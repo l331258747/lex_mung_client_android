@@ -1,0 +1,114 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+    useLibrary 'org.apache.http.legacy'
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        applicationId "com.lex_mung.client_android"
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
+        testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
+
+        ndk {
+            //选择要添加的对应 cpu 类型的 .so 库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: applicationId,
+//                JPUSH_APPKEY : "0c63ef9cdb0385d0ab13f6dd", //正式
+                JPUSH_APPKEY : "57ec233e4815f11235b32395", //测试
+        ]
+    }
+
+    signingConfigs {
+        release {
+            storeFile file('LexClientKeyStore.keystore')
+            storePassword 'a12345679'
+            keyAlias 'lexclientkeystore'
+            keyPassword 'a12345679'
+        }
+    }
+
+    buildTypes {
+        release {
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            buildConfigField "boolean", "USE_CANARY", "false"
+            minifyEnabled false
+//            minifyEnabled true
+//            shrinkResources true
+//            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+
+        debug {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "boolean", "USE_CANARY", "true"
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    lintOptions {
+        disable 'InvalidPackage'
+        disable "ResourceType"
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation rootProject.ext.dependencies["androideventbus"]
+
+    annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
+    implementation rootProject.ext.dependencies["progressmanager"]
+    implementation rootProject.ext.dependencies["retrofit-url-manager"]
+    implementation rootProject.ext.dependencies["lifecyclemodel"]
+    implementation rootProject.ext.dependencies["BaseAdapter"]
+    implementation rootProject.ext.dependencies["Luban"]
+    implementation rootProject.ext.dependencies["ucrop"]
+    implementation rootProject.ext.dependencies["wheelpicker"]
+    implementation rootProject.ext.dependencies["avi"]
+    implementation rootProject.ext.dependencies["wechat"]
+    implementation rootProject.ext.dependencies["jpush"]
+    implementation rootProject.ext.dependencies["jmessage"]
+    implementation rootProject.ext.dependencies["jcore"]
+    implementation rootProject.ext.dependencies["SmartRefreshLayout"]
+    implementation rootProject.ext.dependencies["bugly"]
+    implementation rootProject.ext.dependencies["numberprogressbar"]
+    implementation rootProject.ext.dependencies["umeng_common"]
+    implementation rootProject.ext.dependencies["umeng_analytics"]
+    implementation rootProject.ext.dependencies["amap-location"]
+    implementation rootProject.ext.dependencies["amap-search"]
+    implementation rootProject.ext.dependencies["amap"]
+
+    //view
+    annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
+        exclude module: 'support-annotations'
+    }
+    implementation rootProject.ext.dependencies["paginate"]
+
+    //arms
+    implementation project(':zl_mvp')
+    implementation project(':imageloader-glide')
+    implementation project(':banner')
+
+    implementation(name: 'alipaySdk-15.5.9-20181123210601', ext: 'aar')
+
+    //test
+    testImplementation rootProject.ext.dependencies["junit"]
+}
+

@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">绿豆圈</string>
+    <string name="PeerScreenActivity">筛选</string>
+
+    <string name="text_save">保存</string>
+    <string name="text_loading">加载中</string>
+    <string name="text_cancel">取消</string>
+    <string name="text_home_page">首页</string>
+    <string name="text_me">我的</string>
+    <string name="text_find_lawyer">找律师</string>
+    <string name="text_search_lawyer">搜索律师</string>
+    <string name="text_free_consult">免费咨询</string>
+    <string name="text_free_consult_1">免费答疑解惑</string>
+    <string name="text_fast_consult">快速咨询</string>
+    <string name="text_fast_consult_1">10分钟精准匹配</string>
+    <string name="text_experts_consult">专家咨询</string>
+    <string name="text_experts_consult_1">1对1电话咨询</string>
+    <string name="text_lawyer_service">法律服务</string>
+    <string name="text_find_the_right_lawyer">找到合适的律师</string>
+    <string name="text_legal_card">企业法务卡</string>
+    <string name="text_professional_internet_legal_consultant">专业互联网法律顾问</string>
+    <string name="text_share">分享</string>
+    <string name="text_solution">解决方案</string>
+    <string name="text_release_demand">发布需求</string>
+    <string name="text_synthesis_sort">综合排序</string>
+    <string name="text_newest_enter">最新入驻</string>
+    <string name="text_newest_active">最近活跃</string>
+    <string name="text_all_field">全部领域</string>
+    <string name="text_all_region">全部地区</string>
+    <string name="text_screen">筛选</string>
+    <string name="text_certification_label">认证标签</string>
+    <string name="text_no_data">暂无结果</string>
+    <string name="text_reset">重置</string>
+    <string name="text_confirm">确定</string>
+    <string name="text_lawyer_position">律师职务</string>
+    <string name="text_social_position">社会职务</string>
+    <string name="text_honor_the_name">荣誉名称</string>
+    <string name="text_qualification_certificate">资格证书</string>
+    <string name="text_select_the_type_of_problem">选择问题类型</string>
+    <string name="text_please_enter_the_keyword">请输入关键字</string>
+    <string name="text_supreme_people_court">最高人民法院</string>
+    <string name="text_higher_people_court">高级人民法院</string>
+    <string name="text_intermediate_people_court">中级人民法院</string>
+    <string name="text_grass_roots_court">基层法院</string>
+    <string name="text_supreme_people_p">最高人民检察院</string>
+    <string name="text_higher_people_p">高级人民检察院</string>
+    <string name="text_intermediate_people_p">中级人民检察院</string>
+    <string name="text_grass_roots_p">基层检察院</string>
+    <string name="text_select_by_province">按省份选择</string>
+    <string name="text_resort_court">常去法院</string>
+    <string name="text_resort_p">常去检察院</string>
+    <string name="text_search">搜索</string>
+
+</resources>

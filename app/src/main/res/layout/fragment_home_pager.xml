@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/c_ff"
+        android:orientation="vertical">
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/qb_px_35" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/qb_px_35" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_100"
+            android:background="@color/c_06a66a" />
+
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="@dimen/qb_px_122"
+            android:layout_height="@dimen/qb_px_50"
+            android:layout_marginStart="@dimen/qb_px_25"
+            android:src="@drawable/ic_home_logo"
+            app:layout_constraintBottom_toBottomOf="@id/view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_search"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_70"
+            android:layout_marginStart="@dimen/qb_px_25"
+            android:layout_marginEnd="@dimen/qb_px_15"
+            android:background="@drawable/round_10_32b987_all"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/qb_px_65"
+            android:paddingEnd="@dimen/qb_px_65"
+            android:text="@string/text_search_lawyer"
+            android:textColor="@color/c_ff"
+            android:transitionName="tvSearch"
+            app:layout_constraintBottom_toBottomOf="@id/view"
+            app:layout_constraintEnd_toStartOf="@id/iv_message"
+            app:layout_constraintStart_toEndOf="@id/iv_icon"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_search"
+            android:layout_width="@dimen/qb_px_35"
+            android:layout_height="@dimen/qb_px_35"
+            android:layout_marginStart="@dimen/qb_px_15"
+            android:src="@drawable/ic_search_white"
+            android:transitionName="ivSearch"
+            app:layout_constraintBottom_toBottomOf="@id/view"
+            app:layout_constraintStart_toStartOf="@id/tv_search"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_message"
+            android:layout_width="@dimen/qb_px_70"
+            android:layout_height="@dimen/qb_px_70"
+            android:layout_marginEnd="@dimen/qb_px_20"
+            android:padding="@dimen/qb_px_10"
+            android:src="@drawable/ic_message"
+            app:layout_constraintBottom_toBottomOf="@id/view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_message_count"
+            android:layout_width="@dimen/qb_px_28"
+            android:layout_height="@dimen/qb_px_28"
+            android:background="@drawable/round_100_ea5514_all"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="99"
+            android:textColor="@color/c_ff"
+            android:textSize="10sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/iv_message"
+            app:layout_constraintTop_toTopOf="@id/iv_message" />
+
+        <android.support.design.widget.CoordinatorLayout
+            android:id="@+id/coordinator_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view">
+
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fitsSystemWindows="true">
+
+                <android.support.design.widget.CollapsingToolbarLayout
+                    android:id="@+id/collapsing_toolbar_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fitsSystemWindows="true"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                    app:statusBarScrim="@android:color/transparent">
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/c_ff"
+                        android:orientation="vertical">
+
+                        <android.support.constraint.Guideline
+                            android:id="@+id/guideline4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_begin="@dimen/qb_px_35" />
+
+                        <android.support.constraint.Guideline
+                            android:id="@+id/guideline5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_end="@dimen/qb_px_35" />
+
+                        <View
+                            android:id="@+id/view_free_consult"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_free_consult_1"
+                            app:layout_constraintEnd_toStartOf="@id/view_fast_consult"
+                            app:layout_constraintHorizontal_chainStyle="spread_inside"
+                            app:layout_constraintStart_toStartOf="@id/guideline4"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:id="@+id/view_fast_consult"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintBottom_toBottomOf="@id/view_free_consult"
+                            app:layout_constraintEnd_toStartOf="@id/view_experts_consult"
+                            app:layout_constraintStart_toEndOf="@id/view_free_consult"
+                            app:layout_constraintTop_toTopOf="@id/view_free_consult" />
+
+                        <View
+                            android:id="@+id/view_experts_consult"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintBottom_toBottomOf="@id/view_free_consult"
+                            app:layout_constraintEnd_toStartOf="@id/guideline5"
+                            app:layout_constraintStart_toEndOf="@id/view_fast_consult"
+                            app:layout_constraintTop_toTopOf="@id/view_free_consult" />
+
+                        <ImageView
+                            android:id="@+id/iv_free_consult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/qb_px_35"
+                            android:layout_marginTop="@dimen/qb_px_20"
+                            android:src="@drawable/ic_free_consult"
+                            app:layout_constraintEnd_toStartOf="@id/iv_fast_consult"
+                            app:layout_constraintHorizontal_chainStyle="spread_inside"
+                            app:layout_constraintStart_toStartOf="@id/guideline4"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/iv_fast_consult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_fast_consult"
+                            app:layout_constraintEnd_toStartOf="@id/iv_experts_consult"
+                            app:layout_constraintStart_toEndOf="@id/iv_free_consult"
+                            app:layout_constraintTop_toTopOf="@id/iv_free_consult" />
+
+                        <ImageView
+                            android:id="@+id/iv_experts_consult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/qb_px_35"
+                            android:src="@drawable/ic_experts_consult"
+                            app:layout_constraintEnd_toStartOf="@id/guideline5"
+                            app:layout_constraintStart_toEndOf="@id/iv_fast_consult"
+                            app:layout_constraintTop_toTopOf="@id/iv_free_consult" />
+
+                        <TextView
+                            android:id="@+id/tv_free_consult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/qb_px_15"
+                            android:includeFontPadding="false"
+                            android:text="@string/text_free_consult"
+                            android:textColor="@color/c_323232"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="@id/iv_free_consult"
+                            app:layout_constraintStart_toStartOf="@id/iv_free_consult"
+                            app:layout_constraintTop_toBottomOf="@id/iv_free_consult" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="@string/text_fast_consult"
+                            android:textColor="@color/c_323232"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="@id/iv_fast_consult"
+                            app:layout_constraintStart_toStartOf="@id/iv_fast_consult"
+                            app:layout_constraintTop_toTopOf="@id/tv_free_consult" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="@string/text_experts_consult"
+                            android:textColor="@color/c_323232"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="@id/iv_experts_consult"
+                            app:layout_constraintStart_toStartOf="@id/iv_experts_consult"
+                            app:layout_constraintTop_toTopOf="@id/tv_free_consult" />
+
+                        <TextView
+                            android:id="@+id/tv_free_consult_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/qb_px_20"
+                            android:includeFontPadding="false"
+                            android:text="@string/text_free_consult_1"
+                            android:textColor="@color/c_717171"
+                            android:textSize="12sp"
+                            app:layout_constraintEnd_toEndOf="@id/iv_free_consult"
+                            app:layout_constraintStart_toStartOf="@id/iv_free_consult"
+                            app:layout_constraintTop_toBottomOf="@id/tv_free_consult" />
+
+                        <TextView
+                            android:id="@+id/tv_fast_consult_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="@string/text_fast_consult_1"
+                            android:textColor="@color/c_717171"
+                            android:textSize="12sp"
+                            app:layout_constraintEnd_toEndOf="@id/iv_fast_consult"
+                            app:layout_constraintStart_toStartOf="@id/iv_fast_consult"
+                            app:layout_constraintTop_toTopOf="@id/tv_free_consult_1" />
+
+                        <TextView
+                            android:id="@+id/tv_experts_consult_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="@string/text_free_consult_1"
+                            android:textColor="@color/c_717171"
+                            android:textSize="12sp"
+                            app:layout_constraintEnd_toEndOf="@id/iv_experts_consult"
+                            app:layout_constraintStart_toStartOf="@id/iv_experts_consult"
+                            app:layout_constraintTop_toTopOf="@id/tv_free_consult_1" />
+
+                        <View
+                            android:id="@+id/view_lawyer_service"
+                            android:layout_width="@dimen/qb_px_320"
+                            android:layout_height="@dimen/qb_px_160"
+                            android:layout_marginTop="@dimen/qb_px_50"
+                            android:background="@drawable/round_10_f5fdff_all"
+                            app:layout_constraintStart_toStartOf="@id/guideline4"
+                            app:layout_constraintTop_toBottomOf="@id/tv_free_consult_1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/qb_px_25"
+                            android:layout_marginTop="@dimen/qb_px_35"
+                            android:includeFontPadding="false"
+                            android:text="@string/text_lawyer_service"
+                            android:textColor="@color/c_323232"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toEndOf="@id/guideline4"
+                            app:layout_constraintTop_toTopOf="@id/view_lawyer_service" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/qb_px_25"
+                            android:layout_marginBottom="@dimen/qb_px_35"
+                            android:includeFontPadding="false"
+                            android:text="@string/text_find_the_right_lawyer"
+                            android:textColor="@color/c_717171"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="@id/view_lawyer_service"
+                            app:layout_constraintStart_toEndOf="@id/guideline4" />
+
+                        <ImageView
+                            android:layout_width="@dimen/qb_px_50"
+                            android:layout_height="@dimen/qb_px_50"
+                            android:layout_marginTop="@dimen/qb_px_20"
+                            android:layout_marginEnd="@dimen/qb_px_20"
+                            android:src="@drawable/ic_lawyer_seriver"
+                            app:layout_constraintEnd_toEndOf="@id/view_lawyer_service"
+                            app:layout_constraintTop_toTopOf="@id/view_lawyer_service" />
+
+                        <View
+                            android:id="@+id/view_legal_card"
+                            android:layout_width="@dimen/qb_px_320"
+                            android:layout_height="@dimen/qb_px_160"
+                            android:background="@drawable/round_10_fffaf0_all"
+                            app:layout_constraintEnd_toEndOf="@id/guideline5"
+                            app:layout_constraintTop_toTopOf="@id/view_lawyer_service" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/qb_px_25"
+                            android:layout_marginTop="@dimen/qb_px_35"
+                            android:includeFontPadding="false"
+                            android:text="@string/text_legal_card"
+                            android:textColor="@color/c_323232"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="@id/view_legal_card"
+                            app:layout_constraintTop_toTopOf="@id/view_legal_card" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/qb_px_25"
+                            android:layout_marginBottom="@dimen/qb_px_35"
+                            android:includeFontPadding="false"
+                            android:text="@string/text_professional_internet_legal_consultant"
+                            android:textColor="@color/c_717171"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="@id/view_legal_card"
+                            app:layout_constraintStart_toStartOf="@id/view_legal_card" />
+
+                        <ImageView
+                            android:layout_width="@dimen/qb_px_50"
+                            android:layout_height="@dimen/qb_px_50"
+                            android:layout_marginTop="@dimen/qb_px_20"
+                            android:layout_marginEnd="@dimen/qb_px_20"
+                            android:src="@drawable/ic_legal_card"
+                            app:layout_constraintEnd_toEndOf="@id/view_legal_card"
+                            app:layout_constraintTop_toTopOf="@id/view_legal_card" />
+
+                        <View
+                            android:id="@+id/view_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="@dimen/qb_px_35"
+                            android:background="@color/c_f4f4f4"
+                            app:layout_constraintBottom_toBottomOf="@id/view_3"
+                            app:layout_constraintTop_toBottomOf="@id/view_lawyer_service" />
+
+                        <View
+                            android:id="@+id/view_2"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/qb_px_35"
+                            app:layout_constraintTop_toTopOf="@id/view_1" />
+
+                        <com.youth.banner.Banner
+                            android:id="@+id/banner"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/qb_px_260"
+                            app:banner_layout="@layout/banner"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/view_2" />
+
+                        <View
+                            android:id="@+id/view_3"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/qb_px_35"
+                            app:layout_constraintTop_toBottomOf="@id/banner" />
+
+                        <TextView
+                            android:id="@+id/tv_solution"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/qb_px_100"
+                            android:gravity="center_vertical"
+                            android:paddingStart="@dimen/qb_px_70"
+                            android:paddingEnd="@dimen/qb_px_0"
+                            android:text="@string/text_solution"
+                            android:textColor="@color/c_323232"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintTop_toBottomOf="@id/view_3" />
+
+                        <View
+                            android:layout_width="@dimen/qb_px_10"
+                            android:layout_height="@dimen/qb_px_40"
+                            android:background="@drawable/round_10_06a66a_all"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_solution"
+                            app:layout_constraintStart_toStartOf="@id/guideline4"
+                            app:layout_constraintTop_toTopOf="@id/tv_solution" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/qb_px_1"
+                            android:background="@color/c_b5b5b5"
+                            app:layout_constraintTop_toBottomOf="@id/tv_solution" />
+                    </android.support.constraint.ConstraintLayout>
+
+                    <View
+                        android:id="@+id/view_top"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/qb_px_1"
+                        app:layout_collapseMode="pin" />
+                </android.support.design.widget.CollapsingToolbarLayout>
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tab_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/qb_px_90"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/c_ff"
+                    app:tabBackground="@null"
+                    app:tabGravity="fill"
+                    app:tabIndicatorColor="@color/c_06a66a"
+                    app:tabIndicatorHeight="@dimen/qb_px_5"
+                    app:tabMode="scrollable"
+                    app:tabSelectedTextColor="@color/c_323232"
+                    app:tabTextColor="@color/c_717171" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/qb_px_1"
+                    android:background="@color/c_b5b5b5" />
+            </android.support.design.widget.AppBarLayout>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        </android.support.design.widget.CoordinatorLayout>
+
+    </android.support.constraint.ConstraintLayout>
+</RelativeLayout>

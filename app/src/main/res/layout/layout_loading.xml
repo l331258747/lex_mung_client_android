@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dialog_view"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/round_10_40_all"
+    android:minWidth="@dimen/qb_px_300"
+    android:minHeight="@dimen/qb_px_200"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="@dimen/qb_px_50"
+        android:layout_height="@dimen/qb_px_50"
+        android:padding="@dimen/qb_px_18"
+        android:src="@drawable/ic_white_close"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avi"
+        android:layout_width="@dimen/qb_px_50"
+        android:layout_height="@dimen/qb_px_50"
+        android:visibility="visible"
+        app:indicatorColor="@android:color/white"
+        app:indicatorName="LineSpinFadeLoaderIndicator"
+        app:layout_constraintBottom_toTopOf="@id/load_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/load_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/avi"
+        android:layout_centerHorizontal="true"
+        android:includeFontPadding="false"
+        android:text="@string/text_loading"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/avi" />
+</android.support.constraint.ConstraintLayout>
