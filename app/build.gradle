@@ -105,6 +105,7 @@ dependencies {
     implementation project(':zl_mvp')
     implementation project(':imageloader-glide')
     implementation project(':banner')
+    implementation project(':rxdownload3')
 
     implementation(name: 'alipaySdk-15.5.9-20181123210601', ext: 'aar')
 

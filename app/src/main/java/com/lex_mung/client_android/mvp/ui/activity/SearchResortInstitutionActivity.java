@@ -36,8 +36,8 @@ import com.lex_mung.client_android.R;
 
 import java.util.List;
 
-import static com.lex_mung.client_android.app.EventBusTags.PEER_SCREEN_INFO.PEER_SCREEN_INFO;
-import static com.lex_mung.client_android.app.EventBusTags.PEER_SCREEN_INFO.PEER_SCREEN_INFO_INSTITUTIONS;
+import static com.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO;
+import static com.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_INSTITUTIONS;
 
 public class SearchResortInstitutionActivity extends BaseActivity<SearchResortInstitutionPresenter> implements SearchResortInstitutionContract.View {
     @BindView(R.id.tv_title)
@@ -87,7 +87,7 @@ public class SearchResortInstitutionActivity extends BaseActivity<SearchResortIn
                 } else {
                     mPresenter.getP(false);
                 }
-                DeviceUtils.hideSoftKeyboard(mActivity, etSearch);
+                DeviceUtils.hideSoftKeyboard(etSearch);
             }
             return false;
         });
@@ -117,7 +117,7 @@ public class SearchResortInstitutionActivity extends BaseActivity<SearchResortIn
                 entity.setInstitutionId(0);
                 entity.setInstitutionName("");
             }
-            AppUtils.post(PEER_SCREEN_INFO, PEER_SCREEN_INFO_INSTITUTIONS, entity);
+            AppUtils.post(LAWYER_LIST_SCREEN_INFO, LAWYER_LIST_SCREEN_INFO_INSTITUTIONS, entity);
             AppManager.getAppManager().killActivity(SelectResortInstitutionActivity.class);
             killMyself();
         });
@@ -146,7 +146,7 @@ public class SearchResortInstitutionActivity extends BaseActivity<SearchResortIn
         }
     }
 
-    @OnClick({ R.id.bt_search})
+    @OnClick({R.id.bt_search})
     public void onViewClicked(View view) {
         if (isFastClick()) return;
         switch (view.getId()) {
@@ -157,7 +157,7 @@ public class SearchResortInstitutionActivity extends BaseActivity<SearchResortIn
                 } else {
                     mPresenter.getP(false);
                 }
-                DeviceUtils.hideSoftKeyboard(mActivity, etSearch);
+                DeviceUtils.hideSoftKeyboard(etSearch);
                 break;
         }
     }

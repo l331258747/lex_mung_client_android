@@ -14,7 +14,7 @@ public class LabelAdapter extends BaseQuickAdapter<OrgTagsEntity, BaseViewHolder
     private ImageLoader mImageLoader;
 
     LabelAdapter(ImageLoader imageLoader) {
-        super(R.layout.item_label_min);
+        super(R.layout.item_label);
         this.mImageLoader = imageLoader;
     }
 

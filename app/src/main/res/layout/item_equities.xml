@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:layout_marginTop="@dimen/qb_px_35"
+    android:orientation="horizontal">
+
+    <com.lex_mung.client_android.mvp.ui.widget.RoundImageView
+        android:id="@+id/item_iv_icon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="h,32:9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/item_tv_certified"
+        android:layout_width="@dimen/qb_px_100"
+        android:layout_height="@dimen/qb_px_30"
+        android:layout_marginEnd="@dimen/qb_px_35"
+        android:layout_marginBottom="@dimen/qb_px_35"
+        android:background="@drawable/round_100_cea769_all"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="@string/text_certified"
+        android:textColor="@color/c_ff"
+        android:textSize="12sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</android.support.constraint.ConstraintLayout>

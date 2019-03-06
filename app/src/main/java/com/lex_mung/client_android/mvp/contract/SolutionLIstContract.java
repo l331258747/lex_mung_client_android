@@ -13,7 +13,7 @@ import okhttp3.RequestBody;
 public interface SolutionLIstContract {
     interface View extends IView {
 
-        void setSolutionList(List<SolutionListEntity.ListBean> list, boolean isAdd);
+        void setAdapter(List<SolutionListEntity.ListBean> list, boolean isAdd);
     }
 
     interface Model extends IModel {

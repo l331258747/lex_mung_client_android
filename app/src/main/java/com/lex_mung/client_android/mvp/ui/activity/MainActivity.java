@@ -12,12 +12,13 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.lex_mung.client_android.R;
+import com.lex_mung.client_android.app.DataHelperTags;
 import com.lex_mung.client_android.di.component.DaggerMainComponent;
 import com.lex_mung.client_android.di.module.MainModule;
 import com.lex_mung.client_android.mvp.contract.MainContract;
 import com.lex_mung.client_android.mvp.presenter.MainPresenter;
-import com.lex_mung.client_android.mvp.ui.dialog.EasyDialog;
 import com.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import com.lex_mung.client_android.mvp.ui.fragment.EquitiesFragment;
 import com.lex_mung.client_android.mvp.ui.fragment.FindLawyerFragment;
 import com.lex_mung.client_android.mvp.ui.fragment.HomePagerFragment;
 import com.lex_mung.client_android.mvp.ui.fragment.MeFragment;
@@ -32,8 +33,8 @@ import me.zl.mvp.base.AdapterViewPager;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
+import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.StatusBarUtil;
-
 
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View {
     @BindView(R.id.view_pager)
@@ -43,7 +44,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @BindView(R.id.view)
     View view;
 
-    private EasyDialog easyDialog;
     private SparseIntArray items = new SparseIntArray();
     private List<Fragment> fragments = new ArrayList<>();
 
@@ -79,12 +79,14 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     private void initViewPager() {
         fragments.add(HomePagerFragment.newInstance());
+        fragments.add(EquitiesFragment.newInstance());
         fragments.add(FindLawyerFragment.newInstance());
         fragments.add(MeFragment.newInstance());
         items.append(R.id.i_home, 0);
-        items.append(R.id.i_lawyer, 1);
-        items.append(R.id.i_me, 2);
-        viewPager.setOffscreenPageLimit(2);
+        items.append(R.id.i_equities, 1);
+        items.append(R.id.i_lawyer, 2);
+        items.append(R.id.i_me, 3);
+        viewPager.setOffscreenPageLimit(3);
         viewPager.setScrollable(false);
         viewPager.setAdapter(new AdapterViewPager(getSupportFragmentManager(), fragments));
 
@@ -97,6 +99,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 if (previousPosition != position) {
                     previousPosition = position;
                     viewPager.setCurrentItem(position);
+                }
+                if (position == 3
+                        && !DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
+                    launchActivity(new Intent(mActivity, LoginActivity.class));
                 }
                 return true;
             }

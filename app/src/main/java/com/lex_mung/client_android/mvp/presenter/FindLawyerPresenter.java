@@ -27,7 +27,7 @@ import com.lex_mung.client_android.mvp.contract.FindLawyerContract;
 import com.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import com.lex_mung.client_android.mvp.model.entity.BusinessTypeEntity;
 import com.lex_mung.client_android.mvp.model.entity.LawyerEntity;
-import com.lex_mung.client_android.mvp.model.entity.PeerScreenEntity;
+import com.lex_mung.client_android.mvp.model.entity.LawyerListScreenEntity;
 import com.lex_mung.client_android.mvp.model.entity.RegionEntity;
 
 import org.simple.eventbus.Subscriber;
@@ -39,11 +39,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.lex_mung.client_android.app.EventBusTags.PEER_SCREEN_INFO.PEER_SCREEN_INFO;
-import static com.lex_mung.client_android.app.EventBusTags.PEER_SCREEN_INFO.PEER_SCREEN_INFO_INSTITUTIONS;
-import static com.lex_mung.client_android.app.EventBusTags.PEER_SCREEN_INFO.PEER_SCREEN_INFO_LIST;
-import static com.lex_mung.client_android.app.EventBusTags.PEER_SCREEN_INFO.PEER_SCREEN_INFO_LIST_1;
-import static com.lex_mung.client_android.app.EventBusTags.PEER_SCREEN_INFO.PEER_SCREEN_INFO_TYPE;
+import static com.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO;
+import static com.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_INSTITUTIONS;
+import static com.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_LIST;
+import static com.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_LIST_1;
+import static com.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_TYPE;
 
 @FragmentScope
 public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model, FindLawyerContract.View> {
@@ -67,7 +67,7 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
 
     private List<BusinessTypeEntity> fieldList = new ArrayList<>();
     private List<RegionEntity> regionList = new ArrayList<>();
-    private List<PeerScreenEntity> list = new ArrayList<>();
+    private List<LawyerListScreenEntity> list = new ArrayList<>();
     private Map<String, Object> screenMap = new HashMap<>();
 
     @Inject
@@ -104,7 +104,7 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
         return regionList;
     }
 
-    public List<PeerScreenEntity> getList() {
+    public List<LawyerListScreenEntity> getList() {
         return list;
     }
 
@@ -196,14 +196,14 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
      *
      * @param message message
      */
-    @Subscriber(tag = PEER_SCREEN_INFO)
+    @Subscriber(tag = LAWYER_LIST_SCREEN_INFO)
     private void refresh(Message message) {
         switch (message.what) {
-            case PEER_SCREEN_INFO_LIST:
+            case LAWYER_LIST_SCREEN_INFO_LIST:
                 list.clear();
                 screenMap.clear();
-                list.addAll((Collection<? extends PeerScreenEntity>) message.obj);
-                for (PeerScreenEntity entity : list) {
+                list.addAll((Collection<? extends LawyerListScreenEntity>) message.obj);
+                for (LawyerListScreenEntity entity : list) {
                     if (entity.getId() > 0) {
                         screenMap.put(entity.getPropKey(), entity.getId());
                     }
@@ -211,16 +211,16 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
                 pageNum = 1;
                 getConsultList(false, false);
                 break;
-            case PEER_SCREEN_INFO_LIST_1:
+            case LAWYER_LIST_SCREEN_INFO_LIST_1:
                 list.clear();
-                list.addAll((Collection<? extends PeerScreenEntity>) message.obj);
+                list.addAll((Collection<? extends LawyerListScreenEntity>) message.obj);
                 screenMap.clear();
                 pageNum = 1;
                 getConsultList(false, false);
                 mRootView.setScreenColor(AppUtils.getColor(mApplication, R.color.c_b5b5b5));
                 break;
-            case PEER_SCREEN_INFO_TYPE:
-            case PEER_SCREEN_INFO_INSTITUTIONS:
+            case LAWYER_LIST_SCREEN_INFO_TYPE:
+            case LAWYER_LIST_SCREEN_INFO_INSTITUTIONS:
                 mRootView.setScreenColor(AppUtils.getColor(mApplication, R.color.c_06a66a));
                 break;
         }

@@ -22,7 +22,12 @@ public class SolutionAdapter extends BaseQuickAdapter<SolutionListEntity.ListBea
     @Override
     protected void convert(BaseViewHolder helper, SolutionListEntity.ListBean item) {
         helper.setText(R.id.item_tv_title, item.getTitle());
-        helper.setText(R.id.item_tv_count, Html.fromHtml("已帮助<font color=\"#FE6026\">" + item.getHelpNumber() + "</font>人"));
+        String string = mContext.getString(R.string.text_has_helped)
+                + "<font color=\"#1EC88C\">"
+                + item.getHelpNumber()
+                + "</font>"
+                + mContext.getString(R.string.text_people);
+        helper.setText(R.id.item_tv_count, Html.fromHtml(string));
         if (!TextUtils.isEmpty(item.getImage())) {
             mImageLoader.loadImage(mContext
                     , ImageConfigImpl

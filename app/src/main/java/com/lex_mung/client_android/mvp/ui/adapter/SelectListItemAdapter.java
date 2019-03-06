@@ -8,7 +8,7 @@ import com.lex_mung.client_android.R;
 import com.lex_mung.client_android.mvp.model.entity.FeedbackTypeEntity;
 import com.lex_mung.client_android.mvp.model.entity.HonorTypeEntity;
 import com.lex_mung.client_android.mvp.model.entity.LawsJobEntity;
-import com.lex_mung.client_android.mvp.model.entity.PeerScreenEntity;
+import com.lex_mung.client_android.mvp.model.entity.LawyerListScreenEntity;
 import com.lex_mung.client_android.mvp.model.entity.QualificationTypeEntity;
 import com.lex_mung.client_android.mvp.model.entity.SelectList;
 import com.lex_mung.client_android.mvp.model.entity.SocialTypeEntity;
@@ -56,7 +56,7 @@ public class SelectListItemAdapter extends BaseQuickAdapter<SelectList, BaseView
                 helper.getView(R.id.item_tv_content).setVisibility(View.VISIBLE);
                 break;
             case 5:
-                PeerScreenEntity.ItemsBean bean = (PeerScreenEntity.ItemsBean) item;
+                LawyerListScreenEntity.ItemsBean bean = (LawyerListScreenEntity.ItemsBean) item;
                 if (id == bean.getId()) {
                     helper.getView(R.id.item_iv_select).setVisibility(View.VISIBLE);
                     helper.setTextColor(R.id.item_tv_title, AppUtils.getColor(mContext, R.color.c_06a66a));

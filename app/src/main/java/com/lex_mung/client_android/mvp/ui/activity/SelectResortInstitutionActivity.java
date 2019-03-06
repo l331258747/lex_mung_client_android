@@ -33,8 +33,9 @@ import com.lex_mung.client_android.R;
 
 import java.util.List;
 
-import static com.lex_mung.client_android.app.EventBusTags.PEER_SCREEN_INFO.PEER_SCREEN_INFO;
-import static com.lex_mung.client_android.app.EventBusTags.PEER_SCREEN_INFO.PEER_SCREEN_INFO_INSTITUTIONS;
+import static com.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO;
+import static com.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_1;
+import static com.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_INSTITUTIONS;
 
 public class SelectResortInstitutionActivity extends BaseActivity<SelectResortInstitutionPresenter> implements SelectResortInstitutionContract.View {
     @BindView(R.id.tv_title)
@@ -56,6 +57,7 @@ public class SelectResortInstitutionActivity extends BaseActivity<SelectResortIn
     private int regionId1 = 0;
     private int regionId2 = 0;
     private int id;
+    private boolean flag;
 
     private ResortInstitutionsResultAdapter resultAdapter;
     private ResortInstitutionAdapter institutionAdapter;
@@ -85,6 +87,7 @@ public class SelectResortInstitutionActivity extends BaseActivity<SelectResortIn
             regionId1 = bundleIntent.getInt(BundleTags.REGION_ID_1, 0);
             regionId2 = bundleIntent.getInt(BundleTags.REGION_ID_2, 0);
             id = bundleIntent.getInt(BundleTags.ID, -1);
+            flag = bundleIntent.getBoolean(BundleTags.FLAG, false);
         }
         if (level == 0 && regionId1 > 0) {
             bundle.clear();
@@ -158,7 +161,11 @@ public class SelectResortInstitutionActivity extends BaseActivity<SelectResortIn
                 entity.setInstitutionId(0);
                 entity.setInstitutionName("");
             }
-            AppUtils.post(PEER_SCREEN_INFO, PEER_SCREEN_INFO_INSTITUTIONS, entity);
+            if (flag) {
+                AppUtils.post(LAWYER_LIST_SCREEN_INFO_1, LAWYER_LIST_SCREEN_INFO_INSTITUTIONS, entity);
+            } else {
+                AppUtils.post(LAWYER_LIST_SCREEN_INFO, LAWYER_LIST_SCREEN_INFO_INSTITUTIONS, entity);
+            }
             AppManager.getAppManager().killActivity(SelectResortInstitutionActivity.class);
         });
         institutionAdapter1.setOnItemClickListener((adapter, view, position) -> {
@@ -169,7 +176,11 @@ public class SelectResortInstitutionActivity extends BaseActivity<SelectResortIn
                 entity.setInstitutionId(0);
                 entity.setInstitutionName("");
             }
-            AppUtils.post(PEER_SCREEN_INFO, PEER_SCREEN_INFO_INSTITUTIONS, entity);
+            if (flag) {
+                AppUtils.post(LAWYER_LIST_SCREEN_INFO_1, LAWYER_LIST_SCREEN_INFO_INSTITUTIONS, entity);
+            } else {
+                AppUtils.post(LAWYER_LIST_SCREEN_INFO, LAWYER_LIST_SCREEN_INFO_INSTITUTIONS, entity);
+            }
             AppManager.getAppManager().killActivity(SelectResortInstitutionActivity.class);
         });
         institutionAdapter1.setOnLoadMoreListener(() -> {

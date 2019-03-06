@@ -14,7 +14,7 @@ import okhttp3.RequestBody;
 import javax.inject.Inject;
 
 import com.lex_mung.client_android.mvp.contract.SearchResortInstitutionContract;
-import com.lex_mung.client_android.mvp.model.api.service.CommonService;
+import com.lex_mung.client_android.mvp.model.api.CommonService;
 import com.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import com.lex_mung.client_android.mvp.model.entity.InstitutionEntity;
 

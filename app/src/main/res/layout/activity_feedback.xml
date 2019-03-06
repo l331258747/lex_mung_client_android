@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/qb_px_100" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/qb_px_35" />
+
+    <TextView
+        android:id="@+id/tv_type_text"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_120"
+        android:background="@drawable/button_withe_down"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        android:paddingStart="@dimen/qb_px_35"
+        android:paddingEnd="@dimen/qb_px_35"
+        android:text="@string/text_problem_type"
+        android:textColor="@color/c_323232"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline1" />
+
+    <TextView
+        android:id="@+id/tv_type"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/qb_px_50"
+        android:ellipsize="end"
+        android:hint="@string/text_select_the_type_of_problem"
+        android:includeFontPadding="false"
+        android:maxWidth="@dimen/qb_px_400"
+        android:singleLine="true"
+        android:textColor="@color/c_b5b5b5"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_type_text"
+        app:layout_constraintEnd_toStartOf="@id/guideline3"
+        app:layout_constraintTop_toTopOf="@id/tv_type_text" />
+
+    <ImageView
+        android:layout_width="@dimen/qb_px_30"
+        android:layout_height="@dimen/qb_px_30"
+        android:src="@drawable/ic_right_arrow"
+        app:layout_constraintBottom_toBottomOf="@id/tv_type_text"
+        app:layout_constraintEnd_toStartOf="@id/guideline3"
+        app:layout_constraintTop_toTopOf="@id/tv_type_text" />
+
+    <EditText
+        android:id="@+id/et_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_35"
+        android:background="@android:color/white"
+        android:gravity="start"
+        android:hint="@string/text_please_describe_your_problem"
+        android:maxLength="300"
+        android:minLines="8"
+        android:padding="@dimen/qb_px_35"
+        android:textColor="@color/c_323232"
+        android:textColorHint="@color/c_b5b5b5"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_type_text" />
+
+    <TextView
+        android:id="@+id/tv_num_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/qb_px_10"
+        android:includeFontPadding="false"
+        android:text="@string/text_0_300"
+        android:textColor="@color/c_323232"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/et_input"
+        app:layout_constraintEnd_toStartOf="@id/guideline3" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/qb_px_35"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@id/view"
+        app:layout_constraintTop_toBottomOf="@id/et_input" />
+
+    <TextView
+        android:id="@+id/tv_tip_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/qb_px_35"
+        android:layout_marginTop="@dimen/qb_px_70"
+        android:includeFontPadding="false"
+        android:text="@string/text_upload_pictures"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_input" />
+
+    <LinearLayout
+        android:id="@+id/ll_image"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/qb_px_105"
+        android:layout_marginTop="@dimen/qb_px_60"
+        android:layout_marginEnd="@dimen/qb_px_105"
+        android:background="@drawable/round_10_f4f4f4_all"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintDimensionRatio="h,3:2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_tip_text">
+
+        <ImageView
+            android:id="@+id/iv_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="@dimen/qb_px_200"
+            android:layout_height="@dimen/qb_px_150"
+            android:src="@drawable/ic_feedback_no_data" />
+
+        <TextView
+            android:id="@+id/tv_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_35"
+            android:includeFontPadding="false"
+            android:text="@string/text_click_upload"
+            android:textColor="@color/c_e7e7e7"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_60"
+        app:layout_constraintTop_toBottomOf="@id/ll_image" />
+
+    <View
+        android:id="@+id/view_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</android.support.constraint.ConstraintLayout>

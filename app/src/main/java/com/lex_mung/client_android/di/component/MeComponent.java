@@ -9,7 +9,6 @@ import me.zl.mvp.di.scope.FragmentScope;
 
 import com.lex_mung.client_android.mvp.ui.fragment.MeFragment;
 
-
 @FragmentScope
 @Component(modules = MeModule.class, dependencies = AppComponent.class)
 public interface MeComponent {

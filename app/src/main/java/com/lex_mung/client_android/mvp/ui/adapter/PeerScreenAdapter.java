@@ -9,26 +9,26 @@ import android.widget.RelativeLayout;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.lex_mung.client_android.R;
-import com.lex_mung.client_android.mvp.model.entity.PeerScreenEntity;
-import com.lex_mung.client_android.mvp.ui.activity.PeerScreenActivity;
+import com.lex_mung.client_android.mvp.model.entity.LawyerListScreenEntity;
+import com.lex_mung.client_android.mvp.ui.activity.LawyerListScreenActivity;
 import me.zl.mvp.utils.AppUtils;
 
-import static com.lex_mung.client_android.app.EventBusTags.PEER_SCREEN_INFO.PEER_SCREEN_INFO;
-import static com.lex_mung.client_android.app.EventBusTags.PEER_SCREEN_INFO.PEER_SCREEN_INFO_TYPE;
+import static com.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO;
+import static com.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_TYPE;
 
-public class PeerScreenAdapter extends BaseQuickAdapter<PeerScreenEntity, BaseViewHolder> {
-    private PeerScreenActivity activity;
+public class PeerScreenAdapter extends BaseQuickAdapter<LawyerListScreenEntity, BaseViewHolder> {
+    private LawyerListScreenActivity activity;
 
     public PeerScreenAdapter() {
         super(R.layout.item_peer_screen);
     }
 
-    public void setActivity(PeerScreenActivity activity) {
+    public void setActivity(LawyerListScreenActivity activity) {
         this.activity = activity;
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, PeerScreenEntity item) {
+    protected void convert(BaseViewHolder helper, LawyerListScreenEntity item) {
         helper.setText(R.id.item_tv_title, item.getText());
         View view = helper.getView(R.id.item_35);
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
@@ -53,7 +53,7 @@ public class PeerScreenAdapter extends BaseQuickAdapter<PeerScreenEntity, BaseVi
             PeerScreenChildAdapter adapter = new PeerScreenChildAdapter(item.getItems(), item.getPos());
             recyclerView.setAdapter(adapter);
             adapter.setOnItemClickListener((adapter1, view1, position) -> {
-                PeerScreenEntity.ItemsBean bean = adapter.getItem(position);
+                LawyerListScreenEntity.ItemsBean bean = adapter.getItem(position);
                 if (bean == null) return;
                 adapter.setPos(position);
                 activity.setPos(helper.getLayoutPosition());
@@ -61,7 +61,7 @@ public class PeerScreenAdapter extends BaseQuickAdapter<PeerScreenEntity, BaseVi
                 item.setId(bean.getId());
                 item.setContent(bean.getText());
                 adapter.notifyDataSetChanged();
-                AppUtils.post(PEER_SCREEN_INFO, PEER_SCREEN_INFO_TYPE, bean);
+                AppUtils.post(LAWYER_LIST_SCREEN_INFO, LAWYER_LIST_SCREEN_INFO_TYPE, bean);
             });
         } else {
             if (!TextUtils.isEmpty(item.getContent())) {

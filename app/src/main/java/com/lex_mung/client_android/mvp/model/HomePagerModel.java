@@ -14,9 +14,10 @@ import okhttp3.RequestBody;
 import javax.inject.Inject;
 
 import com.lex_mung.client_android.mvp.contract.HomePagerContract;
-import com.lex_mung.client_android.mvp.model.api.service.CommonService;
+import com.lex_mung.client_android.mvp.model.api.CommonService;
 import com.lex_mung.client_android.mvp.model.entity.BannerEntity;
 import com.lex_mung.client_android.mvp.model.entity.BaseResponse;
+import com.lex_mung.client_android.mvp.model.entity.RequirementTypeEntity;
 import com.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
 
 import java.util.List;
@@ -52,5 +53,12 @@ public class HomePagerModel extends BaseModel implements HomePagerContract.Model
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .getSolutionType(body);
+    }
+
+    @Override
+    public Observable<BaseResponse<List<RequirementTypeEntity>>> getHomepageRequirementType() {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .getHomepageRequirementType();
     }
 }

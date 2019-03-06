@@ -12,6 +12,14 @@ public class OrgTagsEntity implements Serializable {
     private String image;
     private String link;
 
+    public OrgTagsEntity(String image, String tagName) {
+        this.tagName = tagName;
+        this.image = image;
+    }
+
+    public OrgTagsEntity() {
+    }
+
     public String getLink() {
         return link;
     }

@@ -42,15 +42,15 @@ public class GlobalHttpHandlerImpl implements GlobalHttpHandler {
      */
     @Override
     public Request onHttpRequestBefore(Interceptor.Chain chain, Request request) {
-//        String token = DataHelper.getStringSF(context, TOKEN);
-//        String deviceJson = DataHelper.getStringSF(context, DEVICE);
+        String token = DataHelper.getStringSF(context, DataHelperTags.TOKEN);
+        String deviceJson = DataHelper.getStringSF(context, DataHelperTags.DEVICE);
         return chain
                 .request()
                 .newBuilder()
                 .header("Content-Type", "application/json")
                 .header("Accept", "application/json")
-//                .header("X-Token", token)
-//                .header("device", deviceJson)
+                .header("X-Token", token)
+                .header("device", deviceJson)
                 .build();
     }
 }

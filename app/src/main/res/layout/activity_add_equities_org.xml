@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/view_bottom"
+        android:layout_below="@id/toolbar"
+        android:background="@color/c_f4f4f4"
+        android:fillViewport="true"
+        android:orientation="vertical"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/qb_px_35" />
+
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/qb_px_35" />
+
+            <View
+                android:id="@+id/view_your_name"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/qb_px_1"
+                android:background="@color/c_ff"
+                app:layout_constraintBottom_toBottomOf="@id/et_your_name"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="@string/text_x"
+                android:textColor="@color/c_ea5514"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_your_name"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
+                app:layout_constraintTop_toTopOf="@id/tv_your_name" />
+
+            <TextView
+                android:id="@+id/tv_your_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_20"
+                android:layout_marginTop="@dimen/qb_px_35"
+                android:includeFontPadding="false"
+                android:text="@string/text_your_name"
+                android:textColor="@color/c_cea769"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
+                app:layout_constraintTop_toTopOf="@id/view_your_name" />
+
+            <EditText
+                android:id="@+id/et_your_name"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/qb_px_100"
+                android:background="@color/c_ff"
+                android:gravity="center_vertical"
+                android:hint="@string/text_please_enter_your_name"
+                android:includeFontPadding="false"
+                android:maxLength="20"
+                android:singleLine="true"
+                android:textColor="@color/c_323232"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@id/guideline3"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
+                app:layout_constraintTop_toBottomOf="@id/tv_your_name" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/qb_px_1"
+                android:background="@color/c_f4f4f4"
+                app:layout_constraintBottom_toBottomOf="@id/view_your_name"
+                app:layout_constraintEnd_toEndOf="@id/guideline3"
+                app:layout_constraintStart_toStartOf="@id/guideline2" />
+
+            <View
+                android:id="@+id/view_your_mobile"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/c_ff"
+                app:layout_constraintBottom_toBottomOf="@id/et_your_mobile"
+                app:layout_constraintTop_toBottomOf="@id/view_your_name" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="@string/text_x"
+                android:textColor="@color/c_ea5514"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_your_mobile"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
+                app:layout_constraintTop_toTopOf="@id/tv_your_mobile" />
+
+            <TextView
+                android:id="@+id/tv_your_mobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_20"
+                android:layout_marginTop="@dimen/qb_px_35"
+                android:includeFontPadding="false"
+                android:text="@string/text_your_mobile"
+                android:textColor="@color/c_cea769"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
+                app:layout_constraintTop_toTopOf="@id/view_your_mobile" />
+
+            <EditText
+                android:id="@+id/et_your_mobile"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/qb_px_100"
+                android:background="@color/c_ff"
+                android:gravity="center_vertical"
+                android:hint="@string/text_please_enter_your_mobile"
+                android:includeFontPadding="false"
+                android:inputType="phone"
+                android:maxLength="11"
+                android:textColor="@color/c_323232"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@id/guideline3"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
+                app:layout_constraintTop_toBottomOf="@id/tv_your_mobile" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/qb_px_1"
+                android:background="@color/c_f4f4f4"
+                app:layout_constraintBottom_toBottomOf="@id/view_your_mobile"
+                app:layout_constraintEnd_toEndOf="@id/guideline3"
+                app:layout_constraintStart_toStartOf="@id/guideline2" />
+
+            <View
+                android:id="@+id/view_your_org"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/c_ff"
+                app:layout_constraintBottom_toBottomOf="@id/et_your_org"
+                app:layout_constraintTop_toBottomOf="@id/view_your_mobile" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="@string/text_x"
+                android:textColor="@color/c_ea5514"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_your_org"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
+                app:layout_constraintTop_toTopOf="@id/tv_your_org" />
+
+            <TextView
+                android:id="@+id/tv_your_org"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_20"
+                android:layout_marginTop="@dimen/qb_px_35"
+                android:includeFontPadding="false"
+                android:text="@string/text_your_org"
+                android:textColor="@color/c_cea769"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
+                app:layout_constraintTop_toTopOf="@id/view_your_org" />
+
+            <EditText
+                android:id="@+id/et_your_org"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/qb_px_100"
+                android:background="@color/c_ff"
+                android:gravity="center_vertical"
+                android:hint="@string/text_please_enter_your_org"
+                android:includeFontPadding="false"
+                android:maxLength="40"
+                android:singleLine="true"
+                android:textColor="@color/c_323232"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@id/guideline3"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
+                app:layout_constraintTop_toBottomOf="@id/tv_your_org" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="@string/text_x"
+                android:textColor="@color/c_ea5514"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_your_org"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
+                app:layout_constraintTop_toTopOf="@id/tv_your_org" />
+
+            <View
+                android:id="@+id/view_select_org_service"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/qb_px_35"
+                android:background="@color/c_ff"
+                app:layout_constraintBottom_toBottomOf="@id/view_service_3"
+                app:layout_constraintTop_toBottomOf="@id/view_your_org" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="@string/text_x"
+                android:textColor="@color/c_ea5514"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_org_service"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
+                app:layout_constraintTop_toTopOf="@id/tv_org_service" />
+
+            <TextView
+                android:id="@+id/tv_org_service"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/qb_px_100"
+                android:layout_marginStart="@dimen/qb_px_20"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="@string/text_your_hope_service"
+                android:textColor="@color/c_cea769"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
+                app:layout_constraintTop_toTopOf="@id/view_select_org_service" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qb_px_1"
+                android:background="@color/c_f4f4f4"
+                app:layout_constraintBottom_toBottomOf="@id/tv_org_service" />
+
+            <View
+                android:id="@+id/view_service_1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qb_px_140"
+                android:background="@drawable/button_withe_down"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintTop_toBottomOf="@id/tv_org_service" />
+
+            <TextView
+                android:id="@+id/tv_exclusive_service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="@string/text_exclusive_service"
+                android:textColor="@color/c_323232"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@id/tv_exclusive_service_text"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
+                app:layout_constraintTop_toTopOf="@id/view_service_1"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/tv_exclusive_service_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_15"
+                android:includeFontPadding="false"
+                android:text="@string/text_exclusive_service_tip"
+                android:textColor="@color/c_717171"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@id/view_service_1"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
+                app:layout_constraintTop_toBottomOf="@id/tv_exclusive_service" />
+
+            <ImageView
+                android:id="@+id/iv_exclusive_service"
+                android:layout_width="@dimen/qb_px_60"
+                android:layout_height="@dimen/qb_px_140"
+                android:padding="@dimen/qb_px_15"
+                android:src="@drawable/ic_equities_select_service"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/view_service_1"
+                app:layout_constraintEnd_toEndOf="@id/guideline3"
+                app:layout_constraintTop_toTopOf="@id/view_service_1" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/qb_px_1"
+                android:background="@color/c_f4f4f4"
+                app:layout_constraintBottom_toBottomOf="@id/view_service_1"
+                app:layout_constraintEnd_toEndOf="@id/guideline3"
+                app:layout_constraintStart_toStartOf="@id/guideline2" />
+
+            <View
+                android:id="@+id/view_service_2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qb_px_140"
+                android:layout_marginTop="@dimen/qb_px_1"
+                android:background="@drawable/button_withe_down"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintTop_toBottomOf="@id/view_service_1" />
+
+            <TextView
+                android:id="@+id/tv_corporate_counsel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="@string/text_corporate_counsel"
+                android:textColor="@color/c_323232"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@id/tv_corporate_counsel_text"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
+                app:layout_constraintTop_toTopOf="@id/view_service_2"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/tv_corporate_counsel_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_15"
+                android:includeFontPadding="false"
+                android:text="@string/text_corporate_counsel_tip"
+                android:textColor="@color/c_717171"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@id/view_service_2"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
+                app:layout_constraintTop_toBottomOf="@id/tv_corporate_counsel" />
+
+            <ImageView
+                android:id="@+id/iv_corporate_counsel"
+                android:layout_width="@dimen/qb_px_60"
+                android:layout_height="@dimen/qb_px_140"
+                android:padding="@dimen/qb_px_15"
+                android:src="@drawable/ic_equities_select_service"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/view_service_2"
+                app:layout_constraintEnd_toEndOf="@id/guideline3"
+                app:layout_constraintTop_toTopOf="@id/view_service_2" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/qb_px_1"
+                android:background="@color/c_f4f4f4"
+                app:layout_constraintBottom_toBottomOf="@id/view_service_2"
+                app:layout_constraintEnd_toEndOf="@id/guideline3"
+                app:layout_constraintStart_toStartOf="@id/guideline2" />
+
+            <View
+                android:id="@+id/view_service_3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qb_px_140"
+                android:layout_marginTop="@dimen/qb_px_1"
+                android:background="@drawable/button_withe_down"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintTop_toBottomOf="@id/view_service_2" />
+
+            <TextView
+                android:id="@+id/tv_due_diligence"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="@string/text_due_diligence"
+                android:textColor="@color/c_323232"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@id/tv_due_diligence_text"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
+                app:layout_constraintTop_toTopOf="@id/view_service_3"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/tv_due_diligence_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_15"
+                android:includeFontPadding="false"
+                android:text="@string/text_due_diligence_tip"
+                android:textColor="@color/c_717171"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@id/view_service_3"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
+                app:layout_constraintTop_toBottomOf="@id/tv_due_diligence" />
+
+            <ImageView
+                android:id="@+id/iv_due_diligence"
+                android:layout_width="@dimen/qb_px_60"
+                android:layout_height="@dimen/qb_px_140"
+                android:padding="@dimen/qb_px_15"
+                android:src="@drawable/ic_equities_select_service"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/view_service_3"
+                app:layout_constraintEnd_toEndOf="@id/guideline3"
+                app:layout_constraintTop_toTopOf="@id/view_service_3" />
+
+            <View
+                android:id="@+id/view_tip"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/qb_px_35"
+                android:background="@color/c_ff"
+                app:layout_constraintBottom_toBottomOf="@id/tv_tip_7"
+                app:layout_constraintTop_toBottomOf="@id/view_service_3" />
+
+            <TextView
+                android:id="@+id/tv_tip_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_35"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="@dimen/qb_px_10"
+                android:text="@string/text_add_equities_org_tip_1"
+                android:textColor="@color/c_323232"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@id/guideline3"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
+                app:layout_constraintTop_toTopOf="@id/view_tip" />
+
+            <TextView
+                android:id="@+id/tv_tip_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_25"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="@dimen/qb_px_10"
+                android:text="@string/text_add_equities_org_tip_2"
+                android:textColor="@color/c_cea769"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
+                app:layout_constraintTop_toBottomOf="@id/tv_tip_1" />
+
+            <TextView
+                android:id="@+id/tv_tip_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_25"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="@dimen/qb_px_10"
+                android:text="@string/text_add_equities_org_tip_3"
+                android:textColor="@color/c_323232"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@id/guideline3"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
+                app:layout_constraintTop_toBottomOf="@id/tv_tip_2" />
+
+            <TextView
+                android:id="@+id/tv_tip_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_25"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="@dimen/qb_px_10"
+                android:text="@string/text_add_equities_org_tip_4"
+                android:textColor="@color/c_cea769"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
+                app:layout_constraintTop_toBottomOf="@id/tv_tip_3" />
+
+            <TextView
+                android:id="@+id/tv_tip_5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_25"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="@dimen/qb_px_10"
+                android:text="@string/text_add_equities_org_tip_5"
+                android:textColor="@color/c_323232"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@id/guideline3"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
+                app:layout_constraintTop_toBottomOf="@id/tv_tip_4" />
+
+            <TextView
+                android:id="@+id/tv_tip_6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_25"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="@dimen/qb_px_10"
+                android:text="@string/text_add_equities_org_tip_6"
+                android:textColor="@color/c_cea769"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
+                app:layout_constraintTop_toBottomOf="@id/tv_tip_5" />
+
+            <TextView
+                android:id="@+id/tv_tip_7"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_25"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="@dimen/qb_px_10"
+                android:text="@string/text_add_equities_org_tip_7"
+                android:textColor="@color/c_323232"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@id/guideline3"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
+                app:layout_constraintTop_toBottomOf="@id/tv_tip_6" />
+
+            <TextView
+                android:id="@+id/tv_tip_8"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_40"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="@dimen/qb_px_10"
+                android:text="@string/text_add_equities_org_tip_8"
+                android:textColor="@color/c_323232"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@id/guideline3"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
+                app:layout_constraintTop_toBottomOf="@id/tv_tip_7" />
+
+            <TextView
+                android:id="@+id/tv_tip_9"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_10"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="@dimen/qb_px_10"
+                android:text="@string/text_add_equities_org_tip_9"
+                android:textColor="@color/c_323232"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@id/guideline3"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
+                app:layout_constraintTop_toBottomOf="@id/tv_tip_8" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qb_px_100"
+                app:layout_constraintTop_toBottomOf="@id/tv_tip_8" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_1"
+        android:layout_above="@id/view_bottom"
+        android:background="@color/c_b5b5b5" />
+
+    <View
+        android:id="@+id/view_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_140"
+        android:layout_alignParentBottom="true"
+        android:background="@color/c_ff" />
+
+    <Button
+        android:id="@+id/bt_submit"
+        android:layout_width="@dimen/qb_px_380"
+        android:layout_height="@dimen/qb_px_90"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/qb_px_25"
+        android:background="@drawable/round_100_cea769_all"
+        android:text="@string/text_submit"
+        android:textColor="@color/c_ff"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+</RelativeLayout>

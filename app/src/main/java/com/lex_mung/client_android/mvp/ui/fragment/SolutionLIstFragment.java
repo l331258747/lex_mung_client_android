@@ -109,7 +109,7 @@ public class SolutionLIstFragment extends BaseFragment<SolutionLIstPresenter> im
     }
 
     @Override
-    public void setSolutionList(List<SolutionListEntity.ListBean> list, boolean isAdd) {
+    public void setAdapter(List<SolutionListEntity.ListBean> list, boolean isAdd) {
             if (isAdd) {
                 solutionAdapter.addData(list);
                 smartRefreshLayout.finishLoadMore();

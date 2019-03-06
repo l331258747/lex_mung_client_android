@@ -8,6 +8,9 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +22,17 @@ import com.lex_mung.client_android.app.BundleTags;
 import com.lex_mung.client_android.di.component.DaggerHomePagerComponent;
 import com.lex_mung.client_android.di.module.HomePagerModule;
 import com.lex_mung.client_android.mvp.contract.HomePagerContract;
+import com.lex_mung.client_android.mvp.model.entity.RequirementTypeEntity;
 import com.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
 import com.lex_mung.client_android.mvp.model.entity.BannerEntity;
 import com.lex_mung.client_android.mvp.presenter.HomePagerPresenter;
+import com.lex_mung.client_android.mvp.ui.activity.FastConsultActivity;
+import com.lex_mung.client_android.mvp.ui.activity.FreeConsultActivity;
+import com.lex_mung.client_android.mvp.ui.activity.LawyerListActivity;
+import com.lex_mung.client_android.mvp.ui.activity.LoginActivity;
 import com.lex_mung.client_android.mvp.ui.activity.MainActivity;
 import com.lex_mung.client_android.mvp.ui.activity.WebActivity;
+import com.lex_mung.client_android.mvp.ui.adapter.HomePageRequirementTypeAdapter;
 import com.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -54,6 +63,8 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     TextView tvFastConsult1;
     @BindView(R.id.tv_experts_consult_1)
     TextView tvExpertsConsult1;
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
     @BindView(R.id.banner)
     Banner banner;
     @BindView(R.id.tab_layout)
@@ -64,6 +75,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     private List<Fragment> fragments = new ArrayList<>();
     private List<String> titles = new ArrayList<>();
 
+    private HomePageRequirementTypeAdapter adapter;
 
     public static HomePagerFragment newInstance() {
         return new HomePagerFragment();
@@ -86,8 +98,53 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        String freeConsult = "<font color=\"#1EC88C\">"
+                + getString(R.string.text_free)
+                + "</font>"
+                + mContext.getString(R.string.text_free_consult_1);
+        String fastConsult = "<font color=\"#1EC88C\">"
+                + getString(R.string.text_fast_consult_1)
+                + "</font>"
+                + mContext.getString(R.string.text_fast_consult_2);
+        String expertsConsult = "<font color=\"#1EC88C\">"
+                + getString(R.string.text_experts_consult_1)
+                + "</font>"
+                + mContext.getString(R.string.text_experts_consult_2);
+        tvFreeConsult1.setText(Html.fromHtml(freeConsult));
+        tvFastConsult1.setText(Html.fromHtml(fastConsult));
+        tvExpertsConsult1.setText(Html.fromHtml(expertsConsult));
+
+        initAdapter();
+        initRecyclerView();
         initBanner();
         mPresenter.getBanner();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.onResume();
+    }
+
+    private void initAdapter() {
+        adapter = new HomePageRequirementTypeAdapter(mImageLoader);
+        adapter.setOnItemClickListener((adapter1, view, position) -> {
+            if (isFastClick()) return;
+            RequirementTypeEntity entity = adapter.getItem(position);
+            if (entity == null) return;
+            if (entity.getJumptype() == 1) {
+            } else {
+                bundle.clear();
+                bundle.putString(BundleTags.URL, entity.getJumpUrl());
+                bundle.putBoolean(BundleTags.IS_SHARE, false);
+                launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+            }
+        });
+    }
+
+    private void initRecyclerView() {
+        AppUtils.configRecyclerView(recyclerView, new GridLayoutManager(mActivity, 4));
+        recyclerView.setAdapter(adapter);
     }
 
     private void initBanner() {
@@ -151,25 +208,44 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
             , R.id.view_free_consult
             , R.id.view_fast_consult
             , R.id.view_experts_consult
-            , R.id.view_lawyer_service
-            , R.id.view_legal_card
     })
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_search:
-                ((MainActivity)mActivity).switchPage(1);
+                ((MainActivity) mActivity).switchPage(1);
                 break;
             case R.id.iv_message:
+                if (mPresenter.isLogin()) {
+                } else {
+                    launchActivity(new Intent(mActivity, LoginActivity.class));
+                }
                 break;
             case R.id.view_free_consult:
+                if (mPresenter.isLogin()) {
+                    launchActivity(new Intent(mActivity, FreeConsultActivity.class));
+                } else {
+                    bundle.clear();
+                    bundle.putInt(BundleTags.TYPE, 1);
+                    launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
+                }
                 break;
             case R.id.view_fast_consult:
+                if (mPresenter.isLogin()) {
+                    launchActivity(new Intent(mActivity, FastConsultActivity.class));
+                } else {
+                    bundle.clear();
+                    bundle.putInt(BundleTags.TYPE, 2);
+                    launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
+                }
                 break;
             case R.id.view_experts_consult:
-                break;
-            case R.id.view_lawyer_service:
-                break;
-            case R.id.view_legal_card:
+                if (mPresenter.isLogin()) {
+                    launchActivity(new Intent(mActivity, LawyerListActivity.class));
+                } else {
+                    bundle.clear();
+                    bundle.putInt(BundleTags.TYPE, 2);
+                    launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
+                }
                 break;
         }
     }
@@ -193,6 +269,11 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         viewPager.setOffscreenPageLimit(list.size() - 1);
         viewPager.setAdapter(new AdapterViewPager(getChildFragmentManager(), fragments, titles));
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    @Override
+    public void setRequirementTypeAdapter(List<RequirementTypeEntity> data) {
+        adapter.setNewData(data);
     }
 
     @Override

@@ -11,8 +11,10 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
 
+import com.google.gson.Gson;
 import com.lex_mung.client_android.BuildConfig;
 import com.lex_mung.client_android.R;
+import com.lex_mung.client_android.mvp.model.entity.DeviceEntity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -24,6 +26,8 @@ import butterknife.ButterKnife;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.im.android.api.JMessageClient;
 import me.zl.mvp.base.delegate.AppLifecycles;
+import me.zl.mvp.utils.DataHelper;
+import me.zl.mvp.utils.DeviceUtils;
 import timber.log.Timber;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
@@ -53,6 +57,7 @@ public class AppLifecyclesImpl implements AppLifecycles {
             channel = appInfo.metaData.getString("JPUSH_CHANNEL");
         } catch (PackageManager.NameNotFoundException ignored) {
         }
+        DataHelper.setStringSF(application, DataHelperTags.CHANNEL, channel);
 
         //极光
         JPushInterface.setDebugMode(isDebug);
@@ -66,16 +71,6 @@ public class AppLifecyclesImpl implements AppLifecycles {
         UMConfigure.setLogEnabled(!isDebug);
         MobclickAgent.setScenarioType(application, MobclickAgent.EScenarioType.E_UM_NORMAL);
         MobclickAgent.setSessionContinueMillis(1000 * 30);
-
-//        DeviceEntity device = new DeviceEntity(1
-//                , DeviceUtils.getVersionName(application)
-//                , DeviceUtils.getVersionCode(application)
-//                , channel
-//                , Build.BRAND + " " + Build.MODEL
-//                , Build.VERSION.RELEASE
-//        );
-//        String deviceJson = new Gson().toJson(device);
-//        DataHelper.setStringSF(application, DEVICE, deviceJson);
 
         SmartRefreshLayout.setDefaultRefreshHeaderCreator((context, layout) -> {
             layout.setPrimaryColorsId(R.color.c_f4f4f4, R.color.c_b5b5b5);

@@ -7,6 +7,11 @@
         android:title="@string/text_home_page" />
 
     <item
+        android:id="@+id/i_equities"
+        android:icon="@drawable/selector_equities"
+        android:title="@string/text_equities" />
+
+    <item
         android:id="@+id/i_lawyer"
         android:icon="@drawable/selector_lawyer"
         android:title="@string/text_find_lawyer" />

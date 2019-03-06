@@ -9,7 +9,6 @@ import me.zl.mvp.di.scope.FragmentScope;
 
 import com.lex_mung.client_android.mvp.ui.fragment.FindLawyerFragment;
 
-
 @FragmentScope
 @Component(modules = FindLawyerModule.class, dependencies = AppComponent.class)
 public interface FindLawyerComponent {

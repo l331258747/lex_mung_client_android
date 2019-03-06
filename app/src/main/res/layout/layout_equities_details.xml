@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nsv_equities_details"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/c_f4f4f4"
+    android:fillViewport="true"
+    android:orientation="vertical"
+    android:overScrollMode="never"
+    android:scrollbars="none">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/qb_px_35" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/qb_px_35" />
+
+        <View
+            android:id="@+id/view_trading_details"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/iv_equities_bg"
+            app:layout_constraintEnd_toEndOf="@id/tv_trading_details"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="@dimen/qb_px_35"
+            android:layout_height="@dimen/qb_px_35"
+            android:layout_marginTop="@dimen/qb_px_35"
+            android:src="@drawable/ic_equities_details_icon"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_trading_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:paddingStart="@dimen/qb_px_50"
+            android:paddingEnd="0dp"
+            android:text="@string/text_transaction_detail"
+            android:textColor="@color/c_717171"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_icon"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toTopOf="@id/iv_icon" />
+
+        <View
+            android:id="@+id/view_examine_all_equities"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/iv_equities_bg"
+            app:layout_constraintEnd_toEndOf="@id/guideline3"
+            app:layout_constraintStart_toStartOf="@id/tv_examine_all_equities"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_examine_all_equities"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="@string/text_examine_all_equities"
+            android:textColor="@color/c_717171"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_icon"
+            app:layout_constraintEnd_toEndOf="@id/guideline3"
+            app:layout_constraintTop_toTopOf="@id/iv_icon" />
+
+        <com.lex_mung.client_android.mvp.ui.widget.RoundImageView
+            android:id="@+id/iv_equities_bg"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/qb_px_35"
+            android:src="@color/c_717171"
+            app:layout_constraintDimensionRatio="h,2:1"
+            app:layout_constraintEnd_toEndOf="@id/guideline3"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/iv_icon" />
+
+        <TextView
+            android:layout_width="@dimen/qb_px_100"
+            android:layout_height="@dimen/qb_px_30"
+            android:layout_marginEnd="@dimen/qb_px_35"
+            android:layout_marginBottom="@dimen/qb_px_35"
+            android:background="@drawable/round_100_cea769_all"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/text_certified"
+            android:textColor="@color/c_ff"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_equities_bg"
+            app:layout_constraintEnd_toEndOf="@id/guideline3" />
+
+        <View
+            android:id="@+id/view_1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qb_px_160"
+            android:layout_marginTop="@dimen/qb_px_35"
+            android:background="@color/c_ff"
+            app:layout_constraintTop_toBottomOf="@id/iv_equities_bg" />
+
+        <View
+            android:id="@+id/view_horizontal_line_1"
+            android:layout_width="@dimen/qb_px_1"
+            android:layout_height="@dimen/qb_px_50"
+            android:layout_marginTop="@dimen/qb_px_55"
+            android:background="@color/c_b5b5b5"
+            app:layout_constraintEnd_toEndOf="@id/guideline3"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toTopOf="@id/view_1" />
+
+        <TextView
+            android:id="@+id/tv_member_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:textColor="@color/c_cea769"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/tv_member_total_text"
+            app:layout_constraintEnd_toStartOf="@id/view_horizontal_line_1"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toTopOf="@id/view_1"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/tv_member_total_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_10"
+            android:includeFontPadding="false"
+            android:text="@string/text_member_total"
+            android:textColor="@color/c_717171"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/view_1"
+            app:layout_constraintEnd_toStartOf="@id/view_horizontal_line_1"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/tv_member_total" />
+
+        <TextView
+            android:id="@+id/tv_lawyer_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="2346"
+            android:textColor="@color/c_cea769"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/tv_lawyer_total_text"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintStart_toStartOf="@id/view_horizontal_line_1"
+            app:layout_constraintTop_toTopOf="@id/view_1"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/tv_lawyer_total_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_10"
+            android:includeFontPadding="false"
+            android:text="@string/text_lawyer_total"
+            android:textColor="@color/c_717171"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/view_1"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintStart_toStartOf="@id/view_horizontal_line_1"
+            app:layout_constraintTop_toBottomOf="@id/tv_lawyer_total" />
+
+        <View
+            android:id="@+id/view_2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/qb_px_1"
+            android:background="@color/c_ff"
+            app:layout_constraintBottom_toBottomOf="@id/view_3"
+            app:layout_constraintTop_toBottomOf="@id/view_1" />
+
+        <TextView
+            android:id="@+id/tv_equities_explain"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_35"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="@dimen/qb_px_8"
+            android:textColor="@color/c_323232"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@id/guideline3"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toTopOf="@id/view_2" />
+
+        <TextView
+            android:id="@+id/tv_open_qualification_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_35"
+            android:includeFontPadding="false"
+            android:text="@string/text_open_qualification"
+            android:textColor="@color/c_cea769"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/tv_equities_explain" />
+
+        <TextView
+            android:id="@+id/tv_open_qualification"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_25"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="@dimen/qb_px_8"
+            android:textColor="@color/c_323232"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@id/guideline3"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/tv_open_qualification_text" />
+
+        <TextView
+            android:id="@+id/tv_exclusive_equities_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_35"
+            android:includeFontPadding="false"
+            android:text="@string/text_exclusive_equities_1"
+            android:textColor="@color/c_cea769"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/tv_open_qualification" />
+
+        <TextView
+            android:id="@+id/tv_exclusive_equities"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_25"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="@dimen/qb_px_8"
+            android:textColor="@color/c_323232"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@id/guideline3"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/tv_exclusive_equities_text" />
+
+        <View
+            android:id="@+id/view_3"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qb_px_35"
+            app:layout_constraintTop_toBottomOf="@id/tv_exclusive_equities" />
+
+        <View
+            android:id="@+id/view_all_lawyer"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qb_px_110"
+            android:layout_marginTop="@dimen/qb_px_35"
+            android:background="@drawable/button_withe_down"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintTop_toBottomOf="@id/view_3" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="@string/text_lawyer_total"
+            android:textColor="@color/c_cea769"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/view_all_lawyer"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toTopOf="@id/view_all_lawyer" />
+
+        <TextView
+            android:id="@+id/tv_examine_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="@string/text_examine_all"
+            android:textColor="@color/c_717171"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/view_all_lawyer"
+            app:layout_constraintEnd_toEndOf="@id/guideline3"
+            app:layout_constraintTop_toTopOf="@id/view_all_lawyer" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            app:layout_constraintTop_toBottomOf="@id/view_all_lawyer" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qb_px_100"
+            app:layout_constraintTop_toBottomOf="@id/recycler_view" />
+    </android.support.constraint.ConstraintLayout>
+</android.support.v4.widget.NestedScrollView>

@@ -297,17 +297,15 @@ public class DeviceUtils {
     /**
      * 隐藏软键盘
      *
-     * @param context
-     * @param view
+     * @param editText EditText
      */
-    public static void hideSoftKeyboard(Context context, View view) {
-        if (view == null)
+    public static void hideSoftKeyboard(EditText editText) {
+        if (editText == null)
             return;
-        InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(
+        InputMethodManager inputMethodManager = (InputMethodManager) editText.getContext().getSystemService(
                 Context.INPUT_METHOD_SERVICE);
         if (inputMethodManager.isActive())
-            inputMethodManager.hideSoftInputFromWindow(
-                    view.getWindowToken(), 0);
+            inputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
     }
 
     /**
@@ -767,6 +765,7 @@ public class DeviceUtils {
 
     /**
      * 开启软键盘
+     *
      * @param et
      */
     public static void openSoftKeyboard(EditText et) {
@@ -781,18 +780,19 @@ public class DeviceUtils {
 
     /**
      * 关闭软键盘
+     *
      * @param context
      */
     public static void closeSoftKeyboard(Context context) {
         if (context == null || !(context instanceof Activity) || ((Activity) context).getCurrentFocus() == null) {
             return;
         }
-        try{
+        try {
             View view = ((Activity) context).getCurrentFocus();
             InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             view.clearFocus();
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -800,6 +800,7 @@ public class DeviceUtils {
     /**
      * 关闭软键盘
      * 当使用全屏主题的时候,XhsEmoticonsKeyBoard屏蔽了焦点.关闭软键盘时,直接指定 closeSoftKeyboard(EditView)
+     *
      * @param view
      */
     public static void closeSoftKeyboard(View view) {

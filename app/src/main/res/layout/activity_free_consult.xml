@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/c_f4f4f4"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/qb_px_35" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/qb_px_35" />
+
+    <View
+        android:id="@+id/view_consult_type"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_120"
+        android:background="@drawable/button_withe_down"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:text="@string/text_x"
+        android:textColor="@color/c_ea5514"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/view_consult_type"
+        app:layout_constraintStart_toStartOf="@id/guideline2"
+        app:layout_constraintTop_toTopOf="@id/view_consult_type" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/qb_px_20"
+        android:includeFontPadding="false"
+        android:text="@string/text_consult_type"
+        android:textColor="@color/c_323232"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/view_consult_type"
+        app:layout_constraintStart_toStartOf="@id/guideline2"
+        app:layout_constraintTop_toTopOf="@id/view_consult_type" />
+
+    <TextView
+        android:id="@+id/tv_consult_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/qb_px_50"
+        android:hint="@string/text_please_select_the_consult_type"
+        android:gravity="end"
+        android:includeFontPadding="false"
+        android:maxWidth="@dimen/qb_px_350"
+        android:singleLine="true"
+        android:textColor="@color/c_717171"
+        android:textColorHint="@color/c_b5b5b5"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/view_consult_type"
+        app:layout_constraintEnd_toStartOf="@id/guideline3"
+        app:layout_constraintTop_toTopOf="@id/view_consult_type" />
+
+    <ImageView
+        android:layout_width="@dimen/qb_px_30"
+        android:layout_height="@dimen/qb_px_30"
+        android:src="@drawable/ic_right_arrow"
+        app:layout_constraintBottom_toBottomOf="@id/view_consult_type"
+        app:layout_constraintEnd_toStartOf="@id/guideline3"
+        app:layout_constraintTop_toTopOf="@id/view_consult_type" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_1"
+        android:background="@color/c_f4f4f4"
+        app:layout_constraintEnd_toEndOf="@id/guideline3"
+        app:layout_constraintStart_toStartOf="@id/guideline2"
+        app:layout_constraintTop_toBottomOf="@id/view_consult_type" />
+
+    <View
+        android:id="@+id/view_user_region"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_120"
+        android:layout_marginTop="@dimen/qb_px_1"
+        android:background="@drawable/button_withe_down"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintTop_toBottomOf="@id/view_consult_type" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:text="@string/text_x"
+        android:textColor="@color/c_ea5514"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/view_user_region"
+        app:layout_constraintStart_toStartOf="@id/guideline2"
+        app:layout_constraintTop_toTopOf="@id/view_user_region" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/qb_px_20"
+        android:includeFontPadding="false"
+        android:text="@string/text_user_region"
+        android:textColor="@color/c_323232"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/view_user_region"
+        app:layout_constraintStart_toStartOf="@id/guideline2"
+        app:layout_constraintTop_toTopOf="@id/view_user_region" />
+
+    <TextView
+        android:id="@+id/tv_user_region"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/qb_px_50"
+        android:hint="@string/text_please_select_user_region"
+        android:includeFontPadding="false"
+        android:textColor="@color/c_717171"
+        android:textColorHint="@color/c_b5b5b5"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/view_user_region"
+        app:layout_constraintEnd_toStartOf="@id/guideline3"
+        app:layout_constraintTop_toTopOf="@id/view_user_region" />
+
+    <ImageView
+        android:layout_width="@dimen/qb_px_30"
+        android:layout_height="@dimen/qb_px_30"
+        android:src="@drawable/ic_right_arrow"
+        app:layout_constraintBottom_toBottomOf="@id/view_user_region"
+        app:layout_constraintEnd_toStartOf="@id/guideline3"
+        app:layout_constraintTop_toTopOf="@id/view_user_region" />
+
+    <View
+        android:id="@+id/view_1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_35"
+        app:layout_constraintTop_toBottomOf="@id/view_user_region" />
+
+    <EditText
+        android:id="@+id/et_input"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_500"
+        android:background="@color/c_ff"
+        android:gravity="start"
+        android:hint="@string/text_please_describe_your_problem"
+        android:maxLength="300"
+        android:padding="@dimen/qb_px_35"
+        android:textColor="@color/c_323232"
+        android:textColorHint="@color/c_b5b5b5"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/view_1" />
+
+    <ImageView
+        android:id="@+id/iv_anonymous"
+        android:layout_width="@dimen/qb_px_50"
+        android:layout_height="@dimen/qb_px_50"
+        android:layout_marginStart="@dimen/qb_px_30"
+        android:layout_marginTop="@dimen/qb_px_30"
+        android:padding="@dimen/qb_px_10"
+        android:src="@drawable/ic_show_select"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_input" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/qb_px_15"
+        android:includeFontPadding="false"
+        android:text="@string/text_anonymous_release"
+        android:textColor="@color/c_717171"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_anonymous"
+        app:layout_constraintStart_toEndOf="@id/iv_anonymous"
+        app:layout_constraintTop_toTopOf="@id/iv_anonymous" />
+
+    <View
+        android:id="@+id/view_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_1"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</android.support.constraint.ConstraintLayout>

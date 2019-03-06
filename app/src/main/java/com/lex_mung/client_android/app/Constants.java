@@ -1,8 +1,7 @@
 package com.lex_mung.client_android.app;
 
 public class Constants {
-    public static final String APP_ID = "wxe5178124e8a016af";
-
+    public static final String APP_ID = "wxdac6e3748e7426f9";
 
     public static final String WORK_EXPERIENCE = "work_experience";//工作经验
     public static final String ADD = "add";

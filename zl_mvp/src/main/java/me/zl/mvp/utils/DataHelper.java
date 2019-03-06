@@ -28,6 +28,18 @@ public class DataHelper {
     }
 
     /**
+     * 检查key是否存在
+     *
+     * @param key
+     */
+    public static boolean contains(Context context, String key) {
+        if (mSharedPreferences == null) {
+            mSharedPreferences = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
+        }
+        return mSharedPreferences.contains(key);
+    }
+
+    /**
      * 存储重要信息到sharedPreferences；
      *
      * @param key

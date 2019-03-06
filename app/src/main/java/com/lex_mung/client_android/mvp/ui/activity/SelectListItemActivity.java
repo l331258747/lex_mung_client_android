@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.lex_mung.client_android.app.BundleTags;
 import com.lex_mung.client_android.di.module.SelectListItemModule;
-import com.lex_mung.client_android.mvp.model.entity.PeerScreenEntity;
+import com.lex_mung.client_android.mvp.model.entity.LawyerListScreenEntity;
 import com.lex_mung.client_android.mvp.model.entity.SelectList;
 import com.lex_mung.client_android.mvp.ui.adapter.SelectListItemAdapter;
 import com.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
@@ -35,12 +35,13 @@ import static com.lex_mung.client_android.app.EventBusTags.CERTIFICATION_INFO.CE
 import static com.lex_mung.client_android.app.EventBusTags.CERTIFICATION_INFO.EDIT_LAWS_OFFICE;
 import static com.lex_mung.client_android.app.EventBusTags.FEEDBACK_INFO.FEEDBACK_INFO;
 import static com.lex_mung.client_android.app.EventBusTags.FEEDBACK_INFO.FEEDBACK_INFO_TYPE;
+import static com.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_1;
 import static com.lex_mung.client_android.app.EventBusTags.OTHER_INFO.EDIT_HONOR;
 import static com.lex_mung.client_android.app.EventBusTags.OTHER_INFO.EDIT_QUALIFICATION;
 import static com.lex_mung.client_android.app.EventBusTags.OTHER_INFO.EDIT_SOCIAL;
 import static com.lex_mung.client_android.app.EventBusTags.OTHER_INFO.OTHER_INFO;
-import static com.lex_mung.client_android.app.EventBusTags.PEER_SCREEN_INFO.PEER_SCREEN_INFO;
-import static com.lex_mung.client_android.app.EventBusTags.PEER_SCREEN_INFO.PEER_SCREEN_INFO_TYPE;
+import static com.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO;
+import static com.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_TYPE;
 
 public class SelectListItemActivity extends BaseActivity<SelectListItemPresenter> implements SelectListItemContract.View {
     @BindView(R.id.tv_title)
@@ -54,6 +55,7 @@ public class SelectListItemActivity extends BaseActivity<SelectListItemPresenter
     private int type;
     private String title;
     private int id;
+    private boolean flag;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -79,6 +81,7 @@ public class SelectListItemActivity extends BaseActivity<SelectListItemPresenter
             type = bundleIntent.getInt(BundleTags.TYPE);
             title = bundleIntent.getString(BundleTags.TITLE, "");
             id = bundleIntent.getInt(BundleTags.ID, -1);
+            flag = bundleIntent.getBoolean(BundleTags.FLAG, false);
         }
         adapter = new SelectListItemAdapter(type, lists);
         switch (type) {
@@ -125,13 +128,17 @@ public class SelectListItemActivity extends BaseActivity<SelectListItemPresenter
                     AppUtils.post(FEEDBACK_INFO, FEEDBACK_INFO_TYPE, adapter.getItem(position));
                     break;
                 case 5:
-                    PeerScreenEntity.ItemsBean bean = (PeerScreenEntity.ItemsBean) adapter.getItem(position);
+                    LawyerListScreenEntity.ItemsBean bean = (LawyerListScreenEntity.ItemsBean) adapter.getItem(position);
                     if (bean == null) return;
                     if (id == bean.getId()) {
                         bean.setId(0);
                         bean.setText("");
                     }
-                    AppUtils.post(PEER_SCREEN_INFO, PEER_SCREEN_INFO_TYPE, bean);
+                    if (flag) {
+                        AppUtils.post(LAWYER_LIST_SCREEN_INFO_1, LAWYER_LIST_SCREEN_INFO_TYPE, bean);
+                    } else {
+                        AppUtils.post(LAWYER_LIST_SCREEN_INFO, LAWYER_LIST_SCREEN_INFO_TYPE, bean);
+                    }
                     break;
             }
             killMyself();

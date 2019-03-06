@@ -1,6 +1,7 @@
 package com.lex_mung.client_android.mvp.presenter;
 
 import android.app.Application;
+import android.text.TextUtils;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -11,19 +12,23 @@ import me.zl.mvp.di.scope.FragmentScope;
 import me.zl.mvp.mvp.BasePresenter;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.RxLifecycleUtils;
 import okhttp3.RequestBody;
 
 import javax.inject.Inject;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.lex_mung.client_android.app.DataHelperTags;
 import com.lex_mung.client_android.mvp.contract.SolutionLIstContract;
 import com.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import com.lex_mung.client_android.mvp.model.entity.SolutionListEntity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
 
 @FragmentScope
 public class SolutionLIstPresenter extends BasePresenter<SolutionLIstContract.Model, SolutionLIstContract.View> {
@@ -40,6 +45,9 @@ public class SolutionLIstPresenter extends BasePresenter<SolutionLIstContract.Mo
     private int totalNum;
 
     private int id;
+
+    private boolean isFlag = true;
+    private List<SolutionListEntity.ListBean> listBeans = new ArrayList<>();
 
     @Inject
     public SolutionLIstPresenter(SolutionLIstContract.Model model, SolutionLIstContract.View rootView) {
@@ -63,13 +71,27 @@ public class SolutionLIstPresenter extends BasePresenter<SolutionLIstContract.Mo
     }
 
     public void getSolutionList(boolean isAdd) {
+        if (isFlag) {
+            try {
+                String json = DataHelper.getStringSF(mApplication, DataHelperTags.HOME_PAGE_SOLUTION_LIST + "_" + id);
+                if (!TextUtils.isEmpty(json)) {
+                    List<SolutionListEntity.ListBean> listBeans = new Gson().fromJson(json, new TypeToken<List<SolutionListEntity.ListBean>>() {
+                    }.getType());
+                    if (listBeans != null) {
+                        mRootView.setAdapter(listBeans, false);
+                    }
+                }
+            } catch (Exception ignored) {
+            }
+            isFlag = false;
+        }
         Map<String, Object> map = new HashMap<>();
         map.put("typeId", id);
         map.put("pageNum", pageNum);
         map.put("pageSize", 10);
         mModel.getSolutionList(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(3, 2))
+                .retryWhen(new RetryWithDelay(1, 2))
                 .doOnSubscribe(disposable -> {
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -82,9 +104,11 @@ public class SolutionLIstPresenter extends BasePresenter<SolutionLIstContract.Mo
                         if (baseResponse.isSuccess()) {
                             totalNum = baseResponse.getData().getPages();
                             pageNum = baseResponse.getData().getPageNum();
-                            mRootView.setSolutionList(baseResponse.getData().getList(), isAdd);
-//                            String json = new Gson().toJson(baseResponse.getData());
-//                            DataHelper.setStringSF(mApplication, HOME_PAGE_SOLUTION_LIST + "_" + id, json);
+                            mRootView.setAdapter(baseResponse.getData().getList(), isAdd);
+                            if (pageNum == 1) {
+                                listBeans.addAll(baseResponse.getData().getList());
+                                DataHelper.setStringSF(mApplication, DataHelperTags.HOME_PAGE_SOLUTION_LIST + "_" + id, new Gson().toJson(listBeans));
+                            }
                         }
                     }
                 });
@@ -97,5 +121,6 @@ public class SolutionLIstPresenter extends BasePresenter<SolutionLIstContract.Mo
         this.mAppManager = null;
         this.mImageLoader = null;
         this.mApplication = null;
+        this.listBeans = null;
     }
 }

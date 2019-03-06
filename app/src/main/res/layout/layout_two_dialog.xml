@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/qb_px_35">
+
+    <View
+        android:layout_width="@dimen/qb_px_680"
+        android:layout_height="1px" />
+
+    <TextView
+        android:id="@+id/tv_one"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_90"
+        android:background="@drawable/round_10_ffffff_all_f4f4f4"
+        android:gravity="center"
+        android:text="@string/text_photograph"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_two"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_90"
+        android:layout_marginTop="@dimen/qb_px_15"
+        android:background="@drawable/round_10_ffffff_all_f4f4f4"
+        android:gravity="center"
+        android:text="@string/text_photo_album"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_90"
+        android:layout_marginTop="@dimen/qb_px_15"
+        android:background="@drawable/round_10_ffffff_all_f4f4f4"
+        android:gravity="center"
+        android:text="@string/text_cancel"
+        android:textColor="@color/c_323232"
+        android:textSize="14sp" />
+</LinearLayout>

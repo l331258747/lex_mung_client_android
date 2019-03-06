@@ -62,12 +62,13 @@ public interface EventBusTags {
         int FEEDBACK_INFO_TYPE = 100;
     }
 
-    interface PEER_SCREEN_INFO {
-        String PEER_SCREEN_INFO = "feedback_info";
-        int PEER_SCREEN_INFO_TYPE = 100;
-        int PEER_SCREEN_INFO_INSTITUTIONS = 101;
-        int PEER_SCREEN_INFO_LIST = 102;
-        int PEER_SCREEN_INFO_LIST_1 = 103;
+    interface LAWYER_LIST_SCREEN_INFO {
+        String LAWYER_LIST_SCREEN_INFO = "lawyer_list_screen_info";
+        String LAWYER_LIST_SCREEN_INFO_1 = "lawyer_list_screen_info_1";
+        int LAWYER_LIST_SCREEN_INFO_TYPE = 100;
+        int LAWYER_LIST_SCREEN_INFO_INSTITUTIONS = 101;
+        int LAWYER_LIST_SCREEN_INFO_LIST = 102;
+        int LAWYER_LIST_SCREEN_INFO_LIST_1 = 103;
     }
 
     interface MESSAGE_INFO {
@@ -92,28 +93,11 @@ public interface EventBusTags {
         int REFRESH_DIALOG = 102;
     }
 
-    interface WORK_INFO {
-        String WORK_INFO = "work_info";
-        int REMIN_REPLY = 100;
+    interface LOGIN {
+        String LOGIN_INFO = "login_info";
+        int LOGIN = 100;
+        int LOGOUT = 101;
     }
 
-    interface SWITCH_PAGE {
-        String SWITCH_PAGE = "switch_page";
-        int HOME_PAGE_1 = 100;
-        int HOME_PAGE_2 = 101;
-        int HOME_PAGE_3 = 102;
-        int HOME_PAGE_4 = 103;
-        int WORK_PAGE_1 = 200;
-        int WORK_PAGE_2 = 201;
-        int WORK_PAGE_3 = 202;
-        int MESSAGE_PAGE_1 = 300;
-        int MESSAGE_PAGE_2 = 301;
-        int MESSAGE_PAGE_3 = 302;
-        int FOUND_PAGE = 400;
-        int ME_PAGE = 500;
-    }
-    interface MAP_INFO {
-        String MAP_INFO = "map_info";
-        int SELECT_PLACE = 100;
-    }
+
 }
