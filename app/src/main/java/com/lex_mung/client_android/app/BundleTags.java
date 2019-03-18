@@ -10,6 +10,8 @@ public class BundleTags {
     public static final String BALANCE = "balance";
     public static final String OPERATION = "operation";
     public static final String ID = "id";
+    public static final String MEMBER_ID = "member_id";
+    public static final String L_MEMBER_ID = "l_member_id";
     public static final String LIST = "list";
     public static final String LEVEL = "level";
     public static final String REGION_ID = "regionId";
@@ -36,4 +38,5 @@ public class BundleTags {
     public static final String KEY_LNG = "key_lng";
     public static final String KEY_TITLE = "key_title";
     public static final String KEY_LEVEL = "key_level";
+    public static final String REGION = "region";
 }

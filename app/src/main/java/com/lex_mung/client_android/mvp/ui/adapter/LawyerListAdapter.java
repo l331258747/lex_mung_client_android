@@ -12,12 +12,7 @@ import com.lex_mung.client_android.R;
 import com.lex_mung.client_android.mvp.model.entity.LawyerEntity;
 import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import me.zl.mvp.http.imageloader.ImageLoader;
-import me.zl.mvp.utils.AppUtils;
 
 public class LawyerListAdapter extends BaseQuickAdapter<LawyerEntity.LawyerBean.ListBean, BaseViewHolder> {
     private ImageLoader mImageLoader;
@@ -59,22 +54,7 @@ public class LawyerListAdapter extends BaseQuickAdapter<LawyerEntity.LawyerBean.
         }
         helper.setText(R.id.item_tv_law_firms, item.getInstitutionName());
         helper.setText(R.id.item_tv_field, item.getDescription());
-        if ("1970-01-01 00:00:01".equals(item.getBeginPracticeDate())) {
-            helper.getView(R.id.item_tv_practice_num).setVisibility(View.GONE);
-        } else {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date birthday = null;
-            try {
-                birthday = format.parse(item.getBeginPracticeDate());
-            } catch (ParseException ignored) {
-            }
-            int age = AppUtils.getAgeByBirth(birthday);
-            if (age == 0) {
-                age = 1;
-            }
-            helper.getView(R.id.item_tv_practice_num).setVisibility(View.VISIBLE);
-            helper.setText(R.id.item_tv_practice_num, "执业" + age + "年");
-        }
+        helper.setText(R.id.item_tv_practice_num, item.getPractice());
         if (item.getOrgTags() != null
                 && item.getOrgTags().size() > 0) {
             helper.getView(R.id.item_view).setVisibility(View.VISIBLE);

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/c_f4f4f4">
+
+    <TextView
+        android:id="@+id/item_tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/qb_px_40"
+        android:gravity="center"
+        android:textColor="@color/c_b5b5b5"
+        android:textSize="12sp"
+        android:text="前天 10:24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/item_iv_avatar"
+        android:layout_width="@dimen/qb_px_85"
+        android:layout_height="@dimen/qb_px_85"
+        android:layout_marginEnd="@dimen/qb_px_35"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_tv_time" />
+
+    <TextView
+        android:id="@+id/item_tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_chat_me_bg"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        android:maxWidth="@dimen/qb_px_495"
+        android:minHeight="@dimen/qb_px_85"
+        android:paddingEnd="@dimen/qb_px_25"
+        android:paddingStart="@dimen/qb_px_10"
+        android:textColor="@color/c_323232"
+        app:layout_constraintEnd_toEndOf="@id/item_iv"
+        app:layout_constraintTop_toTopOf="@id/item_iv_avatar" />
+
+    <ImageView
+        android:id="@+id/item_iv_fail_resend"
+        android:layout_width="@dimen/qb_px_35"
+        android:layout_height="@dimen/qb_px_35"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="@dimen/qb_px_10"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_fail_resend"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/item_tv_content"
+        app:layout_constraintEnd_toStartOf="@id/item_tv_content"
+        app:layout_constraintTop_toTopOf="@id/item_tv_content" />
+
+    <ImageView
+        android:id="@+id/item_iv_sending"
+        android:layout_width="@dimen/qb_px_35"
+        android:layout_height="@dimen/qb_px_35"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="@dimen/qb_px_10"
+        android:src="@drawable/ic_sending"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/item_tv_content"
+        app:layout_constraintEnd_toStartOf="@id/item_tv_content"
+        app:layout_constraintTop_toTopOf="@id/item_tv_content" />
+
+    <ImageView
+        android:id="@+id/item_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/qb_px_15"
+        android:src="@drawable/ic_chat_me_jiao"
+        app:layout_constraintBottom_toBottomOf="@id/item_iv_avatar"
+        app:layout_constraintEnd_toStartOf="@id/item_iv_avatar"
+        app:layout_constraintTop_toTopOf="@id/item_iv_avatar" />
+</android.support.constraint.ConstraintLayout>

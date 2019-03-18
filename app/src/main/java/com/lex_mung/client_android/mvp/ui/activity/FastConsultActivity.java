@@ -106,7 +106,7 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
                 , AppUtils.formatAmount(mActivity, 0)));
         String string = getString(R.string.text_fast_consult_tip_1)
                 + "<font color=\"#1EC88C\">"
-                + getString(R.string.text_fast_consult_tip_2)
+                + getString(R.string.text_lex_transaction_process)
                 + "</font>";
         tvFastConsultTip.setText(Html.fromHtml(string));
         groupCount.setVisibility(View.GONE);
@@ -206,7 +206,7 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
                 mPresenter.setPayType(3);
                 break;
             case R.id.bt_pay:
-                mPresenter.pay(webView.getSettings().getUserAgentString());
+                mPresenter.pay(etUserName.getText().toString(), webView.getSettings().getUserAgentString());
                 break;
             case R.id.tv_change_phone_number:
                 if (getString(R.string.text_change_phone_number).contentEquals(tvChangePhoneNumber.getText())) {
@@ -235,12 +235,14 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
         wpConsultType.setVisibleItemCount(6);
         wpConsultType.setOnItemSelectedListener((picker, data, position) -> {
             mPresenter.setConsultType(data.toString());
+            mPresenter.setConsultTypePos(position);
             mPresenter.setMoney(position);
         });
         wpConsultType.setData(mPresenter.getSolutionTypeStringList());
         wpConsultType.setSelectedItemPosition(0);
         mPresenter.setMoney(0);
         mPresenter.setConsultType(mPresenter.getSolutionTypeStringList().get(0));
+        mPresenter.setConsultTypePos(0);
         layout.findViewById(R.id.tv_cancel).setOnClickListener(v -> dismiss());
         layout.findViewById(R.id.tv_confirm).setOnClickListener(v -> {
             tvConsultType.setText(mPresenter.getConsultType());

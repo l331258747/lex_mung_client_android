@@ -28,7 +28,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
@@ -58,7 +57,6 @@ public class FreeConsultDetailActivity extends BaseActivity<FreeConsultDetailPre
     SmartRefreshLayout smartRefreshLayout;
 
     private FreeConsultDetailsAdapter freeConsultDetailsAdapter;
-
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -248,12 +246,5 @@ public class FreeConsultDetailActivity extends BaseActivity<FreeConsultDetailPre
     @Override
     public void killMyself() {
         finish();
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 }

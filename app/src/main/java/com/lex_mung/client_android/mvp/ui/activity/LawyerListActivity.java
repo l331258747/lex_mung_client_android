@@ -23,9 +23,9 @@ import com.lex_mung.client_android.mvp.model.entity.ConsultTypeEntity;
 import com.lex_mung.client_android.mvp.model.entity.LawyerEntity;
 import com.lex_mung.client_android.mvp.model.entity.RegionEntity;
 import com.lex_mung.client_android.mvp.ui.adapter.LawyerListAdapter;
-import com.lex_mung.client_android.mvp.ui.adapter.PeerSelectAdapter;
-import com.lex_mung.client_android.mvp.ui.adapter.PeerSelectFieldAdapter;
-import com.lex_mung.client_android.mvp.ui.adapter.PeerSelectRegionAdapter;
+import com.lex_mung.client_android.mvp.ui.adapter.LawyerListSortScreenAdapter;
+import com.lex_mung.client_android.mvp.ui.adapter.LawyerLIstFieldScreenAdapter;
+import com.lex_mung.client_android.mvp.ui.adapter.LawyerListRegionScreenAdapter;
 import com.lex_mung.client_android.mvp.ui.dialog.EasyDialog;
 import com.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
@@ -278,24 +278,23 @@ public class LawyerListActivity extends BaseActivity<LawyerListPresenter> implem
         list.add(new ConsultTypeEntity(0, getString(R.string.text_synthesis_sort)));
         list.add(new ConsultTypeEntity(1, getString(R.string.text_newest_enter)));
         list.add(new ConsultTypeEntity(2, getString(R.string.text_newest_active)));
-        PeerSelectAdapter peerSelectAdapter = new PeerSelectAdapter(list, pos);
+        LawyerListSortScreenAdapter lawyerListSortScreenAdapter = new LawyerListSortScreenAdapter(list, pos);
         AppUtils.configRecyclerView(recyclerView, new LinearLayoutManager(mActivity));
-        recyclerView.setAdapter(peerSelectAdapter);
-        peerSelectAdapter.setOnItemClickListener((adapter, view, position) -> {
-            ConsultTypeEntity entity = peerSelectAdapter.getItem(position);
-            if (entity == null || peerSelectAdapter.getPosition() == position) {
+        recyclerView.setAdapter(lawyerListSortScreenAdapter);
+        lawyerListSortScreenAdapter.setOnItemClickListener((adapter, view, position) -> {
+            ConsultTypeEntity entity = lawyerListSortScreenAdapter.getItem(position);
+            if (entity == null || lawyerListSortScreenAdapter.getPosition() == position) {
                 dismiss();
                 return;
             }
             position1 = position;
             mPresenter.setSort(entity.getId());
             tvSort.setText(entity.getTypeName());
-            peerSelectAdapter.notifyDataSetChanged();
+            lawyerListSortScreenAdapter.notifyDataSetChanged();
             mPresenter.setPageNum(1);
             mPresenter.getConsultList(false, true);
             dismiss();
         });
-        layout.findViewById(R.id.view).setOnClickListener(v -> dismiss());
     }
 
     @SuppressLint("InflateParams")
@@ -311,8 +310,8 @@ public class LawyerListActivity extends BaseActivity<LawyerListPresenter> implem
         RecyclerView recyclerView1 = layout.findViewById(R.id.recycler_view_1);
         RecyclerView recyclerView2 = layout.findViewById(R.id.recycler_view_2);
 
-        PeerSelectFieldAdapter adapter1 = new PeerSelectFieldAdapter(mPresenter.getFieldList(), position2);
-        PeerSelectFieldAdapter adapter2 = new PeerSelectFieldAdapter(mPresenter.getFieldList().get(position2).getChildren(), position22);
+        LawyerLIstFieldScreenAdapter adapter1 = new LawyerLIstFieldScreenAdapter(mPresenter.getFieldList(), position2, true);
+        LawyerLIstFieldScreenAdapter adapter2 = new LawyerLIstFieldScreenAdapter(mPresenter.getFieldList().get(position2).getChildren(), position22, false);
 
         AppUtils.configRecyclerView(recyclerView1, new LinearLayoutManager(mActivity));
         AppUtils.configRecyclerView(recyclerView2, new LinearLayoutManager(mActivity));
@@ -369,7 +368,6 @@ public class LawyerListActivity extends BaseActivity<LawyerListPresenter> implem
 
             dismiss();
         });
-        layout.findViewById(R.id.view).setOnClickListener(v -> dismiss());
     }
 
     @SuppressLint("InflateParams")
@@ -385,8 +383,8 @@ public class LawyerListActivity extends BaseActivity<LawyerListPresenter> implem
         RecyclerView recyclerView1 = layout.findViewById(R.id.recycler_view_1);
         RecyclerView recyclerView2 = layout.findViewById(R.id.recycler_view_2);
 
-        PeerSelectRegionAdapter adapter1 = new PeerSelectRegionAdapter(mPresenter.getRegionList(), position3);
-        PeerSelectRegionAdapter adapter2 = new PeerSelectRegionAdapter(mPresenter.getRegionList().get(position3).getChild(), position33);
+        LawyerListRegionScreenAdapter adapter1 = new LawyerListRegionScreenAdapter(mPresenter.getRegionList(), position3, true);
+        LawyerListRegionScreenAdapter adapter2 = new LawyerListRegionScreenAdapter(mPresenter.getRegionList().get(position3).getChild(), position33, false);
 
         AppUtils.configRecyclerView(recyclerView1, new LinearLayoutManager(mActivity));
         AppUtils.configRecyclerView(recyclerView2, new LinearLayoutManager(mActivity));
@@ -447,7 +445,6 @@ public class LawyerListActivity extends BaseActivity<LawyerListPresenter> implem
 
             dismiss();
         });
-        layout.findViewById(R.id.view).setOnClickListener(v -> dismiss());
     }
 
     @Override

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/c_f4f4f4"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <TextView
+        android:id="@+id/tv_use_rules"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/qb_px_80"
+        android:layout_marginEnd="@dimen/qb_px_70"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="@string/text_use_rules"
+        android:textColor="@color/c_b5b5b5"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <ImageView
+        android:layout_width="@dimen/qb_px_25"
+        android:layout_height="@dimen/qb_px_80"
+        android:layout_marginEnd="@dimen/qb_px_35"
+        android:src="@drawable/ic_use_rules"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_use_rules" />
+
+    <View
+        android:id="@+id/view_no_discounts"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_70"
+        app:layout_constraintTop_toBottomOf="@id/recycler_view" />
+
+    <ImageView
+        android:id="@+id/iv_select"
+        android:layout_width="@dimen/qb_px_35"
+        android:layout_height="@dimen/qb_px_35"
+        android:layout_marginStart="@dimen/qb_px_35"
+        android:src="@drawable/ic_hide_select"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recycler_view" />
+
+    <TextView
+        android:id="@+id/tv_no_discounts"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/qb_px_70"
+        android:layout_marginStart="@dimen/qb_px_25"
+        android:layout_marginEnd="@dimen/qb_px_35"
+        android:text="@string/text_no_discounts"
+        android:textColor="@color/c_323232"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/iv_select"
+        app:layout_constraintTop_toTopOf="@id/iv_select" />
+</android.support.constraint.ConstraintLayout>

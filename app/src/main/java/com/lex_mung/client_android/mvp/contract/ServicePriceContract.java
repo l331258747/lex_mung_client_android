@@ -1,15 +1,25 @@
 package com.lex_mung.client_android.mvp.contract;
 
+import com.lex_mung.client_android.mvp.model.entity.BaseResponse;
+import com.lex_mung.client_android.mvp.model.entity.BusinessEntity;
+import com.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
+
+import java.util.List;
+
+import io.reactivex.Observable;
 import me.zl.mvp.mvp.IView;
 import me.zl.mvp.mvp.IModel;
 
-
 public interface ServicePriceContract {
     interface View extends IView {
+        void setAdapter(List<BusinessEntity> data);
 
+        void showToPayDialog();
+
+        void showDialDialog(String s, String string);
     }
 
     interface Model extends IModel {
-
+        Observable<BaseResponse<ExpertPriceEntity>> expertPrice(int id);
     }
 }

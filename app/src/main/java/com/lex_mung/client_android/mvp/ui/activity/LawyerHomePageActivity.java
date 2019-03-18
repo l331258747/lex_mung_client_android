@@ -1,7 +1,6 @@
 package com.lex_mung.client_android.mvp.ui.activity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -30,10 +29,8 @@ import com.lex_mung.client_android.di.component.DaggerLawyerHomePageComponent;
 import com.lex_mung.client_android.di.module.LawyerHomePageModule;
 import com.lex_mung.client_android.mvp.contract.LawyerHomePageContract;
 import com.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
-import com.lex_mung.client_android.mvp.model.entity.LawyerEvaluationEntity;
 import com.lex_mung.client_android.mvp.model.entity.LawyerTagsEntity;
 import com.lex_mung.client_android.mvp.presenter.LawyerHomePagePresenter;
-import com.lex_mung.client_android.mvp.ui.adapter.PBAdapter;
 import com.lex_mung.client_android.mvp.ui.adapter.TagAdapter;
 import com.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import com.lex_mung.client_android.mvp.ui.fragment.ActiveFragment;
@@ -42,7 +39,6 @@ import com.lex_mung.client_android.mvp.ui.fragment.LawsBusinessCardFragment;
 import com.lex_mung.client_android.mvp.ui.fragment.LawsCaseFragment;
 import com.lex_mung.client_android.mvp.ui.fragment.ServicePriceFragment;
 import com.lex_mung.client_android.mvp.ui.fragment.SocialResourcesFragment;
-import com.umeng.analytics.MobclickAgent;
 import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
 
 import java.util.ArrayList;
@@ -93,8 +89,6 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
     TextView tvField;
     @BindView(R.id.tv_law_firms)
     TextView tvLawFirms;
-    @BindView(R.id.recycler_view_pb)
-    RecyclerView recyclerViewPb;
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.toolbar)
@@ -109,11 +103,8 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
     View viewBottom;
     @BindView(R.id.view)
     View view;
-    @BindView(R.id.tv_telephone_counseling)
-    TextView tvTelephoneCounseling;
 
     private TagAdapter tagAdapter;
-    private PBAdapter pbAdapter;
 
     private List<Fragment> fragments = new ArrayList<>();
     private List<String> titles = new ArrayList<>();
@@ -127,6 +118,11 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
                 .lawyerHomePageModule(new LawyerHomePageModule(this))
                 .build()
                 .inject(this);
+    }
+
+    @Override
+    public boolean useFragment() {
+        return true;
     }
 
     @Override
@@ -199,20 +195,11 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
 
     private void initAdapter() {
         tagAdapter = new TagAdapter(mImageLoader);
-        pbAdapter = new PBAdapter();
-        pbAdapter.setOnItemClickListener((adapter, view, position) -> {
-            if (isFastClick()) return;
-            LawyerEvaluationEntity evaluationEntity = pbAdapter.getItem(position);
-            if (evaluationEntity == null) return;
-            viewPager.setCurrentItem(evaluationEntity.getSortOrder() + 2);
-        });
     }
 
     private void initRecyclerView() {
         AppUtils.configRecyclerView(recyclerViewTag, new GridLayoutManager(mActivity, 3));
         recyclerViewTag.setAdapter(tagAdapter);
-        AppUtils.configRecyclerView(recyclerViewPb, new GridLayoutManager(mActivity, 4));
-        recyclerViewPb.setAdapter(pbAdapter);
     }
 
     @Override
@@ -270,11 +257,6 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
     public void setTagsAdapter(List<LawyerTagsEntity> lawyerTags) {
         recyclerViewTag.setVisibility(View.VISIBLE);
         tagAdapter.setNewData(lawyerTags);
-    }
-
-    @Override
-    public void setPbAdapter(List<LawyerEvaluationEntity> evaluation) {
-        pbAdapter.setNewData(evaluation);
     }
 
     @Override
@@ -374,8 +356,6 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
 
     @OnClick({R.id.rl_click
             , R.id.iv_back_toolbar
-            , R.id.view_release_demand
-            , R.id.view_telephone_counseling
             , R.id.iv_share
     })
     public void onViewClicked(View view) {
@@ -395,26 +375,7 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
             case R.id.iv_back_toolbar:
                 killMyself();
                 break;
-            case R.id.view_release_demand:
-                try {
-                    Intent intent = new Intent(Intent.ACTION_DIAL);
-                    Uri data = Uri.parse("tel:" + mPresenter.getEntity().getMobile());
-                    intent.setData(data);
-                    launchActivity(intent);
-                } catch (Exception ignored) {
-                }
-                break;
-            case R.id.view_telephone_counseling:
-                try {
-                    Intent intent = new Intent(Intent.ACTION_DIAL);
-                    Uri data = Uri.parse("tel:" + mPresenter.getEntity().getMobile());
-                    intent.setData(data);
-                    launchActivity(intent);
-                } catch (Exception ignored) {
-                }
-                break;
             case R.id.iv_share:
-                MobclickAgent.onEvent(mActivity, "app_l_wode_zhuye_detail_fenxiang");
                 ShareUtils.shareUrl(mActivity, viewBottom, "", "", "", "");
                 break;
         }

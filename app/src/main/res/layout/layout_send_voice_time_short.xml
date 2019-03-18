@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/qb_px_250"
+    android:layout_height="@dimen/qb_px_250"
+    android:alpha="0.5"
+    android:background="@drawable/round_10_000000_all"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/qb_px_35"
+        android:src="@drawable/ic_time_too_short" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:text="说话时间太短"
+        android:textColor="@android:color/white"
+        android:textSize="12sp" />
+</LinearLayout>

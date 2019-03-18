@@ -17,6 +17,7 @@ import com.lex_mung.client_android.mvp.contract.FastConsultContract;
 import com.lex_mung.client_android.mvp.model.api.CommonService;
 import com.lex_mung.client_android.mvp.model.entity.BalanceEntity;
 import com.lex_mung.client_android.mvp.model.entity.BaseResponse;
+import com.lex_mung.client_android.mvp.model.entity.OrderStatusEntity;
 import com.lex_mung.client_android.mvp.model.entity.PayEntity;
 
 @ActivityScope
@@ -50,5 +51,12 @@ public class FastConsultModel extends BaseModel implements FastConsultContract.M
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .pay(body);
+    }
+
+    @Override
+    public Observable<BaseResponse<OrderStatusEntity>> releaseFastConsult(RequestBody body) {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .releaseFastConsult(body);
     }
 }

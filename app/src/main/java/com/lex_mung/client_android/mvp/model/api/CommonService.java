@@ -3,29 +3,41 @@ package com.lex_mung.client_android.mvp.model.api;
 import com.lex_mung.client_android.mvp.model.entity.AboutEntity;
 import com.lex_mung.client_android.mvp.model.entity.AgreementEntity;
 import com.lex_mung.client_android.mvp.model.entity.BalanceEntity;
+import com.lex_mung.client_android.mvp.model.entity.BusinessEntity;
 import com.lex_mung.client_android.mvp.model.entity.BusinessTypeEntity;
+import com.lex_mung.client_android.mvp.model.entity.CaseListEntity;
+import com.lex_mung.client_android.mvp.model.entity.CouponsEntity;
+import com.lex_mung.client_android.mvp.model.entity.DemandMessageEntity;
 import com.lex_mung.client_android.mvp.model.entity.EquitiesDetailsEntity;
 import com.lex_mung.client_android.mvp.model.entity.EquitiesListEntity;
+import com.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
 import com.lex_mung.client_android.mvp.model.entity.FeedbackTypeEntity;
 import com.lex_mung.client_android.mvp.model.entity.FreeConsultEntity;
 import com.lex_mung.client_android.mvp.model.entity.FreeConsultReplyEntity;
 import com.lex_mung.client_android.mvp.model.entity.FreeConsultReplyListEntity;
+import com.lex_mung.client_android.mvp.model.entity.GeneralEntity;
 import com.lex_mung.client_android.mvp.model.entity.IndustryEntity;
 import com.lex_mung.client_android.mvp.model.entity.InstitutionEntity;
 import com.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
 import com.lex_mung.client_android.mvp.model.entity.LawyerEntity;
+import com.lex_mung.client_android.mvp.model.entity.MessageEntity;
 import com.lex_mung.client_android.mvp.model.entity.MyLikeEntity;
+import com.lex_mung.client_android.mvp.model.entity.OrderDetailsEntity;
 import com.lex_mung.client_android.mvp.model.entity.OrderEntity;
 import com.lex_mung.client_android.mvp.model.entity.OrderStatusEntity;
 import com.lex_mung.client_android.mvp.model.entity.PayEntity;
 import com.lex_mung.client_android.mvp.model.entity.LawyerListScreenEntity;
 import com.lex_mung.client_android.mvp.model.entity.RegionEntity;
+import com.lex_mung.client_android.mvp.model.entity.ReleaseDemandOrgMoneyEntity;
+import com.lex_mung.client_android.mvp.model.entity.RemainEntity;
+import com.lex_mung.client_android.mvp.model.entity.RequirementStatusEntity;
 import com.lex_mung.client_android.mvp.model.entity.RequirementTypeEntity;
 import com.lex_mung.client_android.mvp.model.entity.SolutionListEntity;
 import com.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
 import com.lex_mung.client_android.mvp.model.entity.BannerEntity;
 import com.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import com.lex_mung.client_android.mvp.model.entity.TradingListEntity;
+import com.lex_mung.client_android.mvp.model.entity.UnreadMessageCountEntity;
 import com.lex_mung.client_android.mvp.model.entity.UploadImageEntity;
 import com.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import com.lex_mung.client_android.mvp.model.entity.VersionEntity;
@@ -41,6 +53,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface CommonService {
 
@@ -51,6 +64,14 @@ public interface CommonService {
      */
     @GET("version/update")
     Observable<BaseResponse<VersionEntity>> checkVersion();
+
+    /**
+     * 获取个人展示页面的案件列表
+     *
+     * @return BaseResponse
+     */
+    @POST("lawyer/case")
+    Observable<BaseResponse<CaseListEntity>> getCaseList(@Body RequestBody body);
 
     /**
      * 首页banner
@@ -253,7 +274,15 @@ public interface CommonService {
      * @return BaseResponse
      */
     @POST("client/member/order")
-    Observable<BaseResponse<List<OrderEntity>>> getOrderList(@Body RequestBody body);
+    Observable<BaseResponse<OrderEntity>> getOrderList(@Body RequestBody body);
+
+    /**
+     * 我的订单详情
+     *
+     * @return BaseResponse
+     */
+    @POST("client/member/order/detail")
+    Observable<BaseResponse<OrderDetailsEntity>> getOrderDetail(@Body RequestBody body);
 
     /**
      * 获取用户余额
@@ -374,5 +403,126 @@ public interface CommonService {
      */
     @POST("lawyer/organization/insert")
     Observable<BaseResponse> joinEquitiesOrg(@Body RequestBody body);
+
+    /**
+     * 获取律师的电话咨询单价和自己的余额
+     *
+     * @return BaseResponse
+     */
+    @GET("expert/price/{id}")
+    Observable<BaseResponse<ExpertPriceEntity>> expertPrice(@Path("id") int id);
+
+    /**
+     * 发送需求服务类型列表
+     *
+     * @return BaseResponse
+     */
+    @POST("client/require")
+    Observable<BaseResponse<List<BusinessEntity>>> releaseDemandList(@Body RequestBody body);
+
+    /**
+     * 用户与律师共同加入的最优惠组织等级+实付金额+优惠金额
+     *
+     * @return BaseResponse
+     */
+    @POST("client/optimal")
+    Observable<BaseResponse<ReleaseDemandOrgMoneyEntity>> getReleaseDemandOrgMoney(@Body RequestBody body);
+
+    /**
+     * 用户与律师共同加入的组织
+     *
+     * @return BaseResponse
+     */
+    @POST("client/optimal/list")
+    Observable<BaseResponse<List<ReleaseDemandOrgMoneyEntity>>> getOrgList(@Body RequestBody body);
+
+    /**
+     * 带支付的发需求
+     *
+     * @return BaseResponse
+     */
+    @POST("client/requirement/post/v2")
+    Observable<BaseResponse<GeneralEntity>> releaseRequirement(@Body RequestBody body);
+
+    /**
+     * 获取未读消息数量
+     *
+     * @return BaseResponse
+     */
+    @GET("client/message/unread/count")
+    Observable<BaseResponse<UnreadMessageCountEntity>> getUnreadCount();
+
+
+    /**
+     * 全部设为已读
+     *
+     * @return BaseResponse
+     */
+    @GET("client/message/unread/update/{type}")
+    Observable<BaseResponse> allSetRead(@Path("type") int type);
+
+    /**
+     * 设置消息为已读
+     *
+     * @return BaseResponse
+     */
+    @GET("client/message/unread/update/single/{id}")
+    Observable<BaseResponse> setRead(@Path("id") int id);
+
+    /**
+     * 获取订单消息列表
+     *
+     * @return BaseResponse
+     */
+    @GET("client/message/order")
+    Observable<BaseResponse<MessageEntity>> getOrderMessageList(@Query("pageNum") int pageNum);
+
+    /**
+     * 获取系统消息列表
+     *
+     * @return BaseResponse
+     */
+    @GET("client/message/system")
+    Observable<BaseResponse<MessageEntity>> getSystemMessageList(@Query("pageNum") int pageNum);
+
+    /**
+     * 获取需求消息列表
+     *
+     * @return BaseResponse
+     */
+    @GET("client/message/requirement")
+    Observable<BaseResponse<DemandMessageEntity>> getDemandMessageList();
+
+    /**
+     * 获取我的优惠券列表
+     *
+     * @return BaseResponse
+     */
+    @GET("client/rights/couponlist")
+    Observable<BaseResponse<CouponsEntity>> getCouponsList(@Query("pageNum") int pageNum);
+
+    /**
+     * 获取快速咨询订单用户号码
+     *
+     * @return BaseResponse
+     */
+    @GET("lawyer/order/quick/userphone/{orderNo}")
+    Observable<BaseResponse<RemainEntity>> getUserPhone(@Path("orderNo") String orderNo);
+
+    /**
+     * 发送快速咨询（需要先支付才可以调用）
+     *
+     * @return BaseResponse
+     */
+    @POST("client/quick/post")
+    Observable<BaseResponse<OrderStatusEntity>> releaseFastConsult(@Body RequestBody body);
+
+    /**
+     * 获取用户与某个律师的最新需求状态
+     *
+     * @return BaseResponse
+     */
+    @GET("client/requirement/between/{lawyerId}")
+    Observable<BaseResponse<List<RequirementStatusEntity>>> getRequirementStatus(@Path("lawyerId") int id);
 
 }

@@ -1,6 +1,7 @@
 package com.lex_mung.client_android.mvp.presenter;
 
 import android.app.Application;
+import android.os.Message;
 import android.text.TextUtils;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -26,11 +27,17 @@ import com.lex_mung.client_android.mvp.model.entity.RequirementTypeEntity;
 import com.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
 import com.lex_mung.client_android.mvp.model.entity.BannerEntity;
 import com.lex_mung.client_android.mvp.model.entity.BaseResponse;
+import com.lex_mung.client_android.mvp.model.entity.UnreadMessageCountEntity;
+
+import org.simple.eventbus.Subscriber;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGIN_INFO;
+import static com.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGOUT;
 
 @FragmentScope
 public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, HomePagerContract.View> {
@@ -48,21 +55,44 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
     private List<BannerEntity.ListBean> bannerList = new ArrayList<>();
     private boolean isFlag = true;
 
+    private UnreadMessageCountEntity unreadMessageCountEntity;
+
     @Inject
     public HomePagerPresenter(HomePagerContract.Model model, HomePagerContract.View rootView) {
         super(model, rootView);
     }
 
-    public void onResume() {
-        isLogin = DataHelper.getBooleanSF(mApplication, DataHelperTags.IS_LOGIN_SUCCESS);
+    public List<BannerEntity.ListBean> getBannerList() {
+        return bannerList;
     }
 
     public boolean isLogin() {
         return isLogin;
     }
 
-    public List<BannerEntity.ListBean> getBannerList() {
-        return bannerList;
+    public UnreadMessageCountEntity getUnreadMessageCountEntity() {
+        return unreadMessageCountEntity;
+    }
+
+    /**
+     * 更新登录信息
+     *
+     * @param message message
+     */
+    @Subscriber(tag = LOGIN_INFO)
+    private void loginInfo(Message message) {
+        switch (message.what) {
+            case LOGOUT:
+                onResume();
+                break;
+        }
+    }
+
+    public void onResume() {
+        isLogin = DataHelper.getBooleanSF(mApplication, DataHelperTags.IS_LOGIN_SUCCESS);
+        if (isLogin) {
+            getUnreadCount();
+        }
     }
 
     public void getBanner() {
@@ -160,6 +190,34 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                         if (baseResponse.isSuccess()) {
                             mRootView.setRequirementTypeAdapter(baseResponse.getData());
                             DataHelper.setStringSF(mApplication, DataHelperTags.HOME_PAGE_REQUIREMENT_TYPE, new Gson().toJson(baseResponse.getData()));
+                        }
+                    }
+                });
+    }
+
+    private void getUnreadCount() {
+        mModel.getUnreadCount()
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(1, 2))
+                .doOnSubscribe(disposable -> {
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<UnreadMessageCountEntity>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<UnreadMessageCountEntity> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            unreadMessageCountEntity = baseResponse.getData();
+                            int count = baseResponse.getData().getUnreadOrderMsgCount()
+                                    + baseResponse.getData().getUnreadReqMsgCount()
+                                    + baseResponse.getData().getUnreadSysMsgCount();
+                            if (count > 0) {
+                                mRootView.setUnreadMessageCount(count + "");
+                            } else {
+                                mRootView.hideUnreadMessageCount();
+                            }
                         }
                     }
                 });

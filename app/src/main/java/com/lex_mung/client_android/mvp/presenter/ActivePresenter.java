@@ -11,7 +11,7 @@ import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import javax.inject.Inject;
 
 import com.lex_mung.client_android.mvp.contract.ActiveContract;
-
+import com.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
 
 @FragmentScope
 public class ActivePresenter extends BasePresenter<ActiveContract.Model, ActiveContract.View> {
@@ -27,6 +27,15 @@ public class ActivePresenter extends BasePresenter<ActiveContract.Model, ActiveC
     @Inject
     public ActivePresenter(ActiveContract.Model model, ActiveContract.View rootView) {
         super(model, rootView);
+    }
+
+    public void setEntity(LawsHomePagerBaseEntity entity) {
+        if (entity == null || entity.getActivityInfo() == null
+                || entity.getActivityInfo().size() == 0) {
+            mRootView.noDataLayout();
+            return;
+        }
+        mRootView.setAdapter(entity.getActivityInfo());
     }
 
     @Override

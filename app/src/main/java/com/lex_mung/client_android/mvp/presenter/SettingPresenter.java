@@ -2,7 +2,6 @@ package com.lex_mung.client_android.mvp.presenter;
 
 import android.app.Application;
 import android.app.Dialog;
-import android.content.Intent;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
@@ -16,22 +15,15 @@ import me.zl.mvp.di.scope.ActivityScope;
 import me.zl.mvp.mvp.BasePresenter;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
-import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.RxLifecycleUtils;
 
 import javax.inject.Inject;
 
 import com.lex_mung.client_android.app.DataHelperTags;
-import com.lex_mung.client_android.app.EventBusTags;
 import com.lex_mung.client_android.mvp.contract.SettingContract;
 import com.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import com.lex_mung.client_android.mvp.model.entity.VersionEntity;
-import com.umeng.analytics.MobclickAgent;
-
-import static com.lex_mung.client_android.app.EventBusTags.LOGIN.LOGIN_INFO;
-import static com.lex_mung.client_android.app.EventBusTags.LOGIN.LOGOUT;
-
 
 @ActivityScope
 public class SettingPresenter extends BasePresenter<SettingContract.Model, SettingContract.View> {
@@ -85,11 +77,7 @@ public class SettingPresenter extends BasePresenter<SettingContract.Model, Setti
                     @Override
                     public void onNext(BaseResponse baseResponse) {
                         if (baseResponse.isSuccess()) {
-                            AppUtils.post(LOGIN_INFO, LOGOUT);
-
                             JMessageClient.logout();
-
-                            MobclickAgent.onProfileSignOff();
 
                             DataHelper.removeSF(mApplication, DataHelperTags.TOKEN);
                             DataHelper.removeSF(mApplication, DataHelperTags.IS_LOGIN_SUCCESS);

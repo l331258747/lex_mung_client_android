@@ -689,4 +689,6 @@ public class LawsHomePagerBaseEntity implements Serializable {
             }
         }
     }
+
+
 }

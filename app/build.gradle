@@ -26,8 +26,8 @@ android {
 
         manifestPlaceholders = [
                 JPUSH_PKGNAME: applicationId,
-//                JPUSH_APPKEY : "0c63ef9cdb0385d0ab13f6dd", //正式
-                JPUSH_APPKEY : "57ec233e4815f11235b32395", //测试
+//                JPUSH_APPKEY : "3d0cc9317f49b07f3a7b7faa", //正式
+                JPUSH_APPKEY : "84616a1110e090224cbc7a07", //测试
         ]
     }
 

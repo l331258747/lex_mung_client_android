@@ -12,7 +12,7 @@ import com.lex_mung.client_android.app.BundleTags;
 import com.lex_mung.client_android.di.component.DaggerLawyerListScreenComponent;
 import com.lex_mung.client_android.di.module.LawyerListScreenModule;
 import com.lex_mung.client_android.mvp.model.entity.LawyerListScreenEntity;
-import com.lex_mung.client_android.mvp.ui.adapter.PeerScreenAdapter;
+import com.lex_mung.client_android.mvp.ui.adapter.LawyerListScreenAdapter;
 import com.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
 import butterknife.BindView;
@@ -38,7 +38,7 @@ public class LawyerListScreenActivity extends BaseActivity<LawyerListScreenPrese
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    private PeerScreenAdapter peerScreenAdapter;
+    private LawyerListScreenAdapter lawyerListScreenAdapter;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -52,7 +52,7 @@ public class LawyerListScreenActivity extends BaseActivity<LawyerListScreenPrese
 
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
-        return R.layout.activity_peer_screen;
+        return R.layout.activity_lawyer_list_screen;
     }
 
     @Override
@@ -68,11 +68,11 @@ public class LawyerListScreenActivity extends BaseActivity<LawyerListScreenPrese
     }
 
     private void initAdapter() {
-        peerScreenAdapter = new PeerScreenAdapter();
-        peerScreenAdapter.setActivity(this);
-        peerScreenAdapter.setOnItemClickListener((adapter, view, position) -> {
+        lawyerListScreenAdapter = new LawyerListScreenAdapter();
+        lawyerListScreenAdapter.setActivity(this);
+        lawyerListScreenAdapter.setOnItemClickListener((adapter, view, position) -> {
             if (isFastClick()) return;
-            LawyerListScreenEntity entity = peerScreenAdapter.getItem(position);
+            LawyerListScreenEntity entity = lawyerListScreenAdapter.getItem(position);
             if (entity == null) {
                 return;
             }
@@ -107,7 +107,7 @@ public class LawyerListScreenActivity extends BaseActivity<LawyerListScreenPrese
 
     private void initRecyclerView() {
         AppUtils.configRecyclerView(recyclerView, new LinearLayoutManager(mActivity));
-        recyclerView.setAdapter(peerScreenAdapter);
+        recyclerView.setAdapter(lawyerListScreenAdapter);
     }
 
     @OnClick({R.id.bt_reset, R.id.bt_confirm})
@@ -120,7 +120,7 @@ public class LawyerListScreenActivity extends BaseActivity<LawyerListScreenPrese
                     entity.setId(0);
                     entity.setPos(0);
                 }
-                peerScreenAdapter.setNewData(mPresenter.getPeerSearchEntityList());
+                lawyerListScreenAdapter.setNewData(mPresenter.getPeerSearchEntityList());
                 if (mPresenter.isFlag()) {
                     AppUtils.post(LAWYER_LIST_SCREEN_INFO_1, LAWYER_LIST_SCREEN_INFO_LIST_1, mPresenter.getPeerSearchEntityList());
                 } else {
@@ -140,12 +140,12 @@ public class LawyerListScreenActivity extends BaseActivity<LawyerListScreenPrese
 
     @Override
     public void setAdapter(List<LawyerListScreenEntity> data) {
-        peerScreenAdapter.setNewData(data);
+        lawyerListScreenAdapter.setNewData(data);
     }
 
     @Override
     public void setAdapterItem(int pos, LawyerListScreenEntity entity) {
-        peerScreenAdapter.setData(pos, entity);
+        lawyerListScreenAdapter.setData(pos, entity);
     }
 
     @Override

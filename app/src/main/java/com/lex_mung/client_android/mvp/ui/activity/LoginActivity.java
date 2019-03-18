@@ -6,10 +6,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.InputFilter;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.lex_mung.client_android.di.module.LoginModule;
+import com.lex_mung.client_android.mvp.model.api.Api;
 import com.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
 import butterknife.BindView;
@@ -33,6 +35,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     EditText etCode;
     @BindView(R.id.tv_code)
     TextView tvCode;
+    @BindView(R.id.bt_test_code)
+    Button btTestCode;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -54,6 +58,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         mPresenter.initTimer();
         etCode.setFilters(new InputFilter[]{CharacterHandler.emojiFilter, new InputFilter.LengthFilter(6)});
         etMobile.setFilters(new InputFilter[]{CharacterHandler.emojiFilter, new InputFilter.LengthFilter(11)});
+        if ("https://api.lex-mung.com/".equals(Api.APP_DOMAIN)) {
+            btTestCode.setVisibility(View.GONE);
+        } else {
+            btTestCode.setVisibility(View.VISIBLE);
+        }
     }
 
     @OnClick({R.id.tv_code, R.id.bt_login, R.id.tv_agreement, R.id.bt_test_code})

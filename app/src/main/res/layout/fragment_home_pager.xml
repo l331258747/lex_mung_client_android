@@ -83,14 +83,13 @@
 
         <TextView
             android:id="@+id/tv_message_count"
-            android:layout_width="@dimen/qb_px_28"
-            android:layout_height="@dimen/qb_px_28"
+            android:layout_width="@dimen/qb_px_25"
+            android:layout_height="@dimen/qb_px_25"
             android:background="@drawable/round_100_ea5514_all"
             android:gravity="center"
             android:includeFontPadding="false"
-            android:text="99"
             android:textColor="@color/c_ff"
-            android:textSize="10sp"
+            android:textSize="8sp"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@id/iv_message"
             app:layout_constraintTop_toTopOf="@id/iv_message" />

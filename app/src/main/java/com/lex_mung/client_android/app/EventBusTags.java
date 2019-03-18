@@ -89,15 +89,13 @@ public interface EventBusTags {
     interface REFRESH {
         String REFRESH = "refresh";
         int REFRESH_CONSULT_DETAILS = 100;
-        int REFRESH_UNREAD_MESSAGES_NUMBER = 101;
-        int REFRESH_DIALOG = 102;
+        int REFRESH_DISCOUNT_WAY = 101;
+        int REFRESH_UNREAD_MESSAGES_NUMBER = 102;
+        int REFRESH_WX_PAY = 103;
     }
 
-    interface LOGIN {
+    interface LOGIN_INFO {
         String LOGIN_INFO = "login_info";
-        int LOGIN = 100;
-        int LOGOUT = 101;
+        int LOGOUT = 100;
     }
-
-
 }

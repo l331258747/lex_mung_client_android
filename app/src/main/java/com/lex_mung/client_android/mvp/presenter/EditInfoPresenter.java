@@ -10,6 +10,8 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.model.UserInfo;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -20,6 +22,7 @@ import me.zl.mvp.mvp.BasePresenter;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.zl.mvp.utils.AppUtils;
+import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.LogUtils;
 import me.zl.mvp.utils.PermissionUtil;
 import me.zl.mvp.utils.RegexUtils;
@@ -512,6 +515,15 @@ public class EditInfoPresenter extends BasePresenter<EditInfoContract.Model, Edi
                     @Override
                     public void onNext(BaseResponse baseResponse) {
                         if (baseResponse.isSuccess()) {
+                            UserInfo info = JMessageClient.getMyInfo();
+                            if (info != null) {
+                                info.setNickname(userName);
+                                info.setGender("男".equals(userSex) ? UserInfo.Gender.male : UserInfo.Gender.female);
+                                JMessageClient.updateMyInfo(UserInfo.Field.nickname, info, null);
+                            }
+                            DataHelper.setStringSF(mApplication, "BIRTHDAY", userDate);
+                            JMessageClient.updateUserAvatar(saveFile, null);
+
                             mRootView.showMessage("保存成功");
                             mRootView.killMyself();
                         }

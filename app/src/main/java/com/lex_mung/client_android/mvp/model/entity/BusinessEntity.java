@@ -32,6 +32,42 @@ public class BusinessEntity implements Serializable {
     private int parentId;
     private int type;
     private List<BusinessEntity> requires;
+    private String iconImage;
+    private String requireTypeDescription;
+    private int requirementType;
+    private int rcount;
+
+    public String getIconImage() {
+        return iconImage;
+    }
+
+    public void setIconImage(String iconImage) {
+        this.iconImage = iconImage;
+    }
+
+    public String getRequireTypeDescription() {
+        return requireTypeDescription;
+    }
+
+    public void setRequireTypeDescription(String requireTypeDescription) {
+        this.requireTypeDescription = requireTypeDescription;
+    }
+
+    public int getRequirementType() {
+        return requirementType;
+    }
+
+    public void setRequirementType(int requirementType) {
+        this.requirementType = requirementType;
+    }
+
+    public int getRcount() {
+        return rcount;
+    }
+
+    public void setRcount(int rcount) {
+        this.rcount = rcount;
+    }
 
     public List<BusinessEntity> getRequires() {
         return requires;

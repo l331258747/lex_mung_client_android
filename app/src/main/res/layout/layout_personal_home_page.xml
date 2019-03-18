@@ -114,7 +114,7 @@
         android:id="@+id/iv_avatar"
         android:layout_width="@dimen/qb_px_126"
         android:layout_height="@dimen/qb_px_126"
-        android:src="@drawable/ic_avatar"
+        android:src="@drawable/ic_lawyer_avatar"
         app:layout_constraintBottom_toBottomOf="@id/iv_avatar_bg"
         app:layout_constraintEnd_toEndOf="@id/iv_avatar_bg"
         app:layout_constraintStart_toStartOf="@id/iv_avatar_bg"
@@ -230,18 +230,8 @@
         app:layout_constraintEnd_toStartOf="@id/guideline3"
         app:layout_constraintStart_toEndOf="@id/guideline2" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view_pb"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:overScrollMode="never"
-        android:scrollbars="none"
-        app:layout_constraintEnd_toStartOf="@id/guideline3"
-        app:layout_constraintStart_toEndOf="@id/guideline2"
-        app:layout_constraintTop_toBottomOf="@id/iv_bg" />
-
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/qb_px_25"
-        app:layout_constraintTop_toBottomOf="@id/recycler_view_pb" />
+        app:layout_constraintTop_toBottomOf="@id/tv_law_firms" />
 </android.support.constraint.ConstraintLayout>

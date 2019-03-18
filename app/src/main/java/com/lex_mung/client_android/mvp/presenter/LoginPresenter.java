@@ -33,7 +33,6 @@ import com.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import com.lex_mung.client_android.mvp.model.entity.TokenEntity;
 import com.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import com.lex_mung.client_android.mvp.ui.activity.WebActivity;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,7 +50,6 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
 
     private int code;
     private MyCountDownTimer myCountDownTimer;
-
 
     @Inject
     public LoginPresenter(LoginContract.Model model, LoginContract.View rootView) {
@@ -200,7 +198,6 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
                     @Override
                     public void onNext(BaseResponse<UserInfoDetailsEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
-                            MobclickAgent.onProfileSignIn(baseResponse.getData().getMemberId() + "");
                             String json = new Gson().toJson(baseResponse.getData());
                             DataHelper.setStringSF(mApplication, DataHelperTags.USER_INFO_DETAIL, json);
 

@@ -19,6 +19,7 @@ import com.lex_mung.client_android.mvp.model.entity.BannerEntity;
 import com.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import com.lex_mung.client_android.mvp.model.entity.RequirementTypeEntity;
 import com.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
+import com.lex_mung.client_android.mvp.model.entity.UnreadMessageCountEntity;
 
 import java.util.List;
 
@@ -60,5 +61,12 @@ public class HomePagerModel extends BaseModel implements HomePagerContract.Model
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .getHomepageRequirementType();
+    }
+
+    @Override
+    public Observable<BaseResponse<UnreadMessageCountEntity>> getUnreadCount() {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .getUnreadCount();
     }
 }

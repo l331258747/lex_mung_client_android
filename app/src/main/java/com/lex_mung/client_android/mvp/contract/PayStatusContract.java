@@ -10,9 +10,11 @@ import okhttp3.RequestBody;
 
 public interface PayStatusContract {
     interface View extends IView {
-        void showSuccessLayout();
+        void showSuccessLayout(String string);
 
         void showFailLayout(String s);
+
+        void showReleaseDemandLayout(String tip, String orderNo, String payTime, String stringSF, String sf);
     }
 
     interface Model extends IModel {

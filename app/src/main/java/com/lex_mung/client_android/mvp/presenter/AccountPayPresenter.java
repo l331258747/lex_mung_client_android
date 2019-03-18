@@ -131,15 +131,14 @@ public class AccountPayPresenter extends BasePresenter<AccountPayContract.Model,
                 }
                 break;
         }
-        payMoney = new BigDecimal(payMoney).multiply(new BigDecimal(100)).intValue();
-        payMoney = 1;
+        long money = new BigDecimal(payMoney).multiply(new BigDecimal(100)).intValue();
         Map<String, Object> map = new HashMap<>();
-        map.put("money", payMoney);
+        map.put("money", money);
         map.put("type", payType);
         map.put("source", 2);
         map.put("product", 4);
         map.put("ua", ua);
-        String sign = "money=" + payMoney + "&type=" + payType + "&source=" + 2 + "&ua=" + ua;
+        String sign = "money=" + money + "&type=" + payType + "&source=" + 2 + "&ua=" + ua;
         map.put("sign", AppUtils.encodeToMD5(sign));
         mModel.pay(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                 .subscribeOn(Schedulers.io())
@@ -215,6 +214,7 @@ public class AccountPayPresenter extends BasePresenter<AccountPayContract.Model,
             }
         }
     };
+
     @Override
     public void onDestroy() {
         super.onDestroy();

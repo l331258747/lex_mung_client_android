@@ -31,6 +31,7 @@ import com.lex_mung.client_android.mvp.ui.activity.FreeConsultActivity;
 import com.lex_mung.client_android.mvp.ui.activity.LawyerListActivity;
 import com.lex_mung.client_android.mvp.ui.activity.LoginActivity;
 import com.lex_mung.client_android.mvp.ui.activity.MainActivity;
+import com.lex_mung.client_android.mvp.ui.activity.MessageActivity;
 import com.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import com.lex_mung.client_android.mvp.ui.adapter.HomePageRequirementTypeAdapter;
 import com.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
@@ -133,6 +134,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
             RequirementTypeEntity entity = adapter.getItem(position);
             if (entity == null) return;
             if (entity.getJumptype() == 1) {
+                ((MainActivity) mActivity).switchPage(2);
             } else {
                 bundle.clear();
                 bundle.putString(BundleTags.URL, entity.getJumpUrl());
@@ -212,10 +214,13 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_search:
-                ((MainActivity) mActivity).switchPage(1);
+                ((MainActivity) mActivity).switchPage(2);
                 break;
             case R.id.iv_message:
                 if (mPresenter.isLogin()) {
+                    bundle.clear();
+                    bundle.putSerializable(BundleTags.ENTITY, mPresenter.getUnreadMessageCountEntity());
+                    launchActivity(new Intent(mActivity, MessageActivity.class), bundle);
                 } else {
                     launchActivity(new Intent(mActivity, LoginActivity.class));
                 }
@@ -248,6 +253,17 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                 }
                 break;
         }
+    }
+
+    @Override
+    public void setUnreadMessageCount(String count) {
+        tvMessageCount.setText(count);
+        tvMessageCount.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideUnreadMessageCount() {
+        tvMessageCount.setVisibility(View.GONE);
     }
 
     @Override

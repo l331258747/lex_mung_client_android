@@ -4,6 +4,7 @@ import com.lex_mung.client_android.mvp.model.entity.RequirementTypeEntity;
 import com.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
 import com.lex_mung.client_android.mvp.model.entity.BannerEntity;
 import com.lex_mung.client_android.mvp.model.entity.BaseResponse;
+import com.lex_mung.client_android.mvp.model.entity.UnreadMessageCountEntity;
 
 import java.util.List;
 
@@ -19,6 +20,10 @@ public interface HomePagerContract {
         void setSolutionType(List<SolutionTypeEntity> list);
 
         void setRequirementTypeAdapter(List<RequirementTypeEntity> data);
+
+        void setUnreadMessageCount(String count);
+
+        void hideUnreadMessageCount();
     }
 
     interface Model extends IModel {
@@ -27,5 +32,7 @@ public interface HomePagerContract {
         Observable<BaseResponse<List<SolutionTypeEntity>>> getSolutionType(RequestBody body);
 
         Observable<BaseResponse<List<RequirementTypeEntity>>> getHomepageRequirementType();
+
+        Observable<BaseResponse<UnreadMessageCountEntity>> getUnreadCount();
     }
 }

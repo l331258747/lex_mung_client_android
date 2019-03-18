@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.lex_mung.client_android.R;
 import com.lex_mung.client_android.app.BundleTags;
+import com.lex_mung.client_android.app.DataHelperTags;
 import com.lex_mung.client_android.di.component.DaggerMeComponent;
 import com.lex_mung.client_android.di.module.MeModule;
 import com.lex_mung.client_android.mvp.contract.MeContract;
@@ -24,6 +25,7 @@ import com.lex_mung.client_android.mvp.ui.activity.LoginActivity;
 import com.lex_mung.client_android.mvp.ui.activity.MyAccountActivity;
 import com.lex_mung.client_android.mvp.ui.activity.MyCouponsActivity;
 import com.lex_mung.client_android.mvp.ui.activity.MyLikeActivity;
+import com.lex_mung.client_android.mvp.ui.activity.MyOrderActivity;
 import com.lex_mung.client_android.mvp.ui.activity.SettingActivity;
 import com.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import com.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
@@ -37,6 +39,7 @@ import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.utils.AppUtils;
+import me.zl.mvp.utils.DataHelper;
 
 public class MeFragment extends BaseFragment<MePresenter> implements MeContract.View {
     @Inject
@@ -107,12 +110,18 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
                 if (mPresenter.isLogin()) {
                     launchActivity(new Intent(mActivity, EditInfoActivity.class));
                 } else {
-                    bundle.clear();
-                    bundle.putInt(BundleTags.TYPE, 1);
+                    DataHelper.setIntergerSF(mActivity, DataHelperTags.LOGIN_TYPE, 1);
                     launchActivity(new Intent(mActivity, LoginActivity.class));
                 }
                 break;
             case R.id.view_order:
+                if (mPresenter.isLogin()) {
+                    launchActivity(new Intent(mActivity, MyOrderActivity.class));
+                } else {
+                    bundle.clear();
+                    bundle.putInt(BundleTags.TYPE, 1);
+                    launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
+                }
                 break;
             case R.id.view_account:
                 if (mPresenter.isLogin()) {

@@ -21,6 +21,7 @@ import javax.inject.Inject;
 import com.google.gson.Gson;
 import com.lex_mung.client_android.R;
 import com.lex_mung.client_android.app.DataHelperTags;
+import com.lex_mung.client_android.app.PayStatusTags;
 import com.lex_mung.client_android.mvp.contract.PayStatusContract;
 import com.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import com.lex_mung.client_android.mvp.model.entity.OrderStatusEntity;
@@ -28,7 +29,6 @@ import com.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 
 import java.util.HashMap;
 import java.util.Map;
-
 
 @ActivityScope
 public class PayStatusPresenter extends BasePresenter<PayStatusContract.Model, PayStatusContract.View> {
@@ -69,13 +69,39 @@ public class PayStatusPresenter extends BasePresenter<PayStatusContract.Model, P
                         if (baseResponse.isSuccess()) {
                             switch (baseResponse.getData().getStatus()) {
                                 case 1:
-                                    mRootView.showSuccessLayout();
+                                    switch (DataHelper.getIntergerSF(mApplication, DataHelperTags.PAY_TYPE)) {
+                                        case PayStatusTags.PAY:
+                                            mRootView.showSuccessLayout(mApplication.getString(R.string.text_pay_success));
+                                            break;
+                                        case PayStatusTags.RELEASE_DEMAND:
+                                            mRootView.showReleaseDemandLayout(mApplication.getString(R.string.text_pay_status_tip)
+                                                    , orderNo
+                                                    , baseResponse.getData().getPayTime()
+                                                    , DataHelper.getStringSF(mApplication, DataHelperTags.ORDER_TYPE)
+                                                    , DataHelper.getStringSF(mApplication, DataHelperTags.ORDER_MONEY));
+                                            mRootView.showSuccessLayout(mApplication.getString(R.string.text_pay_success_1));
+                                            break;
+                                        case PayStatusTags.FAST_CONSULT:
+                                            mRootView.showReleaseDemandLayout(mApplication.getString(R.string.text_pay_status_tip)
+                                                    , orderNo
+                                                    , baseResponse.getData().getPayTime()
+                                                    , DataHelper.getStringSF(mApplication, DataHelperTags.ORDER_TYPE)
+                                                    , DataHelper.getStringSF(mApplication, DataHelperTags.ORDER_MONEY));
+                                            mRootView.showSuccessLayout(mApplication.getString(R.string.text_pay_success_1));
+                                            break;
+                                    }
                                     break;
                                 default:
-                                    if (DataHelper.getIntergerSF(mApplication, "PAY_TYPE") == 2) {
-                                        mRootView.showFailLayout(AppUtils.getString(mApplication, R.string.text_pay_fail_1));
-                                    } else {
-                                        mRootView.showFailLayout(AppUtils.getString(mApplication, R.string.text_pay_fail));
+                                    switch (DataHelper.getIntergerSF(mApplication, DataHelperTags.PAY_TYPE)) {
+                                        case PayStatusTags.PAY:
+                                            mRootView.showFailLayout(mApplication.getString(R.string.text_pay_fail));
+                                            break;
+                                        case PayStatusTags.RELEASE_DEMAND:
+                                            mRootView.showFailLayout(mApplication.getString(R.string.text_pay_fail_1));
+                                            break;
+                                        case PayStatusTags.FAST_CONSULT:
+                                            mRootView.showFailLayout(mApplication.getString(R.string.text_pay_fail_1));
+                                            break;
                                     }
                                     break;
                             }

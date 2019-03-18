@@ -1,6 +1,7 @@
 package com.lex_mung.client_android.mvp.presenter;
 
 import android.app.Application;
+import android.os.Message;
 import android.text.TextUtils;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -18,12 +19,18 @@ import me.zl.mvp.utils.RxLifecycleUtils;
 
 import javax.inject.Inject;
 
+import com.google.gson.Gson;
 import com.lex_mung.client_android.R;
 import com.lex_mung.client_android.app.DataHelperTags;
 import com.lex_mung.client_android.mvp.contract.MeContract;
 import com.lex_mung.client_android.mvp.model.entity.AboutEntity;
 import com.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import com.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
+
+import org.simple.eventbus.Subscriber;
+
+import static com.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGIN_INFO;
+import static com.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGOUT;
 
 @FragmentScope
 public class MePresenter extends BasePresenter<MeContract.Model, MeContract.View> {
@@ -39,6 +46,7 @@ public class MePresenter extends BasePresenter<MeContract.Model, MeContract.View
     private boolean isLogin = false;//是否登录
 
     private AboutEntity aboutEntity;
+    private UserInfoDetailsEntity entity;
 
     @Inject
     public MePresenter(MeContract.Model model, MeContract.View rootView) {
@@ -54,12 +62,28 @@ public class MePresenter extends BasePresenter<MeContract.Model, MeContract.View
     }
 
     /**
+     * 更新登录信息
+     *
+     * @param message message
+     */
+    @Subscriber(tag = LOGIN_INFO)
+    private void loginInfo(Message message) {
+        switch (message.what) {
+            case LOGOUT:
+                loginStatusDispose();
+                break;
+        }
+    }
+
+    /**
      * 登录状态处理
      */
     public void loginStatusDispose() {
         try {
             isLogin = DataHelper.getBooleanSF(mApplication, DataHelperTags.IS_LOGIN_SUCCESS);
             if (isLogin) {
+                entity = new Gson().fromJson(DataHelper.getStringSF(mApplication, DataHelperTags.USER_INFO_DETAIL), UserInfoDetailsEntity.class);
+                setData();
                 mRootView.showLoginLayout();
                 getUserInfoDetail();
             } else {
@@ -85,59 +109,63 @@ public class MePresenter extends BasePresenter<MeContract.Model, MeContract.View
                     @Override
                     public void onNext(BaseResponse<UserInfoDetailsEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
-                            try {
-                                UserInfoDetailsEntity entity = baseResponse.getData();
-                                //头像
-                                if (!TextUtils.isEmpty(entity.getIconImage())) {
-                                    mRootView.setAvatar(entity.getIconImage());
-                                }
-                                //姓名
-                                if (!TextUtils.isEmpty(entity.getMemberName())) {
-                                    mRootView.setName(entity.getMemberName());
-                                } else if (!TextUtils.isEmpty(entity.getMobile())
-                                        && entity.getMobile().length() >= 3) {
-                                    mRootView.setName("用户" + entity.getMobile().substring(0, 3) + "********");
-                                }
-                                //地区
-                                if (entity.getAddressExtend() != null) {
-                                    mRootView.setRegion(entity.getAddressExtend().getProvince() + entity.getAddressExtend().getCity());
-                                }
-                                //组织
-                                if (entity.getOrganizations() != null
-                                        && entity.getOrganizations().size() > 0) {
-                                    mRootView.setOrg(entity.getOrganizations().get(0).getOrganizationName());
-                                } else {
-                                    mRootView.hideOrgLayout();
-                                }
-                                //性别
-                                if (entity.getSex() == 0) {//未知
-                                    mRootView.setSex(R.drawable.round_100_00_all_f4f4f4
-                                            , AppUtils.getColor(mApplication, R.color.c_ff)
-                                            , 0);
-                                    mRootView.hideSexIcon();
-                                    if (TextUtils.isEmpty(entity.getAge())) {
-                                        mRootView.hideAgeLayout();
-                                    }
-                                } else if (entity.getSex() == 1) {//男
-                                    mRootView.setSex(R.drawable.round_100_00_all_76cbff
-                                            , AppUtils.getColor(mApplication, R.color.c_76cbff)
-                                            , R.drawable.ic_man);
-                                    mRootView.showSexIcon();
-                                } else {//女
-                                    mRootView.setSex(R.drawable.round_100_00_all_ff7878
-                                            , AppUtils.getColor(mApplication, R.color.c_ff7878)
-                                            , R.drawable.ic_woman);
-                                    mRootView.showSexIcon();
-                                }
-                                //年龄
-                                if (!TextUtils.isEmpty(entity.getAge())) {
-                                    mRootView.setAge(entity.getAge());
-                                }
-                            } catch (Exception ignored) {
-                            }
+                            entity = baseResponse.getData();
+                            setData();
                         }
                     }
                 });
+    }
+
+    private void setData() {
+        try {
+            //头像
+            if (!TextUtils.isEmpty(entity.getIconImage())) {
+                mRootView.setAvatar(entity.getIconImage());
+            }
+            //姓名
+            if (!TextUtils.isEmpty(entity.getMemberName())) {
+                mRootView.setName(entity.getMemberName());
+            } else if (!TextUtils.isEmpty(entity.getMobile())
+                    && entity.getMobile().length() >= 3) {
+                mRootView.setName("用户" + entity.getMobile().substring(0, 3) + "********");
+            }
+            //地区
+            if (entity.getAddressExtend() != null) {
+                mRootView.setRegion(entity.getAddressExtend().getProvince() + entity.getAddressExtend().getCity());
+            }
+            //组织
+            if (entity.getOrganizations() != null
+                    && entity.getOrganizations().size() > 0) {
+                mRootView.setOrg(entity.getOrganizations().get(0).getOrganizationName());
+            } else {
+                mRootView.hideOrgLayout();
+            }
+            //性别
+            if (entity.getSex() == 0) {//未知
+                mRootView.setSex(R.drawable.round_100_00_all_f4f4f4
+                        , AppUtils.getColor(mApplication, R.color.c_ff)
+                        , 0);
+                mRootView.hideSexIcon();
+                if (TextUtils.isEmpty(entity.getAge())) {
+                    mRootView.hideAgeLayout();
+                }
+            } else if (entity.getSex() == 1) {//男
+                mRootView.setSex(R.drawable.round_100_00_all_76cbff
+                        , AppUtils.getColor(mApplication, R.color.c_76cbff)
+                        , R.drawable.ic_man);
+                mRootView.showSexIcon();
+            } else {//女
+                mRootView.setSex(R.drawable.round_100_00_all_ff7878
+                        , AppUtils.getColor(mApplication, R.color.c_ff7878)
+                        , R.drawable.ic_woman);
+                mRootView.showSexIcon();
+            }
+            //年龄
+            if (!TextUtils.isEmpty(entity.getAge())) {
+                mRootView.setAge(entity.getAge());
+            }
+        } catch (Exception ignored) {
+        }
     }
 
     public void getAbout() {

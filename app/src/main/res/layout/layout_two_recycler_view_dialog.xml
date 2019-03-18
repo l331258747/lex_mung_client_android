@@ -8,24 +8,28 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_1"
         android:layout_width="0dp"
-        android:layout_height="@dimen/qb_px_450"
+        android:layout_height="0dp"
         android:background="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/recycler_view_2"
         app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_2"
         android:layout_width="0dp"
-        android:layout_height="@dimen/qb_px_450"
+        android:layout_height="0dp"
         android:background="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="2"
-        app:layout_constraintStart_toEndOf="@id/recycler_view_1" />
+        app:layout_constraintStart_toEndOf="@id/recycler_view_1"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:layout_width="@dimen/qb_px_2"
-        android:layout_height="@dimen/qb_px_450"
+        android:layout_height="match_parent"
         android:background="@color/c_f4f4f4"
         app:layout_constraintEnd_toStartOf="@id/recycler_view_2" />
 
@@ -33,11 +37,4 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/qb_px_1"
         android:background="@color/c_f4f4f4" />
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="1000dp"
-        android:background="@color/c_50"
-        app:layout_constraintTop_toBottomOf="@id/recycler_view_2" />
 </android.support.constraint.ConstraintLayout>

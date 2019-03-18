@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <View
+        android:id="@+id/view_demand_message"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_100"
+        android:background="@drawable/button_withe_down"
+        app:layout_constraintEnd_toStartOf="@id/view_order_message"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <View
+        android:id="@+id/view_order_message"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_100"
+        android:background="@drawable/button_withe_down"
+        app:layout_constraintEnd_toStartOf="@id/view_system_message"
+        app:layout_constraintStart_toEndOf="@id/view_demand_message"
+        app:layout_constraintTop_toTopOf="@id/view_demand_message" />
+
+    <View
+        android:id="@+id/view_system_message"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_100"
+        android:background="@drawable/button_withe_down"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/view_order_message"
+        app:layout_constraintTop_toTopOf="@id/view_demand_message" />
+
+    <TextView
+        android:id="@+id/tv_demand_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/text_demand_message"
+        android:textColor="@color/c_06a66a"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/view_demand_message"
+        app:layout_constraintEnd_toEndOf="@id/view_demand_message"
+        app:layout_constraintStart_toStartOf="@id/view_demand_message"
+        app:layout_constraintTop_toTopOf="@id/view_demand_message" />
+
+    <TextView
+        android:id="@+id/tv_demand_message_count"
+        android:layout_width="@dimen/qb_px_25"
+        android:layout_height="@dimen/qb_px_25"
+        android:layout_marginBottom="@dimen/qb_px_25"
+        android:background="@drawable/round_100_ea5514_all"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:textColor="@color/c_ff"
+        android:textSize="8sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/view_demand_message"
+        app:layout_constraintStart_toEndOf="@id/tv_demand_message"
+        app:layout_constraintTop_toTopOf="@id/view_demand_message" />
+
+    <ImageView
+        android:id="@+id/iv_demand_message"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_5"
+        android:src="@color/c_06a66a"
+        app:layout_constraintBottom_toBottomOf="@id/view_demand_message"
+        app:layout_constraintEnd_toEndOf="@id/view_demand_message"
+        app:layout_constraintStart_toStartOf="@id/view_demand_message" />
+
+    <TextView
+        android:id="@+id/tv_order_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/text_order_message"
+        android:textColor="@color/c_323232"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/view_order_message"
+        app:layout_constraintEnd_toEndOf="@id/view_order_message"
+        app:layout_constraintStart_toStartOf="@id/view_order_message"
+        app:layout_constraintTop_toTopOf="@id/view_order_message" />
+
+    <TextView
+        android:id="@+id/tv_order_message_count"
+        android:layout_width="@dimen/qb_px_25"
+        android:layout_height="@dimen/qb_px_25"
+        android:layout_marginBottom="@dimen/qb_px_25"
+        android:background="@drawable/round_100_ea5514_all"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:textColor="@color/c_ff"
+        android:textSize="8sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/view_demand_message"
+        app:layout_constraintStart_toEndOf="@id/tv_order_message"
+        app:layout_constraintTop_toTopOf="@id/view_demand_message" />
+
+    <ImageView
+        android:id="@+id/iv_order_message"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_5"
+        android:src="@color/c_06a66a"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/view_order_message"
+        app:layout_constraintEnd_toEndOf="@id/view_order_message"
+        app:layout_constraintStart_toStartOf="@id/view_order_message" />
+
+    <TextView
+        android:id="@+id/tv_system_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/text_system_message"
+        android:textColor="@color/c_323232"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/view_system_message"
+        app:layout_constraintEnd_toEndOf="@id/view_system_message"
+        app:layout_constraintStart_toStartOf="@id/view_system_message"
+        app:layout_constraintTop_toTopOf="@id/view_system_message" />
+
+    <TextView
+        android:id="@+id/tv_system_message_count"
+        android:layout_width="@dimen/qb_px_25"
+        android:layout_height="@dimen/qb_px_25"
+        android:layout_marginBottom="@dimen/qb_px_25"
+        android:background="@drawable/round_100_ea5514_all"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:textColor="@color/c_ff"
+        android:textSize="8sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/view_demand_message"
+        app:layout_constraintStart_toEndOf="@id/tv_system_message"
+        app:layout_constraintTop_toTopOf="@id/view_demand_message" />
+
+    <ImageView
+        android:id="@+id/iv_system_message"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_5"
+        android:src="@color/c_06a66a"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/view_system_message"
+        app:layout_constraintEnd_toEndOf="@id/view_system_message"
+        app:layout_constraintStart_toStartOf="@id/view_system_message" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_demand_message" />
+</android.support.constraint.ConstraintLayout>

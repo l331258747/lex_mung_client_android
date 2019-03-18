@@ -2,16 +2,21 @@ package com.lex_mung.client_android.mvp.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.lex_mung.client_android.app.BundleTags;
+import com.lex_mung.client_android.mvp.model.entity.CaseListEntity;
+import com.lex_mung.client_android.mvp.ui.activity.WebActivity;
+import com.lex_mung.client_android.mvp.ui.adapter.CaseAdapter;
 import com.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
+import butterknife.BindView;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
@@ -22,11 +27,24 @@ import com.lex_mung.client_android.mvp.contract.LawsCaseContract;
 import com.lex_mung.client_android.mvp.presenter.LawsCasePresenter;
 
 import com.lex_mung.client_android.R;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+
+import java.util.List;
 
 public class LawsCaseFragment extends BaseFragment<LawsCasePresenter> implements LawsCaseContract.View {
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
+    @BindView(R.id.smart_refresh_layout)
+    SmartRefreshLayout smartRefreshLayout;
 
-    public static LawsCaseFragment newInstance(int memberId, String institutionName) {
+    private CaseAdapter caseAdapter;
+
+    public static LawsCaseFragment newInstance(int id, String institution) {
         LawsCaseFragment fragment = new LawsCaseFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("ID", id);
+        bundle.putString("INSTITUTION", institution);
+        fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -47,7 +65,56 @@ public class LawsCaseFragment extends BaseFragment<LawsCasePresenter> implements
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        if (getArguments() != null) {
+            mPresenter.setMemberId(getArguments().getInt("ID"));
+            mPresenter.setInstitution(getArguments().getString("INSTITUTION"));
+        }
+        mPresenter.getCaseList(false);
+        initAdapter();
+        initRecyclerView();
+        caseAdapter.setEmptyView(R.layout.layout_loading_view, (ViewGroup) recyclerView.getParent());
+    }
 
+    private void initAdapter() {
+        caseAdapter = new CaseAdapter();
+        caseAdapter.setOnItemClickListener((adapter, view, position) -> {
+            if (isFastClick()) return;
+            CaseListEntity.ListBean bean = caseAdapter.getItem(position);
+            if (bean == null) return;
+            bundle.clear();
+            bundle.putString(BundleTags.URL, bean.getUrl());
+            bundle.putString(BundleTags.TITLE, bean.getTitle());
+            bundle.putBoolean(BundleTags.IS_SHARE, false);
+            launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+        });
+    }
+
+    private void initRecyclerView() {
+        smartRefreshLayout.setOnLoadMoreListener(refreshLayout -> {
+            if (mPresenter.getPageNum() < mPresenter.getTotalNum()) {
+                mPresenter.setPageNum(mPresenter.getPageNum() + 1);
+                mPresenter.getCaseList(true);
+            } else {
+                smartRefreshLayout.finishLoadMoreWithNoMoreData();
+            }
+        });
+        AppUtils.configRecyclerView(recyclerView, new LinearLayoutManager(mActivity));
+        recyclerView.setAdapter(caseAdapter);
+    }
+
+    @Override
+    public void setAdapter(List<CaseListEntity.ListBean> list, boolean isAdd) {
+        if (isAdd) {
+            caseAdapter.addData(list);
+            smartRefreshLayout.finishLoadMore();
+        } else {
+            caseAdapter.setEmptyView(R.layout.layout_empty_view, (ViewGroup) recyclerView.getParent());
+            smartRefreshLayout.finishRefresh();
+            caseAdapter.setNewData(list);
+            if (mPresenter.getTotalNum() == mPresenter.getPageNum()) {
+                smartRefreshLayout.finishLoadMoreWithNoMoreData();
+            }
+        }
     }
 
     @Override

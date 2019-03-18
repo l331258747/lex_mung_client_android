@@ -48,7 +48,6 @@ public class FreeConsultDetailPresenter extends BasePresenter<FreeConsultDetailC
 
     private int consultationId;
     private FreeConsultEntity entity;
-    private UserInfoDetailsEntity userInfoDetailsEntity;
     private boolean isLoading = true;
 
     private int pageNum = 1;
@@ -90,26 +89,17 @@ public class FreeConsultDetailPresenter extends BasePresenter<FreeConsultDetailC
 
     public void setData(FreeConsultEntity entity) {
         this.entity = entity;
-        userInfoDetailsEntity = new Gson().fromJson(DataHelper.getStringSF(mApplication, DataHelperTags.USER_INFO_DETAIL), UserInfoDetailsEntity.class);
-        if (entity.getMemberId() == userInfoDetailsEntity.getMemberId()) {
-            mRootView.setName(entity.getMemberName());
-            if (!TextUtils.isEmpty(entity.getMemberIconImage())) {
-                mRootView.setAvatar(entity.getMemberIconImage());
-            } else {
-                mRootView.setAvatar(R.drawable.ic_avatar);
-            }
+        UserInfoDetailsEntity userInfoDetailsEntity = new Gson().fromJson(DataHelper.getStringSF(mApplication, DataHelperTags.USER_INFO_DETAIL), UserInfoDetailsEntity.class);
+        if (!TextUtils.isEmpty(userInfoDetailsEntity.getMemberName())) {
+            mRootView.setName(userInfoDetailsEntity.getMemberName());
+        } else if (!TextUtils.isEmpty(userInfoDetailsEntity.getMobile())
+                && userInfoDetailsEntity.getMobile().length() >= 3) {
+            mRootView.setName("用户" + userInfoDetailsEntity.getMobile().substring(0, 3) + "********");
+        }
+        if (!TextUtils.isEmpty(userInfoDetailsEntity.getIconImage())) {
+            mRootView.setAvatar(userInfoDetailsEntity.getIconImage());
         } else {
-            if (entity.getIsHide() == 1) {//匿名
-                mRootView.setName("匿名用户");
-                mRootView.setAvatar(R.drawable.ic_avatar);
-            } else {
-                mRootView.setName(entity.getMemberName());
-                if (!TextUtils.isEmpty(entity.getMemberIconImage())) {
-                    mRootView.setAvatar(entity.getMemberIconImage());
-                } else {
-                    mRootView.setAvatar(R.drawable.ic_avatar);
-                }
-            }
+            mRootView.setAvatar(R.drawable.ic_avatar);
         }
         mRootView.setRegion(entity.getRegion());
         mRootView.setCategoryName(entity.getCategoryName());

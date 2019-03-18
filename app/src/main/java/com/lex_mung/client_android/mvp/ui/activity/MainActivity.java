@@ -12,10 +12,12 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.lex_mung.client_android.R;
+import com.lex_mung.client_android.app.BundleTags;
 import com.lex_mung.client_android.app.DataHelperTags;
 import com.lex_mung.client_android.di.component.DaggerMainComponent;
 import com.lex_mung.client_android.di.module.MainModule;
 import com.lex_mung.client_android.mvp.contract.MainContract;
+import com.lex_mung.client_android.mvp.model.api.Api;
 import com.lex_mung.client_android.mvp.presenter.MainPresenter;
 import com.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import com.lex_mung.client_android.mvp.ui.fragment.EquitiesFragment;
@@ -29,6 +31,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.event.NotificationClickEvent;
+import cn.jpush.im.android.api.model.Conversation;
+import cn.jpush.im.android.api.model.Message;
 import me.zl.mvp.base.AdapterViewPager;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
@@ -77,6 +83,12 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         initViewPager();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.onResume();
+    }
+
     private void initViewPager() {
         fragments.add(HomePagerFragment.newInstance());
         fragments.add(EquitiesFragment.newInstance());
@@ -118,6 +130,29 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         try {
             viewPager.setCurrentItem(pos);
             bottomNavigationViewEx.setCurrentItem(pos);
+        } catch (Exception ignored) {
+        }
+    }
+
+    /**
+     * 收到消息处理
+     *
+     * @param notificationClickEvent 通知点击事件
+     */
+    public void onEvent(NotificationClickEvent notificationClickEvent) {
+        try {
+            if (null == notificationClickEvent) {
+                return;
+            }
+            Message msg = notificationClickEvent.getMessage();
+            if (msg != null) {
+                Conversation conversation = JMessageClient.getSingleConversation(msg.getTargetID(), Api.J_PUSH);
+                Intent notificationIntent = new Intent(mActivity, MessageChatActivity.class);
+                int id = Integer.parseInt(conversation.getTargetId().replace("lex", ""));
+                notificationIntent.putExtra(BundleTags.ID, id);
+                conversation.resetUnreadCount();
+                launchActivity(notificationIntent);
+            }
         } catch (Exception ignored) {
         }
     }

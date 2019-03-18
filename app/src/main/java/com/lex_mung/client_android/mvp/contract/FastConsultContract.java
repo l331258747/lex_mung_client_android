@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.lex_mung.client_android.mvp.model.entity.BalanceEntity;
 import com.lex_mung.client_android.mvp.model.entity.BaseResponse;
+import com.lex_mung.client_android.mvp.model.entity.OrderStatusEntity;
 import com.lex_mung.client_android.mvp.model.entity.PayEntity;
 
 import io.reactivex.Observable;
@@ -33,5 +34,7 @@ public interface FastConsultContract {
         Observable<BaseResponse<BalanceEntity>> getUserBalance(int id);
 
         Observable<BaseResponse<PayEntity>> pay(RequestBody body);
+
+        Observable<BaseResponse<OrderStatusEntity>> releaseFastConsult( RequestBody body);
     }
 }

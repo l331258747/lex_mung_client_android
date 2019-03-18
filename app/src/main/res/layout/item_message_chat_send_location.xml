@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/c_f4f4f4">
+
+    <TextView
+        android:id="@+id/item_tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/qb_px_40"
+        android:gravity="center"
+        android:textColor="@color/c_b5b5b5"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/item_iv_avatar"
+        android:layout_width="@dimen/qb_px_85"
+        android:layout_height="@dimen/qb_px_85"
+        android:layout_marginEnd="@dimen/qb_px_35"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_tv_time" />
+
+    <LinearLayout
+        android:id="@+id/item_ll_content"
+        android:layout_width="@dimen/qb_px_500"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_chat_bg_1"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="@id/item_iv"
+        app:layout_constraintTop_toTopOf="@id/item_iv_avatar">
+
+        <TextView
+            android:id="@+id/item_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/qb_px_20"
+            android:layout_marginEnd="@dimen/qb_px_20"
+            android:includeFontPadding="false"
+            android:maxLines="2"
+            android:textColor="@color/c_323232"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qb_px_1"
+            android:layout_marginTop="@dimen/qb_px_15"
+            android:background="@color/c_f4f4f4" />
+
+        <ImageView
+            android:id="@+id/item_iv_map"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qb_px_200"
+            android:layout_marginTop="@dimen/qb_px_20"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_chat_map_icon" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/item_iv_fail_resend"
+        android:layout_width="@dimen/qb_px_35"
+        android:layout_height="@dimen/qb_px_35"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="@dimen/qb_px_10"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_fail_resend"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/item_ll_content"
+        app:layout_constraintEnd_toStartOf="@id/item_ll_content"
+        app:layout_constraintTop_toTopOf="@id/item_ll_content" />
+
+    <ImageView
+        android:id="@+id/item_iv_sending"
+        android:layout_width="@dimen/qb_px_35"
+        android:layout_height="@dimen/qb_px_35"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="@dimen/qb_px_10"
+        android:src="@drawable/ic_sending"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/item_ll_content"
+        app:layout_constraintEnd_toStartOf="@id/item_ll_content"
+        app:layout_constraintTop_toTopOf="@id/item_ll_content" />
+
+    <ImageView
+        android:id="@+id/item_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/qb_px_15"
+        android:src="@drawable/ic_chat_jiao_1"
+        app:layout_constraintBottom_toBottomOf="@id/item_iv_avatar"
+        app:layout_constraintEnd_toStartOf="@id/item_iv_avatar"
+        app:layout_constraintTop_toTopOf="@id/item_iv_avatar" />
+</android.support.constraint.ConstraintLayout>

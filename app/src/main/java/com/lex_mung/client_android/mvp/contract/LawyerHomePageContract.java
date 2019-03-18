@@ -35,8 +35,6 @@ public interface LawyerHomePageContract {
 
         void setTagsAdapter(List<LawyerTagsEntity> lawyerTags);
 
-        void setPbAdapter(List<LawyerEvaluationEntity> evaluation);
-
         void hideTagsAdapter();
 
         void setAge(String age);

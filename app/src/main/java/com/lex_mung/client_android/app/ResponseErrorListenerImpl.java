@@ -1,20 +1,29 @@
 package com.lex_mung.client_android.app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ParseException;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 
-import com.google.gson.JsonIOException;
 import com.google.gson.JsonParseException;
+import com.lex_mung.client_android.mvp.ui.activity.LoginActivity;
 
 import org.json.JSONException;
 
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
+import cn.jpush.im.android.api.JMessageClient;
 import me.jessyan.rxerrorhandler.handler.listener.ResponseErrorListener;
+import me.zl.mvp.utils.AppUtils;
+import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.LogUtils;
 import retrofit2.HttpException;
 import timber.log.Timber;
+
+import static com.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGIN_INFO;
+import static com.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGOUT;
 
 /**
  * RxJava中发生的所有错误处理类
@@ -32,7 +41,7 @@ public class ResponseErrorListenerImpl implements ResponseErrorListener {
         } else if (t instanceof HttpException) {
             HttpException httpException = (HttpException) t;
             msg = convertStatusCode(context, httpException);
-        } else if (t instanceof JsonParseException || t instanceof ParseException || t instanceof JSONException || t instanceof JsonIOException) {
+        } else if (t instanceof JsonParseException || t instanceof ParseException || t instanceof JSONException) {
             msg = "数据解析错误";
         }
         LogUtils.debugInfo(msg);
@@ -50,6 +59,23 @@ public class ResponseErrorListenerImpl implements ResponseErrorListener {
             msg = "请求被重定向到其他页面";
         } else if (httpException.code() == 401) {
             msg = "登录失效，请重新登录";
+        } else if (httpException.code() == 401) {
+            msg = "登录失效，请重新登录";
+            DataHelper.removeSF(context, DataHelperTags.TOKEN);
+            DataHelper.removeSF(context, DataHelperTags.IS_LOGIN_SUCCESS);
+            DataHelper.removeSF(context, DataHelperTags.USER_INFO_DETAIL);
+
+            AppUtils.post(LOGIN_INFO, LOGOUT);
+            JMessageClient.logout();
+
+            Intent intent = new Intent(context, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+
+            CookieSyncManager.createInstance(context);
+            CookieManager cookieManager = CookieManager.getInstance();
+            cookieManager.removeAllCookie();
+            CookieSyncManager.getInstance().sync();
         } else {
             msg = httpException.message();
         }

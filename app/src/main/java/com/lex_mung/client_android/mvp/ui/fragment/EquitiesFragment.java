@@ -104,9 +104,14 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        mPresenter.onCreate();
         initAdapter();
         initRecyclerView();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.onResume();
     }
 
     @OnClick({R.id.view_add, R.id.view_trading_details, R.id.view_examine_all_equities, R.id.view_all_lawyer})

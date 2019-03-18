@@ -261,6 +261,15 @@ public class LawyerEntity {
             private String description;
             private List<OrgTagsEntity> orgTags;
             private String lawyerWeight;
+            private String practice;
+
+            public String getPractice() {
+                return practice;
+            }
+
+            public void setPractice(String practice) {
+                this.practice = practice;
+            }
 
             public String getLawyerWeight() {
                 return lawyerWeight;

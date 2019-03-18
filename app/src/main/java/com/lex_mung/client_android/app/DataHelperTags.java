@@ -24,4 +24,8 @@ public class DataHelperTags {
     public static final String PAY_TYPE = "pay_type";//pay_type
     public static final String EQUITIES_ID = "equities_id";//权益id
     public static final String EQUITIES_LEVEL_ID = "equities_level_id";//权益级别id
+    public static final String ORDER_TYPE = "order_type";//订单类型
+    public static final String ORDER_MONEY = "order_money";//订单金额
+    public static final String LOGIN_TYPE = "login_type";
+    public static final String REQUIREMENT_ID = "requirement_id";
 }

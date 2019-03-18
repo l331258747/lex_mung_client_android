@@ -33,8 +33,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.lex_mung.client_android.app.EventBusTags.LOGIN.LOGIN_INFO;
-import static com.lex_mung.client_android.app.EventBusTags.LOGIN.LOGOUT;
+import static com.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGIN_INFO;
+import static com.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGOUT;
 
 @FragmentScope
 public class EquitiesPresenter extends BasePresenter<EquitiesContract.Model, EquitiesContract.View> {
@@ -66,12 +66,12 @@ public class EquitiesPresenter extends BasePresenter<EquitiesContract.Model, Equ
     private void loginInfo(Message message) {
         switch (message.what) {
             case LOGOUT:
-                onCreate();
+                onResume();
                 break;
         }
     }
 
-    public void onCreate() {
+    public void onResume() {
         try {
             if (DataHelper.getBooleanSF(mApplication, DataHelperTags.IS_LOGIN_SUCCESS)) {
                 getEquitiesList_1();

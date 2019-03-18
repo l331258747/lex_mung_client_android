@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -30,24 +31,32 @@ import com.google.gson.reflect.TypeToken;
 import com.lex_mung.client_android.R;
 import com.lex_mung.client_android.app.BundleTags;
 import com.lex_mung.client_android.app.DataHelperTags;
+import com.lex_mung.client_android.app.PayStatusTags;
 import com.lex_mung.client_android.mvp.contract.FastConsultContract;
 import com.lex_mung.client_android.mvp.model.entity.BalanceEntity;
 import com.lex_mung.client_android.mvp.model.entity.BaseResponse;
+import com.lex_mung.client_android.mvp.model.entity.OrderStatusEntity;
 import com.lex_mung.client_android.mvp.model.entity.PayEntity;
 import com.lex_mung.client_android.mvp.model.entity.PayResultEntity;
 import com.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
 import com.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import com.lex_mung.client_android.mvp.ui.activity.PayStatusActivity;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import org.simple.eventbus.Subscriber;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH;
+import static com.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH_WX_PAY;
 
 @ActivityScope
 public class FastConsultPresenter extends BasePresenter<FastConsultContract.Model, FastConsultContract.View> {
@@ -65,11 +74,14 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
     private List<SolutionTypeEntity> solutionTypeEntityList = new ArrayList<>();
     private List<String> solutionTypeStringList = new ArrayList<>();
     private String consultType;
-    private double money;
+    private int consultTypePos;
+    private double payMoney;
     private double balance;
     private int payType;
     private String mobile;
-    private int sex;
+    private String name;
+    private int sex = 1;
+    private String payOrderNo;
 
     private boolean flag = false;
 
@@ -80,20 +92,26 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
 
     public void setConsultType(String consultType) {
         this.consultType = consultType;
+    } public void setConsultTypePos(int consultTypePos) {
+        this.consultTypePos = consultTypePos;
     }
 
     public void setSex(int sex) {
         this.sex = sex;
     }
 
+    public void setPayType(int payType) {
+        this.payType = payType;
+    }
+
     public void setMoney(int position) {
-        money = solutionTypeEntityList.get(position).getPrice();
+        payMoney = solutionTypeEntityList.get(position).getPrice();
         mRootView.setOrderMoney(String.format(
                 AppUtils.getString(mApplication, R.string.text_yuan_money)
-                , AppUtils.formatAmount(mApplication, money)));
+                , AppUtils.formatAmount(mApplication, payMoney)));
         mRootView.setMoney(String.format(
                 AppUtils.getString(mApplication, R.string.text_yuan_money)
-                , AppUtils.formatAmount(mApplication, money)));
+                , AppUtils.formatAmount(mApplication, payMoney)));
     }
 
     public String getConsultType() {
@@ -146,16 +164,13 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
                 });
     }
 
-    public void setPayType(int payType) {
-        this.payType = payType;
-    }
 
-    private void getPermission(String ua) {
+    private void getPermission(String name, String ua) {
         PermissionUtil.readPhonestate(new PermissionUtil.RequestPermission() {
             @Override
             public void onRequestPermissionSuccess() {
                 flag = true;
-                pay(ua);
+                pay(name, ua);
             }
 
             @Override
@@ -170,9 +185,14 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
         }, mRxPermissions, mErrorHandler);
     }
 
-    public void pay(String ua) {
-        if (money == 0) {
+    public void pay(String name, String ua) {
+        this.name = name;
+        if (payMoney == 0) {
             mRootView.showMessage("请选择问题类型");
+            return;
+        }
+        if (TextUtils.isEmpty(name)) {
+            mRootView.showMessage("请输入您的称呼");
             return;
         }
         switch (payType) {
@@ -184,18 +204,18 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
                 break;
             case 2:
                 if (!flag) {
-                    getPermission(ua);
+                    getPermission(name, ua);
                     return;
                 }
                 break;
             case 3:
-                if (money > balance) {
+                if (payMoney > balance) {
                     mRootView.showLackOfBalanceDialog();
                     return;
                 }
                 break;
         }
-        money = new BigDecimal(money).multiply(new BigDecimal(100)).intValue();
+        long money = new BigDecimal(payMoney).multiply(new BigDecimal(100)).intValue();
         Map<String, Object> map = new HashMap<>();
         map.put("money", money);
         map.put("type", payType);
@@ -216,7 +236,9 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
                     @Override
                     public void onNext(BaseResponse<PayEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
+                            payOrderNo = baseResponse.getData().getOrderNo();
                             DataHelper.setStringSF(mApplication, DataHelperTags.ORDER_NO, baseResponse.getData().getOrderNo());
+                            DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.FAST_CONSULT);
                             if (payType == 1) {//微信
                                 DataHelper.setStringSF(mApplication, DataHelperTags.APP_ID, baseResponse.getData().getAppid());
                                 IWXAPI api = WXAPIFactory.createWXAPI(mApplication, baseResponse.getData().getAppid(), true);
@@ -230,27 +252,18 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
                                 request.timeStamp = baseResponse.getData().getTimestamp();
                                 request.sign = baseResponse.getData().getSign();
                                 api.sendReq(request);
-                                DataHelper.setIntergerSF(mApplication, "PAY_TYPE", 2);
                             } else if (payType == 2) {//支付宝
                                 Runnable payRunnable = () -> {
                                     PayTask payTask = new PayTask(mRootView.getActivity());
                                     Map<String, String> result = payTask.payV2(baseResponse.getData().getOrderInfo(), true);
-
                                     Message msg = new Message();
                                     msg.what = 1;
                                     msg.obj = result;
                                     mHandler.sendMessage(msg);
                                 };
-                                Thread payThread = new Thread(payRunnable);
-                                payThread.start();
+                                new Thread(payRunnable).start();
                             } else {//余额
-                                DataHelper.setIntergerSF(mApplication, "PAY_TYPE", 2);
-                                Bundle bundle = new Bundle();
-                                bundle.putString(BundleTags.ORDER_NO, DataHelper.getStringSF(mApplication, DataHelperTags.ORDER_NO));
-                                Intent intent = new Intent(mApplication, PayStatusActivity.class);
-                                intent.putExtras(bundle);
-                                mRootView.launchActivity(intent);
-                                mRootView.killMyself();
+                                releaseFastConsult();
                             }
                         } else {
                             mRootView.showMessage(baseResponse.getMessage());
@@ -265,19 +278,81 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1: {
-                    DataHelper.setIntergerSF(mApplication, "PAY_TYPE", 2);
                     PayResultEntity payResult = new PayResultEntity((Map<String, String>) msg.obj);
-                    Bundle bundle = new Bundle();
-                    bundle.putString(BundleTags.ORDER_NO, DataHelper.getStringSF(mApplication, DataHelperTags.ORDER_NO));
-                    bundle.putString(BundleTags.ZFB, payResult.getResultStatus());
-                    Intent intent = new Intent(mApplication, PayStatusActivity.class);
-                    intent.putExtras(bundle);
-                    mRootView.launchActivity(intent);
+                    if ("9000".equals(payResult.getResultStatus())) {
+                        releaseFastConsult();
+                        return;
+                    } else {
+                        DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.FAST_CONSULT);
+                        Bundle bundle = new Bundle();
+                        bundle.putString(BundleTags.TYPE, "FAST_CONSULT");
+                        bundle.putString(BundleTags.ORDER_NO, DataHelper.getStringSF(mApplication, DataHelperTags.ORDER_NO));
+                        bundle.putString(BundleTags.ZFB, payResult.getResultStatus());
+                        Intent intent = new Intent(mApplication, PayStatusActivity.class);
+                        intent.putExtras(bundle);
+                        mRootView.launchActivity(intent);
+                    }
                     break;
                 }
             }
         }
     };
+
+    /**
+     * 刷新列表
+     *
+     * @param message message
+     */
+    @Subscriber(tag = REFRESH)
+    private void refresh(Message message) {
+        switch (message.what) {
+            case REFRESH_WX_PAY:
+                releaseFastConsult();
+                break;
+        }
+    }
+
+    private void releaseFastConsult() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("payOrderNo", payOrderNo);
+        map.put("payType", payType);
+        map.put("payAmount", payMoney);
+        map.put("phone", mobile);
+        map.put("sex", sex);
+        map.put("name", name);
+        map.put("typeId", solutionTypeEntityList.get(consultTypePos).getId());
+        mModel.releaseFastConsult(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(1, 2))
+                .doOnSubscribe(disposable -> mRootView.showLoading(""))
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<OrderStatusEntity>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<OrderStatusEntity> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.FAST_CONSULT);
+                            DataHelper.setStringSF(mApplication, DataHelperTags.ORDER_TYPE, consultType);
+                            DataHelper.setStringSF(mApplication, DataHelperTags.ORDER_MONEY, String.format(mApplication.getString(R.string.text_yuan_money), AppUtils.formatAmount(mApplication, payMoney)));
+
+                            Bundle bundle = new Bundle();
+                            bundle.putString(BundleTags.TYPE, "FAST_CONSULT");
+                            bundle.putString(BundleTags.ORDER_NO, DataHelper.getStringSF(mApplication, DataHelperTags.ORDER_NO));
+                            if (payType == 1) {
+                                bundle.putInt(BundleTags.WX, BaseResp.ErrCode.ERR_OK);
+                            } else if (payType == 2) {
+                                bundle.putString(BundleTags.ZFB, "9000");
+                            }
+                            Intent intent = new Intent(mApplication, PayStatusActivity.class);
+                            intent.putExtras(bundle);
+                            mRootView.launchActivity(intent);
+                            mRootView.killMyself();
+                        }
+                    }
+                });
+    }
 
     @Override
     public void onDestroy() {

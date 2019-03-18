@@ -147,11 +147,6 @@ public class LawyerHomePagePresenter extends BasePresenter<LawyerHomePageContrac
                         } else {//不显示
                             mRootView.hideLikeLayout();
                         }
-                        //五维分值
-                        if (entity.getEvaluationList() != null
-                                && entity.getEvaluationList().size() > 3) {
-                            mRootView.setPbAdapter(entity.getEvaluationList());
-                        }
                     }
                 });
     }
