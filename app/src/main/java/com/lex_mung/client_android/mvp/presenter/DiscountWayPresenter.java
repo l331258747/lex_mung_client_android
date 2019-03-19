@@ -83,6 +83,9 @@ public class DiscountWayPresenter extends BasePresenter<DiscountWayContract.Mode
             mRootView.killMyself();
         });
         mRootView.initRecyclerView(adapter);
+        if (organizationLevId == -1) {
+            mRootView.setIvSelect(R.drawable.ic_show_select);
+        }
     }
 
     public void setAdapterOrganizationLevId(int organizationLevId) {

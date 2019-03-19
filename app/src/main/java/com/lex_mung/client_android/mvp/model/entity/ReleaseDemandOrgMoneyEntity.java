@@ -23,6 +23,7 @@ public class ReleaseDemandOrgMoneyEntity {
     private int organizationId;
     private int organizationLevId;
     private int score;
+    private int couponId;
     private String dateAdded;
     private String organizationName;
     private String organizationLevelName;
@@ -32,6 +33,14 @@ public class ReleaseDemandOrgMoneyEntity {
     private double amount;
     private double amountDis;
     private double amountNew;
+
+    public int getCouponId() {
+        return couponId;
+    }
+
+    public void setCouponId(int couponId) {
+        this.couponId = couponId;
+    }
 
     public double getAmountNew() {
         return amountNew;

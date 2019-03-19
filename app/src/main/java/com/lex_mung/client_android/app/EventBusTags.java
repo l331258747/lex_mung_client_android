@@ -98,4 +98,9 @@ public interface EventBusTags {
         String LOGIN_INFO = "login_info";
         int LOGOUT = 100;
     }
+
+    interface MAP_INFO {
+        String MAP_INFO = "map_info";
+        int SELECT_PLACE = 100;
+    }
 }

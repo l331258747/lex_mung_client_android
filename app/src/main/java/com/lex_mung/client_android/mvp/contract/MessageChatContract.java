@@ -5,8 +5,9 @@ import android.content.Intent;
 
 import com.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import com.lex_mung.client_android.mvp.model.entity.RequirementStatusEntity;
+import com.lex_mung.client_android.mvp.ui.adapter.MessageChatAdapter;
+import com.lex_mung.client_android.mvp.ui.adapter.RequirementAdapter;
 
-import java.io.File;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -21,13 +22,9 @@ public interface MessageChatContract {
 
         void showOrderEndLayout();
 
-        void setCountDown(long remain);
+        void voiceOrText(MessageChatAdapter mChatAdapter);
 
-        void voiceOrText();
-
-        void sendSystemMessage(String content);
-
-        void showRequirementAdapter(List<RequirementStatusEntity> list);
+        void showRequirementAdapterLayout();
 
         void showToAppInfoDialog();
 
@@ -35,7 +32,13 @@ public interface MessageChatContract {
 
         void launchActivity(Intent intent, int code);
 
-        void sendImageMessage(File file);
+        void setImageIcon(String absolutePath);
+
+        void initRecyclerView(MessageChatAdapter mChatAdapter, RequirementAdapter requirementAdapter);
+
+        void initListener(MessageChatAdapter mChatAdapter);
+
+        void setTime(String s);
 
         Activity getActivity();
     }

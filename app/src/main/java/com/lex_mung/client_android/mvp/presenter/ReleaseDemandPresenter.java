@@ -85,6 +85,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
     private double balance;//当前余额
     private double amountNew;//会员卡余额
     private int payType = 1;//支付方式
+    private int couponId;
 
     private double payMoney;//实付金额
     private double deduction;//优惠抵扣金额
@@ -250,7 +251,9 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
         Map<String, Object> map = new HashMap<>();
         map.put("memberId", userInfoDetailsEntity.getMemberId());
         map.put("lmemberId", lawsHomePagerBaseEntity.getMemberId());
-        map.put("organizationLevId", organizationLevId);
+        if (organizationLevId != 0) {
+            map.put("organizationLevId", organizationLevId);
+        }
         map.put("requireTypeId", requireTypeId);
         mModel.getReleaseDemandOrgMoney(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                 .subscribeOn(Schedulers.io())
@@ -265,7 +268,10 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                     public void onNext(BaseResponse<ReleaseDemandOrgMoneyEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             entity = baseResponse.getData();
-                            organizationLevId = baseResponse.getData().getOrganizationLevId();
+                            couponId = baseResponse.getData().getCouponId();
+                            if (organizationLevId != -1) {
+                                organizationLevId = baseResponse.getData().getOrganizationLevId();
+                            }
                             payMoney = entity.getAmount();
                             mRootView.setOrderMoney(String.format(mApplication.getString(R.string.text_yuan_money), AppUtils.formatAmount(mApplication, entity.getAmount())));
                             mRootView.setDiscountWay(entity.getOrganizationLevelName());
@@ -289,6 +295,14 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
     }
 
     public void releaseRequirement(String ua, String maxMoney, String content) {
+        if (lawyerFieldPosition == -1) {
+            mRootView.showMessage(mApplication.getString(R.string.text_please_select_lawyer_field));
+            return;
+        }
+        if (requireTypeId == -1) {
+            mRootView.showMessage(mApplication.getString(R.string.text_please_select_service_type));
+            return;
+        }
         if (type == 1) {
             switch (payType) {
                 case 1:
@@ -321,15 +335,6 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                 return;
             }
         }
-        if (lawyerFieldPosition == -1) {
-            mRootView.showMessage(mApplication.getString(R.string.text_please_select_lawyer_field));
-            return;
-        }
-        if (requireTypeId == -1) {
-            mRootView.showMessage(mApplication.getString(R.string.text_please_select_service_type));
-            return;
-        }
-
         Map<String, Object> map = new HashMap<>();
         map.put("requirementId", 0);
         map.put("isFirst", 1);
@@ -413,12 +418,14 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
         map.put("source", 2);//来源 2app
         map.put("product", 5);//订单类型 5发需求
         map.put("ua", ua);//ua
-        if (organizationLevId > 0) {
+        if (payType == 4
+                && couponId > 0) {//会员卡支付并且有会员卡
             map.put("useCoupon", 1);//使用优惠券
+            map.put("other", "{\"requirementId\":" + id + ",\"couponId\":" + couponId + "}");
         } else {
             map.put("useCoupon", 0);//不使用优惠券
+            map.put("other", "{\"requirementId\":" + id + "}");
         }
-        map.put("other", "{\"requirementId\":" + id + "}");
         String sign = "money=" + money + "&type=" + payType + "&source=" + 2 + "&ua=" + ua;
         map.put("sign", AppUtils.encodeToMD5(sign));
         mModel.pay(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))

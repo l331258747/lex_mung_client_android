@@ -25,6 +25,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
+
         <activity
             android:name=".mvp.ui.activity.LaunchActivity"
             android:windowSoftInputMode="adjustPan">
@@ -33,13 +34,16 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- arms配置 -->
+        </activity>
+        <!-- arms配置 -->
         <meta-data
             android:name="com.lex_mung.client_android.app.GlobalConfiguration"
-            android:value="ConfigModule" /> <!-- 高德地图key -->
+            android:value="ConfigModule" />
+        <!-- 高德地图key -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="71457a79a362fe6c86f659874a89444a" /> <!-- 定位需要的服务 -->
+            android:value="93a6234c40482b9d898a6214f31a6b2e" />
+        <!-- 定位需要的服务 -->
         <service android:name="com.amap.api.location.APSService" />
 
         <provider
@@ -319,6 +323,12 @@
             android:name=".mvp.ui.activity.MapActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/MapActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".mvp.ui.activity.MapSearchActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />

@@ -73,6 +73,7 @@
     <string name="text_resort_court">常去法院</string>
     <string name="text_resort_p">常去检察院</string>
     <string name="text_search">搜索</string>
+    <string name="text_search_place">搜索地点</string>
     <string name="text_no_certification">未认证</string>
     <string name="text_0_age">0岁</string>
     <string name="text_active">活跃度</string>
@@ -341,5 +342,8 @@
     <string name="text_photo_album_1">相册</string>
     <string name="text_camera">拍摄</string>
     <string name="text_location">位置</string>
+    <string name="text_demand_list">需求列表</string>
+    <string name="text_accept_order_time">接单倒计时%s</string>
+    <string name="text_remaining_service_time">剩余服务时间%s</string>
 
 </resources>
