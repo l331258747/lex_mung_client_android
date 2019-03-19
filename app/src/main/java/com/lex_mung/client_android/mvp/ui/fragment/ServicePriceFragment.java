@@ -34,6 +34,7 @@ import com.lex_mung.client_android.mvp.contract.ServicePriceContract;
 import com.lex_mung.client_android.mvp.presenter.ServicePricePresenter;
 
 import com.lex_mung.client_android.R;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -97,6 +98,7 @@ public class ServicePriceFragment extends BaseFragment<ServicePricePresenter> im
                 if (entity == null) return;
                 if (view.getId() == R.id.item_tv_release) {
                     if (entity.getRequirementType() == 1) {//发需求
+                        MobclickAgent.onEvent(mActivity, "w_y__shouye_jjfa_list_fbxq");
                         bundle.clear();
                         bundle.putInt(BundleTags.ID, entity.getRequireTypeId());
                         bundle.putInt(BundleTags.TYPE, entity.getType());
@@ -104,6 +106,7 @@ public class ServicePriceFragment extends BaseFragment<ServicePricePresenter> im
                         bundle.putSerializable(BundleTags.ENTITY, mPresenter.getEntity());
                         launchActivity(new Intent(mActivity, ReleaseDemandActivity.class), bundle);
                     } else {//电话咨询
+                        MobclickAgent.onEvent(mActivity, "w_y_shouye_zjzx_detail_boda");
                         mPresenter.expertPrice();
                     }
                 }
@@ -138,7 +141,10 @@ public class ServicePriceFragment extends BaseFragment<ServicePricePresenter> im
     @Override
     public void showToPayDialog() {
         new DefaultDialog(mActivity
-                , dialog -> launchActivity(new Intent(mActivity, AccountPayActivity.class))
+                , dialog -> {
+            MobclickAgent.onEvent(mActivity, "w_y_shouye_zjzx_detail_chongzhi");
+            launchActivity(new Intent(mActivity, AccountPayActivity.class));
+        }
                 , getString(R.string.text_call_consult_lack_of_balance)
                 , getString(R.string.text_leave_for_top_up)
                 , getString(R.string.text_cancel))

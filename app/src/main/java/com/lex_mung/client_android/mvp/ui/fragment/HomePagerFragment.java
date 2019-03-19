@@ -35,6 +35,7 @@ import com.lex_mung.client_android.mvp.ui.activity.MessageActivity;
 import com.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import com.lex_mung.client_android.mvp.ui.adapter.HomePageRequirementTypeAdapter;
 import com.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import com.umeng.analytics.MobclickAgent;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
@@ -97,8 +98,24 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         return inflater.inflate(R.layout.fragment_home_pager, container, false);
     }
 
+    private boolean isCreated = false;
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (!isCreated) {
+            return;
+        }
+        if (isVisibleToUser) {
+            MobclickAgent.onPageStart("w_y_shouye_index");
+        } else {
+            MobclickAgent.onPageEnd("w_y_shouye_index");
+        }
+    }
+
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        isCreated = true;
         String freeConsult = "<font color=\"#1EC88C\">"
                 + getString(R.string.text_free)
                 + "</font>"
@@ -226,6 +243,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                 }
                 break;
             case R.id.view_free_consult:
+                MobclickAgent.onEvent(mActivity, "w_y_shouye_index_mfzx");
                 if (mPresenter.isLogin()) {
                     launchActivity(new Intent(mActivity, FreeConsultActivity.class));
                 } else {
@@ -235,6 +253,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                 }
                 break;
             case R.id.view_fast_consult:
+                MobclickAgent.onEvent(mActivity, "w_y_shouye_index_kszx");
                 if (mPresenter.isLogin()) {
                     launchActivity(new Intent(mActivity, FastConsultActivity.class));
                 } else {
@@ -244,6 +263,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                 }
                 break;
             case R.id.view_experts_consult:
+                MobclickAgent.onEvent(mActivity, "w_y_shouye_index_zjzx");
                 if (mPresenter.isLogin()) {
                     launchActivity(new Intent(mActivity, LawyerListActivity.class));
                 } else {

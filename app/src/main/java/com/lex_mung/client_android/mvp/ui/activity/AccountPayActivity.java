@@ -31,6 +31,7 @@ import com.lex_mung.client_android.mvp.contract.AccountPayContract;
 import com.lex_mung.client_android.mvp.presenter.AccountPayPresenter;
 
 import com.lex_mung.client_android.R;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -63,6 +64,20 @@ public class AccountPayActivity extends BaseActivity<AccountPayPresenter> implem
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
         return R.layout.activity_account_pay;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("w_y_shouye_zjzx_chongzhi_list");
+        MobclickAgent.onResume(mActivity);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("w_y_shouye_zjzx_chongzhi_list");
+        MobclickAgent.onPause(mActivity);
     }
 
     @Override
@@ -131,6 +146,7 @@ public class AccountPayActivity extends BaseActivity<AccountPayPresenter> implem
                 mPresenter.setPayType(2);
                 break;
             case R.id.bt_pay:
+                MobclickAgent.onEvent(mActivity, "w_y_chongzhi_list_tj");
                 mPresenter.pay(webView.getSettings().getUserAgentString());
                 break;
         }

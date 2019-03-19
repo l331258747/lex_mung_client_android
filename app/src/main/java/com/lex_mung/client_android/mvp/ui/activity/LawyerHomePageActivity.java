@@ -39,6 +39,7 @@ import com.lex_mung.client_android.mvp.ui.fragment.LawsBusinessCardFragment;
 import com.lex_mung.client_android.mvp.ui.fragment.LawsCaseFragment;
 import com.lex_mung.client_android.mvp.ui.fragment.ServicePriceFragment;
 import com.lex_mung.client_android.mvp.ui.fragment.SocialResourcesFragment;
+import com.umeng.analytics.MobclickAgent;
 import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
 
 import java.util.ArrayList;
@@ -128,6 +129,20 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
         return R.layout.activity_lawyer_home_page;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("w_y_shouye_zjzx_list");
+        MobclickAgent.onResume(mActivity);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("w_y_shouye_zjzx_list");
+        MobclickAgent.onPause(mActivity);
     }
 
     @Override
@@ -238,6 +253,7 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
             viewPager.setOffscreenPageLimit(5);
             viewPager.setAdapter(new AdapterViewPager(getSupportFragmentManager(), fragments, titles));
             tabLayout.setupWithViewPager(viewPager);
+            viewPager.setCurrentItem(1);
         } catch (Exception ignored) {
         }
     }

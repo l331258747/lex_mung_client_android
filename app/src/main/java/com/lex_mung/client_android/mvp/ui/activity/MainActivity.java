@@ -26,6 +26,7 @@ import com.lex_mung.client_android.mvp.ui.fragment.HomePagerFragment;
 import com.lex_mung.client_android.mvp.ui.fragment.MeFragment;
 import com.lex_mung.client_android.mvp.ui.widget.BottomNavigationViewEx;
 import com.lex_mung.client_android.mvp.ui.widget.CustomScrollViewPager;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,6 +116,18 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 if (position == 3
                         && !DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
                     launchActivity(new Intent(mActivity, LoginActivity.class));
+                }
+                switch (position) {
+                    case 0:
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        MobclickAgent.onEvent(mActivity, "w_y_shouye_index_zls");
+                        break;
+                    case 3:
+                        MobclickAgent.onEvent(mActivity, "w_y_shouye_index_wode");
+                        break;
                 }
                 return true;
             }

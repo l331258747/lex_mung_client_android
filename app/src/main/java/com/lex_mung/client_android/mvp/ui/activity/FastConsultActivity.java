@@ -25,6 +25,7 @@ import com.lex_mung.client_android.mvp.presenter.FastConsultPresenter;
 import com.lex_mung.client_android.mvp.ui.dialog.DefaultDialog;
 import com.lex_mung.client_android.mvp.ui.dialog.EasyDialog;
 import com.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -99,6 +100,20 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("w_y_shouye_kszx_detail");
+        MobclickAgent.onResume(mActivity);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("w_y_shouye_kszx_detail");
+        MobclickAgent.onPause(mActivity);
+    }
+
+    @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         mPresenter.onCreate();
         tvOrderMoney.setText(String.format(
@@ -152,7 +167,10 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
 
     @Override
     public void showLackOfBalanceDialog() {
-        new DefaultDialog(mActivity, dialog -> launchActivity(new Intent(mActivity, MyAccountActivity.class))
+        new DefaultDialog(mActivity, dialog -> {
+            MobclickAgent.onEvent(mActivity, "w_y_shouye_kszx_detail_chongzhi");
+            launchActivity(new Intent(mActivity, MyAccountActivity.class));
+        }
                 , getString(R.string.text_lack_of_balance)
                 , getString(R.string.text_leave_for_top_up)
                 , getString(R.string.text_cancel))
@@ -175,6 +193,7 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
             case R.id.tv_fast_consult_tip:
                 break;
             case R.id.view_consult_type:
+                MobclickAgent.onEvent(mActivity, "w_y_shouye_kszx_detail_fenleixuanze");
                 showSelectTypeDialog();
                 break;
             case R.id.tv_mr:
@@ -206,6 +225,7 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
                 mPresenter.setPayType(3);
                 break;
             case R.id.bt_pay:
+                MobclickAgent.onEvent(mActivity, "w_y_shouye_kszx_detail_kszxtj");
                 mPresenter.pay(etUserName.getText().toString(), webView.getSettings().getUserAgentString());
                 break;
             case R.id.tv_change_phone_number:

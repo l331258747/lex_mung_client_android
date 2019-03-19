@@ -18,6 +18,7 @@ import com.lex_mung.client_android.di.module.AddEquitiesOrgModule;
 import com.lex_mung.client_android.mvp.contract.AddEquitiesOrgContract;
 import com.lex_mung.client_android.mvp.presenter.AddEquitiesOrgPresenter;
 import com.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -62,6 +63,20 @@ public class AddEquitiesOrgActivity extends BaseActivity<AddEquitiesOrgPresenter
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
         return R.layout.activity_add_equities_org;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("w_y_qxxz_detail");
+        MobclickAgent.onResume(mActivity);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("w_y_qxxz_detail");
+        MobclickAgent.onPause(mActivity);
     }
 
     @Override

@@ -33,6 +33,7 @@ import com.lex_mung.client_android.mvp.ui.adapter.ReleaseDemandServiceTypeAdapte
 import com.lex_mung.client_android.mvp.ui.dialog.DefaultDialog;
 import com.lex_mung.client_android.mvp.ui.dialog.EasyDialog;
 import com.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -176,6 +177,7 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
             case R.id.tv_fast_consult_tip_1:
                 break;
             case R.id.bt_pay:
+                MobclickAgent.onEvent(mActivity, "w_y__shouye_jjfa_list_fbxqqr");
                 mPresenter.releaseRequirement(webView.getSettings().getUserAgentString()
                         , etMaxMoney.getText().toString()
                         , etProblemDescription.getText().toString());

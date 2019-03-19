@@ -30,6 +30,7 @@ import com.lex_mung.client_android.mvp.ui.adapter.EquitiesAdapter;
 import com.lex_mung.client_android.mvp.ui.adapter.LawyerListAdapter;
 import com.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import com.lex_mung.client_android.mvp.ui.widget.RoundImageView;
+import com.umeng.analytics.MobclickAgent;
 import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
 
 import java.util.List;
@@ -102,8 +103,24 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
         return inflater.inflate(R.layout.fragment_equities, container, false);
     }
 
+    private boolean isCreated = false;
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (!isCreated) {
+            return;
+        }
+        if (isVisibleToUser) {
+            MobclickAgent.onPageStart("w_y_qylb_list");
+        } else {
+            MobclickAgent.onPageEnd("w_y_qylb_list");
+        }
+    }
+
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        isCreated = true;
         initAdapter();
         initRecyclerView();
     }
@@ -127,6 +144,7 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
                 mPresenter.showAllEquitiesLayout();
                 break;
             case R.id.view_all_lawyer:
+                MobclickAgent.onEvent(mActivity, "w_y_qyxq_detail_zls");
                 bundle.clear();
                 bundle.putInt(BundleTags.LEVEL, DataHelper.getIntergerSF(mActivity, DataHelperTags.EQUITIES_LEVEL_ID));
                 launchActivity(new Intent(mActivity, LawyerListActivity.class), bundle);
@@ -145,6 +163,7 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
     private void initAdapter() {
         equitiesAdapter1 = new EquitiesAdapter(mImageLoader, true);
         equitiesAdapter1.setOnItemClickListener((adapter, view, position) -> {
+            MobclickAgent.onEvent(mActivity, "w_y_qylb_detail_dj");
             if (isFastClick()) return;
             EquitiesListEntity entity = equitiesAdapter1.getItem(position);
             if (entity == null) return;

@@ -46,6 +46,7 @@ import com.lex_mung.client_android.R;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -103,6 +104,20 @@ public class LawyerListActivity extends BaseActivity<LawyerListPresenter> implem
                 .lawyerListModule(new LawyerListModule(this))
                 .build()
                 .inject(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("w_y_shouye_zjzx_detail");
+        MobclickAgent.onResume(mActivity);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("w_y_shouye_zjzx_detail");
+        MobclickAgent.onPause(mActivity);
     }
 
     @Override

@@ -32,6 +32,7 @@ import com.lex_mung.client_android.mvp.contract.WebContract;
 import com.lex_mung.client_android.mvp.presenter.WebPresenter;
 
 import com.lex_mung.client_android.R;
+import com.umeng.analytics.MobclickAgent;
 
 import static com.lex_mung.client_android.app.DataHelperTags.TOKEN;
 
@@ -64,6 +65,20 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
         return R.layout.activity_web;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("w_y_shouye_jjfa_list");
+        MobclickAgent.onResume(mActivity);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("w_y_shouye_jjfa_list");
+        MobclickAgent.onPause(mActivity);
     }
 
     @Override
@@ -135,6 +150,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 
     @OnClick(R.id.tv_right)
     public void onViewClicked() {
+        MobclickAgent.onEvent(mActivity, "w_y__shouye_jjfa_list_fenxiang");
         if (!TextUtils.isEmpty(url)
                 && !TextUtils.isEmpty(title)) {
             ShareUtils.shareUrl(mActivity

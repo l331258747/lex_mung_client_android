@@ -19,6 +19,7 @@ import com.lex_mung.client_android.mvp.contract.FreeConsultContract;
 import com.lex_mung.client_android.mvp.presenter.FreeConsultPresenter;
 import com.lex_mung.client_android.mvp.ui.dialog.EasyDialog;
 import com.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +68,20 @@ public class FreeConsultActivity extends BaseActivity<FreeConsultPresenter> impl
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("w_y_shouye_mfzx_wz_list");
+        MobclickAgent.onResume(mActivity);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("w_y_shouye_mfzx_wz_list");
+        MobclickAgent.onPause(mActivity);
+    }
+
+    @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         tvRight.setText(R.string.text_submit);
         tvRight.setVisibility(View.VISIBLE);
@@ -77,6 +92,7 @@ public class FreeConsultActivity extends BaseActivity<FreeConsultPresenter> impl
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_right:
+                MobclickAgent.onEvent(mActivity, "w_y_shouye_mfzx_wz_list_wztj");
                 mPresenter.releaseFreeConsult(etInput.getText().toString());
                 break;
             case R.id.view_consult_type:

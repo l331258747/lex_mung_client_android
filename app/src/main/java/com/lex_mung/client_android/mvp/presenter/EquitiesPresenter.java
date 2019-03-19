@@ -100,6 +100,7 @@ public class EquitiesPresenter extends BasePresenter<EquitiesContract.Model, Equ
                     @Override
                     public void onNext(BaseResponse<List<EquitiesListEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
+                            list_2.clear();
                             list_2.addAll(baseResponse.getData());
                             mRootView.showAllEquitiesLayout();
                             mRootView.hideCurrentEquitiesLayout();
@@ -126,6 +127,8 @@ public class EquitiesPresenter extends BasePresenter<EquitiesContract.Model, Equ
                     @Override
                     public void onNext(BaseResponse<List<EquitiesListEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
+                            list_1.clear();
+                            list_2.clear();
                             for (EquitiesListEntity entity : baseResponse.getData()) {
                                 if (entity.getJoinStatus() == 2) {//已经加入
                                     list_1.add(entity);

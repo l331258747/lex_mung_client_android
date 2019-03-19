@@ -49,6 +49,7 @@ import com.lex_mung.client_android.R;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -117,8 +118,24 @@ public class FindLawyerFragment extends BaseFragment<FindLawyerPresenter> implem
         return inflater.inflate(R.layout.fragment_find_lawyer, container, false);
     }
 
+    private boolean isCreated = false;
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (!isCreated) {
+            return;
+        }
+        if (isVisibleToUser) {
+            MobclickAgent.onPageStart("w_y_zls_index");
+        } else {
+            MobclickAgent.onPageEnd("w_y_zls_index");
+        }
+    }
+
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        isCreated = true;
         mPresenter.onCreate();
         initAdapter();
         initRecyclerView();
