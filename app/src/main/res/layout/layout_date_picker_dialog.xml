@@ -12,32 +12,32 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <com.lex_mung.client_android.mvp.ui.widget.DatePickerView
+        <cn.lex_mung.client_android.mvp.ui.widget.DatePickerView
             android:id="@+id/dp_year"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2" />
 
-        <com.lex_mung.client_android.mvp.ui.widget.DatePickerView
+        <cn.lex_mung.client_android.mvp.ui.widget.DatePickerView
             android:id="@+id/dp_month"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2" />
 
-        <com.lex_mung.client_android.mvp.ui.widget.DatePickerView
+        <cn.lex_mung.client_android.mvp.ui.widget.DatePickerView
             android:id="@+id/dp_day"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2" />
 
-        <com.lex_mung.client_android.mvp.ui.widget.DatePickerView
+        <cn.lex_mung.client_android.mvp.ui.widget.DatePickerView
             android:id="@+id/dp_hour"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:visibility="gone" />
 
 
-        <com.lex_mung.client_android.mvp.ui.widget.DatePickerView
+        <cn.lex_mung.client_android.mvp.ui.widget.DatePickerView
             android:id="@+id/dp_minute"
             android:layout_width="0dp"
             android:layout_height="match_parent"

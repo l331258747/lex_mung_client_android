@@ -11,7 +11,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.lex_mung.client_android"
+        applicationId "cn.lex_mung.client_android"
         minSdkVersion rootProject.ext.android["minSdkVersion"]
         targetSdkVersion rootProject.ext.android["targetSdkVersion"]
         versionCode rootProject.ext.android["versionCode"]
@@ -26,8 +26,8 @@ android {
 
         manifestPlaceholders = [
                 JPUSH_PKGNAME: applicationId,
-//                JPUSH_APPKEY : "3d0cc9317f49b07f3a7b7faa", //正式
-                JPUSH_APPKEY : "84616a1110e090224cbc7a07", //测试
+                JPUSH_APPKEY : "3d0cc9317f49b07f3a7b7faa", //正式
+//                JPUSH_APPKEY : "aa4cfb15e940d5d3e551fea4", //测试
         ]
     }
 

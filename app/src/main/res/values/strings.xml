@@ -3,9 +3,9 @@
     <string name="PeerScreenActivity">筛选</string>
     <string name="LoginActivity">登录</string>
     <string name="EditInfoActivity">编辑信息</string>
-    <string name="FreeConsultActivity">免费咨询</string>
+    <string name="FreeConsultActivity">免费简单咨询</string>
     <string name="FreeConsultDetailActivity">免费咨询详情</string>
-    <string name="FastConsultActivity">快速咨询</string>
+    <string name="FastConsultActivity">专业深度咨询</string>
     <string name="MyAccountActivity">我的账户</string>
     <string name="TransactionListDetailsActivity">交易详情</string>
     <string name="TransactionListActivity">交易明细</string>
@@ -33,13 +33,13 @@
     <string name="text_find_lawyer">找律师</string>
     <string name="text_equities">权益</string>
     <string name="text_search_lawyer">搜索律师</string>
-    <string name="text_free_consult">免费咨询</string>
+    <string name="text_free_consult">免费简单咨询</string>
     <string name="text_free">免费</string>
     <string name="text_free_consult_1">答疑解惑</string>
-    <string name="text_fast_consult">快速咨询</string>
+    <string name="text_fast_consult">专业深度咨询</string>
     <string name="text_fast_consult_1">10分钟</string>
     <string name="text_fast_consult_2">精准匹配</string>
-    <string name="text_experts_consult">专家咨询</string>
+    <string name="text_experts_consult">专家权威咨询</string>
     <string name="text_experts_consult_1">1对1</string>
     <string name="text_experts_consult_2">电话咨询</string>
     <string name="text_share">分享</string>
@@ -146,7 +146,7 @@
     <string name="text_zfb_pay">支付宝</string>
     <string name="text_balance_pay">账户余额</string>
     <string name="text_remaining_amount">(可用余额 %s 元)</string>
-    <string name="text_fast_consult_tip">温馨提示\n1.订单支付成功后，律师最快将在15钟内联系您，请保持电话畅通。\n2.为不影响您的体验，请尽量在工作时间（9:00-20:00）发布咨询。\n3.咨询时间为首次通话的2小时内，请您提前准备好咨询内容。</string>
+    <string name="text_fast_consult_tip">温馨提示\n1.订单支付成功后，律师最快将在15钟内联系您，请保持电话畅通。\n2.为不影响您的体验，请尽量在工作时间（9:00-20:00）发布咨询。\n3.咨询时间为首次通话的30分钟内，请您提前准备好咨询内容。</string>
     <string name="text_fast_consult_tip_1">4.详细流程请查看</string>
     <string name="text_lex_transaction_process">《绿豆圈交易流程及服务规范》</string>
     <string name="text_order_money">订单金额</string>
@@ -280,6 +280,7 @@
     <string name="text_warm_prompt">温馨提示</string>
     <string name="text_call_consult_tip_1">律师咨询价格为【%1$s元/%2$s】，你拥有{%3$s}的专属权益，优惠后价格为【%4$s元/%5$s】，我们将按照秒为单位进行计费，前%6$s免费通话，您当前账户余额可通话时长【%7$s】</string>
     <string name="text_call_consult_tip_2">律师咨询价格为【%1$s元/%2$s】，我们将按照秒为单位进行计费，前%3$s免费通话，您当前账户余额可通话时长【%4$s】</string>
+    <string name="text_call_consult_tip_3">为保护您的个人权益，我们将先为您联系律师，请注意接听%s的电话</string>
     <string name="text_lawyer_region">律师所在区域</string>
     <string name="text_lawyer_field">律师擅长领域</string>
     <string name="text_please_select_lawyer_field">请选择律师擅长领域</string>
@@ -323,9 +324,10 @@
     <string name="text_reply">回复</string>
     <string name="text_please_input_content">请输入内容</string>
     <string name="text_no_less_20">不能少于20个字符</string>
+    <string name="text_no_less_5">不能少于5个字符</string>
     <string name="text_contact_lawyer">联系律师</string>
     <string name="text_order_details_tip_1">温馨提示\n1、为保护您的隐私，平台使用号码保护技术，律师不会看到您的真实电话号码，半小时后该号码会失效。\n2、若律师接单后长时间未回复，您可以点击下方按钮联系律师</string>
-    <string name="text_order_details_tip_2">温馨提示\n专家咨询计费方式=律师每小时收费金额/3600*通话时长(秒)，前30秒免费。</string>
+    <string name="text_order_details_tip_2">温馨提示\n专家咨询计费方式=律师每小时收费金额/3600*用户通话时长(秒)，前15秒免费。</string>
     <string name="text_order_money_1">订单金额:</string>
     <string name="text_order_lawyer">接单律师:</string>
     <string name="text_speak">按住录音</string>
@@ -345,5 +347,7 @@
     <string name="text_demand_list">需求列表</string>
     <string name="text_accept_order_time">接单倒计时%s</string>
     <string name="text_remaining_service_time">剩余服务时间%s</string>
+    <string name="text_know">知道了</string>
+    <string name="text_countdown">联系倒计时:%d</string>
 
 </resources>

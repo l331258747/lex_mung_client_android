@@ -14,5 +14,5 @@
         path="." />
     <external-path
         name="files_root"
-        path="Android/data/com.lex_mung.client_android/" />
+        path="Android/data/cn.lex_mung.client_android/" />
 </paths>

@@ -39,7 +39,7 @@
                 app:layout_constraintGuide_end="@dimen/qb_px_35" />
 
 
-            <com.lex_mung.client_android.mvp.ui.widget.RoundImageView
+            <cn.lex_mung.client_android.mvp.ui.widget.RoundImageView
                 android:id="@+id/iv_equities_bg"
                 android:layout_width="0dp"
                 android:layout_height="0dp"

@@ -85,6 +85,12 @@
                 app:layout_constraintEnd_toEndOf="@id/guideline3"
                 app:layout_constraintStart_toStartOf="@id/guideline2" />
 
+            <android.support.constraint.Group
+                android:id="@+id/group_lawyer_field"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="view_lawyer_field,tv_lawyer_field_x,tv_lawyer_field_text,tv_lawyer_field,iv_lawyer_field" />
+
             <View
                 android:id="@+id/view_lawyer_field"
                 android:layout_width="match_parent"
@@ -94,6 +100,7 @@
                 app:layout_constraintTop_toBottomOf="@id/view_lawyer_region" />
 
             <TextView
+                android:id="@+id/tv_lawyer_field_x"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:includeFontPadding="false"
@@ -134,6 +141,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_lawyer_field_text" />
 
             <ImageView
+                android:id="@+id/iv_lawyer_field"
                 android:layout_width="@dimen/qb_px_30"
                 android:layout_height="@dimen/qb_px_30"
                 android:src="@drawable/ic_right_arrow"

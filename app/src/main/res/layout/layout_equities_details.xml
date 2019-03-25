@@ -81,7 +81,7 @@
             app:layout_constraintEnd_toEndOf="@id/guideline3"
             app:layout_constraintTop_toTopOf="@id/iv_icon" />
 
-        <com.lex_mung.client_android.mvp.ui.widget.RoundImageView
+        <cn.lex_mung.client_android.mvp.ui.widget.RoundImageView
             android:id="@+id/iv_equities_bg"
             android:layout_width="0dp"
             android:layout_height="0dp"

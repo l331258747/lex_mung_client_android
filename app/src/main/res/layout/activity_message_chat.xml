@@ -106,7 +106,7 @@
                 android:layout_marginStart="@dimen/qb_px_35"
                 android:src="@drawable/down_voice_bg" />
 
-            <com.lex_mung.client_android.mvp.ui.widget.RecordVoiceButton
+            <cn.lex_mung.client_android.mvp.ui.widget.RecordVoiceButton
                 android:id="@+id/bt_voice"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"

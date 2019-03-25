@@ -7,7 +7,7 @@
     android:layout_marginTop="@dimen/qb_px_35"
     android:orientation="horizontal">
 
-    <com.lex_mung.client_android.mvp.ui.widget.RoundImageView
+    <cn.lex_mung.client_android.mvp.ui.widget.RoundImageView
         android:id="@+id/item_iv_icon"
         android:layout_width="0dp"
         android:layout_height="0dp"

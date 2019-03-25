@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.lex_mung.client_android.mvp.ui.widget.RoundImageView
+    <cn.lex_mung.client_android.mvp.ui.widget.RoundImageView
         android:id="@+id/item_iv_icon"
         android:layout_width="0dp"
         android:layout_height="@dimen/qb_px_190"

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.lex_mung.client_android.mvp.ui.widget.CustomScrollViewPager
+    <cn.lex_mung.client_android.mvp.ui.widget.CustomScrollViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,7 +18,7 @@
         android:layout_above="@id/bottom_navigation_view_ex"
         android:background="@color/c_b5b5b5" />
 
-    <com.lex_mung.client_android.mvp.ui.widget.BottomNavigationViewEx
+    <cn.lex_mung.client_android.mvp.ui.widget.BottomNavigationViewEx
         android:id="@+id/bottom_navigation_view_ex"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qb_px_110"
