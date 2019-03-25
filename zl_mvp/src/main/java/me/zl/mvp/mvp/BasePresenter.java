@@ -1,22 +1,16 @@
 package me.zl.mvp.mvp;
 
 import android.app.Activity;
-import android.app.Service;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.OnLifecycleEvent;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.SupportActivity;
-import android.view.View;
 
 import me.zl.mvp.integration.EventBusManager;
 import me.zl.mvp.utils.Preconditions;
-import com.trello.rxlifecycle2.RxLifecycle;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
 
 /**
  * 基类 Presenter
@@ -63,7 +57,7 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
         //将 LifecycleObserver 注册给 LifecycleOwner 后 @OnLifecycleEvent 才可以正常使用
         if (mRootView instanceof LifecycleOwner) {
             ((LifecycleOwner) mRootView).getLifecycle().addObserver(this);
-            if (mModel instanceof LifecycleObserver){
+            if (mModel instanceof LifecycleObserver) {
                 ((LifecycleOwner) mRootView).getLifecycle().addObserver((LifecycleObserver) mModel);
             }
         }
@@ -123,5 +117,16 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
         }
     }
 
+    private static final int MIN_DELAY_TIME = 500;  // 两次点击间隔不能少于500ms
+    private static long lastClickTime;
 
+    public static boolean isFastClick() {
+        boolean flag = true;
+        long currentClickTime = System.currentTimeMillis();
+        if ((currentClickTime - lastClickTime) >= MIN_DELAY_TIME) {
+            flag = false;
+        }
+        lastClickTime = currentClickTime;
+        return flag;
+    }
 }

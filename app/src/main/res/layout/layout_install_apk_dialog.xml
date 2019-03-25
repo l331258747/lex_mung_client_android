@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialog_view"
+    android:layout_width="@dimen/qb_px_550"
+    android:layout_height="@dimen/qb_px_220"
+    android:background="@drawable/round_10_ffffff_all"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/qb_px_35"
+        android:layout_marginTop="@dimen/qb_px_35"
+        android:layout_marginEnd="@dimen/qb_px_35"
+        android:includeFontPadding="false"
+        android:text="@string/text_whether_to_install"
+        android:textColor="@color/c_323232"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/tv_cancel"
+        android:layout_width="@dimen/qb_px_100"
+        android:layout_height="@dimen/qb_px_50"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="@dimen/qb_px_35"
+        android:layout_marginBottom="@dimen/qb_px_20"
+        android:layout_toStartOf="@+id/tv_confirm"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="@string/text_cancel"
+        android:textColor="@color/c_b5b5b5"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_confirm"
+        android:layout_width="@dimen/qb_px_100"
+        android:layout_height="@dimen/qb_px_50"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="@dimen/qb_px_20"
+        android:layout_marginBottom="@dimen/qb_px_20"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="@string/text_install"
+        android:textColor="@color/c_06a66a"
+        android:textSize="14sp" />
+</RelativeLayout>

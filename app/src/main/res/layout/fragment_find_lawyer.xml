@@ -24,7 +24,6 @@
                 android:layout_height="@dimen/qb_px_70"
                 android:layout_centerInParent="true"
                 android:layout_marginStart="@dimen/qb_px_35"
-                android:layout_marginEnd="@dimen/qb_px_25"
                 android:background="@drawable/round_10_32b987_all"
                 android:hint="@string/text_search_lawyer"
                 android:imeOptions="actionSearch"
@@ -37,7 +36,7 @@
                 android:textSize="14sp"
                 android:transitionName="tvSearch"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/tv_release_demand"
+                app:layout_constraintEnd_toStartOf="@id/tv_search"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,27 +50,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:layout_width="@dimen/qb_px_45"
-                android:layout_height="@dimen/qb_px_35"
-                android:src="@drawable/ic_release"
-                android:transitionName="ivSearch"
-                app:layout_constraintEnd_toEndOf="@id/tv_release_demand"
-                app:layout_constraintStart_toStartOf="@id/tv_release_demand"
-                app:layout_constraintTop_toTopOf="@id/et_search" />
-
             <TextView
-                android:id="@+id/tv_release_demand"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_search"
+                android:layout_width="@dimen/qb_px_120"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="@dimen/qb_px_35"
-                android:gravity="bottom"
-                android:paddingBottom="@dimen/qb_px_15"
-                android:text="@string/text_release_demand"
+                android:gravity="center"
+                android:text="@string/text_search"
                 android:textColor="@android:color/white"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="parent" />
-
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="parent" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.Toolbar>
 

@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_loading"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:background="@color/c_f4f4f4"
     android:orientation="vertical">
 
     <com.wang.avi.AVLoadingIndicatorView
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:visibility="visible"
-        app:indicatorColor="@color/c_b5b5b5"
+        app:indicatorColor="@color/c_717171"
         app:indicatorName="LineSpinFadeLoaderIndicator" />
 
     <TextView
@@ -19,8 +21,6 @@
         android:layout_marginTop="@dimen/qb_px_35"
         android:includeFontPadding="false"
         android:text="@string/text_loading"
-        android:textColor="@color/c_b5b5b5"
+        android:textColor="@color/c_717171"
         android:textSize="14sp" />
-
-
 </LinearLayout>

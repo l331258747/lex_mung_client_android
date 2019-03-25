@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/button_withe_down"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/item_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_160" />
+
+    <TextView
+        android:id="@+id/item_tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/qb_px_35"
+        android:layout_marginTop="@dimen/qb_px_35"
+        android:layout_marginEnd="@dimen/qb_px_35"
+        android:includeFontPadding="false"
+        android:textColor="@color/c_717171"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@id/item_iv_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_goneMarginStart="@dimen/qb_px_35" />
+
+    <TextView
+        android:id="@+id/item_tv_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/qb_px_35"
+        android:layout_marginTop="@dimen/qb_px_35"
+        android:layout_marginEnd="@dimen/qb_px_35"
+        android:layout_toStartOf="@id/item_iv_icon"
+        android:includeFontPadding="false"
+        android:singleLine="true"
+        android:textColor="@color/c_323232"
+        android:textColorHint="@color/c_b5b5b5"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@id/item_iv_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_tv_title" />
+
+    <ImageView
+        android:id="@+id/item_iv_icon"
+        android:layout_width="@dimen/qb_px_30"
+        android:layout_height="@dimen/qb_px_30"
+        android:layout_marginEnd="@dimen/qb_px_35"
+        android:src="@drawable/ic_right_arrow"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/item_tv_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/item_tv_content"
+        app:layout_goneMarginEnd="@dimen/qb_px_35" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/qb_px_35"
+        android:layout_marginTop="@dimen/qb_px_35"
+        android:layout_marginEnd="@dimen/qb_px_35"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/item_tv_content" />
+
+    <View
+        android:id="@+id/item_35"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_35"
+        android:layout_marginTop="@dimen/qb_px_35"
+        android:background="@color/c_f4f4f4"
+        app:layout_constraintTop_toBottomOf="@id/recycler_view" />
+</android.support.constraint.ConstraintLayout>

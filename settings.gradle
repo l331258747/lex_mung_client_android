@@ -1,1 +1,1 @@
-include ':app', ':zl_mvp', ':imageloader-glide', 'banner'
+include ':app', ':zl_mvp', ':imageloader-glide', 'banner', 'rxdownload3'

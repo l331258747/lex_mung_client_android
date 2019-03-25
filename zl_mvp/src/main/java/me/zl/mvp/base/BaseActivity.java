@@ -132,7 +132,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     /**
      * 是否会使用Fragment
      *
-     * @return 默认会
+     * @return 默认不会
      */
     @Override
     public boolean useFragment() {

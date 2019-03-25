@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
+
+    <ImageView
+        android:id="@+id/item_iv_point"
+        android:layout_width="@dimen/qb_px_35"
+        android:layout_height="@dimen/qb_px_35"
+        android:src="@drawable/ic_point"
+        app:layout_constraintStart_toEndOf="parent" />
+
+    <View
+        android:id="@+id/item_vertical_view"
+        android:layout_width="@dimen/qb_px_4"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/qb_px_10"
+        android:background="@color/c_06a66a"
+        app:layout_constraintBottom_toTopOf="@id/item_view"
+        app:layout_constraintEnd_toEndOf="@id/item_iv_point"
+        app:layout_constraintStart_toStartOf="@id/item_iv_point"
+        app:layout_constraintTop_toBottomOf="@id/item_iv_point" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="@dimen/qb_px_35"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/item_iv_point" />
+
+    <TextView
+        android:id="@+id/item_tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_10"
+        android:includeFontPadding="false"
+        android:textColor="@color/c_b5b5b5"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@id/view"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/item_tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_30"
+        android:includeFontPadding="false"
+        android:textColor="@color/c_323232"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/item_tv_date"
+        app:layout_constraintTop_toBottomOf="@id/item_tv_date" />
+
+    <TextView
+        android:id="@+id/item_tv_identity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_30"
+        android:includeFontPadding="false"
+        android:textColor="@color/c_b5b5b5"
+        android:textSize="13sp"
+        app:layout_constraintStart_toStartOf="@id/item_tv_date"
+        app:layout_constraintTop_toBottomOf="@id/item_tv_name" />
+
+    <View
+        android:layout_width="@dimen/qb_px_2"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/qb_px_25"
+        android:background="@color/c_b5b5b5"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/item_tv_identity"
+        app:layout_constraintStart_toEndOf="@id/item_tv_identity"
+        app:layout_constraintTop_toTopOf="@id/item_tv_identity" />
+
+    <View
+        android:id="@+id/item_view"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/qb_px_10"
+        android:layout_marginTop="@dimen/qb_px_30"
+        app:layout_constraintTop_toBottomOf="@id/item_tv_identity" />
+
+    <View
+        android:id="@+id/item_view_1"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/qb_px_1"
+        android:layout_marginTop="@dimen/qb_px_40"
+        android:background="@color/c_f4f4f4"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/item_tv_identity" />
+
+    <ImageView
+        android:id="@+id/item_iv_arrow"
+        android:layout_width="@dimen/qb_px_30"
+        android:layout_height="@dimen/qb_px_30"
+        android:layout_marginEnd="@dimen/qb_px_35"
+        android:src="@drawable/ic_right_arrow"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</android.support.constraint.ConstraintLayout>
