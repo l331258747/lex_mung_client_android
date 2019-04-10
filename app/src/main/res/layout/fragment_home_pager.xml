@@ -95,20 +95,17 @@
             app:layout_constraintTop_toTopOf="@id/iv_message" />
 
         <android.support.design.widget.CoordinatorLayout
-            android:id="@+id/coordinator_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view">
 
             <android.support.design.widget.AppBarLayout
-                android:id="@+id/app_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fitsSystemWindows="true">
 
                 <android.support.design.widget.CollapsingToolbarLayout
-                    android:id="@+id/collapsing_toolbar_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fitsSystemWindows="true"
@@ -129,7 +126,6 @@
                             app:layout_constraintGuide_begin="@dimen/qb_px_35" />
 
                         <android.support.constraint.Guideline
-                            android:id="@+id/guideline5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
@@ -345,7 +341,6 @@
                     </android.support.constraint.ConstraintLayout>
 
                     <View
-                        android:id="@+id/view_top"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/qb_px_1"
                         app:layout_collapseMode="pin" />

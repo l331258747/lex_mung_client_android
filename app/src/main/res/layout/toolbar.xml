@@ -41,7 +41,6 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tv_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/qb_px_20"
@@ -65,7 +64,6 @@
             android:visibility="gone" />
 
         <ImageView
-            android:id="@+id/iv_share"
             android:layout_width="@dimen/qb_px_60"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"

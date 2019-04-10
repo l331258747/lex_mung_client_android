@@ -580,7 +580,6 @@
                 app:layout_constraintTop_toBottomOf="@id/view_horizontal_line_3" />
 
             <ImageView
-                android:id="@+id/iv_wx"
                 android:layout_width="@dimen/qb_px_35"
                 android:layout_height="@dimen/qb_px_35"
                 android:layout_marginStart="@dimen/qb_px_35"
@@ -623,7 +622,6 @@
                 app:layout_constraintTop_toBottomOf="@id/view_horizontal_line_4" />
 
             <ImageView
-                android:id="@+id/iv_zfb"
                 android:layout_width="@dimen/qb_px_35"
                 android:layout_height="@dimen/qb_px_35"
                 android:layout_marginStart="@dimen/qb_px_35"
