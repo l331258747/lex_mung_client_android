@@ -167,8 +167,8 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
             mRootView.showProblemDescriptionLayout();
         }
         mRootView.setRegion(lawsHomePagerBaseEntity.getRegion());
-        for (LawsHomePagerBaseEntity.BaseInfoBean.BusinessRadarBean businessRadarBean : lawsHomePagerBaseEntity.getBaseInfo().getBusinessRadar()) {
-            fieldList.add(businessRadarBean.getBusinessTypeName());
+        for (LawsHomePagerBaseEntity.ChildBean businessRadarBean : lawsHomePagerBaseEntity.getBusinessInfo()) {
+            fieldList.add(businessRadarBean.getSolutionMarkName());
         }
         if (fieldList.size() == 0) {
             mRootView.hideFieldLayout();
@@ -347,7 +347,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
         map.put("requirementId", 0);
         map.put("isFirst", 1);
         if (lawyerFieldPosition > -1) {
-            map.put("skillId", lawsHomePagerBaseEntity.getBaseInfo().getBusinessRadar().get(lawyerFieldPosition).getBusinessTypeId());
+            map.put("skillId", lawsHomePagerBaseEntity.getBusinessInfo().get(lawyerFieldPosition).getSolutionMarkId());
         }
         map.put("targetLawyerId", lawsHomePagerBaseEntity.getMemberId());
         map.put("lawyerRegionId", lawsHomePagerBaseEntity.getRegionId());

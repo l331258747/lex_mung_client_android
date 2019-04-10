@@ -6,6 +6,7 @@ import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity;
 
 import java.util.List;
 
+import cn.lex_mung.client_android.mvp.ui.adapter.LawyerListAdapter;
 import io.reactivex.Observable;
 import me.zl.mvp.mvp.IView;
 import me.zl.mvp.mvp.IModel;
@@ -13,9 +14,11 @@ import okhttp3.RequestBody;
 
 public interface LawyerListContract {
     interface View extends IView {
-        void setAdapter(List<LawyerEntity.LawyerBean.ListBean> list, boolean isAdd);
-
         void setScreenColor(int color);
+
+        void initRecyclerView(LawyerListAdapter adapter);
+
+        void setEmptyView(LawyerListAdapter adapter);
     }
 
     interface Model extends IModel {

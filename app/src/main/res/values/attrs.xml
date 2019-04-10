@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomEditText">
+        <attr name="react_keys" format="string" />
+        <attr name="sp_mode" format="enum">
+            <enum name="integrated" value="0" />
+            <enum name="breakable" value="1" />
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="SimpleFlowLayout">
+        <attr name="hor_divider_width" format="dimension" />
+        <attr name="hor_row_height" format="dimension" />
+    </declare-styleable>
+</resources>

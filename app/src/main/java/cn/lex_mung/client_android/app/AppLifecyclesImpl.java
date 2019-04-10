@@ -18,6 +18,8 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.commonsdk.UMConfigure;
 
 import butterknife.ButterKnife;
 import cn.jpush.android.api.JPushInterface;
@@ -32,7 +34,7 @@ import static android.content.Context.NOTIFICATION_SERVICE;
  * 需要在application中初始化的东西
  */
 public class AppLifecyclesImpl implements AppLifecycles {
-    private final boolean isDebug = true;//正式环境为true  测试环境为false
+    private final boolean isDebug = false;//正式环境为true  测试环境为false
 
     @Override
     public void attachBaseContext(@NonNull Context base) {
@@ -62,6 +64,11 @@ public class AppLifecyclesImpl implements AppLifecycles {
         JMessageClient.setDebugMode(isDebug);
         JMessageClient.init(application, true);
 
+        //友盟
+        UMConfigure.init(application, "5a54aea7b27b0a6ccb00016a", channel, UMConfigure.DEVICE_TYPE_PHONE, "");
+        UMConfigure.setLogEnabled(!isDebug);
+        MobclickAgent.setScenarioType(application, MobclickAgent.EScenarioType.E_UM_NORMAL);
+        MobclickAgent.setSessionContinueMillis(1000 * 30);
 
         SmartRefreshLayout.setDefaultRefreshHeaderCreator((context, layout) -> {
             layout.setPrimaryColorsId(R.color.c_f4f4f4, R.color.c_b5b5b5);

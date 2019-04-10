@@ -19,6 +19,7 @@ public class DataHelperTags {
     public static final String HOME_PAGE_DATA_2 = "home_page_data_2";//首页数据2
     public static final String HOME_PAGE_DATA_3 = "home_page_data_3";//首页数据3
     public static final String HOME_PAGE_DATA_4 = "home_page_data_4";//首页数据4
+    public static final String LAWS_HOME_PAGER_BASE = "laws_home_pager_base";//律师个人主页数据
     public static final String CHANNEL = "channel";//渠道
     public static final String UUID = "uuid";//uuid
     public static final String PAY_TYPE = "pay_type";//pay_type

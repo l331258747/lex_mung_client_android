@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/qb_px_15"
+    android:layout_marginEnd="@dimen/qb_px_15"
+    android:layout_marginBottom="@dimen/qb_px_30"
+    android:background="@drawable/round_10_ffffff_all"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/qb_px_15"
+        android:layout_marginEnd="@dimen/qb_px_15"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_basic_info"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/qb_px_83"
+            android:layout_marginStart="@dimen/qb_px_30"
+            android:gravity="bottom"
+            android:text="@string/text_base_info"
+            android:textColor="@color/c_323232"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_basic_info"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_10"
+            android:layout_marginBottom="@dimen/qb_px_5"
+            android:src="@drawable/ic_personal_home_page_tag"
+            app:layout_constraintBottom_toBottomOf="@id/tv_basic_info"
+            app:layout_constraintEnd_toEndOf="@id/tv_basic_info"
+            app:layout_constraintStart_toStartOf="@id/tv_basic_info" />
+
+        <TextView
+            android:id="@+id/tv_service_price"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/qb_px_83"
+            android:layout_marginStart="@dimen/qb_px_50"
+            android:gravity="bottom"
+            android:text="@string/text_service_price"
+            android:textColor="@color/c_323232"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_basic_info"
+            app:layout_constraintStart_toEndOf="@id/tv_basic_info" />
+
+        <ImageView
+            android:id="@+id/iv_service_price"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_10"
+            android:layout_marginBottom="@dimen/qb_px_5"
+            android:src="@drawable/ic_personal_home_page_tag"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/tv_service_price"
+            app:layout_constraintEnd_toEndOf="@id/tv_service_price"
+            app:layout_constraintStart_toStartOf="@id/tv_service_price" />
+
+        <TextView
+            android:id="@+id/tv_practice_experience"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/qb_px_83"
+            android:layout_marginStart="@dimen/qb_px_50"
+            android:gravity="bottom"
+            android:text="@string/text_practice_experience"
+            android:textColor="@color/c_323232"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_basic_info"
+            app:layout_constraintStart_toEndOf="@id/tv_service_price" />
+
+        <ImageView
+            android:id="@+id/iv_practice_experience"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_10"
+            android:layout_marginBottom="@dimen/qb_px_5"
+            android:src="@drawable/ic_personal_home_page_tag"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/tv_practice_experience"
+            app:layout_constraintEnd_toEndOf="@id/tv_practice_experience"
+            app:layout_constraintStart_toStartOf="@id/tv_practice_experience" />
+
+        <View
+            android:id="@+id/view_2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_1"
+            android:layout_marginStart="@dimen/qb_px_30"
+            android:layout_marginTop="@dimen/qb_px_100"
+            android:layout_marginEnd="@dimen/qb_px_30"
+            android:background="@color/c_f4f4f4"
+            app:layout_constraintEnd_toEndOf="@id/guideline3"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toTopOf="@id/tv_basic_info" />
+    </android.support.constraint.ConstraintLayout>
+
+    <cn.lex_mung.client_android.mvp.ui.widget.NoScrollViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/qb_px_30" />
+</LinearLayout>

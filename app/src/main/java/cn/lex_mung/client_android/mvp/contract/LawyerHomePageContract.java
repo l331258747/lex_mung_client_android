@@ -1,5 +1,8 @@
 package cn.lex_mung.client_android.mvp.contract;
 
+import android.content.Context;
+import android.support.v4.app.Fragment;
+
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawyerTagsEntity;
@@ -12,7 +15,6 @@ import me.zl.mvp.mvp.IModel;
 
 public interface LawyerHomePageContract {
     interface View extends IView {
-
         void setName(String memberName);
 
         void setAvatar(String iconImage);
@@ -23,33 +25,37 @@ public interface LawyerHomePageContract {
 
         void setTopBg(int icon);
 
-        void setRegionAndInstitutionName(String text);
-
-        void initViewPager(LawsHomePagerBaseEntity entity);
-
-        void setField(String field);
-
-        void hideFieldLayout();
-
-        void setTagsAdapter(List<LawyerTagsEntity> lawyerTags);
-
-        void hideTagsAdapter();
-
-        void setAge(String age);
-
-        void hideAgeLayout();
-
-        void setSex(int bg, int color, int icon);
+        void initViewPager(List<Fragment> fragments);
 
         void hideLikeLayout();
 
         void setLikeLayout(int icon, int color, String string);
 
-        void setPositionNameAndPractice(String format);
+        void setPositionName(String memberPositionName);
 
-        void hideSexIcon();
+        void setInstitutionNameAndPractice(String format);
 
-        void showSexIcon();
+        void setSocialPosition(String toString);
+
+        void hideSocialPosition();
+
+        void setCreditCertification(String tagName);
+
+        void hideCreditCertificationLayout();
+
+        void showMoreSocialPositionLayout();
+
+        void hideFieldLayout();
+
+        void showFieldDialog(LawsHomePagerBaseEntity.ChildBean bean);
+
+        void hideFieldLayout_1();
+
+        Context getActivity();
+
+        void addSimpleFlowLayout(android.view.View itemView, int i);
+
+        void removeViews();
     }
 
     interface Model extends IModel {

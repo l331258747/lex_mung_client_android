@@ -1,11 +1,17 @@
 package cn.lex_mung.client_android.mvp.presenter;
 
 import android.app.Application;
+import android.content.Intent;
+import android.os.Bundle;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.mvp.model.entity.RequireEntity;
+import cn.lex_mung.client_android.mvp.ui.activity.LawyerHomePageActivity;
+import cn.lex_mung.client_android.mvp.ui.adapter.LawyerListAdapter;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -25,6 +31,9 @@ import javax.inject.Inject;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.mvp.contract.LawyerListContract;
@@ -76,6 +85,10 @@ public class LawyerListPresenter extends BasePresenter<LawyerListContract.Model,
     private List<LawyerListScreenEntity> list = new ArrayList<>();
     private Map<String, Object> screenMap = new HashMap<>();
 
+    private LawyerListAdapter adapter;
+    private SmartRefreshLayout smartRefreshLayout;
+
+
     @Inject
     public LawyerListPresenter(LawyerListContract.Model model, LawyerListContract.View rootView) {
         super(model, rootView);
@@ -83,8 +96,12 @@ public class LawyerListPresenter extends BasePresenter<LawyerListContract.Model,
 
     /**
      * 开始执行
+     *
+     * @param smartRefreshLayout SmartRefreshLayout
      */
-    public void onCreate() {
+    public void onCreate(SmartRefreshLayout smartRefreshLayout) {
+        this.smartRefreshLayout = smartRefreshLayout;
+        initAdapter();
         new Thread(this::initJsonData).start();
         getBusinessType();
         getConsultList(false, false);
@@ -153,6 +170,37 @@ public class LawyerListPresenter extends BasePresenter<LawyerListContract.Model,
         getConsultList(false, true);
     }
 
+    private void initAdapter() {
+        adapter = new LawyerListAdapter(mImageLoader);
+        adapter.setOnItemClickListener((adapter1, view, position) -> {
+            if (isFastClick()) return;
+            LawyerEntity.LawyerBean.ListBean bean = adapter.getItem(position);
+            if (bean == null) return;
+            Bundle bundle = new Bundle();
+            bundle.clear();
+            bundle.putInt(BundleTags.ID, bean.getMemberId());
+            mRootView.launchActivity(new Intent(mApplication, LawyerHomePageActivity.class), bundle);
+        });
+        smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                if (pageNum < totalNum) {
+                    pageNum = pageNum + 1;
+                    getConsultList(true, false);
+                } else {
+                    smartRefreshLayout.finishLoadMoreWithNoMoreData();
+                }
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                pageNum = 1;
+                getConsultList(false, false);
+            }
+        });
+        mRootView.initRecyclerView(adapter);
+    }
+
     public void getConsultList(boolean isAdd, boolean isShowLoading) {
         Map<String, Object> map = new HashMap<>();
         map.put("sort", sort);
@@ -187,7 +235,17 @@ public class LawyerListPresenter extends BasePresenter<LawyerListContract.Model,
                             if (baseResponse.isSuccess()) {
                                 totalNum = baseResponse.getData().getPages();
                                 pageNum = baseResponse.getData().getPageNum();
-                                mRootView.setAdapter(baseResponse.getData().getList(), isAdd);
+                                if (isAdd) {
+                                    adapter.addData(baseResponse.getData().getList());
+                                    smartRefreshLayout.finishLoadMore();
+                                } else {
+                                    mRootView.setEmptyView(adapter);
+                                    smartRefreshLayout.finishRefresh();
+                                    adapter.setNewData(baseResponse.getData().getList());
+                                    if (totalNum == pageNum) {
+                                        smartRefreshLayout.finishLoadMoreWithNoMoreData();
+                                    }
+                                }
                             }
                         }
                     });
@@ -210,7 +268,17 @@ public class LawyerListPresenter extends BasePresenter<LawyerListContract.Model,
                             if (baseResponse.isSuccess()) {
                                 totalNum = baseResponse.getData().getPages();
                                 pageNum = baseResponse.getData().getPageNum();
-                                mRootView.setAdapter(baseResponse.getData().getList(), isAdd);
+                                if (isAdd) {
+                                    adapter.addData(baseResponse.getData().getList());
+                                    smartRefreshLayout.finishLoadMore();
+                                } else {
+                                    mRootView.setEmptyView(adapter);
+                                    smartRefreshLayout.finishRefresh();
+                                    adapter.setNewData(baseResponse.getData().getList());
+                                    if (totalNum == pageNum) {
+                                        smartRefreshLayout.finishLoadMoreWithNoMoreData();
+                                    }
+                                }
                             }
                         }
                     });
@@ -250,12 +318,16 @@ public class LawyerListPresenter extends BasePresenter<LawyerListContract.Model,
                 list.clear();
                 screenMap.clear();
                 list.addAll((Collection<? extends LawyerListScreenEntity>) message.obj);
-                for (LawyerListScreenEntity entity : list) {
-                    if (entity.getId() > 0) {
-                        if ("requireTypeId".equals(entity.getPropKey())) {
-                            screenMap.put("require", new RequireEntity(entity.getId(), 0, 0));
+                for (int i = 0; i < list.size(); i++) {
+                    if (list.get(i).getId() > 0) {
+                        if ("requireTypeId".equals(list.get(i).getPropKey())) {
+                            if (i + 1 < list.size()) {
+                                screenMap.put("require", new RequireEntity(list.get(i).getId(), list.get(i + 1).getMinPrice(), list.get(i + 1).getMaxPrice()));
+                            } else {
+                                screenMap.put("require", new RequireEntity(list.get(i).getId(), 0, 0));
+                            }
                         } else {
-                            screenMap.put(entity.getPropKey(), entity.getId());
+                            screenMap.put(list.get(i).getPropKey(), list.get(i).getId());
                         }
                     }
                 }

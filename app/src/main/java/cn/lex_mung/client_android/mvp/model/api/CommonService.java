@@ -102,7 +102,7 @@ public interface CommonService {
      *
      * @return BaseResponse
      */
-    @GET("common/lawyer/search/page/v2")
+    @GET("common/lawyer/search/page/v3")
     Observable<BaseResponse<List<LawyerListScreenEntity>>> getPeerSearchList();
 
     /**
@@ -159,7 +159,7 @@ public interface CommonService {
      *
      * @return UserAllInfoEntity
      */
-    @GET("common/member/homepage/base/v3/{targetMemberId}")
+    @GET("common/member/homepage/base/v4/{targetMemberId}")
     Observable<BaseResponse<LawsHomePagerBaseEntity>> getLawsHomePagerBase(@Path("targetMemberId") int id);
 
     /**
@@ -167,7 +167,7 @@ public interface CommonService {
      *
      * @return UserAllInfoEntity
      */
-    @GET("lawyer/member/homepage/base/v3/{targetMemberId}")
+    @GET("lawyer/member/homepage/base/v4/{targetMemberId}")
     Observable<BaseResponse<LawsHomePagerBaseEntity>> getLawsHomePagerBase1(@Path("targetMemberId") int id);
 
     /**

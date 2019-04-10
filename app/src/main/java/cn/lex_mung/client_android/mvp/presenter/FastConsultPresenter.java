@@ -81,7 +81,7 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
     private int consultTypePos;
     private double payMoney;
     private double balance;
-    private int payType;
+    private int payType = 1;
     private String mobile;
     private String name;
     private int sex = 1;

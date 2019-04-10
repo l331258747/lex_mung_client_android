@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:overScrollMode="never"
+    android:scrollbars="none">
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/cl_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/qb_px_35" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/qb_px_35" />
+
+        <ImageView
+            android:id="@+id/iv_service_firm"
+            android:layout_width="@dimen/qb_px_70"
+            android:layout_height="@dimen/qb_px_70"
+            android:layout_marginTop="@dimen/qb_px_25"
+            android:src="@drawable/ic_personal_home_page_service_firm"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_service_firm_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/qb_px_20"
+            android:includeFontPadding="false"
+            android:text="@string/text_service_firm"
+            android:textColor="@color/c_323232"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/iv_service_firm"
+            app:layout_constraintStart_toEndOf="@id/iv_service_firm"
+            app:layout_constraintTop_toTopOf="@id/iv_service_firm" />
+
+        <TextView
+            android:id="@+id/tv_service_firm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_20"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="@dimen/qb_px_15"
+            android:textColor="@color/c_717171"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintStart_toEndOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/iv_service_firm" />
+
+        <View
+            android:id="@+id/view_1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qb_px_1"
+            android:layout_marginTop="@dimen/qb_px_50"
+            android:background="@color/c_dbdbdb"
+            app:layout_constraintTop_toBottomOf="@id/tv_service_firm" />
+
+        <ImageView
+            android:id="@+id/iv_professional_skill"
+            android:layout_width="@dimen/qb_px_70"
+            android:layout_height="@dimen/qb_px_70"
+            android:layout_marginTop="@dimen/qb_px_80"
+            android:src="@drawable/ic_personal_home_page_skill"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/tv_service_firm" />
+
+        <TextView
+            android:id="@+id/tv_professional_skill_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/qb_px_20"
+            android:includeFontPadding="false"
+            android:text="@string/text_skill"
+            android:textColor="@color/c_323232"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/iv_professional_skill"
+            app:layout_constraintStart_toEndOf="@id/iv_professional_skill"
+            app:layout_constraintTop_toTopOf="@id/iv_professional_skill" />
+
+        <TextView
+            android:id="@+id/tv_professional_skills_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_40"
+            android:includeFontPadding="false"
+            android:text="@string/text_skills"
+            android:textColor="@color/c_323232"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/iv_professional_skill" />
+
+        <TextView
+            android:id="@+id/tv_professional_skills"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_20"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="@dimen/qb_px_15"
+            android:textColor="@color/c_717171"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintStart_toEndOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/tv_professional_skills_text" />
+
+        <TextView
+            android:id="@+id/tv_industry_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_40"
+            android:includeFontPadding="false"
+            android:text="@string/text_industry"
+            android:textColor="@color/c_323232"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/tv_professional_skills" />
+
+        <TextView
+            android:id="@+id/tv_industry"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_20"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="@dimen/qb_px_15"
+            android:textColor="@color/c_717171"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintStart_toEndOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/tv_industry_text" />
+
+        <TextView
+            android:id="@+id/tv_language_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_40"
+            android:includeFontPadding="false"
+            android:text="@string/text_language"
+            android:textColor="@color/c_323232"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/tv_industry" />
+
+        <TextView
+            android:id="@+id/tv_language"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_20"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="@dimen/qb_px_15"
+            android:textColor="@color/c_717171"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintStart_toEndOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/tv_language_text" />
+
+        <TextView
+            android:id="@+id/tv_other_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_40"
+            android:includeFontPadding="false"
+            android:text="@string/text_other"
+            android:textColor="@color/c_323232"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/tv_language" />
+
+        <TextView
+            android:id="@+id/tv_other"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_20"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="@dimen/qb_px_15"
+            android:textColor="@color/c_717171"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintStart_toEndOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/tv_other_text" />
+
+        <View
+            android:id="@+id/view_2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qb_px_1"
+            android:layout_marginTop="@dimen/qb_px_50"
+            android:background="@color/c_dbdbdb"
+            app:layout_constraintTop_toBottomOf="@id/tv_other" />
+
+        <ImageView
+            android:id="@+id/iv_resort_court"
+            android:layout_width="@dimen/qb_px_70"
+            android:layout_height="@dimen/qb_px_70"
+            android:layout_marginTop="@dimen/qb_px_80"
+            android:src="@drawable/ic_personal_home_page_resort_court"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/tv_other" />
+
+        <TextView
+            android:id="@+id/tv_resort_court_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/qb_px_20"
+            android:includeFontPadding="false"
+            android:text="@string/text_resort_court"
+            android:textColor="@color/c_323232"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/iv_resort_court"
+            app:layout_constraintStart_toEndOf="@id/iv_resort_court"
+            app:layout_constraintTop_toTopOf="@id/iv_resort_court" />
+
+        <TextView
+            android:id="@+id/tv_resort_court"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_20"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="@dimen/qb_px_15"
+            android:textColor="@color/c_717171"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintStart_toEndOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/iv_resort_court" />
+
+        <View
+            android:id="@+id/view_3"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qb_px_1"
+            android:layout_marginTop="@dimen/qb_px_50"
+            android:background="@color/c_dbdbdb"
+            app:layout_constraintTop_toBottomOf="@id/tv_resort_court" />
+
+        <ImageView
+            android:id="@+id/iv_resort_p"
+            android:layout_width="@dimen/qb_px_70"
+            android:layout_height="@dimen/qb_px_70"
+            android:layout_marginTop="@dimen/qb_px_80"
+            android:src="@drawable/ic_personal_home_page_resort_p"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/tv_resort_court" />
+
+        <TextView
+            android:id="@+id/tv_resort_p_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/qb_px_20"
+            android:includeFontPadding="false"
+            android:text="@string/text_resort_p"
+            android:textColor="@color/c_323232"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/iv_resort_p"
+            app:layout_constraintStart_toEndOf="@id/iv_resort_p"
+            app:layout_constraintTop_toTopOf="@id/iv_resort_p" />
+
+        <TextView
+            android:id="@+id/tv_resort_p"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_20"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="@dimen/qb_px_15"
+            android:textColor="@color/c_717171"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintStart_toEndOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/iv_resort_p" />
+
+        <View
+            android:id="@+id/view_4"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qb_px_1"
+            android:layout_marginTop="@dimen/qb_px_50"
+            android:background="@color/c_dbdbdb"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/tv_resort_p" />
+
+        <ImageView
+            android:id="@+id/iv_laws_case"
+            android:layout_width="@dimen/qb_px_70"
+            android:layout_height="@dimen/qb_px_70"
+            android:layout_marginTop="@dimen/qb_px_80"
+            android:src="@drawable/ic_personal_home_page_service_case"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/tv_resort_p" />
+
+        <TextView
+            android:id="@+id/tv_laws_case_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/qb_px_20"
+            android:includeFontPadding="false"
+            android:text="@string/text_laws_case"
+            android:textColor="@color/c_323232"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/iv_laws_case"
+            app:layout_constraintStart_toEndOf="@id/iv_laws_case"
+            app:layout_constraintTop_toTopOf="@id/iv_laws_case" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_laws_case"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_20"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/guideline3"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/iv_laws_case" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qb_px_30"
+            app:layout_constraintTop_toBottomOf="@id/recycler_view_laws_case" />
+
+        <include
+            android:id="@+id/no_layout"
+            layout="@layout/layout_empty_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.v4.widget.NestedScrollView>

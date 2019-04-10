@@ -27,7 +27,7 @@ public class LawyerListScreenChildAdapter extends BaseQuickAdapter<LawyerListScr
             helper.setBackgroundRes(R.id.item_tv_title, R.drawable.round_10_06a66a_all);
             helper.setTextColor(R.id.item_tv_title, AppUtils.getColor(mContext, R.color.c_ff));
         } else {
-            helper.setBackgroundRes(R.id.item_tv_title, R.drawable.round_10_ffffff_all_f4f4f4);
+            helper.setBackgroundRes(R.id.item_tv_title, R.drawable.round_10_ffffff_all_717171);
             helper.setTextColor(R.id.item_tv_title, AppUtils.getColor(mContext, R.color.c_b5b5b5));
         }
         helper.setText(R.id.item_tv_title, item.getText());

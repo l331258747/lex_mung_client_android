@@ -1,4 +1,6 @@
 <resources>
+    <string name="appbar_over_scroll_behavior">cn.lex_mung.client_android.app.behavior.FlingBehavior</string>
+
     <string name="app_name">绿豆圈</string>
     <string name="PeerScreenActivity">筛选</string>
     <string name="LoginActivity">登录</string>
@@ -72,6 +74,7 @@
     <string name="text_select_by_province">按省份选择</string>
     <string name="text_resort_court">常去法院</string>
     <string name="text_resort_p">常去检察院</string>
+    <string name="text_laws_case">服务案例</string>
     <string name="text_search">搜索</string>
     <string name="text_search_place">搜索地点</string>
     <string name="text_no_certification">未认证</string>
@@ -254,7 +257,8 @@
     <string name="text_exclusive_equities_1">▪ 专属权益</string>
     <string name="text_apply_to_join">申请加入</string>
     <string name="text_to_pay">去支付</string>
-    <string name="text_please_select">请选择%s</string>
+    <string name="text_please_select">请选择</string>
+    <string name="text_please_select_1">请选择%s</string>
     <string name="text_good_at_field">擅长领域</string>
     <string name="text_lawyer_data">律师数值</string>
     <string name="text_mean_data">平均数值</string>
@@ -262,6 +266,8 @@
     <string name="text_skills">专业技能</string>
     <string name="text_industry">熟悉行业</string>
     <string name="text_language">语言能力</string>
+    <string name="text_service_firm">服务过的企业</string>
+    <string name="text_skill">职业技能</string>
     <string name="text_other">其他技能</string>
     <string name="text_qualification">资格证书</string>
     <string name="text_personal_resume">个人履历</string>
@@ -349,5 +355,9 @@
     <string name="text_remaining_service_time">剩余服务时间%s</string>
     <string name="text_know">知道了</string>
     <string name="text_countdown">联系倒计时:%d</string>
+    <string name="text_min_price">最低价</string>
+    <string name="text_max_price">最高价</string>
+    <string name="text_more">更多</string>
+    <string name="text_practice_experience">执业经验</string>
 
 </resources>

@@ -256,12 +256,16 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
                 list.clear();
                 screenMap.clear();
                 list.addAll((Collection<? extends LawyerListScreenEntity>) message.obj);
-                for (LawyerListScreenEntity entity : list) {
-                    if (entity.getId() > 0) {
-                        if ("requireTypeId".equals(entity.getPropKey())) {
-                            screenMap.put("require", new RequireEntity(entity.getId(), 0, 0));
+                for (int i = 0; i < list.size(); i++) {
+                    if (list.get(i).getId() > 0) {
+                        if ("requireTypeId".equals(list.get(i).getPropKey())) {
+                            if (i + 1 < list.size()) {
+                                screenMap.put("require", new RequireEntity(list.get(i).getId(), list.get(i + 1).getMinPrice(), list.get(i + 1).getMaxPrice()));
+                            } else {
+                                screenMap.put("require", new RequireEntity(list.get(i).getId(), 0, 0));
+                            }
                         } else {
-                            screenMap.put(entity.getPropKey(), entity.getId());
+                            screenMap.put(list.get(i).getPropKey(), list.get(i).getId());
                         }
                     }
                 }
@@ -291,7 +295,7 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
             StringBuilder sb = new StringBuilder();
             InputStream is = mApplication.getAssets().open("city.json");//打开json数据
             byte[] by = new byte[is.available()];//转字节
-            int len = -1;
+            int len;
             while ((len = is.read(by)) != -1) {
                 sb.append(new String(by, 0, len, StandardCharsets.UTF_8));//根据字节长度设置编码
             }

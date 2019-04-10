@@ -1,63 +1,32 @@
 package cn.lex_mung.client_android.mvp.contract;
 
-import cn.lex_mung.client_android.mvp.model.entity.EducationBackgroundEntity;
-import cn.lex_mung.client_android.mvp.model.entity.JobSkillsEntity;
-import cn.lex_mung.client_android.mvp.model.entity.OrgTagsEntity;
-import cn.lex_mung.client_android.mvp.model.entity.WorkexpEntity;
-import cn.lex_mung.client_android.mvp.ui.widget.RadarView;
-
-import java.util.List;
+import cn.lex_mung.client_android.mvp.ui.adapter.PersonalHomePageEducationAdapter;
+import cn.lex_mung.client_android.mvp.ui.adapter.PersonalHomePageWorkAdapter;
 
 import me.zl.mvp.mvp.IView;
 import me.zl.mvp.mvp.IModel;
 
-
 public interface LawsBusinessCardContract {
     interface View extends IView {
-
-        void setOrgAdapter(List<OrgTagsEntity> depositTags);
-
-        void hideOrgLayout();
-
-        void setIndustryAdapter(String industry);
-
-        void setLanguage(String skillName, StringBuilder language);
-
-        void setOther(String skillName, StringBuilder other);
-
-        void setQualification(StringBuilder qualification);
-
-        void setSkillAdapter(String skillName, List<JobSkillsEntity> children);
-
-        void setFieldData(List<RadarView.RadarData> list, List<RadarView.RadarData> meanList);
+        void initRecyclerView(PersonalHomePageWorkAdapter workAdapter, PersonalHomePageEducationAdapter educationAdapter);
 
         void setDescription(String memberDescription);
 
-        void setWorkAdapter(List<WorkexpEntity> workExp);
+        void hideDescriptionLayout();
 
-        void setEducationAdapter(List<EducationBackgroundEntity> education);
+        void setPersonalHonor(String toString);
 
-        void hideFieldLayout();
+        void hidePersonalHonorLayout();
 
-        void hideWorkLayout();
+        void setJoinLawyerTeam(String toString);
+
+        void hideJoinLawyerTeamLayout();
 
         void hideEducationLayout();
 
-        void hideSkillLayout();
-
-        void hideOtherLayout();
-
-        void hideLanguageLayout();
-
-        void hideIndustryLayout();
-
-        void hideQualificationLayout();
-
-        void hideDescriptionLayout();
+        void hideWorkLayout();
 
         void showNoDataLayout();
-
-        void showNoDataLayout1();
     }
 
     interface Model extends IModel {

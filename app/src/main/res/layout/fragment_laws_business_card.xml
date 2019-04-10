@@ -3,22 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
     android:fillViewport="true"
-    android:orientation="vertical"
     android:overScrollMode="never"
     android:scrollbars="none">
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_root"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.constraint.Guideline
-            android:id="@+id/guideline1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="@dimen/qb_px_50" />
+        android:layout_height="match_parent"
+        android:background="@color/c_ff">
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline2"
@@ -34,451 +27,216 @@
             android:orientation="vertical"
             app:layout_constraintGuide_end="@dimen/qb_px_35" />
 
-        <android.support.constraint.Guideline
-            android:id="@+id/guideline4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="@dimen/qb_px_185" />
-
-        <android.support.constraint.Group
-            android:id="@+id/group_field"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:constraint_referenced_ids="tv_field_text,view_line_5,radar_view,view_lawyer_data,tv_lawyer_data,tv_mean_data,view_mean_data,tv_only_for_reference,view_field_bottom,view_1" />
-
-        <TextView
-            android:id="@+id/tv_field_text"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/qb_px_110"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:text="@string/text_good_at_field"
-            android:textColor="@color/c_717171"
-            android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@id/guideline2"
+        <ImageView
+            android:id="@+id/iv_personal_resume"
+            android:layout_width="@dimen/qb_px_70"
+            android:layout_height="@dimen/qb_px_70"
+            android:layout_marginTop="@dimen/qb_px_25"
+            android:src="@drawable/ic_personal_home_page_personal_resume"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <View
-            android:id="@+id/view_line_5"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/qb_px_1"
-            android:background="@color/c_f4f4f4"
-            app:layout_constraintEnd_toStartOf="@id/guideline3"
-            app:layout_constraintStart_toEndOf="@id/guideline2"
-            app:layout_constraintTop_toBottomOf="@id/tv_field_text" />
-
-        <cn.lex_mung.client_android.mvp.ui.widget.RadarView
-            android:id="@+id/radar_view"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/qb_px_700"
-            app:layout_constraintEnd_toStartOf="@id/guideline3"
-            app:layout_constraintStart_toEndOf="@id/guideline2"
-            app:layout_constraintTop_toBottomOf="@id/tv_field_text" />
-
-        <View
-            android:id="@+id/view_lawyer_data"
-            android:layout_width="@dimen/qb_px_50"
-            android:layout_height="@dimen/qb_px_5"
-            android:layout_marginEnd="@dimen/qb_px_25"
-            android:background="@color/c_f8b62d"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_lawyer_data"
-            app:layout_constraintEnd_toStartOf="@id/tv_lawyer_data"
-            app:layout_constraintTop_toTopOf="@+id/tv_lawyer_data" />
-
-        <TextView
-            android:id="@+id/tv_lawyer_data"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/qb_px_20"
-            android:layout_marginEnd="@dimen/qb_px_30"
-            android:includeFontPadding="false"
-            android:text="@string/text_lawyer_data"
-            android:textColor="@color/c_323232"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toStartOf="@id/view"
-            app:layout_constraintTop_toBottomOf="@+id/radar_view" />
-
-        <View
-            android:id="@+id/view_mean_data"
-            android:layout_width="@dimen/qb_px_50"
-            android:layout_height="@dimen/qb_px_5"
-            android:layout_marginStart="@dimen/qb_px_30"
-            android:background="@color/c_caffd6"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_lawyer_data"
-            app:layout_constraintStart_toEndOf="@id/view"
-            app:layout_constraintTop_toTopOf="@+id/tv_lawyer_data" />
-
-        <TextView
-            android:id="@+id/tv_mean_data"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/qb_px_20"
-            android:layout_marginTop="@dimen/qb_px_20"
-            android:layout_marginEnd="@dimen/qb_px_30"
-            android:includeFontPadding="false"
-            android:text="@string/text_mean_data"
-            android:textColor="@color/c_323232"
-            android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@id/view_mean_data"
-            app:layout_constraintTop_toBottomOf="@+id/radar_view" />
-
-        <TextView
-            android:id="@+id/tv_only_for_reference"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/qb_px_20"
-            android:layout_marginTop="@dimen/qb_px_20"
-            android:layout_marginEnd="@dimen/qb_px_30"
-            android:includeFontPadding="false"
-            android:text="@string/text_only_for_reference"
-            android:textColor="@color/c_b5b5b5"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_mean_data" />
-
-        <View
-            android:id="@+id/view"
-            android:layout_width="@dimen/qb_px_1"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <View
-            android:id="@+id/view_field_bottom"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/qb_px_40"
-            app:layout_constraintTop_toBottomOf="@id/tv_only_for_reference" />
-
-        <View
-            android:id="@+id/view_1"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/qb_px_35"
-            android:background="@color/c_f4f4f4"
-            app:layout_constraintTop_toBottomOf="@id/view_field_bottom" />
-
-        <TextView
-            android:id="@+id/tv_skills_text"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/qb_px_60"
-            android:layout_marginTop="@dimen/qb_px_20"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:text="@string/text_skills"
-            android:textColor="@color/c_717171"
-            android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@id/guideline2"
-            app:layout_constraintTop_toBottomOf="@id/view_1" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view_skills"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/qb_px_20"
-            android:minHeight="@dimen/qb_px_60"
-            android:overScrollMode="never"
-            android:scrollbars="none"
-            app:layout_constraintEnd_toStartOf="@id/guideline3"
-            app:layout_constraintStart_toEndOf="@id/guideline4"
-            app:layout_constraintTop_toBottomOf="@id/view_1" />
-
-        <View
-            android:id="@+id/view_line_1"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/qb_px_1"
-            android:layout_marginTop="@dimen/qb_px_15"
-            android:background="@color/c_f4f4f4"
-            app:layout_constraintEnd_toStartOf="@id/guideline3"
-            app:layout_constraintStart_toEndOf="@id/guideline4"
-            app:layout_constraintTop_toBottomOf="@id/recycler_view_skills" />
-
-        <TextView
-            android:id="@+id/tv_industry_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/qb_px_35"
-            android:includeFontPadding="false"
-            android:text="@string/text_industry"
-            android:textColor="@color/c_717171"
-            android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@id/guideline2"
-            app:layout_constraintTop_toBottomOf="@id/view_line_1" />
-
-        <TextView
-            android:id="@+id/tv_industry"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:includeFontPadding="false"
-            android:lineSpacingExtra="@dimen/qb_px_20"
-            android:textColor="@color/c_323232"
-            android:textColorHint="@color/c_b5b5b5"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@id/guideline3"
-            app:layout_constraintStart_toEndOf="@id/guideline4"
-            app:layout_constraintTop_toTopOf="@id/tv_industry_text" />
-
-        <View
-            android:id="@+id/view_line_2"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/qb_px_1"
-            android:layout_marginTop="@dimen/qb_px_35"
-            android:background="@color/c_f4f4f4"
-            app:layout_constraintEnd_toStartOf="@id/guideline3"
-            app:layout_constraintStart_toEndOf="@id/guideline4"
-            app:layout_constraintTop_toBottomOf="@id/tv_industry" />
-
-        <TextView
-            android:id="@+id/tv_language_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/qb_px_35"
-            android:includeFontPadding="false"
-            android:text="@string/text_language"
-            android:textColor="@color/c_717171"
-            android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@id/guideline2"
-            app:layout_constraintTop_toBottomOf="@id/view_line_2" />
-
-        <TextView
-            android:id="@+id/tv_language"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:includeFontPadding="false"
-            android:lineSpacingExtra="@dimen/qb_px_20"
-            android:textColor="@color/c_323232"
-            android:textColorHint="@color/c_b5b5b5"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@id/guideline3"
-            app:layout_constraintStart_toEndOf="@id/guideline4"
-            app:layout_constraintTop_toTopOf="@id/tv_language_text" />
-
-        <View
-            android:id="@+id/view_line_3"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/qb_px_1"
-            android:layout_marginTop="@dimen/qb_px_35"
-            android:background="@color/c_f4f4f4"
-            app:layout_constraintEnd_toStartOf="@id/guideline3"
-            app:layout_constraintStart_toEndOf="@id/guideline4"
-            app:layout_constraintTop_toBottomOf="@id/tv_language" />
-
-        <TextView
-            android:id="@+id/tv_other_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/qb_px_35"
-            android:includeFontPadding="false"
-            android:text="@string/text_other"
-            android:textColor="@color/c_717171"
-            android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@id/guideline2"
-            app:layout_constraintTop_toBottomOf="@id/view_line_3" />
-
-        <TextView
-            android:id="@+id/tv_other"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:includeFontPadding="false"
-            android:lineSpacingExtra="@dimen/qb_px_20"
-            android:textColor="@color/c_323232"
-            android:textColorHint="@color/c_b5b5b5"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@id/guideline3"
-            app:layout_constraintStart_toEndOf="@id/guideline4"
-            app:layout_constraintTop_toTopOf="@id/tv_other_text" />
-
-        <View
-            android:id="@+id/view_line_4"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/qb_px_1"
-            android:layout_marginTop="@dimen/qb_px_35"
-            android:background="@color/c_f4f4f4"
-            app:layout_constraintEnd_toStartOf="@id/guideline3"
-            app:layout_constraintStart_toEndOf="@id/guideline4"
-            app:layout_constraintTop_toBottomOf="@id/tv_other" />
-
-        <TextView
-            android:id="@+id/tv_qualification_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/qb_px_35"
-            android:includeFontPadding="false"
-            android:text="@string/text_qualification"
-            android:textColor="@color/c_717171"
-            android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@id/guideline2"
-            app:layout_constraintTop_toBottomOf="@id/view_line_4" />
-
-        <TextView
-            android:id="@+id/tv_qualification"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:includeFontPadding="false"
-            android:lineSpacingExtra="@dimen/qb_px_20"
-            android:textColor="@color/c_323232"
-            android:textColorHint="@color/c_b5b5b5"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@id/guideline3"
-            app:layout_constraintStart_toEndOf="@id/guideline4"
-            app:layout_constraintTop_toTopOf="@id/tv_qualification_text" />
-
-        <View
-            android:id="@+id/view_2"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/qb_px_35"
-            android:layout_marginTop="16dp"
-            android:background="@color/c_f4f4f4"
-            app:layout_constraintTop_toBottomOf="@id/tv_qualification" />
-
-        <TextView
-            android:id="@+id/tv_work_text"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/qb_px_110"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:text="@string/text_work_experience"
-            android:textColor="@color/c_717171"
-            android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@id/guideline2"
-            app:layout_constraintTop_toBottomOf="@id/view_2" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view_work"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/qb_px_35"
-            android:layout_marginTop="@dimen/qb_px_35"
-            android:minHeight="@dimen/qb_px_35"
-            app:layout_constraintEnd_toStartOf="@id/guideline3"
-            app:layout_constraintStart_toEndOf="@id/tv_work_text"
-            app:layout_constraintTop_toTopOf="@id/tv_work_text" />
-
-        <View
-            android:id="@+id/view_3"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/qb_px_35"
-            android:layout_marginTop="@dimen/qb_px_35"
-            android:background="@color/c_f4f4f4"
-            app:layout_constraintTop_toBottomOf="@id/recycler_view_work" />
-
-        <TextView
-            android:id="@+id/tv_education_text"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/qb_px_110"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:text="@string/text_education"
-            android:textColor="@color/c_717171"
-            android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@id/guideline2"
-            app:layout_constraintTop_toBottomOf="@id/view_3" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view_education"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/qb_px_35"
-            android:layout_marginTop="@dimen/qb_px_35"
-            android:minHeight="@dimen/qb_px_35"
-            app:layout_constraintEnd_toStartOf="@id/guideline3"
-            app:layout_constraintStart_toEndOf="@id/tv_education_text"
-            app:layout_constraintTop_toTopOf="@id/tv_education_text" />
-
-        <View
-            android:id="@+id/view_4"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/qb_px_35"
-            android:layout_marginTop="16dp"
-            android:background="@color/c_f4f4f4"
-            app:layout_constraintTop_toBottomOf="@id/recycler_view_education" />
 
         <TextView
             android:id="@+id/tv_personal_resume_text"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/qb_px_110"
-            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/qb_px_20"
             android:includeFontPadding="false"
             android:text="@string/text_personal_resume"
-            android:textColor="@color/c_717171"
-            android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@id/guideline2"
-            app:layout_constraintTop_toBottomOf="@id/view_4" />
-
-        <View
-            android:id="@+id/view_line_6"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/qb_px_1"
-            android:background="@color/c_f4f4f4"
-            app:layout_constraintEnd_toStartOf="@id/guideline3"
-            app:layout_constraintStart_toEndOf="@id/guideline2"
-            app:layout_constraintTop_toBottomOf="@id/tv_personal_resume_text" />
+            android:textColor="@color/c_323232"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/iv_personal_resume"
+            app:layout_constraintStart_toEndOf="@id/iv_personal_resume"
+            app:layout_constraintTop_toTopOf="@id/iv_personal_resume" />
 
         <TextView
             android:id="@+id/tv_personal_resume"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/qb_px_40"
+            android:layout_marginTop="@dimen/qb_px_20"
             android:includeFontPadding="false"
-            android:lineSpacingExtra="@dimen/qb_px_20"
-            android:textColor="@color/c_323232"
-            android:textColorHint="@color/c_b5b5b5"
-            android:textSize="14sp"
+            android:lineSpacingExtra="@dimen/qb_px_15"
+            android:textColor="@color/c_717171"
+            android:textSize="13sp"
             app:layout_constraintEnd_toStartOf="@id/guideline3"
             app:layout_constraintStart_toEndOf="@id/guideline2"
-            app:layout_constraintTop_toBottomOf="@id/tv_personal_resume_text" />
+            app:layout_constraintTop_toBottomOf="@id/iv_personal_resume" />
 
         <View
-            android:id="@+id/view_personal_resume_bottom"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/qb_px_40"
-            app:layout_constraintTop_toBottomOf="@id/tv_personal_resume" />
-
-        <View
-            android:id="@+id/view_credit_service"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/qb_px_35"
-            android:layout_marginTop="@dimen/qb_px_35"
-            android:background="@color/c_f4f4f4"
-            app:layout_constraintTop_toBottomOf="@id/view_personal_resume_bottom" />
-
-        <TextView
-            android:id="@+id/tv_credit_service_text"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/qb_px_110"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:text="@string/text_credit_service"
-            android:textColor="@color/c_717171"
-            android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@id/guideline2"
-            app:layout_constraintTop_toBottomOf="@id/view_credit_service" />
-
-        <View
-            android:id="@+id/view_line_7"
+            android:id="@+id/view_1"
             android:layout_width="match_parent"
             android:layout_height="@dimen/qb_px_1"
-            android:background="@color/c_f4f4f4"
-            app:layout_constraintTop_toBottomOf="@id/tv_credit_service_text" />
+            android:layout_marginTop="@dimen/qb_px_50"
+            android:background="@color/c_dbdbdb"
+            app:layout_constraintTop_toBottomOf="@id/tv_personal_resume" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view_credit"
+        <ImageView
+            android:id="@+id/iv_personal_honor"
+            android:layout_width="@dimen/qb_px_70"
+            android:layout_height="@dimen/qb_px_70"
+            android:layout_marginTop="@dimen/qb_px_80"
+            android:src="@drawable/ic_personal_home_page_personal_honor"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/tv_personal_resume" />
+
+        <TextView
+            android:id="@+id/tv_personal_honor_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/qb_px_20"
+            android:includeFontPadding="false"
+            android:text="@string/text_personal_honor"
+            android:textColor="@color/c_323232"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/iv_personal_honor"
+            app:layout_constraintStart_toEndOf="@id/iv_personal_honor"
+            app:layout_constraintTop_toTopOf="@id/iv_personal_honor" />
+
+        <TextView
+            android:id="@+id/tv_personal_honor"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:overScrollMode="never"
-            android:scrollbars="none"
-            app:layout_constraintEnd_toEndOf="@id/guideline3"
-            app:layout_constraintStart_toStartOf="@id/guideline2"
-            app:layout_constraintTop_toBottomOf="@id/view_line_7" />
+            android:layout_marginTop="@dimen/qb_px_20"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="@dimen/qb_px_15"
+            android:textColor="@color/c_717171"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintStart_toEndOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/iv_personal_honor" />
 
         <View
-            android:id="@+id/view_bottom"
+            android:id="@+id/view_2"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/qb_px_100"
-            android:background="@color/c_f4f4f4"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recycler_view_credit" />
+            android:layout_height="@dimen/qb_px_1"
+            android:layout_marginTop="@dimen/qb_px_50"
+            android:background="@color/c_dbdbdb"
+            app:layout_constraintTop_toBottomOf="@id/tv_personal_honor" />
+
+        <ImageView
+            android:id="@+id/iv_join_lawyer_team"
+            android:layout_width="@dimen/qb_px_70"
+            android:layout_height="@dimen/qb_px_70"
+            android:layout_marginTop="@dimen/qb_px_80"
+            android:src="@drawable/ic_personal_home_page_join_lawyer_team"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/tv_personal_honor" />
+
+        <TextView
+            android:id="@+id/tv_join_lawyer_team_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/qb_px_20"
+            android:includeFontPadding="false"
+            android:text="@string/text_join_lawyer_team"
+            android:textColor="@color/c_323232"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/iv_join_lawyer_team"
+            app:layout_constraintStart_toEndOf="@id/iv_join_lawyer_team"
+            app:layout_constraintTop_toTopOf="@id/iv_join_lawyer_team" />
+
+        <TextView
+            android:id="@+id/tv_join_lawyer_team"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_20"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="@dimen/qb_px_15"
+            android:textColor="@color/c_717171"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintStart_toEndOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/iv_join_lawyer_team" />
+
+        <View
+            android:id="@+id/view_3"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qb_px_1"
+            android:layout_marginTop="@dimen/qb_px_50"
+            android:background="@color/c_dbdbdb"
+            app:layout_constraintTop_toBottomOf="@id/tv_join_lawyer_team" />
+
+        <ImageView
+            android:id="@+id/iv_work"
+            android:layout_width="@dimen/qb_px_70"
+            android:layout_height="@dimen/qb_px_70"
+            android:layout_marginTop="@dimen/qb_px_80"
+            android:src="@drawable/ic_personal_home_page_work"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/tv_join_lawyer_team" />
+
+        <TextView
+            android:id="@+id/tv_work_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/qb_px_20"
+            android:includeFontPadding="false"
+            android:text="@string/text_work_experience"
+            android:textColor="@color/c_323232"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/iv_work"
+            app:layout_constraintStart_toEndOf="@id/iv_work"
+            app:layout_constraintTop_toTopOf="@id/iv_work" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_work"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_20"
+            android:minHeight="@dimen/qb_px_35"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/iv_work" />
+
+        <View
+            android:id="@+id/view_4"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qb_px_1"
+            android:layout_marginTop="@dimen/qb_px_50"
+            android:background="@color/c_dbdbdb"
+            app:layout_constraintTop_toBottomOf="@id/recycler_view_work" />
+
+        <ImageView
+            android:id="@+id/iv_education"
+            android:layout_width="@dimen/qb_px_70"
+            android:layout_height="@dimen/qb_px_70"
+            android:layout_marginTop="@dimen/qb_px_80"
+            android:src="@drawable/ic_personal_home_page_education"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/recycler_view_work" />
+
+        <TextView
+            android:id="@+id/tv_education_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/qb_px_20"
+            android:includeFontPadding="false"
+            android:text="@string/text_education"
+            android:textColor="@color/c_323232"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/iv_education"
+            app:layout_constraintStart_toEndOf="@id/iv_education"
+            app:layout_constraintTop_toTopOf="@id/iv_education" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_education"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_20"
+            android:minHeight="@dimen/qb_px_35"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/iv_education" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qb_px_30"
+            app:layout_constraintTop_toBottomOf="@id/recycler_view_education" />
 
         <include
             android:id="@+id/no_layout"

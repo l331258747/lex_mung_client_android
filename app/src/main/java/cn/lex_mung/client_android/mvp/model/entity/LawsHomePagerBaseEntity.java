@@ -10,25 +10,27 @@ public class LawsHomePagerBaseEntity implements Serializable {
      * memberName : 杨纯
      * memberRoleId : 5
      * mobile :
-     * sex : 0
+     * sex : 2
      * birthday : 1985-01-01 00:00:00
      * age : 34岁
      * regionId : 430102
-     * region : 湖南省，长沙市
+     * region : 湖南省-长沙市
      * institutionId : 3
      * institutionName : 湖南金州律师事务所
+     * memberPositionId : 4
      * memberPositionName : 律师
-     * businessDescription :
+     * lawyerTags : []
      * beginPracticeDate : 2018-12-26 00:00:00
      * practice : 执业不足1年
      * isCollect : 0
      * isOnline : 1
      * iconImage : http://oss.lex-mung.com/icon_image_member_1699914879.png
      * backgroundImage :
-     * evaluation : {"aspectVitality":{"code":"aspect_vitality","text":"活跃度","description":"补充信息，提升活跃度，让更多用户找到你","tips":"回答免费文字咨询、快速抢单、接听用户电话、接收用户需求都将快速增加您在平台中的活跃度。","score":52,"maxScore":100,"hasFill":1,"child":[{"code":"point_info_integrity","text":"信息完善度","description":"","tips":"","score":2,"maxScore":10,"hasFill":1,"child":[{"code":"point_base","text":"基本信息","description":"","tips":"","score":0,"maxScore":0,"hasFill":1,"child":[]},{"code":"point_business_type","text":"擅长领域","description":"","tips":"","score":0,"maxScore":0,"hasFill":1,"child":[]},{"code":"point_service_price","text":"服务价格","description":"","tips":"","score":0,"maxScore":0,"hasFill":1,"child":[]},{"code":"point_industry","text":"熟悉的行业","description":"","tips":"","score":0,"maxScore":0,"hasFill":1,"child":[]},{"code":"point_court","text":"常去法院","description":"","tips":"","score":0,"maxScore":0,"hasFill":1,"child":[]},{"code":"point_procuratorate","text":"常去检察院","description":"","tips":"","score":0,"maxScore":0,"hasFill":1,"child":[]}]}]},"aspectReliability":{"code":"aspect_reliability","text":"可信度","description":"可信度分数的提高能让您在平台中获得更高价值的订单","tips":"","score":50,"maxScore":100,"hasFill":1,"child":[{"code":"point_qualification","text":"专业证书","description":"","tips":"","score":5,"maxScore":5,"hasFill":1,"child":[]},{"code":"point_social_function","text":"社会职务","description":"","tips":"","score":2,"maxScore":10,"hasFill":1,"child":[]},{"code":"point_honor","text":"所获荣誉","description":"","tips":"","score":3,"maxScore":5,"hasFill":1,"child":[]},{"code":"point_organization","text":"参加的组织","description":"","tips":"","score":0,"maxScore":15,"hasFill":0,"child":[]},{"code":"point_deposit","text":"增信","description":"","tips":"","score":0,"maxScore":10,"hasFill":0,"child":[]}]},"aspectSocial":{"code":"aspect_social","text":"社会资源","description":"社会资源分数的提升能让您在平台中","tips":"","score":79,"maxScore":100,"hasFill":1,"child":[{"code":"point_court","text":"常去法院","description":"","tips":"","score":10,"maxScore":10,"hasFill":1,"child":[]},{"code":"point_procuratorate","text":"常去检察院","description":"","tips":"","score":10,"maxScore":10,"hasFill":1,"child":[]},{"code":"point_education","text":"教育经历","description":"","tips":"","score":5,"maxScore":5,"hasFill":1,"child":[]},{"code":"point_social_social_function","text":"社会职务","description":"","tips":"","score":2,"maxScore":10,"hasFill":1,"child":[]},{"code":"point_social_honor","text":"所获荣誉","description":"","tips":"","score":2,"maxScore":10,"hasFill":1,"child":[]}]},"aspectLitigation":{"code":"aspect_litigation","text":"诉讼经验","description":"诉讼经验是平台根据您在裁判文书网上公开的案件进行获取，如有疑问，请与客服人员进行联系","tips":"","score":52,"maxScore":100,"hasFill":1,"child":[{"code":"point_lawsuit","text":"","description":"","tips":"","score":0,"maxScore":0,"hasFill":0,"child":[]},{"code":"point_litigation_practice_year","text":"执业年限","description":"","tips":"","score":2,"maxScore":10,"hasFill":1,"child":[]}]},"aspectNonLitigation":{"code":"aspect_non_litigation","text":"非诉经验","description":"非诉经验的提升能帮助您在平台中接到大量的企业订单","tips":"","score":52,"maxScore":100,"hasFill":1,"child":[{"code":"point_non_litigation","text":"","description":"","tips":"","score":0,"maxScore":0,"hasFill":0,"child":[]},{"code":"point_corporate_advisory","text":"","description":"","tips":"","score":0,"maxScore":0,"hasFill":0,"child":[]},{"code":"point_practice_year","text":"执业年限","description":"","tips":"","score":2,"maxScore":10,"hasFill":1,"child":[]}]}}
-     * baseInfo : {"businessRadar":[{"businessTypeId":5,"businessTypeNo":"A1-01","businessTypeName":"离婚/夫妻财产/抚养权","score":0.92,"avgScore":0.08},{"businessTypeId":51,"businessTypeNo":"A1-15","businessTypeName":"遗嘱继承/分家析产","score":0.85,"avgScore":0.1},{"businessTypeId":28,"businessTypeNo":"A3-03","businessTypeName":"涉外婚姻","score":0.75,"avgScore":0.16},{"businessTypeId":27,"businessTypeNo":"A3-02","businessTypeName":"海外移民/投资","score":0.31,"avgScore":0.21},{"businessTypeId":6,"businessTypeNo":"A1-02","businessTypeName":"人身伤害/造谣诽谤/医疗纠纷","score":0.24,"avgScore":0.07},{"businessTypeId":48,"businessTypeNo":"A1-13","businessTypeName":"欠款催收/执行案件","score":0.23,"avgScore":0.08}],"skill":[{"skillId":1,"skillNo":"F1","skillName":"专业技能","iconImage":"","parentId":0,"children":[{"skillId":4,"skillNo":"F1-01","skillName":"文书写作","iconImage":"http://oss.lex-mung.com/skill_f1_01.png","parentId":1,"children":[]},{"skillId":5,"skillNo":"F1-02","skillName":"交流沟通","iconImage":"http://oss.lex-mung.com/skill_f1_02.png","parentId":1,"children":[]},{"skillId":6,"skillNo":"F1-03","skillName":"谈判/庭审","iconImage":"http://oss.lex-mung.com/skill_f1_03.png","parentId":1,"children":[]},{"skillId":7,"skillNo":"F1-04","skillName":"演讲培训","iconImage":"http://oss.lex-mung.com/skill_f1_04.png","parentId":1,"children":[]},{"skillId":8,"skillNo":"F1-05","skillName":"尽职调查","iconImage":"http://oss.lex-mung.com/skill_f1_05.png","parentId":1,"children":[]}]},{"skillId":2,"skillNo":"F2","skillName":"其他技能","iconImage":"","parentId":0,"children":[{"skillId":9,"skillNo":"F2-01","skillName":"会计师","iconImage":"","parentId":2,"children":[]},{"skillId":10,"skillNo":"F2-02","skillName":"审计师","iconImage":"","parentId":2,"children":[]}]},{"skillId":3,"skillNo":"F3","skillName":"语言技能","iconImage":"","parentId":0,"children":[{"skillId":18,"skillNo":"F3-01","skillName":"英语","iconImage":"","parentId":3,"children":[]},{"skillId":19,"skillNo":"F3-02","skillName":"日语","iconImage":"","parentId":3,"children":[]},{"skillId":20,"skillNo":"F3-03","skillName":"德语","iconImage":"","parentId":3,"children":[]}]}],"industry":["农/林/牧/渔/其他","保险／金融／信托／拍卖","建筑业／房地产","文化/传媒/娱乐/体育／广告"],"qualifi":["金融类"],"memberDescription":"个人简介，qsxhxudnxnk"}
-     * reliabilityInfo : {"depositTags":[],"orgTags":[],"socialFunction":["区县级人大代表/政协委员"],"honor":["国家优秀律师"],"workExp":[{"tbMemberExtendWorkExperienceId":317,"institutionName":"法律顾问","positionName":"我的手机1小时1","workExperienceImage":"","startDate":"2018-12-24 00:00:00","endDate":"2018-12-24 00:00:00"},{"tbMemberExtendWorkExperienceId":318,"institutionName":"法律顾问","positionName":"我的手机1小时1","workExperienceImage":"","startDate":"2018-12-24 00:00:00","endDate":"2018-12-24 00:00:00"},{"tbMemberExtendWorkExperienceId":319,"institutionName":"法律顾问","positionName":"我的手机1小时1","workExperienceImage":"","startDate":"2018-12-24 00:00:00","endDate":"2018-12-24 00:00:00"},{"tbMemberExtendWorkExperienceId":320,"institutionName":"法律顾问","positionName":"我的手机1小时1","workExperienceImage":"","startDate":"2018-12-24 00:00:00","endDate":"2018-12-24 00:00:00"},{"tbMemberExtendWorkExperienceId":321,"institutionName":"法律顾问","positionName":"我的手机1小时1","workExperienceImage":"","startDate":"2018-12-24 00:00:00","endDate":"2018-12-24 00:00:00"}],"education":[{"memberExtendEducationId":306,"memberId":5022,"educationId":3,"educationTitle":"我的人生观价值观都","educationImage":"","startDate":"2018-12-24 00:00:00","endDate":"2018-12-24 00:00:00","memberExtendStatusId":1321,"sortOrder":0,"status":1,"dateAdded":"2018-12-24 15:04:00","dateModified":"1970-01-01 08:00:00","verifyUserId":0,"educationDescription":"法学","verifyComment":"","educationName":"本科"}]}
-     * socialInfo : {"socialFunction":["区县级人大代表/政协委员"],"honor":["国家优秀律师"],"court":["湖南省长沙市天心区人民法院","长沙市岳麓区人民法院","长沙市芙蓉区人民法院","长沙市雨花区人民法院"],"procuratorate":["长沙市芙蓉区人民检察院","长沙市岳麓区人民检察院","长沙市开福区人民检察院","长沙县人民检察院"]}
+     * businessInfo : []
+     * socialFunction : ["区县级人大代表/政协委员"]
+     * baseInfo : {"memberDescription":"个人简介，qsxhxudnxnk","honor":["国家优秀律师"],"orgTags":[{"tagName":"ceshi","image":"http://oss.lex-mung.com/aa","link":"https://h5-test.lex-mung.com/organization.html?id=18&organizationLevId=0"},{"tagName":"ceshi","image":"http://oss.lex-mung.com/aa","link":"https://h5-test.lex-mung.com/organization.html?id=4&organizationLevId=0"},{"tagName":"长沙市侨商会专属律师团律师","image":"http://oss.lex-mung.com/organization_aa0a4d35b.jpg","link":"https://h5-test.lex-mung.com/organization.html?id=1&organizationLevId=22"},{"tagName":"诉讼融资授信律师200万额度","image":"http://oss.lex-mung.com/organization_a8fcb0d20.jpg","link":"https://h5-test.lex-mung.com/organization.html?id=3&organizationLevId=21"},{"tagName":"湖南省浙江商会","image":"http://oss.lex-mung.com/organization_image_1071512265.png","link":"https://h5-test.lex-mung.com/organization.html?id=16&organizationLevId=18"}],"workExp":[{"tbMemberExtendWorkExperienceId":317,"institutionName":"法律顾问","positionName":"我的手机1小时1","workExperienceImage":"","startDate":"2018-12-24 00:00:00","endDate":"2018-12-24 00:00:00"},{"tbMemberExtendWorkExperienceId":318,"institutionName":"法律顾问","positionName":"我的手机1小时1","workExperienceImage":"","startDate":"2018-12-24 00:00:00","endDate":"2018-12-24 00:00:00"},{"tbMemberExtendWorkExperienceId":319,"institutionName":"法律顾问","positionName":"我的手机1小时1","workExperienceImage":"","startDate":"2018-12-24 00:00:00","endDate":"2018-12-24 00:00:00"},{"tbMemberExtendWorkExperienceId":320,"institutionName":"法律顾问","positionName":"我的手机1小时1","workExperienceImage":"","startDate":"2018-12-24 00:00:00","endDate":"2018-12-24 00:00:00"},{"tbMemberExtendWorkExperienceId":321,"institutionName":"法律顾问","positionName":"我的手机1小时1","workExperienceImage":"","startDate":"2018-12-24 00:00:00","endDate":"2018-12-24 00:00:00"}],"education":[{"memberExtendEducationId":306,"memberId":5022,"educationId":3,"educationTitle":"我的人生观价值观都","educationImage":"","startDate":"2018-12-24 00:00:00","endDate":"2018-12-24 00:00:00","memberExtendStatusId":1321,"sortOrder":0,"status":1,"dateAdded":"2018-12-24 15:04:00","dateModified":"1970-01-01 08:00:00","verifyUserId":0,"educationDescription":"法学","verifyComment":"","educationName":"本科"}]}
+     * requireInfo : [{"memberId":0,"requireTypeId":8,"requireTypeSectionId":0,"minAmount":0,"creater":"","dateAdded":"","dateModified":"","requireTypeName":"电话咨询","rstatus":1,"iconImage":"http://oss.lex-mung.com/Lawyers_homepage_icon_13_max.png","image":"http://oss.lex-mung.com/Lawyers_homepage_icon_13_max.png","unit":"小时","parentId":0,"type":1,"requireTypeDescription":"电话咨询","requirementType":2,"requireTypes":[],"requires":[{"memberId":0,"requireTypeId":20,"requireTypeSectionId":0,"minAmount":0,"creater":"","dateAdded":"","dateModified":"","requireTypeName":"直接拨打","rstatus":1,"iconImage":"","image":"","unit":"小时","parentId":8,"type":1,"requireTypeDescription":"","requirementType":1,"requireTypes":[],"requires":[],"rcount":0}],"rcount":0},{"memberId":0,"requireTypeId":3,"requireTypeSectionId":0,"minAmount":0,"creater":"","dateAdded":"","dateModified":"","requireTypeName":"起草合同","rstatus":1,"iconImage":"http://oss.lex-mung.com/organization_image_15514318526639.png","image":"http://oss.lex-mung.com/organization_image_15514318490679.png","unit":"份","parentId":0,"type":1,"requireTypeDescription":"审查或完全撰写一份合同","requirementType":1,"requireTypes":[],"requires":[{"memberId":0,"requireTypeId":10,"requireTypeSectionId":0,"minAmount":0,"creater":"","dateAdded":"","dateModified":"","requireTypeName":"起草简式合同","rstatus":1,"iconImage":"http://oss.lex-mung.com/organization_image_15506535018269.jpg","image":"http://oss.lex-mung.com/organization_image_15506534901419.jpg","unit":"起","parentId":3,"type":1,"requireTypeDescription":"适用于法律关系比较简单，关系人比较熟悉，签订合同主要是证明作用","requirementType":1,"requireTypes":[],"requires":[],"rcount":0},{"memberId":0,"requireTypeId":11,"requireTypeSectionId":0,"minAmount":0,"creater":"","dateAdded":"","dateModified":"","requireTypeName":"起草标准合同","rstatus":1,"iconImage":"http://oss.lex-mung.com/organization_image_15514129700259.png","image":"http://oss.lex-mung.com/organization_image_15514129665789.png","unit":"起","parentId":3,"type":1,"requireTypeDescription":"正常交易，双方当事人不是特别熟悉，需要合同防范主要的风险，明确双方权利义务","requirementType":1,"requireTypes":[],"requires":[],"rcount":0}],"rcount":0},{"memberId":5022,"requireTypeId":2,"requireTypeSectionId":3,"minAmount":75,"creater":"","dateAdded":"2018-12-21 11:30:41","dateModified":"2019-01-06 03:33:02","requireTypeName":"诉讼/仲裁","rstatus":2,"iconImage":"http://oss.lex-mung.com/organization_image_15514442414219.png","image":"http://oss.lex-mung.com/organization_image_15514442377499.png","unit":"起","parentId":0,"type":2,"requireTypeDescription":"展开依法审理或纠纷裁决","requirementType":1,"requireTypes":[],"requires":[{"memberId":5022,"requireTypeId":15,"requireTypeSectionId":0,"minAmount":75,"creater":"ceshi666","dateAdded":"2019-01-28 15:22:25","dateModified":"2019-01-28 15:22:25","requireTypeName":"诉讼/仲裁","rstatus":2,"iconImage":"http://oss.lex-mung.com/organization_image_15513465049119.png","image":"http://oss.lex-mung.com/organization_image_15513465012279.png","unit":"份","parentId":2,"type":1,"requireTypeDescription":"这是诉讼仲裁","requirementType":1,"requireTypes":[],"requires":[],"rcount":0}],"rcount":1},{"memberId":0,"requireTypeId":4,"requireTypeSectionId":0,"minAmount":0,"creater":"","dateAdded":"","dateModified":"","requireTypeName":"律师函","rstatus":1,"iconImage":"http://oss.lex-mung.com/organization_image_15514443640949.png","image":"http://oss.lex-mung.com/organization_image_15514443599809.png","unit":"份","parentId":0,"type":1,"requireTypeDescription":"向某人或机构发送律师函","requirementType":1,"requireTypes":[],"requires":[{"memberId":0,"requireTypeId":14,"requireTypeSectionId":0,"minAmount":0,"creater":"","dateAdded":"","dateModified":"","requireTypeName":"律师函","rstatus":1,"iconImage":"","image":"","unit":"份","parentId":4,"type":1,"requireTypeDescription":"","requirementType":1,"requireTypes":[],"requires":[],"rcount":0}],"rcount":0},{"memberId":0,"requireTypeId":9,"requireTypeSectionId":0,"minAmount":0,"creater":"","dateAdded":"","dateModified":"","requireTypeName":"线下见面","rstatus":1,"iconImage":"http://oss.lex-mung.com/organization_image_15514443857829.png","image":"http://oss.lex-mung.com/organization_image_15514443819229.png","unit":"次","parentId":0,"type":1,"requireTypeDescription":"线下见面","requirementType":1,"requireTypes":[],"requires":[{"memberId":0,"requireTypeId":21,"requireTypeSectionId":0,"minAmount":0,"creater":"","dateAdded":"","dateModified":"","requireTypeName":"1小时内","rstatus":1,"iconImage":"","image":"","unit":"次","parentId":9,"type":1,"requireTypeDescription":"","requirementType":1,"requireTypes":[],"requires":[],"rcount":0},{"memberId":0,"requireTypeId":22,"requireTypeSectionId":0,"minAmount":0,"creater":"","dateAdded":"","dateModified":"","requireTypeName":"3小时内","rstatus":1,"iconImage":"","image":"","unit":"次","parentId":9,"type":1,"requireTypeDescription":"","requirementType":1,"requireTypes":[],"requires":[],"rcount":0},{"memberId":0,"requireTypeId":29,"requireTypeSectionId":0,"minAmount":0,"creater":"","dateAdded":"","dateModified":"","requireTypeName":"2点12分","rstatus":1,"iconImage":"http://oss.lex-mung.com/1111","image":"http://oss.lex-mung.com/1111","unit":"次","parentId":9,"type":2,"requireTypeDescription":"2点12分","requirementType":1,"requireTypes":[],"requires":[],"rcount":0}],"rcount":0},{"memberId":0,"requireTypeId":6,"requireTypeSectionId":0,"minAmount":0,"creater":"","dateAdded":"","dateModified":"","requireTypeName":"企业顾问","rstatus":1,"iconImage":"http://oss.lex-mung.com/organization_image_15514444051089.png","image":"http://oss.lex-mung.com/organization_image_15514443994699.png","unit":"年","parentId":0,"type":2,"requireTypeDescription":"律师担任长期法律顾问","requirementType":1,"requireTypes":[],"requires":[{"memberId":0,"requireTypeId":17,"requireTypeSectionId":0,"minAmount":0,"creater":"","dateAdded":"","dateModified":"","requireTypeName":"常年法律顾问","rstatus":1,"iconImage":"","image":"","unit":"年","parentId":6,"type":2,"requireTypeDescription":"","requirementType":1,"requireTypes":[],"requires":[],"rcount":0},{"memberId":0,"requireTypeId":18,"requireTypeSectionId":0,"minAmount":0,"creater":"","dateAdded":"","dateModified":"","requireTypeName":"专项法律顾问","rstatus":1,"iconImage":"","image":"","unit":"年","parentId":6,"type":2,"requireTypeDescription":"","requirementType":1,"requireTypes":[],"requires":[],"rcount":0}],"rcount":0},{"memberId":0,"requireTypeId":30,"requireTypeSectionId":0,"minAmount":0,"creater":"","dateAdded":"","dateModified":"","requireTypeName":"审查合同","rstatus":1,"iconImage":"http://oss.lex-mung.com/organization_image_15514319543389.png","image":"http://oss.lex-mung.com/organization_image_15514319497209.png","unit":"起","parentId":0,"type":2,"requireTypeDescription":"审查或完全撰写一份合同","requirementType":1,"requireTypes":[],"requires":[{"memberId":0,"requireTypeId":12,"requireTypeSectionId":0,"minAmount":0,"creater":"","dateAdded":"","dateModified":"","requireTypeName":"审查简式合同","rstatus":1,"iconImage":"http://oss.lex-mung.com/organization_image_15514129835449.png","image":"http://oss.lex-mung.com/organization_image_15514129875329.png","unit":"起","parentId":30,"type":1,"requireTypeDescription":"1111111111111111111111","requirementType":1,"requireTypes":[],"requires":[],"rcount":0},{"memberId":0,"requireTypeId":13,"requireTypeSectionId":0,"minAmount":0,"creater":"","dateAdded":"","dateModified":"","requireTypeName":"审查标准合同","rstatus":1,"iconImage":"http://oss.lex-mung.com/organization_image_15514130184759.png","image":"http://oss.lex-mung.com/organization_image_15514130117749.png","unit":"起","parentId":30,"type":1,"requireTypeDescription":"1111111111111","requirementType":1,"requireTypes":[],"requires":[],"rcount":0}],"rcount":0},{"memberId":0,"requireTypeId":5,"requireTypeSectionId":0,"minAmount":0,"creater":"","dateAdded":"","dateModified":"","requireTypeName":"意见书","rstatus":1,"iconImage":"http://oss.lex-mung.com/Lawyers_homepage_icon_08_max.png","image":"http://oss.lex-mung.com/Lawyers_homepage_icon_08_max.png","unit":"份","parentId":0,"type":2,"requireTypeDescription":"律师提供法律指导及建议","requirementType":1,"requireTypes":[],"requires":[{"memberId":0,"requireTypeId":16,"requireTypeSectionId":0,"minAmount":0,"creater":"","dateAdded":"","dateModified":"","requireTypeName":"法律意见书","rstatus":1,"iconImage":"","image":"","unit":"份","parentId":5,"type":2,"requireTypeDescription":"","requirementType":1,"requireTypes":[],"requires":[],"rcount":0},{"memberId":0,"requireTypeId":24,"requireTypeSectionId":0,"minAmount":0,"creater":"","dateAdded":"","dateModified":"","requireTypeName":"测试用的","rstatus":1,"iconImage":"http://oss.lex-mung.com/organization_image_15506535606549.jpg","image":"http://oss.lex-mung.com/organization_image_15506535555699.jpg","unit":"","parentId":5,"type":1,"requireTypeDescription":"1111111","requirementType":1,"requireTypes":[],"requires":[],"rcount":0}],"rcount":0},{"memberId":0,"requireTypeId":7,"requireTypeSectionId":0,"minAmount":0,"creater":"","dateAdded":"","dateModified":"","requireTypeName":"尽职调查","rstatus":1,"iconImage":"http://oss.lex-mung.com/Lawyers_homepage_icon_07_max.png","image":"http://oss.lex-mung.com/Lawyers_homepage_icon_07_max.png","unit":"次","parentId":0,"type":2,"requireTypeDescription":"对公司整体状况进行调查","requirementType":1,"requireTypes":[],"requires":[{"memberId":0,"requireTypeId":19,"requireTypeSectionId":0,"minAmount":0,"creater":"","dateAdded":"","dateModified":"","requireTypeName":"尽职调查","rstatus":1,"iconImage":"","image":"","unit":"次","parentId":7,"type":2,"requireTypeDescription":"","requirementType":1,"requireTypes":[],"requires":[],"rcount":0}],"rcount":0}]
+     * practiceInfo : {"served":["中国移动通信股份有限公司湖南分公司","中国联通","测试数据"],"industry":["农/林/牧/渔/其他","保险／金融／信托／拍卖","建筑业／房地产","文化/传媒/娱乐/体育／广告"],"baseSkill":["文书写作","交流沟通","谈判/庭审","演讲培训","尽职调查"],"otherSkill":["会计师","审计师"],"langSkill":["英语","日语","德语"],"court":["湖南省长沙市天心区人民法院","长沙市岳麓区人民法院","长沙市芙蓉区人民法院","长沙市雨花区人民法院"],"procuratorate":["长沙市芙蓉区人民检察院","长沙市岳麓区人民检察院","长沙市开福区人民检察院","长沙县人民检察院"]}
      */
 
     private int memberId;
@@ -42,28 +44,35 @@ public class LawsHomePagerBaseEntity implements Serializable {
     private String region;
     private int institutionId;
     private String institutionName;
+    private int memberPositionId;
     private String memberPositionName;
-    private String businessDescription;
     private String beginPracticeDate;
     private String practice;
     private int isCollect;
     private int isOnline;
+    private List<OrgTagsEntity> lawyerTags;
+    private List<ChildBean> businessInfo;
     private String iconImage;
     private String backgroundImage;
-    private List<LawyerEvaluationEntity> evaluationList;
     private BaseInfoBean baseInfo;
-    private ReliabilityInfoBean reliabilityInfo;
-    private SocialInfoBean socialInfo;
-    private List<LawyerTagsEntity> lawyerTags;
+    private PracticeInfoBean practiceInfo;
+    private List<String> socialFunction;
     private List<BusinessEntity> requireInfo;
-    private List<DynamicInfoBean> activityInfo;
 
-    public List<DynamicInfoBean> getActivityInfo() {
-        return activityInfo;
+    public List<ChildBean> getBusinessInfo() {
+        return businessInfo;
     }
 
-    public void setActivityInfo(List<DynamicInfoBean> activityInfo) {
-        this.activityInfo = activityInfo;
+    public void setBusinessInfo(List<ChildBean> businessInfo) {
+        this.businessInfo = businessInfo;
+    }
+
+    public List<OrgTagsEntity> getLawyerTags() {
+        return lawyerTags;
+    }
+
+    public void setLawyerTags(List<OrgTagsEntity> lawyerTags) {
+        this.lawyerTags = lawyerTags;
     }
 
     public int getMemberId() {
@@ -154,20 +163,20 @@ public class LawsHomePagerBaseEntity implements Serializable {
         this.institutionName = institutionName;
     }
 
+    public int getMemberPositionId() {
+        return memberPositionId;
+    }
+
+    public void setMemberPositionId(int memberPositionId) {
+        this.memberPositionId = memberPositionId;
+    }
+
     public String getMemberPositionName() {
         return memberPositionName;
     }
 
     public void setMemberPositionName(String memberPositionName) {
         this.memberPositionName = memberPositionName;
-    }
-
-    public String getBusinessDescription() {
-        return businessDescription;
-    }
-
-    public void setBusinessDescription(String businessDescription) {
-        this.businessDescription = businessDescription;
     }
 
     public String getBeginPracticeDate() {
@@ -218,14 +227,6 @@ public class LawsHomePagerBaseEntity implements Serializable {
         this.backgroundImage = backgroundImage;
     }
 
-    public List<LawyerEvaluationEntity> getEvaluationList() {
-        return evaluationList;
-    }
-
-    public void setEvaluationList(List<LawyerEvaluationEntity> evaluationList) {
-        this.evaluationList = evaluationList;
-    }
-
     public BaseInfoBean getBaseInfo() {
         return baseInfo;
     }
@@ -234,28 +235,20 @@ public class LawsHomePagerBaseEntity implements Serializable {
         this.baseInfo = baseInfo;
     }
 
-    public ReliabilityInfoBean getReliabilityInfo() {
-        return reliabilityInfo;
+    public PracticeInfoBean getPracticeInfo() {
+        return practiceInfo;
     }
 
-    public void setReliabilityInfo(ReliabilityInfoBean reliabilityInfo) {
-        this.reliabilityInfo = reliabilityInfo;
+    public void setPracticeInfo(PracticeInfoBean practiceInfo) {
+        this.practiceInfo = practiceInfo;
     }
 
-    public SocialInfoBean getSocialInfo() {
-        return socialInfo;
+    public List<String> getSocialFunction() {
+        return socialFunction;
     }
 
-    public void setSocialInfo(SocialInfoBean socialInfo) {
-        this.socialInfo = socialInfo;
-    }
-
-    public List<LawyerTagsEntity> getLawyerTags() {
-        return lawyerTags;
-    }
-
-    public void setLawyerTags(List<LawyerTagsEntity> lawyerTags) {
-        this.lawyerTags = lawyerTags;
+    public void setSocialFunction(List<String> socialFunction) {
+        this.socialFunction = socialFunction;
     }
 
     public List<BusinessEntity> getRequireInfo() {
@@ -268,18 +261,18 @@ public class LawsHomePagerBaseEntity implements Serializable {
 
     public static class BaseInfoBean implements Serializable {
         /**
-         * businessRadar : [{"businessTypeId":5,"businessTypeNo":"A1-01","businessTypeName":"离婚/夫妻财产/抚养权","score":0.92,"avgScore":0.08},{"businessTypeId":51,"businessTypeNo":"A1-15","businessTypeName":"遗嘱继承/分家析产","score":0.85,"avgScore":0.1},{"businessTypeId":28,"businessTypeNo":"A3-03","businessTypeName":"涉外婚姻","score":0.75,"avgScore":0.16},{"businessTypeId":27,"businessTypeNo":"A3-02","businessTypeName":"海外移民/投资","score":0.31,"avgScore":0.21},{"businessTypeId":6,"businessTypeNo":"A1-02","businessTypeName":"人身伤害/造谣诽谤/医疗纠纷","score":0.24,"avgScore":0.07},{"businessTypeId":48,"businessTypeNo":"A1-13","businessTypeName":"欠款催收/执行案件","score":0.23,"avgScore":0.08}]
-         * skill : [{"skillId":1,"skillNo":"F1","skillName":"专业技能","iconImage":"","parentId":0,"children":[{"skillId":4,"skillNo":"F1-01","skillName":"文书写作","iconImage":"http://oss.lex-mung.com/skill_f1_01.png","parentId":1,"children":[]},{"skillId":5,"skillNo":"F1-02","skillName":"交流沟通","iconImage":"http://oss.lex-mung.com/skill_f1_02.png","parentId":1,"children":[]},{"skillId":6,"skillNo":"F1-03","skillName":"谈判/庭审","iconImage":"http://oss.lex-mung.com/skill_f1_03.png","parentId":1,"children":[]},{"skillId":7,"skillNo":"F1-04","skillName":"演讲培训","iconImage":"http://oss.lex-mung.com/skill_f1_04.png","parentId":1,"children":[]},{"skillId":8,"skillNo":"F1-05","skillName":"尽职调查","iconImage":"http://oss.lex-mung.com/skill_f1_05.png","parentId":1,"children":[]}]},{"skillId":2,"skillNo":"F2","skillName":"其他技能","iconImage":"","parentId":0,"children":[{"skillId":9,"skillNo":"F2-01","skillName":"会计师","iconImage":"","parentId":2,"children":[]},{"skillId":10,"skillNo":"F2-02","skillName":"审计师","iconImage":"","parentId":2,"children":[]}]},{"skillId":3,"skillNo":"F3","skillName":"语言技能","iconImage":"","parentId":0,"children":[{"skillId":18,"skillNo":"F3-01","skillName":"英语","iconImage":"","parentId":3,"children":[]},{"skillId":19,"skillNo":"F3-02","skillName":"日语","iconImage":"","parentId":3,"children":[]},{"skillId":20,"skillNo":"F3-03","skillName":"德语","iconImage":"","parentId":3,"children":[]}]}]
-         * industry : ["农/林/牧/渔/其他","保险／金融／信托／拍卖","建筑业／房地产","文化/传媒/娱乐/体育／广告"]
-         * qualifi : ["金融类"]
          * memberDescription : 个人简介，qsxhxudnxnk
+         * honor : ["国家优秀律师"]
+         * orgTags : [{"tagName":"ceshi","image":"http://oss.lex-mung.com/aa","link":"https://h5-test.lex-mung.com/organization.html?id=18&organizationLevId=0"},{"tagName":"ceshi","image":"http://oss.lex-mung.com/aa","link":"https://h5-test.lex-mung.com/organization.html?id=4&organizationLevId=0"},{"tagName":"长沙市侨商会专属律师团律师","image":"http://oss.lex-mung.com/organization_aa0a4d35b.jpg","link":"https://h5-test.lex-mung.com/organization.html?id=1&organizationLevId=22"},{"tagName":"诉讼融资授信律师200万额度","image":"http://oss.lex-mung.com/organization_a8fcb0d20.jpg","link":"https://h5-test.lex-mung.com/organization.html?id=3&organizationLevId=21"},{"tagName":"湖南省浙江商会","image":"http://oss.lex-mung.com/organization_image_1071512265.png","link":"https://h5-test.lex-mung.com/organization.html?id=16&organizationLevId=18"}]
+         * workExp : [{"tbMemberExtendWorkExperienceId":317,"institutionName":"法律顾问","positionName":"我的手机1小时1","workExperienceImage":"","startDate":"2018-12-24 00:00:00","endDate":"2018-12-24 00:00:00"},{"tbMemberExtendWorkExperienceId":318,"institutionName":"法律顾问","positionName":"我的手机1小时1","workExperienceImage":"","startDate":"2018-12-24 00:00:00","endDate":"2018-12-24 00:00:00"},{"tbMemberExtendWorkExperienceId":319,"institutionName":"法律顾问","positionName":"我的手机1小时1","workExperienceImage":"","startDate":"2018-12-24 00:00:00","endDate":"2018-12-24 00:00:00"},{"tbMemberExtendWorkExperienceId":320,"institutionName":"法律顾问","positionName":"我的手机1小时1","workExperienceImage":"","startDate":"2018-12-24 00:00:00","endDate":"2018-12-24 00:00:00"},{"tbMemberExtendWorkExperienceId":321,"institutionName":"法律顾问","positionName":"我的手机1小时1","workExperienceImage":"","startDate":"2018-12-24 00:00:00","endDate":"2018-12-24 00:00:00"}]
+         * education : [{"memberExtendEducationId":306,"memberId":5022,"educationId":3,"educationTitle":"我的人生观价值观都","educationImage":"","startDate":"2018-12-24 00:00:00","endDate":"2018-12-24 00:00:00","memberExtendStatusId":1321,"sortOrder":0,"status":1,"dateAdded":"2018-12-24 15:04:00","dateModified":"1970-01-01 08:00:00","verifyUserId":0,"educationDescription":"法学","verifyComment":"","educationName":"本科"}]
          */
 
         private String memberDescription;
-        private List<BusinessRadarBean> businessRadar;
-        private List<JobSkillsEntity> skill;
-        private List<String> industry;
-        private List<String> qualifi;
+        private List<String> honor;
+        private List<OrgTagsEntity> orgTags;
+        private List<WorkexpEntity> workExp;
+        private List<EducationBackgroundEntity> education;
 
         public String getMemberDescription() {
             return memberDescription;
@@ -289,232 +282,12 @@ public class LawsHomePagerBaseEntity implements Serializable {
             this.memberDescription = memberDescription;
         }
 
-        public List<BusinessRadarBean> getBusinessRadar() {
-            return businessRadar;
+        public List<String> getHonor() {
+            return honor;
         }
 
-        public void setBusinessRadar(List<BusinessRadarBean> businessRadar) {
-            this.businessRadar = businessRadar;
-        }
-
-        public List<JobSkillsEntity> getSkill() {
-            return skill;
-        }
-
-        public void setSkill(List<JobSkillsEntity> skill) {
-            this.skill = skill;
-        }
-
-        public List<String> getIndustry() {
-            return industry;
-        }
-
-        public void setIndustry(List<String> industry) {
-            this.industry = industry;
-        }
-
-        public List<String> getQualifi() {
-            return qualifi;
-        }
-
-        public void setQualifi(List<String> qualifi) {
-            this.qualifi = qualifi;
-        }
-
-        public static class BusinessRadarBean implements Serializable {
-            /**
-             * businessTypeId : 5
-             * businessTypeNo : A1-01
-             * businessTypeName : 离婚/夫妻财产/抚养权
-             * score : 0.92
-             * avgScore : 0.08
-             */
-
-            private int businessTypeId;
-            private String businessTypeNo;
-            private String businessTypeName;
-            private double score;
-            private double avgScore;
-
-            public int getBusinessTypeId() {
-                return businessTypeId;
-            }
-
-            public void setBusinessTypeId(int businessTypeId) {
-                this.businessTypeId = businessTypeId;
-            }
-
-            public String getBusinessTypeNo() {
-                return businessTypeNo;
-            }
-
-            public void setBusinessTypeNo(String businessTypeNo) {
-                this.businessTypeNo = businessTypeNo;
-            }
-
-            public String getBusinessTypeName() {
-                return businessTypeName;
-            }
-
-            public void setBusinessTypeName(String businessTypeName) {
-                this.businessTypeName = businessTypeName;
-            }
-
-            public double getScore() {
-                return score;
-            }
-
-            public void setScore(double score) {
-                this.score = score;
-            }
-
-            public double getAvgScore() {
-                return avgScore;
-            }
-
-            public void setAvgScore(double avgScore) {
-                this.avgScore = avgScore;
-            }
-        }
-
-        public static class SkillBean implements Serializable {
-            /**
-             * skillId : 1
-             * skillNo : F1
-             * skillName : 专业技能
-             * iconImage :
-             * parentId : 0
-             * children : [{"skillId":4,"skillNo":"F1-01","skillName":"文书写作","iconImage":"http://oss.lex-mung.com/skill_f1_01.png","parentId":1,"children":[]},{"skillId":5,"skillNo":"F1-02","skillName":"交流沟通","iconImage":"http://oss.lex-mung.com/skill_f1_02.png","parentId":1,"children":[]},{"skillId":6,"skillNo":"F1-03","skillName":"谈判/庭审","iconImage":"http://oss.lex-mung.com/skill_f1_03.png","parentId":1,"children":[]},{"skillId":7,"skillNo":"F1-04","skillName":"演讲培训","iconImage":"http://oss.lex-mung.com/skill_f1_04.png","parentId":1,"children":[]},{"skillId":8,"skillNo":"F1-05","skillName":"尽职调查","iconImage":"http://oss.lex-mung.com/skill_f1_05.png","parentId":1,"children":[]}]
-             */
-
-            private int skillId;
-            private String skillNo;
-            private String skillName;
-            private String iconImage;
-            private int parentId;
-            private List<ChildrenBean> children;
-
-            public int getSkillId() {
-                return skillId;
-            }
-
-            public void setSkillId(int skillId) {
-                this.skillId = skillId;
-            }
-
-            public String getSkillNo() {
-                return skillNo;
-            }
-
-            public void setSkillNo(String skillNo) {
-                this.skillNo = skillNo;
-            }
-
-            public String getSkillName() {
-                return skillName;
-            }
-
-            public void setSkillName(String skillName) {
-                this.skillName = skillName;
-            }
-
-            public String getIconImage() {
-                return iconImage;
-            }
-
-            public void setIconImage(String iconImage) {
-                this.iconImage = iconImage;
-            }
-
-            public int getParentId() {
-                return parentId;
-            }
-
-            public void setParentId(int parentId) {
-                this.parentId = parentId;
-            }
-
-            public List<ChildrenBean> getChildren() {
-                return children;
-            }
-
-            public void setChildren(List<ChildrenBean> children) {
-                this.children = children;
-            }
-
-            public static class ChildrenBean implements Serializable {
-                /**
-                 * skillId : 4
-                 * skillNo : F1-01
-                 * skillName : 文书写作
-                 * iconImage : http://oss.lex-mung.com/skill_f1_01.png
-                 * parentId : 1
-                 * children : []
-                 */
-
-                private int skillId;
-                private String skillNo;
-                private String skillName;
-                private String iconImage;
-                private int parentId;
-
-                public int getSkillId() {
-                    return skillId;
-                }
-
-                public void setSkillId(int skillId) {
-                    this.skillId = skillId;
-                }
-
-                public String getSkillNo() {
-                    return skillNo;
-                }
-
-                public void setSkillNo(String skillNo) {
-                    this.skillNo = skillNo;
-                }
-
-                public String getSkillName() {
-                    return skillName;
-                }
-
-                public void setSkillName(String skillName) {
-                    this.skillName = skillName;
-                }
-
-                public String getIconImage() {
-                    return iconImage;
-                }
-
-                public void setIconImage(String iconImage) {
-                    this.iconImage = iconImage;
-                }
-
-                public int getParentId() {
-                    return parentId;
-                }
-
-                public void setParentId(int parentId) {
-                    this.parentId = parentId;
-                }
-            }
-        }
-    }
-
-    public static class ReliabilityInfoBean implements Serializable {
-        private List<OrgTagsEntity> depositTags;
-        private List<OrgTagsEntity> orgTags;
-        private List<String> socialFunction;
-        private List<String> honor;
-        private List<WorkexpEntity> workExp;
-        private List<EducationBackgroundEntity> education;
-
-        public List<OrgTagsEntity> getDepositTags() {
-            return depositTags;
-        }
-
-        public void setDepositTags(List<OrgTagsEntity> depositTags) {
-            this.depositTags = depositTags;
+        public void setHonor(List<String> honor) {
+            this.honor = honor;
         }
 
         public List<OrgTagsEntity> getOrgTags() {
@@ -523,22 +296,6 @@ public class LawsHomePagerBaseEntity implements Serializable {
 
         public void setOrgTags(List<OrgTagsEntity> orgTags) {
             this.orgTags = orgTags;
-        }
-
-        public List<String> getSocialFunction() {
-            return socialFunction;
-        }
-
-        public void setSocialFunction(List<String> socialFunction) {
-            this.socialFunction = socialFunction;
-        }
-
-        public List<String> getHonor() {
-            return honor;
-        }
-
-        public void setHonor(List<String> honor) {
-            this.honor = honor;
         }
 
         public List<WorkexpEntity> getWorkExp() {
@@ -558,26 +315,53 @@ public class LawsHomePagerBaseEntity implements Serializable {
         }
     }
 
-    public static class SocialInfoBean implements Serializable {
-        private List<String> socialFunction;
-        private List<String> honor;
+    public static class PracticeInfoBean implements Serializable {
+        private List<String> served;
+        private List<String> industry;
+        private List<String> baseSkill;
+        private List<String> otherSkill;
+        private List<String> langSkill;
         private List<String> court;
         private List<String> procuratorate;
 
-        public List<String> getSocialFunction() {
-            return socialFunction;
+        public List<String> getServed() {
+            return served;
         }
 
-        public void setSocialFunction(List<String> socialFunction) {
-            this.socialFunction = socialFunction;
+        public void setServed(List<String> served) {
+            this.served = served;
         }
 
-        public List<String> getHonor() {
-            return honor;
+        public List<String> getIndustry() {
+            return industry;
         }
 
-        public void setHonor(List<String> honor) {
-            this.honor = honor;
+        public void setIndustry(List<String> industry) {
+            this.industry = industry;
+        }
+
+        public List<String> getBaseSkill() {
+            return baseSkill;
+        }
+
+        public void setBaseSkill(List<String> baseSkill) {
+            this.baseSkill = baseSkill;
+        }
+
+        public List<String> getOtherSkill() {
+            return otherSkill;
+        }
+
+        public void setOtherSkill(List<String> otherSkill) {
+            this.otherSkill = otherSkill;
+        }
+
+        public List<String> getLangSkill() {
+            return langSkill;
+        }
+
+        public void setLangSkill(List<String> langSkill) {
+            this.langSkill = langSkill;
         }
 
         public List<String> getCourt() {
@@ -597,98 +381,75 @@ public class LawsHomePagerBaseEntity implements Serializable {
         }
     }
 
-    public static class DynamicInfoBean implements Serializable {
-
+    public static class ChildBean implements Serializable {
         /**
-         * lawyerDynamicId : 0
-         * lawyerDynamicType : 1
-         * relatedId : 0
-         * createTime : 2019-01-25 17:57:36
-         * lawyerDynamicContent : 完成了一个合同方面的快速咨询
-         * relatedSummary : {"icon":"","text":""}
+         * solutionMarkId : 21
+         * solutionMarkName : 离婚诉讼
+         * score : 45
          */
 
-        private int lawyerDynamicId;
-        private int lawyerDynamicType;
-        private int relatedId;
-        private String createTime;
-        private String lawyerDynamicContent;
-        private RelatedSummaryBean relatedSummary;
+        private int solutionTypeId;
+        private int solutionMarkId;
+        private String solutionTypeName;
+        private String solutionMarkName;
+        private String titleIconImage;
+        private int score;
+        private List<ChildBean> child;
 
-        public int getLawyerDynamicId() {
-            return lawyerDynamicId;
+        public String getTitleIconImage() {
+            return titleIconImage;
         }
 
-        public void setLawyerDynamicId(int lawyerDynamicId) {
-            this.lawyerDynamicId = lawyerDynamicId;
+        public void setTitleIconImage(String titleIconImage) {
+            this.titleIconImage = titleIconImage;
         }
 
-        public int getLawyerDynamicType() {
-            return lawyerDynamicType;
+        public int getSolutionTypeId() {
+            return solutionTypeId;
         }
 
-        public void setLawyerDynamicType(int lawyerDynamicType) {
-            this.lawyerDynamicType = lawyerDynamicType;
+        public void setSolutionTypeId(int solutionTypeId) {
+            this.solutionTypeId = solutionTypeId;
         }
 
-        public int getRelatedId() {
-            return relatedId;
+        public String getSolutionTypeName() {
+            return solutionTypeName;
         }
 
-        public void setRelatedId(int relatedId) {
-            this.relatedId = relatedId;
+        public void setSolutionTypeName(String solutionTypeName) {
+            this.solutionTypeName = solutionTypeName;
         }
 
-        public String getCreateTime() {
-            return createTime;
+        public List<ChildBean> getChild() {
+            return child;
         }
 
-        public void setCreateTime(String createTime) {
-            this.createTime = createTime;
+        public void setChild(List<ChildBean> child) {
+            this.child = child;
         }
 
-        public String getLawyerDynamicContent() {
-            return lawyerDynamicContent;
+        public int getSolutionMarkId() {
+            return solutionMarkId;
         }
 
-        public void setLawyerDynamicContent(String lawyerDynamicContent) {
-            this.lawyerDynamicContent = lawyerDynamicContent;
+        public void setSolutionMarkId(int solutionMarkId) {
+            this.solutionMarkId = solutionMarkId;
         }
 
-        public RelatedSummaryBean getRelatedSummary() {
-            return relatedSummary;
+        public String getSolutionMarkName() {
+            return solutionMarkName;
         }
 
-        public void setRelatedSummary(RelatedSummaryBean relatedSummary) {
-            this.relatedSummary = relatedSummary;
+        public void setSolutionMarkName(String solutionMarkName) {
+            this.solutionMarkName = solutionMarkName;
         }
 
-        public static class RelatedSummaryBean implements Serializable {
-            /**
-             * icon :
-             * text :
-             */
+        public int getScore() {
+            return score;
+        }
 
-            private String icon;
-            private String text;
-
-            public String getIcon() {
-                return icon;
-            }
-
-            public void setIcon(String icon) {
-                this.icon = icon;
-            }
-
-            public String getText() {
-                return text;
-            }
-
-            public void setText(String text) {
-                this.text = text;
-            }
+        public void setScore(int score) {
+            this.score = score;
         }
     }
-
-
 }
