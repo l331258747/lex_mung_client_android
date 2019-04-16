@@ -1,6 +1,7 @@
 package cn.lex_mung.client_android.mvp.ui.fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,10 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.AccountPayActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.ServicePriceAdapter;
-import cn.lex_mung.client_android.mvp.ui.dialog.DefaultDialog;
+import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog;
+import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog2;
+import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog3;
+import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog4;
+import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog5;
 import cn.lex_mung.client_android.mvp.ui.dialog.Dial1Dialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.DialDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
@@ -76,18 +82,33 @@ public class ServicePriceFragment extends BaseFragment<ServicePricePresenter> im
     }
 
     @Override
-    public void showDialDialog(String string) {
-        new DialDialog(mActivity
-                , dialog -> mPresenter.sendCall()
-                , string)
-                .show();
+    public void showDialDialog(ExpertPriceEntity entity) {
+//        new DialDialog(mActivity
+//                , dialog -> mPresenter.sendCall()
+//                , string)
+//                .show();
+
+//        new CallFieldDialog(mActivity
+//                ,dialog -> mPresenter.sendCall()
+//        ,string,"立即拨打",false).show();
+
+        new CallFieldDialog2(mActivity
+                , dialog -> {
+            mPresenter.sendCall();
+            dialog.dismiss();
+        }
+                , entity).show();
     }
 
     @Override
     public void showDial1Dialog(String string) {
-        new Dial1Dialog(mActivity
-                , string)
-                .show();
+//        new Dial1Dialog(mActivity
+//                , string)
+//                .show();
+        new CallFieldDialog3(mActivity,string,dialog -> {
+            new CallFieldDialog4(mActivity,"现在关闭将无法联系律师\n是否继续关闭").show();
+            dialog.dismiss();
+        }).show();
     }
 
     @Override
@@ -97,16 +118,31 @@ public class ServicePriceFragment extends BaseFragment<ServicePricePresenter> im
     }
 
     @Override
-    public void showToPayDialog() {
-        new DefaultDialog(mActivity
-                , dialog -> {
+    public void showToPayDialog(String s) {
+//        new DefaultDialog(mActivity
+//                , dialog -> {
+//            MobclickAgent.onEvent(mActivity, "w_y_shouye_zjzx_detail_chongzhi");
+//            launchActivity(new Intent(mActivity, AccountPayActivity.class));
+//        }
+//                , getString(R.string.text_call_consult_lack_of_balance)
+//                , getString(R.string.text_leave_for_top_up)
+//                , getString(R.string.text_cancel))
+//                .show();
+        new CallFieldDialog(mActivity, dialog -> {
             MobclickAgent.onEvent(mActivity, "w_y_shouye_zjzx_detail_chongzhi");
             launchActivity(new Intent(mActivity, AccountPayActivity.class));
-        }
-                , getString(R.string.text_call_consult_lack_of_balance)
-                , getString(R.string.text_leave_for_top_up)
-                , getString(R.string.text_cancel))
-                .show();
+        }, s, "充值").show();
+    }
+
+    @Override
+    public void showToErrorDialog(String s) {
+        new CallFieldDialog5(mActivity, dialog -> {
+           //TODO 电话
+//            Intent dialIntent =  new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
+//            startActivity(dialIntent);
+//            dialog.dismiss();
+
+        }, s, "联系客服").show();
     }
 
     @Override

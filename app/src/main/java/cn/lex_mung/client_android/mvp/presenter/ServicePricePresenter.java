@@ -2,6 +2,7 @@ package cn.lex_mung.client_android.mvp.presenter;
 
 import android.app.Application;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 
@@ -110,26 +111,29 @@ public class ServicePricePresenter extends BasePresenter<ServicePriceContract.Mo
                         if (baseResponse.isSuccess()) {
                             ExpertPriceEntity entity = baseResponse.getData();
                             if (entity.getBalance() > (entity.getLawyerPrice() / 60)) {
-                                String string;
-                                if (!TextUtils.isEmpty(entity.getOrgnizationName())) {//有权益
-                                    string = String.format(mApplication.getString(R.string.text_call_consult_tip_1)
-                                            , AppUtils.formatAmount(mApplication, entity.getLawyerPrice())
-                                            , entity.getPriceUnit()
-                                            , entity.getOrgnizationName()
-                                            , AppUtils.formatAmount(mApplication, entity.getFavorablePrice())
-                                            , entity.getPriceUnit()
-                                            , entity.getFreeTime()
-                                            , entity.getFavorableTimeLen());
-                                } else {//无权益
-                                    string = String.format(mApplication.getString(R.string.text_call_consult_tip_2)
-                                            , AppUtils.formatAmount(mApplication, entity.getLawyerPrice())
-                                            , entity.getPriceUnit()
-                                            , entity.getFreeTime()
-                                            , entity.getOriginTimeLen());
-                                }
-                                mRootView.showDialDialog(string);
+//                                String string;
+//                                if (!TextUtils.isEmpty(entity.getOrgnizationName())) {//有权益
+//                                    string = String.format(mApplication.getString(R.string.text_call_consult_tip_1)
+//                                            , AppUtils.formatAmount(mApplication, entity.getLawyerPrice())
+//                                            , entity.getPriceUnit()
+//                                            , entity.getOrgnizationName()
+//                                            , AppUtils.formatAmount(mApplication, entity.getFavorablePrice())
+//                                            , entity.getPriceUnit()
+//                                            , entity.getFreeTime()
+//                                            , entity.getFavorableTimeLen());
+//                                } else {//无权益
+//                                    string = String.format(mApplication.getString(R.string.text_call_consult_tip_2)
+//                                            , AppUtils.formatAmount(mApplication, entity.getLawyerPrice())
+//                                            , entity.getPriceUnit()
+//                                            , entity.getFreeTime()
+//                                            , entity.getOriginTimeLen());
+//                                }
+                                mRootView.showDialDialog(entity);
                             } else {
-                                mRootView.showToPayDialog();
+                                String string = String.format(mApplication.getString(R.string.text_call_consult_tip_4)
+                                        , AppUtils.formatAmount(mApplication, entity.getLawyerPrice())
+                                        , entity.getPriceUnit());
+                                mRootView.showToPayDialog(string);
                             }
                         }
                     }
@@ -150,6 +154,23 @@ public class ServicePricePresenter extends BasePresenter<ServicePriceContract.Mo
                     public void onNext(BaseResponse<AgreementEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             mRootView.showDial1Dialog(String.format(mApplication.getString(R.string.text_call_consult_tip_3), baseResponse.getData().getPhone()));
+                        } else {
+                            /*
+                            70001：余额不足
+                            70002：您好，当前律师可能正在繁忙，建议您改天再联系或者联系平台其他律师进行咨询。
+                            70003：您好，该律师暂时无法接听您的电话，建议您联系平台其他律师或拨打客服热线400-811-3060及时处理。
+                             */
+                            switch (baseResponse.getCode()){
+                                case 70001:
+                                    //TODO 充值
+                                    break;
+                                case 70002:
+                                    mRootView.showToErrorDialog(baseResponse.getMessage());
+                                    break;
+                                case 70003:
+                                    mRootView.showToErrorDialog(baseResponse.getMessage());
+                                    break;
+                            }
                         }
                     }
                 });

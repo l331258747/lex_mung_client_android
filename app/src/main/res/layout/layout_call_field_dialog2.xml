@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/qb_px_570"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="@dimen/qb_px_60"
+        android:layout_height="@dimen/qb_px_60"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_field_dialog_close" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_close"
+        android:layout_marginTop="@dimen/qb_px_20"
+        android:background="@drawable/round_20_ffffff_all">
+
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_call_field_dialog_bg" />
+
+        <RelativeLayout
+            android:id="@+id/ll_content"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/qb_px_50"
+            android:layout_marginBottom="@dimen/qb_px_50"
+            android:layout_marginLeft="@dimen/qb_px_40"
+            android:layout_marginRight="@dimen/qb_px_60"
+            android:layout_below="@+id/iv_icon"
+            android:layout_height="wrap_content">
+            
+            <View
+                android:layout_width="@dimen/qb_px_5"
+                android:layout_height="@dimen/qb_px_5"
+                android:layout_marginTop="@dimen/qb_px_20"
+                android:layout_alignTop="@+id/tv_content"
+                android:background="@color/c_3DD790"/>
+
+            <View
+                android:layout_width="@dimen/qb_px_5"
+                android:layout_height="@dimen/qb_px_5"
+                android:layout_marginTop="@dimen/qb_px_20"
+                android:layout_alignTop="@+id/tv_content2"
+                android:background="@color/c_3DD790"/>
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/qb_px_30"
+                android:textColor="@color/c_555555"
+                android:layout_marginLeft="@dimen/qb_px_20"
+                android:lineSpacingExtra="@dimen/qb_px_10"
+                tools:text="111111" />
+
+            <TextView
+                android:id="@+id/tv_content2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/qb_px_28"
+                android:layout_below="@+id/tv_content"
+                android:layout_marginLeft="@dimen/qb_px_20"
+                android:layout_marginTop="@dimen/qb_px_15"
+                android:textStyle="bold"
+                android:textColor="@color/c_555555"
+                android:lineSpacingExtra="@dimen/qb_px_10"
+                tools:text="111111" />
+
+
+            <TextView
+                android:id="@+id/tv_content3"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/qb_px_15"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/qb_px_24"
+                android:layout_below="@+id/tv_content2"
+                android:layout_marginLeft="@dimen/qb_px_20"
+                android:textColor="@color/c_999999"
+                android:lineSpacingExtra="@dimen/qb_px_10"
+                tools:text="111111" />
+
+        </RelativeLayout>
+
+
+
+
+        <LinearLayout
+            android:id="@+id/ll_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_content"
+            android:layout_marginBottom="@dimen/qb_px_60"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/tv_btn"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/qb_px_74"
+                android:layout_marginLeft="@dimen/qb_px_60"
+                android:layout_marginRight="@dimen/qb_px_60"
+                android:layout_weight="1"
+                android:background="@drawable/ic_btn_green"
+                android:textSize="@dimen/qb_px_30"
+                android:gravity="center"
+                android:text="立即拨打"
+                android:textColor="@color/c_ff" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

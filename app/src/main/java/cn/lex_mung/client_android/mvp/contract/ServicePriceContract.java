@@ -16,9 +16,10 @@ public interface ServicePriceContract {
     interface View extends IView {
         void initRecyclerView(ServicePriceAdapter adapter);
 
-        void showToPayDialog();
+        void showToPayDialog(String s);
+        void showToErrorDialog(String s);
 
-        void showDialDialog(String s);
+        void showDialDialog(ExpertPriceEntity entity);
 
         void showDial1Dialog(String s);
     }
