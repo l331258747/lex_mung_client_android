@@ -65,7 +65,7 @@ public class CallFieldDialog3 extends Dialog {
 
         @Override
         public void onTick(long l) {
-            String string = "联系倒计时:<font color=\"#3dd790\">%d</font>";
+            String string = "联系倒计时：<font color=\"#3dd790\">%d秒</font>";
             StringUtils.setHtml(btn,String.format(string,l / 1000));
         }
 

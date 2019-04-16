@@ -49,10 +49,10 @@ public class CallFieldDialog2 extends Dialog {
         String string = "律师咨询价格为%1$s元/%2$s";
         String string2 = "您拥有%1$s的专属权益，优惠后价格为<font color=\"#3dd790\">%2$s元/%3$s</font>";
         String string3 = "您的通话我们将按照秒为单位进行计费，前%1$s免费通话，您当前账户余额可通话时长%2$s";
-        StringUtils.setHtml(tvContent,String.format(string,AppUtils.formatAmount(context, entity.getLawyerPrice()),entity.getPriceUnit()));
+        StringUtils.setHtml(tvContent,String.format(string,entity.getLawyerPriceInt(),entity.getPriceUnit()));
         if (!TextUtils.isEmpty(entity.getOrgnizationName())) {//有权益
             tvContent2.setVisibility(View.VISIBLE);
-            StringUtils.setHtml(tvContent2,String.format(string2,entity.getOrgnizationName(),AppUtils.formatAmount(context, entity.getFavorablePrice()),entity.getPriceUnit()));
+            StringUtils.setHtml(tvContent2,String.format(string2,entity.getOrgnizationName(),entity.getFavorablePriceInt(),entity.getPriceUnit()));
             StringUtils.setHtml(tvContent3,String.format(string3,entity.getFreeTime(),entity.getFavorableTimeLen()));
         }else{
             tvContent2.setVisibility(View.GONE);

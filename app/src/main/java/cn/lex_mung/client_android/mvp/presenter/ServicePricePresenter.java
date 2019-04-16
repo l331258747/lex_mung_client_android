@@ -111,27 +111,10 @@ public class ServicePricePresenter extends BasePresenter<ServicePriceContract.Mo
                         if (baseResponse.isSuccess()) {
                             ExpertPriceEntity entity = baseResponse.getData();
                             if (entity.getBalance() > (entity.getLawyerPrice() / 60)) {
-//                                String string;
-//                                if (!TextUtils.isEmpty(entity.getOrgnizationName())) {//有权益
-//                                    string = String.format(mApplication.getString(R.string.text_call_consult_tip_1)
-//                                            , AppUtils.formatAmount(mApplication, entity.getLawyerPrice())
-//                                            , entity.getPriceUnit()
-//                                            , entity.getOrgnizationName()
-//                                            , AppUtils.formatAmount(mApplication, entity.getFavorablePrice())
-//                                            , entity.getPriceUnit()
-//                                            , entity.getFreeTime()
-//                                            , entity.getFavorableTimeLen());
-//                                } else {//无权益
-//                                    string = String.format(mApplication.getString(R.string.text_call_consult_tip_2)
-//                                            , AppUtils.formatAmount(mApplication, entity.getLawyerPrice())
-//                                            , entity.getPriceUnit()
-//                                            , entity.getFreeTime()
-//                                            , entity.getOriginTimeLen());
-//                                }
                                 mRootView.showDialDialog(entity);
                             } else {
                                 String string = String.format(mApplication.getString(R.string.text_call_consult_tip_4)
-                                        , AppUtils.formatAmount(mApplication, entity.getLawyerPrice())
+                                        , entity.getLawyerPriceInt()
                                         , entity.getPriceUnit());
                                 mRootView.showToPayDialog(string);
                             }
@@ -140,21 +123,19 @@ public class ServicePricePresenter extends BasePresenter<ServicePriceContract.Mo
                 });
     }
 
-    public void sendCall() {
+    public void sendCall(String phone) {
+        mRootView.showDial1Dialog(String.format(mApplication.getString(R.string.text_call_consult_tip_3), phone));
+
         mModel.sendCall(entity.getMemberId())
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(1, 2))
-                .doOnSubscribe(disposable -> mRootView.showLoading(""))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doFinally(() -> mRootView.hideLoading())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
                 .subscribe(new ErrorHandleSubscriber<BaseResponse<AgreementEntity>>(mErrorHandler) {
                     @Override
                     public void onNext(BaseResponse<AgreementEntity> baseResponse) {
-                        if (baseResponse.isSuccess()) {
-                            mRootView.showDial1Dialog(String.format(mApplication.getString(R.string.text_call_consult_tip_3), baseResponse.getData().getPhone()));
-                        } else {
+                        if (!baseResponse.isSuccess()) {
                             /*
                             70001：余额不足
                             70002：您好，当前律师可能正在繁忙，建议您改天再联系或者联系平台其他律师进行咨询。
@@ -162,7 +143,7 @@ public class ServicePricePresenter extends BasePresenter<ServicePriceContract.Mo
                              */
                             switch (baseResponse.getCode()){
                                 case 70001:
-                                    //TODO 充值
+                                    // 充值
                                     break;
                                 case 70002:
                                     mRootView.showToErrorDialog(baseResponse.getMessage());

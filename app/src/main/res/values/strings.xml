@@ -269,8 +269,6 @@
     <string name="text_no_price">价格未配置</string>
     <string name="text_call_consult_lack_of_balance">最低通话时间为1分钟，您当前余额不足，请先充值！</string>
     <string name="text_warm_prompt">温馨提示</string>
-    <string name="text_call_consult_tip_1">律师咨询价格为【%1$s元/%2$s】，你拥有{%3$s}的专属权益，优惠后价格为【%4$s元/%5$s】，我们将按照秒为单位进行计费，前%6$s免费通话，您当前账户余额可通话时长【%7$s】</string>
-    <string name="text_call_consult_tip_2">律师咨询价格为【%1$s元/%2$s】，我们将按照秒为单位进行计费，前%3$s免费通话，您当前账户余额可通话时长【%4$s】</string>
     <string name="text_call_consult_tip_3">为保护您的个人权益，我们将先为您联系律师，请注意接听%s的电话</string>
 
     <string name="text_call_consult_tip_4"><Data><![CDATA[<b>律师咨询价格为</b><font color="#3dd790"><b>%1$s元/%2$s</b></font><br>您的账户不足，请充值]]></Data></string>

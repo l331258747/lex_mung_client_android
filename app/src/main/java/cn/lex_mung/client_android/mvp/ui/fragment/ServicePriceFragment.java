@@ -11,9 +11,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.umeng.analytics.MobclickAgent;
+
+import butterknife.BindView;
+import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.di.component.DaggerServicePriceComponent;
+import cn.lex_mung.client_android.di.module.ServicePriceModule;
+import cn.lex_mung.client_android.mvp.contract.ServicePriceContract;
 import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
+import cn.lex_mung.client_android.mvp.presenter.ServicePricePresenter;
 import cn.lex_mung.client_android.mvp.ui.activity.AccountPayActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.ServicePriceAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog;
@@ -21,27 +29,16 @@ import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog2;
 import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog3;
 import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog4;
 import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog5;
-import cn.lex_mung.client_android.mvp.ui.dialog.Dial1Dialog;
-import cn.lex_mung.client_android.mvp.ui.dialog.DialDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
-
-import butterknife.BindView;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
 
-import cn.lex_mung.client_android.di.component.DaggerServicePriceComponent;
-import cn.lex_mung.client_android.di.module.ServicePriceModule;
-import cn.lex_mung.client_android.mvp.contract.ServicePriceContract;
-import cn.lex_mung.client_android.mvp.presenter.ServicePricePresenter;
-
-import cn.lex_mung.client_android.R;
-
-import com.umeng.analytics.MobclickAgent;
-
 public class ServicePriceFragment extends BaseFragment<ServicePricePresenter> implements ServicePriceContract.View {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+
+    CallFieldDialog3 callFieldDialog3;
 
     public static ServicePriceFragment newInstance(LawsHomePagerBaseEntity entity) {
         ServicePriceFragment fragment = new ServicePriceFragment();
@@ -83,18 +80,9 @@ public class ServicePriceFragment extends BaseFragment<ServicePricePresenter> im
 
     @Override
     public void showDialDialog(ExpertPriceEntity entity) {
-//        new DialDialog(mActivity
-//                , dialog -> mPresenter.sendCall()
-//                , string)
-//                .show();
-
-//        new CallFieldDialog(mActivity
-//                ,dialog -> mPresenter.sendCall()
-//        ,string,"立即拨打",false).show();
-
         new CallFieldDialog2(mActivity
                 , dialog -> {
-            mPresenter.sendCall();
+            mPresenter.sendCall(entity.getCallCenterNo());
             dialog.dismiss();
         }
                 , entity).show();
@@ -102,13 +90,11 @@ public class ServicePriceFragment extends BaseFragment<ServicePricePresenter> im
 
     @Override
     public void showDial1Dialog(String string) {
-//        new Dial1Dialog(mActivity
-//                , string)
-//                .show();
-        new CallFieldDialog3(mActivity,string,dialog -> {
+        callFieldDialog3 = new CallFieldDialog3(mActivity,string,dialog -> {
             new CallFieldDialog4(mActivity,"现在关闭将无法联系律师\n是否继续关闭").show();
             dialog.dismiss();
-        }).show();
+        });
+        callFieldDialog3.show();
     }
 
     @Override
@@ -119,15 +105,6 @@ public class ServicePriceFragment extends BaseFragment<ServicePricePresenter> im
 
     @Override
     public void showToPayDialog(String s) {
-//        new DefaultDialog(mActivity
-//                , dialog -> {
-//            MobclickAgent.onEvent(mActivity, "w_y_shouye_zjzx_detail_chongzhi");
-//            launchActivity(new Intent(mActivity, AccountPayActivity.class));
-//        }
-//                , getString(R.string.text_call_consult_lack_of_balance)
-//                , getString(R.string.text_leave_for_top_up)
-//                , getString(R.string.text_cancel))
-//                .show();
         new CallFieldDialog(mActivity, dialog -> {
             MobclickAgent.onEvent(mActivity, "w_y_shouye_zjzx_detail_chongzhi");
             launchActivity(new Intent(mActivity, AccountPayActivity.class));
@@ -136,11 +113,14 @@ public class ServicePriceFragment extends BaseFragment<ServicePricePresenter> im
 
     @Override
     public void showToErrorDialog(String s) {
+        if(callFieldDialog3 != null && callFieldDialog3.isShowing()){
+            callFieldDialog3.dismiss();
+        }
+
         new CallFieldDialog5(mActivity, dialog -> {
-           //TODO 电话
-//            Intent dialIntent =  new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
-//            startActivity(dialIntent);
-//            dialog.dismiss();
+            Intent dialIntent =  new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "400-811-3060"));
+            startActivity(dialIntent);
+            dialog.dismiss();
 
         }, s, "联系客服").show();
     }
