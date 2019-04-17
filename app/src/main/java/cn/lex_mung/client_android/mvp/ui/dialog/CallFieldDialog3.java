@@ -11,7 +11,7 @@ import cn.lex_mung.client_android.R;
 import me.zl.mvp.utils.StringUtils;
 
 /**
- * 立即拨打dialog
+ * 倒计时dialog
  */
 public class CallFieldDialog3 extends Dialog {
 

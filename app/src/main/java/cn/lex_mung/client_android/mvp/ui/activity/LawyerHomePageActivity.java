@@ -206,7 +206,7 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
             , R.id.tv_basic_info
             , R.id.tv_service_price
             , R.id.tv_practice_experience
-            , R.id.tv_more_social_position
+            , R.id.tv_social_position
             , R.id.iv_head_share
     })
     public void onViewClicked(View view) {
@@ -237,7 +237,9 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
                 switchPager(14, 14, 16, Typeface.NORMAL, Typeface.NORMAL, Typeface.BOLD, View.GONE, View.GONE, View.VISIBLE);
                 viewPager.setCurrentItem(2);
                 break;
-            case R.id.tv_more_social_position:
+            case R.id.tv_social_position:
+                if(tvMoreSocialPosition.getVisibility() != View.VISIBLE) return;
+
                 bundle.clear();
                 bundle.putSerializable(BundleTags.LIST, (Serializable) mPresenter.getEntity().getSocialFunction());
                 launchActivity(new Intent(mActivity, MoreSocialPositionActivity.class), bundle);

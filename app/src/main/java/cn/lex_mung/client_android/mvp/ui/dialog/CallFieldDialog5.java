@@ -10,7 +10,7 @@ import cn.lex_mung.client_android.R;
 import me.zl.mvp.utils.StringUtils;
 
 /**
- * 充值dialog
+ * 错误70000 + dialog
  */
 public class CallFieldDialog5 extends Dialog {
 

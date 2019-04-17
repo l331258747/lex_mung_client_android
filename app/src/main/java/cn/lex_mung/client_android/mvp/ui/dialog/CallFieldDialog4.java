@@ -11,7 +11,7 @@ import cn.lex_mung.client_android.R;
 import me.zl.mvp.utils.StringUtils;
 
 /**
- * 立即拨打dialog
+ * 关闭，等一等dialog
  */
 public class CallFieldDialog4 extends Dialog {
 
