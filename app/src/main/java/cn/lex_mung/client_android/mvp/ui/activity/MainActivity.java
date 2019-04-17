@@ -81,6 +81,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         bottomNavigationViewEx.enableAnimation(true);
         bottomNavigationViewEx.enableShiftingMode(false);
         bottomNavigationViewEx.setTextVisibility(true);
+        bottomNavigationViewEx.setItemIconTintList(null);//取消文字图片着色小郭
         initViewPager();
     }
 
