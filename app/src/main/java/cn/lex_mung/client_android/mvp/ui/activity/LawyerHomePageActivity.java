@@ -3,6 +3,7 @@ package cn.lex_mung.client_android.mvp.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +25,15 @@ import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.component.DaggerLawyerHomePageComponent;
 import cn.lex_mung.client_android.di.module.LawyerHomePageModule;
 import cn.lex_mung.client_android.mvp.contract.LawyerHomePageContract;
+import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
 import cn.lex_mung.client_android.mvp.presenter.LawyerHomePagePresenter;
+import cn.lex_mung.client_android.mvp.ui.adapter.ServicePriceAdapter;
+import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog;
+import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog2;
+import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog3;
+import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog4;
+import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog5;
 import cn.lex_mung.client_android.mvp.ui.dialog.FieldDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
@@ -92,6 +101,10 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
     ImageView ivPracticeExperience;
     @BindView(R.id.view_pager)
     NoScrollViewPager viewPager;
+    @BindView(R.id.iv_release)
+    ImageView ivRelease;
+    @BindView(R.id.iv_call)
+    ImageView ivCall;
 
     @BindView(R.id.toolbar)
     Toolbar toolBar;
@@ -101,6 +114,9 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
     AppBarLayout mAppBarLayout;
     @BindView(R.id.tv_head_title)
     TextView tvHeadTitle;
+
+    CallFieldDialog3 callFieldDialog3;
+    CallFieldDialog4 callFieldDialog4;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -127,6 +143,7 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
         super.onResume();
         MobclickAgent.onPageStart("app_l_wode_zhuye_detail");
         MobclickAgent.onResume(mActivity);
+        mPresenter.onResume();
     }
 
     @Override
@@ -208,6 +225,8 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
             , R.id.tv_practice_experience
             , R.id.tv_social_position
             , R.id.iv_head_share
+            , R.id.iv_call
+            , R.id.iv_release
     })
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -246,6 +265,13 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
                 break;
             case R.id.iv_head_share:
                 MobclickAgent.onEvent(mActivity, "app_l_wode_zhuye_detail_fenxiang");
+                break;
+            case R.id.iv_call:
+                mPresenter.setEntity();
+                break;
+            case R.id.iv_release:
+                viewPager.setCurrentItem(2);
+                mAppBarLayout.setExpanded(false);
                 break;
         }
     }
@@ -430,5 +456,52 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
     @Override
     public void killMyself() {
         finish();
+    }
+
+
+    //-----电话
+    @Override
+    public void showDialDialog(ExpertPriceEntity entity) {
+        new CallFieldDialog2(mActivity
+                , dialog -> {
+            mPresenter.sendCall(entity.getCallCenterNo());
+            dialog.dismiss();
+        }
+                , entity).show();
+    }
+
+    @Override
+    public void showDial1Dialog(String string) {
+        callFieldDialog3 = new CallFieldDialog3(mActivity,string,dialog -> {
+            callFieldDialog4 = new CallFieldDialog4(mActivity,"现在关闭将无法联系律师\n是否继续关闭");
+            callFieldDialog4.show();
+            dialog.dismiss();
+        });
+        callFieldDialog3.show();
+    }
+
+    @Override
+    public void showToPayDialog(String s) {
+        new CallFieldDialog(mActivity, dialog -> {
+            MobclickAgent.onEvent(mActivity, "w_y_shouye_zjzx_detail_chongzhi");
+            launchActivity(new Intent(mActivity, AccountPayActivity.class));
+        }, s, "充值").show();
+    }
+
+    @Override
+    public void showToErrorDialog(String s) {
+        if(callFieldDialog3 != null && callFieldDialog3.isShowing()){
+            callFieldDialog3.dismiss();
+        }
+        if(callFieldDialog4 != null && callFieldDialog4.isShowing()){
+            callFieldDialog4.dismiss();
+        }
+
+        new CallFieldDialog5(mActivity, dialog -> {
+            Intent dialIntent =  new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "400-811-3060"));
+            startActivity(dialIntent);
+            dialog.dismiss();
+
+        }, s, "联系客服").show();
     }
 }

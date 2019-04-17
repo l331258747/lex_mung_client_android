@@ -2,6 +2,8 @@ package cn.lex_mung.client_android.mvp.presenter;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -9,10 +11,18 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
+import cn.lex_mung.client_android.mvp.model.entity.BusinessEntity;
+import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
+import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.ReleaseDemandActivity;
+import cn.lex_mung.client_android.mvp.ui.adapter.ServicePriceAdapter;
 import cn.lex_mung.client_android.mvp.ui.fragment.LawsBusinessCardFragment;
 import cn.lex_mung.client_android.mvp.ui.fragment.PracticeExperienceFragment;
 import cn.lex_mung.client_android.mvp.ui.fragment.ServicePriceFragment;
@@ -57,6 +67,8 @@ public class LawyerHomePagePresenter extends BasePresenter<LawyerHomePageContrac
 
     private boolean isShowLoading = true;
     private boolean isLoading = true;
+
+    private boolean isLogin;
 
     @Inject
     public LawyerHomePagePresenter(LawyerHomePageContract.Model model, LawyerHomePageContract.View rootView) {
@@ -121,8 +133,8 @@ public class LawyerHomePagePresenter extends BasePresenter<LawyerHomePageContrac
         try {
             if (isLoading) {
                 fragments.add(LawsBusinessCardFragment.newInstance(entity));
-                fragments.add(ServicePriceFragment.newInstance(entity));
                 fragments.add(PracticeExperienceFragment.newInstance(entity));
+                fragments.add(ServicePriceFragment.newInstance(entity));
                 mRootView.initViewPager(fragments);
                 isLoading = false;
             }
@@ -275,5 +287,85 @@ public class LawyerHomePagePresenter extends BasePresenter<LawyerHomePageContrac
         this.mAppManager = null;
         this.mImageLoader = null;
         this.mApplication = null;
+    }
+
+
+    //---------电话
+    public void setEntity() {
+        if (isFastClick()) return;
+        Bundle bundle = new Bundle();
+        if (isLogin) {
+            MobclickAgent.onEvent(mApplication, "w_y_shouye_zjzx_detail_boda");
+            expertPrice();
+        } else {
+            bundle.clear();
+            bundle.putInt(BundleTags.TYPE, 1);
+            mRootView.launchActivity(new Intent(mApplication, LoginActivity.class), bundle);
+        }
+    }
+
+    public void onResume() {
+        isLogin = DataHelper.getBooleanSF(mApplication, DataHelperTags.IS_LOGIN_SUCCESS);
+    }
+
+    private void expertPrice() {
+        mModel.expertPrice(entity.getMemberId())
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(1, 2))
+                .doOnSubscribe(disposable -> mRootView.showLoading(""))
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<ExpertPriceEntity>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<ExpertPriceEntity> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            ExpertPriceEntity entity = baseResponse.getData();
+                            if (entity.getBalance() > (entity.getLawyerPrice() / 60)) {
+                                mRootView.showDialDialog(entity);
+                            } else {
+                                String string = String.format(mApplication.getString(R.string.text_call_consult_tip_4)
+                                        , entity.getLawyerPriceInt()
+                                        , entity.getPriceUnit());
+                                mRootView.showToPayDialog(string);
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void sendCall(String phone) {
+        mRootView.showDial1Dialog(String.format(mApplication.getString(R.string.text_call_consult_tip_3), phone));
+
+        mModel.sendCall(entity.getMemberId())
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(1, 2))
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<AgreementEntity>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<AgreementEntity> baseResponse) {
+                        if (!baseResponse.isSuccess()) {
+                            /*
+                            70001：余额不足
+                            70002：您好，当前律师可能正在繁忙，建议您改天再联系或者联系平台其他律师进行咨询。
+                            70003：您好，该律师暂时无法接听您的电话，建议您联系平台其他律师或拨打客服热线400-811-3060及时处理。
+                             */
+                            switch (baseResponse.getCode()){
+                                case 70001:
+                                    // 充值
+                                    break;
+                                case 70002:
+                                    mRootView.showToErrorDialog(baseResponse.getMessage());
+                                    break;
+                                case 70003:
+                                    mRootView.showToErrorDialog(baseResponse.getMessage());
+                                    break;
+                            }
+                        }
+                    }
+                });
     }
 }

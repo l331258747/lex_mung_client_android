@@ -33,12 +33,14 @@ import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
+import me.zl.mvp.utils.LogUtils;
 
 public class ServicePriceFragment extends BaseFragment<ServicePricePresenter> implements ServicePriceContract.View {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
     CallFieldDialog3 callFieldDialog3;
+    CallFieldDialog4 callFieldDialog4;
 
     public static ServicePriceFragment newInstance(LawsHomePagerBaseEntity entity) {
         ServicePriceFragment fragment = new ServicePriceFragment();
@@ -91,7 +93,8 @@ public class ServicePriceFragment extends BaseFragment<ServicePricePresenter> im
     @Override
     public void showDial1Dialog(String string) {
         callFieldDialog3 = new CallFieldDialog3(mActivity,string,dialog -> {
-            new CallFieldDialog4(mActivity,"现在关闭将无法联系律师\n是否继续关闭").show();
+            callFieldDialog4 = new CallFieldDialog4(mActivity,"现在关闭将无法联系律师\n是否继续关闭");
+            callFieldDialog4.show();
             dialog.dismiss();
         });
         callFieldDialog3.show();
@@ -115,6 +118,10 @@ public class ServicePriceFragment extends BaseFragment<ServicePricePresenter> im
     public void showToErrorDialog(String s) {
         if(callFieldDialog3 != null && callFieldDialog3.isShowing()){
             callFieldDialog3.dismiss();
+        }
+
+        if(callFieldDialog4 != null && callFieldDialog4.isShowing()){
+            callFieldDialog4.dismiss();
         }
 
         new CallFieldDialog5(mActivity, dialog -> {

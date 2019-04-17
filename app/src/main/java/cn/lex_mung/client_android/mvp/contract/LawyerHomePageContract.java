@@ -3,7 +3,9 @@ package cn.lex_mung.client_android.mvp.contract;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 
+import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
+import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawyerTagsEntity;
 
@@ -56,6 +58,14 @@ public interface LawyerHomePageContract {
         void addSimpleFlowLayout(android.view.View itemView, int i);
 
         void removeViews();
+
+        //------电话
+        void showToPayDialog(String s);
+        void showToErrorDialog(String s);
+
+        void showDialDialog(ExpertPriceEntity entity);
+
+        void showDial1Dialog(String s);
     }
 
     interface Model extends IModel {
@@ -66,5 +76,10 @@ public interface LawyerHomePageContract {
         Observable<BaseResponse> follow(int id);
 
         Observable<BaseResponse> unFollow(int id);
+
+        //-----电话
+        Observable<BaseResponse<ExpertPriceEntity>> expertPrice(int id);
+
+        Observable<BaseResponse<AgreementEntity>> sendCall(int id);
     }
 }

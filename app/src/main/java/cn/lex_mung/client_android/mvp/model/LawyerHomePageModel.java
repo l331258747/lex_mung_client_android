@@ -4,6 +4,8 @@ import android.app.Application;
 
 import com.google.gson.Gson;
 
+import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
+import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.integration.IRepositoryManager;
 import me.zl.mvp.mvp.BaseModel;
@@ -63,5 +65,19 @@ public class LawyerHomePageModel extends BaseModel implements LawyerHomePageCont
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .unFollow(id);
+    }
+
+    @Override
+    public Observable<BaseResponse<ExpertPriceEntity>> expertPrice(int id) {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .expertPrice(id);
+    }
+
+    @Override
+    public Observable<BaseResponse<AgreementEntity>> sendCall(int id) {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .sendCall(id);
     }
 }
