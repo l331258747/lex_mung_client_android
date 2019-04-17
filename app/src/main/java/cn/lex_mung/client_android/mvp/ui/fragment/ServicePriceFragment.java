@@ -33,7 +33,6 @@ import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
-import me.zl.mvp.utils.LogUtils;
 
 public class ServicePriceFragment extends BaseFragment<ServicePricePresenter> implements ServicePriceContract.View {
     @BindView(R.id.recycler_view)

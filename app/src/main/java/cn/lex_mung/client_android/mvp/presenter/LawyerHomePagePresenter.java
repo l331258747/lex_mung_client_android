@@ -16,37 +16,33 @@ import com.umeng.analytics.MobclickAgent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.app.DataHelperTags;
+import cn.lex_mung.client_android.mvp.contract.LawyerHomePageContract;
 import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
-import cn.lex_mung.client_android.mvp.model.entity.BusinessEntity;
+import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
+import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.ReleaseDemandActivity;
-import cn.lex_mung.client_android.mvp.ui.adapter.ServicePriceAdapter;
 import cn.lex_mung.client_android.mvp.ui.fragment.LawsBusinessCardFragment;
 import cn.lex_mung.client_android.mvp.ui.fragment.PracticeExperienceFragment;
 import cn.lex_mung.client_android.mvp.ui.fragment.ServicePriceFragment;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
-import me.zl.mvp.integration.AppManager;
 import me.zl.mvp.di.scope.ActivityScope;
-import me.zl.mvp.mvp.BasePresenter;
 import me.zl.mvp.http.imageloader.ImageLoader;
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.zl.mvp.integration.AppManager;
+import me.zl.mvp.mvp.BasePresenter;
 import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.LogUtils;
 import me.zl.mvp.utils.RxLifecycleUtils;
-
-import javax.inject.Inject;
-
-import cn.lex_mung.client_android.R;
-import cn.lex_mung.client_android.app.DataHelperTags;
-import cn.lex_mung.client_android.mvp.contract.LawyerHomePageContract;
-import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
-import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
 
 @ActivityScope
 public class LawyerHomePagePresenter extends BasePresenter<LawyerHomePageContract.Model, LawyerHomePageContract.View> {

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipChildren="false"
+    android:background="@color/c_717171"
     android:clipToPadding="false"
     android:orientation="vertical">
 
@@ -11,8 +12,6 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/ll_bottom"
-        android:background="@color/c_717171"
         android:clipChildren="false"
         android:clipToPadding="false">
 
@@ -57,13 +56,13 @@
     <LinearLayout
         android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/qb_px_100"
         android:layout_alignParentBottom="true"
         android:paddingLeft="@dimen/qb_px_50"
         android:paddingRight="@dimen/qb_px_50"
         android:paddingBottom="@dimen/qb_px_10"
         android:paddingTop="@dimen/qb_px_10"
-        android:background="@color/c_ff"
+        android:background="@drawable/ic_bottom_bg"
         android:orientation="horizontal">
 
         <ImageView
