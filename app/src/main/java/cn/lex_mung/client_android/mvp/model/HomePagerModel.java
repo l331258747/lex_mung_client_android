@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.google.gson.Gson;
 
+import cn.lex_mung.client_android.mvp.model.entity.home.RequirementTypeV3Entity;
 import io.reactivex.Observable;
 import me.zl.mvp.integration.IRepositoryManager;
 import me.zl.mvp.mvp.BaseModel;
@@ -17,7 +18,6 @@ import cn.lex_mung.client_android.mvp.contract.HomePagerContract;
 import cn.lex_mung.client_android.mvp.model.api.CommonService;
 import cn.lex_mung.client_android.mvp.model.entity.BannerEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
-import cn.lex_mung.client_android.mvp.model.entity.RequirementTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UnreadMessageCountEntity;
 
@@ -57,7 +57,7 @@ public class HomePagerModel extends BaseModel implements HomePagerContract.Model
     }
 
     @Override
-    public Observable<BaseResponse<List<RequirementTypeEntity>>> getHomepageRequirementType() {
+    public Observable<BaseResponse<RequirementTypeV3Entity>> getHomepageRequirementType() {
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .getHomepageRequirementType();

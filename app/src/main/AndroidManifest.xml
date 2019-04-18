@@ -340,6 +340,12 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".mvp.ui.activity.HomeToLoanActivityActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

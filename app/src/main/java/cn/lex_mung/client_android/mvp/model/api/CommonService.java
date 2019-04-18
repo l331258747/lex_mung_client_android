@@ -31,7 +31,6 @@ import cn.lex_mung.client_android.mvp.model.entity.RegionEntity;
 import cn.lex_mung.client_android.mvp.model.entity.ReleaseDemandOrgMoneyEntity;
 import cn.lex_mung.client_android.mvp.model.entity.RemainEntity;
 import cn.lex_mung.client_android.mvp.model.entity.RequirementStatusEntity;
-import cn.lex_mung.client_android.mvp.model.entity.RequirementTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.SolutionListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BannerEntity;
@@ -44,6 +43,7 @@ import cn.lex_mung.client_android.mvp.model.entity.VersionEntity;
 
 import java.util.List;
 
+import cn.lex_mung.client_android.mvp.model.entity.home.RequirementTypeV3Entity;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -377,8 +377,8 @@ public interface CommonService {
      *
      * @return BaseResponse
      */
-    @GET("common/requirement/types/v2")
-    Observable<BaseResponse<List<RequirementTypeEntity>>> getHomepageRequirementType();
+    @GET("common/requirement/types/v3")
+    Observable<BaseResponse<RequirementTypeV3Entity>> getHomepageRequirementType();
 
     /**
      * 未登录获取全部权益列表

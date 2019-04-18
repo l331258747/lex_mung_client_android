@@ -11,4 +11,15 @@
         <attr name="hor_divider_width" format="dimension" />
         <attr name="hor_row_height" format="dimension" />
     </declare-styleable>
+
+
+    <declare-styleable name="TitleView">
+        <attr name="TitleView_title" format="string"/>
+        <attr name="TitleView_right_text" format="string"/>
+        <attr name="TitleView_right_img" format="reference"/>
+        <attr name="TitleView_left_img" format="reference"/>
+        <attr name="TitleView_bg" format="reference"/>
+    </declare-styleable>
+
+
 </resources>

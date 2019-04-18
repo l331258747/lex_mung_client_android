@@ -10,31 +10,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import cn.lex_mung.client_android.R;
-import cn.lex_mung.client_android.app.BundleTags;
-import cn.lex_mung.client_android.di.component.DaggerHomePagerComponent;
-import cn.lex_mung.client_android.di.module.HomePagerModule;
-import cn.lex_mung.client_android.mvp.contract.HomePagerContract;
-import cn.lex_mung.client_android.mvp.model.entity.RequirementTypeEntity;
-import cn.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
-import cn.lex_mung.client_android.mvp.model.entity.BannerEntity;
-import cn.lex_mung.client_android.mvp.presenter.HomePagerPresenter;
-import cn.lex_mung.client_android.mvp.ui.activity.FastConsultActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.LawyerListActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.MainActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.MessageActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
-import cn.lex_mung.client_android.mvp.ui.adapter.HomePageRequirementTypeAdapter;
-import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import com.umeng.analytics.MobclickAgent;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -47,6 +29,25 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.di.component.DaggerHomePagerComponent;
+import cn.lex_mung.client_android.di.module.HomePagerModule;
+import cn.lex_mung.client_android.mvp.contract.HomePagerContract;
+import cn.lex_mung.client_android.mvp.model.entity.BannerEntity;
+import cn.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
+import cn.lex_mung.client_android.mvp.model.entity.home.HotBean;
+import cn.lex_mung.client_android.mvp.model.entity.home.NormalBean;
+import cn.lex_mung.client_android.mvp.presenter.HomePagerPresenter;
+import cn.lex_mung.client_android.mvp.ui.activity.FastConsultActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.LawyerListActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.MainActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.MessageActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
+import cn.lex_mung.client_android.mvp.ui.adapter.HomePageRequirementTypeAdapter;
+import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import me.zl.mvp.base.AdapterViewPager;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
@@ -57,14 +58,8 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     @Inject
     ImageLoader mImageLoader;
 
-    @BindView(R.id.tv_message_count)
-    TextView tvMessageCount;
-    @BindView(R.id.tv_free_consult_1)
-    TextView tvFreeConsult1;
-    @BindView(R.id.tv_fast_consult_1)
-    TextView tvFastConsult1;
-    @BindView(R.id.tv_experts_consult_1)
-    TextView tvExpertsConsult1;
+//    @BindView(R.id.tv_message_count)
+//    TextView tvMessageCount;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.banner)
@@ -73,6 +68,17 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     TabLayout tabLayout;
     @BindView(R.id.view_pager)
     ViewPager viewPager;
+
+    @BindView(R.id.rl_hot_1)
+    RelativeLayout rlHot1;
+    @BindView(R.id.rl_hot_2)
+    RelativeLayout rlHot2;
+    @BindView(R.id.rl_hot_3)
+    RelativeLayout rlHot3;
+    @BindView(R.id.tv_hot_1)
+    TextView tvHot1;
+    @BindView(R.id.tv_hot_2)
+    TextView tvHot2;
 
     private List<Fragment> fragments = new ArrayList<>();
     private List<String> titles = new ArrayList<>();
@@ -116,21 +122,6 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         isCreated = true;
-        String freeConsult = "<font color=\"#1EC88C\">"
-                + getString(R.string.text_free)
-                + "</font>"
-                + mContext.getString(R.string.text_free_consult_1);
-        String fastConsult = "<font color=\"#1EC88C\">"
-                + getString(R.string.text_fast_consult_1)
-                + "</font>"
-                + mContext.getString(R.string.text_fast_consult_2);
-        String expertsConsult = "<font color=\"#1EC88C\">"
-                + getString(R.string.text_experts_consult_1)
-                + "</font>"
-                + mContext.getString(R.string.text_experts_consult_2);
-        tvFreeConsult1.setText(Html.fromHtml(freeConsult));
-        tvFastConsult1.setText(Html.fromHtml(fastConsult));
-        tvExpertsConsult1.setText(Html.fromHtml(expertsConsult));
 
         initAdapter();
         initRecyclerView();
@@ -148,7 +139,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         adapter = new HomePageRequirementTypeAdapter(mImageLoader);
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;
-            RequirementTypeEntity entity = adapter.getItem(position);
+            NormalBean entity = adapter.getItem(position);
             if (entity == null) return;
             if (entity.getJumptype() == 1) {
                 ((MainActivity) mActivity).switchPage(2);
@@ -277,13 +268,32 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
 
     @Override
     public void setUnreadMessageCount(String count) {
-        tvMessageCount.setText(count);
-        tvMessageCount.setVisibility(View.VISIBLE);
+//        tvMessageCount.setText(count);
+//        tvMessageCount.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideUnreadMessageCount() {
-        tvMessageCount.setVisibility(View.GONE);
+//        tvMessageCount.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setContract(List<HotBean> datas) {
+        rlHot3.setOnClickListener(v -> {
+            //TODO 更多起草合同
+        });
+
+        if(datas == null || datas.size() == 0)
+            return;
+        tvHot1.setText(datas.get(0).getRequireTypeName());
+        rlHot1.setOnClickListener(v -> mPresenter.hotClick(datas.get(0).getRequireTypeId()));
+
+        if(datas.size() >= 2){
+            tvHot2.setText(datas.get(1).getRequireTypeName());
+            rlHot2.setOnClickListener(v -> mPresenter.hotClick(datas.get(1).getRequireTypeId()));
+        }
+
+
     }
 
     @Override
@@ -308,7 +318,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     }
 
     @Override
-    public void setRequirementTypeAdapter(List<RequirementTypeEntity> data) {
+    public void setRequirementTypeAdapter(List<NormalBean> data) {
         adapter.setNewData(data);
     }
 

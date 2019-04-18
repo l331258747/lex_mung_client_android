@@ -36,6 +36,13 @@
     <color name="c_3DD790">#3DD790</color>
 
 
+    <color name="c_ddf6ed">#ddf6ed</color>
+    <color name="c_373737">#373737</color>
+    <color name="c_797979">#797979</color>
+    <color name="c_4D4F5A">#4D4F5A</color>
+
+
+
     <color name="down_color">#eceded</color>
     <color name="float_transparent">#00000000</color>
 </resources>

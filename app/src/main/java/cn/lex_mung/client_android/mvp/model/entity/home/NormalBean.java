@@ -1,13 +1,14 @@
-package cn.lex_mung.client_android.mvp.model.entity;
+package cn.lex_mung.client_android.mvp.model.entity.home;
 
-public class RequirementTypeEntity {
+import android.text.TextUtils;
 
+public class NormalBean {
     /**
-     * requireTypeIcon : http://oss.lex-mung.com/organization_image_15514318526639.png
-     * requireTypeId : 3
+     * requireTypeIcon : http://oss.lex-mung.com/organization_image_15514442414219.png
+     * requireTypeId : 2
      * jumpUrl :
      * jumptype : 1
-     * requireTypeName : 起草合同
+     * requireTypeName : 诉讼/仲裁
      */
 
     private String requireTypeIcon;
@@ -49,7 +50,9 @@ public class RequirementTypeEntity {
     }
 
     public String getRequireTypeName() {
-        return requireTypeName;
+        if(TextUtils.isEmpty(requireTypeName))
+            return "";
+        return requireTypeName.replace("|","\n");
     }
 
     public void setRequireTypeName(String requireTypeName) {
