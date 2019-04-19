@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/white">
 
     <android.support.constraint.ConstraintLayout
@@ -14,7 +14,7 @@
         android:background="@color/c_ff"
         android:orientation="vertical">
 
-        <cn.lex_mung.client_android.widget.TitleView
+        <cn.lex_mung.client_android.mvp.ui.widget.TitleView
             android:id="@+id/titleView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,7 +27,6 @@
             android:layout_height="@dimen/qb_px_100"
             android:background="@color/c_ddf6ed"
             app:layout_constraintTop_toBottomOf="@+id/titleView" />
-
 
         <TextView
             android:id="@+id/tv_search"
@@ -265,8 +264,8 @@
                                     android:layout_height="wrap_content"
                                     android:padding="@dimen/qb_px_20"
                                     android:textColor="@color/c_4D4F5A"
-                                    tools:text="民间借贷\n起草审查合同"
-                                    android:textSize="14sp" />
+                                    android:textSize="14sp"
+                                    tools:text="民间借贷\n起草审查合同" />
 
                             </RelativeLayout>
 
@@ -296,8 +295,8 @@
                                         android:layout_height="wrap_content"
                                         android:padding="@dimen/qb_px_20"
                                         android:textColor="@color/c_4D4F5A"
-                                        tools:text="离婚\n协议书"
-                                        android:textSize="14sp" />
+                                        android:textSize="14sp"
+                                        tools:text="离婚\n协议书" />
 
                                 </RelativeLayout>
 

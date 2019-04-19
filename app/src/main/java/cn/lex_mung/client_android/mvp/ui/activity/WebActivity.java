@@ -22,6 +22,7 @@ import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.lex_mung.client_android.mvp.ui.widget.webview.LWebView;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
@@ -42,7 +43,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.web_view)
-    WebView webView;
+    LWebView webView;
     @BindView(R.id.view_dialog)
     View viewDialog;
 
@@ -98,13 +99,18 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
         if (TextUtils.isEmpty(title)) {
             tvRight.setVisibility(View.GONE);
         }
-        tvTitle.setText(title);
         showLoading("");
         initWebView();
     }
 
     private void initWebView() {
         webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onReceivedTitle(WebView view, String title) {
+                super.onReceivedTitle(view, title);
+                tvTitle.setText(title);
+            }
+
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 if (newProgress == 100) {
@@ -113,40 +119,40 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
                 super.onProgressChanged(view, newProgress);
             }
         });
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String urls) {
-                view.loadUrl(urls);
-                return true;
-            }
-        });
-        WebSettings webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setSupportZoom(true);
-        webSettings.setBuiltInZoomControls(true);
-        webSettings.setUseWideViewPort(true);
-        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        webSettings.setLoadWithOverviewMode(true);
-        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
-        webSettings.setDomStorageEnabled(true);
-        webSettings.setBlockNetworkImage(false);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
-        }
-        webView.addJavascriptInterface(this, "JsBridgeApp");
-        synCookies(url);
+//        webView.setWebViewClient(new WebViewClient() {
+//            @Override
+//            public boolean shouldOverrideUrlLoading(WebView view, String urls) {
+//                view.loadUrl(urls);
+//                return true;
+//            }
+//        });
+//        WebSettings webSettings = webView.getSettings();
+//        webSettings.setJavaScriptEnabled(true);
+//        webSettings.setSupportZoom(true);
+//        webSettings.setBuiltInZoomControls(true);
+//        webSettings.setUseWideViewPort(true);
+//        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+//        webSettings.setLoadWithOverviewMode(true);
+//        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+//        webSettings.setDomStorageEnabled(true);
+//        webSettings.setBlockNetworkImage(false);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+//        }
+//        webView.addJavascriptInterface(this, "JsBridgeApp");
+        webView.synCookies(url);
         webView.loadUrl(url);
     }
 
-    public void synCookies(String url) {
-        CookieSyncManager.createInstance(mActivity);
-        CookieManager cookieManager = CookieManager.getInstance();
-        cookieManager.setAcceptCookie(true);
-        cookieManager.removeSessionCookie();//移除
-        String cookieStr = "X-Token=" + DataHelper.getStringSF(mActivity, TOKEN) + ";Domain=.lex-mung.com;Path=/";
-        cookieManager.setCookie(url, cookieStr);
-        CookieSyncManager.getInstance().sync();
-    }
+//    public void synCookies(String url) {
+//        CookieSyncManager.createInstance(mActivity);
+//        CookieManager cookieManager = CookieManager.getInstance();
+//        cookieManager.setAcceptCookie(true);
+//        cookieManager.removeSessionCookie();//移除
+//        String cookieStr = "X-Token=" + DataHelper.getStringSF(mActivity, TOKEN) + ";Domain=.lex-mung.com;Path=/";
+//        cookieManager.setCookie(url, cookieStr);
+//        CookieSyncManager.getInstance().sync();
+//    }
 
     @OnClick(R.id.tv_right)
     public void onViewClicked() {
@@ -196,6 +202,16 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
     @Override
     public void killMyself() {
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        // 搜索可以返回
+		if (webView.canGoBack()) {
+			webView.goBack();
+		} else {
+			super.onBackPressed();
+		}
     }
 
 }

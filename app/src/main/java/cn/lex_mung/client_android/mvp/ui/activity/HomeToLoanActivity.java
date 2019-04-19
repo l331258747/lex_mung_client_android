@@ -4,7 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.module.HomeToLoanActivityModule;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
@@ -18,7 +26,10 @@ import cn.lex_mung.client_android.mvp.presenter.HomeToLoanActivityPresenter;
 
 import cn.lex_mung.client_android.R;
 
-public class HomeToLoanActivityActivity extends BaseActivity<HomeToLoanActivityPresenter> implements HomeToLoanActivityContract.View {
+public class HomeToLoanActivity extends BaseActivity<HomeToLoanActivityPresenter> implements HomeToLoanActivityContract.View {
+
+    @BindView(R.id.tv_btn)
+    TextView tvBtn;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -74,5 +85,22 @@ public class HomeToLoanActivityActivity extends BaseActivity<HomeToLoanActivityP
     @Override
     public void killMyself() {
         finish();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.onResume();
+    }
+
+    @OnClick({
+            R.id.tv_btn
+    })
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tv_btn:
+
+                break;
+        }
     }
 }

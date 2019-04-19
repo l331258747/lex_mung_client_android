@@ -1,4 +1,4 @@
-package cn.lex_mung.client_android.widget;
+package cn.lex_mung.client_android.mvp.ui.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;

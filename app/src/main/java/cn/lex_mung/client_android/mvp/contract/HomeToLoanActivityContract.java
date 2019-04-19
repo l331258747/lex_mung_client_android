@@ -6,7 +6,6 @@ import me.zl.mvp.mvp.IModel;
 
 public interface HomeToLoanActivityContract {
     interface View extends IView {
-
     }
 
     interface Model extends IModel {

@@ -41,6 +41,7 @@ import cn.lex_mung.client_android.mvp.model.entity.home.NormalBean;
 import cn.lex_mung.client_android.mvp.presenter.HomePagerPresenter;
 import cn.lex_mung.client_android.mvp.ui.activity.FastConsultActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.HomeToLoanActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerListActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MainActivity;
@@ -279,19 +280,23 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
 
     @Override
     public void setContract(List<HotBean> datas) {
-        rlHot3.setOnClickListener(v -> {
-            //TODO 更多起草合同
+//        rlHot3.setOnClickListener(v -> {
+//            //TODO 更多起草合同
+//        });
+//        if(datas == null || datas.size() == 0)
+//            return;
+//        tvHot1.setText(datas.get(0).getRequireTypeName());
+//        rlHot1.setOnClickListener(v -> mPresenter.hotClick(datas.get(0).getRequireTypeId()));
+//        if(datas.size() >= 2){
+//            tvHot2.setText(datas.get(1).getRequireTypeName());
+//            rlHot2.setOnClickListener(v -> mPresenter.hotClick(datas.get(1).getRequireTypeId()));
+//        }
+
+        rlHot1.setOnClickListener(v -> {
+            launchActivity(new Intent(mActivity, HomeToLoanActivity.class), bundle);
         });
 
-        if(datas == null || datas.size() == 0)
-            return;
-        tvHot1.setText(datas.get(0).getRequireTypeName());
-        rlHot1.setOnClickListener(v -> mPresenter.hotClick(datas.get(0).getRequireTypeId()));
 
-        if(datas.size() >= 2){
-            tvHot2.setText(datas.get(1).getRequireTypeName());
-            rlHot2.setOnClickListener(v -> mPresenter.hotClick(datas.get(1).getRequireTypeId()));
-        }
 
 
     }

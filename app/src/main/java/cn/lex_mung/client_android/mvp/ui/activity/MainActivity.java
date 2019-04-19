@@ -76,19 +76,28 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        StatusBarUtil.setColorNoTranslucent(mActivity, AppUtils.getColor(mActivity, R.color.c_06a66a));
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         bottomNavigationViewEx.enableAnimation(true);
         bottomNavigationViewEx.enableShiftingMode(false);
         bottomNavigationViewEx.setTextVisibility(true);
-        bottomNavigationViewEx.setItemIconTintList(null);//取消文字图片着色小郭
+        bottomNavigationViewEx.setItemIconTintList(null);//取消图片着色效果
         initViewPager();
+
+        setStatusColor(0);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         mPresenter.onResume();
+    }
+
+    private void setStatusColor(int position){
+        if(position == 0){
+            StatusBarUtil.setColor(mActivity, AppUtils.getColor(mActivity, R.color.c_ddf6ed), 0);
+        }else{
+            StatusBarUtil.setColor(mActivity, AppUtils.getColor(mActivity, R.color.c_06a66a), 0);
+        }
     }
 
     private void initViewPager() {
@@ -113,6 +122,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 if (previousPosition != position) {
                     previousPosition = position;
                     viewPager.setCurrentItem(position);
+                    setStatusColor(position);
                 }
                 if (position == 3
                         && !DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {

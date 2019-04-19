@@ -341,7 +341,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".mvp.ui.activity.HomeToLoanActivityActivity"
+            android:name=".mvp.ui.activity.HomeToLoanActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
