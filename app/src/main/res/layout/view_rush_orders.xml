@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.9"
+            android:gravity="left|center_vertical"
+            android:text="已支付"
+            android:textSize="11sp"
+            android:textColor="@color/c_ff" />
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5">
+
+            <ImageView
+                android:id="@+id/iv_mate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/ic_rush_order_current2" />
+
+            <TextView
+                android:id="@+id/tv_mate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textSize="11sp"
+                android:text="匹配律师"
+                android:textColor="@color/c_ff" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5">
+
+            <ImageView
+                android:id="@+id/iv_reply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/ic_rush_order_current2" />
+
+            <TextView
+                android:id="@+id/tv_reply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textSize="11sp"
+                android:text="双方沟通交付"
+                android:textColor="@color/c_ff" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.9"
+            android:gravity="right|center_vertical"
+            android:textSize="11sp"
+            android:text="服务完成"
+            android:textColor="@color/c_ff" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_5"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:id="@+id/iv_select_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_rush_order_select" />
+
+
+        <ImageView
+            android:id="@+id/iv_line_1"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginBottom="3dp"
+            android:layout_weight="1"
+            android:background="@color/c_ff" />
+
+        <ImageView
+            android:id="@+id/iv_select_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_rush_order_select_un" />
+
+        <ImageView
+            android:id="@+id/iv_line_2"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginBottom="3dp"
+            android:layout_weight="1"
+            android:background="@color/c_ff" />
+
+        <ImageView
+            android:id="@+id/iv_select_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_rush_order_select_un" />
+
+        <ImageView
+            android:id="@+id/iv_line_3"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginBottom="3dp"
+            android:layout_weight="1"
+            android:background="@color/c_ff" />
+
+
+        <ImageView
+            android:id="@+id/iv_select_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_rush_order_select_un" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

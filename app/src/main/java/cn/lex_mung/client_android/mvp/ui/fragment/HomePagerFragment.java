@@ -45,6 +45,7 @@ import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MainActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MessageActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.ReleaseDemandActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.RushOrdersActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.HomePageRequirementTypeAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
@@ -308,7 +309,10 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         });
         if(datas.size() >= 2){
             tvHot2.setText(datas.get(1).getRequireTypeName());
-            rlHot2.setOnClickListener(v -> contractClick(datas.get(1)));
+//            rlHot2.setOnClickListener(v -> contractClick(datas.get(1)));
+            rlHot2.setOnClickListener(v -> {
+                launchActivity(new Intent(mActivity, RushOrdersActivity.class));
+            });
         }
     }
 

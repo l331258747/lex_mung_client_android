@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <cn.lex_mung.client_android.mvp.ui.widget.TitleView
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:TitleView_bg="@color/c_ff"
+        app:TitleView_title="提交合同"
+        app:TitleView_left_img="@drawable/ic_back"/>
+
+    <View
+        android:id="@+id/view_bg"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_340"
+        android:background="@drawable/ic_rush_order_bg"
+        app:layout_constraintTop_toBottomOf="@+id/titleView" />
+
+    <cn.lex_mung.client_android.mvp.ui.widget.RushOrdersView
+        android:id="@+id/view_rush_orders"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/qb_px_50"
+        android:layout_marginRight="@dimen/qb_px_50"
+        app:layout_constraintBottom_toBottomOf="@+id/view_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view_bg" />
+
+
+
+
+
+
+</android.support.constraint.ConstraintLayout>

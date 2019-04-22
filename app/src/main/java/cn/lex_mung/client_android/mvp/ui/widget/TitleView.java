@@ -79,6 +79,10 @@ public class TitleView extends RelativeLayout {
         }
     }
 
+    public ImageView getLeftView(){
+        return leftIv;
+    }
+
     public void setTitle(String title) {
         titleTv.setText(title);
     }
