@@ -9,6 +9,7 @@ import butterknife.BindView;
 import cn.lex_mung.client_android.di.module.RushOrdersModule;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
+import cn.lex_mung.client_android.mvp.ui.widget.CompletedView;
 import cn.lex_mung.client_android.mvp.ui.widget.RushOrdersView;
 import dagger.BindsInstance;
 import me.zl.mvp.base.BaseActivity;
@@ -29,6 +30,8 @@ public class RushOrdersActivity extends BaseActivity<RushOrdersPresenter> implem
 
     @BindView(R.id.view_rush_orders)
     RushOrdersView rushOrdersView;
+    @BindView(R.id.tasks_view)
+    CompletedView completedView;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -49,6 +52,35 @@ public class RushOrdersActivity extends BaseActivity<RushOrdersPresenter> implem
     public void initData(@Nullable Bundle savedInstanceState) {
         StatusBarUtil.setColor(mActivity, AppUtils.getColor(mActivity, R.color.c_ff), 0);
         rushOrdersView.setProgress(2);
+        completedView.setTotalProgress(mTotalProgress);
+
+        new Thread(new ProgressRunable()).start();
+    }
+
+    private int mTotalProgress = 120;
+    private int mCurrentProgress = 0;
+    private boolean isDestroy;
+    class ProgressRunable implements Runnable {
+        @Override
+        public void run() {
+            while (mCurrentProgress < mTotalProgress) {
+                if(isDestroy)
+                    return;
+                mCurrentProgress += 1;
+                completedView.setProgress(mCurrentProgress);
+                try {
+                    Thread.sleep(90);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        isDestroy = true;
     }
 
     @Override

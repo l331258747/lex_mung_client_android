@@ -10,8 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:TitleView_bg="@color/c_ff"
-        app:TitleView_title="提交合同"
-        app:TitleView_left_img="@drawable/ic_back"/>
+        app:TitleView_left_img="@drawable/ic_back"
+        app:TitleView_title="提交合同" />
 
     <View
         android:id="@+id/view_bg"
@@ -32,8 +32,30 @@
         app:layout_constraintTop_toTopOf="@+id/view_bg" />
 
 
+    <cn.lex_mung.client_android.mvp.ui.widget.CompletedView
+        android:id="@+id/tasks_view"
+        android:layout_width="@dimen/qb_px_280"
+        android:layout_height="@dimen/qb_px_280"
+        app:circleColor="@color/c_ff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_bg"
+        app:radius="@dimen/qb_px_100"
+        app:Completed_textColor="@color/c_737373"
+        app:ringBgColor="@color/c_f4f4f4"
+        app:ringColor="@color/c_3DD790"
+        app:strokeWidth="@dimen/qb_px_15" />
 
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="系统正为您优选在线律师"
+        android:textColor="@color/c_b4b4b4"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/qb_px_10"
+        app:layout_constraintTop_toBottomOf="@+id/tasks_view" />
 
 
 </android.support.constraint.ConstraintLayout>
