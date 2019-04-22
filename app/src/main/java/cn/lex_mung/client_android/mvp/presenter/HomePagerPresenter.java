@@ -190,8 +190,8 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                         if (baseResponse.isSuccess()) {
                             mRootView.setRequirementTypeAdapter(baseResponse.getData().getNormal());
                             DataHelper.setStringSF(mApplication, DataHelperTags.HOME_PAGE_REQUIREMENT_TYPE, new Gson().toJson(baseResponse.getData()));
-
-                            mRootView.setContract(baseResponse.getData().getHot());
+                            mRootView.setHotContract(baseResponse.getData().getHot());
+                            mRootView.setMoreContract(baseResponse.getData().getMore());
                         }
                     }
                 });
@@ -234,8 +234,4 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
         this.mApplication = null;
     }
 
-    public void hotClick(int id){
-        //TODO requireTypeId 36 民间借贷|起草审查合同
-        //TODO requireTypeId 40 "离婚|协议书"
-    }
 }

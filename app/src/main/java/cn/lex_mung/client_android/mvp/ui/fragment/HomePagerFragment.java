@@ -36,16 +36,15 @@ import cn.lex_mung.client_android.di.module.HomePagerModule;
 import cn.lex_mung.client_android.mvp.contract.HomePagerContract;
 import cn.lex_mung.client_android.mvp.model.entity.BannerEntity;
 import cn.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
-import cn.lex_mung.client_android.mvp.model.entity.home.HotBean;
 import cn.lex_mung.client_android.mvp.model.entity.home.NormalBean;
 import cn.lex_mung.client_android.mvp.presenter.HomePagerPresenter;
 import cn.lex_mung.client_android.mvp.ui.activity.FastConsultActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.HomeToLoanActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerListActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MainActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MessageActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.ReleaseDemandActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.HomePageRequirementTypeAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
@@ -80,6 +79,8 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     TextView tvHot1;
     @BindView(R.id.tv_hot_2)
     TextView tvHot2;
+    @BindView(R.id.tv_hot_3)
+    TextView tvHot3;
 
     private List<Fragment> fragments = new ArrayList<>();
     private List<String> titles = new ArrayList<>();
@@ -141,15 +142,16 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;
             NormalBean entity = adapter.getItem(position);
-            if (entity == null) return;
-            if (entity.getJumptype() == 1) {
-                ((MainActivity) mActivity).switchPage(2);
-            } else {
-                bundle.clear();
-                bundle.putString(BundleTags.URL, entity.getJumpUrl());
-                bundle.putBoolean(BundleTags.IS_SHARE, false);
-                launchActivity(new Intent(mActivity, WebActivity.class), bundle);
-            }
+//            if (entity == null) return;
+//            if (entity.getJumptype() == 1) {
+//                ((MainActivity) mActivity).switchPage(2);
+//            } else {
+//                bundle.clear();
+//                bundle.putString(BundleTags.URL, entity.getJumpUrl());
+//                bundle.putBoolean(BundleTags.IS_SHARE, false);
+//                launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+//            }
+            contractClick(entity);
         });
     }
 
@@ -279,26 +281,53 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     }
 
     @Override
-    public void setContract(List<HotBean> datas) {
-//        rlHot3.setOnClickListener(v -> {
-//            //TODO 更多起草合同
-//        });
-//        if(datas == null || datas.size() == 0)
-//            return;
-//        tvHot1.setText(datas.get(0).getRequireTypeName());
-//        rlHot1.setOnClickListener(v -> mPresenter.hotClick(datas.get(0).getRequireTypeId()));
-//        if(datas.size() >= 2){
-//            tvHot2.setText(datas.get(1).getRequireTypeName());
-//            rlHot2.setOnClickListener(v -> mPresenter.hotClick(datas.get(1).getRequireTypeId()));
-//        }
+    public void setHotContract(List<NormalBean> datas) {
 
+        if(datas == null || datas.size() == 0)
+            return;
+        tvHot1.setText(datas.get(0).getRequireTypeName());
+//        rlHot1.setOnClickListener(v -> contractClick(datas.get(0)));
         rlHot1.setOnClickListener(v -> {
-            launchActivity(new Intent(mActivity, HomeToLoanActivity.class), bundle);
+            //TODO 支付
+            if (isFastClick()) return;
+            Bundle bundle = new Bundle();
+            if (mPresenter.isLogin()) {
+                bundle.clear();
+//                bundle.putInt(BundleTags.ID, businessEntity.getRequireTypeId());
+//                bundle.putInt(BundleTags.TYPE, businessEntity.getType());
+//                bundle.putString(BundleTags.TITLE, businessEntity.getRequireTypeName());
+//                bundle.putSerializable(BundleTags.ENTITY, entity);
+                launchActivity(new Intent(mActivity, ReleaseDemandActivity.class), bundle);
+            } else {
+                bundle.clear();
+                bundle.putInt(BundleTags.TYPE, 1);
+                launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
+            }
+
+
         });
+        if(datas.size() >= 2){
+            tvHot2.setText(datas.get(1).getRequireTypeName());
+            rlHot2.setOnClickListener(v -> contractClick(datas.get(1)));
+        }
+    }
 
+    @Override
+    public void setMoreContract(List<NormalBean> datas) {
+        tvHot3.setText(datas.get(0).getRequireTypeName());
+        rlHot3.setOnClickListener(v -> contractClick(datas.get(0)));
+    }
 
-
-
+    public void contractClick(NormalBean entity){
+        if (entity == null) return;
+        if (entity.getJumptype() == 1) {
+            ((MainActivity) mActivity).switchPage(2);
+        } else {
+            bundle.clear();
+            bundle.putString(BundleTags.URL, entity.getJumpUrl());
+            bundle.putBoolean(BundleTags.IS_SHARE, false);
+            launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+        }
     }
 
     @Override

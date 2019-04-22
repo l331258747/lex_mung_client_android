@@ -7,7 +7,6 @@ import cn.lex_mung.client_android.mvp.model.entity.UnreadMessageCountEntity;
 
 import java.util.List;
 
-import cn.lex_mung.client_android.mvp.model.entity.home.HotBean;
 import cn.lex_mung.client_android.mvp.model.entity.home.NormalBean;
 import cn.lex_mung.client_android.mvp.model.entity.home.RequirementTypeV3Entity;
 import io.reactivex.Observable;
@@ -27,7 +26,8 @@ public interface HomePagerContract {
 
         void hideUnreadMessageCount();
 
-        void setContract(List<HotBean> datas);
+        void setHotContract(List<NormalBean> datas);
+        void setMoreContract(List<NormalBean> datas);
     }
 
     interface Model extends IModel {

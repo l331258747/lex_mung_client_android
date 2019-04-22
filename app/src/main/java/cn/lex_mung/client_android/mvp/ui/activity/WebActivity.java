@@ -1,41 +1,32 @@
 package cn.lex_mung.client_android.mvp.ui.activity;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
-import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
 import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.TextView;
 
-import cn.lex_mung.client_android.app.BundleTags;
-import cn.lex_mung.client_android.app.ShareUtils;
-import cn.lex_mung.client_android.di.module.WebModule;
-import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.app.ShareUtils;
+import cn.lex_mung.client_android.di.component.DaggerWebComponent;
+import cn.lex_mung.client_android.di.module.WebModule;
+import cn.lex_mung.client_android.mvp.contract.WebContract;
+import cn.lex_mung.client_android.mvp.presenter.WebPresenter;
+import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import cn.lex_mung.client_android.mvp.ui.widget.webview.AndroidToJs;
 import cn.lex_mung.client_android.mvp.ui.widget.webview.LWebView;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
-import me.zl.mvp.utils.DataHelper;
-
-import cn.lex_mung.client_android.di.component.DaggerWebComponent;
-import cn.lex_mung.client_android.mvp.contract.WebContract;
-import cn.lex_mung.client_android.mvp.presenter.WebPresenter;
-
-import cn.lex_mung.client_android.R;
-import com.umeng.analytics.MobclickAgent;
-
-import static cn.lex_mung.client_android.app.DataHelperTags.TOKEN;
 
 public class WebActivity extends BaseActivity<WebPresenter> implements WebContract.View {
     @BindView(R.id.tv_right)
@@ -139,9 +130,12 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
 //        }
-//        webView.addJavascriptInterface(this, "JsBridgeApp");
+        webView.addJavascriptInterface(new AndroidToJs(),"app");//h5 js调用 app.pay();
+
         webView.synCookies(url);
         webView.loadUrl(url);
+
+
     }
 
 //    public void synCookies(String url) {

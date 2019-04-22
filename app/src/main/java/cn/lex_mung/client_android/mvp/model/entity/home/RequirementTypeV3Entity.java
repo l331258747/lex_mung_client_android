@@ -6,7 +6,8 @@ public class RequirementTypeV3Entity {
 
 
     private List<NormalBean> normal;
-    private List<HotBean> hot;
+    private List<NormalBean> hot;
+    private List<NormalBean> more;
 
     public List<NormalBean> getNormal() {
         return normal;
@@ -16,12 +17,19 @@ public class RequirementTypeV3Entity {
         this.normal = normal;
     }
 
-    public List<HotBean> getHot() {
+    public List<NormalBean> getHot() {
         return hot;
     }
 
-    public void setHot(List<HotBean> hot) {
+    public void setHot(List<NormalBean> hot) {
         this.hot = hot;
     }
 
+    public List<NormalBean> getMore() {
+        return more;
+    }
+
+    public void setMore(List<NormalBean> more) {
+        this.more = more;
+    }
 }

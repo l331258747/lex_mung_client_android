@@ -313,10 +313,11 @@
                                         android:src="@drawable/ic_home_contract_more" />
 
                                     <TextView
+                                        android:id="@+id/tv_hot_3"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:padding="@dimen/qb_px_20"
-                                        android:text="更多起草\n审查合同"
+                                        tools:text="更多起草\n审查合同"
                                         android:textColor="@color/c_4D4F5A"
                                         android:textSize="14sp" />
 
