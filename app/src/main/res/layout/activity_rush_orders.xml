@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,49 +13,73 @@
         app:TitleView_left_img="@drawable/ic_back"
         app:TitleView_title="提交合同" />
 
-    <View
-        android:id="@+id/view_bg"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/qb_px_340"
-        android:background="@drawable/ic_rush_order_bg"
-        app:layout_constraintTop_toBottomOf="@+id/titleView" />
 
     <cn.lex_mung.client_android.mvp.ui.widget.RushOrdersView
         android:id="@+id/view_rush_orders"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_300"
+        android:layout_below="@+id/titleView"
+        android:background="@drawable/ic_rush_order_bg"
+        android:gravity="center"
+        android:paddingLeft="@dimen/qb_px_50"
+        android:paddingRight="@dimen/qb_px_50" />
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/qb_px_50"
-        android:layout_marginRight="@dimen/qb_px_50"
-        app:layout_constraintBottom_toBottomOf="@+id/view_bg"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/view_bg" />
+        android:layout_below="@+id/view_rush_orders">
+
+        <include layout="@layout/activity_rush_orders_rush" />
+
+        <include layout="@layout/activity_rush_orders_error" />
+
+    </FrameLayout>
 
 
-    <cn.lex_mung.client_android.mvp.ui.widget.CompletedView
-        android:id="@+id/tasks_view"
-        android:layout_width="@dimen/qb_px_280"
-        android:layout_height="@dimen/qb_px_280"
-        app:circleColor="@color/c_ff"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_bg"
-        app:radius="@dimen/qb_px_100"
-        app:Completed_textColor="@color/c_737373"
-        app:ringBgColor="@color/c_f4f4f4"
-        app:ringColor="@color/c_3DD790"
-        app:strokeWidth="@dimen/qb_px_15" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="系统正为您优选在线律师"
-        android:textColor="@color/c_b4b4b4"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="@dimen/qb_px_10"
-        app:layout_constraintTop_toBottomOf="@+id/tasks_view" />
+    <include layout="@layout/activity_rush_orders_reply"/>
 
 
-</android.support.constraint.ConstraintLayout>
+    <!--<ViewFlipper-->
+    <!--android:id="@+id/view_flipper"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/view_bg"-->
+    <!--android:layout_marginLeft="@dimen/qb_px_40"-->
+    <!--android:layout_marginRight="@dimen/qb_px_40"-->
+    <!--android:layout_marginTop="@dimen/qb_px_108"-->
+    <!--android:inAnimation="@anim/bottom_in"-->
+    <!--android:outAnimation="@anim/top_out" />-->
+
+
+    <!--<cn.lex_mung.client_android.mvp.ui.widget.CompletedView-->
+    <!--android:id="@+id/tasks_view"-->
+    <!--android:layout_width="@dimen/qb_px_280"-->
+    <!--android:layout_height="@dimen/qb_px_280"-->
+    <!--app:circleColor="@color/c_ff"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--android:layout_marginTop="@dimen/qb_px_60"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/view_flipper"-->
+    <!--app:radius="@dimen/qb_px_100"-->
+    <!--app:Completed_textColor="@color/c_737373"-->
+    <!--app:ringBgColor="@color/c_f4f4f4"-->
+    <!--app:ringColor="@color/c_3DD790"-->
+    <!--app:strokeWidth="@dimen/qb_px_15" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="系统正为您优选在线律师"-->
+    <!--android:textColor="@color/c_b4b4b4"-->
+    <!--android:textSize="12sp"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--android:layout_marginTop="@dimen/qb_px_10"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/tasks_view" />-->
+
+
+</RelativeLayout>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cl_rush_rush"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/qb_px_108"
+    android:visibility="gone"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <ViewFlipper
+        android:id="@+id/view_flipper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/qb_px_40"
+        android:layout_marginRight="@dimen/qb_px_40"
+        android:inAnimation="@anim/bottom_in"
+        android:outAnimation="@anim/top_out" />
+
+
+    <cn.lex_mung.client_android.mvp.ui.widget.CompletedView
+        android:id="@+id/tasks_view"
+        android:layout_width="@dimen/qb_px_280"
+        android:layout_height="@dimen/qb_px_280"
+        android:layout_marginTop="@dimen/qb_px_60"
+        app:Completed_textColor="@color/c_737373"
+        app:circleColor="@color/c_ff"
+        app:radius="@dimen/qb_px_100"
+        app:ringBgColor="@color/c_f4f4f4"
+        app:ringColor="@color/c_3DD790"
+        app:strokeWidth="@dimen/qb_px_15" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_10"
+        android:text="系统正为您优选在线律师"
+        android:textColor="@color/c_b4b4b4"
+        android:textSize="12sp" />
+
+
+</LinearLayout>

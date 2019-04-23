@@ -59,10 +59,20 @@ public class RushOrdersView extends LinearLayout {
         iv_select_4.setOnClickListener(v -> {
             setProgress(3);
         });
+    }
 
+    public interface ItemOnClick{
+        void onClick(int position);
+    }
+    ItemOnClick itemOnClick;
+    public void setItemOnClick(ItemOnClick itemOnClick){
+        this.itemOnClick = itemOnClick;
     }
 
     public void setProgress(int progress){
+        if(itemOnClick !=null){
+            itemOnClick.onClick(progress);
+        }
         switch (progress){
             case 0:
                 iv_select_1.setVisibility(VISIBLE);

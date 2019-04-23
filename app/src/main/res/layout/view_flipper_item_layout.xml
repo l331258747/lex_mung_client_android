@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="@dimen/qb_px_340"
+        android:layout_height="@dimen/qb_px_110"
+        android:paddingLeft="@dimen/qb_px_15"
+        android:paddingRight="@dimen/qb_px_30"
+        android:layout_centerInParent="true"
+        android:background="@drawable/ic_rush_order_name_bg">
+
+        <ImageView
+            android:id="@+id/iv_head"
+            android:layout_width="@dimen/qb_px_60"
+            android:layout_height="@dimen/qb_px_60"
+            android:layout_marginTop="@dimen/qb_px_10"
+            android:src="@drawable/ic_lawyer_avatar" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/qb_px_10"
+            android:layout_marginTop="@dimen/qb_px_10"
+            android:layout_toRightOf="@+id/iv_head"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLength="5"
+                android:maxLines="1"
+                android:textColor="@color/c_ff"
+                android:textSize="11sp"
+                tools:text="卢磊磊" />
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:textColor="@color/c_ff"
+                android:textSize="11sp"
+                tools:text="湖南事务所湖南事务所湖南事务所" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
