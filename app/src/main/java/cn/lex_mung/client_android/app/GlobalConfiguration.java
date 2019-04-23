@@ -23,7 +23,11 @@ public final class GlobalConfiguration implements ConfigModule {
 
     @Override
     public void applyOptions(Context context, GlobalConfigModule.Builder builder) {
-        if (!BuildConfig.LOG_DEBUG) {
+//        if (!BuildConfig.LOG_DEBUG) {
+//            builder.printHttpLogLevel(RequestInterceptor.Level.NONE);
+//        }
+
+        if(BuildConfig.IS_PROD){//正式环境不打印log
             builder.printHttpLogLevel(RequestInterceptor.Level.NONE);
         }
 

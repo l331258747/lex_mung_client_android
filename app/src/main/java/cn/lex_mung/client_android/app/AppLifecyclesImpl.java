@@ -33,7 +33,8 @@ import static android.content.Context.NOTIFICATION_SERVICE;
  * 需要在application中初始化的东西
  */
 public class AppLifecyclesImpl implements AppLifecycles {
-    private final boolean isDebug = false;//正式环境为true  测试环境为false
+//    private final boolean isDebug = false;//正式环境为true  测试环境为false
+    private final boolean isDebug = BuildConfig.IS_PROD;//正式环境为true  测试环境为false
 
     @Override
     public void attachBaseContext(@NonNull Context base) {
@@ -41,7 +42,11 @@ public class AppLifecyclesImpl implements AppLifecycles {
 
     @Override
     public void onCreate(@NonNull Application application) {
-        if (BuildConfig.LOG_DEBUG) {//Timber初始化
+//        if (BuildConfig.LOG_DEBUG) {//Timber初始化
+//            Timber.plant(new Timber.DebugTree());
+//            ButterKnife.setDebug(isDebug);
+//        }
+        if (!BuildConfig.IS_PROD) {//Timber初始化 测试环境打印log
             Timber.plant(new Timber.DebugTree());
             ButterKnife.setDebug(isDebug);
         }
