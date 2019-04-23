@@ -11,9 +11,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
 
-import cn.lex_mung.client_android.BuildConfig;
-import cn.lex_mung.client_android.R;
-
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -24,6 +21,8 @@ import com.umeng.commonsdk.UMConfigure;
 import butterknife.ButterKnife;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.im.android.api.JMessageClient;
+import cn.lex_mung.client_android.BuildConfig;
+import cn.lex_mung.client_android.R;
 import me.zl.mvp.base.delegate.AppLifecycles;
 import me.zl.mvp.utils.DataHelper;
 import timber.log.Timber;
@@ -64,7 +63,7 @@ public class AppLifecyclesImpl implements AppLifecycles {
         JMessageClient.setDebugMode(isDebug);
         JMessageClient.init(application, true);
 
-        //友盟
+        //友盟5a54aea7b27b0a6ccb00016a
         UMConfigure.init(application, "5a54aea7b27b0a6ccb00016a", channel, UMConfigure.DEVICE_TYPE_PHONE, "");
         UMConfigure.setLogEnabled(!isDebug);
         MobclickAgent.setScenarioType(application, MobclickAgent.EScenarioType.E_UM_NORMAL);

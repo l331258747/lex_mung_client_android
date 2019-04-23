@@ -116,7 +116,7 @@ public class MapActivity extends BaseActivity<MapPresenter> implements MapContra
      */
     private void goToBaidu() {
         try {
-            Intent intent = Intent.getIntent("intent://map/direction?destination=latlng:" + latitude + "," + longitude + "|name:" + title + "&mode=driving&coord_type=gcj02&src=com.lex_mung.lawyer_android#Intent;" + "scheme=bdapp;package=com.baidu.BaiduMap;end");
+            Intent intent = Intent.getIntent("intent://map/direction?destination=latlng:" + latitude + "," + longitude + "|name:" + title + "&mode=driving&coord_type=gcj02&src=com.lex_mung.client_android#Intent;" + "scheme=bdapp;package=com.baidu.BaiduMap;end");
             startActivity(intent);
         } catch (URISyntaxException ignored) {
         }
