@@ -10,11 +10,11 @@ import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 
 import javax.inject.Inject;
 
-import cn.lex_mung.client_android.mvp.contract.RushOrdersContract;
+import cn.lex_mung.client_android.mvp.contract.OrderDetailTabContract;
 
 
 @ActivityScope
-public class RushOrdersPresenter extends BasePresenter<RushOrdersContract.Model, RushOrdersContract.View> {
+public class OrderDetailTabPresenter extends BasePresenter<OrderDetailTabContract.Model, OrderDetailTabContract.View> {
     @Inject
     RxErrorHandler mErrorHandler;
     @Inject
@@ -25,7 +25,7 @@ public class RushOrdersPresenter extends BasePresenter<RushOrdersContract.Model,
     AppManager mAppManager;
 
     @Inject
-    public RushOrdersPresenter(RushOrdersContract.Model model, RushOrdersContract.View rootView) {
+    public OrderDetailTabPresenter(OrderDetailTabContract.Model model, OrderDetailTabContract.View rootView) {
         super(model, rootView);
     }
 
@@ -37,6 +37,4 @@ public class RushOrdersPresenter extends BasePresenter<RushOrdersContract.Model,
         this.mImageLoader = null;
         this.mApplication = null;
     }
-
-
 }

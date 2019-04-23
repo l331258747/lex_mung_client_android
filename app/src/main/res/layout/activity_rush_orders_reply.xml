@@ -4,6 +4,8 @@
     android:id="@+id/cl_rush_reply"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:visibility="gone"
+    tools:visibility="visible"
     android:layout_height="match_parent">
 
 
@@ -176,7 +178,7 @@
 
 
     <TextView
-        android:id="@+id/tv_call"
+        android:id="@+id/tv_lawyer_call"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/qb_px_510"
@@ -195,7 +197,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:textColor="@color/c_b4b4b4"
-        app:layout_constraintTop_toBottomOf="@+id/tv_call"
+        app:layout_constraintTop_toBottomOf="@+id/tv_lawyer_call"
         android:text="您也可以现在将合同发送给律师"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -1,6 +1,7 @@
 package cn.lex_mung.client_android.mvp.ui.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,21 +15,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.di.component.DaggerRushOrdersComponent;
 import cn.lex_mung.client_android.di.module.RushOrdersModule;
+import cn.lex_mung.client_android.mvp.contract.RushOrdersContract;
+import cn.lex_mung.client_android.mvp.presenter.RushOrdersPresenter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
-
 import cn.lex_mung.client_android.mvp.ui.widget.CompletedView;
 import cn.lex_mung.client_android.mvp.ui.widget.RushOrdersView;
-import dagger.BindsInstance;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
-
-import cn.lex_mung.client_android.di.component.DaggerRushOrdersComponent;
-import cn.lex_mung.client_android.mvp.contract.RushOrdersContract;
-import cn.lex_mung.client_android.mvp.presenter.RushOrdersPresenter;
-
-import cn.lex_mung.client_android.R;
 import me.zl.mvp.utils.StatusBarUtil;
 
 /**
@@ -49,8 +47,11 @@ public class RushOrdersActivity extends BaseActivity<RushOrdersPresenter> implem
     @BindView(R.id.cl_rush_reply)
     ConstraintLayout clRushReply;
 
-    private boolean isflipper;
-
+    List<String> noticeItems;
+    private Thread Progress;
+    private int mTotalProgress = 120;
+    private int mCurrentProgress = 0;
+    private boolean isStop;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -60,6 +61,115 @@ public class RushOrdersActivity extends BaseActivity<RushOrdersPresenter> implem
                 .rushOrdersModule(new RushOrdersModule(this))
                 .build()
                 .inject(this);
+    }
+
+    @Override
+    public int initView(@Nullable Bundle savedInstanceState) {
+        return R.layout.activity_rush_orders;
+    }
+
+    @Override
+    public void initData(@Nullable Bundle savedInstanceState) {
+        StatusBarUtil.setColor(mActivity, AppUtils.getColor(mActivity, R.color.c_ff), 0);
+
+        initTextBanner();
+        noticeItems = getbanners();
+        completedView.setTotalProgress(mTotalProgress);
+        Progress = new Thread(new ProgressRunable());
+
+        isDelete();
+        setPosition(1);
+    }
+
+    @OnClick({
+            R.id.tv_custom_call,
+            R.id.tv_lawyer_call
+    })
+    public void onViewClicked(View view) {
+        Intent dialIntent;
+        switch (view.getId()) {
+            case R.id.tv_custom_call:
+                dialIntent =  new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "400-811-3060"));
+                startActivity(dialIntent);
+                break;
+            case R.id.tv_lawyer_call:
+                dialIntent =  new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "400-811-3060"));//TODO 律师电话
+                startActivity(dialIntent);
+                break;
+        }
+    }
+
+    //TODO 用来测试用的点击变化 之后要删除点击事件
+    private void isDelete(){
+        rushOrdersView.setItemOnClick(position -> {
+            isStop = true;
+            viewFlipper.stopFlipping();
+
+            switch (position){
+                case 0:
+                    clRushRush.setVisibility(View.GONE);
+                    clRushError.setVisibility(View.VISIBLE);
+                    clRushReply.setVisibility(View.GONE);
+
+                    break;
+                case 1:
+                    clRushRush.setVisibility(View.VISIBLE);
+                    clRushError.setVisibility(View.GONE);
+                    clRushReply.setVisibility(View.GONE);
+
+                    addNotice();
+                    mCurrentProgress = 0;
+                    isStop = false;
+                    Progress.start();
+
+                    break;
+                case 2:
+                    clRushRush.setVisibility(View.GONE);
+                    clRushError.setVisibility(View.GONE);
+                    clRushReply.setVisibility(View.VISIBLE);
+                    break;
+                case 3:
+                    break;
+            }
+        });
+    }
+
+    //设置进度
+    private void setPosition(int i) {
+//        isStop = true;
+//        viewFlipper.stopFlipping();
+//        if(Progress.isInterrupted()){
+//            Progress.interrupt();
+//        }
+//
+//        switch (i){
+//            case 0:
+//                clRushRush.setVisibility(View.GONE);
+//                clRushError.setVisibility(View.VISIBLE);
+//                clRushReply.setVisibility(View.GONE);
+//                break;
+//            case 1:
+//                clRushRush.setVisibility(View.VISIBLE);
+//                clRushError.setVisibility(View.GONE);
+//                clRushReply.setVisibility(View.GONE);
+//
+//                //倒计时开始，律师轮播
+//                addNotice();
+//                mCurrentProgress = 0;
+//                isStop = false;
+//                Progress.start();
+//
+//                break;
+//            case 2:
+//                clRushRush.setVisibility(View.GONE);
+//                clRushError.setVisibility(View.GONE);
+//                clRushReply.setVisibility(View.VISIBLE);
+//                break;
+//            case 3:
+//                break;
+//        }
+
+        rushOrdersView.setProgress(i);//TODO 去除
     }
 
     public void initTextBanner() {
@@ -79,8 +189,6 @@ public class RushOrdersActivity extends BaseActivity<RushOrdersPresenter> implem
      * 公告
      */
     public void addNotice() {
-        isflipper = false;
-        List<String> noticeItems = getbanners();
         int size = noticeItems.size();
         viewFlipper.removeAllViews();
 
@@ -98,7 +206,6 @@ public class RushOrdersActivity extends BaseActivity<RushOrdersPresenter> implem
         }
 
         viewFlipper.startFlipping();
-        isflipper = true;
         for (int i = 0; i < size; i++) {
             View view = View.inflate(mActivity, R.layout.view_flipper_item_layout, null);
             ((TextView) view.findViewById(R.id.tv_name)).setText(noticeItems.get(i));
@@ -106,63 +213,11 @@ public class RushOrdersActivity extends BaseActivity<RushOrdersPresenter> implem
         }
     }
 
-    @Override
-    public int initView(@Nullable Bundle savedInstanceState) {
-        return R.layout.activity_rush_orders;
-    }
-
-    @Override
-    public void initData(@Nullable Bundle savedInstanceState) {
-        StatusBarUtil.setColor(mActivity, AppUtils.getColor(mActivity, R.color.c_ff), 0);
-        rushOrdersView.setItemOnClick(position -> {
-            viewFlipper.stopFlipping();
-            if(Progress.isInterrupted()){
-                Progress.interrupt();
-            }
-            switch (position){
-                case 0:
-                    clRushRush.setVisibility(View.GONE);
-                    clRushError.setVisibility(View.VISIBLE);
-                    clRushReply.setVisibility(View.GONE);
-                    break;
-                case 1:
-                    clRushRush.setVisibility(View.VISIBLE);
-                    clRushError.setVisibility(View.GONE);
-                    clRushReply.setVisibility(View.GONE);
-
-                    addNotice();
-                    mCurrentProgress = 0;
-                    Progress.start();
-
-                    break;
-                case 2:
-                    clRushRush.setVisibility(View.GONE);
-                    clRushError.setVisibility(View.GONE);
-                    clRushReply.setVisibility(View.VISIBLE);
-                    break;
-                case 3:
-                    break;
-            }
-        });
-        initTextBanner();
-        Progress = new Thread(new ProgressRunable());
-        completedView.setTotalProgress(mTotalProgress);
-
-        rushOrdersView.setProgress(1);
-
-    }
-
-    private Thread Progress;
-
-    private int mTotalProgress = 120;
-    private int mCurrentProgress = 0;
-    private boolean isDestroy;
-
     class ProgressRunable implements Runnable {
         @Override
         public void run() {
             while (mCurrentProgress < mTotalProgress) {
-                if (isDestroy)
+                if (isStop)
                     return;
                 mCurrentProgress += 1;
                 completedView.setProgress(mCurrentProgress);
@@ -176,13 +231,12 @@ public class RushOrdersActivity extends BaseActivity<RushOrdersPresenter> implem
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        isDestroy = true;
+    protected void onStop() {
+        super.onStop();
+        isStop = true;
         if(viewFlipper != null){
             viewFlipper.stopFlipping();
         }
-
     }
 
     @Override
@@ -219,5 +273,13 @@ public class RushOrdersActivity extends BaseActivity<RushOrdersPresenter> implem
     @Override
     public void killMyself() {
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        //TODO 抢单订单详情页面
+        finish();
+
+
     }
 }
