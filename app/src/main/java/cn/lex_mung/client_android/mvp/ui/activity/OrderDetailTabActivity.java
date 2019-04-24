@@ -46,7 +46,11 @@ public class OrderDetailTabActivity extends BaseActivity<OrderDetailTabPresenter
     ViewPager viewPager;
 
     private List<Fragment> fragments = new ArrayList<>();
-    private List<String> titles = new ArrayList<>();
+
+    @Override
+    public boolean useFragment() {
+        return true;
+    }
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {

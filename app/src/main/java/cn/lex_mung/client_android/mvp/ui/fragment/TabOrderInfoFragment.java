@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
+import cn.lex_mung.client_android.utils.LogUtil;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
@@ -50,7 +51,7 @@ public class TabOrderInfoFragment extends BaseFragment<TabOrderInfoPresenter> im
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-
+        LogUtil.e("TabOrderInfoFragment");
     }
 
     @Override

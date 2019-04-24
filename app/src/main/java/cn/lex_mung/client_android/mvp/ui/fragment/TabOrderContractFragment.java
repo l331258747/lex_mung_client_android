@@ -22,6 +22,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import cn.lex_mung.client_android.mvp.model.entity.order.TabOrderContractEntity;
 import cn.lex_mung.client_android.mvp.ui.adapter.TabOrderContractAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
@@ -40,6 +41,8 @@ import cn.lex_mung.client_android.mvp.presenter.TabOrderContractPresenter;
 import cn.lex_mung.client_android.R;
 
 public class TabOrderContractFragment extends BaseFragment<TabOrderContractPresenter> implements TabOrderContractContract.View {
+    @Inject
+    ImageLoader mImageLoader;
 
     @BindView(R.id.rl_rush_error)
     RelativeLayout rlRushError;
@@ -54,11 +57,8 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
     @BindView(R.id.iv_send_contract)
     TextView ivSendContract;
 
-    TabOrderContractEntity tabOrderContractEntity;
-    List<TabOrderContractEntity> datas;
-
-    @Inject
-    ImageLoader mImageLoader;
+    private TabOrderContractEntity tabOrderContractEntity;
+    private List<TabOrderContractEntity> datas;
     private TabOrderContractAdapter tabOrderContractAdapter;
 
     public static TabOrderContractFragment newInstance() {
@@ -83,14 +83,15 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        if (getArguments() == null)
-            return;
+//        if (getArguments() == null)
+//            return;
         rlRushError.setVisibility(View.GONE);
         rlList.setVisibility(View.VISIBLE);
         initAdapter();
         initRecyclerView();
+        tabOrderContractEntity = new TabOrderContractEntity();
         datas = tabOrderContractEntity.getDatas();
-        setAdapter(datas,false);
+        setAdapter(datas, false);
     }
 
     private void initAdapter() {
@@ -124,6 +125,18 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
 //            if (mPresenter.getTotalNum() == mPresenter.getPageNum()) {
 //                smartRefreshLayout.finishLoadMoreWithNoMoreData();
 //            }
+        }
+    }
+
+    @OnClick({R.id.iv_call, R.id.iv_send_contract})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_call:
+                LogUtil.e("iv_call");
+                break;
+            case R.id.iv_send_contract:
+                LogUtil.e("iv_send_contract");
+                break;
         }
     }
 
