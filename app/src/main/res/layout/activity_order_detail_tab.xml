@@ -3,6 +3,77 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/c_ff"
     android:orientation="vertical">
 
+    <cn.lex_mung.client_android.mvp.ui.widget.TitleView
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:TitleView_bg="@color/c_ff"
+        app:TitleView_left_img="@drawable/ic_back2"
+        app:TitleView_title="订单详情" />
+
+    <View
+        android:id="@+id/view_z"
+        android:layout_width="@dimen/qb_px_1"
+        android:layout_height="@dimen/qb_px_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleView" />
+
+    <TextView
+        android:id="@+id/tv_order_info"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/qb_px_83"
+        android:layout_marginEnd="@dimen/qb_px_50"
+        android:gravity="bottom"
+        android:text="订单信息"
+        android:textColor="@color/c_323232"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/view_z"
+        app:layout_constraintTop_toBottomOf="@+id/titleView" />
+
+    <ImageView
+        android:id="@+id/iv_order_info"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_10"
+        android:layout_marginBottom="@dimen/qb_px_5"
+        android:src="@drawable/ic_personal_home_page_tag"
+        app:layout_constraintBottom_toBottomOf="@id/tv_order_info"
+        app:layout_constraintEnd_toEndOf="@id/tv_order_info"
+        app:layout_constraintStart_toStartOf="@id/tv_order_info" />
+
+    <TextView
+        android:id="@+id/tv_order_contract"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/qb_px_83"
+        android:layout_marginStart="@dimen/qb_px_50"
+        android:gravity="bottom"
+        android:text="合同"
+        android:textColor="@color/c_323232"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_order_info"
+        app:layout_constraintStart_toEndOf="@+id/view_z" />
+
+    <ImageView
+        android:id="@+id/iv_order_contract"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_10"
+        android:layout_marginBottom="@dimen/qb_px_5"
+        android:src="@drawable/ic_personal_home_page_tag"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/tv_order_contract"
+        app:layout_constraintEnd_toEndOf="@id/tv_order_contract"
+        app:layout_constraintStart_toStartOf="@id/tv_order_contract" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_order_info" />
 </android.support.constraint.ConstraintLayout>

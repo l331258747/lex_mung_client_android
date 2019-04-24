@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_rush_error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/qb_px_240"
+        android:visibility="gone">
+
+        <include layout="@layout/activity_rush_orders_error" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/smart_refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/ll_bottom">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                android:scrollbars="none" />
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qb_px_100"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/ic_bottom_bg"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/qb_px_50"
+            android:paddingTop="@dimen/qb_px_10"
+            android:paddingRight="@dimen/qb_px_50"
+            android:paddingBottom="@dimen/qb_px_10">
+
+            <TextView
+                android:id="@+id/iv_call"
+                android:layout_width="@dimen/qb_px_325"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/qb_px_10"
+                android:layout_weight="1"
+                android:background="@drawable/ic_btn_green"
+                android:gravity="center"
+                android:scaleType="fitCenter"
+                android:text="联系律师"
+                android:textColor="@color/c_ff" />
+
+            <TextView
+                android:id="@+id/iv_send_contract"
+                android:layout_width="@dimen/qb_px_325"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/qb_px_10"
+                android:layout_weight="1"
+                android:background="@drawable/ic_btn_green"
+                android:gravity="center"
+                android:scaleType="fitCenter"
+                android:text="发送合同"
+                android:textColor="@color/c_ff" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</FrameLayout>

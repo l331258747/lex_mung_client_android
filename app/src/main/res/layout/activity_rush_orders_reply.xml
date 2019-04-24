@@ -4,8 +4,6 @@
     android:id="@+id/cl_rush_reply"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:visibility="gone"
-    tools:visibility="visible"
     android:layout_height="match_parent">
 
 

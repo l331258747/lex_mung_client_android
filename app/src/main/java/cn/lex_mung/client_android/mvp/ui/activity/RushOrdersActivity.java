@@ -72,6 +72,10 @@ public class RushOrdersActivity extends BaseActivity<RushOrdersPresenter> implem
     public void initData(@Nullable Bundle savedInstanceState) {
         StatusBarUtil.setColor(mActivity, AppUtils.getColor(mActivity, R.color.c_ff), 0);
 
+        clRushRush.setVisibility(View.GONE);
+        clRushError.setVisibility(View.GONE);
+        clRushReply.setVisibility(View.GONE);
+
         initTextBanner();
         noticeItems = getbanners();
         completedView.setTotalProgress(mTotalProgress);
@@ -279,7 +283,6 @@ public class RushOrdersActivity extends BaseActivity<RushOrdersPresenter> implem
     public void onBackPressed() {
         //TODO 抢单订单详情页面
         finish();
-
-
+        launchActivity(new Intent(mActivity,OrderDetailTabActivity.class));
     }
 }

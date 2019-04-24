@@ -5,16 +5,12 @@
     android:id="@+id/cl_rush_error"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
-    android:layout_marginTop="@dimen/qb_px_108"
-    android:visibility="gone"
-    tools:visibility="visible"
     android:orientation="vertical">
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/qb_px_108"
         android:text="非常抱歉没有匹配到合适您的律师\n我们客服人员将尽快与您联系进行人工匹配"
         android:textColor="@color/c_b4b4b4"
         android:gravity="center"

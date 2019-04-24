@@ -1,31 +1,59 @@
 package cn.lex_mung.client_android.mvp.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.di.component.DaggerOrderDetailTabComponent;
 import cn.lex_mung.client_android.di.module.OrderDetailTabModule;
+import cn.lex_mung.client_android.mvp.contract.OrderDetailTabContract;
+import cn.lex_mung.client_android.mvp.presenter.OrderDetailTabPresenter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
-
+import cn.lex_mung.client_android.mvp.ui.fragment.TabOrderContractFragment;
+import cn.lex_mung.client_android.mvp.ui.fragment.TabOrderInfoFragment;
+import me.zl.mvp.base.AdapterViewPager;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
 
-import cn.lex_mung.client_android.di.component.DaggerOrderDetailTabComponent;
-import cn.lex_mung.client_android.mvp.contract.OrderDetailTabContract;
-import cn.lex_mung.client_android.mvp.presenter.OrderDetailTabPresenter;
-
-import cn.lex_mung.client_android.R;
-
+/**
+ * 订单详情 tab
+ */
 public class OrderDetailTabActivity extends BaseActivity<OrderDetailTabPresenter> implements OrderDetailTabContract.View {
+
+    @BindView(R.id.tv_order_info)
+    TextView tvOrderInfo;
+    @BindView(R.id.tv_order_contract)
+    TextView tvOrderContract;
+    @BindView(R.id.iv_order_info)
+    ImageView ivOrderInfo;
+    @BindView(R.id.iv_order_contract)
+    ImageView ivOrderContract;
+    @BindView(R.id.view_pager)
+    ViewPager viewPager;
+
+    private List<Fragment> fragments = new ArrayList<>();
+    private List<String> titles = new ArrayList<>();
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerOrderDetailTabComponent
                 .builder()
                 .appComponent(appComponent)
-                .OrderDetailTabModule(new OrderDetailTabModule(this))
+                .orderDetailTabModule(new OrderDetailTabModule(this))
                 .build()
                 .inject(this);
     }
