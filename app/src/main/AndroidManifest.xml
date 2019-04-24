@@ -73,7 +73,7 @@
 
         <meta-data
             android:name="JPUSH_CHANNEL"
-            android:value="default"
+            android:value="toutiao"
             tools:replace="android:value" /> <!-- ucrop -->
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"

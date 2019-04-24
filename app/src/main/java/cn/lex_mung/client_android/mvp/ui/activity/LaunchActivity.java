@@ -73,6 +73,7 @@ public class LaunchActivity extends BaseActivity<LaunchPresenter> implements Lau
                     , android.os.Build.BRAND + " " + android.os.Build.MODEL
                     , android.os.Build.VERSION.RELEASE
                     , uuid
+                    , DeviceUtils.getAndroidId(mActivity,uuid)
             );
             DataHelper.setStringSF(mActivity, DataHelperTags.DEVICE, new Gson().toJson(device));
         } catch (Exception ignored) {

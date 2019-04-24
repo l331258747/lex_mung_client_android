@@ -18,6 +18,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.PowerManager;
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -464,6 +465,11 @@ public class DeviceUtils {
             versionCode = 0;
         }
         return versionCode;
+    }
+
+    public static String getAndroidId(Context context,String uuid) {
+        String androidId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        return TextUtils.isEmpty(androidId)?uuid:androidId;
     }
 
     /**

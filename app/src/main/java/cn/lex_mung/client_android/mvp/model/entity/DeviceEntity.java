@@ -8,8 +8,9 @@ public class DeviceEntity {
     private String device_model;
     private String device_os_version;
     private String device_uuid;
+    private String imei;
 
-    public DeviceEntity(int device_type, String app_version, int app_version_code, String channel, String device_model, String device_os_version,String device_uuid) {
+    public DeviceEntity(int device_type, String app_version, int app_version_code, String channel, String device_model, String device_os_version,String device_uuid,String imei) {
         this.device_type = device_type;
         this.app_version = app_version;
         this.app_version_code = app_version_code;
@@ -17,6 +18,7 @@ public class DeviceEntity {
         this.device_model = device_model;
         this.device_os_version = device_os_version;
         this.device_uuid = device_uuid;
+        this.imei = imei;
     }
 
     public String getDevice_uuid() {
