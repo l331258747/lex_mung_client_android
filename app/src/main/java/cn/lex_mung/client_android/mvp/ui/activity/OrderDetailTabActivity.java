@@ -65,7 +65,63 @@ public class OrderDetailTabActivity extends BaseActivity<OrderDetailTabPresenter
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        initViewPager();
+    }
 
+    private void initViewPager() {
+        fragments.add(TabOrderInfoFragment.newInstance());
+        fragments.add(TabOrderContractFragment.newInstance());
+        viewPager.setOffscreenPageLimit(1);
+        viewPager.setAdapter(new AdapterViewPager(getSupportFragmentManager(), fragments));
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position) {
+                    case 0:
+                        switchPager(16, 14, Typeface.BOLD, Typeface.NORMAL,  View.VISIBLE, View.GONE);
+                        break;
+                    case 1:
+                        switchPager(14, 16, Typeface.NORMAL, Typeface.BOLD, View.GONE, View.VISIBLE);
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
+    }
+
+    @OnClick({R.id.tv_order_info, R.id.tv_order_contract})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tv_order_info:
+                switchPager(16, 14, Typeface.BOLD, Typeface.NORMAL,  View.VISIBLE, View.GONE);
+                viewPager.setCurrentItem(0);
+                break;
+            case R.id.tv_order_contract:
+                switchPager(14, 16, Typeface.NORMAL, Typeface.BOLD, View.GONE, View.VISIBLE);
+                viewPager.setCurrentItem(1);
+                break;
+        }
+    }
+
+    /**
+     * 切换页面
+     */
+    private void switchPager(int i1, int i2,  int t1, int t2, int v1, int v2) {
+        tvOrderInfo.setTextSize(i1);
+        tvOrderContract.setTextSize(i2);
+        tvOrderInfo.setTypeface(Typeface.defaultFromStyle(t1));
+        tvOrderContract.setTypeface(Typeface.defaultFromStyle(t2));
+        ivOrderInfo.setVisibility(v1);
+        ivOrderContract.setVisibility(v2);
     }
 
     @Override
