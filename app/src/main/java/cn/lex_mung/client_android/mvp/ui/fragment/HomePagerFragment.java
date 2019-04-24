@@ -304,8 +304,6 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                 bundle.putInt(BundleTags.TYPE, 1);
                 launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
             }
-
-
         });
         if(datas.size() >= 2){
             tvHot2.setText(datas.get(1).getRequireTypeName());

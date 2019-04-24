@@ -40,7 +40,8 @@ public class TabOrderContractAdapter extends BaseQuickAdapter<TabOrderContractEn
                     , ImageConfigImpl
                             .builder()
                             .url(item.getImgHead())
-                            .imageView(helper.getView(R.id.item_iv_icon))
+                            .imageView(helper.getView(R.id.iv_head))
+                            .isCircle(true)
                             .build());
         }
     }

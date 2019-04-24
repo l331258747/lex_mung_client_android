@@ -1,6 +1,8 @@
 package cn.lex_mung.client_android.mvp.ui.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -11,11 +13,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.yalantis.ucrop.util.FileUtils;
 
 import java.util.List;
 
@@ -39,6 +41,7 @@ import cn.lex_mung.client_android.mvp.contract.TabOrderContractContract;
 import cn.lex_mung.client_android.mvp.presenter.TabOrderContractPresenter;
 
 import cn.lex_mung.client_android.R;
+import me.zl.mvp.utils.FileUtil;
 
 public class TabOrderContractFragment extends BaseFragment<TabOrderContractPresenter> implements TabOrderContractContract.View {
     @Inject
@@ -98,13 +101,11 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
         tabOrderContractAdapter = new TabOrderContractAdapter(mImageLoader);
         tabOrderContractAdapter.setOnItemClickListener((adapter, view, position) -> {
             //下载？
-            LogUtil.e("aaaa");
         });
     }
 
     private void initRecyclerView() {
         smartRefreshLayout.setOnLoadMoreListener(refreshLayout -> {
-            LogUtil.e("bbbb");
 //            if (mPresenter.getPageNum() < mPresenter.getTotalNum()) {
 //                mPresenter.setPageNum(mPresenter.getPageNum() + 1);
 //                mPresenter.getSolutionList(true);
@@ -132,10 +133,13 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_call:
-                LogUtil.e("iv_call");
+                //TODO 联系律师
+                Intent dialIntent =  new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "400-811-3060"));
+                startActivity(dialIntent);
                 break;
             case R.id.iv_send_contract:
-                LogUtil.e("iv_send_contract");
+                //TODO 文件浏览
+                showFileChooser();
                 break;
         }
     }
@@ -180,4 +184,41 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
     public void killMyself() {
 
     }
+
+    //-----文件选择
+    private static final int FILE_SELECT_CODE = 0;
+    private void showFileChooser() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        try {
+            startActivityForResult( Intent.createChooser(intent, "Select a File to Upload"), FILE_SELECT_CODE);
+        } catch (android.content.ActivityNotFoundException ex) {
+            // Potentially direct the user to the Market with a Dialog
+            LogUtil.e("Please install a File Manager.");
+        }
+    }
+
+    private static final String TAG = "ChooseFile";
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case FILE_SELECT_CODE:
+                if (resultCode == Activity.RESULT_OK) {
+                    // Get the Uri of the selected file
+                    Uri uri = data.getData();
+                    LogUtil.e( "File Uri: " + uri.toString());
+                    // Get the path
+                    String path = FileUtils.getPath(mActivity, uri);
+                    LogUtil.e( "File Path: " + path);
+                    // Get the file instance
+                    // File file = new File(path);
+                    // Initiate the upload
+                }
+                break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
 }

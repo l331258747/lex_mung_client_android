@@ -51,7 +51,6 @@ public class TabOrderInfoFragment extends BaseFragment<TabOrderInfoPresenter> im
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        LogUtil.e("TabOrderInfoFragment");
     }
 
     @Override
