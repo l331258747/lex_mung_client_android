@@ -217,6 +217,7 @@ public class FindLawyerFragment extends BaseFragment<FindLawyerPresenter> implem
                 bundle.clear();
                 bundle.putInt(BundleTags.REGION_ID_1, mPresenter.getRegionId1());
                 bundle.putInt(BundleTags.REGION_ID_2, mPresenter.getRegionId2());
+                bundle.putInt(BundleTags.REQUIRE_TYPE_ID, mPresenter.getRequireTypeId());
                 bundle.putSerializable(BundleTags.LIST, (Serializable) mPresenter.getList());
                 launchActivity(new Intent(mActivity, LawyerListScreenActivity.class), bundle);
                 break;

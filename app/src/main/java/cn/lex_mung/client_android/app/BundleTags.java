@@ -30,6 +30,7 @@ public class BundleTags {
     public static final String FLAG = "flag";
     public static final String REGION_ID_1 = "REGION_ID_1";
     public static final String REGION_ID_2 = "REGION_ID_2";
+    public static final String REQUIRE_TYPE_ID = "requireTypeId";
     public static final String JSON = "json";
     public static final String IS_RECEIVE_REQUIRE_MENT = "is_receive_require_ment";
     public static final String TAGIDS = "tagIds";

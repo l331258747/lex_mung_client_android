@@ -53,6 +53,7 @@ public class LawyerListScreenActivity extends BaseActivity<LawyerListScreenPrese
             mPresenter.setFlag(bundleIntent.getBoolean(BundleTags.FLAG));
             mPresenter.setRegionId1(bundleIntent.getInt(BundleTags.REGION_ID_1));
             mPresenter.setRegionId2(bundleIntent.getInt(BundleTags.REGION_ID_2));
+            mPresenter.setRequireTypeId(bundleIntent.getInt(BundleTags.REQUIRE_TYPE_ID));
             mPresenter.setLawyerListScreenEntityList((List<LawyerListScreenEntity>) bundleIntent.getSerializable(BundleTags.LIST));
         }
     }

@@ -207,17 +207,6 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
     }
 
     @Override
-    public void showPayLayout() {
-        btPay.setText(R.string.text_pay_order);
-        groupMoney.setVisibility(View.GONE);
-        groupProblemDescription.setVisibility(View.GONE);
-        groupPay.setVisibility(View.VISIBLE);
-        tvOrderMoney.setVisibility(View.VISIBLE);
-        tvOrderMoneyText.setText(getString(R.string.text_order_money));
-        tvOrderMoneyText.setTextColor(AppUtils.getColor(mActivity, R.color.c_323232));
-    }
-
-    @Override
     public void showProblemDescriptionLayout() {
         btPay.setText(R.string.text_release_demand);
         groupMoney.setVisibility(View.VISIBLE);
@@ -226,6 +215,17 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
         tvOrderMoney.setVisibility(View.INVISIBLE);
         tvOrderMoneyText.setText(getString(R.string.text_price_negotiation));
         tvOrderMoneyText.setTextColor(AppUtils.getColor(mActivity, R.color.c_ea5514));
+    }
+
+    @Override
+    public void showPayLayout() {
+        btPay.setText(R.string.text_pay_order);
+        groupMoney.setVisibility(View.GONE);
+        groupProblemDescription.setVisibility(View.GONE);
+        groupPay.setVisibility(View.VISIBLE);
+        tvOrderMoney.setVisibility(View.VISIBLE);
+        tvOrderMoneyText.setText(getString(R.string.text_order_money));
+        tvOrderMoneyText.setTextColor(AppUtils.getColor(mActivity, R.color.c_323232));
     }
 
     @Override

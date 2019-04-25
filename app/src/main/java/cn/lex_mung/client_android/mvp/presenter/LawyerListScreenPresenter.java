@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
+import android.text.TextUtils;
 
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.mvp.ui.activity.SelectListItemActivity;
@@ -59,6 +60,7 @@ public class LawyerListScreenPresenter extends BasePresenter<LawyerListScreenCon
     private boolean flag;
     private int regionId1;
     private int regionId2;
+    private int requireTypeId;
 
     @Inject
     public LawyerListScreenPresenter(LawyerListScreenContract.Model model, LawyerListScreenContract.View rootView) {
@@ -89,6 +91,10 @@ public class LawyerListScreenPresenter extends BasePresenter<LawyerListScreenCon
 
     public void setRegionId2(int regionId2) {
         this.regionId2 = regionId2;
+    }
+
+    public void setRequireTypeId(int requireTypeId) {
+        this.requireTypeId = requireTypeId;
     }
 
     public boolean isFlag() {
@@ -168,10 +174,29 @@ public class LawyerListScreenPresenter extends BasePresenter<LawyerListScreenCon
                     public void onNext(BaseResponse<List<LawyerListScreenEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             list.addAll(baseResponse.getData());
+                            setSelectRequireTypeId(list);
                             adapter.setNewData(list);
                         }
                     }
                 });
+    }
+
+    public void setSelectRequireTypeId(List<LawyerListScreenEntity> list) {
+        if (requireTypeId == -1 || list == null || list.size() == 0)
+            return;
+        for (int i = 0; i < list.size(); i++) {
+            LawyerListScreenEntity item = list.get(i);
+            if (TextUtils.equals(item.getPropKey(), "requireTypeId")) {
+                List<LawyerListScreenEntity.ItemsBean> item2 = item.getItems();
+                for (int j = 0; j < item2.size(); j++) {
+                    if (item2.get(j).getId() == requireTypeId) {
+                        item.setPos(j);
+                        item.setId(requireTypeId);
+                        item.setContent(item2.get(j).getText());
+                    }
+                }
+            }
+        }
     }
 
     /**

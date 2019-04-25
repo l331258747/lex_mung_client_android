@@ -26,8 +26,8 @@ public class LawyerListScreenEntity implements Serializable, SelectList {
     private String text;
     private int isTile;
     private int margin;
-    private List<ItemsBean> items;
 
+    private List<ItemsBean> items;
     private int id;
     private int pos;
     private String content;

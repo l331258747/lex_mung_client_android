@@ -46,6 +46,7 @@ import java.util.List;
 import cn.lex_mung.client_android.mvp.model.entity.home.RequirementTypeV3Entity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocGetEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocUploadEntity;
+import cn.lex_mung.client_android.mvp.model.entity.order.RequirementCreateEntity;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -581,4 +582,6 @@ public interface CommonService {
     @GET("client/order/doc/get/{orderNo}")
     Observable<BaseResponse<List<DocGetEntity>>> docGet(@Path("orderNo") String orderNo);
 
+    @POST("client/requirement/create")
+    Observable<BaseResponse<RequirementCreateEntity>> requirementCreate(@Body RequestBody body);
 }

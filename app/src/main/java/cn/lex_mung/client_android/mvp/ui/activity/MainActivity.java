@@ -11,6 +11,16 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.umeng.analytics.MobclickAgent;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.event.NotificationClickEvent;
+import cn.jpush.im.android.api.model.Conversation;
+import cn.jpush.im.android.api.model.Message;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.app.DataHelperTags;
@@ -26,16 +36,6 @@ import cn.lex_mung.client_android.mvp.ui.fragment.HomePagerFragment;
 import cn.lex_mung.client_android.mvp.ui.fragment.MeFragment;
 import cn.lex_mung.client_android.mvp.ui.widget.BottomNavigationViewEx;
 import cn.lex_mung.client_android.mvp.ui.widget.CustomScrollViewPager;
-import com.umeng.analytics.MobclickAgent;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
-import cn.jpush.im.android.api.JMessageClient;
-import cn.jpush.im.android.api.event.NotificationClickEvent;
-import cn.jpush.im.android.api.model.Conversation;
-import cn.jpush.im.android.api.model.Message;
 import me.zl.mvp.base.AdapterViewPager;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
@@ -143,10 +143,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 return true;
             }
         });
-    }
-
-    public FindLawyerFragment getFindLawyerFragment() {
-        return (FindLawyerFragment) fragments.get(2);
     }
 
     /**

@@ -73,6 +73,7 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
     private int regionId1;
     private int regionId2;
     private String lawyerName;
+    private int requireTypeId = -1;
 
     private List<BusinessTypeEntity> fieldList = new ArrayList<>();
     private List<RegionEntity> regionList = new ArrayList<>();
@@ -156,6 +157,10 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
 
     public int getRegionId2() {
         return regionId2;
+    }
+
+    public int getRequireTypeId(){
+        return requireTypeId;
     }
 
     public void setLawyerName(String name) {
@@ -286,7 +291,12 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
                 mRootView.setScreenColor(AppUtils.getColor(mApplication, R.color.c_06a66a));
                 break;
             case LAWYER_LIST_SCREEN_INFO_LIST_ID:
-
+                mRootView.setScreenColor(AppUtils.getColor(mApplication, R.color.c_06a66a));
+                list.clear();
+                requireTypeId = (int)message.obj;
+                screenMap.put("require", new RequireEntity(requireTypeId, 0, 0));
+                pageNum = 1;
+                getConsultList(false, false);
                 break;
         }
     }

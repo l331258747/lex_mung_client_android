@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <include
         android:id="@+id/toolbar"
@@ -100,6 +101,7 @@
                 app:layout_constraintTop_toBottomOf="@id/view_lawyer_region" />
 
             <TextView
+                android:id="@+id/tv_lawyer_field_x"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:includeFontPadding="false"
@@ -140,6 +142,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_lawyer_field_text" />
 
             <ImageView
+                android:id="@+id/iv_lawyer_field"
                 android:layout_width="@dimen/qb_px_30"
                 android:layout_height="@dimen/qb_px_30"
                 android:src="@drawable/ic_right_arrow"
@@ -152,6 +155,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
+                tools:visibility="visible"
                 app:constraint_referenced_ids="view_max_money,tv_max_money_text_x,tv_max_money_text,et_max_money" />
 
             <View
@@ -163,6 +167,7 @@
                 app:layout_constraintTop_toBottomOf="@id/view_lawyer_field" />
 
             <TextView
+                android:id="@+id/tv_max_money_text_x"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:includeFontPadding="false"
@@ -246,6 +251,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
+                tools:visibility="visible"
                 app:constraint_referenced_ids="view_problem_description,tv_problem_description_text_x,tv_problem_description_text,et_problem_description" />
 
             <View
@@ -258,6 +264,7 @@
                 app:layout_constraintTop_toBottomOf="@id/view_service_type" />
 
             <TextView
+                android:id="@+id/tv_problem_description_text_x"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:includeFontPadding="false"
@@ -345,6 +352,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_pay_way_text" />
 
             <ImageView
+                android:id="@+id/iv_wx"
                 android:layout_width="@dimen/qb_px_35"
                 android:layout_height="@dimen/qb_px_35"
                 android:layout_marginStart="@dimen/qb_px_35"
@@ -388,6 +396,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_wx" />
 
             <ImageView
+                android:id="@+id/iv_zfb"
                 android:layout_width="@dimen/qb_px_35"
                 android:layout_height="@dimen/qb_px_35"
                 android:layout_marginStart="@dimen/qb_px_35"
@@ -469,6 +478,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
+                tools:visibility="visible"
                 app:layout_constraintEnd_toEndOf="@id/guideline3"
                 app:layout_constraintStart_toStartOf="@id/guideline2"
                 app:layout_constraintTop_toBottomOf="@id/tv_balance">
@@ -542,6 +552,7 @@
                 app:layout_constraintTop_toBottomOf="@id/view_pay_way" />
 
             <TextView
+                android:id="@+id/tv_discount_way_x"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:includeFontPadding="false"
@@ -556,7 +567,11 @@
                 android:id="@+id/group_pay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="cl_club_card,view_pay_way,tv_pay_way_text,view_line_1,tv_wx,iv_wx,iv_select_wx,view_line_2,tv_zfb,iv_zfb,iv_select_zfb,view_line_3,tv_balance,iv_balance,tv_balance_count,iv_select_balance,view_discount_way,view_line_5,tv_discount_way_text,tv_discount_way,iv_discount_way" />
+                app:constraint_referenced_ids="cl_club_card,view_pay_way,tv_pay_way_text,
+                view_line_1,tv_wx,iv_wx,iv_select_wx,iv_discount_field,
+                tv_zfb,iv_zfb,iv_select_zfb,tv_balance,iv_balance,
+                tv_balance_count,iv_select_balance,view_discount_way,tv_discount_way_x,
+                tv_discount_way_text,tv_discount_way" />
 
             <TextView
                 android:id="@+id/tv_discount_way_text"
@@ -588,6 +603,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_discount_way_text" />
 
             <ImageView
+                android:id="@+id/iv_discount_field"
                 android:layout_width="@dimen/qb_px_30"
                 android:layout_height="@dimen/qb_px_30"
                 android:src="@drawable/ic_right_arrow"
@@ -679,6 +695,7 @@
             android:textColor="@color/c_f8b62d"
             android:textSize="12sp"
             android:visibility="gone"
+            tools:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_order_money"
             app:layout_constraintTop_toBottomOf="@id/tv_order_money" />

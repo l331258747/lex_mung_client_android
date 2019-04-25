@@ -1,19 +1,22 @@
 package cn.lex_mung.client_android.mvp.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.TextureView;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.w3c.dom.Text;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -23,19 +26,19 @@ import cn.lex_mung.client_android.app.ShareUtils;
 import cn.lex_mung.client_android.di.component.DaggerWebComponent;
 import cn.lex_mung.client_android.di.module.WebModule;
 import cn.lex_mung.client_android.mvp.contract.WebContract;
-import cn.lex_mung.client_android.mvp.model.entity.LawyerListScreenEntity;
+import cn.lex_mung.client_android.mvp.model.entity.other.WebGoPayEntity;
 import cn.lex_mung.client_android.mvp.presenter.WebPresenter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
-import cn.lex_mung.client_android.mvp.ui.widget.webview.AndroidToJs;
 import cn.lex_mung.client_android.mvp.ui.widget.webview.LWebView;
+import cn.lex_mung.client_android.utils.GsonUtil;
+import cn.lex_mung.client_android.utils.LogUtil;
 import me.zl.mvp.base.ActivityCollect;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
 
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO;
-import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_LIST;
-import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_TYPE;
+import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_LIST_ID;
 
 public class WebActivity extends BaseActivity<WebPresenter> implements WebContract.View {
     @BindView(R.id.tv_right)
@@ -73,6 +76,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
         super.onResume();
         MobclickAgent.onPageStart("w_y_shouye_jjfa_list");
         MobclickAgent.onResume(mActivity);
+        mPresenter.onResume();
     }
 
     @Override
@@ -139,12 +143,10 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
 //        }
-        webView.addJavascriptInterface(new AndroidToJs(),"JsBridgeApp");//h5 js调用 app.pay();
+        webView.addJavascriptInterface(new AndroidToJs(), "JsBridgeApp");//h5 js调用 app.pay();
 
         webView.synCookies(url);
         webView.loadUrl(url);
-
-
     }
 
 //    public void synCookies(String url) {
@@ -209,11 +211,61 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 
     @Override
     public void onBackPressed() {
-		if (webView.canGoBack()) {
-			webView.goBack();
-		} else {
-			super.onBackPressed();
-		}
+        if (webView.canGoBack()) {
+            webView.goBack();
+        } else {
+            super.onBackPressed();
+        }
     }
+
+
+    public class AndroidToJs extends Object {
+
+        //支付
+        @JavascriptInterface
+        public void goPay(String string) {
+            if(TextUtils.isEmpty(string))
+                return;
+
+            WebGoPayEntity businessEntity = GsonUtil.convertString2Object(string,WebGoPayEntity.class);
+
+            if (isFastClick()) return;
+            Bundle bundle = new Bundle();
+            if (mPresenter.isLogin()) {
+                bundle.clear();
+                bundle.putInt(BundleTags.ID, businessEntity.getRequireTypeId());
+//                bundle.putInt(BundleTags.TYPE, businessEntity.getType());//支付方式在下个页面选择、
+                bundle.putString(BundleTags.TITLE, businessEntity.getRequireTypeName());
+//                bundle.putSerializable(BundleTags.ENTITY, entity);//没有律师，不要律师信息
+                bundle.putInt(BundleTags.MONEY, businessEntity.getMoney());
+                launchActivity(new Intent(mActivity, RushLoanPayActivity.class), bundle);
+
+                //TODO 需求接口
+            } else {
+                bundle.clear();
+                bundle.putInt(BundleTags.TYPE, 1);
+                launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
+            }
+        }
+
+        //电话
+        @JavascriptInterface
+        public void toCall(String phone) {
+            Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
+            startActivity(dialIntent);
+        }
+
+        //找律师
+        @JavascriptInterface
+        public void goLawyerList(int requireTypeId) {
+            runOnUiThread(() -> {
+                ActivityCollect.getAppCollect().finishAllNotHome(MainActivity.class);
+                ((MainActivity) ActivityCollect.getAppCollect().findActivity(MainActivity.class)).switchPage(2);
+                AppUtils.post(LAWYER_LIST_SCREEN_INFO, LAWYER_LIST_SCREEN_INFO_LIST_ID, 3);
+            });
+        }
+
+    }
+
 
 }
