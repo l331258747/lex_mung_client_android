@@ -1,10 +1,8 @@
 package cn.lex_mung.client_android.mvp.ui.fragment;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,7 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.yalantis.ucrop.util.FileUtils;
 
 import java.util.List;
 
@@ -25,23 +22,19 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.lex_mung.client_android.mvp.model.entity.order.TabOrderContractEntity;
+import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.di.component.DaggerTabOrderContractComponent;
+import cn.lex_mung.client_android.di.module.TabOrderContractModule;
+import cn.lex_mung.client_android.mvp.contract.TabOrderContractContract;
+import cn.lex_mung.client_android.mvp.model.entity.order.DocGetEntity;
+import cn.lex_mung.client_android.mvp.presenter.TabOrderContractPresenter;
 import cn.lex_mung.client_android.mvp.ui.adapter.TabOrderContractAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
-
 import cn.lex_mung.client_android.utils.LogUtil;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.utils.AppUtils;
-
-import cn.lex_mung.client_android.di.component.DaggerTabOrderContractComponent;
-import cn.lex_mung.client_android.di.module.TabOrderContractModule;
-import cn.lex_mung.client_android.mvp.contract.TabOrderContractContract;
-import cn.lex_mung.client_android.mvp.presenter.TabOrderContractPresenter;
-
-import cn.lex_mung.client_android.R;
-import me.zl.mvp.utils.FileUtil;
 
 public class TabOrderContractFragment extends BaseFragment<TabOrderContractPresenter> implements TabOrderContractContract.View {
     @Inject
@@ -60,8 +53,7 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
     @BindView(R.id.iv_send_contract)
     TextView ivSendContract;
 
-    private TabOrderContractEntity tabOrderContractEntity;
-    private List<TabOrderContractEntity> datas;
+    private List<DocGetEntity> datas;
     private TabOrderContractAdapter tabOrderContractAdapter;
 
     public static TabOrderContractFragment newInstance() {
@@ -84,17 +76,21 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
         return inflater.inflate(R.layout.fragment_tab_order_contract, container, false);
     }
 
+    public Fragment getFragment() {
+        return this;
+    }
+
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
 //        if (getArguments() == null)
 //            return;
+
+        mPresenter.getList("单号");
+
         rlRushError.setVisibility(View.GONE);
         rlList.setVisibility(View.VISIBLE);
         initAdapter();
         initRecyclerView();
-        tabOrderContractEntity = new TabOrderContractEntity();
-        datas = tabOrderContractEntity.getDatas();
-        setAdapter(datas, false);
     }
 
     private void initAdapter() {
@@ -117,16 +113,9 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
         recyclerView.setAdapter(tabOrderContractAdapter);
     }
 
-    public void setAdapter(List<TabOrderContractEntity> list, boolean isAdd) {
-        if (isAdd) {
-            tabOrderContractAdapter.addData(list);
-            smartRefreshLayout.finishLoadMore();
-        } else {
-            tabOrderContractAdapter.setNewData(list);
-//            if (mPresenter.getTotalNum() == mPresenter.getPageNum()) {
-//                smartRefreshLayout.finishLoadMoreWithNoMoreData();
-//            }
-        }
+    @Override
+    public void setAdapter(List<DocGetEntity> list) {
+        tabOrderContractAdapter.setNewData(list);
     }
 
     @OnClick({R.id.iv_call, R.id.iv_send_contract})
@@ -134,7 +123,7 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
         switch (view.getId()) {
             case R.id.iv_call:
                 //TODO 联系律师
-                Intent dialIntent =  new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "400-811-3060"));
+                Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "400-811-3060"));
                 startActivity(dialIntent);
                 break;
             case R.id.iv_send_contract:
@@ -187,12 +176,13 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
 
     //-----文件选择
     private static final int FILE_SELECT_CODE = 0;
+
     private void showFileChooser() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("*/*");
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         try {
-            startActivityForResult( Intent.createChooser(intent, "Select a File to Upload"), FILE_SELECT_CODE);
+            startActivityForResult(Intent.createChooser(intent, "Select a File to Upload"), FILE_SELECT_CODE);
         } catch (android.content.ActivityNotFoundException ex) {
             // Potentially direct the user to the Market with a Dialog
             LogUtil.e("Please install a File Manager.");
@@ -203,22 +193,8 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case FILE_SELECT_CODE:
-                if (resultCode == Activity.RESULT_OK) {
-                    // Get the Uri of the selected file
-                    Uri uri = data.getData();
-                    LogUtil.e( "File Uri: " + uri.toString());
-                    // Get the path
-                    String path = FileUtils.getPath(mActivity, uri);
-                    LogUtil.e( "File Path: " + path);
-                    // Get the file instance
-                    // File file = new File(path);
-                    // Initiate the upload
-                }
-                break;
-        }
         super.onActivityResult(requestCode, resultCode, data);
+        mPresenter.onActivityResult(requestCode,resultCode,data);
     }
 
 }

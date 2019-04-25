@@ -44,6 +44,8 @@ import cn.lex_mung.client_android.mvp.model.entity.VersionEntity;
 import java.util.List;
 
 import cn.lex_mung.client_android.mvp.model.entity.home.RequirementTypeV3Entity;
+import cn.lex_mung.client_android.mvp.model.entity.order.DocGetEntity;
+import cn.lex_mung.client_android.mvp.model.entity.order.DocUploadEntity;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -564,5 +566,19 @@ public interface CommonService {
      */
     @GET("client/expert/call/{id}")
     Observable<BaseResponse<AgreementEntity>> sendCall(@Path("id") int id);
+
+    /**
+     * 用户上传订单文档
+     */
+    @Multipart
+    @POST("client/order/doc/upload")
+    Observable<BaseResponse<DocUploadEntity>> docUpload(@Part("order_no") RequestBody order_no,
+                                                        @Part MultipartBody.Part file);
+
+    ///client/order/doc/get/{orderNo}
+    //GET
+    //用户获取订单文档
+    @GET("client/order/doc/get/{orderNo}")
+    Observable<BaseResponse<List<DocGetEntity>>> docGet(@Path("orderNo") String orderNo);
 
 }

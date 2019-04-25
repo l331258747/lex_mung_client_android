@@ -55,7 +55,7 @@ public class SelectListItemActivity extends BaseActivity<SelectListItemPresenter
     private int type;
     private String title;
     private int id;
-    private boolean flag;
+    private boolean flag;//判断是fragment，还是activity 律师列表进入
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {

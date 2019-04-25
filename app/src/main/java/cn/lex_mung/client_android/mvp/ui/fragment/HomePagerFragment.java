@@ -287,30 +287,30 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         if(datas == null || datas.size() == 0)
             return;
         tvHot1.setText(datas.get(0).getRequireTypeName());
-//        rlHot1.setOnClickListener(v -> contractClick(datas.get(0)));
-        rlHot1.setOnClickListener(v -> {
-            //TODO 支付
-            if (isFastClick()) return;
-            Bundle bundle = new Bundle();
-            if (mPresenter.isLogin()) {
-                bundle.clear();
-//                bundle.putInt(BundleTags.ID, businessEntity.getRequireTypeId());
-//                bundle.putInt(BundleTags.TYPE, businessEntity.getType());
-//                bundle.putString(BundleTags.TITLE, businessEntity.getRequireTypeName());
-//                bundle.putSerializable(BundleTags.ENTITY, entity);
-                launchActivity(new Intent(mActivity, ReleaseDemandActivity.class), bundle);
-            } else {
-                bundle.clear();
-                bundle.putInt(BundleTags.TYPE, 1);
-                launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
-            }
-        });
+        rlHot1.setOnClickListener(v -> contractClick(datas.get(0)));
+//        rlHot1.setOnClickListener(v -> {
+//            //TODO 支付
+//            if (isFastClick()) return;
+//            Bundle bundle = new Bundle();
+//            if (mPresenter.isLogin()) {
+//                bundle.clear();
+////                bundle.putInt(BundleTags.ID, businessEntity.getRequireTypeId());
+////                bundle.putInt(BundleTags.TYPE, businessEntity.getType());
+////                bundle.putString(BundleTags.TITLE, businessEntity.getRequireTypeName());
+////                bundle.putSerializable(BundleTags.ENTITY, entity);
+//                launchActivity(new Intent(mActivity, ReleaseDemandActivity.class), bundle);
+//            } else {
+//                bundle.clear();
+//                bundle.putInt(BundleTags.TYPE, 1);
+//                launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
+//            }
+//        });
         if(datas.size() >= 2){
             tvHot2.setText(datas.get(1).getRequireTypeName());
-//            rlHot2.setOnClickListener(v -> contractClick(datas.get(1)));
-            rlHot2.setOnClickListener(v -> {
-                launchActivity(new Intent(mActivity, RushOrdersActivity.class));
-            });
+            rlHot2.setOnClickListener(v -> contractClick(datas.get(1)));
+//            rlHot2.setOnClickListener(v -> {
+//                launchActivity(new Intent(mActivity, RushOrdersActivity.class));
+//            });
         }
     }
 

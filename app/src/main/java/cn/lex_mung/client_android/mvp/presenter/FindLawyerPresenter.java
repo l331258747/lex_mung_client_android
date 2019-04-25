@@ -48,6 +48,7 @@ import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INF
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_INSTITUTIONS;
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_LIST;
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_LIST_1;
+import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_LIST_ID;
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_TYPE;
 import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGIN;
 import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGIN_INFO;
@@ -252,7 +253,7 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
     @Subscriber(tag = LAWYER_LIST_SCREEN_INFO)
     private void refresh(Message message) {
         switch (message.what) {
-            case LAWYER_LIST_SCREEN_INFO_LIST:
+            case LAWYER_LIST_SCREEN_INFO_LIST://条件筛选
                 list.clear();
                 screenMap.clear();
                 list.addAll((Collection<? extends LawyerListScreenEntity>) message.obj);
@@ -272,7 +273,7 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
                 pageNum = 1;
                 getConsultList(false, false);
                 break;
-            case LAWYER_LIST_SCREEN_INFO_LIST_1:
+            case LAWYER_LIST_SCREEN_INFO_LIST_1://重置
                 list.clear();
                 list.addAll((Collection<? extends LawyerListScreenEntity>) message.obj);
                 screenMap.clear();
@@ -283,6 +284,9 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
             case LAWYER_LIST_SCREEN_INFO_TYPE:
             case LAWYER_LIST_SCREEN_INFO_INSTITUTIONS:
                 mRootView.setScreenColor(AppUtils.getColor(mApplication, R.color.c_06a66a));
+                break;
+            case LAWYER_LIST_SCREEN_INFO_LIST_ID:
+
                 break;
         }
     }

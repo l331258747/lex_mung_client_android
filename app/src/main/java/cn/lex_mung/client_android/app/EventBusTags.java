@@ -69,6 +69,7 @@ public interface EventBusTags {
         int LAWYER_LIST_SCREEN_INFO_INSTITUTIONS = 101;
         int LAWYER_LIST_SCREEN_INFO_LIST = 102;
         int LAWYER_LIST_SCREEN_INFO_LIST_1 = 103;
+        int LAWYER_LIST_SCREEN_INFO_LIST_ID = 104;
     }
 
     interface MESSAGE_INFO {

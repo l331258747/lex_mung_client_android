@@ -76,6 +76,9 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mActivity = this;
+
+        ActivityCollect.getAppCollect().addActivity(this);
+
         mCache = AppUtils.obtainAppComponentFromContext(mActivity).extras();
         bundle = new Bundle();
         bundleIntent = getIntent().getExtras();
@@ -104,6 +107,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         if (mPresenter != null)
             mPresenter.onDestroy();//释放资源
         this.mPresenter = null;
+        ActivityCollect.getAppCollect().finishActivity(this);
     }
 
     public void hintKeyBoard() {

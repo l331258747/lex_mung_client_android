@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.lex_mung.client_android.R;
@@ -20,13 +23,19 @@ import cn.lex_mung.client_android.app.ShareUtils;
 import cn.lex_mung.client_android.di.component.DaggerWebComponent;
 import cn.lex_mung.client_android.di.module.WebModule;
 import cn.lex_mung.client_android.mvp.contract.WebContract;
+import cn.lex_mung.client_android.mvp.model.entity.LawyerListScreenEntity;
 import cn.lex_mung.client_android.mvp.presenter.WebPresenter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.webview.AndroidToJs;
 import cn.lex_mung.client_android.mvp.ui.widget.webview.LWebView;
+import me.zl.mvp.base.ActivityCollect;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
+
+import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO;
+import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_LIST;
+import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_TYPE;
 
 public class WebActivity extends BaseActivity<WebPresenter> implements WebContract.View {
     @BindView(R.id.tv_right)
@@ -130,7 +139,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
 //        }
-        webView.addJavascriptInterface(new AndroidToJs(),"app");//h5 js调用 app.pay();
+        webView.addJavascriptInterface(new AndroidToJs(),"JsBridgeApp");//h5 js调用 app.pay();
 
         webView.synCookies(url);
         webView.loadUrl(url);
@@ -200,7 +209,6 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 
     @Override
     public void onBackPressed() {
-        // 搜索可以返回
 		if (webView.canGoBack()) {
 			webView.goBack();
 		} else {

@@ -145,6 +145,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         });
     }
 
+    public FindLawyerFragment getFindLawyerFragment() {
+        return (FindLawyerFragment) fragments.get(2);
+    }
+
     /**
      * 切换页面
      *
