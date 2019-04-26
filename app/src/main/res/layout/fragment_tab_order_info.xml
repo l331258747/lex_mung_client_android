@@ -1,293 +1,313 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/qb_px_35" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="@dimen/qb_px_35" />
-
-    <View
-        android:id="@+id/view_0"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/qb_px_50"
-        android:background="@color/c_f6f6f6"
-        app:layout_constraintBottom_toBottomOf="@+id/view_2"
-        app:layout_constraintEnd_toStartOf="@id/guideline3"
-        app:layout_constraintStart_toEndOf="@id/guideline2"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_order_number_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/qb_px_40"
-        android:layout_marginTop="@dimen/qb_px_40"
-        android:includeFontPadding="false"
-        android:text="@string/text_order_no"
-        android:textColor="@color/c_323232"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@id/view_0"
-        app:layout_constraintTop_toTopOf="@+id/view_0" />
-
-    <TextView
-        android:id="@+id/tv_order_number"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/qb_px_20"
-        android:layout_marginEnd="@dimen/qb_px_40"
-        android:ellipsize="end"
-        android:includeFontPadding="false"
-        android:maxLines="1"
-        android:textColor="@color/c_323232"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@id/view_0"
-        app:layout_constraintStart_toEndOf="@id/tv_order_number_text"
-        app:layout_constraintTop_toTopOf="@id/tv_order_number_text"
-        tools:text="111111111111111111111111111111111111111111" />
-
-    <TextView
-        android:id="@+id/tv_order_date_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/qb_px_40"
-        android:layout_marginTop="@dimen/qb_px_20"
-        android:includeFontPadding="false"
-        android:text="@string/text_order_date"
-        android:textColor="@color/c_323232"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@id/view_0"
-        app:layout_constraintTop_toBottomOf="@id/tv_order_number_text" />
-
-    <TextView
-        android:id="@+id/tv_order_date"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/qb_px_20"
-        android:layout_marginEnd="@dimen/qb_px_40"
-        android:ellipsize="end"
-        android:includeFontPadding="false"
-        android:maxLines="1"
-        android:textColor="@color/c_323232"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@id/view_0"
-        app:layout_constraintStart_toEndOf="@id/tv_order_date_text"
-        app:layout_constraintTop_toTopOf="@id/tv_order_date_text"
-        tools:text="111111111111111111111111111111111111111111" />
-
-    <TextView
-        android:id="@+id/tv_order_name_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/qb_px_40"
-        android:layout_marginTop="@dimen/qb_px_20"
-        android:includeFontPadding="false"
-        android:text="@string/text_goods_name"
-        android:textColor="@color/c_323232"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@id/view_0"
-        app:layout_constraintTop_toBottomOf="@id/tv_order_date_text" />
-
-    <TextView
-        android:id="@+id/tv_order_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/qb_px_20"
-        android:layout_marginEnd="@dimen/qb_px_40"
-        android:ellipsize="end"
-        android:includeFontPadding="false"
-        android:maxLines="1"
-        android:textColor="@color/c_323232"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@id/view_0"
-        app:layout_constraintStart_toEndOf="@id/tv_order_name_text"
-        app:layout_constraintTop_toTopOf="@id/tv_order_name_text"
-        tools:text="111111111111111111111111111111111111111111" />
-
-    <TextView
-        android:id="@+id/tv_order_price_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/qb_px_40"
-        android:layout_marginTop="@dimen/qb_px_20"
-        android:includeFontPadding="false"
-        android:text="@string/text_order_money_1"
-        android:textColor="@color/c_323232"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@id/view_0"
-        app:layout_constraintTop_toBottomOf="@id/tv_order_name_text" />
-
-    <TextView
-        android:id="@+id/tv_order_price"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/qb_px_20"
-        android:layout_marginEnd="@dimen/qb_px_40"
-        android:ellipsize="end"
-        android:includeFontPadding="false"
-        android:maxLines="1"
-        android:textColor="@color/c_323232"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@id/view_0"
-        app:layout_constraintStart_toEndOf="@id/tv_order_price_text"
-        app:layout_constraintTop_toTopOf="@id/tv_order_price_text"
-        tools:text="111111111111111111111111111111111111111111" />
-
-    <TextView
-        android:id="@+id/tv_order_status_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/qb_px_40"
-        android:layout_marginTop="@dimen/qb_px_20"
-        android:includeFontPadding="false"
-        android:text="@string/text_order_status"
-        android:textColor="@color/c_323232"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@id/view_0"
-        app:layout_constraintTop_toBottomOf="@id/tv_order_price_text" />
-
-    <TextView
-        android:id="@+id/tv_order_status"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/qb_px_20"
-        android:layout_marginEnd="@dimen/qb_px_40"
-        android:ellipsize="end"
-        android:includeFontPadding="false"
-        android:maxLines="1"
-        android:textColor="@color/c_323232"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@id/view_0"
-        app:layout_constraintStart_toEndOf="@id/tv_order_status_text"
-        app:layout_constraintTop_toTopOf="@id/tv_order_status_text"
-        tools:text="111111111111111111111111111111111111111111" />
-
-    <TextView
-        android:id="@+id/tv_order_customer_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/qb_px_40"
-        android:layout_marginTop="@dimen/qb_px_20"
-        android:includeFontPadding="false"
-        android:text="服务律师"
-        android:textColor="@color/c_323232"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@id/view_0"
-        app:layout_constraintTop_toBottomOf="@id/tv_order_status_text" />
-
-    <TextView
-        android:id="@+id/tv_order_customer"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/qb_px_20"
-        android:layout_marginEnd="@dimen/qb_px_40"
-        android:ellipsize="end"
-        android:includeFontPadding="false"
-        android:maxLines="1"
-        android:textColor="@color/c_323232"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@id/view_0"
-        app:layout_constraintStart_toEndOf="@id/tv_order_customer_text"
-        app:layout_constraintTop_toTopOf="@id/tv_order_customer_text"
-        tools:text="111111111111111111111111111111111111111111" />
-
-
-    <View
-        android:id="@+id/view_line_dotted"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/qb_px_1"
-        android:layout_marginStart="@dimen/qb_px_40"
-        android:layout_marginTop="@dimen/qb_px_30"
-        android:layout_marginEnd="@dimen/qb_px_40"
-        android:background="@drawable/ic_line_dotted"
-        app:layout_constraintEnd_toEndOf="@id/view_0"
-        app:layout_constraintStart_toStartOf="@id/view_0"
-        app:layout_constraintTop_toBottomOf="@id/tv_order_customer_text" />
-
-
-    <android.support.constraint.Group
-        android:id="@+id/group_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="view_time,iv_time_icon,tv_time,view_1,view_line_dotted"
-        tools:visibility="visible" />
-
-    <View
-        android:id="@+id/view_time"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/qb_px_50"
-        android:layout_marginStart="@dimen/qb_px_40"
-        android:layout_marginTop="@dimen/qb_px_30"
-        android:layout_marginEnd="@dimen/qb_px_40"
-        app:layout_constraintEnd_toEndOf="@id/view_0"
-        app:layout_constraintTop_toBottomOf="@+id/view_line_dotted"
-        app:layout_constraintStart_toStartOf="@id/view_0" />
-
-    <ImageView
-        android:id="@+id/iv_time_icon"
-        android:layout_width="@dimen/qb_px_25"
-        android:layout_height="@dimen/qb_px_25"
-        android:src="@drawable/ic_message_2"
-        app:layout_constraintBottom_toBottomOf="@id/view_time"
-        app:layout_constraintStart_toStartOf="@id/view_time"
-        app:layout_constraintTop_toTopOf="@id/view_time" />
-
-    <TextView
-        android:id="@+id/tv_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/qb_px_10"
-        android:includeFontPadding="false"
-        tools:text="服务倒计时：9天22小时32分"
-        android:textColor="@color/c_f4a523"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@id/view_time"
-        app:layout_constraintStart_toEndOf="@id/iv_time_icon"
-        app:layout_constraintTop_toTopOf="@id/view_time" />
-
-
-    <View
-        android:id="@+id/view_2"
+    <RelativeLayout
+        android:id="@+id/rl_rush_error"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/qb_px_35"
-        app:layout_constraintTop_toBottomOf="@id/view_time" />
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/qb_px_240"
+        android:visibility="gone">
 
-    <TextView
-        android:id="@+id/tv_tip"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/qb_px_100"
-        android:gravity="center"
-        android:includeFontPadding="false"
-        android:lineSpacingExtra="@dimen/qb_px_10"
-        android:text="温馨提示：如遇疑问，请联系绿豆圈客户400-811-3060"
-        android:textColor="@color/c_717171"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@id/guideline3"
-        app:layout_constraintStart_toEndOf="@id/guideline2"
-        app:layout_constraintTop_toBottomOf="@id/view_2" />
+        <include layout="@layout/activity_rush_orders_error" />
 
-    <android.support.constraint.Group
-        android:id="@+id/group_bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="view_horizontal_line,view_3,ll_call_lawyer"
-        tools:visibility="visible" />
+    </RelativeLayout>
 
-</android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_order_info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/qb_px_35" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/qb_px_35" />
+
+        <View
+            android:id="@+id/view_0"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/qb_px_50"
+            android:background="@color/c_f6f6f6"
+            app:layout_constraintBottom_toBottomOf="@+id/view_2"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintStart_toEndOf="@id/guideline2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_order_number_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/qb_px_40"
+            android:layout_marginTop="@dimen/qb_px_40"
+            android:includeFontPadding="false"
+            android:text="@string/text_order_no"
+            android:textColor="@color/c_323232"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@id/view_0"
+            app:layout_constraintTop_toTopOf="@+id/view_0" />
+
+        <TextView
+            android:id="@+id/tv_order_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/qb_px_20"
+            android:layout_marginEnd="@dimen/qb_px_40"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="@color/c_323232"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@id/view_0"
+            app:layout_constraintStart_toEndOf="@id/tv_order_number_text"
+            app:layout_constraintTop_toTopOf="@id/tv_order_number_text"
+            tools:text="111111111111111111111111111111111111111111" />
+
+        <TextView
+            android:id="@+id/tv_order_date_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/qb_px_40"
+            android:layout_marginTop="@dimen/qb_px_20"
+            android:includeFontPadding="false"
+            android:text="@string/text_order_date"
+            android:textColor="@color/c_323232"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@id/view_0"
+            app:layout_constraintTop_toBottomOf="@id/tv_order_number_text" />
+
+        <TextView
+            android:id="@+id/tv_order_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/qb_px_20"
+            android:layout_marginEnd="@dimen/qb_px_40"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="@color/c_323232"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@id/view_0"
+            app:layout_constraintStart_toEndOf="@id/tv_order_date_text"
+            app:layout_constraintTop_toTopOf="@id/tv_order_date_text"
+            tools:text="111111111111111111111111111111111111111111" />
+
+        <TextView
+            android:id="@+id/tv_order_name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/qb_px_40"
+            android:layout_marginTop="@dimen/qb_px_20"
+            android:includeFontPadding="false"
+            android:text="@string/text_goods_name"
+            android:textColor="@color/c_323232"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@id/view_0"
+            app:layout_constraintTop_toBottomOf="@id/tv_order_date_text" />
+
+        <TextView
+            android:id="@+id/tv_order_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/qb_px_20"
+            android:layout_marginEnd="@dimen/qb_px_40"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="@color/c_323232"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@id/view_0"
+            app:layout_constraintStart_toEndOf="@id/tv_order_name_text"
+            app:layout_constraintTop_toTopOf="@id/tv_order_name_text"
+            tools:text="111111111111111111111111111111111111111111" />
+
+        <TextView
+            android:id="@+id/tv_order_price_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/qb_px_40"
+            android:layout_marginTop="@dimen/qb_px_20"
+            android:includeFontPadding="false"
+            android:text="@string/text_order_money_1"
+            android:textColor="@color/c_323232"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@id/view_0"
+            app:layout_constraintTop_toBottomOf="@id/tv_order_name_text" />
+
+        <TextView
+            android:id="@+id/tv_order_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/qb_px_20"
+            android:layout_marginEnd="@dimen/qb_px_40"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="@color/c_323232"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@id/view_0"
+            app:layout_constraintStart_toEndOf="@id/tv_order_price_text"
+            app:layout_constraintTop_toTopOf="@id/tv_order_price_text"
+            tools:text="111111111111111111111111111111111111111111" />
+
+        <TextView
+            android:id="@+id/tv_order_status_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/qb_px_40"
+            android:layout_marginTop="@dimen/qb_px_20"
+            android:includeFontPadding="false"
+            android:text="@string/text_order_status"
+            android:textColor="@color/c_323232"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@id/view_0"
+            app:layout_constraintTop_toBottomOf="@id/tv_order_price_text" />
+
+        <TextView
+            android:id="@+id/tv_order_status"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/qb_px_20"
+            android:layout_marginEnd="@dimen/qb_px_40"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="@color/c_323232"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@id/view_0"
+            app:layout_constraintStart_toEndOf="@id/tv_order_status_text"
+            app:layout_constraintTop_toTopOf="@id/tv_order_status_text"
+            tools:text="111111111111111111111111111111111111111111" />
+
+        <TextView
+            android:id="@+id/tv_order_customer_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/qb_px_40"
+            android:layout_marginTop="@dimen/qb_px_20"
+            android:includeFontPadding="false"
+            android:text="服务律师:"
+            android:textColor="@color/c_323232"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@id/view_0"
+            app:layout_constraintTop_toBottomOf="@id/tv_order_status_text" />
+
+        <TextView
+            android:id="@+id/tv_order_customer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/qb_px_20"
+            android:layout_marginEnd="@dimen/qb_px_40"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="@color/c_323232"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@id/view_0"
+            app:layout_constraintStart_toEndOf="@id/tv_order_customer_text"
+            app:layout_constraintTop_toTopOf="@id/tv_order_customer_text"
+            tools:text="111111111111111111111111111111111111111111" />
+
+
+        <View
+            android:id="@+id/view_line_dotted"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_1"
+            android:layout_marginStart="@dimen/qb_px_40"
+            android:layout_marginTop="@dimen/qb_px_30"
+            android:layout_marginEnd="@dimen/qb_px_40"
+            android:background="@drawable/ic_line_dotted"
+            app:layout_constraintEnd_toEndOf="@id/view_0"
+            app:layout_constraintStart_toStartOf="@id/view_0"
+            app:layout_constraintTop_toBottomOf="@id/tv_order_customer_text" />
+
+
+        <android.support.constraint.Group
+            android:id="@+id/group_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="view_time,iv_time_icon,tv_time,view_1,view_line_dotted"
+            tools:visibility="visible" />
+
+        <View
+            android:id="@+id/view_time"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_50"
+            android:layout_marginStart="@dimen/qb_px_40"
+            android:layout_marginTop="@dimen/qb_px_30"
+            android:layout_marginEnd="@dimen/qb_px_40"
+            app:layout_constraintEnd_toEndOf="@id/view_0"
+            app:layout_constraintStart_toStartOf="@id/view_0"
+            app:layout_constraintTop_toBottomOf="@+id/view_line_dotted" />
+
+        <ImageView
+            android:id="@+id/iv_time_icon"
+            android:layout_width="@dimen/qb_px_25"
+            android:layout_height="@dimen/qb_px_25"
+            android:src="@drawable/ic_message_2"
+            app:layout_constraintBottom_toBottomOf="@id/view_time"
+            app:layout_constraintStart_toStartOf="@id/view_time"
+            app:layout_constraintTop_toTopOf="@id/view_time" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/qb_px_10"
+            android:includeFontPadding="false"
+            android:textColor="@color/c_f4a523"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/view_time"
+            app:layout_constraintStart_toEndOf="@id/iv_time_icon"
+            app:layout_constraintTop_toTopOf="@id/view_time"
+            tools:text="服务倒计时：9天22小时32分" />
+
+
+        <View
+            android:id="@+id/view_2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qb_px_35"
+            app:layout_constraintTop_toBottomOf="@id/view_time" />
+
+        <TextView
+            android:id="@+id/tv_tip"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_100"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="@dimen/qb_px_10"
+            android:text="温馨提示：如遇疑问，请联系绿豆圈客户400-811-3060"
+            android:textColor="@color/c_717171"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintStart_toEndOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/view_2" />
+
+        <android.support.constraint.Group
+            android:id="@+id/group_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="view_horizontal_line,view_3,ll_call_lawyer"
+            tools:visibility="visible" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>

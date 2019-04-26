@@ -17,6 +17,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.component.DaggerOrderDetailTabComponent;
 import cn.lex_mung.client_android.di.module.OrderDetailTabModule;
 import cn.lex_mung.client_android.mvp.contract.OrderDetailTabContract;
@@ -47,6 +48,10 @@ public class OrderDetailTabActivity extends BaseActivity<OrderDetailTabPresenter
 
     private List<Fragment> fragments = new ArrayList<>();
 
+    private int id;
+    private String orderNo;
+    private int orderStatus;
+
     @Override
     public boolean useFragment() {
         return true;
@@ -69,12 +74,17 @@ public class OrderDetailTabActivity extends BaseActivity<OrderDetailTabPresenter
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        if (bundleIntent != null) {
+            id = bundleIntent.getInt(BundleTags.ID);
+            orderNo = bundleIntent.getString(BundleTags.ORDER_NO);
+            orderStatus = bundleIntent.getInt(BundleTags.STATE);
+        }
         initViewPager();
     }
 
     private void initViewPager() {
-        fragments.add(TabOrderInfoFragment.newInstance());
-        fragments.add(TabOrderContractFragment.newInstance());
+        fragments.add(TabOrderInfoFragment.newInstance(id,orderStatus));
+        fragments.add(TabOrderContractFragment.newInstance(orderNo,orderStatus));
         viewPager.setOffscreenPageLimit(1);
         viewPager.setAdapter(new AdapterViewPager(getSupportFragmentManager(), fragments));
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

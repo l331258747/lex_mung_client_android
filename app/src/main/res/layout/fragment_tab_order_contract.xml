@@ -5,17 +5,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/rl_rush_error"
+    <cn.lex_mung.client_android.mvp.ui.widget.EmptyView
+        android:id="@+id/emptyView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="@dimen/qb_px_240"
-        android:visibility="gone">
-
-        <include layout="@layout/activity_rush_orders_error" />
-
-    </RelativeLayout>
-
+        android:visibility="gone"
+        app:EmptyView_bg="@color/c_ff"
+        android:layout_height="match_parent"/>
 
     <RelativeLayout
         android:id="@+id/rl_list"

@@ -49,6 +49,7 @@ import cn.lex_mung.client_android.mvp.model.entity.order.DocUploadEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RequirementCreateEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RushOrderLawyerEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RushOrderStatusEntity;
+import cn.lex_mung.client_android.mvp.model.entity.order.RequirementDetailEntity;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -604,6 +605,6 @@ public interface CommonService {
     //GET
     //付费需求详细信息
     @GET("lawyer/order/requirement/detail/{requirementId}")
-    Observable<BaseResponse<RushOrderStatusEntity>> requirementDetail(@Path("requirementId") int requirementId);
+    Observable<BaseResponse<List<RequirementDetailEntity>>> requirementDetail(@Path("requirementId") int requirementId);
 
 }

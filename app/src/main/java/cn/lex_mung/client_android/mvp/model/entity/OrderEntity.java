@@ -256,6 +256,11 @@ public class OrderEntity implements Serializable {
         private int pageNum;
         private int pageSize;
         private int typeId;
+        private int isHot;
+
+        public int getIsHot() {
+            return isHot;
+        }
 
         public int getTypeId() {
             return typeId;

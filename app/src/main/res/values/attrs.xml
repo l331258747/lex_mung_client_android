@@ -31,5 +31,8 @@
         <attr name="ringBgColor" format="color"/>
     </declare-styleable>
 
+    <declare-styleable name="EmptyView">
+        <attr name="EmptyView_bg" format="reference"/>
+    </declare-styleable>
 
 </resources>

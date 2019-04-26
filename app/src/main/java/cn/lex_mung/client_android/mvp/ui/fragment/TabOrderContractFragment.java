@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.component.DaggerTabOrderContractComponent;
 import cn.lex_mung.client_android.di.module.TabOrderContractModule;
 import cn.lex_mung.client_android.mvp.contract.TabOrderContractContract;
@@ -30,6 +32,7 @@ import cn.lex_mung.client_android.mvp.model.entity.order.DocGetEntity;
 import cn.lex_mung.client_android.mvp.presenter.TabOrderContractPresenter;
 import cn.lex_mung.client_android.mvp.ui.adapter.TabOrderContractAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import cn.lex_mung.client_android.mvp.ui.widget.EmptyView;
 import cn.lex_mung.client_android.utils.LogUtil;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
@@ -40,8 +43,9 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
     @Inject
     ImageLoader mImageLoader;
 
-    @BindView(R.id.rl_rush_error)
-    RelativeLayout rlRushError;
+
+    @BindView(R.id.emptyView)
+    EmptyView emptyView;
     @BindView(R.id.rl_list)
     RelativeLayout rlList;
     @BindView(R.id.smart_refresh_layout)
@@ -55,9 +59,14 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
 
     private List<DocGetEntity> datas;
     private TabOrderContractAdapter tabOrderContractAdapter;
+    private int orderStatus;
 
-    public static TabOrderContractFragment newInstance() {
+    public static TabOrderContractFragment newInstance(String orderNo,int orderStatus) {
         TabOrderContractFragment fragment = new TabOrderContractFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(BundleTags.ORDER_NO, orderNo);
+        bundle.putInt(BundleTags.STATE,orderStatus);
+        fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -82,13 +91,21 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-//        if (getArguments() == null)
-//            return;
+        if (getArguments() != null){
+            orderStatus = getArguments().getInt(BundleTags.STATE);
 
-        mPresenter.getList("单号");
+            if(orderStatus == 0){
+                emptyView.setVisibility(View.VISIBLE);
+                rlList.setVisibility(View.GONE);
+            }else{
+                emptyView.setVisibility(View.GONE);
+                rlList.setVisibility(View.VISIBLE);
 
-        rlRushError.setVisibility(View.GONE);
-        rlList.setVisibility(View.VISIBLE);
+                mPresenter.getList(getArguments().getString(BundleTags.ORDER_NO));
+            }
+
+        }
+
         initAdapter();
         initRecyclerView();
     }

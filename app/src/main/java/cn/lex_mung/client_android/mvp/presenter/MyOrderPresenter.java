@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import cn.lex_mung.client_android.mvp.ui.activity.OrderDetailTabActivity;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -79,6 +80,14 @@ public class MyOrderPresenter extends BasePresenter<MyOrderContract.Model, MyOrd
                     mRootView.launchActivity(new Intent(mApplication, FreeConsultDetailActivity.class), bundle);
                     break;
                 case 5://客户需求
+                    if(entity.getIsHot() == 1){
+                        bundle.clear();
+                        bundle.putInt(BundleTags.ID, entity.getId());
+                        bundle.putString(BundleTags.ORDER_NO,entity.getOrderNo());
+                        bundle.putInt(BundleTags.STATE,entity.getOrderStatus());
+                        mRootView.launchActivity(new Intent(mApplication, OrderDetailTabActivity.class), bundle);
+                        return;
+                    }
                     bundle.clear();
                     bundle.putInt(BundleTags.ID, entity.getLawyerMemberId());
                     bundle.putString(BundleTags.TITLE, entity.getMemberName());
