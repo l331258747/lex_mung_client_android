@@ -18,6 +18,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
+import me.zl.mvp.base.App;
 import me.zl.mvp.integration.AppManager;
 import me.zl.mvp.di.scope.FragmentScope;
 import me.zl.mvp.mvp.BasePresenter;
@@ -43,6 +44,8 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
     ImageLoader mImageLoader;
     @Inject
     AppManager mAppManager;
+
+    private String orderNo;
 
     @Inject
     public TabOrderContractPresenter(TabOrderContractContract.Model model, TabOrderContractContract.View rootView) {
@@ -83,8 +86,11 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
                 });
     }
 
-    //点击列表item，在自己的目录下查看有没有，没有的话下载，下载完成后进入查看器
+    public void setOrderNo(String orderNo){
+        this.orderNo = orderNo;
+    }
 
+    //点击列表item，在自己的目录下查看有没有，没有的话下载，下载完成后进入查看器
 
     public void getList(String order_no){
         mModel.docGet(order_no,0)
@@ -144,7 +150,7 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
                             || path.endsWith("xls")
                             || path.endsWith("xlsx")
                             || path.endsWith("pdf")) {
-                        docUpload("aaaaaa111",new File(path));
+                        docUpload(orderNo,new File(path));
 
                     }else{
                         mRootView.showMessage("无效的文件类型");
@@ -152,6 +158,19 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
 
                 }
                 break;
+        }
+    }
+
+
+    public void showFileChooser() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        try {
+            mRootView.getFragment().startActivityForResult(Intent.createChooser(intent, "Select a File to Upload"), FILE_SELECT_CODE);
+        } catch (android.content.ActivityNotFoundException ex) {
+            // Potentially direct the user to the Market with a Dialog
+            LogUtil.e("Please install a File Manager.");
         }
     }
 

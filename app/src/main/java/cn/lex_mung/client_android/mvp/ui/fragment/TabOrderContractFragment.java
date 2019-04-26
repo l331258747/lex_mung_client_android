@@ -64,6 +64,7 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
     private TabOrderContractAdapter tabOrderContractAdapter;
     private int orderStatus;
     private String lmobile;
+    private String orderNo;
 
     public static TabOrderContractFragment newInstance(String orderNo,int orderStatus) {
         TabOrderContractFragment fragment = new TabOrderContractFragment();
@@ -108,14 +109,15 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
             }else{//显示文件列表
                 emptyView.setVisibility(View.GONE);
                 rlList.setVisibility(View.VISIBLE);
-                mPresenter.getList(getArguments().getString(BundleTags.ORDER_NO));
+                mPresenter.getList(orderNo = getArguments().getString(BundleTags.ORDER_NO));
+                mPresenter.setOrderNo(orderNo);
             }
 
-            if(orderStatus == 3){//订单关闭->不显示底部按钮
-                ll_bottom.setVisibility(View.GONE);
-            }else{
-                ll_bottom.setVisibility(View.VISIBLE);
-            }
+//            if(orderStatus == 3){//订单关闭->不显示底部按钮
+//                ll_bottom.setVisibility(View.GONE);
+//            }else{
+//                ll_bottom.setVisibility(View.VISIBLE);
+//            }
         }
 
         initAdapter();
@@ -158,7 +160,7 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
                 break;
             case R.id.iv_send_contract:
                 //TODO 文件浏览
-                showFileChooser();
+                mPresenter.showFileChooser();
                 break;
         }
     }
@@ -203,23 +205,6 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
     public void killMyself() {
 
     }
-
-    //-----文件选择
-    private static final int FILE_SELECT_CODE = 0;
-
-    private void showFileChooser() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("*/*");
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        try {
-            startActivityForResult(Intent.createChooser(intent, "Select a File to Upload"), FILE_SELECT_CODE);
-        } catch (android.content.ActivityNotFoundException ex) {
-            // Potentially direct the user to the Market with a Dialog
-            LogUtil.e("Please install a File Manager.");
-        }
-    }
-
-    private static final String TAG = "ChooseFile";
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
