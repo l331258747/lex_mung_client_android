@@ -47,32 +47,32 @@ public class RushOrdersView extends LinearLayout {
         tv_mate.setText("匹配律师");
         tv_reply.setText("双方沟通交付");
 
-        iv_select_1.setOnClickListener(v -> {
-            setProgress(0);
-        });
-        iv_select_2.setOnClickListener(v -> {
-            setProgress(1);
-        });
-        iv_select_3.setOnClickListener(v -> {
-            setProgress(2);
-        });
-        iv_select_4.setOnClickListener(v -> {
-            setProgress(3);
-        });
+//        iv_select_1.setOnClickListener(v -> {
+//            setProgress(0);
+//        });
+//        iv_select_2.setOnClickListener(v -> {
+//            setProgress(1);
+//        });
+//        iv_select_3.setOnClickListener(v -> {
+//            setProgress(2);
+//        });
+//        iv_select_4.setOnClickListener(v -> {
+//            setProgress(3);
+//        });
     }
 
-    public interface ItemOnClick{
-        void onClick(int position);
-    }
-    ItemOnClick itemOnClick;
-    public void setItemOnClick(ItemOnClick itemOnClick){
-        this.itemOnClick = itemOnClick;
-    }
+//    public interface ItemOnClick{
+//        void onClick(int position);
+//    }
+//    ItemOnClick itemOnClick;
+//    public void setItemOnClick(ItemOnClick itemOnClick){
+//        this.itemOnClick = itemOnClick;
+//    }
 
     public void setProgress(int progress){
-        if(itemOnClick !=null){
-            itemOnClick.onClick(progress);
-        }
+//        if(itemOnClick !=null){
+//            itemOnClick.onClick(progress);
+//        }
         switch (progress){
             case 0:
                 iv_select_1.setVisibility(VISIBLE);

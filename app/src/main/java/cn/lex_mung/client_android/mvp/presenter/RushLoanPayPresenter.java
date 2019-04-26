@@ -68,6 +68,7 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
     @Inject
     RxPermissions mRxPermissions;
 
+    private int requirementId = -1;
 
     private int requireTypeId = -1;//当前选择的需求ID
     private String requireTypeName;//当前选择的需求Name
@@ -172,7 +173,7 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
                     @Override
                     public void onNext(BaseResponse<RequirementCreateEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
-                            pay(ua, Integer.valueOf(baseResponse.getData().getRequirementId()));
+                            pay(ua, requirementId = Integer.valueOf(baseResponse.getData().getRequirementId()));
                         } else {
                             mRootView.showMessage(baseResponse.getMessage());
                         }
@@ -284,7 +285,10 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
         switch (message.what) {
             case PAY_CONFIRM:
                 mRootView.killMyself();
-                mRootView.launchActivity(new Intent(mApplication,RushOrdersActivity.class));
+                Bundle bundle = new Bundle();
+                bundle.clear();
+                bundle.putInt(BundleTags.ID, requirementId);
+                mRootView.launchActivity(new Intent(mApplication,RushOrdersActivity.class),bundle);
                 break;
         }
     }

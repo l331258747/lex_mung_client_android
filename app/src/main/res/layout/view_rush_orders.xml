@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/ic_rush_order_current2" />
+                android:src="@drawable/ic_rush_order_current" />
 
             <TextView
                 android:id="@+id/tv_mate"
@@ -96,7 +96,6 @@
             android:id="@+id/iv_line_1"
             android:layout_width="0dp"
             android:layout_height="@dimen/qb_px_4"
-            android:layout_marginBottom="3dp"
             android:layout_weight="1"
             android:background="@color/c_ff" />
 
@@ -110,7 +109,6 @@
             android:id="@+id/iv_line_2"
             android:layout_width="0dp"
             android:layout_height="@dimen/qb_px_4"
-            android:layout_marginBottom="3dp"
             android:layout_weight="1"
             android:background="@color/c_ff" />
 
@@ -124,7 +122,6 @@
             android:id="@+id/iv_line_3"
             android:layout_width="0dp"
             android:layout_height="@dimen/qb_px_4"
-            android:layout_marginBottom="3dp"
             android:layout_weight="1"
             android:background="@color/c_ff" />
 

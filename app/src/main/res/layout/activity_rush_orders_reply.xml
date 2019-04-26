@@ -19,18 +19,18 @@
         android:id="@+id/iv_head"
         android:layout_width="@dimen/qb_px_180"
         android:layout_height="@dimen/qb_px_180"
-        android:src="@drawable/ic_lawyer_avatar"
+        tools:src="@drawable/ic_lawyer_avatar"
         app:layout_constraintBottom_toTopOf="@+id/view_card"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/view_card" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/qb_px_20"
-        android:text="雷露露"
+        tools:text="雷露露"
         android:textColor="@color/c_323232"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/view_card"
@@ -38,28 +38,29 @@
         app:layout_constraintTop_toBottomOf="@+id/iv_head" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tv_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/qb_px_20"
-        android:text="律所合伙人"
+        tools:text="律所合伙人"
         android:textColor="@color/c_737373"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/view_card"
         app:layout_constraintStart_toStartOf="@+id/view_card"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
     <TextView
+        android:id="@+id/tv_content_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="@dimen/qb_px_10"
-        android:text="湖南湘君律师事务所 | 执业7年"
+        tools:text="湖南湘君律师事务所 | 执业7年"
         android:textColor="@color/c_737373"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/view_card"
         app:layout_constraintStart_toStartOf="@+id/view_card"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_content" />
 
     <View
         android:id="@+id/view_card_line"
@@ -90,7 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="12"
+            tools:text="12"
             android:textColor="@color/c_323232"
             android:textSize="18sp" />
 
@@ -100,7 +101,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="6min"
+            tools:text="6min"
             android:textColor="@color/c_323232"
             android:textSize="18sp" />
 
@@ -110,7 +111,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="6h"
+            tools:text="6h"
             android:textColor="@color/c_323232"
             android:textSize="18sp" />
 
@@ -120,7 +121,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="100%"
+            tools:text="100%"
             android:textColor="@color/c_323232"
             android:textSize="18sp" />
 
@@ -184,7 +185,7 @@
         app:layout_constraintEnd_toEndOf="@+id/view_card"
         app:layout_constraintStart_toStartOf="@+id/view_card"
         app:layout_constraintTop_toTopOf="@+id/view_card"
-        android:text="联系律师:1350212912"
+        tools:text="联系律师:1350212912"
         android:gravity="center"
         android:textColor="@color/c_d89b4b"/>
 

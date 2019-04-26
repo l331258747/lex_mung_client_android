@@ -47,6 +47,8 @@ import cn.lex_mung.client_android.mvp.model.entity.home.RequirementTypeV3Entity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocGetEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocUploadEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RequirementCreateEntity;
+import cn.lex_mung.client_android.mvp.model.entity.order.RushOrderLawyerEntity;
+import cn.lex_mung.client_android.mvp.model.entity.order.RushOrderStatusEntity;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -582,6 +584,19 @@ public interface CommonService {
     @GET("client/order/doc/get/{orderNo}")
     Observable<BaseResponse<List<DocGetEntity>>> docGet(@Path("orderNo") String orderNo);
 
+    //发抢单类型商品需求
     @POST("client/requirement/create")
     Observable<BaseResponse<RequirementCreateEntity>> requirementCreate(@Body RequestBody body);
+
+    ///client/requirement/grablawyers
+    //POST
+    //获取当前需求可抢单的律师列表(5个)
+    @POST("client/requirement/grablawyers")
+    Observable<BaseResponse<List<RushOrderLawyerEntity>>> requirementGrablawyers(@Body RequestBody body);
+
+    ///client/requirement/status/check
+    //POST
+    //需求抢单状态查询
+    @POST("client/requirement/status/check")
+    Observable<BaseResponse<RushOrderStatusEntity>> requirementStatusCheck(@Body RequestBody body);
 }
