@@ -1,5 +1,7 @@
 package cn.lex_mung.client_android.app;
 
+import cn.lex_mung.client_android.utils.FileUtil2;
+
 public class Constants {
     public static final String APP_ID = "wxdac6e3748e7426f9";
 
@@ -14,4 +16,10 @@ public class Constants {
     public static final String COURT = "court";
     public static final String IDS = "ids";
     public static final String UPDATE = "update";
+
+
+    //文件路径
+    public static final String BASE_PATH = "lex_mung_client";
+    public static final String FILE_PATH = "file";
+
 }

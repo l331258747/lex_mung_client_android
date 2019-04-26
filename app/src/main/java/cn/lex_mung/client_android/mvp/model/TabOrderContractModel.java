@@ -51,7 +51,7 @@ public class TabOrderContractModel extends BaseModel implements TabOrderContract
     }
 
     @Override
-    public Observable<BaseResponse<List<DocGetEntity>>> docGet(String order_no,int pageNum) {
+    public Observable<BaseResponse<DocGetEntity>> docGet(String order_no,int pageNum) {
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .docGet(order_no,pageNum,10);

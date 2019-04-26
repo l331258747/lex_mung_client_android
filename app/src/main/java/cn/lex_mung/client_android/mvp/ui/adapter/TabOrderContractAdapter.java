@@ -9,9 +9,10 @@ import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
 
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocGetEntity;
+import cn.lex_mung.client_android.mvp.model.entity.order.ListBean;
 import me.zl.mvp.http.imageloader.ImageLoader;
 
-public class TabOrderContractAdapter extends BaseQuickAdapter<DocGetEntity, BaseViewHolder> {
+public class TabOrderContractAdapter extends BaseQuickAdapter<ListBean, BaseViewHolder> {
     private ImageLoader mImageLoader;
 
     public TabOrderContractAdapter(ImageLoader imageLoader) {
@@ -20,7 +21,7 @@ public class TabOrderContractAdapter extends BaseQuickAdapter<DocGetEntity, Base
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, DocGetEntity item) {
+    protected void convert(BaseViewHolder helper, ListBean item) {
 
         helper.setText(R.id.tv_name, item.getCreate_member_name());
         helper.setText(R.id.tv_content, item.getName());
@@ -29,7 +30,31 @@ public class TabOrderContractAdapter extends BaseQuickAdapter<DocGetEntity, Base
         helper.setText(R.id.tv_time, item.getCreate_time());
         helper.setText(R.id.tv_read, item.getRead());
 
-        helper.setImageDrawable(R.id.iv_file_type,ContextCompat.getDrawable(mContext,R.drawable.ic_ppt));
+        helper.setImageDrawable(R.id.iv_file_type,ContextCompat.getDrawable(mContext,R.drawable.word));
+        switch (item.getFileType()){
+            case "jpg":
+            case "jpeg":
+                helper.setImageDrawable(R.id.iv_file_type,ContextCompat.getDrawable(mContext,R.drawable.jpg));
+                break;
+            case "png":
+                helper.setImageDrawable(R.id.iv_file_type,ContextCompat.getDrawable(mContext,R.drawable.png));
+                break;
+            case "doc":
+            case "docx":
+                helper.setImageDrawable(R.id.iv_file_type,ContextCompat.getDrawable(mContext,R.drawable.word));
+                break;
+            case "ppt":
+            case "pptx":
+                helper.setImageDrawable(R.id.iv_file_type,ContextCompat.getDrawable(mContext,R.drawable.ppt));
+                break;
+            case "xls":
+            case "xlsx":
+                helper.setImageDrawable(R.id.iv_file_type,ContextCompat.getDrawable(mContext,R.drawable.excel));
+                break;
+            case "pdf":
+                helper.setImageDrawable(R.id.iv_file_type,ContextCompat.getDrawable(mContext,R.drawable.pdf));
+                break;
+        }
 
         if (!TextUtils.isEmpty(item.getCreate_member_icon_image())) {
             mImageLoader.loadImage(mContext

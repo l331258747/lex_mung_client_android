@@ -4,15 +4,24 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.yalantis.ucrop.util.FileUtils;
 
 import java.io.File;
 import java.util.List;
 
+import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.app.Constants;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocGetEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocUploadEntity;
+import cn.lex_mung.client_android.mvp.ui.adapter.MyCouponsAdapter;
+import cn.lex_mung.client_android.mvp.ui.adapter.TabOrderContractAdapter;
+import cn.lex_mung.client_android.utils.FileUtil2;
 import cn.lex_mung.client_android.utils.LogUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -26,8 +35,10 @@ import me.zl.mvp.http.imageloader.ImageLoader;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 
 import javax.inject.Inject;
+import javax.sql.RowSetListener;
 
 import cn.lex_mung.client_android.mvp.contract.TabOrderContractContract;
+import me.zl.mvp.utils.FileUtil;
 import me.zl.mvp.utils.RxLifecycleUtils;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -47,9 +58,50 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
 
     private String orderNo;
 
+    private String FILE_CACHE_PATH;
+
+    private SmartRefreshLayout smartRefreshLayout;
+    TabOrderContractAdapter adapter;
+    private int pageNum;
+    private int totalNum;
+
+
     @Inject
     public TabOrderContractPresenter(TabOrderContractContract.Model model, TabOrderContractContract.View rootView) {
         super(model, rootView);
+    }
+
+    public void onCreate(SmartRefreshLayout smartRefreshLayout,String orderNo) {
+        FILE_CACHE_PATH = FileUtil2.getFolder(mApplication, Constants.FILE_PATH).getAbsolutePath();
+
+        this.smartRefreshLayout = smartRefreshLayout;
+        this.orderNo = orderNo;
+
+        initAdapter();
+
+        getList(false);
+    }
+
+    private void initAdapter() {
+        adapter = new TabOrderContractAdapter(mImageLoader);
+        smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                if (pageNum < totalNum) {
+                    pageNum = pageNum + 1;
+                    getList(true);
+                } else {
+                    smartRefreshLayout.finishLoadMoreWithNoMoreData();
+                }
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                pageNum = 1;
+                getList(false);
+            }
+        });
+        mRootView.initRecyclerView(adapter);
     }
 
     /**
@@ -66,21 +118,22 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doFinally(() -> mRootView.hideLoading())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
                 .subscribe(new ErrorHandleSubscriber<BaseResponse<DocUploadEntity>>(mErrorHandler) {
                     @Override
                     public void onNext(BaseResponse<DocUploadEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
-//                            iconImage = baseResponse.getData().getDburl();
-//                            mRootView.setAvatar(saveFile.getPath());
-//                            isUploadNewAvatar = true;
-
-                            //刷新列表
-                            //存在自己的目录下
-
+                            if(!FileUtil2.isFileExist(new File(FILE_CACHE_PATH + File.separator + file.getName()))){
+                                LogUtil.e("不存在");
+                                FileUtil2.copyFile(file.getAbsolutePath() ,FILE_CACHE_PATH + File.separator + file.getName());
+                            }else{
+                                LogUtil.e("已存在");
+                            }
+                            mRootView.hideLoading();
                         }else{
                             mRootView.showMessage(baseResponse.getMessage());
+
+                            mRootView.hideLoading();
                         }
                     }
                 });
@@ -92,25 +145,32 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
 
     //点击列表item，在自己的目录下查看有没有，没有的话下载，下载完成后进入查看器
 
-    public void getList(String order_no){
-        mModel.docGet(order_no,0)
+    public void getList(boolean isAdd){
+        mModel.docGet(orderNo,1)
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(3, 2))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<List<DocGetEntity>>>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<DocGetEntity>>(mErrorHandler) {
                     @Override
-                    public void onNext(BaseResponse<List<DocGetEntity>> baseResponse) {
+                    public void onNext(BaseResponse<DocGetEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
-//                            iconImage = baseResponse.getData().getDburl();
-//                            mRootView.setAvatar(saveFile.getPath());
-//                            isUploadNewAvatar = true;
+                            totalNum = baseResponse.getData().getPaginated().getPage_num();
+                            pageNum = baseResponse.getData().getPaginated().getPages();
 
+                            if (isAdd) {
+                                adapter.addData(baseResponse.getData().getList());
+                                smartRefreshLayout.finishLoadMore();
+                            } else {
+                                smartRefreshLayout.finishRefresh();
+                                adapter.setNewData(baseResponse.getData().getList());
+                                if (totalNum == pageNum) {
+                                    smartRefreshLayout.finishLoadMoreWithNoMoreData();
+                                }
+                            }
                         }else{
                             mRootView.showMessage(baseResponse.getMessage());
-
-
                         }
                     }
                 });

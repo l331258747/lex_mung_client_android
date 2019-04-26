@@ -26,6 +26,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.app.Constants;
 import cn.lex_mung.client_android.di.component.DaggerTabOrderContractComponent;
 import cn.lex_mung.client_android.di.module.TabOrderContractModule;
 import cn.lex_mung.client_android.mvp.contract.TabOrderContractContract;
@@ -34,6 +35,7 @@ import cn.lex_mung.client_android.mvp.presenter.TabOrderContractPresenter;
 import cn.lex_mung.client_android.mvp.ui.adapter.TabOrderContractAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.EmptyView;
+import cn.lex_mung.client_android.utils.FileUtil2;
 import cn.lex_mung.client_android.utils.LogUtil;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
@@ -60,11 +62,9 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
     @BindView(R.id.ll_bottom)
     LinearLayout ll_bottom;
 
-    private List<DocGetEntity> datas;
     private TabOrderContractAdapter tabOrderContractAdapter;
     private int orderStatus;
     private String lmobile;
-    private String orderNo;
 
     public static TabOrderContractFragment newInstance(String orderNo,int orderStatus) {
         TabOrderContractFragment fragment = new TabOrderContractFragment();
@@ -109,57 +109,34 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
             }else{//显示文件列表
                 emptyView.setVisibility(View.GONE);
                 rlList.setVisibility(View.VISIBLE);
-                mPresenter.getList(orderNo = getArguments().getString(BundleTags.ORDER_NO));
-                mPresenter.setOrderNo(orderNo);
+
+                mPresenter.onCreate(smartRefreshLayout,getArguments().getString(BundleTags.ORDER_NO));
             }
 
+            //TODO
 //            if(orderStatus == 3){//订单关闭->不显示底部按钮
 //                ll_bottom.setVisibility(View.GONE);
 //            }else{
 //                ll_bottom.setVisibility(View.VISIBLE);
 //            }
         }
-
-        initAdapter();
-        initRecyclerView();
-    }
-
-    private void initAdapter() {
-        tabOrderContractAdapter = new TabOrderContractAdapter(mImageLoader);
-        tabOrderContractAdapter.setOnItemClickListener((adapter, view, position) -> {
-            //下载？
-        });
-    }
-
-    private void initRecyclerView() {
-        smartRefreshLayout.setOnLoadMoreListener(refreshLayout -> {
-//            if (mPresenter.getPageNum() < mPresenter.getTotalNum()) {
-//                mPresenter.setPageNum(mPresenter.getPageNum() + 1);
-//                mPresenter.getSolutionList(true);
-//            } else {
-//                smartRefreshLayout.finishLoadMoreWithNoMoreData();
-//            }
-        });
-        AppUtils.configRecyclerView(recyclerView, new LinearLayoutManager(mActivity));
-        recyclerView.setAdapter(tabOrderContractAdapter);
     }
 
     @Override
-    public void setAdapter(List<DocGetEntity> list) {
-        tabOrderContractAdapter.setNewData(list);
+    public void initRecyclerView(TabOrderContractAdapter adapter) {
+        AppUtils.configRecyclerView(recyclerView, new LinearLayoutManager(mActivity));
+        recyclerView.setAdapter(adapter);
     }
 
     @OnClick({R.id.iv_call, R.id.iv_send_contract})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_call:
-                //TODO 联系律师
                 if(TextUtils.isEmpty(lmobile)) return;
                 Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + lmobile));
                 startActivity(dialIntent);
                 break;
             case R.id.iv_send_contract:
-                //TODO 文件浏览
                 mPresenter.showFileChooser();
                 break;
         }

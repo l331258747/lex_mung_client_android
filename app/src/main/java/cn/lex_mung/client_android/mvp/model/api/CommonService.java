@@ -583,7 +583,7 @@ public interface CommonService {
     //GET
     //用户获取订单文档
     @GET("client/order/doc/get/{orderNo}/{pageNum}/{pageSize}")
-    Observable<BaseResponse<List<DocGetEntity>>> docGet(@Path("orderNo") String orderNo,@Path("orderNo") int pageNum,@Path("pageSize") int pageSize);
+    Observable<BaseResponse<DocGetEntity>> docGet(@Path("orderNo") String orderNo,@Path("pageNum") int pageNum,@Path("pageSize") int pageSize);
 
     //发抢单类型商品需求
     @POST("client/requirement/create")

@@ -16,7 +16,7 @@ public class RequirementDetailEntity {
     int typeId;
     int orderStatus;
     int payType;
-    int payAmount;
+    float payAmount;
     int hasPay;
     String payFailReason;
     String orderComment;
@@ -133,7 +133,7 @@ public class RequirementDetailEntity {
         return payType;
     }
 
-    public int getPayAmount() {
+    public float getPayAmount() {
         return payAmount;
     }
 

@@ -56,7 +56,7 @@
         android:layout_width="@dimen/qb_px_80"
         android:layout_height="@dimen/qb_px_120"
         android:layout_marginEnd="@dimen/qb_px_50"
-        android:src="@drawable/ic_ppt"
+        android:src="@drawable/pdf"
         app:layout_constraintBottom_toBottomOf="@+id/view_bg"
         app:layout_constraintEnd_toEndOf="@+id/view_bg"
         app:layout_constraintTop_toTopOf="@+id/view_bg" />
