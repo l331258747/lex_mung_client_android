@@ -105,4 +105,9 @@ public interface EventBusTags {
         String MAP_INFO = "map_info";
         int SELECT_PLACE = 100;
     }
+
+    interface PAY_INFO {
+        String PAY_INFO = "pay_info";
+        int PAY_CONFIRM = 100;
+    }
 }

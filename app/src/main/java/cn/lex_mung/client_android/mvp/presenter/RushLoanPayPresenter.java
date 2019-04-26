@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextUtils;
 
 import com.alipay.sdk.app.PayTask;
 import com.google.gson.Gson;
@@ -18,50 +17,42 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import org.simple.eventbus.Subscriber;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.inject.Inject;
 
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.app.PayStatusTags;
-import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
+import cn.lex_mung.client_android.mvp.contract.RushLoanPayContract;
 import cn.lex_mung.client_android.mvp.model.entity.BalanceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
-import cn.lex_mung.client_android.mvp.model.entity.BusinessEntity;
-import cn.lex_mung.client_android.mvp.model.entity.GeneralEntity;
-import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayResultEntity;
-import cn.lex_mung.client_android.mvp.model.entity.ReleaseDemandOrgMoneyEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RequirementCreateEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.PayStatusActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
-import cn.lex_mung.client_android.mvp.ui.adapter.ReleaseDemandServiceTypeAdapter;
+import cn.lex_mung.client_android.mvp.ui.activity.RushOrdersActivity;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
-import me.zl.mvp.integration.AppManager;
 import me.zl.mvp.di.scope.ActivityScope;
-import me.zl.mvp.mvp.BasePresenter;
 import me.zl.mvp.http.imageloader.ImageLoader;
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
-
-import javax.inject.Inject;
-
-import cn.lex_mung.client_android.mvp.contract.RushLoanPayContract;
+import me.zl.mvp.integration.AppManager;
+import me.zl.mvp.mvp.BasePresenter;
 import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.PermissionUtil;
 import me.zl.mvp.utils.RxLifecycleUtils;
 import okhttp3.RequestBody;
 
-import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH;
-import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH_DISCOUNT_WAY;
+import static cn.lex_mung.client_android.app.EventBusTags.PAY_INFO.PAY_CONFIRM;
+import static cn.lex_mung.client_android.app.EventBusTags.PAY_INFO.PAY_INFO;
 
 
 @ActivityScope
@@ -277,13 +268,25 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
                                 Intent intent = new Intent(mApplication, PayStatusActivity.class);
                                 intent.putExtras(bundle);
                                 mRootView.launchActivity(intent);
-                                mRootView.killMyself();
                             }
                         } else {
                             mRootView.showMessage(baseResponse.getMessage());
                         }
                     }
                 });
+    }
+
+    /**
+     * 跳转抢单界面
+     */
+    @Subscriber(tag = PAY_INFO)
+    private void goRushLoan(Message message) {
+        switch (message.what) {
+            case PAY_CONFIRM:
+                mRootView.killMyself();
+                mRootView.launchActivity(new Intent(mApplication,RushOrdersActivity.class));
+                break;
+        }
     }
 
     @SuppressLint("HandlerLeak")

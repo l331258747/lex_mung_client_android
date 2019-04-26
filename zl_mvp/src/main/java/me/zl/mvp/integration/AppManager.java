@@ -341,6 +341,20 @@ public final class AppManager {
         }
     }
 
+    public void killAllNotClass(Class<?> cls) {
+        synchronized (AppManager.class) {
+            Iterator<Activity> iterator = getActivityList().iterator();
+            while (iterator.hasNext()) {
+                Activity next = iterator.next();
+                if(!next.getClass().equals(cls)){
+                    iterator.remove();
+                    next.finish();
+                }
+
+            }
+        }
+    }
+
     /**
      * 关闭所有 {@link Activity},排除指定的 {@link Activity}
      *

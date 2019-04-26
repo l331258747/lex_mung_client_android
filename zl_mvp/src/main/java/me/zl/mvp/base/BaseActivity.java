@@ -12,17 +12,8 @@ import android.view.InflateException;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-import me.zl.mvp.base.delegate.IActivity;
-import me.zl.mvp.integration.cache.Cache;
-import me.zl.mvp.integration.cache.CacheType;
-import me.zl.mvp.integration.lifecycle.ActivityLifecycleable;
-import me.zl.mvp.mvp.IPresenter;
-import me.zl.mvp.utils.AppUtils;
-
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.zl.mvp.R;
-
-import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
@@ -30,6 +21,12 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
+import me.zl.mvp.base.delegate.IActivity;
+import me.zl.mvp.integration.cache.Cache;
+import me.zl.mvp.integration.cache.CacheType;
+import me.zl.mvp.integration.lifecycle.ActivityLifecycleable;
+import me.zl.mvp.mvp.IPresenter;
+import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.StatusBarUtil;
 
 /**
@@ -77,8 +74,6 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         super.onCreate(savedInstanceState);
         mActivity = this;
 
-        ActivityCollect.getAppCollect().addActivity(this);
-
         mCache = AppUtils.obtainAppComponentFromContext(mActivity).extras();
         bundle = new Bundle();
         bundleIntent = getIntent().getExtras();
@@ -107,7 +102,6 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         if (mPresenter != null)
             mPresenter.onDestroy();//释放资源
         this.mPresenter = null;
-        ActivityCollect.getAppCollect().finishActivity(this);
     }
 
     public void hintKeyBoard() {

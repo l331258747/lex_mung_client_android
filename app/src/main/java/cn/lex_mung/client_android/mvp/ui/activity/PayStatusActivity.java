@@ -27,6 +27,9 @@ import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.integration.AppManager;
 import me.zl.mvp.utils.AppUtils;
 
+import static cn.lex_mung.client_android.app.EventBusTags.PAY_INFO.PAY_CONFIRM;
+import static cn.lex_mung.client_android.app.EventBusTags.PAY_INFO.PAY_INFO;
+
 public class PayStatusActivity extends BaseActivity<PayStatusPresenter> implements PayStatusContract.View {
     @BindView(R.id.iv_icon)
     ImageView ivIcon;
@@ -109,6 +112,7 @@ public class PayStatusActivity extends BaseActivity<PayStatusPresenter> implemen
         if (isFastClick()) return;
         if (getString(R.string.text_confirm).equals(btBack.getText().toString())) {
             AppManager.getAppManager().killActivity(ReleaseDemandActivity.class);
+            AppUtils.post(PAY_INFO,PAY_CONFIRM);
         }
         AppManager.getAppManager().killActivity(AccountPayActivity.class);
         killMyself();

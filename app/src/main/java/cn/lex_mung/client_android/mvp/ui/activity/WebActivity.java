@@ -1,13 +1,11 @@
 package cn.lex_mung.client_android.mvp.ui.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.view.TextureView;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
@@ -15,8 +13,6 @@ import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
-
-import org.w3c.dom.Text;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -31,10 +27,9 @@ import cn.lex_mung.client_android.mvp.presenter.WebPresenter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.webview.LWebView;
 import cn.lex_mung.client_android.utils.GsonUtil;
-import cn.lex_mung.client_android.utils.LogUtil;
-import me.zl.mvp.base.ActivityCollect;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
+import me.zl.mvp.integration.AppManager;
 import me.zl.mvp.utils.AppUtils;
 
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO;
@@ -259,9 +254,9 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
         @JavascriptInterface
         public void goLawyerList(int requireTypeId) {
             runOnUiThread(() -> {
-                ActivityCollect.getAppCollect().finishAllNotHome(MainActivity.class);
-                ((MainActivity) ActivityCollect.getAppCollect().findActivity(MainActivity.class)).switchPage(2);
-                AppUtils.post(LAWYER_LIST_SCREEN_INFO, LAWYER_LIST_SCREEN_INFO_LIST_ID, 3);
+                AppManager.getAppManager().killAllNotClass(MainActivity.class);
+                ((MainActivity)AppManager.getAppManager().findActivity(MainActivity.class)).switchPage(2);
+                AppUtils.post(LAWYER_LIST_SCREEN_INFO, LAWYER_LIST_SCREEN_INFO_LIST_ID, requireTypeId);
             });
         }
 
