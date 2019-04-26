@@ -579,11 +579,11 @@ public interface CommonService {
     Observable<BaseResponse<DocUploadEntity>> docUpload(@Part("order_no") RequestBody order_no,
                                                         @Part MultipartBody.Part file);
 
-    ///client/order/doc/get/{orderNo}
+    ///client/order/doc/get/{orderNo}/{pageNum}/{pageSize}
     //GET
     //用户获取订单文档
-    @GET("client/order/doc/get/{orderNo}")
-    Observable<BaseResponse<List<DocGetEntity>>> docGet(@Path("orderNo") String orderNo);
+    @GET("client/order/doc/get/{orderNo}/{pageNum}/{pageSize}")
+    Observable<BaseResponse<List<DocGetEntity>>> docGet(@Path("orderNo") String orderNo,@Path("orderNo") int pageNum,@Path("pageSize") int pageSize);
 
     //发抢单类型商品需求
     @POST("client/requirement/create")

@@ -48,6 +48,7 @@ public class RequirementDetailEntity {
     String hiddenNo;
     String recordUrl;
     String lmemberName;
+    String lmobile;
     String startTime;
     String endTime;
 
@@ -56,6 +57,10 @@ public class RequirementDetailEntity {
     int requireType;
     int isReceipt;
     int requirementId;
+
+    public String getLmobile() {
+        return lmobile;
+    }
 
     public int getId() {
         return id;

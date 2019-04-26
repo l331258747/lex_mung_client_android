@@ -52,6 +52,8 @@ public class OrderDetailTabActivity extends BaseActivity<OrderDetailTabPresenter
     private String orderNo;
     private int orderStatus;
 
+    private TabOrderContractFragment tabOrderContractFragment;
+
     @Override
     public boolean useFragment() {
         return true;
@@ -72,6 +74,10 @@ public class OrderDetailTabActivity extends BaseActivity<OrderDetailTabPresenter
         return R.layout.activity_order_detail_tab;
     }
 
+    public void setLmobile(String lmobile){
+        tabOrderContractFragment.setLmobile(lmobile);
+    }
+
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         if (bundleIntent != null) {
@@ -84,7 +90,7 @@ public class OrderDetailTabActivity extends BaseActivity<OrderDetailTabPresenter
 
     private void initViewPager() {
         fragments.add(TabOrderInfoFragment.newInstance(id,orderStatus));
-        fragments.add(TabOrderContractFragment.newInstance(orderNo,orderStatus));
+        fragments.add(tabOrderContractFragment = TabOrderContractFragment.newInstance(orderNo,orderStatus));
         viewPager.setOffscreenPageLimit(1);
         viewPager.setAdapter(new AdapterViewPager(getSupportFragmentManager(), fragments));
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

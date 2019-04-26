@@ -40,4 +40,5 @@ public class BundleTags {
     public static final String KEY_TITLE = "key_title";
     public static final String KEY_LEVEL = "key_level";
     public static final String REGION = "region";
+    public static final String MOBILE  = "mobile";
 }

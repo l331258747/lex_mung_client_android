@@ -21,6 +21,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.mvp.model.entity.order.RequirementDetailEntity;
+import cn.lex_mung.client_android.mvp.ui.activity.OrderDetailTabActivity;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
 import cn.lex_mung.client_android.utils.LogUtil;
@@ -90,15 +91,16 @@ public class TabOrderInfoFragment extends BaseFragment<TabOrderInfoPresenter> im
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         if (getArguments() != null) {
-            mPresenter.getRequirementDetail(getArguments().getInt(BundleTags.ID));
             orderStatus = getArguments().getInt(BundleTags.STATE);
 
-            if(orderStatus == 0){
+            if(orderStatus == 0){//显示联系客服界面
                 rlRushError.setVisibility(View.VISIBLE);
                 clOrderInfo.setVisibility(View.GONE);
-            }else{
+            }else{//显示订单信息界面
                 rlRushError.setVisibility(View.GONE);
                 clOrderInfo.setVisibility(View.VISIBLE);
+
+                mPresenter.getRequirementDetail(getArguments().getInt(BundleTags.ID));
             }
         }
     }
@@ -133,6 +135,8 @@ public class TabOrderInfoFragment extends BaseFragment<TabOrderInfoPresenter> im
         tv_order_customer.setText(entity.getLmemberName());
         tv_order_status.setText(entity.getIsReceiptStr());
         group_time.setVisibility(View.GONE);
+
+        ((OrderDetailTabActivity)getActivity()).setLmobile(entity.getLmobile());
     }
 
     @Override

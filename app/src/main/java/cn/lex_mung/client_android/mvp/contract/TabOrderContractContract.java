@@ -24,6 +24,6 @@ public interface TabOrderContractContract {
 
     interface Model extends IModel {
         Observable<BaseResponse<DocUploadEntity>> docUpload(RequestBody order_no, MultipartBody.Part file);
-        Observable<BaseResponse<List<DocGetEntity>>> docGet(String order_no);
+        Observable<BaseResponse<List<DocGetEntity>>> docGet(String order_no,int pageNum);
     }
 }

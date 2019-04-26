@@ -108,4 +108,5 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
         lastClickTime = currentClickTime;
         return flag;
     }
+
 }

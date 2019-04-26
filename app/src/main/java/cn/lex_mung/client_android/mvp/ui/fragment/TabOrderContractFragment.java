@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,10 +57,13 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
     TextView ivCall;
     @BindView(R.id.iv_send_contract)
     TextView ivSendContract;
+    @BindView(R.id.ll_bottom)
+    LinearLayout ll_bottom;
 
     private List<DocGetEntity> datas;
     private TabOrderContractAdapter tabOrderContractAdapter;
     private int orderStatus;
+    private String lmobile;
 
     public static TabOrderContractFragment newInstance(String orderNo,int orderStatus) {
         TabOrderContractFragment fragment = new TabOrderContractFragment();
@@ -68,6 +72,10 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
         bundle.putInt(BundleTags.STATE,orderStatus);
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+    public void setLmobile(String lmobile){
+        this.lmobile = lmobile;
     }
 
     @Override
@@ -94,16 +102,20 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
         if (getArguments() != null){
             orderStatus = getArguments().getInt(BundleTags.STATE);
 
-            if(orderStatus == 0){
+            if(orderStatus == 0){//显示空界面
                 emptyView.setVisibility(View.VISIBLE);
                 rlList.setVisibility(View.GONE);
-            }else{
+            }else{//显示文件列表
                 emptyView.setVisibility(View.GONE);
                 rlList.setVisibility(View.VISIBLE);
-
                 mPresenter.getList(getArguments().getString(BundleTags.ORDER_NO));
             }
 
+            if(orderStatus == 3){//订单关闭->不显示底部按钮
+                ll_bottom.setVisibility(View.GONE);
+            }else{
+                ll_bottom.setVisibility(View.VISIBLE);
+            }
         }
 
         initAdapter();
@@ -140,7 +152,8 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
         switch (view.getId()) {
             case R.id.iv_call:
                 //TODO 联系律师
-                Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "400-811-3060"));
+                if(TextUtils.isEmpty(lmobile)) return;
+                Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + lmobile));
                 startActivity(dialIntent);
                 break;
             case R.id.iv_send_contract:

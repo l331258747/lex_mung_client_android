@@ -87,7 +87,7 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
 
 
     public void getList(String order_no){
-        mModel.docGet(order_no)
+        mModel.docGet(order_no,0)
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(3, 2))
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -100,9 +100,6 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
 //                            iconImage = baseResponse.getData().getDburl();
 //                            mRootView.setAvatar(saveFile.getPath());
 //                            isUploadNewAvatar = true;
-
-
-
 
                         }else{
                             mRootView.showMessage(baseResponse.getMessage());
