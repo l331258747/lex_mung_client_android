@@ -599,4 +599,11 @@ public interface CommonService {
     //需求抢单状态查询
     @POST("client/requirement/status/check")
     Observable<BaseResponse<RushOrderStatusEntity>> requirementStatusCheck(@Body RequestBody body);
+
+    ///lawyer/order/requirement/detail/{requirementId}
+    //GET
+    //付费需求详细信息
+    @GET("lawyer/order/requirement/detail/{requirementId}")
+    Observable<BaseResponse<RushOrderStatusEntity>> requirementDetail(@Path("requirementId") int requirementId);
+
 }

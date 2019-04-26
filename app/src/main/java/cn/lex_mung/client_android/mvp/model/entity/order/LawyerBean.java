@@ -47,8 +47,8 @@ public class LawyerBean {
         return icon_image;
     }
 
-    public int getSatisfaction_degree() {
-        return satisfaction_degree;
+    public String getSatisfaction_degree() {
+        return satisfaction_degree + "%";
     }
 
     public String getContract_count() {

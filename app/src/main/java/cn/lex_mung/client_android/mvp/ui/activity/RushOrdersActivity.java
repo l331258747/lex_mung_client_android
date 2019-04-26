@@ -27,12 +27,14 @@ import cn.lex_mung.client_android.di.module.RushOrdersModule;
 import cn.lex_mung.client_android.mvp.contract.RushOrdersContract;
 import cn.lex_mung.client_android.mvp.model.entity.order.LawyerBean;
 import cn.lex_mung.client_android.mvp.presenter.RushOrdersPresenter;
+import cn.lex_mung.client_android.mvp.ui.dialog.DefaultDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.CompletedView;
 import cn.lex_mung.client_android.mvp.ui.widget.RushOrdersView;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
+import me.zl.mvp.integration.AppManager;
 import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.StatusBarUtil;
 
@@ -78,6 +80,7 @@ public class RushOrdersActivity extends BaseActivity<RushOrdersPresenter> implem
     TextView tvLawyerCall;
 
     String lawyerPhone;
+    int requirementId;
 
 
     @Override
@@ -100,7 +103,8 @@ public class RushOrdersActivity extends BaseActivity<RushOrdersPresenter> implem
         StatusBarUtil.setColor(mActivity, AppUtils.getColor(mActivity, R.color.c_ff), 0);
 
         if (bundleIntent != null) {
-            mPresenter.onCreate(bundleIntent.getInt(BundleTags.ID));
+            requirementId = bundleIntent.getInt(BundleTags.ID);
+            mPresenter.onCreate(requirementId);
         }
     }
 
@@ -122,12 +126,12 @@ public class RushOrdersActivity extends BaseActivity<RushOrdersPresenter> implem
         Intent dialIntent;
         switch (view.getId()) {
             case R.id.tv_custom_call:
-                dialIntent =  new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "400-811-3060"));
+                dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "400-811-3060"));
                 startActivity(dialIntent);
                 break;
             case R.id.tv_lawyer_call:
-                if(TextUtils.isEmpty(lawyerPhone)) return;
-                dialIntent =  new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + lawyerPhone));//TODO 律师电话
+                if (TextUtils.isEmpty(lawyerPhone)) return;
+                dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + lawyerPhone));//TODO 律师电话
                 startActivity(dialIntent);
                 break;
         }
@@ -140,7 +144,7 @@ public class RushOrdersActivity extends BaseActivity<RushOrdersPresenter> implem
 
     @Override
     public void stopFlipping() {
-        if(viewFlipper != null){
+        if (viewFlipper != null) {
             viewFlipper.stopFlipping();
         }
     }
@@ -152,6 +156,7 @@ public class RushOrdersActivity extends BaseActivity<RushOrdersPresenter> implem
                     , ImageConfigImpl
                             .builder()
                             .url(lawyerBean.getIcon_image())
+                            .isCircle(true)
                             .imageView(ivHead)
                             .build());
         }
@@ -170,7 +175,7 @@ public class RushOrdersActivity extends BaseActivity<RushOrdersPresenter> implem
 
     @Override
     public void setOrderStatus(int position) {
-        switch (position){
+        switch (position) {
             case 0://初始
                 clRushRush.setVisibility(View.GONE);
                 clRushError.setVisibility(View.GONE);
@@ -267,7 +272,16 @@ public class RushOrdersActivity extends BaseActivity<RushOrdersPresenter> implem
 
     @Override
     public void onBackPressed() {
-        killMyself();
-        launchActivity(new Intent(mActivity,OrderDetailTabActivity.class));
+        if (mPresenter.getOrderStatus() == 2) {
+            new DefaultDialog(mActivity, dialog -> {
+                killMyself();
+                AppManager.getAppManager().killAllNotClass(MainActivity.class);
+            },"您可以在我的-订单中查看服务律师和订单详情.","确定","取消").show();
+        } else {
+            new DefaultDialog(mActivity, dialog -> {
+                killMyself();
+                AppManager.getAppManager().killAllNotClass(MainActivity.class);
+            },"我们将继续为您优选律师，您可以在我的-订单中查看服务律师和订单详情.","确定","取消").show();
+        }
     }
 }

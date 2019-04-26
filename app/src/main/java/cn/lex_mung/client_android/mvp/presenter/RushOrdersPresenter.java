@@ -53,6 +53,8 @@ public class RushOrdersPresenter extends BasePresenter<RushOrdersContract.Model,
     private boolean isGetStatusStop;//获取订单状态停止
     private Thread getStatusThread;
 
+    private int orderStatus = 1;
+
     @Inject
     public RushOrdersPresenter(RushOrdersContract.Model model, RushOrdersContract.View rootView) {
         super(model, rootView);
@@ -121,6 +123,7 @@ public class RushOrdersPresenter extends BasePresenter<RushOrdersContract.Model,
             case 0://初始
                 mRootView.setOrderStatus(0);
                 mRootView.setRushOrdersView(1);
+                orderStatus = 1;
                 break;
             case 1://倒计时
                 //倒计时开始，律师轮播
@@ -130,17 +133,23 @@ public class RushOrdersPresenter extends BasePresenter<RushOrdersContract.Model,
                 countdownThread.start();
                 mRootView.setOrderStatus(1);
                 mRootView.setRushOrdersView(1);
-
+                orderStatus = 1;
                 break;
             case 2://匹配到律师
                 mRootView.setOrderStatus(2);
                 mRootView.setRushOrdersView(2);
+                orderStatus = 2;
                 break;
             case 3://失败
                 mRootView.setOrderStatus(3);
                 mRootView.setRushOrdersView(2);
+                orderStatus = 1;
                 break;
         }
+    }
+
+    public int getOrderStatus(){
+        return orderStatus;
     }
 
     /**
