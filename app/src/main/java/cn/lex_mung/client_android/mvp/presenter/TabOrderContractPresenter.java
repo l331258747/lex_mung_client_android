@@ -11,6 +11,7 @@ import android.support.constraint.ConstraintLayout;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -22,7 +23,9 @@ import java.util.List;
 
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.app.Constants;
+import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
+import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocGetEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocUploadEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.ListBean;
@@ -46,6 +49,7 @@ import javax.inject.Inject;
 import javax.sql.RowSetListener;
 
 import cn.lex_mung.client_android.mvp.contract.TabOrderContractContract;
+import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.FileUtil;
 import me.zl.mvp.utils.RxLifecycleUtils;
 import okhttp3.MediaType;
@@ -75,6 +79,7 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
     private int totalNum;//总
     private String helpLink;
 
+    UserInfoDetailsEntity userInfoDetailsEntity;
 
     @Inject
     public TabOrderContractPresenter(TabOrderContractContract.Model model, TabOrderContractContract.View rootView) {
@@ -90,6 +95,8 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
         initAdapter();
 
         getList(false);
+
+        userInfoDetailsEntity = new Gson().fromJson(DataHelper.getStringSF(mApplication, DataHelperTags.USER_INFO_DETAIL), UserInfoDetailsEntity.class);
     }
 
     private void initAdapter() {
@@ -99,7 +106,7 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
             ListBean bean = adapter.getItem(position);
             if (bean == null) return;
             fileClick(bean.getName(),bean.getLink());
-            if(bean.getIs_read() == 0){
+            if(bean.getCreate_member_id() != userInfoDetailsEntity.getMemberId() && bean.getIs_read() == 0){
                 docRead(position,bean.getRepository_id());
             }
         });
@@ -243,7 +250,8 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
                     @Override
                     public void onNext(BaseResponse baseResponse) {
                         if (baseResponse.isSuccess()) {
-                            //更新状态 要加字段
+                            adapter.getData().get(position).setIs_read(3);
+                            adapter.notifyItemChanged(position);
                         }
                     }
                 });
