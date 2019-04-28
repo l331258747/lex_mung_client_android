@@ -90,7 +90,7 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
             ListBean bean = adapter.getItem(position);
             if (bean == null) return;
             if(!FileUtil2.isFileExist(new File(FILE_CACHE_PATH + File.separator + bean.getName()))){
-                mRootView.showMessage("下载中...");
+                mRootView.showLoading("下载中...");
                 FileUtil2.downloadFile3(bean.getLink()
                         , FILE_CACHE_PATH + File.separator + bean.getName()
                         , new FileUtil2.DowloadListener() {
