@@ -70,15 +70,15 @@
                 app:layout_constraintTop_toTopOf="@+id/view_bg"
                 android:text="如何通过微信等第三方工具上传您要的起草/审查的合同" />
 
-            <TextView
-                android:id="@+id/tv_help_close"
+            <ImageView
+                android:id="@+id/iv_help_close"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/qb_px_40"
                 android:paddingBottom="@dimen/qb_px_40"
                 android:paddingRight="@dimen/qb_px_10"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:text="x"/>
+                android:src="@drawable/ic_x"/>
 
 
         </android.support.constraint.ConstraintLayout>

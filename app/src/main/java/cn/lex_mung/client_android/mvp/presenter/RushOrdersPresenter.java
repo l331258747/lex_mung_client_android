@@ -47,7 +47,7 @@ public class RushOrdersPresenter extends BasePresenter<RushOrdersContract.Model,
     private int mTotalProgress = 120;
     private Thread countdownThread;//倒计时线程
 
-    private int mCurrentProgress = 0;
+    private int mCurrentProgress = 120;
     private boolean isCountdownStop;//倒计时
 
     private boolean isGetStatusStop;//获取订单状态停止
@@ -95,10 +95,10 @@ public class RushOrdersPresenter extends BasePresenter<RushOrdersContract.Model,
         @Override
         public void run() {
 
-            while (mCurrentProgress < mTotalProgress) {
+            while (mCurrentProgress > 0) {
                 if (isCountdownStop)
                     return;
-                mCurrentProgress += 1;
+                mCurrentProgress -= 1;
                 mRootView.setCountdown(mCurrentProgress);
                 try {
                     Thread.sleep(1000);
@@ -128,7 +128,7 @@ public class RushOrdersPresenter extends BasePresenter<RushOrdersContract.Model,
             case 1://倒计时
                 //倒计时开始，律师轮播
                 addNotice();
-                mCurrentProgress = 0;
+                mCurrentProgress = 120;
                 isCountdownStop = false;
                 countdownThread.start();
                 mRootView.setOrderStatus(1);
@@ -142,7 +142,7 @@ public class RushOrdersPresenter extends BasePresenter<RushOrdersContract.Model,
                 break;
             case 3://失败
                 mRootView.setOrderStatus(3);
-                mRootView.setRushOrdersView(2);
+                mRootView.setRushOrdersView(1);
                 orderStatus = 1;
                 break;
         }

@@ -130,7 +130,7 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
         recyclerView.setAdapter(adapter);
     }
 
-    @OnClick({R.id.iv_call, R.id.iv_send_contract,R.id.tv_help_close,R.id.cl_help})
+    @OnClick({R.id.iv_call, R.id.iv_send_contract,R.id.iv_help_close,R.id.cl_help})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_call:
@@ -141,7 +141,7 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
             case R.id.iv_send_contract:
                 mPresenter.showFileChooser();
                 break;
-            case R.id.tv_help_close:
+            case R.id.iv_help_close:
                 cl_help.setVisibility(View.GONE);
                 break;
             case R.id.cl_help:

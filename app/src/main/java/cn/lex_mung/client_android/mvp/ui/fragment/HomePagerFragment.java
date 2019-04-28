@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -61,6 +62,8 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
 
 //    @BindView(R.id.tv_message_count)
 //    TextView tvMessageCount;
+    @BindView(R.id.iv_message)
+    ImageView iv_message;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.banner)
@@ -143,15 +146,6 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;
             NormalBean entity = adapter.getItem(position);
-//            if (entity == null) return;
-//            if (entity.getJumptype() == 1) {
-//                ((MainActivity) mActivity).switchPage(2);
-//            } else {
-//                bundle.clear();
-//                bundle.putString(BundleTags.URL, entity.getJumpUrl());
-//                bundle.putBoolean(BundleTags.IS_SHARE, false);
-//                launchActivity(new Intent(mActivity, WebActivity.class), bundle);
-//            }
             contractClick(entity);
         });
     }
@@ -274,11 +268,13 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     public void setUnreadMessageCount(String count) {
 //        tvMessageCount.setText(count);
 //        tvMessageCount.setVisibility(View.VISIBLE);
+        iv_message.setImageDrawable(ContextCompat.getDrawable(mActivity,R.drawable.ic_message));
     }
 
     @Override
     public void hideUnreadMessageCount() {
 //        tvMessageCount.setVisibility(View.GONE);
+        iv_message.setImageDrawable(ContextCompat.getDrawable(mActivity,R.drawable.ic_message_un));
     }
 
     @Override

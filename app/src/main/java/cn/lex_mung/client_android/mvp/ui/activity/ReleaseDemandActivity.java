@@ -49,8 +49,8 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
     TextView tvTitle;
     @BindView(R.id.tv_lawyer_region)
     TextView tvLawyerRegion;
-    @BindView(R.id.tv_lawyer_field)
-    TextView tvLawyerField;
+//    @BindView(R.id.tv_lawyer_field)
+//    TextView tvLawyerField;
     @BindView(R.id.group_money)
     Group groupMoney;
     @BindView(R.id.et_max_money)
@@ -95,8 +95,8 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
     WebView webView;
     @BindView(R.id.bt_pay)
     Button btPay;
-    @BindView(R.id.group_lawyer_field)
-    Group groupLawyerField;
+//    @BindView(R.id.group_lawyer_field)
+//    Group groupLawyerField;
 
     private EasyDialog easyDialog;
     private DefaultDialog defaultDialog;
@@ -137,12 +137,13 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
         recyclerView.setAdapter(adapter);
     }
 
-    @OnClick({R.id.view_lawyer_field, R.id.tv_wx, R.id.tv_zfb, R.id.tv_balance, R.id.tv_club_card, R.id.view_discount_way, R.id.tv_fast_consult_tip, R.id.tv_fast_consult_tip_1, R.id.bt_pay})
+//    @OnClick({R.id.view_lawyer_field, R.id.tv_wx, R.id.tv_zfb, R.id.tv_balance, R.id.tv_club_card, R.id.view_discount_way, R.id.tv_fast_consult_tip, R.id.tv_fast_consult_tip_1, R.id.bt_pay})
+    @OnClick({R.id.tv_wx, R.id.tv_zfb, R.id.tv_balance, R.id.tv_club_card, R.id.view_discount_way, R.id.tv_fast_consult_tip, R.id.tv_fast_consult_tip_1, R.id.bt_pay})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.view_lawyer_field:
-                showSelectFieldDialog();
-                break;
+//            case R.id.view_lawyer_field:
+//                showSelectFieldDialog();
+//                break;
             case R.id.tv_wx:
                 ivSelectWx.setImageResource(R.drawable.ic_show_select);
                 ivSelectZfb.setImageResource(R.drawable.ic_hide_select);
@@ -193,7 +194,7 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
 
     @Override
     public void hideFieldLayout() {
-        groupLawyerField.setVisibility(View.GONE);
+//        groupLawyerField.setVisibility(View.GONE);
     }
 
     @Override
@@ -292,7 +293,7 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
 
         layout.findViewById(R.id.tv_cancel).setOnClickListener(v -> dismiss());
         layout.findViewById(R.id.tv_confirm).setOnClickListener(v -> {
-            tvLawyerField.setText(mPresenter.getLawyerField());
+//            tvLawyerField.setText(mPresenter.getLawyerField());
             dismiss();
         });
     }
