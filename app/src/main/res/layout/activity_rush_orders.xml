@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <cn.lex_mung.client_android.mvp.ui.widget.TitleView
@@ -23,6 +24,16 @@
         android:gravity="center"
         android:paddingLeft="@dimen/qb_px_50"
         android:paddingRight="@dimen/qb_px_50" />
+
+    <View
+        android:id="@+id/view_bg_down"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_360"
+        android:layout_below="@+id/titleView"
+        android:background="@drawable/ic_rush_order_bg_down"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:layout_marginTop="@dimen/qb_px_280"/>
 
 
     <FrameLayout

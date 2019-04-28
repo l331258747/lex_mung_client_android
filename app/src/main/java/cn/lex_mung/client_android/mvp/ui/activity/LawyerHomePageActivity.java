@@ -243,12 +243,12 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
                 switchPager(16, 14, 14, Typeface.BOLD, Typeface.NORMAL, Typeface.NORMAL, View.VISIBLE, View.GONE, View.GONE);
                 viewPager.setCurrentItem(0);
                 break;
-            case R.id.tv_service_price:
+            case R.id.tv_practice_experience:
                 if (viewPager.getCurrentItem() == 1) return;
                 switchPager(14, 16, 14, Typeface.NORMAL, Typeface.BOLD, Typeface.NORMAL, View.GONE, View.VISIBLE, View.GONE);
                 viewPager.setCurrentItem(1);
                 break;
-            case R.id.tv_practice_experience:
+            case R.id.tv_service_price:
                 if (viewPager.getCurrentItem() == 2) return;
                 switchPager(14, 14, 16, Typeface.NORMAL, Typeface.NORMAL, Typeface.BOLD, View.GONE, View.GONE, View.VISIBLE);
                 viewPager.setCurrentItem(2);
@@ -279,14 +279,14 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
      */
     private void switchPager(int i1, int i2, int i3, int t1, int t2, int t3, int v1, int v2, int v3) {
         tvBasicInfo.setTextSize(i1);
-        tvServicePrice.setTextSize(i2);
-        tvPracticeExperience.setTextSize(i3);
+        tvPracticeExperience.setTextSize(i2);
+        tvServicePrice.setTextSize(i3);
         tvBasicInfo.setTypeface(Typeface.defaultFromStyle(t1));
-        tvServicePrice.setTypeface(Typeface.defaultFromStyle(t2));
-        tvPracticeExperience.setTypeface(Typeface.defaultFromStyle(t3));
+        tvPracticeExperience.setTypeface(Typeface.defaultFromStyle(t2));
+        tvServicePrice.setTypeface(Typeface.defaultFromStyle(t3));
         ivBasicInfo.setVisibility(v1);
-        ivServicePrice.setVisibility(v2);
-        ivPracticeExperience.setVisibility(v3);
+        ivPracticeExperience.setVisibility(v2);
+        ivServicePrice.setVisibility(v3);
     }
 
     @Override

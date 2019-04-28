@@ -75,10 +75,10 @@ public class RushOrdersView extends LinearLayout {
 //        }
         switch (progress){
             case 0:
-                iv_select_1.setVisibility(VISIBLE);
-                iv_select_2.setVisibility(VISIBLE);
-                iv_select_3.setVisibility(VISIBLE);
-                iv_select_4.setVisibility(VISIBLE);
+//                iv_select_1.setVisibility(VISIBLE);
+//                iv_select_2.setVisibility(VISIBLE);
+//                iv_select_3.setVisibility(VISIBLE);
+//                iv_select_4.setVisibility(VISIBLE);
                 iv_select_1.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_rush_order_select));
                 iv_select_2.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_rush_order_select_un));
                 iv_select_3.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_rush_order_select_un));
@@ -94,17 +94,17 @@ public class RushOrdersView extends LinearLayout {
                 tv_reply.setVisibility(VISIBLE);
                 break;
             case 1:
-                iv_select_1.setVisibility(VISIBLE);
-                iv_select_2.setVisibility(INVISIBLE);
-                iv_select_3.setVisibility(VISIBLE);
-                iv_select_4.setVisibility(VISIBLE);
+//                iv_select_1.setVisibility(VISIBLE);
+//                iv_select_2.setVisibility(INVISIBLE);
+//                iv_select_3.setVisibility(VISIBLE);
+//                iv_select_4.setVisibility(VISIBLE);
                 iv_select_1.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_rush_order_select));
-                iv_select_2.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_rush_order_select_un));
+                iv_select_2.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_rush_order_line_z));
                 iv_select_3.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_rush_order_select_un));
                 iv_select_4.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_rush_order_select_un));
 
 
-                iv_line_1.setBackgroundColor(ContextCompat.getColor(context,R.color.c_3DD790));
+                iv_line_1.setBackgroundColor(ContextCompat.getColor(context,R.color.c_78FAA0));
                 iv_line_2.setBackgroundColor(ContextCompat.getColor(context,R.color.c_ff));
                 iv_line_3.setBackgroundColor(ContextCompat.getColor(context,R.color.c_ff));
 
@@ -115,18 +115,18 @@ public class RushOrdersView extends LinearLayout {
 
                 break;
             case 2:
-                iv_select_1.setVisibility(VISIBLE);
-                iv_select_2.setVisibility(VISIBLE);
-                iv_select_3.setVisibility(INVISIBLE);
-                iv_select_4.setVisibility(VISIBLE);
+//                iv_select_1.setVisibility(VISIBLE);
+//                iv_select_2.setVisibility(VISIBLE);
+//                iv_select_3.setVisibility(INVISIBLE);
+//                iv_select_4.setVisibility(VISIBLE);
                 iv_select_1.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_rush_order_select));
                 iv_select_2.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_rush_order_select));
-                iv_select_3.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_rush_order_select_un));
+                iv_select_3.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_rush_order_line_z));
                 iv_select_4.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_rush_order_select_un));
 
 
-                iv_line_1.setBackgroundColor(ContextCompat.getColor(context,R.color.c_3DD790));
-                iv_line_2.setBackgroundColor(ContextCompat.getColor(context,R.color.c_3DD790));
+                iv_line_1.setBackgroundColor(ContextCompat.getColor(context,R.color.c_78FAA0));
+                iv_line_2.setBackgroundColor(ContextCompat.getColor(context,R.color.c_78FAA0));
                 iv_line_3.setBackgroundColor(ContextCompat.getColor(context,R.color.c_ff));
 
                 iv_mate.setVisibility(INVISIBLE);
@@ -135,19 +135,19 @@ public class RushOrdersView extends LinearLayout {
                 tv_reply.setVisibility(INVISIBLE);
                 break;
             case 3:
-                iv_select_1.setVisibility(VISIBLE);
-                iv_select_2.setVisibility(VISIBLE);
-                iv_select_3.setVisibility(VISIBLE);
-                iv_select_4.setVisibility(VISIBLE);
+//                iv_select_1.setVisibility(VISIBLE);
+//                iv_select_2.setVisibility(VISIBLE);
+//                iv_select_3.setVisibility(VISIBLE);
+//                iv_select_4.setVisibility(VISIBLE);
                 iv_select_1.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_rush_order_select));
                 iv_select_2.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_rush_order_select));
                 iv_select_3.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_rush_order_select));
                 iv_select_4.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_rush_order_select));
 
 
-                iv_line_1.setBackgroundColor(ContextCompat.getColor(context,R.color.c_3DD790));
-                iv_line_2.setBackgroundColor(ContextCompat.getColor(context,R.color.c_3DD790));
-                iv_line_3.setBackgroundColor(ContextCompat.getColor(context,R.color.c_3DD790));
+                iv_line_1.setBackgroundColor(ContextCompat.getColor(context,R.color.c_78FAA0));
+                iv_line_2.setBackgroundColor(ContextCompat.getColor(context,R.color.c_78FAA0));
+                iv_line_3.setBackgroundColor(ContextCompat.getColor(context,R.color.c_78FAA0));
 
                 iv_mate.setVisibility(INVISIBLE);
                 tv_mate.setVisibility(VISIBLE);

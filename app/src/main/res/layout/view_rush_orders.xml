@@ -88,7 +88,7 @@
         <ImageView
             android:id="@+id/iv_select_1"
             android:layout_width="@dimen/qb_px_25"
-            android:layout_height="@dimen/qb_px_25"
+            android:layout_height="@dimen/qb_px_20"
             android:src="@drawable/ic_rush_order_select" />
 
 
@@ -102,7 +102,7 @@
         <ImageView
             android:id="@+id/iv_select_2"
             android:layout_width="@dimen/qb_px_25"
-            android:layout_height="@dimen/qb_px_25"
+            android:layout_height="@dimen/qb_px_20"
             android:src="@drawable/ic_rush_order_select_un" />
 
         <ImageView
@@ -115,8 +115,8 @@
         <ImageView
             android:id="@+id/iv_select_3"
             android:layout_width="@dimen/qb_px_25"
-            android:layout_height="@dimen/qb_px_25"
-            android:src="@drawable/ic_rush_order_select_un" />
+            android:layout_height="@dimen/qb_px_20"
+            android:src="@drawable/ic_rush_order_line_z" />
 
         <ImageView
             android:id="@+id/iv_line_3"
@@ -129,7 +129,7 @@
         <ImageView
             android:id="@+id/iv_select_4"
             android:layout_width="@dimen/qb_px_25"
-            android:layout_height="@dimen/qb_px_25"
+            android:layout_height="@dimen/qb_px_20"
             android:src="@drawable/ic_rush_order_select_un" />
 
     </LinearLayout>

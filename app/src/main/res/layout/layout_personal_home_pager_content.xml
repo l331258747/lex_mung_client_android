@@ -40,29 +40,28 @@
             app:layout_constraintEnd_toEndOf="@id/tv_basic_info"
             app:layout_constraintStart_toStartOf="@id/tv_basic_info" />
 
-        <TextView
-            android:id="@+id/tv_service_price"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/qb_px_83"
-            android:layout_marginStart="@dimen/qb_px_50"
-            android:gravity="bottom"
-            android:text="@string/text_service_price"
-            android:textColor="@color/c_323232"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@id/tv_basic_info"
-            app:layout_constraintStart_toEndOf="@id/tv_basic_info" />
+        <!--<TextView-->
+            <!--android:id="@+id/tv_service_price"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="@dimen/qb_px_83"-->
+            <!--android:layout_marginStart="@dimen/qb_px_50"-->
+            <!--android:gravity="bottom"-->
+            <!--android:text="@string/text_service_price"-->
+            <!--android:textColor="@color/c_323232"-->
+            <!--android:textSize="14sp"-->
+            <!--app:layout_constraintBottom_toBottomOf="@id/tv_basic_info"-->
+            <!--app:layout_constraintStart_toEndOf="@id/tv_basic_info" />-->
 
-        <ImageView
-            android:id="@+id/iv_service_price"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/qb_px_10"
-            android:layout_marginBottom="@dimen/qb_px_5"
-            android:src="@drawable/ic_personal_home_page_tag"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@id/tv_service_price"
-            app:layout_constraintEnd_toEndOf="@id/tv_service_price"
-            app:layout_constraintStart_toStartOf="@id/tv_service_price" />
-
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_service_price"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="@dimen/qb_px_10"-->
+            <!--android:layout_marginBottom="@dimen/qb_px_5"-->
+            <!--android:src="@drawable/ic_personal_home_page_tag"-->
+            <!--android:visibility="gone"-->
+            <!--app:layout_constraintBottom_toBottomOf="@id/tv_service_price"-->
+            <!--app:layout_constraintEnd_toEndOf="@id/tv_service_price"-->
+            <!--app:layout_constraintStart_toStartOf="@id/tv_service_price" />-->
         <TextView
             android:id="@+id/tv_practice_experience"
             android:layout_width="wrap_content"
@@ -73,7 +72,7 @@
             android:textColor="@color/c_323232"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/tv_basic_info"
-            app:layout_constraintStart_toEndOf="@id/tv_service_price" />
+            app:layout_constraintStart_toEndOf="@id/tv_basic_info" />
 
         <ImageView
             android:id="@+id/iv_practice_experience"
@@ -85,6 +84,51 @@
             app:layout_constraintBottom_toBottomOf="@id/tv_practice_experience"
             app:layout_constraintEnd_toEndOf="@id/tv_practice_experience"
             app:layout_constraintStart_toStartOf="@id/tv_practice_experience" />
+
+        <TextView
+            android:id="@+id/tv_service_price"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/qb_px_83"
+            android:layout_marginStart="@dimen/qb_px_50"
+            android:gravity="bottom"
+            android:text="@string/text_service_price"
+            android:textColor="@color/c_323232"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_basic_info"
+            app:layout_constraintStart_toEndOf="@id/tv_practice_experience" />
+
+        <ImageView
+            android:id="@+id/iv_service_price"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_10"
+            android:layout_marginBottom="@dimen/qb_px_5"
+            android:src="@drawable/ic_personal_home_page_tag"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/tv_service_price"
+            app:layout_constraintEnd_toEndOf="@id/tv_service_price"
+            app:layout_constraintStart_toStartOf="@id/tv_service_price" />
+        <!--<TextView-->
+            <!--android:id="@+id/tv_practice_experience"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="@dimen/qb_px_83"-->
+            <!--android:layout_marginStart="@dimen/qb_px_50"-->
+            <!--android:gravity="bottom"-->
+            <!--android:text="@string/text_practice_experience"-->
+            <!--android:textColor="@color/c_323232"-->
+            <!--android:textSize="14sp"-->
+            <!--app:layout_constraintBottom_toBottomOf="@id/tv_basic_info"-->
+            <!--app:layout_constraintStart_toEndOf="@id/tv_service_price" />-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_practice_experience"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="@dimen/qb_px_10"-->
+            <!--android:layout_marginBottom="@dimen/qb_px_5"-->
+            <!--android:src="@drawable/ic_personal_home_page_tag"-->
+            <!--android:visibility="gone"-->
+            <!--app:layout_constraintBottom_toBottomOf="@id/tv_practice_experience"-->
+            <!--app:layout_constraintEnd_toEndOf="@id/tv_practice_experience"-->
+            <!--app:layout_constraintStart_toStartOf="@id/tv_practice_experience" />-->
 
         <View
             android:id="@+id/view_2"

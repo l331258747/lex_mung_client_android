@@ -78,6 +78,8 @@ public class RushOrdersActivity extends BaseActivity<RushOrdersPresenter> implem
     TextView tvOrderScore;
     @BindView(R.id.tv_lawyer_call)
     TextView tvLawyerCall;
+    @BindView(R.id.view_bg_down)
+    View viewBgDown;
 
     String lawyerPhone;
     int requirementId;
@@ -190,6 +192,8 @@ public class RushOrdersActivity extends BaseActivity<RushOrdersPresenter> implem
                 clRushRush.setVisibility(View.GONE);
                 clRushError.setVisibility(View.GONE);
                 clRushReply.setVisibility(View.VISIBLE);
+
+                viewBgDown.setVisibility(View.VISIBLE);
                 break;
             case 3://失败
                 clRushRush.setVisibility(View.GONE);
