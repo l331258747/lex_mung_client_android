@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -61,6 +62,8 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
     TextView ivSendContract;
     @BindView(R.id.ll_bottom)
     LinearLayout ll_bottom;
+    @BindView(R.id.cl_help)
+    ConstraintLayout cl_help;
 
     private int orderStatus;
     private String lmobile;
@@ -110,6 +113,7 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
                 rlList.setVisibility(View.VISIBLE);
 
                 mPresenter.onCreate(smartRefreshLayout,getArguments().getString(BundleTags.ORDER_NO));
+                mPresenter.setHelpView(cl_help);
             }
 
             if(orderStatus == 3){//订单关闭->不显示底部按钮
@@ -126,7 +130,7 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
         recyclerView.setAdapter(adapter);
     }
 
-    @OnClick({R.id.iv_call, R.id.iv_send_contract})
+    @OnClick({R.id.iv_call, R.id.iv_send_contract,R.id.tv_help_close,R.id.cl_help})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_call:
@@ -136,6 +140,17 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
                 break;
             case R.id.iv_send_contract:
                 mPresenter.showFileChooser();
+                break;
+            case R.id.tv_help_close:
+                cl_help.setVisibility(View.GONE);
+                break;
+            case R.id.cl_help:
+                if(TextUtils.isEmpty(mPresenter.getHelpLink())) return;
+                String fileLink = mPresenter.getHelpLink();
+                String[] sli = fileLink.split("\\.");
+                if(sli.length < 2) return;
+                String fileName = sli[sli.length - 2];
+                mPresenter.fileClick(fileName,fileLink);
                 break;
         }
     }

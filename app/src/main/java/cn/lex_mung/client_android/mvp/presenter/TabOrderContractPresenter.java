@@ -4,11 +4,17 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
+import android.text.TextUtils;
+import android.view.View;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+import com.tencent.smtt.sdk.TbsReaderView;
 import com.yalantis.ucrop.util.FileUtils;
 
 import java.io.File;
@@ -20,6 +26,7 @@ import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocGetEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocUploadEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.ListBean;
+import cn.lex_mung.client_android.mvp.ui.activity.X5WebActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.MyCouponsAdapter;
 import cn.lex_mung.client_android.mvp.ui.adapter.TabOrderContractAdapter;
 import cn.lex_mung.client_android.utils.FileUtil2;
@@ -62,9 +69,11 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
     private String FILE_CACHE_PATH;
 
     private SmartRefreshLayout smartRefreshLayout;
+    ConstraintLayout cl_help;
     TabOrderContractAdapter adapter;
     private int pageNum = 1;
     private int totalNum;//总
+    private String helpLink;
 
 
     @Inject
@@ -89,26 +98,9 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
             if (isFastClick()) return;
             ListBean bean = adapter.getItem(position);
             if (bean == null) return;
-            if(!FileUtil2.isFileExist(new File(FILE_CACHE_PATH + File.separator + bean.getName()))){
-                mRootView.showLoading("下载中...");
-                FileUtil2.downloadFile3(bean.getLink()
-                        , FILE_CACHE_PATH + File.separator + bean.getName()
-                        , new FileUtil2.DowloadListener() {
-                    @Override
-                    public void onSuccess() {
-                        mRootView.showMessage("下载成功");
-                        mRootView.hideLoading();
-                        LogUtil.e("下载成功...打开");
-                    }
-
-                    @Override
-                    public void onFailed() {
-                        mRootView.showMessage("下载失败");
-                        mRootView.hideLoading();
-                    }
-                });
-            }else{
-                LogUtil.e("直接打开");
+            fileClick(bean.getName(),bean.getLink());
+            if(bean.getIs_read() == 0){
+                docRead(position,bean.getRepository_id());
             }
         });
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -131,9 +123,39 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
         mRootView.initRecyclerView(adapter);
     }
 
-    //通过腾讯---预览文件
-    public void previewFile(){
+    public void fileClick(String fileName,String fileLink){
+        String filePath = FILE_CACHE_PATH + File.separator + fileName;
+        if(!FileUtil2.isFileExist(new File(filePath))){
+            mRootView.showLoading("下载中...");
+            FileUtil2.downloadFile3(fileLink
+                    , filePath
+                    , new FileUtil2.DowloadListener() {
+                        @Override
+                        public void onSuccess() {
+                            mRootView.showMessage("下载成功");
+                            mRootView.hideLoading();
+                            LogUtil.e("下载成功...打开");
+                            previewFile(filePath,fileName);
+                        }
 
+                        @Override
+                        public void onFailed() {
+                            mRootView.showMessage("下载失败");
+                            mRootView.hideLoading();
+                        }
+                    });
+        }else{
+            LogUtil.e("直接打开");
+            previewFile(filePath,fileName);
+        }
+    }
+
+    //通过腾讯---预览文件
+    public void previewFile(String filePath,String fileName){
+        Bundle bundle = new Bundle();
+        bundle.putString("x5web_file_path",filePath);
+        bundle.putString("x5web_file_name",fileName);
+        mRootView.launchActivity(new Intent(mApplication,X5WebActivity.class),bundle);
     }
 
     /**
@@ -161,6 +183,7 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
                             }else{
                                 LogUtil.e("已存在");
                             }
+                            getList(false);
                             mRootView.hideLoading();//进度关在这里是因为还有存储文件的过程
                         }else{
                             mRootView.showMessage(baseResponse.getMessage());
@@ -201,11 +224,45 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
                                     smartRefreshLayout.finishLoadMoreWithNoMoreData();
                                 }
                             }
+                            setHelpHide(helpLink = baseResponse.getData().getHelp_link());
                         }else{
                             mRootView.showMessage(baseResponse.getMessage());
                         }
                     }
                 });
+    }
+
+    public void docRead(int position, int repositoryId){
+        mModel.docRead(repositoryId)
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(1, 2))
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            //更新状态 要加字段
+                        }
+                    }
+                });
+    }
+
+    public String getHelpLink(){
+        return helpLink;
+    }
+
+    boolean isHelpHide;//第一次进入才有用
+    private void setHelpHide(String helpLink){
+        if(isHelpHide)
+            return;
+        if(!TextUtils.isEmpty(helpLink)){
+            cl_help.setVisibility(View.VISIBLE);
+        }else{
+            cl_help.setVisibility(View.GONE);
+        }
+        isHelpHide = true;
     }
 
     //-----文件选择
@@ -273,5 +330,9 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
         this.mAppManager = null;
         this.mImageLoader = null;
         this.mApplication = null;
+    }
+
+    public void setHelpView(ConstraintLayout cl_help) {
+        this.cl_help = cl_help;
     }
 }

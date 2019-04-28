@@ -18,10 +18,14 @@ android {
         versionName rootProject.ext.android["versionName"]
         testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
 
+//        ndk {
+//            //选择要添加的对应 cpu 类型的 .so 库。
+//            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+//            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+//        } //这样tbs通过不了 。
+
         ndk {
-            //选择要添加的对应 cpu 类型的 .so 库。
-            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
-            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+            abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
         }
 
 //        manifestPlaceholders = [
@@ -32,7 +36,7 @@ android {
 
         manifestPlaceholders = [
                 JPUSH_PKGNAME: applicationId,
-                JPUSH_APPKEY : rootProject.ext.android["isprod"]?"3d0cc9317f49b07f3a7b7faa":"aa4cfb15e940d5d3e551fea4", //正式
+                JPUSH_APPKEY : rootProject.ext.android["isprod"] ? "3d0cc9317f49b07f3a7b7faa" : "aa4cfb15e940d5d3e551fea4", //正式
         ]
     }
 
@@ -47,7 +51,7 @@ android {
 
     buildTypes {
         release {
-            buildConfigField "boolean", "IS_PROD", rootProject.ext.android["isprod"]?"true":"false"
+            buildConfigField "boolean", "IS_PROD", rootProject.ext.android["isprod"] ? "true" : "false"
 
 //            buildConfigField "boolean", "LOG_DEBUG", "false"
 //            buildConfigField "boolean", "USE_CANARY", "false"
@@ -61,7 +65,7 @@ android {
         }
 
         debug {
-            buildConfigField "boolean", "IS_PROD", rootProject.ext.android["isprod"]?"true":"false"
+            buildConfigField "boolean", "IS_PROD", rootProject.ext.android["isprod"] ? "true" : "false"
 
 //            buildConfigField "boolean", "LOG_DEBUG", "true"
 //            buildConfigField "boolean", "USE_CANARY", "true"

@@ -4,22 +4,17 @@ import android.app.Application;
 
 import com.google.gson.Gson;
 
-import java.io.File;
-import java.util.List;
+import javax.inject.Inject;
 
+import cn.lex_mung.client_android.mvp.contract.TabOrderContractContract;
 import cn.lex_mung.client_android.mvp.model.api.CommonService;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocGetEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocUploadEntity;
 import io.reactivex.Observable;
+import me.zl.mvp.di.scope.FragmentScope;
 import me.zl.mvp.integration.IRepositoryManager;
 import me.zl.mvp.mvp.BaseModel;
-
-import me.zl.mvp.di.scope.FragmentScope;
-
-import javax.inject.Inject;
-
-import cn.lex_mung.client_android.mvp.contract.TabOrderContractContract;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
@@ -55,5 +50,12 @@ public class TabOrderContractModel extends BaseModel implements TabOrderContract
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .docGet(order_no,pageNum,10);
+    }
+
+    @Override
+    public Observable<BaseResponse> docRead(int repositoryId) {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .docRead(repositoryId);
     }
 }

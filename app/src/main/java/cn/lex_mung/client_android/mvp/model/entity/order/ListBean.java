@@ -2,6 +2,7 @@ package cn.lex_mung.client_android.mvp.model.entity.order;
 
 import android.text.TextUtils;
 
+import cn.lex_mung.client_android.app.TimeFormat;
 import cn.lex_mung.client_android.utils.LogUtil;
 
 public class ListBean {
@@ -24,11 +25,11 @@ public class ListBean {
     private int create_member_id;
     private String create_member_icon_image;
     private int size;
-    private String create_time;
+    private long create_time;
     private String create_member_name;
     private String name;
     private String link;
-    private String repository_id;
+    private int repository_id;
     private int create_member_sex;
 
     public String getSize_text() {
@@ -71,12 +72,8 @@ public class ListBean {
         this.size = size;
     }
 
-    public String getCreate_time() {
-        return create_time;
-    }
-
-    public void setCreate_time(String create_time) {
-        this.create_time = create_time;
+    public String getCreateTimeStr(){
+        return TimeFormat.longToStr(create_time * 1000);
     }
 
     public String getCreate_member_name() {
@@ -103,11 +100,11 @@ public class ListBean {
         this.link = link;
     }
 
-    public String getRepository_id() {
+    public int getRepository_id() {
         return repository_id;
     }
 
-    public void setRepository_id(String repository_id) {
+    public void setRepository_id(int repository_id) {
         this.repository_id = repository_id;
     }
 

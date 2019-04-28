@@ -1,8 +1,12 @@
 package cn.lex_mung.client_android.mvp.model.api;
 
+import java.util.List;
+
 import cn.lex_mung.client_android.mvp.model.entity.AboutEntity;
 import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BalanceEntity;
+import cn.lex_mung.client_android.mvp.model.entity.BannerEntity;
+import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.BusinessEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BusinessTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.CaseListEntity;
@@ -20,36 +24,31 @@ import cn.lex_mung.client_android.mvp.model.entity.IndustryEntity;
 import cn.lex_mung.client_android.mvp.model.entity.InstitutionEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity;
+import cn.lex_mung.client_android.mvp.model.entity.LawyerListScreenEntity;
 import cn.lex_mung.client_android.mvp.model.entity.MessageEntity;
 import cn.lex_mung.client_android.mvp.model.entity.MyLikeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.OrderDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.OrderEntity;
 import cn.lex_mung.client_android.mvp.model.entity.OrderStatusEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayEntity;
-import cn.lex_mung.client_android.mvp.model.entity.LawyerListScreenEntity;
 import cn.lex_mung.client_android.mvp.model.entity.RegionEntity;
 import cn.lex_mung.client_android.mvp.model.entity.ReleaseDemandOrgMoneyEntity;
 import cn.lex_mung.client_android.mvp.model.entity.RemainEntity;
 import cn.lex_mung.client_android.mvp.model.entity.RequirementStatusEntity;
 import cn.lex_mung.client_android.mvp.model.entity.SolutionListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
-import cn.lex_mung.client_android.mvp.model.entity.BannerEntity;
-import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.TradingListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UnreadMessageCountEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UploadImageEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.VersionEntity;
-
-import java.util.List;
-
 import cn.lex_mung.client_android.mvp.model.entity.home.RequirementTypeV3Entity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocGetEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocUploadEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RequirementCreateEntity;
+import cn.lex_mung.client_android.mvp.model.entity.order.RequirementDetailEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RushOrderLawyerEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RushOrderStatusEntity;
-import cn.lex_mung.client_android.mvp.model.entity.order.RequirementDetailEntity;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -606,5 +605,11 @@ public interface CommonService {
     //付费需求详细信息
     @GET("lawyer/order/requirement/detail/{requirementId}")
     Observable<BaseResponse<List<RequirementDetailEntity>>> requirementDetail(@Path("requirementId") int requirementId);
+
+    ///client/order/doc/read/{repositoryId}
+    //GET
+    //用户端更新文件已读状态
+    @GET("client/order/doc/read/{repositoryId}")
+    Observable<BaseResponse> docRead(@Path("repositoryId") int repositoryId);
 
 }

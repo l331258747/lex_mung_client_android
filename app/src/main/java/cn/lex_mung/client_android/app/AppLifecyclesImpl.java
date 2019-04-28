@@ -15,6 +15,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.tencent.smtt.sdk.QbSdk;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 
@@ -23,6 +24,7 @@ import cn.jpush.android.api.JPushInterface;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.lex_mung.client_android.BuildConfig;
 import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.utils.LogUtil;
 import me.zl.mvp.base.delegate.AppLifecycles;
 import me.zl.mvp.utils.DataHelper;
 import timber.log.Timber;
@@ -36,6 +38,9 @@ public class AppLifecyclesImpl implements AppLifecycles {
 //    private final boolean isDebug = false;//正式环境为true  测试环境为false
     private final boolean isDebug = BuildConfig.IS_PROD;//正式环境为true  测试环境为false
 
+    /**
+     * 搜集本地tbs内核信息并上报服务器，服务器返回结果决定使用哪个内核。
+     */
     @Override
     public void attachBaseContext(@NonNull Context base) {
     }
@@ -50,6 +55,23 @@ public class AppLifecyclesImpl implements AppLifecycles {
             Timber.plant(new Timber.DebugTree());
             ButterKnife.setDebug(isDebug);
         }
+
+        QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {
+
+            @Override
+            public void onViewInitFinished(boolean arg0) {
+                //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
+                LogUtil.e( " onViewInitFinished is " + arg0);
+            }
+
+            @Override
+            public void onCoreInitFinished() {
+                LogUtil.e(" onCoreInitFinished");
+            }
+        };
+        //x5内核初始化接口
+        QbSdk.initX5Environment(application,  cb);
+
 
         ApplicationInfo appInfo;
         String channel = "website";
