@@ -120,8 +120,6 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
         }
     }
 
-    //TODO if(lawsHomePagerBaseEntity != null) 首页文案提交判断
-
     public void setLawyerFieldPosition(int position) {
         lawyerFieldPosition = position;
     }
@@ -168,11 +166,9 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
         } else {
             mRootView.showProblemDescriptionLayout();
         }
-        if(lawsHomePagerBaseEntity != null){
-            mRootView.setRegion(lawsHomePagerBaseEntity.getRegion());
-            for (LawsHomePagerBaseEntity.ChildBean businessRadarBean : lawsHomePagerBaseEntity.getBusinessInfo()) {
-                fieldList.add(businessRadarBean.getSolutionMarkName());
-            }
+        mRootView.setRegion(lawsHomePagerBaseEntity.getRegion());
+        for (LawsHomePagerBaseEntity.ChildBean businessRadarBean : lawsHomePagerBaseEntity.getBusinessInfo()) {
+            fieldList.add(businessRadarBean.getSolutionMarkName());
         }
 
         if (fieldList.size() == 0) {
@@ -209,8 +205,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
 
     private void releaseDemandList(int id) {
         Map<String, Object> map = new HashMap<>();
-        if(lawsHomePagerBaseEntity != null)
-            map.put("memberId", lawsHomePagerBaseEntity.getMemberId());
+        map.put("memberId", lawsHomePagerBaseEntity.getMemberId());
         map.put("parentId", id);
         mModel.releaseDemandList(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                 .subscribeOn(Schedulers.io())
@@ -263,8 +258,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
     private void getReleaseDemandOrgMoney() {
         Map<String, Object> map = new HashMap<>();
         map.put("memberId", userInfoDetailsEntity.getMemberId());
-        if(lawsHomePagerBaseEntity != null)
-            map.put("lmemberId", lawsHomePagerBaseEntity.getMemberId());
+        map.put("lmemberId", lawsHomePagerBaseEntity.getMemberId());
         if (organizationLevId != 0) {
             map.put("organizationLevId", organizationLevId);
         }
@@ -353,13 +347,11 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
         Map<String, Object> map = new HashMap<>();
         map.put("requirementId", 0);
         map.put("isFirst", 1);
-        if(lawsHomePagerBaseEntity != null){
-            if (lawyerFieldPosition > -1) {
-                map.put("skillId", lawsHomePagerBaseEntity.getBusinessInfo().get(lawyerFieldPosition).getSolutionMarkId());
-            }
-            map.put("targetLawyerId", lawsHomePagerBaseEntity.getMemberId());
-            map.put("lawyerRegionId", lawsHomePagerBaseEntity.getRegionId());
+        if (lawyerFieldPosition > -1) {
+            map.put("skillId", lawsHomePagerBaseEntity.getBusinessInfo().get(lawyerFieldPosition).getSolutionMarkId());
         }
+        map.put("targetLawyerId", lawsHomePagerBaseEntity.getMemberId());
+        map.put("lawyerRegionId", lawsHomePagerBaseEntity.getRegionId());
 
         map.put("requirementTypeId", requireTypeId);
         map.put("requirementTypeName", requireTypeName);

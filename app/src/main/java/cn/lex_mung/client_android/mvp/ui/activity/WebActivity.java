@@ -232,10 +232,8 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 //                bundle.putInt(BundleTags.TYPE, businessEntity.getType());//支付方式在下个页面选择、
                 bundle.putString(BundleTags.TITLE, businessEntity.getRequireTypeName());
 //                bundle.putSerializable(BundleTags.ENTITY, entity);//没有律师，不要律师信息
-                bundle.putInt(BundleTags.MONEY, businessEntity.getMoney());
+                bundle.putFloat(BundleTags.MONEY, businessEntity.getMoney());
                 launchActivity(new Intent(mActivity, RushLoanPayActivity.class), bundle);
-
-                //TODO 需求接口
             } else {
                 bundle.clear();
                 bundle.putInt(BundleTags.TYPE, 1);

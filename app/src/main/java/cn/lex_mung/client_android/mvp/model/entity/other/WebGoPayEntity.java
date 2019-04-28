@@ -14,10 +14,10 @@ public class WebGoPayEntity {
     private int requireTypeId;
     private String requireTypeName;
 
-    public int getMoney() {
+    public float getMoney() {
         if(TextUtils.isEmpty(money))
             return 0;
-        return Integer.valueOf(money);
+        return Float.valueOf(money);
     }
 
     public void setMoney(String money) {

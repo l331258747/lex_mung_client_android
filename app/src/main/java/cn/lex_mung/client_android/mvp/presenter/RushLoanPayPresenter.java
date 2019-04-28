@@ -36,6 +36,8 @@ import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RequirementCreateEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.PayStatusActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.RushOrdersActivity;
+import cn.lex_mung.client_android.utils.DecimalUtil;
+import cn.lex_mung.client_android.utils.LogUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
@@ -76,8 +78,8 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
     private int payType = 1;//支付方式
     private int couponId;
 
-    private double payMoney;//实付金额
-    private double deduction;//优惠抵扣金额
+    private float payMoney;//实付金额
+    private float deduction;//优惠抵扣金额
 
     private boolean flag = false;
 
@@ -89,7 +91,7 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
         this.payType = payType;
     }
 
-    public void setPayMoney(double payMoney){
+    public void setPayMoney(float payMoney){
         this.payMoney = payMoney;
     }
 
@@ -202,7 +204,9 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
     }
 
     private void pay(String ua, int id) {
-        long money = new BigDecimal(payMoney).multiply(new BigDecimal(100)).intValue();
+        long money = (long) DecimalUtil.multiply(payMoney,100);
+        LogUtil.e("1:"+new BigDecimal(payMoney));
+        LogUtil.e("1:"+new BigDecimal(100));
         Map<String, Object> map = new HashMap<>();
         map.put("money", money);//金额
         map.put("type", payType);//支付类型 1微信 2支付宝 3余额支付 4会员卡支付

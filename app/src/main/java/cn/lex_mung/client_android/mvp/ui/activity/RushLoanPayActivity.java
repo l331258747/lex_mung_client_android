@@ -82,11 +82,11 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
     public void initData(@Nullable Bundle savedInstanceState) {
         if (bundleIntent != null) {
             mPresenter.setRequireTypeId(bundleIntent.getInt(BundleTags.ID));
-            mPresenter.setPayMoney(bundleIntent.getInt(BundleTags.MONEY));
+            mPresenter.setPayMoney(bundleIntent.getFloat(BundleTags.MONEY));
             mPresenter.setRequireTypeName(bundleIntent.getString(BundleTags.TITLE));
 
             titleView.setTitle(bundleIntent.getString(BundleTags.TITLE));
-            tvOrderMoney.setText(bundleIntent.getInt(BundleTags.MONEY) + "");
+            tvOrderMoney.setText(bundleIntent.getFloat(BundleTags.MONEY) + "");
         }
     }
 

@@ -12,6 +12,14 @@ import java.io.InputStream;
 import cn.lex_mung.client_android.app.Constants;
 import me.zl.mvp.integration.AppManager;
 import me.zl.mvp.utils.AppUtils;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okio.BufferedSink;
+import okio.Okio;
+import okio.Sink;
 
 /**
  * Created by LGQ
@@ -63,18 +71,17 @@ public class FileUtil2 {
      * 内部存储
      * Environment.getDataDirectory()
      * /data文件夹,一般应用无权限操作
-     *
+     * <p>
      * Environment.getDownloadCacheDirectory()
      * /cache文件夹,一般应用无权限操作
-     *
+     * <p>
      * Environment.getRootDirectory()
      * /system 文件夹,需要root 权限
-     *
      */
 
 
     //获取文件夹 filename:log
-    public static File getFolder(Context context, String filename){
+    public static File getFolder(Context context, String filename) {
         String filePath;
         if (Environment.getExternalStorageState().equals(
                 Environment.MEDIA_MOUNTED)) { // SD卡根目录的hello.text
@@ -93,7 +100,7 @@ public class FileUtil2 {
     /**
      * 删除文件目录，或指定文件
      */
-    public static void delAllFile(File file){
+    public static void delAllFile(File file) {
         if (file.isDirectory()) {
             File[] files = file.listFiles();
             for (int i = 0; i < files.length; i++) {
@@ -165,6 +172,7 @@ public class FileUtil2 {
 
     /**
      * 复制单个文件
+     *
      * @param oldPath String 原文件路径 如：c:/fqf.txt
      * @param newPath String 复制后路径 如：f:/fqf.txt
      * @return boolean
@@ -179,20 +187,59 @@ public class FileUtil2 {
                 FileOutputStream fs = new FileOutputStream(newPath);
                 byte[] buffer = new byte[1444];
                 int length;
-                while ( (byteread = inStream.read(buffer)) != -1) {
+                while ((byteread = inStream.read(buffer)) != -1) {
                     bytesum += byteread; //字节数 文件大小
                     fs.write(buffer, 0, byteread);
                 }
                 inStream.close();
                 LogUtil.e("复制单个文件操作成功");
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             LogUtil.e("复制单个文件操作出错");
             e.printStackTrace();
 
         }
+    }
 
+    public static void downloadFile3(String url, String filePath,DowloadListener dowloadListener) {
+        //下载路径，如果路径无效了，可换成你的下载路径
+        Request request = new Request.Builder().url(url).build();
+        new OkHttpClient().newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                // 下载失败
+                e.printStackTrace();
+                LogUtil.e("DOWNLOAD ：download failed");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Sink sink = null;
+                BufferedSink bufferedSink = null;
+                try {
+                    File dest = new File(filePath);
+                    sink = Okio.sink(dest);
+                    bufferedSink = Okio.buffer(sink);
+                    bufferedSink.writeAll(response.body().source());
+                    bufferedSink.close();
+                    LogUtil.e("DOWNLOAD:download success");
+                    dowloadListener.onSuccess();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    LogUtil.e("DOWNLOAD :download failed");
+                    dowloadListener.onFailed();
+                } finally {
+                    if (bufferedSink != null) {
+                        bufferedSink.close();
+                    }
+                }
+            }
+        });
+    }
+
+    public interface DowloadListener{
+        void onSuccess();
+        void onFailed();
     }
 
 }

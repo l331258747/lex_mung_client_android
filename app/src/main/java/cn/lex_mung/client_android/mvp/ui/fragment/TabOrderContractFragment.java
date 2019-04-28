@@ -62,7 +62,6 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
     @BindView(R.id.ll_bottom)
     LinearLayout ll_bottom;
 
-    private TabOrderContractAdapter tabOrderContractAdapter;
     private int orderStatus;
     private String lmobile;
 
@@ -113,12 +112,11 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
                 mPresenter.onCreate(smartRefreshLayout,getArguments().getString(BundleTags.ORDER_NO));
             }
 
-            //TODO
-//            if(orderStatus == 3){//订单关闭->不显示底部按钮
-//                ll_bottom.setVisibility(View.GONE);
-//            }else{
-//                ll_bottom.setVisibility(View.VISIBLE);
-//            }
+            if(orderStatus == 3){//订单关闭->不显示底部按钮
+                ll_bottom.setVisibility(View.GONE);
+            }else{
+                ll_bottom.setVisibility(View.VISIBLE);
+            }
         }
     }
 

@@ -19,6 +19,7 @@ import cn.lex_mung.client_android.app.Constants;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocGetEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocUploadEntity;
+import cn.lex_mung.client_android.mvp.model.entity.order.ListBean;
 import cn.lex_mung.client_android.mvp.ui.adapter.MyCouponsAdapter;
 import cn.lex_mung.client_android.mvp.ui.adapter.TabOrderContractAdapter;
 import cn.lex_mung.client_android.utils.FileUtil2;
@@ -62,8 +63,8 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
 
     private SmartRefreshLayout smartRefreshLayout;
     TabOrderContractAdapter adapter;
-    private int pageNum;
-    private int totalNum;
+    private int pageNum = 1;
+    private int totalNum;//总
 
 
     @Inject
@@ -84,6 +85,32 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
 
     private void initAdapter() {
         adapter = new TabOrderContractAdapter(mImageLoader);
+        adapter.setOnItemClickListener((adapter1, view, position) -> {
+            if (isFastClick()) return;
+            ListBean bean = adapter.getItem(position);
+            if (bean == null) return;
+            if(!FileUtil2.isFileExist(new File(FILE_CACHE_PATH + File.separator + bean.getName()))){
+                mRootView.showMessage("下载中...");
+                FileUtil2.downloadFile3(bean.getLink()
+                        , FILE_CACHE_PATH + File.separator + bean.getName()
+                        , new FileUtil2.DowloadListener() {
+                    @Override
+                    public void onSuccess() {
+                        mRootView.showMessage("下载成功");
+                        mRootView.hideLoading();
+                        LogUtil.e("下载成功...打开");
+                    }
+
+                    @Override
+                    public void onFailed() {
+                        mRootView.showMessage("下载失败");
+                        mRootView.hideLoading();
+                    }
+                });
+            }else{
+                LogUtil.e("直接打开");
+            }
+        });
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -102,6 +129,11 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
             }
         });
         mRootView.initRecyclerView(adapter);
+    }
+
+    //通过腾讯---预览文件
+    public void previewFile(){
+
     }
 
     /**
@@ -129,7 +161,7 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
                             }else{
                                 LogUtil.e("已存在");
                             }
-                            mRootView.hideLoading();
+                            mRootView.hideLoading();//进度关在这里是因为还有存储文件的过程
                         }else{
                             mRootView.showMessage(baseResponse.getMessage());
 
@@ -146,7 +178,7 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
     //点击列表item，在自己的目录下查看有没有，没有的话下载，下载完成后进入查看器
 
     public void getList(boolean isAdd){
-        mModel.docGet(orderNo,1)
+        mModel.docGet(orderNo,pageNum)
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(3, 2))
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -156,8 +188,8 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
                     @Override
                     public void onNext(BaseResponse<DocGetEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
-                            totalNum = baseResponse.getData().getPaginated().getPage_num();
-                            pageNum = baseResponse.getData().getPaginated().getPages();
+                            totalNum = baseResponse.getData().getPaginated().getPages();
+                            pageNum = baseResponse.getData().getPaginated().getPage_num();
 
                             if (isAdd) {
                                 adapter.addData(baseResponse.getData().getList());
