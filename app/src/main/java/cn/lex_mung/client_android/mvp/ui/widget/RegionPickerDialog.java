@@ -40,9 +40,12 @@ public class RegionPickerDialog {
     private int posCity = -1;
     private int posArea = -1;
 
+    private onClickLisenter onClickLisenter;
+
     @SuppressLint("InflateParams")
-    public RegionPickerDialog(Context context, View viewBottom) {
+    public RegionPickerDialog(Context context, View viewBottom,onClickLisenter onClickLisenter) {
         mContext = context;
+        this.onClickLisenter = onClickLisenter;
         View layout = ((Activity) mContext).getLayoutInflater().inflate(R.layout.layout_region_picker_dialog, null);
         initDialog(layout, viewBottom);
         initView(layout);
@@ -180,7 +183,13 @@ public class RegionPickerDialog {
             areaAdapter.setPos(posArea);
             areaAdapter.notifyDataSetChanged();
             tvArea.setText(list.get(posProvince).getChild().get(posCity).getChild().get(posArea).getName());
+            onClickLisenter.onClick(tvProvince.getText().toString(),tvCity.getText().toString(),tvArea.getText().toString());
+            dismiss();
         });
+    }
+
+    public interface onClickLisenter{
+        void onClick(String province,String city,String area);
     }
 
     /**

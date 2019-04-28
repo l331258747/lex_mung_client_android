@@ -86,7 +86,7 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
         super(model, rootView);
     }
 
-    public void onCreate(SmartRefreshLayout smartRefreshLayout,String orderNo) {
+    public void onCreate(SmartRefreshLayout smartRefreshLayout, String orderNo) {
         FILE_CACHE_PATH = FileUtil2.getFolder(mApplication, Constants.FILE_PATH).getAbsolutePath();
 
         this.smartRefreshLayout = smartRefreshLayout;
@@ -105,9 +105,9 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
             if (isFastClick()) return;
             ListBean bean = adapter.getItem(position);
             if (bean == null) return;
-            fileClick(bean.getName(),bean.getLink());
-            if(bean.getCreate_member_id() != userInfoDetailsEntity.getMemberId() && bean.getIs_read() == 0){
-                docRead(position,bean.getRepository_id());
+            fileClick(bean.getName(), bean.getLink());
+            if (bean.getCreate_member_id() != userInfoDetailsEntity.getMemberId() && bean.getIs_read() == 0) {
+                docRead(position, bean.getRepository_id());
             }
         });
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -130,9 +130,9 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
         mRootView.initRecyclerView(adapter);
     }
 
-    public void fileClick(String fileName,String fileLink){
+    public void fileClick(String fileName, String fileLink) {
         String filePath = FILE_CACHE_PATH + File.separator + fileName;
-        if(!FileUtil2.isFileExist(new File(filePath))){
+        if (!FileUtil2.isFileExist(new File(filePath))) {
             mRootView.showLoading("下载中...");
             FileUtil2.downloadFile3(fileLink
                     , filePath
@@ -142,7 +142,7 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
                             mRootView.showMessage("下载成功");
                             mRootView.hideLoading();
                             LogUtil.e("下载成功...打开");
-                            previewFile(filePath,fileName);
+                            previewFile(filePath, fileName);
                         }
 
                         @Override
@@ -151,18 +151,18 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
                             mRootView.hideLoading();
                         }
                     });
-        }else{
+        } else {
             LogUtil.e("直接打开");
-            previewFile(filePath,fileName);
+            previewFile(filePath, fileName);
         }
     }
 
     //通过腾讯---预览文件
-    public void previewFile(String filePath,String fileName){
+    public void previewFile(String filePath, String fileName) {
         Bundle bundle = new Bundle();
-        bundle.putString("x5web_file_path",filePath);
-        bundle.putString("x5web_file_name",fileName);
-        mRootView.launchActivity(new Intent(mApplication,X5WebActivity.class),bundle);
+        bundle.putString("x5web_file_path", filePath);
+        bundle.putString("x5web_file_name", fileName);
+        mRootView.launchActivity(new Intent(mApplication, X5WebActivity.class), bundle);
     }
 
     /**
@@ -178,37 +178,37 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
                 .retryWhen(new RetryWithDelay(3, 2))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
                 .subscribeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
                 .subscribe(new ErrorHandleSubscriber<BaseResponse<DocUploadEntity>>(mErrorHandler) {
                     @Override
                     public void onNext(BaseResponse<DocUploadEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
-                            if(!FileUtil2.isFileExist(new File(FILE_CACHE_PATH + File.separator + file.getName()))){
+                            if (!FileUtil2.isFileExist(new File(FILE_CACHE_PATH + File.separator + file.getName()))) {
+                                mRootView.showLoading("");
                                 LogUtil.e("不存在");
-                                FileUtil2.copyFile(file.getAbsolutePath() ,FILE_CACHE_PATH + File.separator + file.getName());
-                            }else{
+                                FileUtil2.copyFile(file.getAbsolutePath(), FILE_CACHE_PATH + File.separator + file.getName());
+                                mRootView.hideLoading();
+                            } else {
                                 LogUtil.e("已存在");
                             }
                             getList(false);
-                            mRootView.hideLoading();//进度关在这里是因为还有存储文件的过程
-                        }else{
+                        } else {
                             mRootView.showMessage(baseResponse.getMessage());
-
-                            mRootView.hideLoading();
                         }
                     }
                 });
     }
 
-    public void setOrderNo(String orderNo){
+    public void setOrderNo(String orderNo) {
         this.orderNo = orderNo;
     }
 
     //点击列表item，在自己的目录下查看有没有，没有的话下载，下载完成后进入查看器
 
-    public void getList(boolean isAdd){
-        mModel.docGet(orderNo,pageNum)
+    public void getList(boolean isAdd) {
+        mModel.docGet(orderNo, pageNum)
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(3, 2))
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -232,14 +232,14 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
                                 }
                             }
                             setHelpHide(helpLink = baseResponse.getData().getHelp_link());
-                        }else{
+                        } else {
                             mRootView.showMessage(baseResponse.getMessage());
                         }
                     }
                 });
     }
 
-    public void docRead(int position, int repositoryId){
+    public void docRead(int position, String repositoryId) {
         mModel.docRead(repositoryId)
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(1, 2))
@@ -257,17 +257,18 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
                 });
     }
 
-    public String getHelpLink(){
+    public String getHelpLink() {
         return helpLink;
     }
 
     boolean isHelpHide;//第一次进入才有用
-    private void setHelpHide(String helpLink){
-        if(isHelpHide)
+
+    private void setHelpHide(String helpLink) {
+        if (isHelpHide)
             return;
-        if(!TextUtils.isEmpty(helpLink)){
+        if (!TextUtils.isEmpty(helpLink)) {
             cl_help.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             cl_help.setVisibility(View.GONE);
         }
         isHelpHide = true;
@@ -275,6 +276,7 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
 
     //-----文件选择
     private static final int FILE_SELECT_CODE = 0;
+
     /**
      * 选择图片回调
      *
@@ -307,9 +309,9 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
                             || path.endsWith("xls")
                             || path.endsWith("xlsx")
                             || path.endsWith("pdf")) {
-                        docUpload(orderNo,new File(path));
+                        docUpload(orderNo, new File(path));
 
-                    }else{
+                    } else {
                         mRootView.showMessage("无效的文件类型");
                     }
 

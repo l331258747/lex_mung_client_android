@@ -181,7 +181,12 @@ public class EditInfoActivity extends BaseActivity<EditInfoPresenter> implements
                 showSelectDateDialog();
                 break;
             case R.id.view_user_region:
-                RegionPickerDialog dialog = new RegionPickerDialog(mActivity, viewBottom);
+                RegionPickerDialog dialog = new RegionPickerDialog(mActivity, viewBottom, (province, city, area) -> {
+                    setRegion(province + "-" + city + "-" + area);
+                    mPresenter.setProvince(province);
+                    mPresenter.setCity(city);
+                    mPresenter.setArea(area);
+                });
                 dialog.show();
                 break;
             case R.id.view_user_industry:

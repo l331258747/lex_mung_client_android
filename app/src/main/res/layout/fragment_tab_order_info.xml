@@ -276,7 +276,7 @@
             app:layout_constraintBottom_toBottomOf="@id/view_time"
             app:layout_constraintStart_toEndOf="@id/iv_time_icon"
             app:layout_constraintTop_toTopOf="@id/view_time"
-            tools:text="服务倒计时：9天22小时32分" />
+            android:text="服务倒计时：0" />
 
 
         <View

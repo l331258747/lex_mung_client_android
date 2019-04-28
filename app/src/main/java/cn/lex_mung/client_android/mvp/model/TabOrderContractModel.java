@@ -53,7 +53,7 @@ public class TabOrderContractModel extends BaseModel implements TabOrderContract
     }
 
     @Override
-    public Observable<BaseResponse> docRead(int repositoryId) {
+    public Observable<BaseResponse> docRead(String repositoryId) {
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .docRead(repositoryId);

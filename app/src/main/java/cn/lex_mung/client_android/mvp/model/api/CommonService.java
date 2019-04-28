@@ -610,6 +610,6 @@ public interface CommonService {
     //GET
     //用户端更新文件已读状态
     @GET("client/order/doc/read/{repositoryId}")
-    Observable<BaseResponse> docRead(@Path("repositoryId") int repositoryId);
+    Observable<BaseResponse> docRead(@Path("repositoryId") String repositoryId);
 
 }

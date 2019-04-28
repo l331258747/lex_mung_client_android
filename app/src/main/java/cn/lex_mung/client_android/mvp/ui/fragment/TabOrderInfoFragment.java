@@ -1,8 +1,10 @@
 package cn.lex_mung.client_android.mvp.ui.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,11 +19,17 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.mvp.model.entity.order.RequirementDetailEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.OrderDetailTabActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.OrderDetailsActivity;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
 import cn.lex_mung.client_android.utils.LogUtil;
@@ -58,11 +66,12 @@ public class TabOrderInfoFragment extends BaseFragment<TabOrderInfoPresenter> im
     @BindView(R.id.tv_order_status)
     TextView tv_order_status;
     @BindView(R.id.tv_time)
-    TextView tv_time;
+    TextView tvTime;
     @BindView(R.id.group_time)
     Group group_time;
 
     int orderStatus;
+    private MyCountDownTimer myCountDownTimer;
 
     public static TabOrderInfoFragment newInstance(int id,int orderStatus) {
         TabOrderInfoFragment fragment = new TabOrderInfoFragment();
@@ -134,9 +143,54 @@ public class TabOrderInfoFragment extends BaseFragment<TabOrderInfoPresenter> im
         tv_order_price.setText(entity.getPayAmountStr());
         tv_order_customer.setText(entity.getLmemberName());
         tv_order_status.setText(entity.getIsReceiptStr());
-        group_time.setVisibility(View.GONE);
+        group_time.setVisibility(View.VISIBLE);
+
+        setOrderRemain(entity.getRemainingTime() * 1000);
 
         ((OrderDetailTabActivity)getActivity()).setLmobile(entity.getLmobile());
+    }
+
+    public void setOrderRemain(int remain) {
+        if (remain == 0) return;
+        if (myCountDownTimer != null) {
+            myCountDownTimer.cancel();
+            myCountDownTimer = null;
+        }
+        myCountDownTimer = new MyCountDownTimer(remain);
+        myCountDownTimer.start();
+    }
+
+    private class MyCountDownTimer extends CountDownTimer {
+        SimpleDateFormat sdf;
+
+        @SuppressLint("SimpleDateFormat")
+        MyCountDownTimer(long millisInFuture) {
+            super(millisInFuture, 1000);
+            if (millisInFuture > 1000 * 60 * 60 * 24) {
+                sdf = new SimpleDateFormat("dd天 HH:mm:ss", Locale.getDefault());
+            } else if (millisInFuture > 1000 * 60 * 60) {
+                sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+            } else {
+                sdf = new SimpleDateFormat("mm:ss", Locale.getDefault());
+            }
+            sdf.setTimeZone(TimeZone.getTimeZone("GMT+0"));
+        }
+
+        @Override
+        @SuppressLint({"SetTextI18n"})
+        public void onTick(long l) {
+            String s = sdf.format(new Date(l));
+            if (tvTime != null) {
+                tvTime.setText("服务倒计时: " + s);
+            }
+        }
+
+        @Override
+        public void onFinish() {
+            try {
+            } catch (Exception ignored) {
+            }
+        }
     }
 
     @Override

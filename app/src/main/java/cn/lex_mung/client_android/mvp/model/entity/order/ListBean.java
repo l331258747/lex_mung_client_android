@@ -29,7 +29,7 @@ public class ListBean {
     private String create_member_name;
     private String name;
     private String link;
-    private int repository_id;
+    private String repository_id;
     private int create_member_sex;
 
     public String getSize_text() {
@@ -100,11 +100,11 @@ public class ListBean {
         this.link = link;
     }
 
-    public int getRepository_id() {
+    public String getRepository_id() {
         return repository_id;
     }
 
-    public void setRepository_id(int repository_id) {
+    public void setRepository_id(String repository_id) {
         this.repository_id = repository_id;
     }
 
