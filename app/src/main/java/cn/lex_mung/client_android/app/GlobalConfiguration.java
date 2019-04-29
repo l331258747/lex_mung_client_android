@@ -43,7 +43,7 @@ public final class GlobalConfiguration implements ConfigModule {
                 .retrofitConfiguration((context1, retrofitBuilder) -> {//自定义配置Retrofit的参数
                 })
                 .okhttpConfiguration((context1, okHttpBuilder) -> {//自定义配置OkHttp的参数
-                    okHttpBuilder.writeTimeout(10, TimeUnit.SECONDS);
+                    okHttpBuilder.writeTimeout(15, TimeUnit.SECONDS);
                     okHttpBuilder.sslSocketFactory(SSLSocketClient.getSSLSocketFactory());
                     okHttpBuilder.hostnameVerifier(SSLSocketClient.getHostnameVerifier());
                 })
