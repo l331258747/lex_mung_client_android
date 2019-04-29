@@ -9,7 +9,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qb_px_100"
-        android:background="@color/c_06a66a"
+        android:background="@color/c_ff"
         android:gravity="center"
         app:contentInsetStart="0dp">
 
@@ -20,7 +20,7 @@
             android:gravity="center"
             android:includeFontPadding="false"
             android:text="@string/text_equities"
-            android:textColor="@android:color/white"
+            android:textColor="@color/c_373737"
             android:textSize="18sp"
             android:textStyle="bold" />
     </android.support.v7.widget.Toolbar>

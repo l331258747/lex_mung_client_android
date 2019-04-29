@@ -30,6 +30,7 @@
     <color name="c_edfaf5">#EDFAF5</color>
     <color name="c_fff2de">#fff2de</color>
     <color name="c_d89b4b">#d89b4b</color>
+    <color name="c_d8d8d8">#d8d8d8</color>
 
 
     <color name="c_555555">#555555</color>
@@ -49,6 +50,7 @@
     <color name="c_f0f0f0">#f0f0f0</color>
     <color name="c_f4a523">#f4a523</color>
     <color name="c_f7f7f7">#f7f7f7</color>
+    <color name="c_33000000">#33000000</color>
 
     <color name="down_color">#eceded</color>
     <color name="float_transparent">#00000000</color>

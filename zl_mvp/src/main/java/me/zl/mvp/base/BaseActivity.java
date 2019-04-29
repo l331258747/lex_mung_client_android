@@ -88,7 +88,6 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
             e.printStackTrace();
         }
         StatusBarUtil.setColor(mActivity, AppUtils.getColor(mActivity, R.color.theme), 0);
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         initData(savedInstanceState);
     }
 
