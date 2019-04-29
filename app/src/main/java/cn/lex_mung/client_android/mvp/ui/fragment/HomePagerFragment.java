@@ -11,6 +11,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.di.component.DaggerHomePagerComponent;
 import cn.lex_mung.client_android.di.module.HomePagerModule;
 import cn.lex_mung.client_android.mvp.contract.HomePagerContract;
@@ -51,10 +53,12 @@ import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.HomePageRequirementTypeAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import me.zl.mvp.base.AdapterViewPager;
+import me.zl.mvp.base.App;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.utils.AppUtils;
+import me.zl.mvp.utils.DataHelper;
 
 public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implements HomePagerContract.View {
     @Inject
@@ -163,6 +167,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                         , ImageConfigImpl
                                 .builder()
                                 .url(path.toString())
+                                .imageRadius(AppUtils.dip2px(mActivity,10))
                                 .imageView(imageView)
                                 .build());
             }
@@ -171,6 +176,19 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
             try {
                 if (isFastClick()) return;
                 BannerEntity.ListBean bean = mPresenter.getBannerList().get(position);
+                String linkValue = bean.getLinkValue();
+                if(TextUtils.isEmpty(linkValue))
+                    return;
+                if(linkValue.indexOf("orgId=") != -1){
+                    ((MainActivity) mActivity).switchPage(2);
+                    return;
+                }
+                if(linkValue.indexOf("needLogin=1") != -1 && !DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)){
+                    bundle.clear();
+                    bundle.putInt(BundleTags.TYPE, 1);
+                    launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
+                    return;
+                }
                 bundle.clear();
                 bundle.putString(BundleTags.URL, bean.getLinkValue());
                 bundle.putString(BundleTags.TITLE, bean.getTitle());
