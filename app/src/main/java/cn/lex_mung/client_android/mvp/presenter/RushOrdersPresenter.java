@@ -231,6 +231,7 @@ public class RushOrdersPresenter extends BasePresenter<RushOrdersContract.Model,
                                 setOrderStatus(2);
                                 isGetStatusStop = true;
                                 mRootView.setStatusSuccess(baseResponse.getData().getLawyer());
+                                mRootView.setOrderInfo(baseResponse.getData().getOrder());
                             }
                         }
                     }

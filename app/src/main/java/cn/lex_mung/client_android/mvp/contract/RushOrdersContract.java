@@ -6,6 +6,7 @@ import java.util.List;
 
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.order.LawyerBean;
+import cn.lex_mung.client_android.mvp.model.entity.order.OrderBean;
 import cn.lex_mung.client_android.mvp.model.entity.order.RushOrderLawyerEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RushOrderStatusEntity;
 import io.reactivex.Observable;
@@ -37,6 +38,8 @@ public interface RushOrdersContract {
         Activity getActivity();
 
         void setStatusSuccess(LawyerBean lawyerBean);
+
+        void setOrderInfo(OrderBean orderInfo);
 
     }
 

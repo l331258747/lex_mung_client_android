@@ -10,6 +10,7 @@ public class RushOrderStatusEntity {
 
     private LawyerBean lawyer;
     private int status;
+    private OrderBean order;
 
     public LawyerBean getLawyer() {
         return lawyer;
@@ -27,5 +28,7 @@ public class RushOrderStatusEntity {
         this.status = status;
     }
 
-
+    public OrderBean getOrder() {
+        return order;
+    }
 }

@@ -190,6 +190,7 @@
         android:textColor="@color/c_d89b4b"/>
 
     <TextView
+        android:id="@+id/tv_go_orderDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"

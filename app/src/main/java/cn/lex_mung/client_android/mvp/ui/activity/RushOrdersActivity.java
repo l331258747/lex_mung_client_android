@@ -26,6 +26,7 @@ import cn.lex_mung.client_android.di.component.DaggerRushOrdersComponent;
 import cn.lex_mung.client_android.di.module.RushOrdersModule;
 import cn.lex_mung.client_android.mvp.contract.RushOrdersContract;
 import cn.lex_mung.client_android.mvp.model.entity.order.LawyerBean;
+import cn.lex_mung.client_android.mvp.model.entity.order.OrderBean;
 import cn.lex_mung.client_android.mvp.presenter.RushOrdersPresenter;
 import cn.lex_mung.client_android.mvp.ui.dialog.DefaultDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
@@ -83,7 +84,7 @@ public class RushOrdersActivity extends BaseActivity<RushOrdersPresenter> implem
 
     String lawyerPhone;
     int requirementId;
-
+    OrderBean orderBean;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -122,7 +123,8 @@ public class RushOrdersActivity extends BaseActivity<RushOrdersPresenter> implem
 
     @OnClick({
             R.id.tv_custom_call,
-            R.id.tv_lawyer_call
+            R.id.tv_lawyer_call,
+            R.id.tv_go_orderDetail
     })
     public void onViewClicked(View view) {
         Intent dialIntent;
@@ -133,8 +135,18 @@ public class RushOrdersActivity extends BaseActivity<RushOrdersPresenter> implem
                 break;
             case R.id.tv_lawyer_call:
                 if (TextUtils.isEmpty(lawyerPhone)) return;
-                dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + lawyerPhone));//TODO 律师电话
+                dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + lawyerPhone));
                 startActivity(dialIntent);
+                break;
+            case R.id.tv_go_orderDetail:
+                killMyself();
+                AppManager.getAppManager().killAllNotClass(MainActivity.class);
+                if(orderBean == null) return;
+                bundle.clear();
+                bundle.putInt(BundleTags.ID, orderBean.getRequirementId());
+                bundle.putString(BundleTags.ORDER_NO,orderBean.getOrderNo());
+                bundle.putInt(BundleTags.STATE,orderBean.getStatus());
+                launchActivity(new Intent(mActivity, OrderDetailTabActivity.class), bundle);
                 break;
         }
     }
@@ -173,6 +185,11 @@ public class RushOrdersActivity extends BaseActivity<RushOrdersPresenter> implem
         tvLawyerCall.setText(lawyerBean.getMobile2());
 
         lawyerPhone = lawyerBean.getMobile();
+    }
+
+    @Override
+    public void setOrderInfo(OrderBean orderInfo) {
+        this.orderBean = orderInfo;
     }
 
     @Override

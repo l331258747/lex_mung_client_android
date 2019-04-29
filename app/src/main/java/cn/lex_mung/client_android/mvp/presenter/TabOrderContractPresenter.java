@@ -175,7 +175,7 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
         RequestBody requestFile = RequestBody.create(MediaType.parse("application/octet-stream"), file);
         mModel.docUpload(requestBody, MultipartBody.Part.createFormData("file", file.getName(), requestFile))
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(3, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
