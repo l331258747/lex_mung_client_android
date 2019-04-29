@@ -210,7 +210,7 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
     public void getList(boolean isAdd) {
         mModel.docGet(orderNo, pageNum)
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(3, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))

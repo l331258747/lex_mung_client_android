@@ -98,7 +98,7 @@
             android:label="@string/PeerScreenActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".mvp.ui.activity.LawyerHomePageActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

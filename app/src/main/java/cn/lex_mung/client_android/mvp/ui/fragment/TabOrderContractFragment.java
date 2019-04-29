@@ -33,6 +33,7 @@ import cn.lex_mung.client_android.di.module.TabOrderContractModule;
 import cn.lex_mung.client_android.mvp.contract.TabOrderContractContract;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocGetEntity;
 import cn.lex_mung.client_android.mvp.presenter.TabOrderContractPresenter;
+import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.TabOrderContractAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.EmptyView;
@@ -146,11 +147,10 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
                 break;
             case R.id.cl_help:
                 if(TextUtils.isEmpty(mPresenter.getHelpLink())) return;
-                String fileLink = mPresenter.getHelpLink();
-                String[] sli = fileLink.split("\\.");
-                if(sli.length < 2) return;
-                String fileName = sli[sli.length - 2];
-                mPresenter.fileClick(fileName,fileLink);
+                bundle.clear();
+                bundle.putString(BundleTags.URL, mPresenter.getHelpLink());
+                bundle.putBoolean(BundleTags.IS_SHARE, false);
+                launchActivity(new Intent(mActivity, WebActivity.class), bundle);
                 break;
         }
     }
