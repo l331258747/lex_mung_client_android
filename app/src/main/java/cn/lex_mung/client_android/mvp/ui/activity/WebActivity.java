@@ -98,6 +98,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
         if (TextUtils.isEmpty(title)) {
             tvRight.setVisibility(View.GONE);
         }
+        tvTitle.setText(title);
         showLoading("");
         initWebView();
     }
@@ -107,7 +108,6 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
-                tvTitle.setText(title);
             }
 
             @Override

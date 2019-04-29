@@ -303,6 +303,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         } else {
             bundle.clear();
             bundle.putString(BundleTags.URL, entity.getJumpUrl());
+            bundle.putString(BundleTags.TITLE, entity.getRequireTypeName());
             bundle.putBoolean(BundleTags.IS_SHARE, false);
             launchActivity(new Intent(mActivity, WebActivity.class), bundle);
         }

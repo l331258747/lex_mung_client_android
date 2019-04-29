@@ -149,6 +149,7 @@ public class TabOrderContractFragment extends BaseFragment<TabOrderContractPrese
                 if(TextUtils.isEmpty(mPresenter.getHelpLink())) return;
                 bundle.clear();
                 bundle.putString(BundleTags.URL, mPresenter.getHelpLink());
+                bundle.putString(BundleTags.TITLE, "帮助文档");
                 bundle.putBoolean(BundleTags.IS_SHARE, false);
                 launchActivity(new Intent(mActivity, WebActivity.class), bundle);
                 break;

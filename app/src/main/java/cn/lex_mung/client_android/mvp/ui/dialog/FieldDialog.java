@@ -41,6 +41,7 @@ public class FieldDialog extends Dialog {
         mImageLoader.loadImage(getContext()
                 , ImageConfigImpl
                         .builder()
+                        .isCenterCrop(false)
                         .url(bean.getTitleIconImage())
                         .imageView(imageView)
                         .build());

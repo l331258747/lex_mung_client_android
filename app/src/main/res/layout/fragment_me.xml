@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nsv_all_equities"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -32,9 +33,14 @@
 
         <ImageView
             android:id="@+id/iv_top_bg"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/view_3"
+            app:layout_constraintTop_toTopOf="parent"
             android:src="@drawable/ic_me_top_bg" />
 
         <View
@@ -79,6 +85,8 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:visibility="gone"
+            tools:visibility="visible"
+            tools:text="name"
             app:layout_constraintEnd_toEndOf="@id/iv_avatar_bg"
             app:layout_constraintStart_toStartOf="@id/iv_avatar_bg"
             app:layout_constraintTop_toBottomOf="@id/iv_avatar_bg" />
@@ -92,6 +100,7 @@
             android:paddingStart="@dimen/qb_px_20"
             android:paddingEnd="@dimen/qb_px_20"
             android:visibility="gone"
+            tools:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@id/tv_user_name"
             app:layout_constraintStart_toEndOf="@id/tv_user_name">
 
@@ -124,6 +133,8 @@
             android:textColor="@color/c_ff"
             android:textSize="14sp"
             android:visibility="gone"
+            tools:visibility="visible"
+            tools:text="地区"
             app:layout_constraintEnd_toEndOf="@id/iv_avatar_bg"
             app:layout_constraintStart_toStartOf="@id/iv_avatar_bg"
             app:layout_constraintTop_toBottomOf="@id/tv_user_name" />
@@ -142,9 +153,17 @@
             android:textColor="@color/c_ff"
             android:textSize="12sp"
             android:visibility="gone"
+            tools:visibility="visible"
+            tools:text="协会"
             app:layout_constraintEnd_toEndOf="@id/iv_avatar_bg"
             app:layout_constraintStart_toStartOf="@id/iv_avatar_bg"
             app:layout_constraintTop_toBottomOf="@id/tv_user_region" />
+
+        <View
+            android:id="@+id/view_3"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qb_px_20"
+            app:layout_constraintTop_toBottomOf="@+id/tv_user_org"/>
 
         <View
             android:id="@+id/view_order"

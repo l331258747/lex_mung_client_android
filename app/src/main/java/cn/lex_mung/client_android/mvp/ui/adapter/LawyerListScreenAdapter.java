@@ -100,6 +100,9 @@ public class LawyerListScreenAdapter extends BaseQuickAdapter<LawyerListScreenEn
                             if (!TextUtils.isEmpty(s)) {
                                 item.setMinPrice(Double.valueOf(s.toString()));
                             }
+                            else{
+                                item.setMinPrice(0);
+                            }
                         }
                     });
                     etMaxPrice.addTextChangedListener(new TextWatcher() {
@@ -117,6 +120,8 @@ public class LawyerListScreenAdapter extends BaseQuickAdapter<LawyerListScreenEn
                         public void afterTextChanged(Editable s) {
                             if (!TextUtils.isEmpty(s)) {
                                 item.setMaxPrice(Double.valueOf(s.toString()));
+                            }else{
+                                item.setMaxPrice(0);
                             }
                         }
                     });

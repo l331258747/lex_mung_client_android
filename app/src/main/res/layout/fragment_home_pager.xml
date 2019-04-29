@@ -67,6 +67,7 @@
             android:background="@drawable/round_100_ea5514_all"
             android:gravity="center"
             android:includeFontPadding="false"
+            android:visibility="gone"
             android:textColor="@color/c_ff"
             android:textSize="8sp"
             app:layout_constraintEnd_toEndOf="@id/iv_message"
