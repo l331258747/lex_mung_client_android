@@ -83,7 +83,7 @@
             android:value="default"
             tools:replace="android:value" /> <!-- ucrop -->
 
-        <meta-data android:value="5a54aea7b27b0a6ccb00016a" android:name="UMENG_APPKEY"/>
+        <meta-data android:value="5cce769d4ca357eee4000328" android:name="UMENG_APPKEY"/>
         <meta-data android:name="UMENG_CHANNEL" android:value="${UMENG_CHANNEL_VALUE}" />
 
         <activity

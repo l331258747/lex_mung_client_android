@@ -90,10 +90,9 @@ public class AppLifecyclesImpl implements AppLifecycles {
         JMessageClient.setDebugMode(isDebug);
         JMessageClient.init(application, true);
 
-        //友盟5a54aea7b27b0a6ccb00016a
-//        UMConfigure.init(application, "5a54aea7b27b0a6ccb00016a", channel, UMConfigure.DEVICE_TYPE_PHONE, "");
+        //友盟
         UMConfigure.init(application, UMConfigure.DEVICE_TYPE_PHONE, "");
-        UMConfigure.setLogEnabled(true);
+        UMConfigure.setLogEnabled(!isDebug);
 
         SmartRefreshLayout.setDefaultRefreshHeaderCreator((context, layout) -> {
             layout.setPrimaryColorsId(R.color.c_f4f4f4, R.color.c_b5b5b5);

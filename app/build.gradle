@@ -83,7 +83,7 @@ android {
 
         if(rootProject.ext.android["isprod"]){
             prod {
-                manifestPlaceholders = [UMENG_CHANNEL_VALUE: "prod"]
+                manifestPlaceholders = [UMENG_CHANNEL_VALUE: "lex"]
             }
 //            toutiao {
 //                manifestPlaceholders = [UMENG_CHANNEL_VALUE: "toutiao"]
