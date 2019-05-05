@@ -134,6 +134,9 @@ public class LawyerHomePagePresenter extends BasePresenter<LawyerHomePageContrac
                 mRootView.initViewPager(fragments);
                 isLoading = false;
             }
+
+            mRootView.showCall(entity.showCall());
+
             //背景
             if (!TextUtils.isEmpty(entity.getBackgroundImage())) {
                 mRootView.setTopBg(entity.getBackgroundImage());

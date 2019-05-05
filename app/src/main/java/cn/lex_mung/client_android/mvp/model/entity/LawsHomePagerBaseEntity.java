@@ -59,6 +59,15 @@ public class LawsHomePagerBaseEntity implements Serializable {
     private List<String> socialFunction;
     private List<BusinessEntity> requireInfo;
 
+    public boolean showCall(){
+        if(requireInfo == null) return false;
+        for(BusinessEntity item : requireInfo){
+            if(item.getRequirementType() == 2)
+                return true;
+        }
+        return false;
+    }
+
     public List<ChildBean> getBusinessInfo() {
         return businessInfo;
     }

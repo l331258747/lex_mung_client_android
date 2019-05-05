@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipChildren="false"
     android:background="@color/c_717171"
+    android:clipChildren="false"
     android:clipToPadding="false"
     android:orientation="vertical">
 
@@ -58,29 +58,35 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/qb_px_100"
         android:layout_alignParentBottom="true"
-        android:paddingLeft="@dimen/qb_px_50"
-        android:paddingRight="@dimen/qb_px_50"
-        android:paddingBottom="@dimen/qb_px_10"
-        android:paddingTop="@dimen/qb_px_10"
         android:background="@drawable/ic_bottom_bg"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/qb_px_50"
+        android:paddingTop="@dimen/qb_px_10"
+        android:paddingRight="@dimen/qb_px_50"
+        android:paddingBottom="@dimen/qb_px_10">
 
-        <ImageView
+        <TextView
             android:id="@+id/iv_release"
             android:layout_width="@dimen/qb_px_325"
             android:layout_height="@dimen/qb_px_80"
             android:layout_weight="1"
+            android:background="@drawable/round_40_06a66a_all"
+            android:gravity="center"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_btn_green_release" />
+            android:text="发布需求"
+            android:textColor="@color/c_ff" />
 
-        <ImageView
+        <TextView
             android:id="@+id/iv_call"
             android:layout_width="@dimen/qb_px_325"
             android:layout_height="@dimen/qb_px_80"
             android:layout_marginLeft="@dimen/qb_px_50"
             android:layout_weight="1"
+            android:background="@drawable/round_40_f7f7f7_all"
+            android:gravity="center"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_btn_green_call" />
+            android:text="拨打电话"
+            android:textColor="@color/c_ff" />
 
 
     </LinearLayout>

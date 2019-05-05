@@ -12,6 +12,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -99,9 +100,9 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
     @BindView(R.id.view_pager)
     NoScrollViewPager viewPager;
     @BindView(R.id.iv_release)
-    ImageView ivRelease;
+    TextView ivRelease;
     @BindView(R.id.iv_call)
-    ImageView ivCall;
+    TextView ivCall;
 
     @BindView(R.id.toolbar)
     Toolbar toolBar;
@@ -114,6 +115,8 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
 
     CallFieldDialog3 callFieldDialog3;
     CallFieldDialog4 callFieldDialog4;
+
+    boolean isCall;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -262,6 +265,7 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
                 MobclickAgent.onEvent(mActivity, "app_l_wode_zhuye_detail_fenxiang");
                 break;
             case R.id.iv_call:
+                if(!isCall) return;
                 mPresenter.setEntity();
                 break;
             case R.id.iv_release:
@@ -473,6 +477,16 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
             dialog.dismiss();
         });
         callFieldDialog3.show();
+    }
+
+    @Override
+    public void showCall(boolean isShow) {
+        isCall = isShow;
+        if(isShow){
+            ivCall.setBackground(ContextCompat.getDrawable(mActivity,R.drawable.round_40_06a66a_all));
+        }else{
+            ivCall.setBackground(ContextCompat.getDrawable(mActivity,R.drawable.round_40_b5b5b5_all));
+        }
     }
 
     @Override

@@ -66,6 +66,8 @@ public interface LawyerHomePageContract {
         void showDialDialog(ExpertPriceEntity entity);
 
         void showDial1Dialog(String s);
+
+        void showCall(boolean isHide);
     }
 
     interface Model extends IModel {
