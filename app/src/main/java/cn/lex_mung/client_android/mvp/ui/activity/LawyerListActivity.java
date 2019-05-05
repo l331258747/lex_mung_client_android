@@ -106,14 +106,12 @@ public class LawyerListActivity extends BaseActivity<LawyerListPresenter> implem
     protected void onResume() {
         super.onResume();
         MobclickAgent.onPageStart("w_y_shouye_zjzx_detail");
-        MobclickAgent.onResume(mActivity);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd("w_y_shouye_zjzx_detail");
-        MobclickAgent.onPause(mActivity);
     }
 
     @Override

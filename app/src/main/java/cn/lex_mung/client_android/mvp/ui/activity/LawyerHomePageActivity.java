@@ -139,7 +139,6 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
     protected void onResume() {
         super.onResume();
         MobclickAgent.onPageStart("app_l_wode_zhuye_detail");
-        MobclickAgent.onResume(mActivity);
         mPresenter.onResume();
     }
 
@@ -147,7 +146,6 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
     protected void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd("app_l_wode_zhuye_detail");
-        MobclickAgent.onPause(mActivity);
     }
 
     @Override

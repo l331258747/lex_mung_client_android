@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
+
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
 
@@ -53,10 +55,12 @@ public class ActivityLifecycleCallbacksImpl implements Application.ActivityLifec
 
     @Override
     public void onActivityResumed(Activity activity) {
+        MobclickAgent.onResume(activity);
     }
 
     @Override
     public void onActivityPaused(Activity activity) {
+        MobclickAgent.onPause(activity);
     }
 
     @Override

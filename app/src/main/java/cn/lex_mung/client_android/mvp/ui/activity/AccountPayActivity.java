@@ -66,14 +66,12 @@ public class AccountPayActivity extends BaseActivity<AccountPayPresenter> implem
     protected void onResume() {
         super.onResume();
         MobclickAgent.onPageStart("w_y_shouye_zjzx_chongzhi_list");
-        MobclickAgent.onResume(mActivity);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd("w_y_shouye_zjzx_chongzhi_list");
-        MobclickAgent.onPause(mActivity);
     }
 
     @Override

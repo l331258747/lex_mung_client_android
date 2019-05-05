@@ -70,7 +70,6 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
     protected void onResume() {
         super.onResume();
         MobclickAgent.onPageStart("w_y_shouye_jjfa_list");
-        MobclickAgent.onResume(mActivity);
         mPresenter.onResume();
     }
 
@@ -78,7 +77,6 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
     protected void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd("w_y_shouye_jjfa_list");
-        MobclickAgent.onPause(mActivity);
     }
 
     @Override
