@@ -84,7 +84,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
     private String requireTypeName;//当前选择的需求Name
     private int type;//1固定服务价格 2可协商服务价格
     private int organizationLevId = 0;//组织等级id
-    private String lawyerField;//选择的擅长领域name
+//    private String lawyerField;//选择的擅长领域name
     private int lawyerFieldPosition = -1;//选择的擅长领域
     private double balance;//当前余额
     private double amountNew;//会员卡余额
@@ -96,7 +96,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
 
     private boolean flag = false;
 
-    private List<String> fieldList = new ArrayList<>();
+//    private List<String> fieldList = new ArrayList<>();
 
     private ReleaseDemandServiceTypeAdapter adapter;
 
@@ -124,9 +124,9 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
         lawyerFieldPosition = position;
     }
 
-    public void setLawyerField(String lawyerField) {
-        this.lawyerField = lawyerField;
-    }
+//    public void setLawyerField(String lawyerField) {
+//        this.lawyerField = lawyerField;
+//    }
 
     public void setPayType(int payType) {
         this.payType = payType;
@@ -148,13 +148,13 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
         return lawsHomePagerBaseEntity;
     }
 
-    public String getLawyerField() {
-        return lawyerField;
-    }
+//    public String getLawyerField() {
+//        return lawyerField;
+//    }
 
-    public List<String> getFieldList() {
-        return fieldList;
-    }
+//    public List<String> getFieldList() {
+//        return fieldList;
+//    }
 
     public void onCreate(LawsHomePagerBaseEntity lawsHomePagerBaseEntity, int requireTypeId) {
         initAdapter();
@@ -167,13 +167,14 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
             mRootView.showProblemDescriptionLayout();
         }
         mRootView.setRegion(lawsHomePagerBaseEntity.getRegion());
-        for (LawsHomePagerBaseEntity.ChildBean businessRadarBean : lawsHomePagerBaseEntity.getBusinessInfo()) {
-            fieldList.add(businessRadarBean.getSolutionMarkName());
-        }
+//        for (LawsHomePagerBaseEntity.ChildBean businessRadarBean : lawsHomePagerBaseEntity.getBusinessInfo()) {
+//            if(!TextUtils.isEmpty(businessRadarBean.getSolutionMarkName()))
+//                fieldList.add(businessRadarBean.getSolutionMarkName());
+//        }
 
-        if (fieldList.size() == 0) {
-            mRootView.hideFieldLayout();
-        }
+//        if (fieldList.size() == 0) {
+//            mRootView.hideFieldLayout();
+//        }
         String string = mApplication.getString(R.string.text_release_demand_tip_2)
                 + "<font color=\"#1EC88C\">"
                 + mApplication.getString(R.string.text_lex_transaction_process)
@@ -303,11 +304,11 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
     }
 
     public void releaseRequirement(String ua, String maxMoney, String content) {
-        if (fieldList.size() > 0
-                && lawyerFieldPosition == -1) {
-            mRootView.showMessage(mApplication.getString(R.string.text_please_select_lawyer_field));
-            return;
-        }
+//        if (fieldList.size() > 0
+//                && lawyerFieldPosition == -1) {
+//            mRootView.showMessage(mApplication.getString(R.string.text_please_select_lawyer_field));
+//            return;
+//        }
         if (requireTypeId == -1) {
             mRootView.showMessage(mApplication.getString(R.string.text_please_select_service_type));
             return;

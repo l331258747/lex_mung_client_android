@@ -29,4 +29,12 @@
         <item name="android:windowIsTranslucent">true</item><!-- 半透明 -->
         <item name="android:windowContentOverlay">@null</item>
     </style>
+
+    <!-- 启动页样式 -->
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowBackground">@color/c_ff</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
 </resources>

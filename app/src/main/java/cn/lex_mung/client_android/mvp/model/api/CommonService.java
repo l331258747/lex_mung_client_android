@@ -414,16 +414,16 @@ public interface CommonService {
      *
      * @return BaseResponse
      */
-    @GET("client/rights/{orgId}/{levelId}")
-    Observable<BaseResponse<EquitiesDetailsEntity>> getEquitiesDetails1(@Path("orgId") int orgId, @Path("levelId") int levelId);
+    @GET("client/rights/{orgId}/{level}")
+    Observable<BaseResponse<EquitiesDetailsEntity>> getEquitiesDetails1(@Path("orgId") int orgId, @Path("level") int levelId);
 
     /**
      * 权益组织详情
      *
      * @return BaseResponse
      */
-    @GET("common/rights/{orgId}/{levelId}")
-    Observable<BaseResponse<EquitiesDetailsEntity>> getEquitiesDetails(@Path("orgId") int orgId, @Path("levelId") int levelId);
+    @GET("common/rights/{orgId}/{level}")
+    Observable<BaseResponse<EquitiesDetailsEntity>> getEquitiesDetails(@Path("orgId") int orgId, @Path("level") int levelId);
 
     /**
      * 加入组织

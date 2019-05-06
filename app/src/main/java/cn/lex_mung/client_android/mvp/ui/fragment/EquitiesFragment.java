@@ -174,7 +174,6 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
             if (entity == null) return;
             DataHelper.setIntergerSF(mActivity, DataHelperTags.EQUITIES_ORG_ID, entity.getOrganizationId());
             DataHelper.setIntergerSF(mActivity, DataHelperTags.EQUITIES_ORG_LEVEL_ID, entity.getOrganizationLevelNameId());
-            showEquitiesDetails();
             mPresenter.getEquitiesDetails();
         });
 

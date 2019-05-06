@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         app:TitleView_bg="@color/c_ff"
         app:TitleView_left_img="@drawable/ic_back2"
-        app:TitleView_title="提交合同" />
+        app:TitleView_title="提交订单" />
 
     <android.support.constraint.ConstraintLayout
         android:layout_below="@+id/titleView"

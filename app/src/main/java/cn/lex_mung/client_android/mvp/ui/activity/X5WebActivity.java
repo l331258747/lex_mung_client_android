@@ -14,6 +14,8 @@ import com.tencent.smtt.sdk.TbsReaderView;
 
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
+import me.zl.mvp.utils.AppUtils;
+import me.zl.mvp.utils.StatusBarUtil;
 
 public class X5WebActivity extends AppCompatActivity implements TbsReaderView.ReaderCallback {
 
@@ -28,6 +30,8 @@ public class X5WebActivity extends AppCompatActivity implements TbsReaderView.Re
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        StatusBarUtil.setColor(this, AppUtils.getColor(this, com.zl.mvp.R.color.theme), 0);
 
         setContentView(R.layout.activity_x5web);
 

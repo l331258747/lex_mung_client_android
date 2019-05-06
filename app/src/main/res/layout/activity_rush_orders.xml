@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         app:TitleView_bg="@color/c_ff"
         app:TitleView_left_img="@drawable/ic_back2"
-        app:TitleView_title="提交合同" />
+        app:TitleView_title="匹配律师" />
 
 
     <cn.lex_mung.client_android.mvp.ui.widget.RushOrdersView

@@ -19,6 +19,7 @@ import com.tencent.smtt.sdk.TbsReaderView;
 import com.yalantis.ucrop.util.FileUtils;
 
 import java.io.File;
+import java.net.SocketTimeoutException;
 import java.util.List;
 
 import cn.lex_mung.client_android.app.BundleTags;
@@ -196,6 +197,19 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
                             getList(false);
                         } else {
                             mRootView.showMessage(baseResponse.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        try {
+                            if (t instanceof SocketTimeoutException) {//请求超时
+                                mRootView.showMessage("网络连接超时");
+                            }
+                        } catch (Exception e2) {
+                            e2.printStackTrace();
+                        } finally {
+                            LogUtil.e("error:" + t.getMessage());
                         }
                     }
                 });

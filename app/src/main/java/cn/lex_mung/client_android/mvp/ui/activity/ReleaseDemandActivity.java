@@ -282,14 +282,14 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
         wpConsultType.setCurved(false);
         wpConsultType.setVisibleItemCount(6);
         wpConsultType.setOnItemSelectedListener((picker, data, position) -> {
-            mPresenter.setLawyerField(data.toString());
+//            mPresenter.setLawyerField(data.toString());
             mPresenter.setLawyerFieldPosition(position);
         });
-        wpConsultType.setData(mPresenter.getFieldList());
+//        wpConsultType.setData(mPresenter.getFieldList());
         wpConsultType.setSelectedItemPosition(0);
 
         mPresenter.setLawyerFieldPosition(0);
-        mPresenter.setLawyerField(mPresenter.getFieldList().get(0));
+//        mPresenter.setLawyerField(mPresenter.getFieldList().get(0));
 
         layout.findViewById(R.id.tv_cancel).setOnClickListener(v -> dismiss());
         layout.findViewById(R.id.tv_confirm).setOnClickListener(v -> {

@@ -177,30 +177,63 @@ public class EquitiesPresenter extends BasePresenter<EquitiesContract.Model, Equ
     public void getEquitiesDetails() {
         int orgId = DataHelper.getIntergerSF(mApplication, DataHelperTags.EQUITIES_ORG_ID);
         int orgLevelId = DataHelper.getIntergerSF(mApplication, DataHelperTags.EQUITIES_ORG_LEVEL_ID);
-        mModel.getEquitiesDetails(orgId, orgLevelId)
-                .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(1, 2))
-                .doOnSubscribe(disposable -> {
-                })
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doFinally(() -> mRootView.hideLoading())
-                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<EquitiesDetailsEntity>>(mErrorHandler) {
-                    @Override
-                    public void onNext(BaseResponse<EquitiesDetailsEntity> baseResponse) {
-                        if (baseResponse.isSuccess()) {
-                            entity = baseResponse.getData();
-                            mRootView.setEquitiesBg(entity.getImage());
-                            mRootView.setMemberTotal(entity.getMemberCount() + "");
-                            mRootView.setLawyerTotal(entity.getLawyerCount() + "");
-                            mRootView.setEquitiesExplain(entity.getRightsInterpret());
-                            mRootView.setOpenQualification(entity.getOpeningQualification());
-                            mRootView.setExclusiveEquities(entity.getExclusiveRights());
-                            getConsultList(orgId, orgLevelId);
+        if (DataHelper.getBooleanSF(mApplication, DataHelperTags.IS_LOGIN_SUCCESS)) {
+            mModel.getEquitiesDetails1(orgId, orgLevelId)
+                    .subscribeOn(Schedulers.io())
+                    .retryWhen(new RetryWithDelay(0, 0))
+                    .doOnSubscribe(disposable -> {})
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doFinally(() -> mRootView.hideLoading())
+                    .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                    .subscribe(new ErrorHandleSubscriber<BaseResponse<EquitiesDetailsEntity>>(mErrorHandler) {
+                        @Override
+                        public void onNext(BaseResponse<EquitiesDetailsEntity> baseResponse) {
+                            if (baseResponse.isSuccess()) {
+                                entity = baseResponse.getData();
+                                mRootView.setEquitiesBg(entity.getImage());
+                                mRootView.setMemberTotal(entity.getMemberCount() + "");
+                                mRootView.setLawyerTotal(entity.getLawyerCount() + "");
+                                mRootView.setEquitiesExplain(entity.getRightsInterpret());
+                                mRootView.setOpenQualification(entity.getOpeningQualification());
+                                mRootView.setExclusiveEquities(entity.getExclusiveRights());
+                                mRootView.showEquitiesDetails();
+                                getConsultList(orgId, orgLevelId);
+                            }else{
+                                mRootView.showMessage(baseResponse.getMessage());
+                            }
                         }
-                    }
-                });
+                    });
+        }else{
+            mModel.getEquitiesDetails(orgId, orgLevelId)
+                    .subscribeOn(Schedulers.io())
+                    .retryWhen(new RetryWithDelay(1, 2))
+                    .doOnSubscribe(disposable -> {
+                    })
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doFinally(() -> mRootView.hideLoading())
+                    .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                    .subscribe(new ErrorHandleSubscriber<BaseResponse<EquitiesDetailsEntity>>(mErrorHandler) {
+                        @Override
+                        public void onNext(BaseResponse<EquitiesDetailsEntity> baseResponse) {
+                            if (baseResponse.isSuccess()) {
+                                entity = baseResponse.getData();
+                                mRootView.setEquitiesBg(entity.getImage());
+                                mRootView.setMemberTotal(entity.getMemberCount() + "");
+                                mRootView.setLawyerTotal(entity.getLawyerCount() + "");
+                                mRootView.setEquitiesExplain(entity.getRightsInterpret());
+                                mRootView.setOpenQualification(entity.getOpeningQualification());
+                                mRootView.setExclusiveEquities(entity.getExclusiveRights());
+                                mRootView.showEquitiesDetails();
+                                getConsultList(orgId, orgLevelId);
+                            }else{
+                                mRootView.showMessage(baseResponse.getMessage());
+                            }
+                        }
+                    });
+        }
+
     }
 
     private void getConsultList(int orgId, int orgLevelId) {
