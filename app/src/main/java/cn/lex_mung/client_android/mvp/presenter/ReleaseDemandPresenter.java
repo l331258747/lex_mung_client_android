@@ -85,7 +85,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
     private int type;//1固定服务价格 2可协商服务价格
     private int organizationLevId = 0;//组织等级id
 //    private String lawyerField;//选择的擅长领域name
-    private int lawyerFieldPosition = -1;//选择的擅长领域
+//    private int lawyerFieldPosition = -1;//选择的擅长领域
     private double balance;//当前余额
     private double amountNew;//会员卡余额
     private int payType = 1;//支付方式
@@ -120,9 +120,9 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
         }
     }
 
-    public void setLawyerFieldPosition(int position) {
-        lawyerFieldPosition = position;
-    }
+//    public void setLawyerFieldPosition(int position) {
+//        lawyerFieldPosition = position;
+//    }
 
 //    public void setLawyerField(String lawyerField) {
 //        this.lawyerField = lawyerField;
@@ -156,8 +156,11 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
 //        return fieldList;
 //    }
 
-    public void onCreate(LawsHomePagerBaseEntity lawsHomePagerBaseEntity, int requireTypeId) {
+    public void onCreate(LawsHomePagerBaseEntity lawsHomePagerBaseEntity, int requireTypeId,String requireTypeName) {
         initAdapter();
+        this.requireTypeId =requireTypeId;
+        this.requireTypeName = requireTypeName;
+
         this.lawsHomePagerBaseEntity = lawsHomePagerBaseEntity;
         userInfoDetailsEntity = new Gson().fromJson(DataHelper.getStringSF(mApplication, DataHelperTags.USER_INFO_DETAIL), UserInfoDetailsEntity.class);
 
@@ -195,10 +198,11 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
             BusinessEntity entity = adapter.getItem(position);
             if (entity == null) return;
             if (entity.getMinAmount() == 0) return;
+            if(type != 1) return;
             adapter.setPos(position);
             adapter.notifyDataSetChanged();
-            requireTypeId = entity.getRequireTypeId();
-            requireTypeName = entity.getRequireTypeName();
+//            requireTypeId = entity.getRequireTypeId();
+//            requireTypeName = entity.getRequireTypeName();
             getReleaseDemandOrgMoney();
         });
         mRootView.initRecyclerView(adapter);
@@ -221,12 +225,23 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                     @Override
                     public void onNext(BaseResponse<List<BusinessEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
-                            adapter.setNewData(baseResponse.getData());
-                            mRootView.hideLoadingLayout();
-                            if (baseResponse.getData().size() == 1) {
-                                requireTypeId = baseResponse.getData().get(0).getRequireTypeId();
-                                requireTypeName = baseResponse.getData().get(0).getRequireTypeName();
+                            if(type == 1){
+                                adapter.setNewData(baseResponse.getData());
+                            }else{
+                                List<BusinessEntity> entities = new ArrayList<>();
+                                for (BusinessEntity entity : baseResponse.getData()){
+                                    if(entity.getMinAmount() > 0){
+                                        entities.add(entity);
+                                    }
+                                }
+                                adapter.setNewData(entities);
                             }
+
+                            mRootView.hideLoadingLayout();
+//                            if (baseResponse.getData().size() == 1) {
+//                                requireTypeId = baseResponse.getData().get(0).getRequireTypeId();
+//                                requireTypeName = baseResponse.getData().get(0).getRequireTypeName();
+//                            }
                         }
                     }
                 });
@@ -309,10 +324,11 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
 //            mRootView.showMessage(mApplication.getString(R.string.text_please_select_lawyer_field));
 //            return;
 //        }
-        if (requireTypeId == -1) {
+        if (type == 1 && requireTypeId == -1) {
             mRootView.showMessage(mApplication.getString(R.string.text_please_select_service_type));
             return;
         }
+
         if (type == 1) {
             switch (payType) {
                 case 1:
@@ -348,9 +364,9 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
         Map<String, Object> map = new HashMap<>();
         map.put("requirementId", 0);
         map.put("isFirst", 1);
-        if (lawyerFieldPosition > -1) {
-            map.put("skillId", lawsHomePagerBaseEntity.getBusinessInfo().get(lawyerFieldPosition).getSolutionMarkId());
-        }
+//        if (lawyerFieldPosition > -1) {
+//            map.put("skillId", lawsHomePagerBaseEntity.getBusinessInfo().get(lawyerFieldPosition).getSolutionMarkId());
+//        }
         map.put("targetLawyerId", lawsHomePagerBaseEntity.getMemberId());
         map.put("lawyerRegionId", lawsHomePagerBaseEntity.getRegionId());
 

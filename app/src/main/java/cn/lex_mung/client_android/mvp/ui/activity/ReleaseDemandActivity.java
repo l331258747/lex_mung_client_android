@@ -120,7 +120,7 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
     public void initData(@Nullable Bundle savedInstanceState) {
         if (bundleIntent != null) {
             mPresenter.setType(bundleIntent.getInt(BundleTags.TYPE));
-            mPresenter.onCreate((LawsHomePagerBaseEntity) bundleIntent.getSerializable(BundleTags.ENTITY), bundleIntent.getInt(BundleTags.ID));
+            mPresenter.onCreate((LawsHomePagerBaseEntity) bundleIntent.getSerializable(BundleTags.ENTITY), bundleIntent.getInt(BundleTags.ID),bundleIntent.getString(BundleTags.TITLE));
             tvTitle.setText(bundleIntent.getString(BundleTags.TITLE));
         }
     }
@@ -283,12 +283,12 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
         wpConsultType.setVisibleItemCount(6);
         wpConsultType.setOnItemSelectedListener((picker, data, position) -> {
 //            mPresenter.setLawyerField(data.toString());
-            mPresenter.setLawyerFieldPosition(position);
+//            mPresenter.setLawyerFieldPosition(position);
         });
 //        wpConsultType.setData(mPresenter.getFieldList());
         wpConsultType.setSelectedItemPosition(0);
 
-        mPresenter.setLawyerFieldPosition(0);
+//        mPresenter.setLawyerFieldPosition(0);
 //        mPresenter.setLawyerField(mPresenter.getFieldList().get(0));
 
         layout.findViewById(R.id.tv_cancel).setOnClickListener(v -> dismiss());
