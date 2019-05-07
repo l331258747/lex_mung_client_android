@@ -81,7 +81,7 @@
 
         <meta-data
             android:name="JPUSH_CHANNEL"
-            android:value="toutiao"
+            android:value="default"
             tools:replace="android:value" /> <!-- ucrop -->
 
         <meta-data android:value="5cce769d4ca357eee4000328" android:name="UMENG_APPKEY"/>
