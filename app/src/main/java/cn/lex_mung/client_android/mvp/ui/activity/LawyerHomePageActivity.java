@@ -1,60 +1,57 @@
 package cn.lex_mung.client_android.mvp.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import cn.lex_mung.client_android.R;
-import cn.lex_mung.client_android.app.BundleTags;
-import cn.lex_mung.client_android.app.DataHelperTags;
-import cn.lex_mung.client_android.app.ShareUtils;
-import cn.lex_mung.client_android.di.component.DaggerLawyerHomePageComponent;
-import cn.lex_mung.client_android.di.module.LawyerHomePageModule;
-import cn.lex_mung.client_android.mvp.contract.LawyerHomePageContract;
-import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
-import cn.lex_mung.client_android.mvp.model.entity.LawyerTagsEntity;
-import cn.lex_mung.client_android.mvp.presenter.LawyerHomePagePresenter;
-import cn.lex_mung.client_android.mvp.ui.adapter.TagAdapter;
-import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
-import cn.lex_mung.client_android.mvp.ui.fragment.ActiveFragment;
-import cn.lex_mung.client_android.mvp.ui.fragment.IntegrityFragment;
-import cn.lex_mung.client_android.mvp.ui.fragment.LawsBusinessCardFragment;
-import cn.lex_mung.client_android.mvp.ui.fragment.LawsCaseFragment;
-import cn.lex_mung.client_android.mvp.ui.fragment.ServicePriceFragment;
-import cn.lex_mung.client_android.mvp.ui.fragment.SocialResourcesFragment;
 import com.umeng.analytics.MobclickAgent;
 import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.di.component.DaggerLawyerHomePageComponent;
+import cn.lex_mung.client_android.di.module.LawyerHomePageModule;
+import cn.lex_mung.client_android.mvp.contract.LawyerHomePageContract;
+import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
+import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
+import cn.lex_mung.client_android.mvp.presenter.LawyerHomePagePresenter;
+import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog;
+import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog2;
+import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog3;
+import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog4;
+import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog5;
+import cn.lex_mung.client_android.mvp.ui.dialog.FieldDialog;
+import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import cn.lex_mung.client_android.mvp.ui.widget.NoScrollViewPager;
+import cn.lex_mung.client_android.mvp.ui.widget.SimpleFlowLayout;
 import me.zl.mvp.base.AdapterViewPager;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.utils.AppUtils;
-import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.DeviceUtils;
 import me.zl.mvp.utils.StatusBarUtil;
 
@@ -64,52 +61,62 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
 
     @BindView(R.id.iv_bg)
     ImageView ivBg;
-    @BindView(R.id.view_status)
-    View viewStatus;
-    @BindView(R.id.rl_click)
-    RelativeLayout rlClick;
-    @BindView(R.id.iv_icon)
-    ImageView ivLike;
-    @BindView(R.id.tv_text)
-    TextView tvLikeText;
     @BindView(R.id.iv_avatar)
     ImageView ivAvatar;
     @BindView(R.id.tv_name)
     TextView tvName;
     @BindView(R.id.tv_post)
     TextView tvPost;
-    @BindView(R.id.iv_sex)
-    ImageView ivSex;
-    @BindView(R.id.tv_age)
-    TextView tvAge;
-    @BindView(R.id.ll_age)
-    LinearLayout llAge;
-    @BindView(R.id.recycler_view_tag)
-    RecyclerView recyclerViewTag;
-    @BindView(R.id.tv_field)
-    TextView tvField;
+    @BindView(R.id.tv_like)
+    TextView tvLike;
     @BindView(R.id.tv_law_firms)
     TextView tvLawFirms;
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.tab_layout)
-    TabLayout tabLayout;
-    @BindView(R.id.app_bar)
-    AppBarLayout appBar;
+    @BindView(R.id.iv_credit_certification)
+    ImageView ivCreditCertification;
+    @BindView(R.id.tv_credit_certification)
+    TextView tvCreditCertification;
+    @BindView(R.id.tv_field)
+    TextView tvField;
+    @BindView(R.id.sfl_field)
+    SimpleFlowLayout sflField;
+    @BindView(R.id.tv_social_position)
+    TextView tvSocialPosition;
+    @BindView(R.id.iv_social_position)
+    ImageView ivSocialPosition;
+    @BindView(R.id.tv_more_social_position)
+    TextView tvMoreSocialPosition;
+    @BindView(R.id.tv_basic_info)
+    TextView tvBasicInfo;
+    @BindView(R.id.iv_basic_info)
+    ImageView ivBasicInfo;
+    @BindView(R.id.tv_service_price)
+    TextView tvServicePrice;
+    @BindView(R.id.iv_service_price)
+    ImageView ivServicePrice;
+    @BindView(R.id.tv_practice_experience)
+    TextView tvPracticeExperience;
+    @BindView(R.id.iv_practice_experience)
+    ImageView ivPracticeExperience;
     @BindView(R.id.view_pager)
-    ViewPager viewPager;
-    @BindView(R.id.view_bottom)
-    View viewBottom;
-    @BindView(R.id.view)
-    View view;
+    NoScrollViewPager viewPager;
+    @BindView(R.id.iv_release)
+    TextView ivRelease;
+    @BindView(R.id.iv_call)
+    TextView ivCall;
 
-    private TagAdapter tagAdapter;
+    @BindView(R.id.toolbar)
+    Toolbar toolBar;
+    @BindView(R.id.rl_head_root)
+    ViewGroup rlHeadRoot;
+    @BindView(R.id.appbar_layout)
+    AppBarLayout mAppBarLayout;
+    @BindView(R.id.tv_head_title)
+    TextView tvHeadTitle;
 
-    private List<Fragment> fragments = new ArrayList<>();
-    private List<String> titles = new ArrayList<>();
-    private int id;
+    CallFieldDialog3 callFieldDialog3;
+    CallFieldDialog4 callFieldDialog4;
+
+    boolean isCall;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -134,203 +141,166 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
     @Override
     protected void onResume() {
         super.onResume();
-        MobclickAgent.onPageStart("w_y_shouye_zjzx_list");
-        MobclickAgent.onResume(mActivity);
+        MobclickAgent.onPageStart("app_l_wode_zhuye_detail");
+        mPresenter.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        MobclickAgent.onPageEnd("w_y_shouye_zjzx_list");
-        MobclickAgent.onPause(mActivity);
-    }
-
-    @Override
-    protected void onDestroy() {
-        handler.removeCallbacks(runnable);
-        super.onDestroy();
+        MobclickAgent.onPageEnd("app_l_wode_zhuye_detail");
     }
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {//设置状态栏文字颜色为白色
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-        }
-        AppUtils.statsInScreen(this);//全屏
-        StatusBarUtil.setTranslucent(mActivity);
-
-        ConstraintLayout.LayoutParams layoutParams1 = (ConstraintLayout.LayoutParams) viewStatus.getLayoutParams();
-        layoutParams1.height = DeviceUtils.getStatusBarHeight(mActivity);
-        viewStatus.setLayoutParams(layoutParams1);
-
-        CollapsingToolbarLayout.LayoutParams layoutParams2 = (CollapsingToolbarLayout.LayoutParams) toolbar.getLayoutParams();
-        layoutParams2.topMargin = DeviceUtils.getStatusBarHeight(mActivity);
-        toolbar.setLayoutParams(layoutParams2);
-
         if (bundleIntent != null) {
-            id = bundleIntent.getInt(BundleTags.ID);
-            mPresenter.getLawsHomePagerBase(id);
+            mPresenter.setId(bundleIntent.getInt(BundleTags.ID));
+            mPresenter.getLawsHomePagerBase();
         }
-        initAdapter();
-        initRecyclerView();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);//设置状态栏文字颜色为白色
+        }
+        initStatus();
+    }
 
-        appBar.addOnOffsetChangedListener((appBarLayout, i) -> {
-            if (toolbar == null) return;
-            if (i == 0) {//展开
-                toolbar.setVisibility(View.INVISIBLE);
-            } else if (Math.abs(i) >= appBarLayout.getTotalScrollRange()) {//折叠
-                toolbar.setVisibility(View.VISIBLE);
+    /**
+     * 初始化状态栏位置和滑动监听
+     */
+    private void initStatus() {
+        mAppBarLayout.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
+            float percent = (float) Math.abs(verticalOffset) / (float) appBarLayout.getTotalScrollRange();
+            rlHeadRoot.setAlpha(percent);
+            StatusBarUtil.setTranslucentForImageView(mActivity, (int) (255f * percent), null);
+            if (percent == 0) {
+                viewPager.setNoScroll(false);
+            } else if (percent == 1) {
+                viewPager.setNoScroll(false);
             } else {
-                toolbar.setVisibility(View.INVISIBLE);
+                viewPager.setNoScroll(true);
             }
         });
-        handler.postDelayed(runnable, 200);
-    }
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
 
-    Handler handler = new Handler();
-    Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            if (AppUtils.getVirtualBarHeigh(mActivity) != 0) {//存在虚拟按键
-                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-                if (layoutParams.height == 0) {
-                    layoutParams.height = AppUtils.getVirtualBarHeigh(mActivity);
-                    view.setLayoutParams(layoutParams);
-                }
-            } else {
-                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-                if (layoutParams.height != 0) {
-                    layoutParams.height = 0;
-                    view.setLayoutParams(layoutParams);
-                }
             }
-            handler.postDelayed(this, 200);
-        }
-    };
 
-    private void initAdapter() {
-        tagAdapter = new TagAdapter(mImageLoader);
-    }
-
-    private void initRecyclerView() {
-        AppUtils.configRecyclerView(recyclerViewTag, new GridLayoutManager(mActivity, 3));
-        recyclerViewTag.setAdapter(tagAdapter);
-    }
-
-    @Override
-    public void initViewPager(LawsHomePagerBaseEntity entity) {
-        try {
-            fragments.clear();
-            titles.clear();
-            fragments.add(LawsBusinessCardFragment.newInstance(entity));
-            fragments.add(ServicePriceFragment.newInstance(entity));
-            titles.add(getString(R.string.text_base_info));
-            titles.add(getString(R.string.text_service_price));
-            if (entity.getEvaluationList() != null
-                    && entity.getEvaluationList().size() > 3) {
-                titles.add(entity.getEvaluationList().get(0).getText());
-                titles.add(entity.getEvaluationList().get(1).getText());
-                titles.add(entity.getEvaluationList().get(2).getText());
-                titles.add(entity.getEvaluationList().get(3).getText());
-                for (int i = 0; i < entity.getEvaluationList().size(); i++) {
-                    switch (entity.getEvaluationList().get(i).getCode()) {
-                        case "aspect_vitality"://活跃度
-                            fragments.add(ActiveFragment.newInstance(entity));
-                            break;
-                        case "aspect_reliability"://诚信度
-                            fragments.add(IntegrityFragment.newInstance(entity));
-                            break;
-                        case "aspect_social"://社会资源
-                            fragments.add(SocialResourcesFragment.newInstance(entity));
-                            break;
-                        case "aspect_litigation"://诉讼经验
-                            fragments.add(LawsCaseFragment.newInstance(entity.getMemberId(), entity.getInstitutionName()));
-                            break;
-                    }
+            @Override
+            public void onPageSelected(int i) {
+                switch (i) {
+                    case 0:
+                        switchPager(16, 14, 14, Typeface.BOLD, Typeface.NORMAL, Typeface.NORMAL, View.VISIBLE, View.GONE, View.GONE);
+                        break;
+                    case 1:
+                        switchPager(14, 16, 14, Typeface.NORMAL, Typeface.BOLD, Typeface.NORMAL, View.GONE, View.VISIBLE, View.GONE);
+                        break;
+                    case 2:
+                        switchPager(14, 14, 16, Typeface.NORMAL, Typeface.NORMAL, Typeface.BOLD, View.GONE, View.GONE, View.VISIBLE);
+                        break;
                 }
             }
 
-            viewPager.setOffscreenPageLimit(5);
-            viewPager.setAdapter(new AdapterViewPager(getSupportFragmentManager(), fragments, titles));
-            tabLayout.setupWithViewPager(viewPager);
-            viewPager.setCurrentItem(1);
-        } catch (Exception ignored) {
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
+        StatusBarUtil.setTransparentForImageView(mActivity, null);
+        int statusBarHeight = DeviceUtils.getStatusBarHeight(mActivity);
+        CollapsingToolbarLayout.LayoutParams lp1 = (CollapsingToolbarLayout.LayoutParams) rlHeadRoot.getLayoutParams();
+        lp1.topMargin = statusBarHeight;
+        rlHeadRoot.setLayoutParams(lp1);
+        CollapsingToolbarLayout.LayoutParams lp2 = (CollapsingToolbarLayout.LayoutParams) toolBar.getLayoutParams();
+        lp2.topMargin = statusBarHeight;
+        toolBar.setLayoutParams(lp2);
+    }
+
+    @OnClick({R.id.iv_back
+            , R.id.iv_head_back
+            , R.id.tv_like
+            , R.id.tv_basic_info
+            , R.id.tv_service_price
+            , R.id.tv_practice_experience
+            , R.id.tv_social_position
+            , R.id.iv_head_share
+            , R.id.iv_call
+            , R.id.iv_release
+    })
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_back:
+            case R.id.iv_head_back:
+                killMyself();
+                break;
+            case R.id.tv_like:
+                if ("关注TA".contentEquals(tvLike.getText())) {
+                    mPresenter.follow();
+                } else {
+                    mPresenter.unFollow();
+                }
+                break;
+            case R.id.tv_basic_info:
+                if (viewPager.getCurrentItem() == 0) return;
+                switchPager(16, 14, 14, Typeface.BOLD, Typeface.NORMAL, Typeface.NORMAL, View.VISIBLE, View.GONE, View.GONE);
+                viewPager.setCurrentItem(0);
+                break;
+            case R.id.tv_practice_experience:
+                if (viewPager.getCurrentItem() == 1) return;
+                switchPager(14, 16, 14, Typeface.NORMAL, Typeface.BOLD, Typeface.NORMAL, View.GONE, View.VISIBLE, View.GONE);
+                viewPager.setCurrentItem(1);
+                break;
+            case R.id.tv_service_price:
+                if (viewPager.getCurrentItem() == 2) return;
+                switchPager(14, 14, 16, Typeface.NORMAL, Typeface.NORMAL, Typeface.BOLD, View.GONE, View.GONE, View.VISIBLE);
+                viewPager.setCurrentItem(2);
+                break;
+            case R.id.tv_social_position:
+                if(tvMoreSocialPosition.getVisibility() != View.VISIBLE) return;
+
+                bundle.clear();
+                bundle.putSerializable(BundleTags.LIST, (Serializable) mPresenter.getEntity().getSocialFunction());
+                launchActivity(new Intent(mActivity, MoreSocialPositionActivity.class), bundle);
+                break;
+            case R.id.iv_head_share:
+                MobclickAgent.onEvent(mActivity, "app_l_wode_zhuye_detail_fenxiang");
+                break;
+            case R.id.iv_call:
+                if(!isCall) return;
+                mPresenter.setEntity();
+                break;
+            case R.id.iv_release:
+                viewPager.setCurrentItem(2);
+                mAppBarLayout.setExpanded(false);
+                break;
         }
     }
 
-    @Override
-    public void setField(String field) {
-        tvField.setVisibility(View.VISIBLE);
-        tvField.setText(field);
+
+    /**
+     * 切换页面
+     */
+    private void switchPager(int i1, int i2, int i3, int t1, int t2, int t3, int v1, int v2, int v3) {
+        tvBasicInfo.setTextSize(i1);
+        tvPracticeExperience.setTextSize(i2);
+        tvServicePrice.setTextSize(i3);
+        tvBasicInfo.setTypeface(Typeface.defaultFromStyle(t1));
+        tvPracticeExperience.setTypeface(Typeface.defaultFromStyle(t2));
+        tvServicePrice.setTypeface(Typeface.defaultFromStyle(t3));
+        ivBasicInfo.setVisibility(v1);
+        ivPracticeExperience.setVisibility(v2);
+        ivServicePrice.setVisibility(v3);
     }
 
     @Override
-    public void hideFieldLayout() {
-        tvField.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void setTagsAdapter(List<LawyerTagsEntity> lawyerTags) {
-        recyclerViewTag.setVisibility(View.VISIBLE);
-        tagAdapter.setNewData(lawyerTags);
-    }
-
-    @Override
-    public void hideTagsAdapter() {
-        recyclerViewTag.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void setAge(String age) {
-        llAge.setVisibility(View.VISIBLE);
-        tvAge.setText(age);
-    }
-
-    @Override
-    public void hideAgeLayout() {
-        llAge.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void setSex(int bg, int color, int icon) {
-        llAge.setVisibility(View.VISIBLE);
-        llAge.setBackgroundResource(bg);
-        tvAge.setTextColor(color);
-        ivSex.setImageResource(icon);
-    }
-
-    @Override
-    public void hideSexIcon() {
-        ivSex.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void showSexIcon() {
-        ivSex.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideLikeLayout() {
-        rlClick.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void setLikeLayout(int icon, int color, String string) {
-        rlClick.setVisibility(View.VISIBLE);
-        ivLike.setImageResource(icon);
-        tvLikeText.setTextColor(color);
-        tvLikeText.setText(string);
+    public void initViewPager(List<Fragment> fragments) {
+        viewPager.setOffscreenPageLimit(2);
+        viewPager.setAdapter(new AdapterViewPager(getSupportFragmentManager(), fragments));
     }
 
     @Override
     public void setName(String memberName) {
         tvName.setText(memberName);
-        tvTitle.setText(memberName);
-    }
-
-    @Override
-    public void setPositionNameAndPractice(String format) {
-        tvPost.setText(format);
+        tvHeadTitle.setText(memberName);
     }
 
     @Override
@@ -365,36 +335,90 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
     }
 
     @Override
-    public void setRegionAndInstitutionName(String text) {
-        tvLawFirms.setVisibility(View.VISIBLE);
-        tvLawFirms.setText(text);
+    public void hideLikeLayout() {
+        tvLike.setVisibility(View.GONE);
     }
 
-    @OnClick({R.id.rl_click
-            , R.id.iv_back_toolbar
-            , R.id.iv_share
-    })
-    public void onViewClicked(View view) {
-        if (isFastClick()) return;
-        switch (view.getId()) {
-            case R.id.rl_click:
-                if (DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {//已登录
-                    if ("关注TA".contentEquals(tvLikeText.getText())) {
-                        mPresenter.follow(id);
-                    } else {
-                        mPresenter.unFollow(id);
-                    }
-                } else {//未登录
-                    launchActivity(new Intent(mActivity, LoginActivity.class));
-                }
-                break;
-            case R.id.iv_back_toolbar:
-                killMyself();
-                break;
-            case R.id.iv_share:
-                ShareUtils.shareUrl(mActivity, viewBottom, "", "", "", "");
-                break;
+    @Override
+    public void setLikeLayout(int icon, int color, String string) {
+        tvLike.setVisibility(View.VISIBLE);
+        tvLike.setBackgroundResource(icon);
+        tvLike.setTextColor(color);
+        tvLike.setText(string);
+    }
+
+    @Override
+    public void setPositionName(String memberPositionName) {
+        tvPost.setText(memberPositionName);
+    }
+
+    @Override
+    public void setInstitutionNameAndPractice(String format) {
+        tvLawFirms.setText(format);
+    }
+
+    @Override
+    public void setCreditCertification(String tagName) {
+        tvCreditCertification.setText(tagName);
+    }
+
+    @Override
+    public void hideCreditCertificationLayout() {
+        tvCreditCertification.setVisibility(View.GONE);
+        ivCreditCertification.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setSocialPosition(String socialPosition) {
+        tvSocialPosition.setText(socialPosition);
+    }
+
+    @Override
+    public void hideSocialPosition() {
+        tvSocialPosition.setVisibility(View.GONE);
+        ivSocialPosition.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showMoreSocialPositionLayout() {
+        tvMoreSocialPosition.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideFieldLayout() {
+        tvField.setVisibility(View.GONE);
+        sflField.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hideFieldLayout_1() {
+        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) sflField.getLayoutParams();
+        layoutParams.height = AppUtils.dip2px(mActivity, AppUtils.getXmlDef(mActivity, R.dimen.qb_px_300));
+        sflField.setLayoutParams(layoutParams);
+        tvField.setVisibility(View.INVISIBLE);
+        sflField.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public Context getActivity() {
+        return this;
+    }
+
+    @Override
+    public void addSimpleFlowLayout(View itemView, int i) {
+        sflField.addView(itemView, i);
+    }
+
+    @Override
+    public void removeViews() {
+        if (sflField.getChildCount() > 0) {
+            sflField.removeViews(0, sflField.getChildCount());
         }
+    }
+
+    @Override
+    public void showFieldDialog(LawsHomePagerBaseEntity.ChildBean bean) {
+        new FieldDialog(mActivity, bean, mImageLoader).show();
     }
 
     @Override
@@ -431,5 +455,62 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
     @Override
     public void killMyself() {
         finish();
+    }
+
+
+    //-----电话
+    @Override
+    public void showDialDialog(ExpertPriceEntity entity) {
+        new CallFieldDialog2(mActivity
+                , dialog -> {
+            mPresenter.sendCall(entity.getCallCenterNo());
+            dialog.dismiss();
+        }
+                , entity).show();
+    }
+
+    @Override
+    public void showDial1Dialog(String string) {
+        callFieldDialog3 = new CallFieldDialog3(mActivity,string,dialog -> {
+            callFieldDialog4 = new CallFieldDialog4(mActivity,"现在关闭将无法联系律师\n是否继续关闭");
+            callFieldDialog4.show();
+            dialog.dismiss();
+        });
+        callFieldDialog3.show();
+    }
+
+    @Override
+    public void showCall(boolean isShow) {
+        isCall = isShow;
+        if(isShow){
+            ivCall.setBackground(ContextCompat.getDrawable(mActivity,R.drawable.round_40_06a66a_all));
+        }else{
+            ivCall.setBackground(ContextCompat.getDrawable(mActivity,R.drawable.round_40_b5b5b5_all));
+        }
+    }
+
+    @Override
+    public void showToPayDialog(String s) {
+        new CallFieldDialog(mActivity, dialog -> {
+            MobclickAgent.onEvent(mActivity, "w_y_shouye_zjzx_detail_chongzhi");
+            launchActivity(new Intent(mActivity, AccountPayActivity.class));
+        }, s, "充值").show();
+    }
+
+    @Override
+    public void showToErrorDialog(String s) {
+        if(callFieldDialog3 != null && callFieldDialog3.isShowing()){
+            callFieldDialog3.dismiss();
+        }
+        if(callFieldDialog4 != null && callFieldDialog4.isShowing()){
+            callFieldDialog4.dismiss();
+        }
+
+        new CallFieldDialog5(mActivity, dialog -> {
+            Intent dialIntent =  new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "400-811-3060"));
+            startActivity(dialIntent);
+            dialog.dismiss();
+
+        }, s, "联系客服").show();
     }
 }

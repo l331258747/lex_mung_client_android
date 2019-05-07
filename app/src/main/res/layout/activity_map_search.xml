@@ -9,7 +9,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qb_px_100"
-        android:background="@color/c_06a66a"
+        android:background="@color/c_ff"
         android:gravity="center"
         app:contentInsetStart="0dp">
 
@@ -24,7 +24,7 @@
                 android:layout_height="match_parent"
                 android:paddingStart="@dimen/qb_px_10"
                 android:paddingEnd="0dp"
-                android:src="@drawable/ic_withe_back" />
+                android:src="@drawable/ic_back2" />
 
             <EditText
                 android:id="@+id/et_search"
@@ -34,16 +34,26 @@
                 android:layout_marginTop="@dimen/qb_px_10"
                 android:layout_toStartOf="@id/tv_search"
                 android:layout_toEndOf="@id/iv_back"
-                android:background="@drawable/round_10_32b987_all"
-                android:hint="@string/text_search_place"
+                android:background="@drawable/round_10_f7f7f7_all"
+                android:hint="@string/text_search_lawyer"
                 android:imeOptions="actionSearch"
-                android:paddingStart="@dimen/qb_px_15"
+                android:maxLength="10"
+                android:paddingStart="@dimen/qb_px_65"
                 android:paddingEnd="@dimen/qb_px_15"
                 android:singleLine="true"
-                android:textColor="@android:color/white"
-                android:textColorHint="@android:color/white"
+                android:textColor="@color/c_373737"
+                android:textColorHint="@color/c_d8d8d8"
                 android:textSize="14sp"
                 android:transitionName="tvSearch" />
+
+            <ImageView
+                android:layout_width="@dimen/qb_px_35"
+                android:layout_height="@dimen/qb_px_35"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/qb_px_15"
+                android:layout_toEndOf="@id/iv_back"
+                android:src="@drawable/ic_search"
+                android:transitionName="ivSearch" />
 
             <TextView
                 android:id="@+id/tv_search"
@@ -52,7 +62,7 @@
                 android:layout_alignParentEnd="true"
                 android:gravity="center"
                 android:text="@string/text_search"
-                android:textColor="@android:color/white"
+                android:textColor="@color/c_373737"
                 android:textSize="14sp" />
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>

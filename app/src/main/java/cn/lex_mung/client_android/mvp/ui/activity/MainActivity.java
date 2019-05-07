@@ -11,6 +11,16 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.umeng.analytics.MobclickAgent;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.event.NotificationClickEvent;
+import cn.jpush.im.android.api.model.Conversation;
+import cn.jpush.im.android.api.model.Message;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.app.DataHelperTags;
@@ -26,16 +36,6 @@ import cn.lex_mung.client_android.mvp.ui.fragment.HomePagerFragment;
 import cn.lex_mung.client_android.mvp.ui.fragment.MeFragment;
 import cn.lex_mung.client_android.mvp.ui.widget.BottomNavigationViewEx;
 import cn.lex_mung.client_android.mvp.ui.widget.CustomScrollViewPager;
-import com.umeng.analytics.MobclickAgent;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
-import cn.jpush.im.android.api.JMessageClient;
-import cn.jpush.im.android.api.event.NotificationClickEvent;
-import cn.jpush.im.android.api.model.Conversation;
-import cn.jpush.im.android.api.model.Message;
 import me.zl.mvp.base.AdapterViewPager;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
@@ -76,18 +76,30 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        StatusBarUtil.setColorNoTranslucent(mActivity, AppUtils.getColor(mActivity, R.color.c_06a66a));
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         bottomNavigationViewEx.enableAnimation(true);
         bottomNavigationViewEx.enableShiftingMode(false);
         bottomNavigationViewEx.setTextVisibility(true);
+        bottomNavigationViewEx.setItemIconTintList(null);//取消图片着色效果
         initViewPager();
+
+        setStatusColor(0);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         mPresenter.onResume();
+    }
+
+    private void setStatusColor(int position){
+        if(position == 0){
+            StatusBarUtil.setColor(mActivity, AppUtils.getColor(mActivity, R.color.c_ddf6ed), 0);
+        }else if(position == 3){
+            StatusBarUtil.setColor(mActivity, AppUtils.getColor(mActivity, R.color.c_06a66a), 0);
+        }else{
+            StatusBarUtil.setColor(mActivity, AppUtils.getColor(mActivity, R.color.c_ff), 0);
+        }
     }
 
     private void initViewPager() {
@@ -112,6 +124,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 if (previousPosition != position) {
                     previousPosition = position;
                     viewPager.setCurrentItem(position);
+                    setStatusColor(position);
                 }
                 if (position == 3
                         && !DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {

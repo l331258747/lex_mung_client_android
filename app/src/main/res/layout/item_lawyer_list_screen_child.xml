@@ -5,7 +5,7 @@
     android:layout_height="@dimen/qb_px_50"
     android:layout_marginBottom="@dimen/qb_px_35"
     android:singleLine="true"
-    android:background="@drawable/round_10_ffffff_all_f4f4f4"
+    android:background="@drawable/round_10_ffffff_all_717171"
     android:gravity="center"
     android:textColor="@color/c_b5b5b5"
     android:textSize="14sp" />

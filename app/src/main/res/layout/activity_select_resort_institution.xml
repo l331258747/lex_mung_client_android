@@ -18,14 +18,14 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/qb_px_70"
             android:layout_centerInParent="true"
-            android:background="@drawable/round_10_f4f4f4_all"
+            android:background="@drawable/round_10_f7f7f7_all"
             android:gravity="center_vertical"
             android:hint="@string/text_please_enter_the_keyword"
             android:includeFontPadding="false"
             android:paddingStart="@dimen/qb_px_90"
             android:paddingEnd="@dimen/qb_px_25"
             android:textColor="@color/c_323232"
-            android:textColorHint="@color/c_b5b5b5"
+            android:textColorHint="@color/c_d8d8d8"
             android:textSize="14sp" />
 
         <ImageView

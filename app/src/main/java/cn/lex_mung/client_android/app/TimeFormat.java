@@ -22,6 +22,15 @@ public class TimeFormat {
         return "";
     }
 
+    public static String longToStr(long dateLong) {
+        String res;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        long lt = new Long(dateLong);
+        Date date = new Date(lt);
+        res = simpleDateFormat.format(date);
+        return res;
+    }
+
     /**
      * 会话内时间显示规则：
      * 当天消息只显示具体时间, 举例子：18:09

@@ -48,6 +48,7 @@ import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INF
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_INSTITUTIONS;
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_LIST;
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_LIST_1;
+import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_LIST_ID;
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_TYPE;
 import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGIN;
 import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGIN_INFO;
@@ -72,6 +73,7 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
     private int regionId1;
     private int regionId2;
     private String lawyerName;
+    private int requireTypeId = -1;
 
     private List<BusinessTypeEntity> fieldList = new ArrayList<>();
     private List<RegionEntity> regionList = new ArrayList<>();
@@ -155,6 +157,10 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
 
     public int getRegionId2() {
         return regionId2;
+    }
+
+    public int getRequireTypeId(){
+        return requireTypeId;
     }
 
     public void setLawyerName(String name) {
@@ -252,23 +258,27 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
     @Subscriber(tag = LAWYER_LIST_SCREEN_INFO)
     private void refresh(Message message) {
         switch (message.what) {
-            case LAWYER_LIST_SCREEN_INFO_LIST:
+            case LAWYER_LIST_SCREEN_INFO_LIST://条件筛选
                 list.clear();
                 screenMap.clear();
                 list.addAll((Collection<? extends LawyerListScreenEntity>) message.obj);
-                for (LawyerListScreenEntity entity : list) {
-                    if (entity.getId() > 0) {
-                        if ("requireTypeId".equals(entity.getPropKey())) {
-                            screenMap.put("require", new RequireEntity(entity.getId(), 0, 0));
+                for (int i = 0; i < list.size(); i++) {
+                    if (list.get(i).getId() > 0) {
+                        if ("requireTypeId".equals(list.get(i).getPropKey())) {
+                            if (i + 1 < list.size()) {
+                                screenMap.put("require", new RequireEntity(list.get(i).getId(), list.get(i + 1).getMinPrice(), list.get(i + 1).getMaxPrice()));
+                            } else {
+                                screenMap.put("require", new RequireEntity(list.get(i).getId(), 0, 0));
+                            }
                         } else {
-                            screenMap.put(entity.getPropKey(), entity.getId());
+                            screenMap.put(list.get(i).getPropKey(), list.get(i).getId());
                         }
                     }
                 }
                 pageNum = 1;
                 getConsultList(false, false);
                 break;
-            case LAWYER_LIST_SCREEN_INFO_LIST_1:
+            case LAWYER_LIST_SCREEN_INFO_LIST_1://重置
                 list.clear();
                 list.addAll((Collection<? extends LawyerListScreenEntity>) message.obj);
                 screenMap.clear();
@@ -279,6 +289,14 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
             case LAWYER_LIST_SCREEN_INFO_TYPE:
             case LAWYER_LIST_SCREEN_INFO_INSTITUTIONS:
                 mRootView.setScreenColor(AppUtils.getColor(mApplication, R.color.c_06a66a));
+                break;
+            case LAWYER_LIST_SCREEN_INFO_LIST_ID:
+                mRootView.setScreenColor(AppUtils.getColor(mApplication, R.color.c_06a66a));
+                list.clear();
+                requireTypeId = (int)message.obj;
+                screenMap.put("require", new RequireEntity(requireTypeId, 0, 0));
+                pageNum = 1;
+                getConsultList(false, false);
                 break;
         }
     }
@@ -291,7 +309,7 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
             StringBuilder sb = new StringBuilder();
             InputStream is = mApplication.getAssets().open("city.json");//打开json数据
             byte[] by = new byte[is.available()];//转字节
-            int len = -1;
+            int len;
             while ((len = is.read(by)) != -1) {
                 sb.append(new String(by, 0, len, StandardCharsets.UTF_8));//根据字节长度设置编码
             }

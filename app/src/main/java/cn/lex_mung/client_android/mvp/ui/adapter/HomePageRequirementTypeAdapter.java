@@ -5,12 +5,12 @@ import android.text.TextUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import cn.lex_mung.client_android.R;
-import cn.lex_mung.client_android.mvp.model.entity.RequirementTypeEntity;
 import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
 
+import cn.lex_mung.client_android.mvp.model.entity.home.NormalBean;
 import me.zl.mvp.http.imageloader.ImageLoader;
 
-public class HomePageRequirementTypeAdapter extends BaseQuickAdapter<RequirementTypeEntity, BaseViewHolder> {
+public class HomePageRequirementTypeAdapter extends BaseQuickAdapter<NormalBean, BaseViewHolder> {
     private ImageLoader mImageLoader;
 
     public HomePageRequirementTypeAdapter(ImageLoader imageLoader) {
@@ -19,7 +19,7 @@ public class HomePageRequirementTypeAdapter extends BaseQuickAdapter<Requirement
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, RequirementTypeEntity item) {
+    protected void convert(BaseViewHolder helper, NormalBean item) {
         if (!TextUtils.isEmpty(item.getRequireTypeIcon())) {
             mImageLoader.loadImage(mContext
                     , ImageConfigImpl

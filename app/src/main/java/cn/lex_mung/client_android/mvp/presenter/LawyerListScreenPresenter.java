@@ -1,8 +1,15 @@
 package cn.lex_mung.client_android.mvp.presenter;
 
 import android.app.Application;
+import android.content.Intent;
+import android.os.Bundle;
 import android.os.Message;
+import android.text.TextUtils;
 
+import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.mvp.ui.activity.SelectListItemActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.SelectResortInstitutionActivity;
+import cn.lex_mung.client_android.mvp.ui.adapter.LawyerListScreenAdapter;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -12,6 +19,7 @@ import me.zl.mvp.di.scope.ActivityScope;
 import me.zl.mvp.mvp.BasePresenter;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.RxLifecycleUtils;
 
 import javax.inject.Inject;
@@ -23,14 +31,16 @@ import cn.lex_mung.client_android.mvp.model.entity.LawyerListScreenEntity;
 
 import org.simple.eventbus.Subscriber;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO;
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_1;
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_INSTITUTIONS;
+import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_LIST;
+import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_LIST_1;
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_TYPE;
-
 
 @ActivityScope
 public class LawyerListScreenPresenter extends BasePresenter<LawyerListScreenContract.Model, LawyerListScreenContract.View> {
@@ -43,29 +53,28 @@ public class LawyerListScreenPresenter extends BasePresenter<LawyerListScreenCon
     @Inject
     AppManager mAppManager;
 
-    private List<LawyerListScreenEntity> lawyerListScreenEntityList = new ArrayList<>();
+    private LawyerListScreenAdapter adapter;
+    private List<LawyerListScreenEntity> list = new ArrayList<>();
 
     private int pos;
     private boolean flag;
     private int regionId1;
     private int regionId2;
+    private int requireTypeId;
 
     @Inject
     public LawyerListScreenPresenter(LawyerListScreenContract.Model model, LawyerListScreenContract.View rootView) {
         super(model, rootView);
     }
 
-    public void setLawyerListScreenEntityList(List<LawyerListScreenEntity> lawyerListScreenEntityList) {
-        this.lawyerListScreenEntityList.addAll(lawyerListScreenEntityList);
-        if (lawyerListScreenEntityList.size() <= 0) {
+    public void setLawyerListScreenEntityList(List<LawyerListScreenEntity> list) {
+        initAdapter();
+        this.list.addAll(list);
+        if (list.size() <= 0) {
             getPeerSearchList();
         } else {
-            mRootView.setAdapter(lawyerListScreenEntityList);
+            adapter.setNewData(list);
         }
-    }
-
-    public List<LawyerListScreenEntity> getPeerSearchEntityList() {
-        return lawyerListScreenEntityList;
     }
 
     public void setPos(int pos) {
@@ -84,16 +93,71 @@ public class LawyerListScreenPresenter extends BasePresenter<LawyerListScreenCon
         this.regionId2 = regionId2;
     }
 
+    public void setRequireTypeId(int requireTypeId) {
+        this.requireTypeId = requireTypeId;
+    }
+
     public boolean isFlag() {
         return flag;
     }
 
-    public int getRegionId1() {
-        return regionId1;
+    private void initAdapter() {
+        adapter = new LawyerListScreenAdapter();
+        adapter.setActivity(mRootView.getActivity());
+        adapter.setOnItemClickListener((adapter1, view, position) -> {
+            if (isFastClick()) return;
+            LawyerListScreenEntity entity = adapter.getItem(position);
+            if (entity == null) {
+                return;
+            }
+            Bundle bundle = new Bundle();
+            if ("courtId".equals(entity.getPropKey())
+                    || "procuratorateId".equals(entity.getPropKey())) {
+                pos = position;
+                bundle.clear();
+                bundle.putString(BundleTags.TYPE, "courtId".equals(entity.getPropKey()) ? "court" : "procuratorate");
+                bundle.putInt(BundleTags.REGION_ID_1, regionId1);
+                bundle.putInt(BundleTags.REGION_ID_2, regionId2);
+                bundle.putInt(BundleTags.ID, entity.getId());
+                bundle.putBoolean(BundleTags.FLAG, isFlag());
+                mRootView.launchActivity(new Intent(mApplication, SelectResortInstitutionActivity.class), bundle);
+                return;
+            }
+            if (entity.getIsTile() == 0) {
+                pos = position;
+                bundle.clear();
+                bundle.putSerializable(BundleTags.LIST, (Serializable) entity.getItems());
+                bundle.putInt(BundleTags.TYPE, 5);
+                bundle.putString(BundleTags.TITLE, entity.getText());
+                bundle.putInt(BundleTags.ID, entity.getId());
+                bundle.putBoolean(BundleTags.FLAG, isFlag());
+                mRootView.launchActivity(new Intent(mApplication, SelectListItemActivity.class), bundle);
+            }
+        });
+        mRootView.initRecyclerView(adapter);
     }
 
-    public int getRegionId2() {
-        return regionId2;
+    public void reset() {
+        for (LawyerListScreenEntity entity : list) {
+            entity.setContent("");
+            entity.setId(0);
+            entity.setPos(0);
+        }
+        adapter.setNewData(list);
+        if (isFlag()) {
+            AppUtils.post(LAWYER_LIST_SCREEN_INFO_1, LAWYER_LIST_SCREEN_INFO_LIST_1, list);
+        } else {
+            AppUtils.post(LAWYER_LIST_SCREEN_INFO, LAWYER_LIST_SCREEN_INFO_LIST_1, list);
+        }
+    }
+
+    public void confirm() {
+        if (isFlag()) {
+            AppUtils.post(LAWYER_LIST_SCREEN_INFO_1, LAWYER_LIST_SCREEN_INFO_LIST, list);
+        } else {
+            AppUtils.post(LAWYER_LIST_SCREEN_INFO, LAWYER_LIST_SCREEN_INFO_LIST, list);
+        }
+        mRootView.killMyself();
     }
 
     private void getPeerSearchList() {
@@ -109,11 +173,30 @@ public class LawyerListScreenPresenter extends BasePresenter<LawyerListScreenCon
                     @Override
                     public void onNext(BaseResponse<List<LawyerListScreenEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
-                            lawyerListScreenEntityList.addAll(baseResponse.getData());
-                            mRootView.setAdapter(baseResponse.getData());
+                            list.addAll(baseResponse.getData());
+                            setSelectRequireTypeId(list);
+                            adapter.setNewData(list);
                         }
                     }
                 });
+    }
+
+    public void setSelectRequireTypeId(List<LawyerListScreenEntity> list) {
+        if (requireTypeId == -1 || list == null || list.size() == 0)
+            return;
+        for (int i = 0; i < list.size(); i++) {
+            LawyerListScreenEntity item = list.get(i);
+            if (TextUtils.equals(item.getPropKey(), "requireTypeId")) {
+                List<LawyerListScreenEntity.ItemsBean> item2 = item.getItems();
+                for (int j = 0; j < item2.size(); j++) {
+                    if (item2.get(j).getId() == requireTypeId) {
+                        item.setPos(j);
+                        item.setId(requireTypeId);
+                        item.setContent(item2.get(j).getText());
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -127,17 +210,17 @@ public class LawyerListScreenPresenter extends BasePresenter<LawyerListScreenCon
         switch (message.what) {
             case LAWYER_LIST_SCREEN_INFO_TYPE:
                 LawyerListScreenEntity.ItemsBean bean = (LawyerListScreenEntity.ItemsBean) message.obj;
-                entity = lawyerListScreenEntityList.get(pos);
+                entity = list.get(pos);
                 entity.setContent(bean.getText());
                 entity.setId(bean.getId());
-                mRootView.setAdapterItem(pos, entity);
+                adapter.notifyItemChanged(pos, entity);
                 break;
             case LAWYER_LIST_SCREEN_INFO_INSTITUTIONS:
                 InstitutionListEntity institutionListEntity = (InstitutionListEntity) message.obj;
-                entity = lawyerListScreenEntityList.get(pos);
+                entity = list.get(pos);
                 entity.setContent(institutionListEntity.getInstitutionName());
                 entity.setId(institutionListEntity.getInstitutionId());
-                mRootView.setAdapterItem(pos, entity);
+                adapter.notifyItemChanged(pos, entity);
                 break;
         }
     }
@@ -153,17 +236,17 @@ public class LawyerListScreenPresenter extends BasePresenter<LawyerListScreenCon
         switch (message.what) {
             case LAWYER_LIST_SCREEN_INFO_TYPE:
                 LawyerListScreenEntity.ItemsBean bean = (LawyerListScreenEntity.ItemsBean) message.obj;
-                entity = lawyerListScreenEntityList.get(pos);
+                entity = list.get(pos);
                 entity.setContent(bean.getText());
                 entity.setId(bean.getId());
-                mRootView.setAdapterItem(pos, entity);
+                adapter.notifyItemChanged(pos, entity);
                 break;
             case LAWYER_LIST_SCREEN_INFO_INSTITUTIONS:
                 InstitutionListEntity institutionListEntity = (InstitutionListEntity) message.obj;
-                entity = lawyerListScreenEntityList.get(pos);
+                entity = list.get(pos);
                 entity.setContent(institutionListEntity.getInstitutionName());
                 entity.setId(institutionListEntity.getInstitutionId());
-                mRootView.setAdapterItem(pos, entity);
+                adapter.notifyItemChanged(pos, entity);
                 break;
         }
     }

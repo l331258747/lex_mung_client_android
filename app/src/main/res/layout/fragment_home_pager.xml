@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white">
@@ -8,38 +9,16 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:background="@color/c_ff"
         android:orientation="vertical">
-
-        <android.support.constraint.Guideline
-            android:id="@+id/guideline2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="@dimen/qb_px_35" />
-
-        <android.support.constraint.Guideline
-            android:id="@+id/guideline3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_end="@dimen/qb_px_35" />
 
         <View
             android:id="@+id/view"
             android:layout_width="0dp"
             android:layout_height="@dimen/qb_px_100"
-            android:background="@color/c_06a66a" />
-
-        <ImageView
-            android:id="@+id/iv_icon"
-            android:layout_width="@dimen/qb_px_122"
-            android:layout_height="@dimen/qb_px_50"
-            android:layout_marginStart="@dimen/qb_px_25"
-            android:src="@drawable/ic_home_logo"
-            app:layout_constraintBottom_toBottomOf="@id/view"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:background="@color/c_ddf6ed" />
 
         <TextView
             android:id="@+id/tv_search"
@@ -47,28 +26,28 @@
             android:layout_height="@dimen/qb_px_70"
             android:layout_marginStart="@dimen/qb_px_25"
             android:layout_marginEnd="@dimen/qb_px_15"
-            android:background="@drawable/round_10_32b987_all"
+            android:background="@drawable/round_40_ff_all"
             android:gravity="center_vertical"
             android:paddingStart="@dimen/qb_px_65"
             android:paddingEnd="@dimen/qb_px_65"
             android:text="@string/text_search_lawyer"
-            android:textColor="@color/c_ff"
+            android:textColor="@color/c_50"
             android:transitionName="tvSearch"
             app:layout_constraintBottom_toBottomOf="@id/view"
             app:layout_constraintEnd_toStartOf="@id/iv_message"
-            app:layout_constraintStart_toEndOf="@id/iv_icon"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/view" />
 
         <ImageView
             android:id="@+id/iv_search"
             android:layout_width="@dimen/qb_px_35"
             android:layout_height="@dimen/qb_px_35"
             android:layout_marginStart="@dimen/qb_px_15"
-            android:src="@drawable/ic_search_white"
+            android:src="@drawable/ic_search"
             android:transitionName="ivSearch"
             app:layout_constraintBottom_toBottomOf="@id/view"
             app:layout_constraintStart_toStartOf="@id/tv_search"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/view" />
 
         <ImageView
             android:id="@+id/iv_message"
@@ -76,10 +55,10 @@
             android:layout_height="@dimen/qb_px_70"
             android:layout_marginEnd="@dimen/qb_px_20"
             android:padding="@dimen/qb_px_10"
-            android:src="@drawable/ic_message"
+            android:src="@drawable/ic_message_un"
             app:layout_constraintBottom_toBottomOf="@id/view"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/view" />
 
         <TextView
             android:id="@+id/tv_message_count"
@@ -88,27 +67,24 @@
             android:background="@drawable/round_100_ea5514_all"
             android:gravity="center"
             android:includeFontPadding="false"
+            android:visibility="gone"
             android:textColor="@color/c_ff"
             android:textSize="8sp"
-            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@id/iv_message"
             app:layout_constraintTop_toTopOf="@id/iv_message" />
 
         <android.support.design.widget.CoordinatorLayout
-            android:id="@+id/coordinator_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view">
 
             <android.support.design.widget.AppBarLayout
-                android:id="@+id/app_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fitsSystemWindows="true">
 
                 <android.support.design.widget.CollapsingToolbarLayout
-                    android:id="@+id/collapsing_toolbar_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fitsSystemWindows="true"
@@ -122,248 +98,291 @@
                         android:orientation="vertical">
 
                         <android.support.constraint.Guideline
+                            android:id="@+id/guideline_left"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_begin="@dimen/qb_px_40" />
+
+                        <android.support.constraint.Guideline
+                            android:id="@+id/guideline_right"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_end="@dimen/qb_px_40" />
+
+                        <android.support.constraint.Guideline
+                            android:id="@+id/guideline_top"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            app:layout_constraintGuide_begin="@dimen/qb_px_25" />
+
+                        <android.support.constraint.Guideline
                             android:id="@+id/guideline4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            app:layout_constraintGuide_begin="@dimen/qb_px_35" />
-
-                        <android.support.constraint.Guideline
-                            android:id="@+id/guideline5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            app:layout_constraintGuide_end="@dimen/qb_px_35" />
-
-                        <View
-                            android:id="@+id/view_free_consult"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:background="@drawable/button_withe_down"
-                            android:clickable="true"
-                            android:focusable="true"
-                            app:layout_constraintBottom_toBottomOf="@id/tv_free_consult_1"
-                            app:layout_constraintEnd_toStartOf="@id/view_fast_consult"
-                            app:layout_constraintHorizontal_chainStyle="spread_inside"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <View
-                            android:id="@+id/view_fast_consult"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:background="@drawable/button_withe_down"
-                            android:clickable="true"
-                            android:focusable="true"
-                            app:layout_constraintBottom_toBottomOf="@id/view_free_consult"
-                            app:layout_constraintEnd_toStartOf="@id/view_experts_consult"
-                            app:layout_constraintStart_toEndOf="@id/view_free_consult"
-                            app:layout_constraintTop_toTopOf="@id/view_free_consult" />
-
-                        <View
-                            android:id="@+id/view_experts_consult"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:background="@drawable/button_withe_down"
-                            android:clickable="true"
-                            android:focusable="true"
-                            app:layout_constraintBottom_toBottomOf="@id/view_free_consult"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/view_fast_consult"
-                            app:layout_constraintTop_toTopOf="@id/view_free_consult" />
+                            app:layout_constraintGuide_end="366dp" />
 
                         <ImageView
-                            android:id="@+id/iv_free_consult"
-                            android:layout_width="@dimen/qb_px_55"
-                            android:layout_height="@dimen/qb_px_55"
-                            android:layout_marginTop="@dimen/qb_px_40"
-                            android:src="@drawable/ic_free_consult"
-                            app:layout_constraintEnd_toEndOf="@id/view_free_consult"
-                            app:layout_constraintStart_toStartOf="@id/view_free_consult"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:id="@+id/iv_fast_consult"
-                            android:layout_width="@dimen/qb_px_55"
-                            android:layout_height="@dimen/qb_px_55"
-                            android:src="@drawable/ic_fast_consult"
-                            app:layout_constraintEnd_toEndOf="@id/view_fast_consult"
-                            app:layout_constraintStart_toStartOf="@id/view_fast_consult"
-                            app:layout_constraintTop_toTopOf="@id/iv_free_consult" />
-
-                        <ImageView
-                            android:id="@+id/iv_experts_consult"
-                            android:layout_width="@dimen/qb_px_55"
-                            android:layout_height="@dimen/qb_px_55"
-                            android:src="@drawable/ic_experts_consult"
-                            app:layout_constraintEnd_toEndOf="@id/view_experts_consult"
-                            app:layout_constraintStart_toStartOf="@id/view_experts_consult"
-                            app:layout_constraintTop_toTopOf="@id/iv_free_consult" />
-
-                        <TextView
-                            android:id="@+id/tv_free_consult"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/qb_px_25"
-                            android:includeFontPadding="false"
-                            android:text="@string/text_free_consult"
-                            android:textColor="@color/c_323232"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="@id/iv_free_consult"
-                            app:layout_constraintStart_toStartOf="@id/iv_free_consult"
-                            app:layout_constraintTop_toBottomOf="@id/iv_free_consult" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:includeFontPadding="false"
-                            android:text="@string/text_fast_consult"
-                            android:textColor="@color/c_323232"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="@id/iv_fast_consult"
-                            app:layout_constraintStart_toStartOf="@id/iv_fast_consult"
-                            app:layout_constraintTop_toTopOf="@id/tv_free_consult" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:includeFontPadding="false"
-                            android:text="@string/text_experts_consult"
-                            android:textColor="@color/c_323232"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="@id/iv_experts_consult"
-                            app:layout_constraintStart_toStartOf="@id/iv_experts_consult"
-                            app:layout_constraintTop_toTopOf="@id/tv_free_consult" />
-
-                        <TextView
-                            android:id="@+id/tv_free_consult_1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/qb_px_20"
-                            android:includeFontPadding="false"
-                            android:textColor="@color/c_717171"
-                            android:textSize="12sp"
-                            app:layout_constraintEnd_toEndOf="@id/iv_free_consult"
-                            app:layout_constraintStart_toStartOf="@id/iv_free_consult"
-                            app:layout_constraintTop_toBottomOf="@id/tv_free_consult" />
-
-                        <TextView
-                            android:id="@+id/tv_fast_consult_1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:includeFontPadding="false"
-                            android:textColor="@color/c_717171"
-                            android:textSize="12sp"
-                            app:layout_constraintEnd_toEndOf="@id/iv_fast_consult"
-                            app:layout_constraintStart_toStartOf="@id/iv_fast_consult"
-                            app:layout_constraintTop_toTopOf="@id/tv_free_consult_1" />
-
-                        <TextView
-                            android:id="@+id/tv_experts_consult_1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:includeFontPadding="false"
-                            android:textColor="@color/c_717171"
-                            android:textSize="12sp"
-                            app:layout_constraintEnd_toEndOf="@id/iv_experts_consult"
-                            app:layout_constraintStart_toStartOf="@id/iv_experts_consult"
-                            app:layout_constraintTop_toTopOf="@id/tv_free_consult_1" />
-
-                        <View
-                            android:id="@+id/view_1"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/qb_px_35"
-                            android:layout_marginTop="@dimen/qb_px_35"
-                            android:background="@color/c_f4f4f4"
-                            app:layout_constraintTop_toBottomOf="@id/tv_free_consult_1" />
+                            android:layout_height="@dimen/qb_px_180"
+                            android:background="@drawable/ic_home_table_bg"
+                            android:scaleType="centerCrop" />
+
+
+                        <LinearLayout
+                            android:id="@+id/ll_home_table"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            app:layout_constraintEnd_toStartOf="@id/guideline_right"
+                            app:layout_constraintStart_toEndOf="@id/guideline_left"
+                            app:layout_constraintTop_toBottomOf="@+id/guideline_top">
+
+
+                            <RelativeLayout
+                                android:id="@+id/view_fast_consult"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/qb_px_210"
+                                android:layout_weight="1"
+                                android:background="@drawable/ic_home_public"
+                                android:clickable="true"
+                                android:focusable="true">
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/qb_px_210"
+                                    android:background="@drawable/ic_home_quick" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:padding="@dimen/qb_px_20"
+                                    android:text="快速深度\n咨询"
+                                    android:textColor="@color/c_ff"
+                                    android:textSize="16sp" />
+
+                            </RelativeLayout>
+
+
+                            <RelativeLayout
+                                android:id="@+id/view_experts_consult"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/qb_px_210"
+                                android:layout_marginLeft="@dimen/qb_px_20"
+                                android:layout_weight="1"
+                                android:background="@drawable/ic_home_public"
+                                android:clickable="true"
+                                android:focusable="true">
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/qb_px_210"
+                                    android:background="@drawable/ic_home_expert" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:padding="@dimen/qb_px_20"
+                                    android:text="专家权威\n咨询"
+                                    android:textColor="@color/c_ff"
+                                    android:textSize="16sp" />
+
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/view_free_consult"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/qb_px_210"
+                                android:layout_marginLeft="@dimen/qb_px_20"
+                                android:layout_weight="1"
+                                android:background="@drawable/ic_home_public"
+                                android:clickable="true"
+                                android:focusable="true">
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/qb_px_210"
+                                    android:background="@drawable/ic_home_public" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:padding="@dimen/qb_px_20"
+                                    android:text="公开简单\n咨询"
+                                    android:textColor="@color/c_ff"
+                                    android:textSize="16sp" />
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
 
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/recycler_view"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/qb_px_20"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/view_1" />
+                            app:layout_constraintTop_toBottomOf="@id/ll_home_table" />
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_marginTop="@dimen/qb_px_35"
-                            android:background="@color/c_f4f4f4"
-                            app:layout_constraintBottom_toTopOf="@id/view_2"
-                            app:layout_constraintTop_toBottomOf="@id/recycler_view" />
+
+                        <LinearLayout
+                            android:id="@+id/ll_home_contract"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/qb_px_60"
+                            android:orientation="horizontal"
+                            app:layout_constraintEnd_toStartOf="@id/guideline_right"
+                            app:layout_constraintStart_toEndOf="@id/guideline_left"
+                            app:layout_constraintTop_toBottomOf="@id/recycler_view">
+
+                            <RelativeLayout
+                                android:id="@+id/rl_hot_1"
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/qb_px_250"
+                                android:layout_weight="1">
+
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:src="@drawable/ic_home_contract_to_loan" />
+
+                                <TextView
+                                    android:id="@+id/tv_hot_1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/qb_px_20"
+                                    android:textColor="@color/c_4D4F5A"
+                                    android:textSize="14sp"
+                                    tools:text="民间借贷\n起草审查合同" />
+
+                            </RelativeLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/qb_px_250"
+                                android:layout_marginLeft="@dimen/qb_px_20"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+
+                                <RelativeLayout
+                                    android:id="@+id/rl_hot_2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="1">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:src="@drawable/ic_home_contract_divorce" />
+
+                                    <TextView
+                                        android:id="@+id/tv_hot_2"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="@dimen/qb_px_20"
+                                        android:textColor="@color/c_4D4F5A"
+                                        android:textSize="14sp"
+                                        tools:text="离婚\n协议书" />
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:id="@+id/rl_hot_3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="0dp"
+                                    android:layout_marginTop="@dimen/qb_px_20"
+                                    android:layout_weight="1">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:src="@drawable/ic_home_contract_more" />
+
+                                    <TextView
+                                        android:id="@+id/tv_hot_3"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="@dimen/qb_px_20"
+                                        tools:text="更多起草\n审查合同"
+                                        android:textColor="@color/c_4D4F5A"
+                                        android:textSize="14sp" />
+
+                                </RelativeLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
 
                         <com.youth.banner.Banner
                             android:id="@+id/banner"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:layout_marginStart="@dimen/qb_px_35"
-                            android:layout_marginTop="@dimen/qb_px_70"
+                            android:layout_marginTop="@dimen/qb_px_60"
                             android:layout_marginEnd="@dimen/qb_px_35"
                             app:banner_layout="@layout/banner"
                             app:layout_constraintDimensionRatio="h,16:9"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/recycler_view" />
-
-                        <View
-                            android:id="@+id/view_2"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/qb_px_35"
-                            android:background="@color/c_f4f4f4"
-                            app:layout_constraintTop_toBottomOf="@id/banner" />
+                            app:layout_constraintTop_toBottomOf="@id/ll_home_contract" />
 
                         <TextView
                             android:id="@+id/tv_solution"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/qb_px_100"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/qb_px_40"
                             android:gravity="center_vertical"
-                            android:paddingStart="@dimen/qb_px_70"
-                            android:paddingEnd="@dimen/qb_px_0"
                             android:text="@string/text_solution"
-                            android:textColor="@color/c_323232"
+                            android:textColor="@color/c_797979"
                             android:textSize="16sp"
-                            android:textStyle="bold"
-                            app:layout_constraintTop_toBottomOf="@id/view_2" />
+                            app:layout_constraintStart_toEndOf="@id/guideline_left"
+                            app:layout_constraintTop_toBottomOf="@id/banner" />
 
-                        <View
-                            android:layout_width="@dimen/qb_px_10"
-                            android:layout_height="@dimen/qb_px_40"
-                            android:background="@drawable/round_10_06a66a_all"
-                            app:layout_constraintBottom_toBottomOf="@id/tv_solution"
-                            app:layout_constraintStart_toStartOf="@id/guideline4"
-                            app:layout_constraintTop_toTopOf="@id/tv_solution" />
 
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/qb_px_1"
+                            android:layout_marginTop="@dimen/qb_px_20"
                             android:background="@color/c_b5b5b5"
                             app:layout_constraintTop_toBottomOf="@id/tv_solution" />
                     </android.support.constraint.ConstraintLayout>
 
                     <View
-                        android:id="@+id/view_top"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/qb_px_1"
                         app:layout_collapseMode="pin" />
                 </android.support.design.widget.CollapsingToolbarLayout>
 
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/tab_layout"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/qb_px_90"
-                    android:layout_alignParentBottom="true"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/qb_px_40"
                     android:background="@color/c_ff"
-                    app:tabBackground="@null"
-                    app:tabGravity="fill"
-                    app:tabIndicatorColor="@color/c_06a66a"
-                    app:tabIndicatorHeight="@dimen/qb_px_5"
-                    app:tabMode="scrollable"
-                    app:tabSelectedTextColor="@color/c_323232"
-                    app:tabTextColor="@color/c_717171" />
+                    android:paddingRight="@dimen/qb_px_40">
+
+                    <android.support.design.widget.TabLayout
+                        android:id="@+id/tab_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/qb_px_90"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/c_ff"
+                        app:tabBackground="@null"
+                        app:tabGravity="fill"
+                        app:tabIndicatorColor="@color/c_06a66a"
+                        app:tabIndicatorHeight="@dimen/qb_px_5"
+                        app:tabMode="scrollable"
+                        app:tabSelectedTextColor="@color/c_323232"
+                        app:tabTextColor="@color/c_717171" />
+
+                </LinearLayout>
+
+
 
                 <View
                     android:layout_width="match_parent"

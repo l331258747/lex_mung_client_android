@@ -18,16 +18,28 @@ android {
         versionName rootProject.ext.android["versionName"]
         testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
 
+        //版本名后面添加一句话，意思就是flavor dimension 它的维度就是该版本号，这样维度就是都是统一的了
+        flavorDimensions "versionCode"
+
+//        ndk {
+//            //选择要添加的对应 cpu 类型的 .so 库。
+//            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+//            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+//        } //这样tbs通过不了 。
+
         ndk {
-            //选择要添加的对应 cpu 类型的 .so 库。
-            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
-            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+            abiFilters "armeabi", "armeabi-v7a", "x86", "mips"
         }
+
+//        manifestPlaceholders = [
+//                JPUSH_PKGNAME: applicationId,
+////                JPUSH_APPKEY : "3d0cc9317f49b07f3a7b7faa", //正式
+//                JPUSH_APPKEY : "aa4cfb15e940d5d3e551fea4", //测试
+//        ]
 
         manifestPlaceholders = [
                 JPUSH_PKGNAME: applicationId,
-                JPUSH_APPKEY : "3d0cc9317f49b07f3a7b7faa", //正式
-//                JPUSH_APPKEY : "aa4cfb15e940d5d3e551fea4", //测试
+                JPUSH_APPKEY : rootProject.ext.android["isprod"] ? "3d0cc9317f49b07f3a7b7faa" : "aa4cfb15e940d5d3e551fea4", //正式
         ]
     }
 
@@ -42,9 +54,12 @@ android {
 
     buildTypes {
         release {
-            buildConfigField "boolean", "LOG_DEBUG", "false"
-            buildConfigField "boolean", "USE_CANARY", "false"
+            buildConfigField "boolean", "IS_PROD", rootProject.ext.android["isprod"] ? "true" : "false"
+
+//            buildConfigField "boolean", "LOG_DEBUG", "false"
+//            buildConfigField "boolean", "USE_CANARY", "false"
 //            minifyEnabled false
+
             minifyEnabled true
             shrinkResources true
             zipAlignEnabled true
@@ -53,11 +68,39 @@ android {
         }
 
         debug {
-            buildConfigField "boolean", "LOG_DEBUG", "true"
-            buildConfigField "boolean", "USE_CANARY", "true"
+            buildConfigField "boolean", "IS_PROD", rootProject.ext.android["isprod"] ? "true" : "false"
+
+//            buildConfigField "boolean", "LOG_DEBUG", "true"
+//            buildConfigField "boolean", "USE_CANARY", "true"
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+        }
+    }
+
+    productFlavors {
+
+        if(rootProject.ext.android["isprod"]){
+            prod {
+                manifestPlaceholders = [UMENG_CHANNEL_VALUE: "lex"]
+            }
+//            toutiao {
+//                manifestPlaceholders = [UMENG_CHANNEL_VALUE: "toutiao"]
+//            }
+//            baidu {
+//                manifestPlaceholders = [UMENG_CHANNEL_VALUE: "baidu"]
+//            }
+//            qq {
+//                manifestPlaceholders = [UMENG_CHANNEL_VALUE: "qq"]
+//            }
+//            wx {
+//                manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wx"]
+//            }
+        }else{
+            dev {
+                manifestPlaceholders = [UMENG_CHANNEL_VALUE: "dev"]
+            }
         }
     }
 

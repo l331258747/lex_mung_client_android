@@ -446,6 +446,9 @@ public class EditInfoPresenter extends BasePresenter<EditInfoContract.Model, Edi
         map.put("memberId", entity.getMemberId());
         if (!TextUtils.isEmpty(userName)) {
             map.put("memberName", userName);
+        }else{
+            mRootView.showMessage("请输入名称");
+            return;
         }
         if (!TextUtils.isEmpty(iconImage)
                 && isUploadNewAvatar) {
@@ -453,9 +456,15 @@ public class EditInfoPresenter extends BasePresenter<EditInfoContract.Model, Edi
         }
         if (!TextUtils.isEmpty(userSex)) {
             map.put("sex", "男".endsWith(userSex) ? 1 : 2);
+        }else{
+            mRootView.showMessage("请选择性别");
+            return;
         }
         if (!TextUtils.isEmpty(userDate)) {
             map.put("birthday1", userDate + " 00:00:00");
+        }else{
+            mRootView.showMessage("请输入出生日期");
+            return;
         }
         if (!TextUtils.isEmpty(province)
                 && !TextUtils.isEmpty(city)
@@ -478,6 +487,9 @@ public class EditInfoPresenter extends BasePresenter<EditInfoContract.Model, Edi
                 }
             }
             map.put("regionId", regionId);
+        }else{
+            mRootView.showMessage("请选择所在地区");
+            return;
         }
         if (!TextUtils.isEmpty(industry)) {
             int industryId = 0;

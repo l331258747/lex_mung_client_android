@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 
+import cn.lex_mung.client_android.mvp.ui.adapter.MyAccountPayAdapter;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -26,6 +28,7 @@ import javax.inject.Inject;
 
 import com.alipay.sdk.app.PayTask;
 import com.google.gson.Gson;
+
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.app.DataHelperTags;
@@ -35,6 +38,7 @@ import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.PayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayResultEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.PayStatusActivity;
+
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -59,7 +63,7 @@ public class AccountPayPresenter extends BasePresenter<AccountPayContract.Model,
     @Inject
     RxPermissions mRxPermissions;
 
-    private List<String> priceList = new ArrayList<>();
+    private MyAccountPayAdapter myAccountPayAdapter;
 
     private int payMoney;
     private int payType = 1;
@@ -71,7 +75,7 @@ public class AccountPayPresenter extends BasePresenter<AccountPayContract.Model,
         super(model, rootView);
     }
 
-    public void setPayMoney(int payMoney) {
+    private void setPayMoney(int payMoney) {
         this.payMoney = payMoney;
         mRootView.setOrderMoney(String.format(
                 AppUtils.getString(mApplication, R.string.text_yuan_money)
@@ -83,13 +87,27 @@ public class AccountPayPresenter extends BasePresenter<AccountPayContract.Model,
     }
 
     public void onCreate() {
+        List<String> priceList = new ArrayList<>();
         priceList.add("50元");
         priceList.add("100元");
         priceList.add("200元");
         priceList.add("300元");
         priceList.add("500元");
         priceList.add("1000元");
-        mRootView.setPriceAdapter(priceList);
+        initAdapter(priceList);
+    }
+
+    private void initAdapter(List<String> priceList) {
+        myAccountPayAdapter = new MyAccountPayAdapter(priceList);
+        myAccountPayAdapter.setOnItemClickListener((adapter, view, position) -> {
+            String money = myAccountPayAdapter.getItem(position);
+            if (TextUtils.isEmpty(money)) return;
+            setPayMoney(Integer.valueOf(money.replace("元", "")));
+            myAccountPayAdapter.setPos(position);
+            myAccountPayAdapter.notifyDataSetChanged();
+        });
+        mRootView.initRecyclerView(myAccountPayAdapter);
+        setPayMoney(Integer.valueOf(priceList.get(0).replace("元", "")));
     }
 
     private void getPermission(String ua) {

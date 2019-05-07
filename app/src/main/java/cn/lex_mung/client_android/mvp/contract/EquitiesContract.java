@@ -48,6 +48,8 @@ public interface EquitiesContract {
 
         Observable<BaseResponse<EquitiesDetailsEntity>> getEquitiesDetails(int orgId, int levelId);
 
+        Observable<BaseResponse<EquitiesDetailsEntity>> getEquitiesDetails1(int orgId, int levelId);
+
         Observable<LawyerEntity> getLawyerList(int pageNum, RequestBody body);
     }
 }

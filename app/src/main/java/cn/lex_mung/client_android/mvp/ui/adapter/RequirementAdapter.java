@@ -54,12 +54,12 @@ public class RequirementAdapter extends BaseQuickAdapter<RequirementStatusEntity
         if (!TextUtils.isEmpty(item.getCreateTime())) {
             helper.setText(R.id.item_tv_time, item.getCreateTime());
         }
-        if (!TextUtils.isEmpty(item.getSkillName())) {
-            helper.setText(R.id.item_tv_field, item.getSkillName());
-            helper.getView(R.id.item_ll_field).setVisibility(View.VISIBLE);
-        } else {
-            helper.getView(R.id.item_ll_field).setVisibility(View.GONE);
-        }
+//        if (!TextUtils.isEmpty(item.getSkillName())) {
+//            helper.setText(R.id.item_tv_field, item.getSkillName());
+//            helper.getView(R.id.item_ll_field).setVisibility(View.VISIBLE);
+//        } else {
+//            helper.getView(R.id.item_ll_field).setVisibility(View.GONE);
+//        }
         if (item.getTags() != null
                 && item.getTags().size() > 0) {
             StringBuilder tag = new StringBuilder();

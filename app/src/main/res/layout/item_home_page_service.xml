@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/qb_px_160"
+    android:layout_height="wrap_content"
     android:background="@drawable/button_withe_down"
-    android:paddingTop="@dimen/qb_px_35">
+    android:paddingTop="@dimen/qb_px_40">
 
     <ImageView
         android:id="@+id/item_iv_icon"
@@ -16,9 +16,11 @@
         android:id="@+id/item_tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:includeFontPadding="false"
-        android:textColor="@color/c_323232"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/qb_px_20"
+        android:layout_below="@+id/item_iv_icon"
+        android:textColor="@color/c_797979"
         android:textSize="14sp" />
 </RelativeLayout>

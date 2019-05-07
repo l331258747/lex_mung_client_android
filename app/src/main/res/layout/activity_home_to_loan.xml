@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nsv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/rl_bottom"
+        android:background="@color/c_f4f4f4"
+        android:fillViewport="true"
+        android:orientation="vertical"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <!--public-->
+            <android.support.constraint.Guideline
+                android:id="@+id/gline_left_40"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/qb_px_40" />
+
+            <android.support.constraint.Guideline
+                android:id="@+id/gline_left_20"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/qb_px_20" />
+
+            <android.support.constraint.Guideline
+                android:id="@+id/gline_right_20"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/qb_px_20" />
+
+            <!--banner-->
+            <com.youth.banner.Banner
+                android:id="@+id/banner"
+                android:layout_width="@dimen/qb_px_357"
+                android:layout_height="0dp"
+                android:layout_marginEnd="@dimen/qb_px_20"
+                app:banner_layout="@layout/banner"
+                app:layout_constraintDimensionRatio="h,381:574"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <View
+                android:layout_width="@dimen/qb_px_440"
+                android:layout_height="0dp"
+                android:background="@drawable/ic_toloan_head_bg"
+                app:layout_constraintBottom_toBottomOf="@id/banner"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+
+            <View
+                android:id="@+id/v_name_bg"
+                android:layout_width="@dimen/qb_px_200"
+                android:layout_height="@dimen/qb_px_80"
+                android:layout_marginBottom="@dimen/qb_px_93"
+                android:background="@drawable/ic_toloan_name_bg"
+                app:layout_constraintBottom_toBottomOf="@id/banner"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_20"
+                android:maxLength="5"
+                android:textColor="@color/c_ff"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@+id/v_name_bg"
+                app:layout_constraintStart_toStartOf="@+id/v_name_bg"
+                app:layout_constraintTop_toTopOf="@+id/v_name_bg"
+                tools:text="李梦舟" />
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_20"
+                android:layout_marginTop="@dimen/qb_px_10"
+                android:inputType="text"
+                android:textColor="@color/c_ff"
+                android:textSize="10sp"
+                app:layout_constraintStart_toStartOf="@+id/v_name_bg"
+                app:layout_constraintTop_toBottomOf="@+id/tv_name"
+                tools:text="湖南湘君律师事务所" />
+
+            <!--个人借款\n起草审查合同-->
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_127"
+                android:lineSpacingExtra="@dimen/qb_px_10"
+                android:text="个人借款\n起草审查合同"
+                android:textColor="@color/c_363A52"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@id/gline_left_40"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_40"
+                android:text="已完成的婚姻家事合同"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@id/gline_left_40"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+            <cn.lex_mung.client_android.mvp.ui.widget.ToLoanNumView
+                android:id="@+id/toloanNum_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_10"
+                app:layout_constraintStart_toEndOf="@id/gline_left_40"
+                app:layout_constraintTop_toBottomOf="@+id/tv_num" />
+
+
+            <TextView
+                android:id="@+id/tv_num_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_20"
+                android:text="平均首次完成合同时间"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@id/gline_left_40"
+                app:layout_constraintTop_toBottomOf="@+id/toloanNum_num" />
+
+            <cn.lex_mung.client_android.mvp.ui.widget.ToLoanNumView
+                android:id="@+id/toloanNum_num_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_10"
+                app:layout_constraintStart_toEndOf="@id/gline_left_40"
+                app:layout_constraintTop_toBottomOf="@+id/tv_num_time" />
+
+            <!--起草审核合同-个人借款合同-->
+
+            <View
+                android:id="@+id/view_draft_bg"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/qb_px_200"
+                android:background="@drawable/ic_toloan_draft_bg"
+                app:layout_constraintEnd_toStartOf="@id/gline_right_20"
+                app:layout_constraintStart_toEndOf="@id/gline_left_20"
+                app:layout_constraintTop_toBottomOf="@+id/banner" />
+
+            <TextView
+                android:id="@+id/tv_draft_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/qb_px_80"
+                android:layout_marginTop="@dimen/qb_px_40"
+                android:text="起草审核合同-个人借款合同"
+                android:textColor="@color/c_323232"
+                app:layout_constraintStart_toStartOf="@id/view_draft_bg"
+                app:layout_constraintTop_toTopOf="@+id/view_draft_bg" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/qb_px_80"
+                android:layout_marginTop="@dimen/qb_px_10"
+                android:layout_marginRight="@dimen/qb_px_140"
+                android:maxLines="2"
+                android:text="平台通过大数据自动为您智能推荐匹配律师，响应速度更快，性价比更高"
+                android:textColor="@color/c_737373"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@id/view_draft_bg"
+                app:layout_constraintStart_toStartOf="@id/view_draft_bg"
+                app:layout_constraintTop_toBottomOf="@+id/tv_draft_title" />
+
+            <TextView
+                android:id="@+id/tv_draft_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/qb_px_40"
+                android:text="300"
+                android:textColor="@color/c_ff"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/view_draft_bg"
+                app:layout_constraintEnd_toEndOf="@id/view_draft_bg"
+                app:layout_constraintTop_toTopOf="@+id/view_draft_bg" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/qb_px_2"
+                android:text="￥"
+                android:textColor="@color/c_ff"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_draft_price"
+                app:layout_constraintEnd_toStartOf="@+id/tv_draft_price" />
+
+            <!--范围-->
+            <TextView
+                android:id="@+id/tv_range"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="适用范围"
+                android:textColor="@color/c_323232"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@id/gline_right_20"
+                app:layout_constraintStart_toEndOf="@id/gline_left_20"
+                app:layout_constraintTop_toBottomOf="@+id/view_draft_bg" />
+
+            <View
+                android:layout_width="@dimen/qb_px_52"
+                android:layout_height="@dimen/qb_px_15"
+                android:layout_marginRight="@dimen/qb_px_20"
+                android:background="@drawable/ic_toloan_draft_lightning_l"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_range"
+                app:layout_constraintEnd_toStartOf="@id/tv_range"
+                app:layout_constraintTop_toTopOf="@+id/tv_range" />
+
+            <View
+                android:layout_width="@dimen/qb_px_52"
+                android:layout_height="@dimen/qb_px_15"
+                android:layout_marginLeft="@dimen/qb_px_20"
+                android:background="@drawable/ic_toloan_draft_lightning_r"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_range"
+                app:layout_constraintStart_toEndOf="@+id/tv_range"
+                app:layout_constraintTop_toTopOf="@+id/tv_range" />
+
+            <TextView
+                android:id="@+id/tv_range_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_18"
+                android:text="该合同起草适用于个人之间，生活用途的借款"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@id/gline_right_20"
+                app:layout_constraintStart_toEndOf="@id/gline_left_20"
+                app:layout_constraintTop_toBottomOf="@+id/tv_range" />
+
+            <!--服务优势-->
+
+            <TextView
+                android:id="@+id/tv_advantage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_40"
+                android:text="服务优势"
+                android:textColor="@color/c_323232"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@id/gline_right_20"
+                app:layout_constraintStart_toEndOf="@id/gline_left_20"
+                app:layout_constraintTop_toBottomOf="@+id/tv_range_content" />
+
+            <View
+                android:layout_width="@dimen/qb_px_52"
+                android:layout_height="@dimen/qb_px_15"
+                android:layout_marginRight="@dimen/qb_px_20"
+                android:background="@drawable/ic_toloan_draft_lightning_l"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_advantage"
+                app:layout_constraintEnd_toStartOf="@id/tv_advantage"
+                app:layout_constraintTop_toTopOf="@+id/tv_advantage" />
+
+            <View
+                android:layout_width="@dimen/qb_px_52"
+                android:layout_height="@dimen/qb_px_15"
+                android:layout_marginLeft="@dimen/qb_px_20"
+                android:background="@drawable/ic_toloan_draft_lightning_r"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_advantage"
+                app:layout_constraintStart_toEndOf="@+id/tv_advantage"
+                app:layout_constraintTop_toTopOf="@+id/tv_advantage" />
+
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_120"
+        android:layout_alignParentBottom="true"
+        android:background="@color/c_363A52"
+        android:paddingLeft="@dimen/qb_px_40"
+        android:paddingTop="@dimen/qb_px_25"
+        android:paddingRight="@dimen/qb_px_40">
+
+
+        <TextView
+            android:id="@+id/tv_btn"
+            android:layout_width="@dimen/qb_px_240"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/ic_btn_green"
+            android:gravity="center"
+            android:text="立即购买" />
+        
+        <ImageView
+            android:id="@+id/iv_unit"
+            android:layout_width="@dimen/qb_px_20"
+            android:layout_height="@dimen/qb_px_24"
+            android:layout_marginTop="@dimen/qb_px_10"
+            android:src="@drawable/ic_money_unit"/>
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/iv_unit"
+            android:textColor="@color/c_ecc994"
+            android:includeFontPadding="false"
+            android:layout_marginLeft="@dimen/qb_px_10"
+            android:textSize="26sp"
+            android:text="300"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
+
+
+
+
+

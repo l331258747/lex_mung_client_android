@@ -1,7 +1,7 @@
 package cn.lex_mung.client_android.mvp.model.entity;
 
 public class RequireEntity {
-    public RequireEntity(int requireTypeId, int clientAffordMinAmount, int clientAffordMaxAmount) {
+    public RequireEntity(int requireTypeId, double clientAffordMinAmount, double clientAffordMaxAmount) {
         this.requireTypeId = requireTypeId;
         this.clientAffordMinAmount = clientAffordMinAmount;
         this.clientAffordMaxAmount = clientAffordMaxAmount;
@@ -17,8 +17,8 @@ public class RequireEntity {
      */
 
     private int requireTypeId;
-    private int clientAffordMinAmount;
-    private int clientAffordMaxAmount;
+    private double clientAffordMinAmount;
+    private double clientAffordMaxAmount;
 
     public int getRequireTypeId() {
         return requireTypeId;
@@ -28,19 +28,19 @@ public class RequireEntity {
         this.requireTypeId = requireTypeId;
     }
 
-    public int getClientAffordMinAmount() {
+    public double getClientAffordMinAmount() {
         return clientAffordMinAmount;
     }
 
-    public void setClientAffordMinAmount(int clientAffordMinAmount) {
+    public void setClientAffordMinAmount(double clientAffordMinAmount) {
         this.clientAffordMinAmount = clientAffordMinAmount;
     }
 
-    public int getClientAffordMaxAmount() {
+    public double getClientAffordMaxAmount() {
         return clientAffordMaxAmount;
     }
 
-    public void setClientAffordMaxAmount(int clientAffordMaxAmount) {
+    public void setClientAffordMaxAmount(double clientAffordMaxAmount) {
         this.clientAffordMaxAmount = clientAffordMaxAmount;
     }
 }

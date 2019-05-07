@@ -28,6 +28,26 @@ public class DataHelper {
     }
 
     /**
+     * 存储重要信息到sharedPreferences；
+     */
+    public static void setString(Context context, String name, String key, String value) {
+        if (mSharedPreferences == null) {
+            mSharedPreferences = context.getSharedPreferences(name, Context.MODE_PRIVATE);
+        }
+        mSharedPreferences.edit().putString(key, value).apply();
+    }
+
+    /**
+     * 返回存在sharedPreferences的信息
+     */
+    public static String getString(Context context, String name, String key) {
+        if (mSharedPreferences == null) {
+            mSharedPreferences = context.getSharedPreferences(name, Context.MODE_PRIVATE);
+        }
+        return mSharedPreferences.getString(key, "");
+    }
+
+    /**
      * 检查key是否存在
      *
      * @param key

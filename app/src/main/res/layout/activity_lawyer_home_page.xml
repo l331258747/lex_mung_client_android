@@ -1,106 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/c_f4f4f4">
+    android:background="@color/c_717171"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:orientation="vertical">
 
     <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/coordinator_layout"
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false">
 
         <android.support.design.widget.AppBarLayout
-            android:id="@+id/app_bar"
+            android:id="@+id/appbar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fitsSystemWindows="true">
+            android:background="@color/c_717171"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:elevation="0dp"
+            app:layout_behavior="@string/appbar_over_scroll_behavior">
 
             <android.support.design.widget.CollapsingToolbarLayout
-                android:id="@+id/collapsing_toolbar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:fitsSystemWindows="true"
-                app:contentScrim="?attr/colorPrimary"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:statusBarScrim="@android:color/transparent">
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
-                <include layout="@layout/layout_personal_home_page" />
+                <include layout="@layout/layout_personal_home_pager_head_view" />
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/qb_px_100"
-                    android:layout_marginTop="25dp"
-                    android:background="@color/c_06a66a"
-                    android:visibility="invisible"
-                    app:contentInsetStart="0dp"
-                    app:layout_collapseMode="pin">
+                    android:alpha="0"
+                    android:background="@android:color/white"
+                    android:tag="toolbar"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/Widget.AppCompat.Toolbar" />
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical">
+                <include layout="@layout/layout_personal_home_pager_head_title" />
 
-                        <ImageView
-                            android:id="@+id/iv_back_toolbar"
-                            android:layout_width="@dimen/qb_px_60"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/ic_withe_back" />
-
-                        <TextView
-                            android:id="@+id/tv_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:includeFontPadding="false"
-                            android:textColor="@android:color/white"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-                    </RelativeLayout>
-
-                </android.support.v7.widget.Toolbar>
             </android.support.design.widget.CollapsingToolbarLayout>
-
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tab_layout"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/qb_px_120"
-                android:layout_alignParentBottom="true"
-                android:background="@color/c_ff"
-                app:tabBackground="@null"
-                app:tabGravity="fill"
-                app:tabIndicatorColor="@color/c_06a66a"
-                app:tabIndicatorHeight="@dimen/qb_px_5"
-                app:tabMode="scrollable"
-                app:tabSelectedTextColor="@color/c_323232"
-                app:tabTextColor="@color/c_717171" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/qb_px_1"
-                android:background="@color/c_b5b5b5" />
         </android.support.design.widget.AppBarLayout>
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/view_pager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        <include layout="@layout/layout_personal_home_pager_content" />
     </android.support.design.widget.CoordinatorLayout>
 
-    <View
-        android:id="@+id/view_bottom"
+    <LinearLayout
+        android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/qb_px_1"
-        android:layout_above="@id/view"
-        android:background="@color/c_b5b5b5" />
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/qb_px_100"
         android:layout_alignParentBottom="true"
-        android:background="@color/c_50" />
+        android:background="@drawable/ic_bottom_bg"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/qb_px_50"
+        android:paddingTop="@dimen/qb_px_10"
+        android:paddingRight="@dimen/qb_px_50"
+        android:paddingBottom="@dimen/qb_px_10">
+
+        <TextView
+            android:id="@+id/iv_release"
+            android:layout_width="@dimen/qb_px_325"
+            android:layout_height="@dimen/qb_px_80"
+            android:layout_weight="1"
+            android:background="@drawable/round_40_06a66a_all"
+            android:gravity="center"
+            android:scaleType="fitCenter"
+            android:text="发布需求"
+            android:textColor="@color/c_ff" />
+
+        <TextView
+            android:id="@+id/iv_call"
+            android:layout_width="@dimen/qb_px_325"
+            android:layout_height="@dimen/qb_px_80"
+            android:layout_marginLeft="@dimen/qb_px_50"
+            android:layout_weight="1"
+            android:background="@drawable/round_40_f7f7f7_all"
+            android:gravity="center"
+            android:scaleType="fitCenter"
+            android:text="拨打电话"
+            android:textColor="@color/c_ff" />
+
+
+    </LinearLayout>
+
 </RelativeLayout>

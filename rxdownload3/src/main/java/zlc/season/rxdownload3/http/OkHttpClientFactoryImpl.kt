@@ -7,7 +7,7 @@ class OkHttpClientFactoryImpl : OkHttpClientFactory {
     override fun build(): OkHttpClient {
         val builder = OkHttpClient().newBuilder()
                 .connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(15, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
                 .writeTimeout(15, TimeUnit.SECONDS)
         return builder.build()
     }

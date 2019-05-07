@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cn.lex_mung.client_android.mvp.ui.widget.DisInterceptNestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="@dimen/qb_px_15"
+    android:tag="middle"
+    app:layout_collapseMode="parallax"
+    app:layout_collapseParallaxMultiplier="0.5">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/qb_px_415" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="@dimen/qb_px_355" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/qb_px_15" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/qb_px_15" />
+
+        <ImageView
+            android:id="@+id/iv_bg"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_p_bg_1"
+            app:layout_constraintDimensionRatio="h,1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="@dimen/qb_px_60"
+            android:layout_height="@dimen/qb_px_100"
+            android:layout_marginStart="@dimen/qb_px_25"
+            android:layout_marginTop="@dimen/qb_px_50"
+            android:padding="@dimen/qb_px_5"
+            android:src="@drawable/ic_personal_home_page_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/round_10_ffffff_all"
+            app:layout_constraintBottom_toBottomOf="@id/view_1"
+            app:layout_constraintEnd_toEndOf="@id/guideline3"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toTopOf="@id/guideline1" />
+
+        <View
+            android:id="@+id/iv_avatar_bg"
+            android:layout_width="@dimen/qb_px_180"
+            android:layout_height="@dimen/qb_px_180"
+            android:layout_marginStart="@dimen/qb_px_30"
+            android:layout_marginBottom="@dimen/qb_px_40"
+            android:background="@drawable/round_100_f4f4f4_all"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/guideline4" />
+
+        <ImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="@dimen/qb_px_175"
+            android:layout_height="@dimen/qb_px_175"
+            android:src="@drawable/ic_avatar"
+            app:layout_constraintBottom_toBottomOf="@id/iv_avatar_bg"
+            app:layout_constraintEnd_toEndOf="@id/iv_avatar_bg"
+            app:layout_constraintStart_toStartOf="@id/iv_avatar_bg"
+            app:layout_constraintTop_toTopOf="@id/iv_avatar_bg" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/qb_px_20"
+            android:layout_marginTop="@dimen/qb_px_30"
+            android:includeFontPadding="false"
+            android:maxWidth="@dimen/qb_px_150"
+            android:singleLine="true"
+            android:textColor="@color/c_323232"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/iv_avatar_bg"
+            app:layout_constraintTop_toBottomOf="@id/guideline1"
+            tools:text="张三张三张三张三张三" />
+
+        <TextView
+            android:id="@+id/tv_post"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/qb_px_25"
+            android:includeFontPadding="false"
+            android:maxWidth="@dimen/qb_px_130"
+            android:singleLine="true"
+            android:textColor="@color/c_b5b5b5"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_name"
+            app:layout_constraintStart_toEndOf="@id/tv_name"
+            app:layout_constraintTop_toTopOf="@id/tv_name"
+            tools:text="律所合伙人" />
+
+        <TextView
+            android:id="@+id/tv_like"
+            android:layout_width="@dimen/qb_px_125"
+            android:layout_height="@dimen/qb_px_40"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/qb_px_20"
+            android:background="@drawable/round_100_ffffff_all_06a66a"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/text_no_like"
+            android:textColor="@color/c_06a66a"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_name"
+            app:layout_constraintEnd_toEndOf="@id/guideline3"
+            app:layout_constraintTop_toTopOf="@id/tv_name" />
+
+        <TextView
+            android:id="@+id/tv_law_firms"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_20"
+            android:layout_marginEnd="@dimen/qb_px_20"
+            android:includeFontPadding="false"
+            android:singleLine="true"
+            android:textColor="@color/c_b5b5b5"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@id/guideline3"
+            app:layout_constraintStart_toStartOf="@id/tv_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_name"
+            tools:text="湖南湘君律师事务所 | 执业7年" />
+
+        <ImageView
+            android:id="@+id/iv_credit_certification"
+            android:layout_width="@dimen/qb_px_21"
+            android:layout_height="@dimen/qb_px_25"
+            android:layout_marginTop="@dimen/qb_px_20"
+            android:src="@drawable/ic_personal_home_page_credit_certification"
+            app:layout_constraintStart_toStartOf="@id/tv_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_law_firms" />
+
+        <TextView
+            android:id="@+id/tv_credit_certification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/qb_px_10"
+            android:includeFontPadding="false"
+            android:singleLine="true"
+            android:textColor="@color/c_b5b5b5"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_credit_certification"
+            app:layout_constraintStart_toEndOf="@id/iv_credit_certification"
+            app:layout_constraintTop_toTopOf="@id/iv_credit_certification"
+            tools:text="LEX提供最高额20000元的担保服务" />
+
+        <TextView
+            android:id="@+id/tv_field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/qb_px_30"
+            android:layout_marginTop="@dimen/qb_px_30"
+            android:includeFontPadding="false"
+            android:text="@string/text_good_at_field"
+            android:textColor="@color/c_323232"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/tv_credit_certification" />
+
+        <cn.lex_mung.client_android.mvp.ui.widget.SimpleFlowLayout
+            android:id="@+id/sfl_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/qb_px_30"
+            android:layout_marginTop="@dimen/qb_px_20"
+            android:layout_marginEnd="@dimen/qb_px_30"
+            app:hor_divider_width="@dimen/qb_px_10"
+            app:hor_row_height="@dimen/qb_px_10"
+            app:layout_constraintEnd_toEndOf="@id/guideline3"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/tv_field" />
+
+        <TextView
+            android:id="@+id/tv_social_position"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/qb_px_30"
+            android:layout_marginTop="@dimen/qb_px_40"
+            android:layout_marginEnd="@dimen/qb_px_30"
+            android:background="@drawable/round_10_fff2de_all"
+            android:lineSpacingExtra="@dimen/qb_px_10"
+            android:paddingStart="@dimen/qb_px_15"
+            android:paddingTop="@dimen/qb_px_15"
+            android:paddingEnd="@dimen/qb_px_90"
+            android:paddingBottom="@dimen/qb_px_15"
+            android:textColor="@color/c_d89b4b"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@id/guideline3"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/sfl_field"
+            tools:text="长沙市第十五届人大代表\n第五届长沙市律师协会副会长、常务理事\n第九届湖南省律师协会刑事专业委员会副主任" />
+
+        <ImageView
+            android:id="@+id/iv_social_position"
+            android:layout_width="@dimen/qb_px_87"
+            android:layout_height="@dimen/qb_px_90"
+            android:layout_marginTop="@dimen/qb_px_20"
+            android:src="@drawable/ic_personal_home_page_social_position"
+            app:layout_constraintEnd_toEndOf="@id/tv_social_position"
+            app:layout_constraintTop_toBottomOf="@id/sfl_field" />
+
+        <TextView
+            android:id="@+id/tv_more_social_position"
+            android:layout_width="@dimen/qb_px_70"
+            android:layout_height="@dimen/qb_px_80"
+            android:layout_marginBottom="@dimen/qb_px_15"
+            android:gravity="bottom"
+            android:text="@string/text_more"
+            android:textColor="@color/c_717171"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/tv_social_position"
+            app:layout_constraintEnd_toEndOf="@id/tv_social_position" />
+
+        <View
+            android:id="@+id/view_1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qb_px_45"
+            app:layout_constraintTop_toBottomOf="@id/tv_social_position" />
+    </android.support.constraint.ConstraintLayout>
+</cn.lex_mung.client_android.mvp.ui.widget.DisInterceptNestedScrollView>

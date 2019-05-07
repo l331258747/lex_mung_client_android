@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_head_root"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/qb_px_100"
+    android:background="@color/c_ff"
+    app:layout_collapseMode="pin">
+
+    <ImageView
+        android:id="@+id/iv_head_back"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:includeFontPadding="false"
+        android:padding="@dimen/qb_px_32"
+        android:paddingStart="@dimen/qb_px_15"
+        android:paddingEnd="@dimen/qb_px_35"
+        android:src="@drawable/ic_back" />
+
+    <TextView
+        android:id="@+id/tv_head_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="@dimen/qb_px_35"
+        android:includeFontPadding="false"
+        android:textColor="@color/c_323232"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/iv_head_share"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:includeFontPadding="false"
+        android:padding="@dimen/qb_px_35"
+        android:paddingStart="@dimen/qb_px_35"
+        android:paddingEnd="@dimen/qb_px_15"
+        android:src="@drawable/ic_black_share"
+        android:visibility="gone" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_1"
+        android:layout_alignParentBottom="true"
+        android:background="@color/c_dbdbdb" />
+</RelativeLayout>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/qb_px_30"
+    android:paddingTop="@dimen/qb_px_20"
+    android:paddingEnd="@dimen/qb_px_20"
+    android:paddingBottom="@dimen/qb_px_20">
+
+    <View
+        android:id="@+id/view_bg"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_150"
+        android:layout_marginStart="@dimen/qb_px_40"
+        android:background="@drawable/round_40_f7f7f7_all"
+        android:layout_marginTop="@dimen/qb_px_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+    <ImageView
+        android:id="@+id/iv_head"
+        android:layout_width="@dimen/qb_px_100"
+        android:layout_height="@dimen/qb_px_100"
+        tools:src="@drawable/ic_lawyer_avatar" />
+
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/qb_px_30"
+        android:textColor="@color/c_737373"
+        app:layout_constraintStart_toEndOf="@+id/iv_head"
+        tools:text="namename" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_20"
+        android:layout_marginEnd="@dimen/qb_px_80"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/c_323232"
+        app:layout_constraintEnd_toStartOf="@id/iv_file_type"
+        app:layout_constraintStart_toStartOf="@id/tv_name"
+        app:layout_constraintTop_toTopOf="@+id/view_bg"
+        tools:text="contentcontentcontentcontentcontentcontentcontent" />
+
+    <ImageView
+        android:id="@+id/iv_file_type"
+        android:layout_width="@dimen/qb_px_80"
+        android:layout_height="@dimen/qb_px_120"
+        android:layout_marginEnd="@dimen/qb_px_50"
+        android:src="@drawable/pdf"
+        app:layout_constraintBottom_toBottomOf="@+id/view_bg"
+        app:layout_constraintEnd_toEndOf="@+id/view_bg"
+        app:layout_constraintTop_toTopOf="@+id/view_bg" />
+
+    <TextView
+        android:id="@+id/tv_file_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/qb_px_20"
+        android:textColor="@color/c_737373"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/view_bg"
+        app:layout_constraintStart_toStartOf="@+id/tv_name"
+        tools:text="docx" />
+
+    <TextView
+        android:id="@+id/tv_file_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/qb_px_30"
+        android:text="15kb"
+        android:textColor="@color/c_737373"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/tv_file_type"
+        app:layout_constraintTop_toTopOf="@+id/tv_file_type" />
+
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/c_b4b4b4"
+        android:layout_marginTop="@dimen/qb_px_20"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_name"
+        app:layout_constraintTop_toBottomOf="@+id/view_bg"
+        tools:text="2019-01-01 11:23" />
+
+    <TextView
+        android:id="@+id/tv_read"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/c_b4b4b4"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@+id/iv_file_type"
+        app:layout_constraintTop_toTopOf="@+id/tv_time"
+        tools:text="律师已读" />
+
+</android.support.constraint.ConstraintLayout>

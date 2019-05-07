@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+
+    <TextView
+        android:id="@+id/tv_num_1"
+        android:layout_width="@dimen/qb_px_38"
+        android:layout_height="@dimen/qb_px_55"
+        android:background="@drawable/ic_toloan_num_bg"
+        android:gravity="center"
+        android:text="1"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_num_2"
+        android:layout_width="@dimen/qb_px_38"
+        android:layout_height="@dimen/qb_px_55"
+        android:layout_marginLeft="@dimen/qb_px_10"
+        android:background="@drawable/ic_toloan_num_bg"
+        android:gravity="center"
+        android:text="1"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_num_3"
+        android:layout_width="@dimen/qb_px_38"
+        android:layout_height="@dimen/qb_px_55"
+        android:layout_marginLeft="@dimen/qb_px_10"
+        android:background="@drawable/ic_toloan_num_bg"
+        android:gravity="center"
+        android:text="1"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_num_4"
+        android:layout_width="@dimen/qb_px_38"
+        android:layout_height="@dimen/qb_px_55"
+        android:layout_marginLeft="@dimen/qb_px_10"
+        android:background="@drawable/ic_toloan_num_bg"
+        android:gravity="center"
+        android:text="1"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_num_5"
+        android:layout_width="@dimen/qb_px_38"
+        android:layout_height="@dimen/qb_px_55"
+        android:layout_marginLeft="@dimen/qb_px_10"
+        android:background="@drawable/ic_toloan_num_bg"
+        android:gravity="center"
+        android:text="1"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+
+</LinearLayout>

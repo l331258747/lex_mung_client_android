@@ -36,7 +36,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 @Module
 public abstract class ClientModule {
-    private static final int TIME_OUT = 10;
+    private static final int TIME_OUT = 15;
+    private static final int READ_TIME_OUT = 60;
 
     /**
      * 提供 {@link Retrofit}
@@ -91,7 +92,7 @@ public abstract class ClientModule {
             , @Nullable List<Interceptor> interceptors
             , @Nullable GlobalHttpHandler handler) {
         builder.connectTimeout(TIME_OUT, TimeUnit.SECONDS)
-                .readTimeout(TIME_OUT, TimeUnit.SECONDS)
+                .readTimeout(READ_TIME_OUT, TimeUnit.SECONDS)
                 .addNetworkInterceptor(intercept);
 
         if (handler != null) {

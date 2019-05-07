@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <include
         android:id="@+id/toolbar"
@@ -85,75 +86,76 @@
                 app:layout_constraintEnd_toEndOf="@id/guideline3"
                 app:layout_constraintStart_toStartOf="@id/guideline2" />
 
-            <android.support.constraint.Group
-                android:id="@+id/group_lawyer_field"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:constraint_referenced_ids="view_lawyer_field,tv_lawyer_field_x,tv_lawyer_field_text,tv_lawyer_field,iv_lawyer_field" />
+            <!--<android.support.constraint.Group-->
+                <!--android:id="@+id/group_lawyer_field"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--app:constraint_referenced_ids="view_lawyer_field,tv_lawyer_field_x,tv_lawyer_field_text,tv_lawyer_field,iv_lawyer_field" />-->
 
-            <View
-                android:id="@+id/view_lawyer_field"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="@drawable/button_withe_down"
-                app:layout_constraintBottom_toBottomOf="@id/tv_lawyer_field"
-                app:layout_constraintTop_toBottomOf="@id/view_lawyer_region" />
+            <!--<View-->
+                <!--android:id="@+id/view_lawyer_field"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="0dp"-->
+                <!--android:background="@drawable/button_withe_down"-->
+                <!--app:layout_constraintBottom_toBottomOf="@id/tv_lawyer_field"-->
+                <!--app:layout_constraintTop_toBottomOf="@id/view_lawyer_region" />-->
 
-            <TextView
-                android:id="@+id/tv_lawyer_field_x"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:includeFontPadding="false"
-                android:text="@string/text_x"
-                android:textColor="@color/c_ea5514"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@id/tv_lawyer_field_text"
-                app:layout_constraintStart_toStartOf="@id/guideline2"
-                app:layout_constraintTop_toTopOf="@id/tv_lawyer_field_text" />
+            <!--<TextView-->
+                <!--android:id="@+id/tv_lawyer_field_x"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:includeFontPadding="false"-->
+                <!--android:text="@string/text_x"-->
+                <!--android:textColor="@color/c_ea5514"-->
+                <!--android:textSize="18sp"-->
+                <!--app:layout_constraintBottom_toBottomOf="@id/tv_lawyer_field_text"-->
+                <!--app:layout_constraintStart_toStartOf="@id/guideline2"-->
+                <!--app:layout_constraintTop_toTopOf="@id/tv_lawyer_field_text" />-->
 
-            <TextView
-                android:id="@+id/tv_lawyer_field_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/qb_px_20"
-                android:layout_marginTop="@dimen/qb_px_35"
-                android:includeFontPadding="false"
-                android:text="@string/text_lawyer_field"
-                android:textColor="@color/c_717171"
-                android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="@id/guideline2"
-                app:layout_constraintTop_toTopOf="@id/view_lawyer_field" />
+            <!--<TextView-->
+                <!--android:id="@+id/tv_lawyer_field_text"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginStart="@dimen/qb_px_20"-->
+                <!--android:layout_marginTop="@dimen/qb_px_35"-->
+                <!--android:includeFontPadding="false"-->
+                <!--android:text="@string/text_lawyer_field"-->
+                <!--android:textColor="@color/c_717171"-->
+                <!--android:textSize="12sp"-->
+                <!--app:layout_constraintStart_toStartOf="@id/guideline2"-->
+                <!--app:layout_constraintTop_toTopOf="@id/view_lawyer_field" />-->
 
-            <TextView
-                android:id="@+id/tv_lawyer_field"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/qb_px_100"
-                android:layout_marginEnd="@dimen/qb_px_50"
-                android:gravity="center_vertical"
-                android:hint="@string/text_please_select_lawyer_field"
-                android:includeFontPadding="false"
-                android:singleLine="true"
-                android:textColor="@color/c_323232"
-                android:textColorHint="@color/c_b5b5b5"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="@id/guideline3"
-                app:layout_constraintStart_toStartOf="@id/guideline2"
-                app:layout_constraintTop_toBottomOf="@id/tv_lawyer_field_text" />
+            <!--<TextView-->
+                <!--android:id="@+id/tv_lawyer_field"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="@dimen/qb_px_100"-->
+                <!--android:layout_marginEnd="@dimen/qb_px_50"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:hint="@string/text_please_select_lawyer_field"-->
+                <!--android:includeFontPadding="false"-->
+                <!--android:singleLine="true"-->
+                <!--android:textColor="@color/c_323232"-->
+                <!--android:textColorHint="@color/c_b5b5b5"-->
+                <!--android:textSize="16sp"-->
+                <!--app:layout_constraintEnd_toEndOf="@id/guideline3"-->
+                <!--app:layout_constraintStart_toStartOf="@id/guideline2"-->
+                <!--app:layout_constraintTop_toBottomOf="@id/tv_lawyer_field_text" />-->
 
-            <ImageView
-                android:id="@+id/iv_lawyer_field"
-                android:layout_width="@dimen/qb_px_30"
-                android:layout_height="@dimen/qb_px_30"
-                android:src="@drawable/ic_right_arrow"
-                app:layout_constraintBottom_toBottomOf="@id/tv_lawyer_field"
-                app:layout_constraintEnd_toStartOf="@id/guideline3"
-                app:layout_constraintTop_toTopOf="@id/tv_lawyer_field" />
+            <!--<ImageView-->
+                <!--android:id="@+id/iv_lawyer_field"-->
+                <!--android:layout_width="@dimen/qb_px_30"-->
+                <!--android:layout_height="@dimen/qb_px_30"-->
+                <!--android:src="@drawable/ic_right_arrow"-->
+                <!--app:layout_constraintBottom_toBottomOf="@id/tv_lawyer_field"-->
+                <!--app:layout_constraintEnd_toStartOf="@id/guideline3"-->
+                <!--app:layout_constraintTop_toTopOf="@id/tv_lawyer_field" />-->
 
             <android.support.constraint.Group
                 android:id="@+id/group_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
+                tools:visibility="visible"
                 app:constraint_referenced_ids="view_max_money,tv_max_money_text_x,tv_max_money_text,et_max_money" />
 
             <View
@@ -162,7 +164,7 @@
                 android:layout_height="0dp"
                 android:background="@color/c_ff"
                 app:layout_constraintBottom_toBottomOf="@id/et_max_money"
-                app:layout_constraintTop_toBottomOf="@id/view_lawyer_field" />
+                app:layout_constraintTop_toBottomOf="@id/view_lawyer_region" />
 
             <TextView
                 android:id="@+id/tv_max_money_text_x"
@@ -249,6 +251,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
+                tools:visibility="visible"
                 app:constraint_referenced_ids="view_problem_description,tv_problem_description_text_x,tv_problem_description_text,et_problem_description" />
 
             <View
@@ -275,7 +278,7 @@
             <TextView
                 android:id="@+id/tv_problem_description_text"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/qb_px_110"
+                android:layout_height="@dimen/qb_px_100"
                 android:layout_marginStart="@dimen/qb_px_20"
                 android:gravity="center_vertical"
                 android:includeFontPadding="false"
@@ -289,7 +292,6 @@
                 android:id="@+id/et_problem_description"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/qb_px_220"
-                android:layout_marginTop="@dimen/qb_px_65"
                 android:background="@color/c_ff"
                 android:gravity="start"
                 android:hint="@string/text_please_describe_your_problem"
@@ -300,7 +302,7 @@
                 android:textColor="@color/c_323232"
                 android:textColorHint="@color/c_b5b5b5"
                 android:textSize="16sp"
-                app:layout_constraintTop_toTopOf="@id/view_problem_description" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_problem_description_text" />
 
             <View
                 android:id="@+id/view_pay_way"
@@ -369,7 +371,6 @@
                 app:layout_constraintTop_toTopOf="@id/tv_wx" />
 
             <View
-                android:id="@+id/view_line_2"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/qb_px_1"
                 android:background="@color/c_f4f4f4"
@@ -414,7 +415,6 @@
                 app:layout_constraintTop_toTopOf="@id/tv_zfb" />
 
             <View
-                android:id="@+id/view_line_3"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/qb_px_1"
                 android:background="@color/c_f4f4f4"
@@ -477,6 +477,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
+                tools:visibility="visible"
                 app:layout_constraintEnd_toEndOf="@id/guideline3"
                 app:layout_constraintStart_toStartOf="@id/guideline2"
                 app:layout_constraintTop_toBottomOf="@id/tv_balance">
@@ -550,7 +551,7 @@
                 app:layout_constraintTop_toBottomOf="@id/view_pay_way" />
 
             <TextView
-                android:id="@+id/view_line_5"
+                android:id="@+id/tv_discount_way_x"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:includeFontPadding="false"
@@ -565,7 +566,11 @@
                 android:id="@+id/group_pay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="cl_club_card,view_pay_way,tv_pay_way_text,view_line_1,tv_wx,iv_wx,iv_select_wx,view_line_2,tv_zfb,iv_zfb,iv_select_zfb,view_line_3,tv_balance,iv_balance,tv_balance_count,iv_select_balance,view_discount_way,view_line_5,tv_discount_way_text,tv_discount_way,iv_discount_way" />
+                app:constraint_referenced_ids="cl_club_card,view_pay_way,tv_pay_way_text,
+                view_line_1,tv_wx,iv_wx,iv_select_wx,iv_discount_field,
+                tv_zfb,iv_zfb,iv_select_zfb,tv_balance,iv_balance,
+                tv_balance_count,iv_select_balance,view_discount_way,tv_discount_way_x,
+                tv_discount_way_text,tv_discount_way" />
 
             <TextView
                 android:id="@+id/tv_discount_way_text"
@@ -597,7 +602,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_discount_way_text" />
 
             <ImageView
-                android:id="@+id/iv_discount_way"
+                android:id="@+id/iv_discount_field"
                 android:layout_width="@dimen/qb_px_30"
                 android:layout_height="@dimen/qb_px_30"
                 android:src="@drawable/ic_right_arrow"
@@ -689,6 +694,7 @@
             android:textColor="@color/c_f8b62d"
             android:textSize="12sp"
             android:visibility="gone"
+            tools:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/tv_order_money"
             app:layout_constraintTop_toBottomOf="@id/tv_order_money" />

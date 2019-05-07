@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/c_f4f4f4"
     android:orientation="vertical">
 
@@ -189,6 +190,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        tools:visibility="visible"
         app:constraint_referenced_ids="tv_order_customer_text,tv_order_customer,tv_order_time_text,tv_order_time_start,tv_order_time_end,tv_order_total_text,tv_order_total" />
 
     <TextView

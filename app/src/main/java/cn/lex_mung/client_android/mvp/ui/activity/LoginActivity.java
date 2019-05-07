@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import cn.lex_mung.client_android.BuildConfig;
 import cn.lex_mung.client_android.di.module.LoginModule;
 import cn.lex_mung.client_android.mvp.model.api.Api;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
@@ -58,7 +59,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         mPresenter.initTimer();
         etCode.setFilters(new InputFilter[]{CharacterHandler.emojiFilter, new InputFilter.LengthFilter(6)});
         etMobile.setFilters(new InputFilter[]{CharacterHandler.emojiFilter, new InputFilter.LengthFilter(11)});
-        if ("https://api.lex-mung.com/".equals(Api.APP_DOMAIN)) {
+        if (BuildConfig.IS_PROD) {
             btTestCode.setVisibility(View.GONE);
         } else {
             btTestCode.setVisibility(View.VISIBLE);

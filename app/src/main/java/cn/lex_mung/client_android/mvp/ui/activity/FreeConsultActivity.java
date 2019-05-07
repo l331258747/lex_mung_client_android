@@ -70,14 +70,12 @@ public class FreeConsultActivity extends BaseActivity<FreeConsultPresenter> impl
     protected void onResume() {
         super.onResume();
         MobclickAgent.onPageStart("w_y_shouye_mfzx_wz_list");
-        MobclickAgent.onResume(mActivity);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd("w_y_shouye_mfzx_wz_list");
-        MobclickAgent.onPause(mActivity);
     }
 
     @Override

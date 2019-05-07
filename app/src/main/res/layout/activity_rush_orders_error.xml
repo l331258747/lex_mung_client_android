@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_rush_error"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="非常抱歉没有匹配到合适您的律师\n我们客服人员将尽快与您联系进行人工匹配"
+        android:textColor="@color/c_b4b4b4"
+        android:gravity="center"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_custom_call"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_127"
+        android:background="@drawable/ic_rush_order_name_bg"
+        android:gravity="center"
+        android:text="400-811-3060"
+        android:textColor="@color/c_ff"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_20"
+        android:text="联系客服"
+        android:textColor="@color/c_b4b4b4"
+        android:textSize="12sp" />
+
+</LinearLayout>

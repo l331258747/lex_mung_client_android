@@ -1,40 +1,39 @@
 package cn.lex_mung.client_android.mvp.ui.activity;
 
 import android.content.Intent;
-import android.os.Build;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
-import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.TextView;
 
-import cn.lex_mung.client_android.app.BundleTags;
-import cn.lex_mung.client_android.app.ShareUtils;
-import cn.lex_mung.client_android.di.module.WebModule;
-import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.app.ShareUtils;
+import cn.lex_mung.client_android.di.component.DaggerWebComponent;
+import cn.lex_mung.client_android.di.module.WebModule;
+import cn.lex_mung.client_android.mvp.contract.WebContract;
+import cn.lex_mung.client_android.mvp.model.entity.other.WebGoPayEntity;
+import cn.lex_mung.client_android.mvp.presenter.WebPresenter;
+import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import cn.lex_mung.client_android.mvp.ui.widget.webview.LWebView;
+import cn.lex_mung.client_android.utils.GsonUtil;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
+import me.zl.mvp.integration.AppManager;
 import me.zl.mvp.utils.AppUtils;
-import me.zl.mvp.utils.DataHelper;
 
-import cn.lex_mung.client_android.di.component.DaggerWebComponent;
-import cn.lex_mung.client_android.mvp.contract.WebContract;
-import cn.lex_mung.client_android.mvp.presenter.WebPresenter;
-
-import cn.lex_mung.client_android.R;
-import com.umeng.analytics.MobclickAgent;
-
-import static cn.lex_mung.client_android.app.DataHelperTags.TOKEN;
+import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO;
+import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_LIST_ID;
 
 public class WebActivity extends BaseActivity<WebPresenter> implements WebContract.View {
     @BindView(R.id.tv_right)
@@ -42,7 +41,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.web_view)
-    WebView webView;
+    LWebView webView;
     @BindView(R.id.view_dialog)
     View viewDialog;
 
@@ -71,14 +70,13 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
     protected void onResume() {
         super.onResume();
         MobclickAgent.onPageStart("w_y_shouye_jjfa_list");
-        MobclickAgent.onResume(mActivity);
+        mPresenter.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd("w_y_shouye_jjfa_list");
-        MobclickAgent.onPause(mActivity);
     }
 
     @Override
@@ -106,6 +104,11 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
     private void initWebView() {
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
+            public void onReceivedTitle(WebView view, String title) {
+                super.onReceivedTitle(view, title);
+            }
+
+            @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 if (newProgress == 100) {
                     hideLoading();
@@ -113,40 +116,41 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
                 super.onProgressChanged(view, newProgress);
             }
         });
-        webView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String urls) {
-                view.loadUrl(urls);
-                return true;
-            }
-        });
-        WebSettings webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setSupportZoom(true);
-        webSettings.setBuiltInZoomControls(true);
-        webSettings.setUseWideViewPort(true);
-        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        webSettings.setLoadWithOverviewMode(true);
-        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
-        webSettings.setDomStorageEnabled(true);
-        webSettings.setBlockNetworkImage(false);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
-        }
-        webView.addJavascriptInterface(this, "JsBridgeApp");
-        synCookies(url);
+//        webView.setWebViewClient(new WebViewClient() {
+//            @Override
+//            public boolean shouldOverrideUrlLoading(WebView view, String urls) {
+//                view.loadUrl(urls);
+//                return true;
+//            }
+//        });
+//        WebSettings webSettings = webView.getSettings();
+//        webSettings.setJavaScriptEnabled(true);
+//        webSettings.setSupportZoom(true);
+//        webSettings.setBuiltInZoomControls(true);
+//        webSettings.setUseWideViewPort(true);
+//        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+//        webSettings.setLoadWithOverviewMode(true);
+//        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+//        webSettings.setDomStorageEnabled(true);
+//        webSettings.setBlockNetworkImage(false);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+//        }
+        webView.addJavascriptInterface(new AndroidToJs(), "JsBridgeApp");//h5 js调用 app.pay();
+
+        webView.synCookies(url);
         webView.loadUrl(url);
     }
 
-    public void synCookies(String url) {
-        CookieSyncManager.createInstance(mActivity);
-        CookieManager cookieManager = CookieManager.getInstance();
-        cookieManager.setAcceptCookie(true);
-        cookieManager.removeSessionCookie();//移除
-        String cookieStr = "X-Token=" + DataHelper.getStringSF(mActivity, TOKEN) + ";Domain=.lex-mung.com;Path=/";
-        cookieManager.setCookie(url, cookieStr);
-        CookieSyncManager.getInstance().sync();
-    }
+//    public void synCookies(String url) {
+//        CookieSyncManager.createInstance(mActivity);
+//        CookieManager cookieManager = CookieManager.getInstance();
+//        cookieManager.setAcceptCookie(true);
+//        cookieManager.removeSessionCookie();//移除
+//        String cookieStr = "X-Token=" + DataHelper.getStringSF(mActivity, TOKEN) + ";Domain=.lex-mung.com;Path=/";
+//        cookieManager.setCookie(url, cookieStr);
+//        CookieSyncManager.getInstance().sync();
+//    }
 
     @OnClick(R.id.tv_right)
     public void onViewClicked() {
@@ -197,5 +201,62 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
     public void killMyself() {
         finish();
     }
+
+    @Override
+    public void onBackPressed() {
+        if (webView.canGoBack()) {
+            webView.goBack();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+
+    public class AndroidToJs extends Object {
+
+        //支付
+        @JavascriptInterface
+        public void goPay(String string) {
+            if(TextUtils.isEmpty(string))
+                return;
+
+            WebGoPayEntity businessEntity = GsonUtil.convertString2Object(string,WebGoPayEntity.class);
+
+            if (isFastClick()) return;
+            Bundle bundle = new Bundle();
+            if (mPresenter.isLogin()) {
+                bundle.clear();
+                bundle.putInt(BundleTags.ID, businessEntity.getRequireTypeId());
+//                bundle.putInt(BundleTags.TYPE, businessEntity.getType());//支付方式在下个页面选择、
+                bundle.putString(BundleTags.TITLE, businessEntity.getRequireTypeName());
+//                bundle.putSerializable(BundleTags.ENTITY, entity);//没有律师，不要律师信息
+                bundle.putFloat(BundleTags.MONEY, businessEntity.getMoney());
+                launchActivity(new Intent(mActivity, RushLoanPayActivity.class), bundle);
+            } else {
+                bundle.clear();
+                bundle.putInt(BundleTags.TYPE, 1);
+                launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
+            }
+        }
+
+        //电话
+        @JavascriptInterface
+        public void toCall(String phone) {
+            Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
+            startActivity(dialIntent);
+        }
+
+        //找律师
+        @JavascriptInterface
+        public void goLawyerList(int requireTypeId) {
+            runOnUiThread(() -> {
+                AppManager.getAppManager().killAllNotClass(MainActivity.class);
+                ((MainActivity)AppManager.getAppManager().findActivity(MainActivity.class)).switchPage(2);
+                AppUtils.post(LAWYER_LIST_SCREEN_INFO, LAWYER_LIST_SCREEN_INFO_LIST_ID, requireTypeId);
+            });
+        }
+
+    }
+
 
 }

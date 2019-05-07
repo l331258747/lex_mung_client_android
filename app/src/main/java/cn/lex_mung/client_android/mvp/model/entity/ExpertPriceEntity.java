@@ -34,6 +34,10 @@ public class ExpertPriceEntity {
         return favorablePrice;
     }
 
+    public String getFavorablePriceInt(){
+        return ((int) favorablePrice ) + "";
+    }
+
     public void setFavorablePrice(double favorablePrice) {
         this.favorablePrice = favorablePrice;
     }
@@ -64,6 +68,10 @@ public class ExpertPriceEntity {
 
     public double getLawyerPrice() {
         return lawyerPrice;
+    }
+
+    public String getLawyerPriceInt(){
+        return ((int) lawyerPrice ) + "";
     }
 
     public void setLawyerPrice(double lawyerPrice) {

@@ -15,17 +15,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aigestudio.wheelpicker.WheelPicker;
+
 import cn.lex_mung.client_android.R;
-import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.component.DaggerEditInfoComponent;
 import cn.lex_mung.client_android.di.module.EditInfoModule;
 import cn.lex_mung.client_android.mvp.contract.EditInfoContract;
-import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.presenter.EditInfoPresenter;
 import cn.lex_mung.client_android.mvp.ui.dialog.DefaultDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.EasyDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.CustomDatePicker;
+
 import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
 
 import java.text.SimpleDateFormat;
@@ -38,6 +38,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.lex_mung.client_android.mvp.ui.widget.RegionPickerDialog;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
@@ -180,7 +181,13 @@ public class EditInfoActivity extends BaseActivity<EditInfoPresenter> implements
                 showSelectDateDialog();
                 break;
             case R.id.view_user_region:
-                showSelectRegionDialog();
+                RegionPickerDialog dialog = new RegionPickerDialog(mActivity, viewBottom, (province, city, area) -> {
+                    setRegion(province + "-" + city + "-" + area);
+                    mPresenter.setProvince(province);
+                    mPresenter.setCity(city);
+                    mPresenter.setArea(area);
+                });
+                dialog.show();
                 break;
             case R.id.view_user_industry:
                 showSelectIndustryDialog();

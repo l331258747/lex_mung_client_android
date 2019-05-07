@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -31,9 +30,8 @@ import cn.lex_mung.client_android.mvp.contract.AccountPayContract;
 import cn.lex_mung.client_android.mvp.presenter.AccountPayPresenter;
 
 import cn.lex_mung.client_android.R;
-import com.umeng.analytics.MobclickAgent;
 
-import java.util.List;
+import com.umeng.analytics.MobclickAgent;
 
 public class AccountPayActivity extends BaseActivity<AccountPayPresenter> implements AccountPayContract.View {
     @BindView(R.id.recycler_view)
@@ -46,8 +44,6 @@ public class AccountPayActivity extends BaseActivity<AccountPayPresenter> implem
     WebView webView;
     @BindView(R.id.tv_order_money)
     TextView tvOrderMoney;
-
-    private MyAccountPayAdapter myAccountPayAdapter;
 
     private DefaultDialog defaultDialog;
 
@@ -70,43 +66,23 @@ public class AccountPayActivity extends BaseActivity<AccountPayPresenter> implem
     protected void onResume() {
         super.onResume();
         MobclickAgent.onPageStart("w_y_shouye_zjzx_chongzhi_list");
-        MobclickAgent.onResume(mActivity);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd("w_y_shouye_zjzx_chongzhi_list");
-        MobclickAgent.onPause(mActivity);
     }
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        initAdapter();
-        initRecyclerView();
         mPresenter.onCreate();
     }
 
-    private void initAdapter() {
-        myAccountPayAdapter = new MyAccountPayAdapter();
-        myAccountPayAdapter.setOnItemClickListener((adapter, view, position) -> {
-            String money = myAccountPayAdapter.getItem(position);
-            if (TextUtils.isEmpty(money)) return;
-            mPresenter.setPayMoney(Integer.valueOf(money.replace("元", "")));
-            myAccountPayAdapter.setPos(position);
-            myAccountPayAdapter.notifyDataSetChanged();
-        });
-    }
-
-    private void initRecyclerView() {
-        AppUtils.configRecyclerView(recyclerView, new GridLayoutManager(mActivity, 3));
-        recyclerView.setAdapter(myAccountPayAdapter);
-    }
-
     @Override
-    public void setPriceAdapter(List<String> priceList) {
-        myAccountPayAdapter.setNewData(priceList);
-        mPresenter.setPayMoney(Integer.valueOf(priceList.get(0).replace("元", "")));
+    public void initRecyclerView(MyAccountPayAdapter adapter) {
+        AppUtils.configRecyclerView(recyclerView, new GridLayoutManager(mActivity, 3));
+        recyclerView.setAdapter(adapter);
     }
 
     @Override

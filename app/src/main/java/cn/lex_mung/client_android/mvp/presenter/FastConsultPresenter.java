@@ -81,7 +81,7 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
     private int consultTypePos;
     private double payMoney;
     private double balance;
-    private int payType;
+    private int payType = 1;
     private String mobile;
     private String name;
     private int sex = 1;
@@ -137,11 +137,15 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
                 DataHelper.getStringSF(mApplication, DataHelperTags.HOME_PAGE_SOLUTION_TYPE)
                 , new TypeToken<List<SolutionTypeEntity>>() {
                 }.getType()));
+        List<SolutionTypeEntity> solutionTypeEntityList2 = new ArrayList<>();
+
         for (SolutionTypeEntity entity : solutionTypeEntityList) {
             if (entity.getQuick() == 1) {
                 solutionTypeStringList.add(entity.getTypeName());
+                solutionTypeEntityList2.add(entity);
             }
         }
+        solutionTypeEntityList = solutionTypeEntityList2;
         UserInfoDetailsEntity userInfoDetailsEntity = new Gson().fromJson(DataHelper.getStringSF(mApplication, DataHelperTags.USER_INFO_DETAIL), UserInfoDetailsEntity.class);
         mobile = userInfoDetailsEntity.getMobile();
         mRootView.setPhone(mobile);

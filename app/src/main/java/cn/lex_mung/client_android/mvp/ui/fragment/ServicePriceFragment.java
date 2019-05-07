@@ -1,6 +1,7 @@
 package cn.lex_mung.client_android.mvp.ui.fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,45 +11,35 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import cn.lex_mung.client_android.app.BundleTags;
-import cn.lex_mung.client_android.mvp.model.entity.BusinessEntity;
-import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
-import cn.lex_mung.client_android.mvp.ui.activity.AccountPayActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.ReleaseDemandActivity;
-import cn.lex_mung.client_android.mvp.ui.adapter.BusinessConfigurationAdapter;
-import cn.lex_mung.client_android.mvp.ui.dialog.DefaultDialog;
-import cn.lex_mung.client_android.mvp.ui.dialog.Dial1Dialog;
-import cn.lex_mung.client_android.mvp.ui.dialog.DialDialog;
-import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.BindView;
-import me.zl.mvp.base.BaseFragment;
-import me.zl.mvp.di.component.AppComponent;
-import me.zl.mvp.http.imageloader.ImageLoader;
-import me.zl.mvp.utils.AppUtils;
-
+import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.component.DaggerServicePriceComponent;
 import cn.lex_mung.client_android.di.module.ServicePriceModule;
 import cn.lex_mung.client_android.mvp.contract.ServicePriceContract;
+import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
+import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
 import cn.lex_mung.client_android.mvp.presenter.ServicePricePresenter;
-
-import cn.lex_mung.client_android.R;
-
-import com.umeng.analytics.MobclickAgent;
-
-import java.util.List;
-
-import javax.inject.Inject;
+import cn.lex_mung.client_android.mvp.ui.activity.AccountPayActivity;
+import cn.lex_mung.client_android.mvp.ui.adapter.ServicePriceAdapter;
+import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog;
+import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog2;
+import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog3;
+import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog4;
+import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog5;
+import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import me.zl.mvp.base.BaseFragment;
+import me.zl.mvp.di.component.AppComponent;
+import me.zl.mvp.utils.AppUtils;
 
 public class ServicePriceFragment extends BaseFragment<ServicePricePresenter> implements ServicePriceContract.View {
-    @Inject
-    ImageLoader mImageLoader;
-
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    private BusinessConfigurationAdapter adapter;
+    CallFieldDialog3 callFieldDialog3;
+    CallFieldDialog4 callFieldDialog4;
 
     public static ServicePriceFragment newInstance(LawsHomePagerBaseEntity entity) {
         ServicePriceFragment fragment = new ServicePriceFragment();
@@ -75,8 +66,6 @@ public class ServicePriceFragment extends BaseFragment<ServicePricePresenter> im
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        initAdapter();
-        initRecyclerView();
         if (getArguments() != null) {
             LawsHomePagerBaseEntity entity = (LawsHomePagerBaseEntity) getArguments().getSerializable(BundleTags.ENTITY);
             if (entity == null) return;
@@ -90,73 +79,56 @@ public class ServicePriceFragment extends BaseFragment<ServicePricePresenter> im
         mPresenter.onResume();
     }
 
-    private void initAdapter() {
-        adapter = new BusinessConfigurationAdapter(mImageLoader);
-        adapter.setOnItemChildClickListener((adapter1, view, position) -> {
-            if (isFastClick()) return;
-            if (mPresenter.isLogin()) {
-                BusinessEntity entity = adapter.getItem(position);
-                if (entity == null) return;
-                if (view.getId() == R.id.item_tv_release) {
-                    if (entity.getRequirementType() == 1) {//发需求
-                        MobclickAgent.onEvent(mActivity, "w_y__shouye_jjfa_list_fbxq");
-                        bundle.clear();
-                        bundle.putInt(BundleTags.ID, entity.getRequireTypeId());
-                        bundle.putInt(BundleTags.TYPE, entity.getType());
-                        bundle.putString(BundleTags.TITLE, entity.getRequireTypeName());
-                        bundle.putSerializable(BundleTags.ENTITY, mPresenter.getEntity());
-                        launchActivity(new Intent(mActivity, ReleaseDemandActivity.class), bundle);
-                    } else {//电话咨询
-                        MobclickAgent.onEvent(mActivity, "w_y_shouye_zjzx_detail_boda");
-                        mPresenter.expertPrice();
-                    }
-                }
-            } else {
-                bundle.clear();
-                bundle.putInt(BundleTags.TYPE, 1);
-                launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
-            }
-
-        });
-        adapter.setShow(false);
+    @Override
+    public void showDialDialog(ExpertPriceEntity entity) {
+        new CallFieldDialog2(mActivity
+                , dialog -> {
+            mPresenter.sendCall(entity.getCallCenterNo());
+            dialog.dismiss();
+        }
+                , entity).show();
     }
 
-    private void initRecyclerView() {
+    @Override
+    public void showDial1Dialog(String string) {
+        callFieldDialog3 = new CallFieldDialog3(mActivity,string,dialog -> {
+            callFieldDialog4 = new CallFieldDialog4(mActivity,"现在关闭将无法联系律师\n是否继续关闭");
+            callFieldDialog4.show();
+            dialog.dismiss();
+        });
+        callFieldDialog3.show();
+    }
+
+    @Override
+    public void initRecyclerView(ServicePriceAdapter adapter) {
         AppUtils.configRecyclerView(recyclerView, new LinearLayoutManager(mActivity));
         recyclerView.setAdapter(adapter);
     }
 
     @Override
-    public void setAdapter(List<BusinessEntity> data) {
-        adapter.setNewData(data);
-    }
-
-    @Override
-    public void showDialDialog(String string) {
-        new DialDialog(mActivity
-                , dialog -> mPresenter.sendCall()
-                , string)
-                .show();
-    }
-
-    @Override
-    public void showDial1Dialog(String string) {
-        new Dial1Dialog(mActivity
-                , string)
-                .show();
-    }
-
-    @Override
-    public void showToPayDialog() {
-        new DefaultDialog(mActivity
-                , dialog -> {
+    public void showToPayDialog(String s) {
+        new CallFieldDialog(mActivity, dialog -> {
             MobclickAgent.onEvent(mActivity, "w_y_shouye_zjzx_detail_chongzhi");
             launchActivity(new Intent(mActivity, AccountPayActivity.class));
+        }, s, "充值").show();
+    }
+
+    @Override
+    public void showToErrorDialog(String s) {
+        if(callFieldDialog3 != null && callFieldDialog3.isShowing()){
+            callFieldDialog3.dismiss();
         }
-                , getString(R.string.text_call_consult_lack_of_balance)
-                , getString(R.string.text_leave_for_top_up)
-                , getString(R.string.text_cancel))
-                .show();
+
+        if(callFieldDialog4 != null && callFieldDialog4.isShowing()){
+            callFieldDialog4.dismiss();
+        }
+
+        new CallFieldDialog5(mActivity, dialog -> {
+            Intent dialIntent =  new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "400-811-3060"));
+            startActivity(dialIntent);
+            dialog.dismiss();
+
+        }, s, "联系客服").show();
     }
 
     @Override

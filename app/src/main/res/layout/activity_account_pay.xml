@@ -112,7 +112,6 @@
         app:layout_constraintTop_toBottomOf="@id/view_horizontal_line_2" />
 
     <ImageView
-        android:id="@+id/iv_wx"
         android:layout_width="@dimen/qb_px_35"
         android:layout_height="@dimen/qb_px_35"
         android:layout_marginStart="@dimen/qb_px_35"
@@ -155,7 +154,6 @@
         app:layout_constraintTop_toBottomOf="@id/view_horizontal_line_4" />
 
     <ImageView
-        android:id="@+id/iv_zfb"
         android:layout_width="@dimen/qb_px_35"
         android:layout_height="@dimen/qb_px_35"
         android:layout_marginStart="@dimen/qb_px_35"
@@ -176,7 +174,6 @@
 
 
     <TextView
-        android:id="@+id/tv_account_tip"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/qb_px_35"

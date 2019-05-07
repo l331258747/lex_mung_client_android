@@ -69,6 +69,7 @@ public interface EventBusTags {
         int LAWYER_LIST_SCREEN_INFO_INSTITUTIONS = 101;
         int LAWYER_LIST_SCREEN_INFO_LIST = 102;
         int LAWYER_LIST_SCREEN_INFO_LIST_1 = 103;
+        int LAWYER_LIST_SCREEN_INFO_LIST_ID = 104;
     }
 
     interface MESSAGE_INFO {
@@ -103,5 +104,10 @@ public interface EventBusTags {
     interface MAP_INFO {
         String MAP_INFO = "map_info";
         int SELECT_PLACE = 100;
+    }
+
+    interface PAY_INFO {
+        String PAY_INFO = "pay_info";
+        int PAY_CONFIRM = 100;
     }
 }

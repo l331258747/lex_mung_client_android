@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomEditText">
+        <attr name="react_keys" format="string" />
+        <attr name="sp_mode" format="enum">
+            <enum name="integrated" value="0" />
+            <enum name="breakable" value="1" />
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="SimpleFlowLayout">
+        <attr name="hor_divider_width" format="dimension" />
+        <attr name="hor_row_height" format="dimension" />
+    </declare-styleable>
+
+
+    <declare-styleable name="TitleView">
+        <attr name="TitleView_title" format="string"/>
+        <attr name="TitleView_right_text" format="string"/>
+        <attr name="TitleView_right_img" format="reference"/>
+        <attr name="TitleView_left_img" format="reference"/>
+        <attr name="TitleView_bg" format="reference"/>
+    </declare-styleable>
+
+    <!--圆弧进度条-->
+    <declare-styleable name="TasksCompletedView">
+        <attr name="radius" format="dimension"/>
+        <attr name="strokeWidth" format="dimension"/>
+        <attr name="Completed_textColor" format="color"/>
+        <attr name="circleColor" format="color"/>
+        <attr name="ringColor" format="color"/>
+        <attr name="ringBgColor" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="EmptyView">
+        <attr name="EmptyView_bg" format="reference"/>
+    </declare-styleable>
+
+</resources>

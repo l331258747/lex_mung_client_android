@@ -1,8 +1,12 @@
 package cn.lex_mung.client_android.mvp.model.api;
 
+import java.util.List;
+
 import cn.lex_mung.client_android.mvp.model.entity.AboutEntity;
 import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BalanceEntity;
+import cn.lex_mung.client_android.mvp.model.entity.BannerEntity;
+import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.BusinessEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BusinessTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.CaseListEntity;
@@ -20,30 +24,31 @@ import cn.lex_mung.client_android.mvp.model.entity.IndustryEntity;
 import cn.lex_mung.client_android.mvp.model.entity.InstitutionEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity;
+import cn.lex_mung.client_android.mvp.model.entity.LawyerListScreenEntity;
 import cn.lex_mung.client_android.mvp.model.entity.MessageEntity;
 import cn.lex_mung.client_android.mvp.model.entity.MyLikeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.OrderDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.OrderEntity;
 import cn.lex_mung.client_android.mvp.model.entity.OrderStatusEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayEntity;
-import cn.lex_mung.client_android.mvp.model.entity.LawyerListScreenEntity;
 import cn.lex_mung.client_android.mvp.model.entity.RegionEntity;
 import cn.lex_mung.client_android.mvp.model.entity.ReleaseDemandOrgMoneyEntity;
 import cn.lex_mung.client_android.mvp.model.entity.RemainEntity;
 import cn.lex_mung.client_android.mvp.model.entity.RequirementStatusEntity;
-import cn.lex_mung.client_android.mvp.model.entity.RequirementTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.SolutionListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
-import cn.lex_mung.client_android.mvp.model.entity.BannerEntity;
-import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.TradingListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UnreadMessageCountEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UploadImageEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.VersionEntity;
-
-import java.util.List;
-
+import cn.lex_mung.client_android.mvp.model.entity.home.RequirementTypeV3Entity;
+import cn.lex_mung.client_android.mvp.model.entity.order.DocGetEntity;
+import cn.lex_mung.client_android.mvp.model.entity.order.DocUploadEntity;
+import cn.lex_mung.client_android.mvp.model.entity.order.RequirementCreateEntity;
+import cn.lex_mung.client_android.mvp.model.entity.order.RequirementDetailEntity;
+import cn.lex_mung.client_android.mvp.model.entity.order.RushOrderLawyerEntity;
+import cn.lex_mung.client_android.mvp.model.entity.order.RushOrderStatusEntity;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -102,7 +107,7 @@ public interface CommonService {
      *
      * @return BaseResponse
      */
-    @GET("common/lawyer/search/page/v2")
+    @GET("common/lawyer/search/page/v3")
     Observable<BaseResponse<List<LawyerListScreenEntity>>> getPeerSearchList();
 
     /**
@@ -159,7 +164,7 @@ public interface CommonService {
      *
      * @return UserAllInfoEntity
      */
-    @GET("common/member/homepage/base/v3/{targetMemberId}")
+    @GET("common/member/homepage/base/v4/{targetMemberId}")
     Observable<BaseResponse<LawsHomePagerBaseEntity>> getLawsHomePagerBase(@Path("targetMemberId") int id);
 
     /**
@@ -167,7 +172,7 @@ public interface CommonService {
      *
      * @return UserAllInfoEntity
      */
-    @GET("lawyer/member/homepage/base/v3/{targetMemberId}")
+    @GET("lawyer/member/homepage/base/v4/{targetMemberId}")
     Observable<BaseResponse<LawsHomePagerBaseEntity>> getLawsHomePagerBase1(@Path("targetMemberId") int id);
 
     /**
@@ -377,8 +382,8 @@ public interface CommonService {
      *
      * @return BaseResponse
      */
-    @GET("common/requirement/types/v2")
-    Observable<BaseResponse<List<RequirementTypeEntity>>> getHomepageRequirementType();
+    @GET("common/requirement/types/v3")
+    Observable<BaseResponse<RequirementTypeV3Entity>> getHomepageRequirementType();
 
     /**
      * 未登录获取全部权益列表
@@ -409,16 +414,16 @@ public interface CommonService {
      *
      * @return BaseResponse
      */
-    @GET("client/rights/{orgId}/{levelId}")
-    Observable<BaseResponse<EquitiesDetailsEntity>> getEquitiesDetails1(@Path("orgId") int orgId, @Path("levelId") int levelId);
+    @GET("client/rights/{orgId}/{level}")
+    Observable<BaseResponse<EquitiesDetailsEntity>> getEquitiesDetails1(@Path("orgId") int orgId, @Path("level") int levelId);
 
     /**
      * 权益组织详情
      *
      * @return BaseResponse
      */
-    @GET("common/rights/{orgId}/{levelId}")
-    Observable<BaseResponse<EquitiesDetailsEntity>> getEquitiesDetails(@Path("orgId") int orgId, @Path("levelId") int levelId);
+    @GET("common/rights/{orgId}/{level}")
+    Observable<BaseResponse<EquitiesDetailsEntity>> getEquitiesDetails(@Path("orgId") int orgId, @Path("level") int levelId);
 
     /**
      * 加入组织
@@ -564,5 +569,47 @@ public interface CommonService {
      */
     @GET("client/expert/call/{id}")
     Observable<BaseResponse<AgreementEntity>> sendCall(@Path("id") int id);
+
+    /**
+     * 用户上传订单文档
+     */
+    @Multipart
+    @POST("client/order/doc/upload")
+    Observable<BaseResponse<DocUploadEntity>> docUpload(@Part("order_no") RequestBody order_no,
+                                                        @Part MultipartBody.Part file);
+
+    ///client/order/doc/get/{orderNo}/{pageNum}/{pageSize}
+    //GET
+    //用户获取订单文档
+    @GET("client/order/doc/get/{orderNo}/{pageNum}/{pageSize}")
+    Observable<BaseResponse<DocGetEntity>> docGet(@Path("orderNo") String orderNo,@Path("pageNum") int pageNum,@Path("pageSize") int pageSize);
+
+    //发抢单类型商品需求
+    @POST("client/requirement/create")
+    Observable<BaseResponse<RequirementCreateEntity>> requirementCreate(@Body RequestBody body);
+
+    ///client/requirement/grablawyers
+    //POST
+    //获取当前需求可抢单的律师列表(5个)
+    @POST("client/requirement/grablawyers")
+    Observable<BaseResponse<List<RushOrderLawyerEntity>>> requirementGrablawyers(@Body RequestBody body);
+
+    ///client/requirement/status/check
+    //POST
+    //需求抢单状态查询
+    @POST("client/requirement/status/check")
+    Observable<BaseResponse<RushOrderStatusEntity>> requirementStatusCheck(@Body RequestBody body);
+
+    ///lawyer/order/requirement/detail/{requirementId}
+    //GET
+    //付费需求详细信息
+    @GET("lawyer/order/requirement/detail/{requirementId}")
+    Observable<BaseResponse<List<RequirementDetailEntity>>> requirementDetail(@Path("requirementId") int requirementId);
+
+    ///client/order/doc/read/{repositoryId}
+    //GET
+    //用户端更新文件已读状态
+    @GET("client/order/doc/read/{repositoryId}")
+    Observable<BaseResponse> docRead(@Path("repositoryId") String repositoryId);
 
 }

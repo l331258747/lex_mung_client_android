@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/c_ff"
+    android:paddingTop="@dimen/qb_px_15"
+    android:paddingBottom="@dimen/qb_px_15">
+
+    <TextView
+        android:id="@+id/item_tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:maxWidth="@dimen/qb_px_200"
+        android:singleLine="true"
+        android:textColor="@color/c_717171"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@id/item_tv_count"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/item_tv_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/qb_px_15"
+        android:includeFontPadding="false"
+        android:textColor="@color/c_717171"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@id/item_tv_title"
+        app:layout_constraintEnd_toStartOf="@id/item_progress_bar"
+        app:layout_constraintTop_toTopOf="@id/item_tv_title" />
+
+    <ProgressBar
+        android:id="@+id/item_progress_bar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="@dimen/qb_px_300"
+        android:layout_height="0dp"
+        android:progressDrawable="@drawable/progress_red"
+        app:layout_constraintBottom_toBottomOf="@id/item_tv_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/item_tv_title" />
+</android.support.constraint.ConstraintLayout>

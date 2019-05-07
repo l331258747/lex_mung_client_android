@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/c_ff"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/item_tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/qb_px_35"
+        android:layout_marginTop="@dimen/qb_px_35"
+        android:layout_marginEnd="@dimen/qb_px_35"
+        android:includeFontPadding="false"
+        android:textColor="@color/c_717171"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@id/item_iv_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_goneMarginStart="@dimen/qb_px_35" />
+
+    <EditText
+        android:id="@+id/item_tv_min_price"
+        android:layout_width="@dimen/qb_px_200"
+        android:layout_height="@dimen/qb_px_50"
+        android:layout_marginStart="@dimen/qb_px_35"
+        android:layout_marginTop="@dimen/qb_px_35"
+        android:layout_marginEnd="@dimen/qb_px_35"
+        android:background="@drawable/round_10_ffffff_all_717171"
+        android:gravity="center"
+        android:hint="@string/text_min_price"
+        android:includeFontPadding="false"
+        android:inputType="number"
+        android:maxLength="7"
+        android:singleLine="true"
+        android:textColor="@color/c_323232"
+        android:textColorHint="@color/c_b5b5b5"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_tv_title" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_2"
+        android:layout_marginStart="@dimen/qb_px_25"
+        android:layout_marginEnd="@dimen/qb_px_25"
+        android:background="@color/c_f4f4f4"
+        app:layout_constraintBottom_toBottomOf="@id/item_tv_min_price"
+        app:layout_constraintEnd_toStartOf="@id/item_tv_max_price"
+        app:layout_constraintStart_toEndOf="@id/item_tv_min_price"
+        app:layout_constraintTop_toTopOf="@id/item_tv_min_price" />
+
+    <EditText
+        android:id="@+id/item_tv_max_price"
+        android:layout_width="@dimen/qb_px_200"
+        android:layout_height="@dimen/qb_px_50"
+        android:layout_marginStart="@dimen/qb_px_35"
+        android:layout_marginTop="@dimen/qb_px_35"
+        android:layout_marginEnd="@dimen/qb_px_35"
+        android:background="@drawable/round_10_ffffff_all_717171"
+        android:gravity="center"
+        android:hint="@string/text_max_price"
+        android:includeFontPadding="false"
+        android:inputType="number"
+        android:maxLength="7"
+        android:singleLine="true"
+        android:textColor="@color/c_323232"
+        android:textColorHint="@color/c_b5b5b5"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/item_tv_title" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_35"
+        android:layout_marginTop="@dimen/qb_px_35"
+        android:background="@color/c_f4f4f4"
+        app:layout_constraintTop_toBottomOf="@id/item_tv_min_price" />
+</android.support.constraint.ConstraintLayout>

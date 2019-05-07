@@ -4,6 +4,8 @@ import android.app.Application;
 import android.os.Message;
 import android.text.TextUtils;
 
+import cn.lex_mung.client_android.mvp.model.entity.home.RequirementTypeV3Entity;
+import cn.lex_mung.client_android.utils.GsonUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -23,7 +25,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.mvp.contract.HomePagerContract;
-import cn.lex_mung.client_android.mvp.model.entity.RequirementTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BannerEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
@@ -118,10 +119,9 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                 }
                 String requirementTypeJson = DataHelper.getStringSF(mApplication, DataHelperTags.HOME_PAGE_REQUIREMENT_TYPE);
                 if (!TextUtils.isEmpty(requirementTypeJson)) {
-                    List<RequirementTypeEntity> listBeans = new Gson().fromJson(requirementTypeJson, new TypeToken<List<RequirementTypeEntity>>() {
-                    }.getType());
+                    RequirementTypeV3Entity listBeans = GsonUtil.convertString2Object(requirementTypeJson,RequirementTypeV3Entity.class);
                     if (listBeans != null) {
-                        mRootView.setRequirementTypeAdapter(listBeans);
+                        mRootView.setRequirementTypeAdapter(listBeans.getNormal());
                     }
                 }
             } catch (Exception ignored) {
@@ -184,12 +184,14 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<List<RequirementTypeEntity>>>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<RequirementTypeV3Entity>>(mErrorHandler) {
                     @Override
-                    public void onNext(BaseResponse<List<RequirementTypeEntity>> baseResponse) {
+                    public void onNext(BaseResponse<RequirementTypeV3Entity> baseResponse) {
                         if (baseResponse.isSuccess()) {
-                            mRootView.setRequirementTypeAdapter(baseResponse.getData());
+                            mRootView.setRequirementTypeAdapter(baseResponse.getData().getNormal());
                             DataHelper.setStringSF(mApplication, DataHelperTags.HOME_PAGE_REQUIREMENT_TYPE, new Gson().toJson(baseResponse.getData()));
+                            mRootView.setHotContract(baseResponse.getData().getHot());
+                            mRootView.setMoreContract(baseResponse.getData().getMore());
                         }
                     }
                 });
@@ -231,4 +233,5 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
         this.mImageLoader = null;
         this.mApplication = null;
     }
+
 }

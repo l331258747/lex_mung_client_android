@@ -69,14 +69,12 @@ public class AddEquitiesOrgActivity extends BaseActivity<AddEquitiesOrgPresenter
     protected void onResume() {
         super.onResume();
         MobclickAgent.onPageStart("w_y_qxxz_detail");
-        MobclickAgent.onResume(mActivity);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd("w_y_qxxz_detail");
-        MobclickAgent.onPause(mActivity);
     }
 
     @Override

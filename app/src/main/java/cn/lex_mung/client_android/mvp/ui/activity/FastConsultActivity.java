@@ -31,6 +31,7 @@ import com.umeng.analytics.MobclickAgent;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.lex_mung.client_android.utils.LogUtil;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
@@ -105,14 +106,12 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
     protected void onResume() {
         super.onResume();
         MobclickAgent.onPageStart("w_y_shouye_kszx_detail");
-        MobclickAgent.onResume(mActivity);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd("w_y_shouye_kszx_detail");
-        MobclickAgent.onPause(mActivity);
     }
 
     @Override

@@ -12,17 +12,8 @@ import android.view.InflateException;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-import me.zl.mvp.base.delegate.IActivity;
-import me.zl.mvp.integration.cache.Cache;
-import me.zl.mvp.integration.cache.CacheType;
-import me.zl.mvp.integration.lifecycle.ActivityLifecycleable;
-import me.zl.mvp.mvp.IPresenter;
-import me.zl.mvp.utils.AppUtils;
-
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.zl.mvp.R;
-
-import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
@@ -30,6 +21,12 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
+import me.zl.mvp.base.delegate.IActivity;
+import me.zl.mvp.integration.cache.Cache;
+import me.zl.mvp.integration.cache.CacheType;
+import me.zl.mvp.integration.lifecycle.ActivityLifecycleable;
+import me.zl.mvp.mvp.IPresenter;
+import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.StatusBarUtil;
 
 /**
@@ -76,6 +73,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mActivity = this;
+
         mCache = AppUtils.obtainAppComponentFromContext(mActivity).extras();
         bundle = new Bundle();
         bundleIntent = getIntent().getExtras();
@@ -90,7 +88,6 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
             e.printStackTrace();
         }
         StatusBarUtil.setColor(mActivity, AppUtils.getColor(mActivity, R.color.theme), 0);
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         initData(savedInstanceState);
     }
 

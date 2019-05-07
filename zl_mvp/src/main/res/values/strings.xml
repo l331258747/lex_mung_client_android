@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">zl_mvp</string>
-    <color name="theme">#1ec88c</color>
+    <color name="theme">#ffffff</color>
     <string name="format_amount"><xliff id="AGE">%1$1.2f</xliff></string>
 </resources>

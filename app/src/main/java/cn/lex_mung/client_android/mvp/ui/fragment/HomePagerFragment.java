@@ -7,34 +7,18 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import cn.lex_mung.client_android.R;
-import cn.lex_mung.client_android.app.BundleTags;
-import cn.lex_mung.client_android.di.component.DaggerHomePagerComponent;
-import cn.lex_mung.client_android.di.module.HomePagerModule;
-import cn.lex_mung.client_android.mvp.contract.HomePagerContract;
-import cn.lex_mung.client_android.mvp.model.entity.RequirementTypeEntity;
-import cn.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
-import cn.lex_mung.client_android.mvp.model.entity.BannerEntity;
-import cn.lex_mung.client_android.mvp.presenter.HomePagerPresenter;
-import cn.lex_mung.client_android.mvp.ui.activity.FastConsultActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.LawyerListActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.MainActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.MessageActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
-import cn.lex_mung.client_android.mvp.ui.adapter.HomePageRequirementTypeAdapter;
-import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import com.umeng.analytics.MobclickAgent;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -47,24 +31,43 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.app.DataHelperTags;
+import cn.lex_mung.client_android.di.component.DaggerHomePagerComponent;
+import cn.lex_mung.client_android.di.module.HomePagerModule;
+import cn.lex_mung.client_android.mvp.contract.HomePagerContract;
+import cn.lex_mung.client_android.mvp.model.entity.BannerEntity;
+import cn.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
+import cn.lex_mung.client_android.mvp.model.entity.home.NormalBean;
+import cn.lex_mung.client_android.mvp.presenter.HomePagerPresenter;
+import cn.lex_mung.client_android.mvp.ui.activity.FastConsultActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.LawyerListActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.MainActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.MessageActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.ReleaseDemandActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.RushOrdersActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
+import cn.lex_mung.client_android.mvp.ui.adapter.HomePageRequirementTypeAdapter;
+import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import me.zl.mvp.base.AdapterViewPager;
+import me.zl.mvp.base.App;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.utils.AppUtils;
+import me.zl.mvp.utils.DataHelper;
 
 public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implements HomePagerContract.View {
     @Inject
     ImageLoader mImageLoader;
 
-    @BindView(R.id.tv_message_count)
-    TextView tvMessageCount;
-    @BindView(R.id.tv_free_consult_1)
-    TextView tvFreeConsult1;
-    @BindView(R.id.tv_fast_consult_1)
-    TextView tvFastConsult1;
-    @BindView(R.id.tv_experts_consult_1)
-    TextView tvExpertsConsult1;
+//    @BindView(R.id.tv_message_count)
+//    TextView tvMessageCount;
+    @BindView(R.id.iv_message)
+    ImageView iv_message;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.banner)
@@ -73,6 +76,19 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     TabLayout tabLayout;
     @BindView(R.id.view_pager)
     ViewPager viewPager;
+
+    @BindView(R.id.rl_hot_1)
+    RelativeLayout rlHot1;
+    @BindView(R.id.rl_hot_2)
+    RelativeLayout rlHot2;
+    @BindView(R.id.rl_hot_3)
+    RelativeLayout rlHot3;
+    @BindView(R.id.tv_hot_1)
+    TextView tvHot1;
+    @BindView(R.id.tv_hot_2)
+    TextView tvHot2;
+    @BindView(R.id.tv_hot_3)
+    TextView tvHot3;
 
     private List<Fragment> fragments = new ArrayList<>();
     private List<String> titles = new ArrayList<>();
@@ -116,21 +132,6 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         isCreated = true;
-        String freeConsult = "<font color=\"#1EC88C\">"
-                + getString(R.string.text_free)
-                + "</font>"
-                + mContext.getString(R.string.text_free_consult_1);
-        String fastConsult = "<font color=\"#1EC88C\">"
-                + getString(R.string.text_fast_consult_1)
-                + "</font>"
-                + mContext.getString(R.string.text_fast_consult_2);
-        String expertsConsult = "<font color=\"#1EC88C\">"
-                + getString(R.string.text_experts_consult_1)
-                + "</font>"
-                + mContext.getString(R.string.text_experts_consult_2);
-        tvFreeConsult1.setText(Html.fromHtml(freeConsult));
-        tvFastConsult1.setText(Html.fromHtml(fastConsult));
-        tvExpertsConsult1.setText(Html.fromHtml(expertsConsult));
 
         initAdapter();
         initRecyclerView();
@@ -148,16 +149,8 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         adapter = new HomePageRequirementTypeAdapter(mImageLoader);
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;
-            RequirementTypeEntity entity = adapter.getItem(position);
-            if (entity == null) return;
-            if (entity.getJumptype() == 1) {
-                ((MainActivity) mActivity).switchPage(2);
-            } else {
-                bundle.clear();
-                bundle.putString(BundleTags.URL, entity.getJumpUrl());
-                bundle.putBoolean(BundleTags.IS_SHARE, false);
-                launchActivity(new Intent(mActivity, WebActivity.class), bundle);
-            }
+            NormalBean entity = adapter.getItem(position);
+            contractClick(entity);
         });
     }
 
@@ -174,6 +167,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                         , ImageConfigImpl
                                 .builder()
                                 .url(path.toString())
+                                .imageRadius(AppUtils.dip2px(mActivity,10))
                                 .imageView(imageView)
                                 .build());
             }
@@ -182,6 +176,19 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
             try {
                 if (isFastClick()) return;
                 BannerEntity.ListBean bean = mPresenter.getBannerList().get(position);
+                String linkValue = bean.getLinkValue();
+                if(TextUtils.isEmpty(linkValue))
+                    return;
+                if(linkValue.indexOf("orgId=") != -1){
+                    ((MainActivity) mActivity).switchPage(2);
+                    return;
+                }
+                if(linkValue.indexOf("needLogin=1") != -1 && !DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)){
+                    bundle.clear();
+                    bundle.putInt(BundleTags.TYPE, 1);
+                    launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
+                    return;
+                }
                 bundle.clear();
                 bundle.putString(BundleTags.URL, bean.getLinkValue());
                 bundle.putString(BundleTags.TITLE, bean.getTitle());
@@ -277,13 +284,47 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
 
     @Override
     public void setUnreadMessageCount(String count) {
-        tvMessageCount.setText(count);
-        tvMessageCount.setVisibility(View.VISIBLE);
+//        tvMessageCount.setText(count);
+//        tvMessageCount.setVisibility(View.VISIBLE);
+        iv_message.setImageDrawable(ContextCompat.getDrawable(mActivity,R.drawable.ic_message));
     }
 
     @Override
     public void hideUnreadMessageCount() {
-        tvMessageCount.setVisibility(View.GONE);
+//        tvMessageCount.setVisibility(View.GONE);
+        iv_message.setImageDrawable(ContextCompat.getDrawable(mActivity,R.drawable.ic_message_un));
+    }
+
+    @Override
+    public void setHotContract(List<NormalBean> datas) {
+
+        if(datas == null || datas.size() == 0)
+            return;
+        tvHot1.setText(datas.get(0).getRequireTypeName());
+        rlHot1.setOnClickListener(v -> contractClick(datas.get(0)));
+        if(datas.size() >= 2){
+            tvHot2.setText(datas.get(1).getRequireTypeName());
+            rlHot2.setOnClickListener(v -> contractClick(datas.get(1)));
+        }
+    }
+
+    @Override
+    public void setMoreContract(List<NormalBean> datas) {
+        tvHot3.setText(datas.get(0).getRequireTypeName());
+        rlHot3.setOnClickListener(v -> contractClick(datas.get(0)));
+    }
+
+    public void contractClick(NormalBean entity){
+        if (entity == null) return;
+        if (entity.getJumptype() == 1) {
+            ((MainActivity) mActivity).switchPage(2);
+        } else {
+            bundle.clear();
+            bundle.putString(BundleTags.URL, entity.getJumpUrl());
+            bundle.putString(BundleTags.TITLE, entity.getRequireTypeName());
+            bundle.putBoolean(BundleTags.IS_SHARE, false);
+            launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+        }
     }
 
     @Override
@@ -308,7 +349,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     }
 
     @Override
-    public void setRequirementTypeAdapter(List<RequirementTypeEntity> data) {
+    public void setRequirementTypeAdapter(List<NormalBean> data) {
         adapter.setNewData(data);
     }
 

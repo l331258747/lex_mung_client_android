@@ -20,7 +20,6 @@ import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.module.LawyerListModule;
 import cn.lex_mung.client_android.mvp.model.entity.BusinessTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.ConsultTypeEntity;
-import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity;
 import cn.lex_mung.client_android.mvp.model.entity.RegionEntity;
 import cn.lex_mung.client_android.mvp.ui.adapter.LawyerListAdapter;
 import cn.lex_mung.client_android.mvp.ui.adapter.LawyerListSortScreenAdapter;
@@ -43,9 +42,8 @@ import cn.lex_mung.client_android.mvp.contract.LawyerListContract;
 import cn.lex_mung.client_android.mvp.presenter.LawyerListPresenter;
 
 import cn.lex_mung.client_android.R;
+
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.umeng.analytics.MobclickAgent;
 
 import java.io.Serializable;
@@ -94,8 +92,6 @@ public class LawyerListActivity extends BaseActivity<LawyerListPresenter> implem
 
     private EasyDialog easyDialog;
 
-    private LawyerListAdapter lawyerListAdapter;
-
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerLawyerListComponent
@@ -110,14 +106,12 @@ public class LawyerListActivity extends BaseActivity<LawyerListPresenter> implem
     protected void onResume() {
         super.onResume();
         MobclickAgent.onPageStart("w_y_shouye_zjzx_detail");
-        MobclickAgent.onResume(mActivity);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd("w_y_shouye_zjzx_detail");
-        MobclickAgent.onPause(mActivity);
     }
 
     @Override
@@ -133,10 +127,7 @@ public class LawyerListActivity extends BaseActivity<LawyerListPresenter> implem
             mPresenter.setOrgId(bundleIntent.getInt(BundleTags.ORG_ID));
             mPresenter.setOrgLevId(bundleIntent.getInt(BundleTags.LEVEL));
         }
-        mPresenter.onCreate();
-        initAdapter();
-        initRecyclerView();
-        lawyerListAdapter.setEmptyView(R.layout.layout_loading_view, (ViewGroup) recyclerView.getParent());
+        mPresenter.onCreate(smartRefreshLayout);
         etSearch.setFilters(new InputFilter[]{CharacterHandler.emojiFilter});
         etSearch.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -147,38 +138,16 @@ public class LawyerListActivity extends BaseActivity<LawyerListPresenter> implem
         });
     }
 
-    private void initAdapter() {
-        lawyerListAdapter = new LawyerListAdapter(mImageLoader);
-        lawyerListAdapter.setOnItemClickListener((adapter, view, position) -> {
-            if (isFastClick()) return;
-            LawyerEntity.LawyerBean.ListBean bean = lawyerListAdapter.getItem(position);
-            if (bean == null) return;
-            bundle.clear();
-            bundle.putInt(BundleTags.ID, bean.getMemberId());
-            launchActivity(new Intent(mActivity, LawyerHomePageActivity.class), bundle);
-        });
+    @Override
+    public void initRecyclerView(LawyerListAdapter adapter) {
+        AppUtils.configRecyclerView(recyclerView, new LinearLayoutManager(mActivity));
+        recyclerView.setAdapter(adapter);
+        adapter.setEmptyView(R.layout.layout_loading_view, (ViewGroup) recyclerView.getParent());
     }
 
-    private void initRecyclerView() {
-        smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                if (mPresenter.getPageNum() < mPresenter.getTotalNum()) {
-                    mPresenter.setPageNum(mPresenter.getPageNum() + 1);
-                    mPresenter.getConsultList(true, false);
-                } else {
-                    smartRefreshLayout.finishLoadMoreWithNoMoreData();
-                }
-            }
-
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.setPageNum(1);
-                mPresenter.getConsultList(false, false);
-            }
-        });
-        AppUtils.configRecyclerView(recyclerView, new LinearLayoutManager(mActivity));
-        recyclerView.setAdapter(lawyerListAdapter);
+    @Override
+    public void setEmptyView(LawyerListAdapter adapter) {
+        adapter.setEmptyView(R.layout.layout_empty_view, (ViewGroup) recyclerView.getParent());
     }
 
     @OnClick({R.id.tv_search, R.id.ll_sort, R.id.ll_field, R.id.ll_region, R.id.ll_screen})
@@ -218,23 +187,6 @@ public class LawyerListActivity extends BaseActivity<LawyerListPresenter> implem
                 bundle.putSerializable(BundleTags.LIST, (Serializable) mPresenter.getList());
                 launchActivity(new Intent(mActivity, LawyerListScreenActivity.class), bundle);
                 break;
-        }
-    }
-
-    @Override
-    public void setAdapter(List<LawyerEntity.LawyerBean.ListBean> list, boolean isAdd) {
-        if (isAdd) {
-            lawyerListAdapter.addData(list);
-            smartRefreshLayout.finishLoadMore();
-        } else {
-            smartRefreshLayout.setNoMoreData(false);
-            lawyerListAdapter.setEmptyView(R.layout.layout_empty_view, (ViewGroup) recyclerView.getParent());
-            recyclerView.scrollToPosition(0);
-            smartRefreshLayout.finishRefresh();
-            lawyerListAdapter.setNewData(list);
-            if (mPresenter.getTotalNum() == mPresenter.getPageNum()) {
-                smartRefreshLayout.finishLoadMoreWithNoMoreData();
-            }
         }
     }
 

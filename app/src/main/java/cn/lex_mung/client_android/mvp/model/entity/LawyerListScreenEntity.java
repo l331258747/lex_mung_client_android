@@ -5,6 +5,15 @@ import java.util.List;
 
 public class LawyerListScreenEntity implements Serializable, SelectList {
 
+    public LawyerListScreenEntity(String propKey, String text, int isTile) {
+        this.propKey = propKey;
+        this.text = text;
+        this.isTile = isTile;
+    }
+
+    public LawyerListScreenEntity() {
+    }
+
     /**
      * propKey : practiceYearId
      * text : 执业年限
@@ -17,11 +26,29 @@ public class LawyerListScreenEntity implements Serializable, SelectList {
     private String text;
     private int isTile;
     private int margin;
-    private List<ItemsBean> items;
 
+    private List<ItemsBean> items;
     private int id;
     private int pos;
     private String content;
+    private double minPrice;
+    private double maxPrice;
+
+    public double getMinPrice() {
+        return minPrice;
+    }
+
+    public void setMinPrice(double minPrice) {
+        this.minPrice = minPrice;
+    }
+
+    public double getMaxPrice() {
+        return maxPrice;
+    }
+
+    public void setMaxPrice(double maxPrice) {
+        this.maxPrice = maxPrice;
+    }
 
     public int getId() {
         return id;

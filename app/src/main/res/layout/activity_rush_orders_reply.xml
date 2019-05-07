@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cl_rush_reply"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <View
+        android:id="@+id/view_card"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_600"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/qb_px_430"
+        android:background="@drawable/ic_rush_order_card" />
+
+    <ImageView
+        android:id="@+id/iv_head"
+        android:layout_width="@dimen/qb_px_180"
+        android:layout_height="@dimen/qb_px_180"
+        tools:src="@drawable/ic_lawyer_avatar"
+        app:layout_constraintBottom_toTopOf="@+id/view_card"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view_card" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_20"
+        tools:text="雷露露"
+        android:textColor="@color/c_323232"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/view_card"
+        app:layout_constraintStart_toStartOf="@+id/view_card"
+        app:layout_constraintTop_toBottomOf="@+id/iv_head" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_20"
+        tools:text="律所合伙人"
+        android:textColor="@color/c_737373"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/view_card"
+        app:layout_constraintStart_toStartOf="@+id/view_card"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+    <TextView
+        android:id="@+id/tv_content_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="@dimen/qb_px_10"
+        tools:text="湖南湘君律师事务所 | 执业7年"
+        android:textColor="@color/c_737373"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/view_card"
+        app:layout_constraintStart_toStartOf="@+id/view_card"
+        app:layout_constraintTop_toBottomOf="@+id/tv_content" />
+
+    <View
+        android:id="@+id/view_card_line"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_5"
+        android:layout_marginLeft="@dimen/qb_px_60"
+        android:layout_marginRight="@dimen/qb_px_60"
+        android:background="@color/c_f0f0f0"
+        app:layout_constraintBottom_toBottomOf="@+id/view_card"
+        app:layout_constraintEnd_toEndOf="@+id/view_card"
+        app:layout_constraintStart_toStartOf="@+id/view_card"
+        app:layout_constraintTop_toTopOf="@+id/view_card"
+        app:layout_constraintVertical_bias="0.49" />
+
+    <LinearLayout
+        android:id="@+id/ll_order_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_45"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/view_card"
+        app:layout_constraintStart_toStartOf="@+id/view_card"
+        app:layout_constraintTop_toBottomOf="@+id/view_card_line">
+
+        <TextView
+            android:id="@+id/tv_order_num"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            tools:text="12"
+            android:textColor="@color/c_323232"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_order_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            tools:text="6min"
+            android:textColor="@color/c_323232"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_order_fast_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            tools:text="6h"
+            android:textColor="@color/c_323232"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_order_score"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            tools:text="100%"
+            android:textColor="@color/c_323232"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_order_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_10"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/view_card"
+        app:layout_constraintStart_toStartOf="@+id/view_card"
+        app:layout_constraintTop_toBottomOf="@+id/ll_order_content">
+
+        <TextView
+            android:id="@+id/tv_order_num_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="接单数"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_order_time_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="响应时间"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_order_fast_time_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="首次完成时间"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_order_score_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="满意度"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_lawyer_call"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_510"
+        android:background="@drawable/ic_btn_black"
+        app:layout_constraintEnd_toEndOf="@+id/view_card"
+        app:layout_constraintStart_toStartOf="@+id/view_card"
+        app:layout_constraintTop_toTopOf="@+id/view_card"
+        tools:text="联系律师:1350212912"
+        android:gravity="center"
+        android:textColor="@color/c_d89b4b"/>
+
+    <TextView
+        android:id="@+id/tv_go_orderDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/c_b4b4b4"
+        app:layout_constraintTop_toBottomOf="@+id/tv_lawyer_call"
+        android:text="您也可以现在将合同发送给律师"/>
+
+</android.support.constraint.ConstraintLayout>

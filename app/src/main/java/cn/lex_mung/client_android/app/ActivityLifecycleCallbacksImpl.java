@@ -5,9 +5,13 @@ import android.app.Application;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
+
 import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
 
 /**
  * 监听所有activity的生命周期
@@ -41,15 +45,22 @@ public class ActivityLifecycleCallbacksImpl implements Application.ActivityLifec
             if (activity.findViewById(R.id.iv_back) != null) {
                 activity.findViewById(R.id.iv_back).setOnClickListener(v -> activity.onBackPressed());
             }
+
+            TitleView tv = activity.findViewById(R.id.titleView);
+            if (tv != null && tv.getLeftView().getVisibility() == View.VISIBLE) {
+                tv.getLeftView().setOnClickListener(v -> activity.onBackPressed());
+            }
         }
     }
 
     @Override
     public void onActivityResumed(Activity activity) {
+        MobclickAgent.onResume(activity);
     }
 
     @Override
     public void onActivityPaused(Activity activity) {
+        MobclickAgent.onPause(activity);
     }
 
     @Override

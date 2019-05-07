@@ -23,7 +23,11 @@ public final class GlobalConfiguration implements ConfigModule {
 
     @Override
     public void applyOptions(Context context, GlobalConfigModule.Builder builder) {
-        if (!BuildConfig.LOG_DEBUG) {
+//        if (!BuildConfig.LOG_DEBUG) {
+//            builder.printHttpLogLevel(RequestInterceptor.Level.NONE);
+//        }
+
+        if(BuildConfig.IS_PROD){//正式环境不打印log
             builder.printHttpLogLevel(RequestInterceptor.Level.NONE);
         }
 
@@ -39,7 +43,7 @@ public final class GlobalConfiguration implements ConfigModule {
                 .retrofitConfiguration((context1, retrofitBuilder) -> {//自定义配置Retrofit的参数
                 })
                 .okhttpConfiguration((context1, okHttpBuilder) -> {//自定义配置OkHttp的参数
-                    okHttpBuilder.writeTimeout(10, TimeUnit.SECONDS);
+                    okHttpBuilder.writeTimeout(15, TimeUnit.SECONDS);
                     okHttpBuilder.sslSocketFactory(SSLSocketClient.getSSLSocketFactory());
                     okHttpBuilder.hostnameVerifier(SSLSocketClient.getHostnameVerifier());
                 })

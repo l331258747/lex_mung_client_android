@@ -12,25 +12,25 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.google.gson.Gson;
-import cn.lex_mung.client_android.app.DataHelperTags;
-import cn.lex_mung.client_android.di.module.LaunchModule;
-import cn.lex_mung.client_android.mvp.model.entity.DeviceEntity;
-import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import com.umeng.analytics.AnalyticsConfig;
 
+import java.util.UUID;
+
+import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.app.DataHelperTags;
+import cn.lex_mung.client_android.di.component.DaggerLaunchComponent;
+import cn.lex_mung.client_android.di.module.LaunchModule;
+import cn.lex_mung.client_android.mvp.contract.LaunchContract;
+import cn.lex_mung.client_android.mvp.model.entity.DeviceEntity;
+import cn.lex_mung.client_android.mvp.presenter.LaunchPresenter;
+import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import cn.lex_mung.client_android.utils.LogUtil;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.DeviceUtils;
 import me.zl.mvp.utils.StatusBarUtil;
-
-import cn.lex_mung.client_android.di.component.DaggerLaunchComponent;
-import cn.lex_mung.client_android.mvp.contract.LaunchContract;
-import cn.lex_mung.client_android.mvp.presenter.LaunchPresenter;
-
-import cn.lex_mung.client_android.R;
-
-import java.util.UUID;
 
 public class LaunchActivity extends BaseActivity<LaunchPresenter> implements LaunchContract.View {
 
@@ -51,10 +51,6 @@ public class LaunchActivity extends BaseActivity<LaunchPresenter> implements Lau
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        StatusBarUtil.setColor(mActivity, AppUtils.getColor(mActivity, R.color.c_ff), 0);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
         WindowManager.LayoutParams attrs = getWindow().getAttributes();
         attrs.flags &= ~WindowManager.LayoutParams.FLAG_FULLSCREEN;
         AppUtils.statsInScreen(this);
@@ -80,6 +76,8 @@ public class LaunchActivity extends BaseActivity<LaunchPresenter> implements Lau
         } finally {
             mPresenter.getPermission();
         }
+
+        LogUtil.e("Channel：" + AnalyticsConfig.getChannel(mActivity));
     }
 
     @Override

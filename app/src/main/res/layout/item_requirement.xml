@@ -148,32 +148,32 @@
             android:textSize="14sp" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/item_ll_field"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/qb_px_20"
-        android:paddingStart="@dimen/qb_px_35"
-        android:paddingEnd="@dimen/qb_px_35">
+    <!--<LinearLayout-->
+        <!--android:id="@+id/item_ll_field"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="@dimen/qb_px_20"-->
+        <!--android:paddingStart="@dimen/qb_px_35"-->
+        <!--android:paddingEnd="@dimen/qb_px_35">-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:includeFontPadding="false"
-            android:text="律师擅长领域:"
-            android:textColor="@color/c_323232"
-            android:textSize="14sp" />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:includeFontPadding="false"-->
+            <!--android:text="律师擅长领域:"-->
+            <!--android:textColor="@color/c_323232"-->
+            <!--android:textSize="14sp" />-->
 
-        <TextView
-            android:id="@+id/item_tv_field"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/qb_px_10"
-            android:includeFontPadding="false"
-            android:singleLine="true"
-            android:textColor="@color/c_323232"
-            android:textSize="14sp" />
-    </LinearLayout>
+        <!--<TextView-->
+            <!--android:id="@+id/item_tv_field"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="@dimen/qb_px_10"-->
+            <!--android:includeFontPadding="false"-->
+            <!--android:singleLine="true"-->
+            <!--android:textColor="@color/c_323232"-->
+            <!--android:textSize="14sp" />-->
+    <!--</LinearLayout>-->
 
     <LinearLayout
         android:id="@+id/item_ll_price"

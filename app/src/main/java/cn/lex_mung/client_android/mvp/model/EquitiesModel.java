@@ -64,6 +64,13 @@ public class EquitiesModel extends BaseModel implements EquitiesContract.Model {
     }
 
     @Override
+    public Observable<BaseResponse<EquitiesDetailsEntity>> getEquitiesDetails1(int orgId, int levelId) {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .getEquitiesDetails1(orgId, levelId);
+    }
+
+    @Override
     public Observable<LawyerEntity> getLawyerList(int pageNum, RequestBody body) {
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)

@@ -5,22 +5,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
-import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
-import me.zl.mvp.integration.AppManager;
-import me.zl.mvp.di.scope.ActivityScope;
-import me.zl.mvp.mvp.BasePresenter;
-import me.zl.mvp.http.imageloader.ImageLoader;
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
-import me.zl.mvp.utils.DataHelper;
-import me.zl.mvp.utils.RxLifecycleUtils;
-import okhttp3.RequestBody;
+import com.google.gson.Gson;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
 
-import com.google.gson.Gson;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.mvp.contract.MyOrderContract;
@@ -29,14 +23,21 @@ import cn.lex_mung.client_android.mvp.model.entity.OrderEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultDetailActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MessageChatActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.OrderDetailTabActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.OrderDetailsActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.MyOrderAdapter;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-
-import java.util.HashMap;
-import java.util.Map;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
+import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
+import me.zl.mvp.di.scope.ActivityScope;
+import me.zl.mvp.http.imageloader.ImageLoader;
+import me.zl.mvp.integration.AppManager;
+import me.zl.mvp.mvp.BasePresenter;
+import me.zl.mvp.utils.DataHelper;
+import me.zl.mvp.utils.RxLifecycleUtils;
+import okhttp3.RequestBody;
 
 @ActivityScope
 public class MyOrderPresenter extends BasePresenter<MyOrderContract.Model, MyOrderContract.View> {
@@ -79,6 +80,14 @@ public class MyOrderPresenter extends BasePresenter<MyOrderContract.Model, MyOrd
                     mRootView.launchActivity(new Intent(mApplication, FreeConsultDetailActivity.class), bundle);
                     break;
                 case 5://客户需求
+                    if(entity.getIsHot() == 1){
+                        bundle.clear();
+                        bundle.putInt(BundleTags.ID, entity.getId());
+                        bundle.putString(BundleTags.ORDER_NO,entity.getOrderNo());
+                        bundle.putInt(BundleTags.STATE,entity.getOrderStatus());
+                        mRootView.launchActivity(new Intent(mApplication, OrderDetailTabActivity.class), bundle);
+                        return;
+                    }
                     bundle.clear();
                     bundle.putInt(BundleTags.ID, entity.getLawyerMemberId());
                     bundle.putString(BundleTags.TITLE, entity.getMemberName());
