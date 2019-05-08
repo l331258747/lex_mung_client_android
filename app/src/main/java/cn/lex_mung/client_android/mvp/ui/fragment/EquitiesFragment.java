@@ -114,6 +114,7 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
         }
         if (isVisibleToUser) {
             MobclickAgent.onPageStart("w_y_qylb_list");
+            mPresenter.onResume();//bug1 后加的
         } else {
             MobclickAgent.onPageEnd("w_y_qylb_list");
         }
@@ -129,7 +130,7 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.onResume();
+//        mPresenter.onResume();//bug1 出现菊花转个不停
     }
 
     @OnClick({R.id.view_add, R.id.view_trading_details, R.id.view_examine_all_equities, R.id.view_all_lawyer})

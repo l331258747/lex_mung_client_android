@@ -94,7 +94,7 @@ public class EquitiesPresenter extends BasePresenter<EquitiesContract.Model, Equ
     private void getEquitiesList() {
         mModel.getEquitiesList()
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(1, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> {
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -121,7 +121,7 @@ public class EquitiesPresenter extends BasePresenter<EquitiesContract.Model, Equ
     private void getEquitiesList_1() {
         mModel.getEquitiesList_1()
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(1, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> {
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())

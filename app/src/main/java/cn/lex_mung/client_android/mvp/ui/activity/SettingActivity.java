@@ -10,6 +10,7 @@ import android.webkit.CookieSyncManager;
 import android.webkit.WebView;
 import android.widget.TextView;
 
+import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.app.DownloadUtils;
 import cn.lex_mung.client_android.di.module.SettingModule;
 import cn.lex_mung.client_android.mvp.model.entity.VersionEntity;
@@ -22,6 +23,7 @@ import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.utils.AppUtils;
+import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.DeviceUtils;
 
 import cn.lex_mung.client_android.di.component.DaggerSettingComponent;
@@ -40,6 +42,8 @@ public class SettingActivity extends BaseActivity<SettingPresenter> implements S
 
     @BindView(R.id.tv_version_name)
     TextView tvVersionName;
+    @BindView(R.id.tv_logout)
+    TextView tvLogout;
     @BindView(R.id.web_view)
     WebView webView;
 
@@ -61,6 +65,10 @@ public class SettingActivity extends BaseActivity<SettingPresenter> implements S
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         tvVersionName.setText(String.format(getString(R.string.text_version), DeviceUtils.getVersionName(mActivity)));
+
+        if(!DataHelper.getBooleanSF(mActivity,DataHelperTags.IS_LOGIN_SUCCESS)){
+            tvLogout.setVisibility(View.GONE);
+        }
     }
 
     @Override

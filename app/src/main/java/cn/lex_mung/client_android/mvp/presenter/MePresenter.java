@@ -98,7 +98,7 @@ public class MePresenter extends BasePresenter<MeContract.Model, MeContract.View
     private void getUserInfoDetail() {
         mModel.getUserInfoDetail()
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(1, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> {
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())

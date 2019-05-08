@@ -192,7 +192,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
     private void getUserInfoDetail() {
         mModel.getUserInfoDetail()
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(3, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())

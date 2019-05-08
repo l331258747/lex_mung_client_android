@@ -200,7 +200,7 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
     private void getUnreadCount() {
         mModel.getUnreadCount()
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(1, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> {
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
