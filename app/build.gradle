@@ -63,7 +63,7 @@ android {
             minifyEnabled true
             shrinkResources true
             zipAlignEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro','proguard.cfg'
             signingConfig signingConfigs.release
         }
 
@@ -74,7 +74,6 @@ android {
 //            buildConfigField "boolean", "USE_CANARY", "true"
 
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
     }

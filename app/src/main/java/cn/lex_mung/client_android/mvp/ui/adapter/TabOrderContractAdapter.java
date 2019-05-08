@@ -64,6 +64,8 @@ public class TabOrderContractAdapter extends BaseQuickAdapter<ListBean, BaseView
                             .imageView(helper.getView(R.id.iv_head))
                             .isCircle(true)
                             .build());
+        }else{
+            helper.setImageDrawable(R.id.iv_head,ContextCompat.getDrawable(mContext,R.drawable.ic_lawyer_avatar));
         }
     }
 }
