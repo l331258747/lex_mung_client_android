@@ -11,6 +11,7 @@ import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocGetEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.ListBean;
 import me.zl.mvp.http.imageloader.ImageLoader;
+import me.zl.mvp.utils.DataHelper;
 
 public class TabOrderContractAdapter extends BaseQuickAdapter<ListBean, BaseViewHolder> {
     private ImageLoader mImageLoader;
@@ -65,7 +66,7 @@ public class TabOrderContractAdapter extends BaseQuickAdapter<ListBean, BaseView
                             .isCircle(true)
                             .build());
         }else{
-            helper.setImageDrawable(R.id.iv_head,ContextCompat.getDrawable(mContext,R.drawable.ic_lawyer_avatar));
+            helper.setImageDrawable(R.id.iv_head,ContextCompat.getDrawable(mContext,R.drawable.ic_avatar));
         }
     }
 }

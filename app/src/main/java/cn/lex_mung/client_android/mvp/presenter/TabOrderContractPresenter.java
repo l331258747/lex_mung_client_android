@@ -106,9 +106,10 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
             if (isFastClick()) return;
             ListBean bean = adapter.getItem(position);
             if (bean == null) return;
-            fileClick(bean.getName(), bean.getLink());
             if (bean.getCreate_member_id() != userInfoDetailsEntity.getMemberId() && bean.getIs_read() == 0) {
-                docRead(position, bean.getRepository_id());
+                docRead(position, bean.getRepository_id(),bean);
+            }else{
+                fileClick(bean.getName(), bean.getLink());
             }
         });
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -226,6 +227,7 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))
                 .subscribeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
                 .subscribe(new ErrorHandleSubscriber<BaseResponse<DocGetEntity>>(mErrorHandler) {
@@ -253,10 +255,11 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
                 });
     }
 
-    public void docRead(int position, String repositoryId) {
+    public void docRead(int position, String repositoryId,ListBean bean) {
         mModel.docRead(repositoryId)
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(1, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> {})
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
@@ -266,6 +269,7 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
                         if (baseResponse.isSuccess()) {
                             adapter.getData().get(position).setIs_read(3);
                             adapter.notifyItemChanged(position);
+                            fileClick(bean.getName(), bean.getLink());
                         }
                     }
                 });
