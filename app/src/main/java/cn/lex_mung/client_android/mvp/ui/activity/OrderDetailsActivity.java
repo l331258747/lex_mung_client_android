@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.app.TimeFormat;
 import cn.lex_mung.client_android.di.module.OrderDetailsModule;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
@@ -205,23 +206,25 @@ public class OrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> im
         @SuppressLint("SimpleDateFormat")
         MyCountDownTimer(long millisInFuture) {
             super(millisInFuture, 1000);
-            if (millisInFuture > 1000 * 60 * 60 * 24) {
-                sdf = new SimpleDateFormat("dd天 HH:mm:ss", Locale.getDefault());
-            } else if (millisInFuture > 1000 * 60 * 60) {
-                sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-            } else {
-                sdf = new SimpleDateFormat("mm:ss", Locale.getDefault());
-            }
-            sdf.setTimeZone(TimeZone.getTimeZone("GMT+0"));
+//            if (millisInFuture > 1000 * 60 * 60 * 24) {
+//                sdf = new SimpleDateFormat("dd天 HH:mm:ss", Locale.getDefault());
+//            } else if (millisInFuture > 1000 * 60 * 60) {
+//                sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+//            } else {
+//                sdf = new SimpleDateFormat("mm:ss", Locale.getDefault());
+//            }
+//            sdf.setTimeZone(TimeZone.getTimeZone("GMT+0"));
         }
 
         @Override
         @SuppressLint({"SetTextI18n"})
         public void onTick(long l) {
-            String s = sdf.format(new Date(l));
-            if (tvTime != null) {
-                tvTime.setText("剩余回电时间: " + s);
-            }
+//            String s = sdf.format(new Date(l));
+//            if (tvTime != null) {
+//                tvTime.setText("剩余回电时间: " + s);
+//            }
+            if (tvTime != null)
+                tvTime.setText("剩余回电时间: " + TimeFormat.countDownToStr(l,0));
         }
 
         @Override

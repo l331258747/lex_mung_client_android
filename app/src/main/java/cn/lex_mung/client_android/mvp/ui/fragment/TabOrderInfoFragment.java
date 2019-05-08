@@ -27,6 +27,7 @@ import java.util.TimeZone;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.app.TimeFormat;
 import cn.lex_mung.client_android.mvp.model.entity.order.RequirementDetailEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.OrderDetailTabActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.OrderDetailsActivity;
@@ -166,23 +167,25 @@ public class TabOrderInfoFragment extends BaseFragment<TabOrderInfoPresenter> im
         @SuppressLint("SimpleDateFormat")
         MyCountDownTimer(long millisInFuture) {
             super(millisInFuture, 1000);
-            if (millisInFuture > 1000 * 60 * 60 * 24) {
-                sdf = new SimpleDateFormat("dd天 HH:mm:ss", Locale.getDefault());
-            } else if (millisInFuture > 1000 * 60 * 60) {
-                sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-            } else {
-                sdf = new SimpleDateFormat("mm:ss", Locale.getDefault());
-            }
-            sdf.setTimeZone(TimeZone.getTimeZone("GMT+0"));
+//            if (millisInFuture > 1000 * 60 * 60 * 24) {
+//                sdf = new SimpleDateFormat("dd天 HH时mm分ss秒", Locale.getDefault());
+//            } else if (millisInFuture > 1000 * 60 * 60) {
+//                sdf = new SimpleDateFormat("HH时mm分ss秒", Locale.getDefault());
+//            } else {
+//                sdf = new SimpleDateFormat("mm分ss秒", Locale.getDefault());
+//            }
+//            sdf.setTimeZone(TimeZone.getTimeZone("GMT+0"));
         }
 
         @Override
         @SuppressLint({"SetTextI18n"})
         public void onTick(long l) {
-            String s = sdf.format(new Date(l));
-            if (tvTime != null) {
-                tvTime.setText("服务倒计时: " + s);
-            }
+//            String s = sdf.format(new Date(l));
+//            if (tvTime != null) {
+//                tvTime.setText("服务倒计时: " + s);
+//            }
+            if (tvTime != null)
+                tvTime.setText("服务倒计时: " + TimeFormat.countDownToStr(l,0));
         }
 
         @Override
