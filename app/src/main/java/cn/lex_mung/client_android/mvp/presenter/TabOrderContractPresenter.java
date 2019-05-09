@@ -5,7 +5,6 @@ import android.app.Application;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.text.TextUtils;
@@ -15,43 +14,35 @@ import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-import com.tencent.smtt.sdk.TbsReaderView;
 import com.yalantis.ucrop.util.FileUtils;
 
 import java.io.File;
 import java.net.SocketTimeoutException;
-import java.util.List;
 
-import cn.lex_mung.client_android.app.BundleTags;
+import javax.inject.Inject;
+
 import cn.lex_mung.client_android.app.Constants;
 import cn.lex_mung.client_android.app.DataHelperTags;
+import cn.lex_mung.client_android.mvp.contract.TabOrderContractContract;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocGetEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocUploadEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.ListBean;
-import cn.lex_mung.client_android.mvp.ui.activity.X5WebActivity;
-import cn.lex_mung.client_android.mvp.ui.adapter.MyCouponsAdapter;
+import cn.lex_mung.client_android.mvp.ui.activity.X5Web2Activity;
 import cn.lex_mung.client_android.mvp.ui.adapter.TabOrderContractAdapter;
 import cn.lex_mung.client_android.utils.FileUtil2;
 import cn.lex_mung.client_android.utils.LogUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
-import me.zl.mvp.base.App;
-import me.zl.mvp.integration.AppManager;
 import me.zl.mvp.di.scope.FragmentScope;
-import me.zl.mvp.mvp.BasePresenter;
 import me.zl.mvp.http.imageloader.ImageLoader;
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
-
-import javax.inject.Inject;
-import javax.sql.RowSetListener;
-
-import cn.lex_mung.client_android.mvp.contract.TabOrderContractContract;
+import me.zl.mvp.integration.AppManager;
+import me.zl.mvp.mvp.BasePresenter;
 import me.zl.mvp.utils.DataHelper;
-import me.zl.mvp.utils.FileUtil;
 import me.zl.mvp.utils.RxLifecycleUtils;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -164,7 +155,7 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
         Bundle bundle = new Bundle();
         bundle.putString("x5web_file_path", filePath);
         bundle.putString("x5web_file_name", fileName);
-        mRootView.launchActivity(new Intent(mApplication, X5WebActivity.class), bundle);
+        mRootView.launchActivity(new Intent(mApplication, X5Web2Activity.class), bundle);
     }
 
     /**
@@ -173,6 +164,15 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
      * @param file 压缩后的图片
      */
     private void docUpload(String order_no, File file) {
+        if (!FileUtil2.isFileExist(new File(FILE_CACHE_PATH + File.separator + file.getName()))) {
+            mRootView.showLoading("");
+            LogUtil.e("不存在");
+            FileUtil2.copyFile(file.getAbsolutePath(), FILE_CACHE_PATH + File.separator + file.getName());
+            mRootView.hideLoading();
+        } else {
+            LogUtil.e("已存在");
+        }
+
         RequestBody requestBody = RequestBody.create(MediaType.parse("text/plain"), order_no);
         RequestBody requestFile = RequestBody.create(MediaType.parse("application/octet-stream"), file);
         mModel.docUpload(requestBody, MultipartBody.Part.createFormData("file", file.getName(), requestFile))
@@ -187,14 +187,6 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
                     @Override
                     public void onNext(BaseResponse<DocUploadEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
-                            if (!FileUtil2.isFileExist(new File(FILE_CACHE_PATH + File.separator + file.getName()))) {
-                                mRootView.showLoading("");
-                                LogUtil.e("不存在");
-                                FileUtil2.copyFile(file.getAbsolutePath(), FILE_CACHE_PATH + File.separator + file.getName());
-                                mRootView.hideLoading();
-                            } else {
-                                LogUtil.e("已存在");
-                            }
                             getList(false);
                         } else {
                             mRootView.showMessage(baseResponse.getMessage());

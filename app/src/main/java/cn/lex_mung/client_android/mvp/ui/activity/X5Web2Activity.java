@@ -1,9 +1,10 @@
 package cn.lex_mung.client_android.mvp.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -12,12 +13,21 @@ import android.widget.RelativeLayout;
 import com.bumptech.glide.Glide;
 import com.tencent.smtt.sdk.TbsReaderView;
 
-import cn.lex_mung.client_android.R;
-import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
-import me.zl.mvp.utils.AppUtils;
-import me.zl.mvp.utils.StatusBarUtil;
+import cn.lex_mung.client_android.di.module.X5Web2Module;
+import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
-public class X5WebActivity extends AppCompatActivity implements TbsReaderView.ReaderCallback {
+import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
+import me.zl.mvp.base.BaseActivity;
+import me.zl.mvp.di.component.AppComponent;
+import me.zl.mvp.utils.AppUtils;
+
+import cn.lex_mung.client_android.di.component.DaggerX5Web2Component;
+import cn.lex_mung.client_android.mvp.contract.X5Web2Contract;
+import cn.lex_mung.client_android.mvp.presenter.X5Web2Presenter;
+
+import cn.lex_mung.client_android.R;
+
+public class X5Web2Activity extends BaseActivity<X5Web2Presenter> implements X5Web2Contract.View,TbsReaderView.ReaderCallback {
 
     LinearLayout ll_parent;
     TbsReaderView mTbsReaderView;
@@ -28,13 +38,22 @@ public class X5WebActivity extends AppCompatActivity implements TbsReaderView.Re
     TitleView titleView;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void setupActivityComponent(@NonNull AppComponent appComponent) {
+        DaggerX5Web2Component
+                .builder()
+                .appComponent(appComponent)
+                .x5Web2Module(new X5Web2Module(this))
+                .build()
+                .inject(this);
+    }
 
-        StatusBarUtil.setColor(this, AppUtils.getColor(this, com.zl.mvp.R.color.theme), 0);
+    @Override
+    public int initView(@Nullable Bundle savedInstanceState) {
+        return R.layout.activity_x5_web2;
+    }
 
-        setContentView(R.layout.activity_x5web);
-
+    @Override
+    public void initData(@Nullable Bundle savedInstanceState) {
         ll_parent = findViewById(R.id.ll_parent);
         iv_img = findViewById(R.id.iv_img);
         findViewById(R.id.titleView).setOnClickListener(v -> finish());
@@ -58,7 +77,6 @@ public class X5WebActivity extends AppCompatActivity implements TbsReaderView.Re
         }
     }
 
-
     private void displayFile() {
         Bundle bundle = new Bundle();
         bundle.putString("filePath", filePath);
@@ -74,14 +92,50 @@ public class X5WebActivity extends AppCompatActivity implements TbsReaderView.Re
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if(mTbsReaderView !=null)
-            mTbsReaderView.onStop();
+    public void showLoading(@NonNull String message) {
+        loading = LoadingDialog.getInstance().init(mActivity, message, false);
+        loading.show();
+    }
+
+    @Override
+    public void hideLoading() {
+        if (loading != null
+                && loading.isShowing())
+            loading.dismiss();
+    }
+
+    @Override
+    public void showMessage(@NonNull String message) {
+        AppUtils.makeText(mActivity, message);
+    }
+
+    @Override
+    public void launchActivity(@NonNull Intent intent) {
+        AppUtils.startActivity(intent);
+    }
+
+    @Override
+    public void launchActivity(Intent intent, Bundle bundle) {
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
+        launchActivity(intent);
+    }
+
+    @Override
+    public void killMyself() {
+        finish();
     }
 
     @Override
     public void onCallBackAction(Integer integer, Object o, Object o1) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mTbsReaderView !=null)
+            mTbsReaderView.onStop();
     }
 }

@@ -19,11 +19,11 @@
     <application
         android:name="me.zl.mvp.base.BaseApplication"
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:hardwareAccelerated="true"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
@@ -84,8 +84,12 @@
             android:value="default"
             tools:replace="android:value" /> <!-- ucrop -->
 
-        <meta-data android:value="5cce769d4ca357eee4000328" android:name="UMENG_APPKEY"/>
-        <meta-data android:name="UMENG_CHANNEL" android:value="${UMENG_CHANNEL_VALUE}" />
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5cce769d4ca357eee4000328" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${UMENG_CHANNEL_VALUE}" />
 
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
@@ -365,7 +369,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".mvp.ui.activity.X5WebActivity"
+            android:name=".mvp.ui.activity.X5Web2Activity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
