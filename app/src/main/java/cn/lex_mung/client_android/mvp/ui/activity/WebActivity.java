@@ -18,6 +18,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.app.ShareUtils;
 import cn.lex_mung.client_android.di.component.DaggerWebComponent;
 import cn.lex_mung.client_android.di.module.WebModule;
@@ -31,6 +32,7 @@ import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.integration.AppManager;
 import me.zl.mvp.utils.AppUtils;
+import me.zl.mvp.utils.DataHelper;
 
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO;
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_LIST_ID;
@@ -256,7 +258,11 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             });
         }
 
+        @JavascriptInterface
+        public String getToken(){
+            String token = DataHelper.getStringSF(mActivity, DataHelperTags.TOKEN);
+            return token;
+        }
+
     }
-
-
 }
