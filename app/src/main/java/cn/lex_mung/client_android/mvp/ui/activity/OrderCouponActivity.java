@@ -8,6 +8,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+
 import butterknife.BindView;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.decoration.SpacesItemDecoration;
@@ -23,6 +25,8 @@ import me.zl.mvp.utils.AppUtils;
 
 public class OrderCouponActivity extends BaseActivity<OrderCouponPresenter> implements OrderCouponContract.View {
 
+    @BindView(R.id.smart_refresh_layout)
+    SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
@@ -43,7 +47,7 @@ public class OrderCouponActivity extends BaseActivity<OrderCouponPresenter> impl
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        mPresenter.onCreate();
+        mPresenter.onCreate(smartRefreshLayout);
     }
 
     @Override

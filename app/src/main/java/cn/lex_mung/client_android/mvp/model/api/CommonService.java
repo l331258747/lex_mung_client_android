@@ -45,6 +45,7 @@ import cn.lex_mung.client_android.mvp.model.entity.VersionEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.RequirementTypeV3Entity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocGetEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocUploadEntity;
+import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RequirementCreateEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RequirementDetailEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RushOrderLawyerEntity;
@@ -611,5 +612,11 @@ public interface CommonService {
     //用户端更新文件已读状态
     @GET("client/order/doc/read/{repositoryId}")
     Observable<BaseResponse> docRead(@Path("repositoryId") String repositoryId);
+
+    ///client/quick/coupon
+    //POST
+    //用户快速电话咨询优惠券列表
+    @POST("client/quick/coupon")
+    Observable<BaseResponse<OrderCouponEntity>> quickCoupon(@Body RequestBody body);
 
 }
