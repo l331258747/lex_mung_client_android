@@ -8,10 +8,10 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.JavascriptInterface;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
 import android.widget.TextView;
 
+import com.tencent.smtt.sdk.WebChromeClient;
+import com.tencent.smtt.sdk.WebView;
 import com.umeng.analytics.MobclickAgent;
 
 import butterknife.BindView;
@@ -28,6 +28,7 @@ import cn.lex_mung.client_android.mvp.presenter.WebPresenter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.webview.LWebView;
 import cn.lex_mung.client_android.utils.GsonUtil;
+import cn.lex_mung.client_android.utils.LogUtil;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.integration.AppManager;
@@ -91,6 +92,9 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             image = bundleIntent.getString(BundleTags.IMAGE);
             isShare = bundleIntent.getBoolean(BundleTags.IS_SHARE, true);
         }
+
+        LogUtil.e("url:" + url);
+
         if (isShare) {
             tvRight.setVisibility(View.VISIBLE);
             tvRight.setText(R.string.text_share);
@@ -212,7 +216,6 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             super.onBackPressed();
         }
     }
-
 
     public class AndroidToJs extends Object {
 
