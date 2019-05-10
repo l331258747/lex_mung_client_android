@@ -9,6 +9,7 @@ import android.os.Message;
 import android.text.TextUtils;
 
 import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
+import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -114,7 +115,7 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
         payMoney = solutionTypeEntityList.get(position).getPrice();
         mRootView.setOrderMoney(String.format(
                 AppUtils.getString(mApplication, R.string.text_yuan_money)
-                , AppUtils.formatAmount(mApplication, payMoney)));
+                , AppUtils.formatAmount(mApplication, payMoney)),payMoney);
         mRootView.setMoney(String.format(
                 AppUtils.getString(mApplication, R.string.text_yuan_money)
                 , AppUtils.formatAmount(mApplication, payMoney)));
@@ -152,6 +153,7 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
         getUserBalance(userInfoDetailsEntity.getMemberId());
     }
 
+    //获取余额
     private void getUserBalance(int id) {
         mModel.getUserBalance(id)
                 .subscribeOn(Schedulers.io())
@@ -195,6 +197,7 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
         }, mRxPermissions, mErrorHandler);
     }
 
+    //支付
     public void pay(String name, String ua) {
         this.name = name;
         if (payMoney == 0) {
@@ -229,6 +232,13 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
         Map<String, Object> map = new HashMap<>();
         map.put("money", money);
         map.put("type", payType);
+
+        if (mRootView.getCouponPrice() > 0) {
+            map.put("deduction", mRootView.getCouponPrice());//优惠金额
+            map.put("useCoupon", 1);//使用优惠券
+            map.put("other", mRootView.getCouponId());
+        }
+
         map.put("source", 2);
         map.put("product", 2);
         map.put("ua", ua);
@@ -322,6 +332,7 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
         }
     }
 
+    //发送快速咨询（需要先支付才可以调用）
     private void releaseFastConsult() {
         Map<String, Object> map = new HashMap<>();
         map.put("payOrderNo", payOrderNo);
@@ -364,6 +375,34 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
                 });
     }
 
+    //获取优惠卷
+    public void getCoupon(){
+        mModel.quickCoupon()
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> mRootView.showLoading(""))
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<OrderCouponEntity>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<OrderCouponEntity> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            if(baseResponse.getData().getList() != null && baseResponse.getData().getList().size() > 0){
+                                OrderCouponEntity.ListBean bean = baseResponse.getData().getList().get(0);
+                                mRootView.setCouponLayout(bean,false);
+                            }else{
+                                mRootView.setCouponLayout(null,false);
+                            }
+                        }else{
+                            mRootView.setCouponLayout(null,false);
+                        }
+                    }
+                });
+    }
+
+    //服务规范url
     public void tariffExplanationUrl() {
         mModel.tariffExplanationUrl()
                 .subscribeOn(Schedulers.io())

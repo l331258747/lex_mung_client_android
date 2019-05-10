@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Message;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,15 +20,19 @@ import android.widget.TextView;
 import com.aigestudio.wheelpicker.WheelPicker;
 
 import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.component.DaggerFastConsultComponent;
 import cn.lex_mung.client_android.di.module.FastConsultModule;
 import cn.lex_mung.client_android.mvp.contract.FastConsultContract;
+import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
 import cn.lex_mung.client_android.mvp.presenter.FastConsultPresenter;
 import cn.lex_mung.client_android.mvp.ui.dialog.DefaultDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.EasyDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
 import com.umeng.analytics.MobclickAgent;
+
+import org.simple.eventbus.Subscriber;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -36,6 +41,9 @@ import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.DeviceUtils;
+
+import static cn.lex_mung.client_android.app.EventBusTags.ORDER_COUPON.ORDER_COUPON;
+import static cn.lex_mung.client_android.app.EventBusTags.ORDER_COUPON.REFRESH_COUPON;
 
 public class FastConsultActivity extends BaseActivity<FastConsultPresenter> implements FastConsultContract.View {
 
@@ -57,10 +65,14 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
     ImageView ivSelectZfb;
     @BindView(R.id.tv_balance_count)
     TextView tvBalanceCount;
+    @BindView(R.id.tv_discount_way)
+    TextView tvDiscountWay;
     @BindView(R.id.iv_select_balance)
     ImageView ivSelectBalance;
     @BindView(R.id.tv_order_money)
     TextView tvOrderMoney;
+    @BindView(R.id.tv_discount_money)
+    TextView tvDiscountMoney;
     @BindView(R.id.tv_change_phone_number)
     TextView tvChangePhoneNumber;
     @BindView(R.id.tv_fast_consult_tip)
@@ -87,6 +99,10 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
     private DefaultDialog defaultDialog;
     private EasyDialog easyDialog;
 
+    private int couponId;
+    private double orderPrice;
+    private double couponPrice;
+
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerFastConsultComponent
@@ -103,6 +119,33 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
     }
 
     @Override
+    public void setCouponLayout(OrderCouponEntity.ListBean bean, boolean showToast) {
+        if(bean == null){
+            tvDiscountWay.setText("");
+            tvDiscountMoney.setText(String.format(
+                    AppUtils.getString(mActivity, R.string.text_discount_money)
+                    , AppUtils.formatAmount(mActivity, 0)));
+            this.couponId = 0;
+            return;
+        }
+
+        if(orderPrice < bean.getFullNum()){
+            if(showToast){
+                showMessage("无法使用优惠卷");
+            }
+            LogUtil.e("无法使用优惠卷");
+            return;
+        }
+
+        tvDiscountWay.setText(bean.getCouponName());
+        tvDiscountMoney.setText(String.format(
+                AppUtils.getString(mActivity, R.string.text_discount_money)
+                , AppUtils.formatAmount(mActivity, bean.getReduceNum())));
+        this.couponId = bean.getCouponId();
+        this.couponPrice = bean.getReduceNum();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         MobclickAgent.onPageStart("w_y_shouye_kszx_detail");
@@ -115,10 +158,24 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
     }
 
     @Override
+    public double getCouponPrice() {
+        return couponPrice;
+    }
+
+    @Override
+    public int getCouponId() {
+        return couponId;
+    }
+
+    @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         mPresenter.onCreate();
         tvOrderMoney.setText(String.format(
                 AppUtils.getString(mActivity, R.string.text_yuan_money)
+                , AppUtils.formatAmount(mActivity, 0)));
+        orderPrice = 0;
+        tvDiscountMoney.setText(String.format(
+                AppUtils.getString(mActivity, R.string.text_discount_money)
                 , AppUtils.formatAmount(mActivity, 0)));
         String string = getString(R.string.text_fast_consult_tip_1)
                 + "<font color=\"#1EC88C\">"
@@ -139,8 +196,9 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
     }
 
     @Override
-    public void setOrderMoney(String money) {
+    public void setOrderMoney(String money,double orderMoney) {
         tvOrderMoney.setText(money);
+        orderPrice = orderMoney;
     }
 
     @Override
@@ -189,6 +247,7 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
             , R.id.tv_fast_consult_tip_1
             , R.id.tv_ms
             , R.id.tv_mr
+            , R.id.view_discount_way
     })
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -244,6 +303,24 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
                     tvChangePhoneNumber.setText(R.string.text_change_phone_number);
                 }
                 break;
+            case R.id.view_discount_way:
+                bundle.clear();
+                bundle.putInt(BundleTags.ID, couponId);//优惠卷id
+                launchActivity(new Intent(mActivity, OrderCouponActivity.class), bundle);
+                break;
+        }
+    }
+
+    /**
+     * 更新优惠卷
+     */
+    @Subscriber(tag = ORDER_COUPON)
+    private void selectPlace(Message message) {
+        switch (message.what) {
+            case REFRESH_COUPON:
+                OrderCouponEntity.ListBean bean = (OrderCouponEntity.ListBean) message.obj;
+                setCouponLayout(bean,true);
+                break;
         }
     }
 
@@ -269,6 +346,8 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
         mPresenter.setConsultTypePos(0);
         layout.findViewById(R.id.tv_cancel).setOnClickListener(v -> dismiss());
         layout.findViewById(R.id.tv_confirm).setOnClickListener(v -> {
+            mPresenter.getCoupon();
+
             tvConsultType.setText(mPresenter.getConsultType());
             dismiss();
         });

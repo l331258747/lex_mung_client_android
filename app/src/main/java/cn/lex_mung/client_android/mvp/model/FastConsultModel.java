@@ -4,7 +4,11 @@ import android.app.Application;
 
 import com.google.gson.Gson;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
+import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.integration.IRepositoryManager;
 import me.zl.mvp.mvp.BaseModel;
@@ -66,5 +70,16 @@ public class FastConsultModel extends BaseModel implements FastConsultContract.M
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .tariffExplanationUrl();
+    }
+
+    @Override
+    public Observable<BaseResponse<OrderCouponEntity>> quickCoupon() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("pageNum", 1);
+        map.put("pageSize", 10);
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map));
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .quickCoupon(body);
     }
 }

@@ -3,16 +3,27 @@ package cn.lex_mung.client_android.mvp.ui.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 
+import com.amap.api.maps2d.CameraUpdateFactory;
+import com.amap.api.maps2d.model.CameraPosition;
+import com.amap.api.maps2d.model.LatLng;
+import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.core.PoiItem;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
+import org.simple.eventbus.Subscriber;
+
 import butterknife.BindView;
+import butterknife.OnClick;
 import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.app.decoration.SpacesItemDecoration;
 import cn.lex_mung.client_android.di.component.DaggerOrderCouponComponent;
 import cn.lex_mung.client_android.di.module.OrderCouponModule;
@@ -24,12 +35,17 @@ import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
 
+import static cn.lex_mung.client_android.app.EventBusTags.ORDER_COUPON.ORDER_COUPON;
+import static cn.lex_mung.client_android.app.EventBusTags.ORDER_COUPON.REFRESH_COUPON;
+
 public class OrderCouponActivity extends BaseActivity<OrderCouponPresenter> implements OrderCouponContract.View {
 
     @BindView(R.id.smart_refresh_layout)
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+
+    int couponId;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -48,7 +64,11 @@ public class OrderCouponActivity extends BaseActivity<OrderCouponPresenter> impl
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        mPresenter.onCreate(smartRefreshLayout);
+        couponId = bundleIntent.getInt(BundleTags.ID,-1);
+        if(couponId == 0)
+            couponId = -1;
+
+        mPresenter.onCreate(smartRefreshLayout,couponId);
     }
 
     @Override
@@ -57,6 +77,19 @@ public class OrderCouponActivity extends BaseActivity<OrderCouponPresenter> impl
         recyclerView.addItemDecoration(new SpacesItemDecoration(0, AppUtils.dip2px(mActivity, AppUtils.getXmlDef(mActivity, R.dimen.qb_px_35))));
         recyclerView.setAdapter(adapter);
         adapter.setEmptyView(R.layout.layout_loading_view, (ViewGroup) recyclerView.getParent());
+    }
+
+    //tv_no_coupon
+    @OnClick({
+            R.id.tv_no_coupon
+    })
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tv_no_coupon:
+                AppUtils.post(ORDER_COUPON, REFRESH_COUPON, null);
+                killMyself();
+                break;
+        }
     }
 
     @Override

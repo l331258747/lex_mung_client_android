@@ -201,8 +201,8 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
             if(type != 1) return;
             adapter.setPos(position);
             adapter.notifyDataSetChanged();
-//            requireTypeId = entity.getRequireTypeId();
-//            requireTypeName = entity.getRequireTypeName();
+            requireTypeId = entity.getRequireTypeId();
+            requireTypeName = entity.getRequireTypeName();
             getReleaseDemandOrgMoney();
         });
         mRootView.initRecyclerView(adapter);
@@ -227,6 +227,10 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                         if (baseResponse.isSuccess()) {
                             if(type == 1){
                                 adapter.setNewData(baseResponse.getData());
+                                if (baseResponse.getData().size() == 1) {
+                                    requireTypeId = baseResponse.getData().get(0).getRequireTypeId();
+                                    requireTypeName = baseResponse.getData().get(0).getRequireTypeName();
+                                }
                             }else{
                                 List<BusinessEntity> entities = new ArrayList<>();
                                 for (BusinessEntity entity : baseResponse.getData()){
@@ -238,10 +242,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                             }
 
                             mRootView.hideLoadingLayout();
-//                            if (baseResponse.getData().size() == 1) {
-//                                requireTypeId = baseResponse.getData().get(0).getRequireTypeId();
-//                                requireTypeName = baseResponse.getData().get(0).getRequireTypeName();
-//                            }
+
                         }
                     }
                 });

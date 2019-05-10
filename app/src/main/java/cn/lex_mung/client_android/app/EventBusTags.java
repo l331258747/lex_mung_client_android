@@ -110,4 +110,9 @@ public interface EventBusTags {
         String PAY_INFO = "pay_info";
         int PAY_CONFIRM = 100;
     }
+
+    interface ORDER_COUPON{
+        String ORDER_COUPON = "order_coupon";
+        int REFRESH_COUPON = 100;
+    }
 }

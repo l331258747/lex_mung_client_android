@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -696,6 +697,67 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_balance" />
 
+            <!--start 优惠-->
+            <View
+                android:id="@+id/view_discount_way"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/qb_px_35"
+                android:background="@drawable/button_withe_down"
+                app:layout_constraintBottom_toBottomOf="@id/tv_discount_way"
+                app:layout_constraintTop_toBottomOf="@id/view_pay_way" />
+
+            <TextView
+                android:id="@+id/tv_discount_way_x"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="@string/text_x"
+                android:textColor="@color/c_ea5514"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_discount_way_text"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
+                app:layout_constraintTop_toTopOf="@id/tv_discount_way_text" />
+
+            <TextView
+                android:id="@+id/tv_discount_way_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_20"
+                android:layout_marginTop="@dimen/qb_px_35"
+                android:includeFontPadding="false"
+                android:text="@string/text_text_discount_way"
+                android:textColor="@color/c_717171"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
+                app:layout_constraintTop_toTopOf="@id/view_discount_way" />
+
+            <TextView
+                android:id="@+id/tv_discount_way"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/qb_px_100"
+                android:layout_marginEnd="@dimen/qb_px_50"
+                android:gravity="center_vertical"
+                android:hint="@string/text_please_select_discount_way"
+                android:includeFontPadding="false"
+                android:singleLine="true"
+                android:textColor="@color/c_323232"
+                android:textColorHint="@color/c_b5b5b5"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@id/guideline3"
+                app:layout_constraintStart_toStartOf="@id/guideline2"
+                app:layout_constraintTop_toBottomOf="@id/tv_discount_way_text" />
+
+            <ImageView
+                android:id="@+id/iv_discount_field"
+                android:layout_width="@dimen/qb_px_30"
+                android:layout_height="@dimen/qb_px_30"
+                android:src="@drawable/ic_right_arrow"
+                app:layout_constraintBottom_toBottomOf="@id/tv_discount_way"
+                app:layout_constraintEnd_toStartOf="@id/guideline3"
+                app:layout_constraintTop_toTopOf="@id/tv_discount_way" />
+            <!--end 优惠-->
+
             <TextView
                 android:id="@+id/tv_fast_consult_tip_1"
                 android:layout_width="0dp"
@@ -707,7 +769,7 @@
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="@id/guideline3"
                 app:layout_constraintStart_toStartOf="@id/guideline2"
-                app:layout_constraintTop_toBottomOf="@id/tv_balance" />
+                app:layout_constraintTop_toBottomOf="@id/view_discount_way" />
 
             <TextView
                 android:id="@+id/tv_fast_consult_tip"
@@ -732,37 +794,57 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/qb_px_1"
-        android:layout_above="@id/rl_bottom"
+        android:layout_above="@id/cl_bottom"
         android:background="@color/c_b5b5b5" />
 
-    <RelativeLayout
-        android:id="@+id/rl_bottom"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_bottom"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/qb_px_120"
+        android:layout_height="@dimen/qb_px_140"
         android:layout_alignParentBottom="true"
         android:background="@color/c_ff"
         android:paddingStart="@dimen/qb_px_50"
         android:paddingEnd="@dimen/qb_px_50">
 
         <TextView
-            android:layout_width="@dimen/qb_px_130"
+            android:id="@+id/tv_order_money_text"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:includeFontPadding="false"
             android:text="@string/text_order_money"
             android:textColor="@color/c_323232"
-            android:textSize="14sp" />
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_order_money"
+            app:layout_constraintTop_toTopOf="@id/tv_order_money" />
 
         <TextView
             android:id="@+id/tv_order_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/qb_px_130"
+            android:layout_marginStart="@dimen/qb_px_15"
             android:includeFontPadding="false"
             android:text="@string/text_yuan_money"
             android:textColor="@color/c_f8b62d"
-            android:textSize="16sp" />
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/tv_discount_money"
+            app:layout_constraintStart_toEndOf="@id/tv_order_money_text"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/tv_discount_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_5"
+            android:includeFontPadding="false"
+            android:text="@string/text_discount_money"
+            android:textColor="@color/c_f8b62d"
+            android:textSize="12sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_order_money"
+            app:layout_constraintTop_toBottomOf="@id/tv_order_money" />+
 
         <Button
             android:id="@+id/bt_pay"
@@ -774,8 +856,11 @@
             android:includeFontPadding="false"
             android:text="@string/text_pay_order"
             android:textColor="@color/c_ff"
-            android:textSize="16sp" />
-    </RelativeLayout>
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
 
     <View
         android:id="@+id/view_bottom"

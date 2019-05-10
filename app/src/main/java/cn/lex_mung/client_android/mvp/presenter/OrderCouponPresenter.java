@@ -25,7 +25,11 @@ import me.zl.mvp.di.scope.ActivityScope;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.integration.AppManager;
 import me.zl.mvp.mvp.BasePresenter;
+import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.RxLifecycleUtils;
+
+import static cn.lex_mung.client_android.app.EventBusTags.ORDER_COUPON.ORDER_COUPON;
+import static cn.lex_mung.client_android.app.EventBusTags.ORDER_COUPON.REFRESH_COUPON;
 
 
 @ActivityScope
@@ -45,29 +49,30 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
     private OrderCouponAdapter adapter;
     private SmartRefreshLayout smartRefreshLayout;
 
+    private int couponId;
+
     @Inject
     public OrderCouponPresenter(OrderCouponContract.Model model, OrderCouponContract.View rootView) {
         super(model, rootView);
     }
 
-    public void onCreate(SmartRefreshLayout smartRefreshLayout) {
+    public void onCreate(SmartRefreshLayout smartRefreshLayout,int couponId) {
         this.smartRefreshLayout = smartRefreshLayout;
+        this.couponId = couponId;
         initAdapter();
         getCouponsList(false);
     }
 
     private void initAdapter() {
         adapter = new OrderCouponAdapter(mRootView.getActivity());
-
+        adapter.setCouponId(couponId);
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;
             OrderCouponEntity.ListBean entity = adapter.getItem(position);
             if (entity == null) return;
-            adapter.setCouponId(entity.getCouponId());
-            adapter.notifyDataSetChanged();//删除
-//            mRootView.setIvSelect(R.drawable.ic_hide_select);
-//            AppUtils.postInt(REFRESH, REFRESH_DISCOUNT_WAY, entity.getOrganizationLevId());
-//            mRootView.killMyself();
+
+            AppUtils.post(ORDER_COUPON, REFRESH_COUPON, entity);
+            mRootView.killMyself();
         });
 
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -89,6 +94,8 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
         });
         mRootView.initRecyclerView(adapter);
     }
+
+
 
     private void getCouponsList(boolean isAdd) {
         mModel.quickCoupon(pageNum)
