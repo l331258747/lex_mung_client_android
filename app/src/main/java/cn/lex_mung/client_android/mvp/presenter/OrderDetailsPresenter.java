@@ -133,6 +133,10 @@ public class OrderDetailsPresenter extends BasePresenter<OrderDetailsContract.Mo
                                     mRootView.setOrderTotal(bean.getTalkTime());
                                     mRootView.showLayout(2);
                                 }
+                                if(bean.getCouponDeductionAmount() > 0){
+                                    mRootView.setCouponLayout(AppUtils.formatAmount(mApplication, bean.getCouponDeductionAmount()) + "元"
+                                            ,AppUtils.formatAmount(mApplication, bean.getPayAmount()) + "元");
+                                }
                             } else if (bean.getTypeId() == 3) {//专家咨询
                                 if (!TextUtils.isEmpty(bean.getLmemberName())) {
                                     mRootView.setOrderCustomer(bean.getLmemberName());

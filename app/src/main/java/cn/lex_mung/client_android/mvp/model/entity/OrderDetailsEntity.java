@@ -282,7 +282,7 @@ public class OrderDetailsEntity {
         private String couponName;
         private int scopeOfUse;
         private int couponType;
-        private int couponDeductionAmount;
+        private double couponDeductionAmount;
         private int useCoupon;
         private String payStatusValue;
         private int couponId;
@@ -578,11 +578,11 @@ public class OrderDetailsEntity {
             this.couponType = couponType;
         }
 
-        public int getCouponDeductionAmount() {
+        public double getCouponDeductionAmount() {
             return couponDeductionAmount;
         }
 
-        public void setCouponDeductionAmount(int couponDeductionAmount) {
+        public void setCouponDeductionAmount(double couponDeductionAmount) {
             this.couponDeductionAmount = couponDeductionAmount;
         }
 

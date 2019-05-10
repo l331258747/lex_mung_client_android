@@ -36,6 +36,8 @@ public interface OrderDetailsContract {
         void setOrderRemain(int remain);
 
         void call(String phone);
+
+        void setCouponLayout(String couponPrice, String amountPrice);
     }
 
     interface Model extends IModel {

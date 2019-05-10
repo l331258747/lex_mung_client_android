@@ -36,6 +36,8 @@ import java.util.TimeZone;
 public class OrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> implements OrderDetailsContract.View {
     @BindView(R.id.group_time)
     Group groupTime;
+    @BindView(R.id.group_coupon)
+    Group groupCoupon;
     @BindView(R.id.tv_time)
     TextView tvTime;
     @BindView(R.id.tv_order_number)
@@ -50,6 +52,10 @@ public class OrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> im
     TextView tvOrderType;
     @BindView(R.id.tv_order_price)
     TextView tvOrderPrice;
+    @BindView(R.id.tv_order_coupon_price)
+    TextView tvOrderCouponPrice;
+    @BindView(R.id.tv_order_amount_price)
+    TextView tvOrderAmountPrice;
     @BindView(R.id.tv_order_status)
     TextView tvOrderStatus;
     @BindView(R.id.group_time_1)
@@ -117,6 +123,13 @@ public class OrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> im
             launchActivity(intent);
         } catch (Exception ignored) {
         }
+    }
+
+    @Override
+    public void setCouponLayout(String couponPrice, String amountPrice) {
+        groupCoupon.setVisibility(View.VISIBLE);
+        tvOrderCouponPrice.setText(couponPrice);
+        tvOrderAmountPrice.setText(amountPrice);
     }
 
     @Override

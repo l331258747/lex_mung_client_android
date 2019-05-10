@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/c_f4f4f4"
     android:orientation="vertical">
 
@@ -199,6 +200,65 @@
         app:layout_constraintStart_toEndOf="@id/tv_order_price_text"
         app:layout_constraintTop_toTopOf="@id/tv_order_price_text" />
 
+    <!--start 优惠-->
+    <android.support.constraint.Group
+        android:id="@+id/group_coupon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:constraint_referenced_ids="tv_order_coupon_price_text,tv_order_coupon_price,tv_order_amount_price_text,tv_order_amount_price" />
+    <!--end 优惠-->
+    <!--start 优惠金额-->
+    <TextView
+        android:id="@+id/tv_order_coupon_price_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_20"
+        android:includeFontPadding="false"
+        android:text="优惠金额"
+        android:textColor="@color/c_323232"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/guideline2"
+        app:layout_constraintTop_toBottomOf="@id/tv_order_price_text" />
+
+    <TextView
+        android:id="@+id/tv_order_coupon_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/qb_px_20"
+        android:includeFontPadding="false"
+        android:textColor="@color/c_f8b22d"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/tv_order_price_text"
+        app:layout_constraintTop_toTopOf="@id/tv_order_price_text" />
+    <!--end 优惠金额-->
+
+    <!--start 实付金额-->
+    <TextView
+        android:id="@+id/tv_order_amount_price_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_20"
+        android:includeFontPadding="false"
+        android:text="实付金额"
+        android:textColor="@color/c_323232"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/guideline2"
+        app:layout_constraintTop_toBottomOf="@id/tv_order_coupon_price_text" />
+
+    <TextView
+        android:id="@+id/tv_order_amount_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/qb_px_20"
+        android:includeFontPadding="false"
+        android:textColor="@color/c_f8b22d"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@id/tv_order_price_text"
+        app:layout_constraintTop_toTopOf="@id/tv_order_price_text" />
+    <!--end 实付金额-->
+
     <TextView
         android:id="@+id/tv_order_status_text"
         android:layout_width="wrap_content"
@@ -209,7 +269,7 @@
         android:textColor="@color/c_323232"
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@id/guideline2"
-        app:layout_constraintTop_toBottomOf="@id/tv_order_price_text" />
+        app:layout_constraintTop_toBottomOf="@id/tv_order_amount_price_text" />
 
     <TextView
         android:id="@+id/tv_order_status"
