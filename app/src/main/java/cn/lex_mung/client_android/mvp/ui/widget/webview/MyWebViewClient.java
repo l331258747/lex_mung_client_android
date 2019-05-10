@@ -1,11 +1,10 @@
 package cn.lex_mung.client_android.mvp.ui.widget.webview;
 
 import android.view.View;
-
-import com.tencent.smtt.export.external.interfaces.WebResourceError;
-import com.tencent.smtt.export.external.interfaces.WebResourceRequest;
-import com.tencent.smtt.sdk.WebView;
-import com.tencent.smtt.sdk.WebViewClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 //图片过大处理
 public class MyWebViewClient extends WebViewClient {
@@ -31,7 +30,7 @@ public class MyWebViewClient extends WebViewClient {
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
         // 不重写会调用系统浏览器
-        view.loadUrl(url);//跳转
+//        view.loadUrl(url);//跳转
         return true;
     }
 

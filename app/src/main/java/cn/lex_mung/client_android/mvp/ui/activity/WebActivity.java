@@ -8,10 +8,10 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
 import android.widget.TextView;
 
-import com.tencent.smtt.sdk.WebChromeClient;
-import com.tencent.smtt.sdk.WebView;
 import com.umeng.analytics.MobclickAgent;
 
 import butterknife.BindView;
@@ -74,12 +74,21 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
         super.onResume();
         MobclickAgent.onPageStart("w_y_shouye_jjfa_list");
         mPresenter.onResume();
+        webView.onWebResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd("w_y_shouye_jjfa_list");
+        webView.onWebPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        webView.onWebDestroy();
+        webView = null;
+        super.onDestroy();
     }
 
     @Override
@@ -92,9 +101,6 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             image = bundleIntent.getString(BundleTags.IMAGE);
             isShare = bundleIntent.getBoolean(BundleTags.IS_SHARE, true);
         }
-
-        LogUtil.e("url:" + url);
-
         if (isShare) {
             tvRight.setVisibility(View.VISIBLE);
             tvRight.setText(R.string.text_share);
@@ -105,6 +111,10 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
         tvTitle.setText(title);
         showLoading("");
         initWebView();
+
+
+        LogUtil.e("url:" + url);
+
     }
 
     private void initWebView() {
@@ -217,15 +227,16 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
         }
     }
 
+
     public class AndroidToJs extends Object {
 
         //支付
         @JavascriptInterface
         public void goPay(String string) {
-            if(TextUtils.isEmpty(string))
+            if (TextUtils.isEmpty(string))
                 return;
 
-            WebGoPayEntity businessEntity = GsonUtil.convertString2Object(string,WebGoPayEntity.class);
+            WebGoPayEntity businessEntity = GsonUtil.convertString2Object(string, WebGoPayEntity.class);
 
             if (isFastClick()) return;
             Bundle bundle = new Bundle();
@@ -256,15 +267,20 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
         public void goLawyerList(int requireTypeId) {
             runOnUiThread(() -> {
                 AppManager.getAppManager().killAllNotClass(MainActivity.class);
-                ((MainActivity)AppManager.getAppManager().findActivity(MainActivity.class)).switchPage(2);
+                ((MainActivity) AppManager.getAppManager().findActivity(MainActivity.class)).switchPage(2);
                 AppUtils.post(LAWYER_LIST_SCREEN_INFO, LAWYER_LIST_SCREEN_INFO_LIST_ID, requireTypeId);
             });
         }
 
         @JavascriptInterface
-        public String getToken(){
+        public String getToken() {
             String token = DataHelper.getStringSF(mActivity, DataHelperTags.TOKEN);
             return token;
+        }
+
+        @JavascriptInterface
+        public void toldApp(){
+            launchActivity(new Intent(mActivity, FastConsultActivity.class));
         }
 
     }
