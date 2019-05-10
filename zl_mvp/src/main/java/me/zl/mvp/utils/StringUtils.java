@@ -12,4 +12,12 @@ public class StringUtils {
             tv.setText(Html.fromHtml(content));
         }
     }
+
+    public static String getStringNum(double f){
+        if((f * 100) % 100 == 0){
+            return ((int) f) + "";
+        }else{
+            return f+"";
+        }
+    }
 }

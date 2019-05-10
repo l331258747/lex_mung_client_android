@@ -57,7 +57,19 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
     }
 
     private void initAdapter() {
-        adapter = new OrderCouponAdapter();
+        adapter = new OrderCouponAdapter(mRootView.getActivity());
+
+        adapter.setOnItemClickListener((adapter1, view, position) -> {
+            if (isFastClick()) return;
+            OrderCouponEntity.ListBean entity = adapter.getItem(position);
+            if (entity == null) return;
+            adapter.setCouponId(entity.getCouponId());
+            adapter.notifyDataSetChanged();//删除
+//            mRootView.setIvSelect(R.drawable.ic_hide_select);
+//            AppUtils.postInt(REFRESH, REFRESH_DISCOUNT_WAY, entity.getOrganizationLevId());
+//            mRootView.killMyself();
+        });
+
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {

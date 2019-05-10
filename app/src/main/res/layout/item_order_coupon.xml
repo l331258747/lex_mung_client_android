@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/qb_px_40"
@@ -13,36 +14,54 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/qb_px_180"
         app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/ic_coupon_select_bg"
         app:layout_constraintStart_toStartOf="parent" />
 
     <View
         android:id="@+id/view_price"
         android:layout_width="@dimen/qb_px_240"
         android:layout_height="0dp"
-        android:background="@color/c_EEC897"
+        android:layout_marginBottom="@dimen/qb_px_10"
         app:layout_constraintBottom_toBottomOf="@+id/view_bg"
         app:layout_constraintTop_toTopOf="@+id/view_bg" />
 
 
     <ImageView
+        android:id="@+id/iv_price_unit"
         android:layout_width="@dimen/qb_px_40"
         android:layout_height="@dimen/qb_px_40"
         android:src="@drawable/ic_price_unit"
+        android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/tv_price"
-        app:layout_constraintTop_toTopOf="@+id/tv_price" />
+        app:layout_constraintTop_toTopOf="@+id/tv_price"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/tv_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="200"
+        android:includeFontPadding="false"
         android:textColor="@color/c_ff"
         android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/view_price"
         app:layout_constraintEnd_toEndOf="@+id/view_price"
         app:layout_constraintStart_toStartOf="@+id/view_price"
-        app:layout_constraintTop_toTopOf="@+id/view_price" />
+        app:layout_constraintTop_toTopOf="@+id/view_price"
+        tools:text="200" />
+
+    <TextView
+        android:id="@+id/tv_price_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:text="折"
+        android:textColor="@color/c_ff"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_price"
+        app:layout_constraintStart_toEndOf="@+id/tv_price"
+        tools:visibility="visible" />
 
     <LinearLayout
         android:id="@+id/view_content"
@@ -50,7 +69,9 @@
         android:layout_height="0dp"
         android:gravity="center_vertical"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/qb_px_40"
+        android:paddingLeft="@dimen/qb_px_20"
+        android:paddingRight="@dimen/qb_px_20"
+        android:layout_marginBottom="@dimen/qb_px_10"
         app:layout_constraintBottom_toBottomOf="@+id/view_bg"
         app:layout_constraintEnd_toStartOf="@+id/view_user"
         app:layout_constraintStart_toEndOf="@+id/view_price"
@@ -60,24 +81,24 @@
             android:id="@+id/tv_user_rule"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="满1000减200"
-            android:textColor="@color/c_323232" />
+            android:textColor="@color/c_323232"
+            tools:text="满1000减200" />
 
         <TextView
             android:id="@+id/tv_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/qb_px_5"
-            android:text="起草法律文书"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="起草法律文书" />
 
         <TextView
             android:id="@+id/tv_end_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/qb_px_5"
-            android:text="有效期2019.05.21 18:00"
-            android:textSize="10sp" />
+            android:textSize="10sp"
+            tools:text="有效期2019.05.21 18:00" />
 
     </LinearLayout>
 
@@ -86,30 +107,30 @@
         android:id="@+id/view_user"
         android:layout_width="@dimen/qb_px_100"
         android:layout_height="0dp"
-        android:background="@color/c_b4b4b4"
         app:layout_constraintBottom_toBottomOf="@+id/view_bg"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="@dimen/qb_px_10"
         app:layout_constraintTop_toTopOf="@+id/view_bg" />
 
     <TextView
         android:id="@+id/tv_coupon_usable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="立\n即\n使\n用"
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/iv_coupon_usable"
         app:layout_constraintEnd_toEndOf="@+id/view_user"
         app:layout_constraintStart_toStartOf="@+id/view_user"
-        app:layout_constraintTop_toTopOf="@+id/view_user" />
+        app:layout_constraintTop_toTopOf="@+id/view_user"
+        tools:text="立\n即\n使\n用" />
 
     <ImageView
         android:id="@+id/iv_coupon_usable"
         android:layout_width="@dimen/qb_px_20"
         android:layout_height="@dimen/qb_px_20"
-        android:src="@drawable/ic_coupon_usable"
         app:layout_constraintBottom_toBottomOf="@+id/view_user"
         app:layout_constraintEnd_toEndOf="@+id/view_user"
         app:layout_constraintStart_toStartOf="@+id/view_user"
-        app:layout_constraintTop_toBottomOf="@+id/tv_coupon_usable" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_coupon_usable"
+        tools:src="@drawable/ic_coupon_usable" />
 
 </android.support.constraint.ConstraintLayout>

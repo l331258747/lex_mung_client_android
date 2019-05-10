@@ -1,5 +1,6 @@
 package cn.lex_mung.client_android.mvp.ui.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -56,6 +57,11 @@ public class OrderCouponActivity extends BaseActivity<OrderCouponPresenter> impl
         recyclerView.addItemDecoration(new SpacesItemDecoration(0, AppUtils.dip2px(mActivity, AppUtils.getXmlDef(mActivity, R.dimen.qb_px_35))));
         recyclerView.setAdapter(adapter);
         adapter.setEmptyView(R.layout.layout_loading_view, (ViewGroup) recyclerView.getParent());
+    }
+
+    @Override
+    public Activity getActivity() {
+        return mActivity;
     }
 
     @Override

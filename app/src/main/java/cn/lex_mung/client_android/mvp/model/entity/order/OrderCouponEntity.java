@@ -2,6 +2,8 @@ package cn.lex_mung.client_android.mvp.model.entity.order;
 
 import java.util.List;
 
+import me.zl.mvp.utils.StringUtils;
+
 public class OrderCouponEntity {
 
     /**
@@ -233,7 +235,7 @@ public class OrderCouponEntity {
         }
 
         public String getRule() {
-            return "满" + fullNum + "减" + reduceNum;
+            return "满" + StringUtils.getStringNum(fullNum) + "减" + StringUtils.getStringNum(reduceNum);
         }
 
         public int getPreferentialWay() {
@@ -249,7 +251,7 @@ public class OrderCouponEntity {
         }
 
         public String getReduceNumStr() {
-            return reduceNum + "";
+            return StringUtils.getStringNum(reduceNum);
         }
 
         public String getPreferentialContent() {
@@ -258,6 +260,10 @@ public class OrderCouponEntity {
 
         public double getPreferentialDiscount() {
             return preferentialDiscount;
+        }
+
+        public String getPreferentialDiscountStr(){
+            return (preferentialDiscount * 10) + "";
         }
 
         public String getStartTime() {
@@ -274,11 +280,11 @@ public class OrderCouponEntity {
 
         public String getCouponStatusStr() {
             if (couponStatus == 1) {
-                return "立即使用";
+                return "立\n即\n使\n用";
             } else if (couponStatus == 2) {
-                return "不可用";
+                return "不\n可\n用";
             }
-            return "不可用";
+            return "不\n可\n用";
         }
 
         public int getPageNum() {

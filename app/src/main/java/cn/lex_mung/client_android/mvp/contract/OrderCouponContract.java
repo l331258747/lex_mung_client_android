@@ -1,5 +1,7 @@
 package cn.lex_mung.client_android.mvp.contract;
 
+import android.app.Activity;
+
 import java.util.List;
 
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
@@ -19,6 +21,8 @@ public interface OrderCouponContract {
         void initRecyclerView(OrderCouponAdapter adapter);
 
         void setEmptyView(OrderCouponAdapter adapter);
+
+        Activity getActivity();
 
     }
 

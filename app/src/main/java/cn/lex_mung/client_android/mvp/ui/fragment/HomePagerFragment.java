@@ -240,7 +240,6 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         switch (view.getId()) {
             case R.id.tv_search:
                 ((MainActivity) mActivity).switchPage(2);
-//                launchActivity(new Intent(mActivity, OrderCouponActivity.class));
                 break;
             case R.id.iv_message:
                 if (mPresenter.isLogin()) {
