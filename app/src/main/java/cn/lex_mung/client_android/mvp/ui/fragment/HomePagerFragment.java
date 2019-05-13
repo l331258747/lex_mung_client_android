@@ -191,7 +191,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                 bundle.putString(BundleTags.TITLE, bean.getTitle());
                 bundle.putString(BundleTags.DES, "");
                 bundle.putString(BundleTags.IMAGE, bean.getImage());
-                bundle.putBoolean(BundleTags.IS_SHARE, true);
+                bundle.putBoolean(BundleTags.IS_SHARE, false);
                 launchActivity(new Intent(mActivity, WebActivity.class), bundle);
             } catch (Exception ignored) {
             }
