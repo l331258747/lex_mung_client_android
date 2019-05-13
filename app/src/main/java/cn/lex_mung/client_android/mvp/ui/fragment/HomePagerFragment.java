@@ -47,14 +47,10 @@ import cn.lex_mung.client_android.mvp.ui.activity.LawyerListActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MainActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MessageActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.OrderCouponActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.ReleaseDemandActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.RushOrdersActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.HomePageRequirementTypeAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import me.zl.mvp.base.AdapterViewPager;
-import me.zl.mvp.base.App;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
@@ -168,7 +164,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                         , ImageConfigImpl
                                 .builder()
                                 .url(path.toString())
-                                .imageRadius(AppUtils.dip2px(mActivity,10))
+//                                .imageRadius(AppUtils.dip2px(mActivity,10))//图片存在bug
                                 .imageView(imageView)
                                 .build());
             }
