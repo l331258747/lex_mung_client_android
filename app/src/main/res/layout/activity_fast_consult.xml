@@ -161,138 +161,136 @@
                 app:layout_constraintStart_toEndOf="@id/tv_3"
                 app:layout_constraintTop_toTopOf="@id/tv_1" />
 
-            <android.support.constraint.Group
-                android:id="@+id/group_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:constraint_referenced_ids="view_count,tv_count_text_1,tv_count_text_2,ll_count_text" />
+            <!--<android.support.constraint.Group-->
+                <!--android:id="@+id/group_count"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--app:constraint_referenced_ids="view_count,tv_count_text_1,tv_count_text_2,ll_count_text" />-->
 
-            <View
-                android:id="@+id/view_count"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/qb_px_70"
-                android:layout_marginStart="@dimen/qb_px_20"
-                android:layout_marginTop="@dimen/qb_px_50"
-                android:layout_marginEnd="@dimen/qb_px_20"
-                android:background="@drawable/round_100_ffffff_all"
-                app:layout_constraintEnd_toEndOf="@id/guideline3"
-                app:layout_constraintStart_toStartOf="@id/guideline2"
-                app:layout_constraintTop_toBottomOf="@id/tv_1" />
+            <!--<View-->
+                <!--android:id="@+id/view_count"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="@dimen/qb_px_70"-->
+                <!--android:layout_marginStart="@dimen/qb_px_20"-->
+                <!--android:layout_marginTop="@dimen/qb_px_50"-->
+                <!--android:layout_marginEnd="@dimen/qb_px_20"-->
+                <!--android:background="@drawable/round_100_ffffff_all"-->
+                <!--app:layout_constraintEnd_toEndOf="@id/guideline3"-->
+                <!--app:layout_constraintStart_toStartOf="@id/guideline2"-->
+                <!--app:layout_constraintTop_toBottomOf="@id/tv_1" />-->
 
-            <TextView
-                android:id="@+id/tv_count_text_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/text_fast_consult_count_1"
-                android:textColor="@color/c_323232"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="@id/view_count"
-                app:layout_constraintEnd_toStartOf="@id/ll_count_text"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="@id/view_count"
-                app:layout_constraintTop_toTopOf="@id/view_count" />
+            <!--<TextView-->
+                <!--android:id="@+id/tv_count_text_1"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/text_fast_consult_count_1"-->
+                <!--android:textColor="@color/c_323232"-->
+                <!--android:textSize="14sp"-->
+                <!--app:layout_constraintBottom_toBottomOf="@id/view_count"-->
+                <!--app:layout_constraintEnd_toStartOf="@id/ll_count_text"-->
+                <!--app:layout_constraintHorizontal_chainStyle="packed"-->
+                <!--app:layout_constraintStart_toStartOf="@id/view_count"-->
+                <!--app:layout_constraintTop_toTopOf="@id/view_count" />-->
 
-            <LinearLayout
-                android:id="@+id/ll_count_text"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="@id/view_count"
-                app:layout_constraintEnd_toStartOf="@id/tv_count_text_2"
-                app:layout_constraintStart_toEndOf="@id/tv_count_text_1"
-                app:layout_constraintTop_toTopOf="@id/view_count">
+            <!--<LinearLayout-->
+                <!--android:id="@+id/ll_count_text"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="0dp"-->
+                <!--android:gravity="center"-->
+                <!--app:layout_constraintBottom_toBottomOf="@id/view_count"-->
+                <!--app:layout_constraintEnd_toStartOf="@id/tv_count_text_2"-->
+                <!--app:layout_constraintStart_toEndOf="@id/tv_count_text_1"-->
+                <!--app:layout_constraintTop_toTopOf="@id/view_count">-->
 
-                <TextView
-                    android:id="@+id/tv_count_1"
-                    android:layout_width="@dimen/qb_px_30"
-                    android:layout_height="@dimen/qb_px_50"
-                    android:layout_marginStart="@dimen/qb_px_15"
-                    android:background="@color/c_f4f4f4"
-                    android:gravity="center"
-                    android:text="@string/text_0"
-                    android:textColor="@color/c_06a66a"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_count_1"-->
+                    <!--android:layout_width="@dimen/qb_px_30"-->
+                    <!--android:layout_height="@dimen/qb_px_50"-->
+                    <!--android:layout_marginStart="@dimen/qb_px_15"-->
+                    <!--android:background="@color/c_f4f4f4"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="@string/text_0"-->
+                    <!--android:textColor="@color/c_06a66a"-->
+                    <!--android:textSize="18sp"-->
+                    <!--android:textStyle="bold" />-->
 
-                <TextView
-                    android:id="@+id/tv_count_2"
-                    android:layout_width="@dimen/qb_px_30"
-                    android:layout_height="@dimen/qb_px_50"
-                    android:layout_marginStart="@dimen/qb_px_15"
-                    android:background="@color/c_f4f4f4"
-                    android:gravity="center"
-                    android:text="@string/text_0"
-                    android:textColor="@color/c_06a66a"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_count_2"-->
+                    <!--android:layout_width="@dimen/qb_px_30"-->
+                    <!--android:layout_height="@dimen/qb_px_50"-->
+                    <!--android:layout_marginStart="@dimen/qb_px_15"-->
+                    <!--android:background="@color/c_f4f4f4"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="@string/text_0"-->
+                    <!--android:textColor="@color/c_06a66a"-->
+                    <!--android:textSize="18sp"-->
+                    <!--android:textStyle="bold" />-->
 
-                <TextView
-                    android:id="@+id/tv_count_3"
-                    android:layout_width="@dimen/qb_px_30"
-                    android:layout_height="@dimen/qb_px_50"
-                    android:layout_marginStart="@dimen/qb_px_15"
-                    android:background="@color/c_f4f4f4"
-                    android:gravity="center"
-                    android:text="@string/text_0"
-                    android:textColor="@color/c_06a66a"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_count_3"-->
+                    <!--android:layout_width="@dimen/qb_px_30"-->
+                    <!--android:layout_height="@dimen/qb_px_50"-->
+                    <!--android:layout_marginStart="@dimen/qb_px_15"-->
+                    <!--android:background="@color/c_f4f4f4"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="@string/text_0"-->
+                    <!--android:textColor="@color/c_06a66a"-->
+                    <!--android:textSize="18sp"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:visibility="gone" />-->
 
-                <TextView
-                    android:id="@+id/tv_count_4"
-                    android:layout_width="@dimen/qb_px_30"
-                    android:layout_height="@dimen/qb_px_50"
-                    android:layout_marginStart="@dimen/qb_px_15"
-                    android:background="@color/c_f4f4f4"
-                    android:gravity="center"
-                    android:text="@string/text_0"
-                    android:textColor="@color/c_06a66a"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_count_4"-->
+                    <!--android:layout_width="@dimen/qb_px_30"-->
+                    <!--android:layout_height="@dimen/qb_px_50"-->
+                    <!--android:layout_marginStart="@dimen/qb_px_15"-->
+                    <!--android:background="@color/c_f4f4f4"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="@string/text_0"-->
+                    <!--android:textColor="@color/c_06a66a"-->
+                    <!--android:textSize="18sp"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:visibility="gone" />-->
 
-                <TextView
-                    android:id="@+id/tv_count_5"
-                    android:layout_width="@dimen/qb_px_30"
-                    android:layout_height="@dimen/qb_px_50"
-                    android:layout_marginStart="@dimen/qb_px_15"
-                    android:background="@color/c_f4f4f4"
-                    android:gravity="center"
-                    android:text="@string/text_0"
-                    android:textColor="@color/c_06a66a"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_count_5"-->
+                    <!--android:layout_width="@dimen/qb_px_30"-->
+                    <!--android:layout_height="@dimen/qb_px_50"-->
+                    <!--android:layout_marginStart="@dimen/qb_px_15"-->
+                    <!--android:background="@color/c_f4f4f4"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="@string/text_0"-->
+                    <!--android:textColor="@color/c_06a66a"-->
+                    <!--android:textSize="18sp"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:visibility="gone" />-->
 
-                <TextView
-                    android:id="@+id/tv_count_6"
-                    android:layout_width="@dimen/qb_px_30"
-                    android:layout_height="@dimen/qb_px_50"
-                    android:layout_marginStart="@dimen/qb_px_15"
-                    android:background="@color/c_f4f4f4"
-                    android:gravity="center"
-                    android:text="@string/text_0"
-                    android:textColor="@color/c_06a66a"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
-            </LinearLayout>
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_count_6"-->
+                    <!--android:layout_width="@dimen/qb_px_30"-->
+                    <!--android:layout_height="@dimen/qb_px_50"-->
+                    <!--android:layout_marginStart="@dimen/qb_px_15"-->
+                    <!--android:background="@color/c_f4f4f4"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="@string/text_0"-->
+                    <!--android:textColor="@color/c_06a66a"-->
+                    <!--android:textSize="18sp"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:visibility="gone" />-->
+            <!--</LinearLayout>-->
 
-            <TextView
-                android:id="@+id/tv_count_text_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/qb_px_15"
-                android:text="@string/text_fast_consult_count_2"
-                android:textColor="@color/c_323232"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="@id/view_count"
-                app:layout_constraintEnd_toEndOf="@id/view_count"
-                app:layout_constraintStart_toEndOf="@id/ll_count_text"
-                app:layout_constraintTop_toTopOf="@id/view_count" />
+            <!--<TextView-->
+                <!--android:id="@+id/tv_count_text_2"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginStart="@dimen/qb_px_15"-->
+                <!--android:text="@string/text_fast_consult_count_2"-->
+                <!--android:textColor="@color/c_323232"-->
+                <!--android:textSize="14sp"-->
+                <!--app:layout_constraintBottom_toBottomOf="@id/view_count"-->
+                <!--app:layout_constraintEnd_toEndOf="@id/view_count"-->
+                <!--app:layout_constraintStart_toEndOf="@id/ll_count_text"-->
+                <!--app:layout_constraintTop_toTopOf="@id/view_count" />-->
 
             <View
                 android:id="@+id/view_consult_type"
@@ -301,7 +299,7 @@
                 android:layout_marginTop="@dimen/qb_px_50"
                 android:background="@drawable/button_withe_down"
                 app:layout_constraintBottom_toBottomOf="@id/tv_consult_type"
-                app:layout_constraintTop_toBottomOf="@id/view_count" />
+                app:layout_constraintTop_toBottomOf="@id/tv_1" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -343,20 +341,20 @@
                 app:layout_constraintStart_toStartOf="@id/guideline2"
                 app:layout_constraintTop_toBottomOf="@id/tv_consult_type_text" />
 
-            <TextView
-                android:id="@+id/tv_money"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/qb_px_20"
-                android:includeFontPadding="false"
-                android:text="@string/text_yuan_money"
-                android:textColor="@color/c_f8b62d"
-                android:textSize="14sp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@id/tv_consult_type"
-                app:layout_constraintStart_toEndOf="@id/tv_consult_type"
-                app:layout_constraintTop_toTopOf="@id/tv_consult_type" />
+            <!--<TextView-->
+                <!--android:id="@+id/tv_money"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_marginStart="@dimen/qb_px_20"-->
+                <!--android:includeFontPadding="false"-->
+                <!--android:text="@string/text_yuan_money"-->
+                <!--android:textColor="@color/c_f8b62d"-->
+                <!--android:textSize="14sp"-->
+                <!--android:visibility="gone"-->
+                <!--app:layout_constraintBottom_toBottomOf="@id/tv_consult_type"-->
+                <!--app:layout_constraintStart_toEndOf="@id/tv_consult_type"-->
+                <!--app:layout_constraintTop_toTopOf="@id/tv_consult_type" />-->
 
             <ImageView
                 android:layout_width="@dimen/qb_px_30"

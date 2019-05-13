@@ -49,8 +49,8 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
 
     @BindView(R.id.tv_consult_type)
     TextView tvConsultType;
-    @BindView(R.id.tv_money)
-    TextView tvMoney;
+//    @BindView(R.id.tv_money)
+//    TextView tvMoney;
     @BindView(R.id.et_contact_phone)
     EditText etContactPhone;
     @BindView(R.id.et_user_name)
@@ -81,27 +81,30 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
     View viewBottom;
     @BindView(R.id.web_view)
     WebView webView;
-    @BindView(R.id.group_count)
-    Group groupCount;
-    @BindView(R.id.tv_count_1)
-    TextView tvCount1;
-    @BindView(R.id.tv_count_2)
-    TextView tvCount2;
-    @BindView(R.id.tv_count_3)
-    TextView tvCount3;
-    @BindView(R.id.tv_count_4)
-    TextView tvCount4;
-    @BindView(R.id.tv_count_5)
-    TextView tvCount5;
-    @BindView(R.id.tv_count_6)
-    TextView tvCount6;
+//    @BindView(R.id.group_count)
+//    Group groupCount;
+//    @BindView(R.id.tv_count_1)
+//    TextView tvCount1;
+//    @BindView(R.id.tv_count_2)
+//    TextView tvCount2;
+//    @BindView(R.id.tv_count_3)
+//    TextView tvCount3;
+//    @BindView(R.id.tv_count_4)
+//    TextView tvCount4;
+//    @BindView(R.id.tv_count_5)
+//    TextView tvCount5;
+//    @BindView(R.id.tv_count_6)
+//    TextView tvCount6;
 
     private DefaultDialog defaultDialog;
     private EasyDialog easyDialog;
 
     private int couponId;
-    private double orderPrice;
-    private double couponPrice;
+    private double orderPrice;//订单原价
+    private double couponPrice;//优惠价格
+
+    private String consultType = "";
+    private int pos = -1 ;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -118,14 +121,13 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
         return R.layout.activity_fast_consult;
     }
 
+    //设置优惠卷
     @Override
     public void setCouponLayout(OrderCouponEntity.ListBean bean, boolean showToast) {
         if(bean == null){
             tvDiscountWay.setText("");
-            tvDiscountMoney.setText(String.format(
-                    AppUtils.getString(mActivity, R.string.text_discount_money)
-                    , AppUtils.formatAmount(mActivity, 0)));
             this.couponId = 0;
+            setPriceLayout(0,0,orderPrice);
             return;
         }
 
@@ -138,51 +140,103 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
         }
 
         tvDiscountWay.setText(bean.getCouponName());
+        this.couponId = bean.getCouponId();
+
+        mPresenter.getPrice(couponId,orderPrice);
+    }
+
+    //设置价格
+    @Override
+    public void setPriceLayout(double orderPrice,double couponPrice,double payPrice) {
+
+        this.couponPrice = couponPrice;
+
+        tvOrderMoney.setText(String.format(
+                AppUtils.getString(mActivity, R.string.text_yuan_money)
+                , AppUtils.formatAmount(mActivity, payPrice)));
         tvDiscountMoney.setText(String.format(
                 AppUtils.getString(mActivity, R.string.text_discount_money)
-                , AppUtils.formatAmount(mActivity, bean.getReduceNum())));
-        this.couponId = bean.getCouponId();
-        this.couponPrice = bean.getReduceNum();
+                , AppUtils.formatAmount(mActivity, couponPrice)));
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        MobclickAgent.onPageStart("w_y_shouye_kszx_detail");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        MobclickAgent.onPageEnd("w_y_shouye_kszx_detail");
-    }
-
+    //获取优惠价格
     @Override
     public double getCouponPrice() {
         return couponPrice;
     }
 
+    //获取优惠id
     @Override
     public int getCouponId() {
         return couponId;
     }
 
+
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         mPresenter.onCreate();
-        tvOrderMoney.setText(String.format(
-                AppUtils.getString(mActivity, R.string.text_yuan_money)
-                , AppUtils.formatAmount(mActivity, 0)));
-        orderPrice = 0;
-        tvDiscountMoney.setText(String.format(
-                AppUtils.getString(mActivity, R.string.text_discount_money)
-                , AppUtils.formatAmount(mActivity, 0)));
+        setPriceLayout(0,0,0);
+        setCouponLayout(null,false);
+
         String string = getString(R.string.text_fast_consult_tip_1)
                 + "<font color=\"#1EC88C\">"
                 + getString(R.string.text_lex_transaction_process)
                 + "</font>";
         tvFastConsultTip.setText(Html.fromHtml(string));
-        groupCount.setVisibility(View.GONE);
+//        groupCount.setVisibility(View.GONE);
+    }
+
+    //设置价格
+    @Override
+    public void setOrderMoney(String money,double orderMoney) {
+        tvOrderMoney.setText(money);
+        orderPrice = orderMoney;
+    }
+
+    /**
+     * 选择问题类型
+     */
+    @SuppressLint("InflateParams")
+    private void showSelectTypeDialog() {
+        View layout = getLayoutInflater().inflate(R.layout.layout_select_industry_dialog, null);
+        initDialog(layout);
+        WheelPicker wpConsultType = layout.findViewById(R.id.wheel_1);
+        wpConsultType.setCurved(false);
+        wpConsultType.setVisibleItemCount(6);
+
+        consultType = mPresenter.getSolutionTypeStringList().get(0);
+        pos = 0;
+        wpConsultType.setOnItemSelectedListener((picker, data, position) -> {
+            consultType = data.toString();
+            pos = position;
+        });
+        wpConsultType.setData(mPresenter.getSolutionTypeStringList());
+        layout.findViewById(R.id.tv_cancel).setOnClickListener(v -> dismiss());
+        layout.findViewById(R.id.tv_confirm).setOnClickListener(v -> {
+            setPriceLayout(0,0,0);
+            setCouponLayout(null,false);
+
+            mPresenter.setConsultType(consultType);
+            mPresenter.setConsultTypePos(pos);
+            mPresenter.setMoney(pos);
+            tvConsultType.setText(consultType);
+
+            mPresenter.getCoupon();
+            dismiss();
+        });
+    }
+
+    /**
+     * 更新优惠卷
+     */
+    @Subscriber(tag = ORDER_COUPON)
+    private void selectPlace(Message message) {
+        switch (message.what) {
+            case REFRESH_COUPON:
+                OrderCouponEntity.ListBean bean = (OrderCouponEntity.ListBean) message.obj;
+                setCouponLayout(bean,true);
+                break;
+        }
     }
 
     @Override
@@ -195,16 +249,12 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
         tvBalanceCount.setText(balance);
     }
 
-    @Override
-    public void setOrderMoney(String money,double orderMoney) {
-        tvOrderMoney.setText(money);
-        orderPrice = orderMoney;
-    }
 
-    @Override
-    public void setMoney(String money) {
-        tvMoney.setText(money);
-    }
+
+//    @Override
+//    public void setMoney(String money) {
+//        tvMoney.setText(money);
+//    }
 
     @Override
     public void showToAppInfoDialog() {
@@ -312,48 +362,6 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
     }
 
     /**
-     * 更新优惠卷
-     */
-    @Subscriber(tag = ORDER_COUPON)
-    private void selectPlace(Message message) {
-        switch (message.what) {
-            case REFRESH_COUPON:
-                OrderCouponEntity.ListBean bean = (OrderCouponEntity.ListBean) message.obj;
-                setCouponLayout(bean,true);
-                break;
-        }
-    }
-
-    /**
-     * 选择问题类型
-     */
-    @SuppressLint("InflateParams")
-    private void showSelectTypeDialog() {
-        View layout = getLayoutInflater().inflate(R.layout.layout_select_industry_dialog, null);
-        initDialog(layout);
-        WheelPicker wpConsultType = layout.findViewById(R.id.wheel_1);
-        wpConsultType.setCurved(false);
-        wpConsultType.setVisibleItemCount(6);
-        wpConsultType.setOnItemSelectedListener((picker, data, position) -> {
-            mPresenter.setConsultType(data.toString());
-            mPresenter.setConsultTypePos(position);
-            mPresenter.setMoney(position);
-        });
-        wpConsultType.setData(mPresenter.getSolutionTypeStringList());
-        wpConsultType.setSelectedItemPosition(0);
-        mPresenter.setMoney(0);
-        mPresenter.setConsultType(mPresenter.getSolutionTypeStringList().get(0));
-        mPresenter.setConsultTypePos(0);
-        layout.findViewById(R.id.tv_cancel).setOnClickListener(v -> dismiss());
-        layout.findViewById(R.id.tv_confirm).setOnClickListener(v -> {
-            mPresenter.getCoupon();
-
-            tvConsultType.setText(mPresenter.getConsultType());
-            dismiss();
-        });
-    }
-
-    /**
      * 初始化dialog
      */
     private void initDialog(View layout) {
@@ -420,5 +428,17 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
     @Override
     public void killMyself() {
         finish();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("w_y_shouye_kszx_detail");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("w_y_shouye_kszx_detail");
     }
 }

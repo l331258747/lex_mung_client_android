@@ -9,6 +9,7 @@ import cn.lex_mung.client_android.mvp.model.entity.OrderStatusEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayEntity;
 
 import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
+import cn.lex_mung.client_android.mvp.model.entity.order.QuickPayEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.mvp.IView;
 import me.zl.mvp.mvp.IModel;
@@ -29,13 +30,15 @@ public interface FastConsultContract {
 
         Activity getActivity();
 
-        void setMoney(String money);
+//        void setMoney(String money);
 
         void setCouponLayout(OrderCouponEntity.ListBean bean, boolean showToast);
 
         int getCouponId();
 
         double getCouponPrice();
+
+        void setPriceLayout(double orderPrice,double couponPrice,double payPrice);
     }
 
     interface Model extends IModel {
@@ -48,5 +51,7 @@ public interface FastConsultContract {
         Observable<BaseResponse<AgreementEntity>> tariffExplanationUrl();
 
         Observable<BaseResponse<OrderCouponEntity>> quickCoupon();
+
+        Observable<BaseResponse<QuickPayEntity>> quickPay(int couponId, double orderAmount);
     }
 }

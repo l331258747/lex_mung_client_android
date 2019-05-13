@@ -46,6 +46,7 @@ import cn.lex_mung.client_android.mvp.model.entity.home.RequirementTypeV3Entity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocGetEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocUploadEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
+import cn.lex_mung.client_android.mvp.model.entity.order.QuickPayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RequirementCreateEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RequirementDetailEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RushOrderLawyerEntity;
@@ -618,5 +619,11 @@ public interface CommonService {
     //用户快速电话咨询优惠券列表
     @POST("client/quick/coupon")
     Observable<BaseResponse<OrderCouponEntity>> quickCoupon(@Body RequestBody body);
+
+    ///client/quick/pay
+    //POST
+    //用户快速电话咨询实付价格
+    @POST("client/quick/pay")
+    Observable<BaseResponse<QuickPayEntity>> quickPay(@Body RequestBody body);
 
 }

@@ -9,6 +9,7 @@ import java.util.Map;
 
 import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
+import cn.lex_mung.client_android.mvp.model.entity.order.QuickPayEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.integration.IRepositoryManager;
 import me.zl.mvp.mvp.BaseModel;
@@ -81,5 +82,16 @@ public class FastConsultModel extends BaseModel implements FastConsultContract.M
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .quickCoupon(body);
+    }
+
+    @Override
+    public Observable<BaseResponse<QuickPayEntity>> quickPay(int couponId, double orderAmount) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("couponId", couponId);
+        map.put("orderAmount", orderAmount);
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map));
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .quickPay(body);
     }
 }

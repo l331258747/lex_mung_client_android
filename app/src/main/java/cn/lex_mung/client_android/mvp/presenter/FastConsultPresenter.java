@@ -10,6 +10,7 @@ import android.text.TextUtils;
 
 import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
+import cn.lex_mung.client_android.mvp.model.entity.order.QuickPayEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -111,14 +112,15 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
         this.payType = payType;
     }
 
+    //设置订单原价
     public void setMoney(int position) {
         payMoney = solutionTypeEntityList.get(position).getPrice();
         mRootView.setOrderMoney(String.format(
                 AppUtils.getString(mApplication, R.string.text_yuan_money)
                 , AppUtils.formatAmount(mApplication, payMoney)),payMoney);
-        mRootView.setMoney(String.format(
-                AppUtils.getString(mApplication, R.string.text_yuan_money)
-                , AppUtils.formatAmount(mApplication, payMoney)));
+//        mRootView.setMoney(String.format(
+//                AppUtils.getString(mApplication, R.string.text_yuan_money)
+//                , AppUtils.formatAmount(mApplication, payMoney)));
     }
 
     public String getConsultType() {
@@ -397,6 +399,28 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
                             }
                         }else{
                             mRootView.setCouponLayout(null,false);
+                        }
+                    }
+                });
+    }
+
+    public void getPrice(int couponId,double orderAmount){
+        mModel.quickPay(couponId,orderAmount)
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> mRootView.showLoading(""))
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<QuickPayEntity>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<QuickPayEntity> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            mRootView.setPriceLayout(baseResponse.getData().getOrderAmount()
+                                    ,baseResponse.getData().getDeductionAmount()
+                                    ,baseResponse.getData().getPayment());
+                            payMoney = baseResponse.getData().getPayment();
                         }
                     }
                 });
