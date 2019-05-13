@@ -70,6 +70,7 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
             if (isFastClick()) return;
             OrderCouponEntity.ListBean entity = adapter.getItem(position);
             if (entity == null) return;
+            if(entity.getCouponStatus() == 2) return;//不可用
 
             AppUtils.post(ORDER_COUPON, REFRESH_COUPON, entity);
             mRootView.killMyself();

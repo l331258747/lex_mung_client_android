@@ -236,7 +236,8 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
         map.put("type", payType);
 
         if (mRootView.getCouponPrice() > 0) {
-            map.put("deduction", mRootView.getCouponPrice());//优惠金额
+            long moneyCoupon = new BigDecimal(mRootView.getCouponPrice()).multiply(new BigDecimal(100)).intValue();
+            map.put("deduction", moneyCoupon);//优惠金额
             map.put("useCoupon", 1);//使用优惠券
             map.put("other", mRootView.getCouponId());
         }

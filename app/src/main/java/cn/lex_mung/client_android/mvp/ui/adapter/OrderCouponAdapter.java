@@ -27,7 +27,7 @@ public class OrderCouponAdapter extends BaseQuickAdapter<OrderCouponEntity.ListB
     protected void convert(BaseViewHolder helper, OrderCouponEntity.ListBean item) {
         helper.setText(R.id.tv_user_rule, item.getRule());//规则
         helper.setText(R.id.tv_type, item.getPreferentialContent());//内容
-        helper.setText(R.id.tv_end_time, item.getEndTime());//截止时间
+        helper.setText(R.id.tv_end_time, item.getTimeStr());//截止时间
         helper.setText(R.id.tv_coupon_usable, item.getCouponStatusStr());//状态
 
         //券状态（1可使用2不可使用）

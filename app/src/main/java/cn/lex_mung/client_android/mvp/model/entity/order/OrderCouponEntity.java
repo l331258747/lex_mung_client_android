@@ -1,5 +1,7 @@
 package cn.lex_mung.client_android.mvp.model.entity.order;
 
+import android.text.TextUtils;
+
 import java.util.List;
 
 import me.zl.mvp.utils.StringUtils;
@@ -235,7 +237,11 @@ public class OrderCouponEntity {
         }
 
         public String getRule() {
-            return "满" + StringUtils.getStringNum(fullNum) + "减" + StringUtils.getStringNum(reduceNum);
+            if(preferentialWay == 2){
+                return "满" + StringUtils.getStringNum(fullNum) + "减" + StringUtils.getStringNum(reduceNum);
+            }else{
+                return "满" + StringUtils.getStringNum(fullNum) + "打" + getPreferentialDiscountStr() + "折";
+            }
         }
 
         public int getPreferentialWay() {
@@ -263,7 +269,7 @@ public class OrderCouponEntity {
         }
 
         public String getPreferentialDiscountStr(){
-            return (preferentialDiscount * 10) + "";
+            return (preferentialDiscount / 10) + "";
         }
 
         public String getStartTime() {
@@ -272,6 +278,11 @@ public class OrderCouponEntity {
 
         public String getEndTime() {
             return endTime;
+        }
+
+        public String getTimeStr() {
+            if(TextUtils.isEmpty(startTime) || TextUtils.isEmpty(endTime)) return "";
+            return "限"+startTime.split(" ")[0] + "至" + endTime.split(" ")[0];
         }
 
         public int getCouponStatus() {
