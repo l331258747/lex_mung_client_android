@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:TitleView_left_img="@drawable/ic_back2"
-        app:TitleView_title="优惠卷" />
+        app:TitleView_title="优惠劵" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_left"
@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/qb_px_10"
-            android:text=" 使用会员卡无法使用优惠卷、优惠卷不可以叠加使用"
+            android:text=" 使用会员卡无法使用优惠劵、优惠劵不可以叠加使用"
             android:textColor="@color/c_b4b4b4"
             android:textSize="12sp" />
 
@@ -75,7 +75,7 @@
         android:id="@+id/tv_no_coupon"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qb_px_100"
-        android:text="不适用优惠卷"
+        android:text="不适用优惠劵"
         android:textColor="@color/c_ff"
         android:gravity="center"
         android:background="@color/c_26CD8D"

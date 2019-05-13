@@ -121,7 +121,7 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
         return R.layout.activity_fast_consult;
     }
 
-    //设置优惠卷
+    //设置优惠劵
     @Override
     public void setCouponLayout(OrderCouponEntity.ListBean bean, boolean showToast) {
         if(bean == null){
@@ -133,9 +133,9 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
 
         if(orderPrice < bean.getFullNum()){
             if(showToast){
-                showMessage("无法使用优惠卷");
+                showMessage("无法使用优惠劵");
             }
-            LogUtil.e("无法使用优惠卷");
+            LogUtil.e("无法使用优惠劵");
             return;
         }
 
@@ -227,7 +227,7 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
     }
 
     /**
-     * 更新优惠卷
+     * 更新优惠劵
      */
     @Subscriber(tag = ORDER_COUPON)
     private void selectPlace(Message message) {
@@ -355,7 +355,7 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
                 break;
             case R.id.view_discount_way:
                 bundle.clear();
-                bundle.putInt(BundleTags.ID, couponId);//优惠卷id
+                bundle.putInt(BundleTags.ID, couponId);//优惠劵id
                 launchActivity(new Intent(mActivity, OrderCouponActivity.class), bundle);
                 break;
         }

@@ -230,8 +230,8 @@
         android:includeFontPadding="false"
         android:textColor="@color/c_f8b22d"
         android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@id/tv_order_price_text"
-        app:layout_constraintTop_toTopOf="@id/tv_order_price_text" />
+        app:layout_constraintStart_toEndOf="@id/tv_order_coupon_price_text"
+        app:layout_constraintTop_toTopOf="@id/tv_order_coupon_price_text" />
     <!--end 优惠金额-->
 
     <!--start 实付金额-->
@@ -255,8 +255,8 @@
         android:includeFontPadding="false"
         android:textColor="@color/c_f8b22d"
         android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@id/tv_order_price_text"
-        app:layout_constraintTop_toTopOf="@id/tv_order_price_text" />
+        app:layout_constraintStart_toEndOf="@id/tv_order_amount_price_text"
+        app:layout_constraintTop_toTopOf="@id/tv_order_amount_price_text" />
     <!--end 实付金额-->
 
     <TextView

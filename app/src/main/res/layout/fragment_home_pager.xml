@@ -160,7 +160,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:padding="@dimen/qb_px_20"
-                                    android:text="快速深度\n咨询"
+                                    android:text="快速电话\n咨询"
                                     android:textColor="@color/c_ff"
                                     android:textSize="16sp" />
 
@@ -211,7 +211,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:padding="@dimen/qb_px_20"
-                                    android:text="公开简单\n咨询"
+                                    android:text="免费文字\n咨询"
                                     android:textColor="@color/c_ff"
                                     android:textSize="16sp" />
 

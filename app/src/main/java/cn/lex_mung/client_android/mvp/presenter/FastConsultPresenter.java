@@ -377,7 +377,7 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
                 });
     }
 
-    //获取优惠卷
+    //获取优惠劵
     public void getCoupon(){
         mModel.quickCoupon()
                 .subscribeOn(Schedulers.io())
