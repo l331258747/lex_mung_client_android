@@ -392,9 +392,10 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
                     @Override
                     public void onNext(BaseResponse<OrderCouponEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
-                            if(baseResponse.getData().getList() != null && baseResponse.getData().getList().size() > 0){
-                                OrderCouponEntity.ListBean bean = baseResponse.getData().getList().get(0);
-                                mRootView.setCouponLayout(bean,false);
+                            if(baseResponse.getData().getList() != null
+                                    && baseResponse.getData().getList().size() > 0
+                                    && baseResponse.getData().getList().get(0).getCouponStatus() == 1){
+                                mRootView.setCouponLayout(baseResponse.getData().getList().get(0),false);
                             }else{
                                 mRootView.setCouponLayout(null,false);
                             }
