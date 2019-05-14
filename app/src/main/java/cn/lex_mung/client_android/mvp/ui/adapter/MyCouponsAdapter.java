@@ -24,6 +24,7 @@ public class MyCouponsAdapter extends BaseQuickAdapter<CouponsEntity.ListBean, B
             mImageLoader.loadImage(mContext
                     , ImageConfigImpl
                             .builder()
+                            .isCenterCrop(false)
                             .url(item.getImage())
                             .imageView(helper.getView(R.id.item_iv_icon))
                             .build());

@@ -67,6 +67,7 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
         adapter = new OrderCouponAdapter(mRootView.getActivity());
         adapter.setCouponId(couponId);
         adapter.setOnItemClickListener((adapter1, view, position) -> {
+            if(mRootView.getType() != 0) return;
             if (isFastClick()) return;
             OrderCouponEntity.ListBean entity = adapter.getItem(position);
             if (entity == null) return;

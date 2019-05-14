@@ -24,6 +24,8 @@ public interface OrderCouponContract {
 
         Activity getActivity();
 
+        int getType();
+
     }
 
     interface Model extends IModel {

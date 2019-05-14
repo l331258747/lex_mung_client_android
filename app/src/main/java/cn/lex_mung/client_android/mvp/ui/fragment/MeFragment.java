@@ -26,6 +26,7 @@ import cn.lex_mung.client_android.mvp.ui.activity.MyAccountActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MyCouponsActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MyLikeActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MyOrderActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.OrderCouponActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.SettingActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
@@ -40,6 +41,7 @@ import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.DataHelper;
+import me.zl.mvp.utils.StatusBarUtil;
 
 public class MeFragment extends BaseFragment<MePresenter> implements MeContract.View {
     @Inject
@@ -49,16 +51,16 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
     ImageView ivAvatar;
     @BindView(R.id.tv_user_name)
     TextView tvUserName;
-    @BindView(R.id.iv_user_sex)
-    ImageView ivUserSex;
-    @BindView(R.id.tv_user_age)
-    TextView tvUserAge;
-    @BindView(R.id.ll_age)
-    RelativeLayout llAge;
+//    @BindView(R.id.iv_user_sex)
+//    ImageView ivUserSex;
+//    @BindView(R.id.tv_user_age)
+//    TextView tvUserAge;
+//    @BindView(R.id.ll_age)
+//    RelativeLayout llAge;
     @BindView(R.id.tv_user_region)
     TextView tvUserRegion;
-    @BindView(R.id.tv_user_org)
-    TextView tvUserOrg;
+//    @BindView(R.id.tv_user_org)
+//    TextView tvUserOrg;
     @BindView(R.id.tv_edit_info)
     TextView tvEditInfo;
 
@@ -78,7 +80,7 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
 
     @Override
     public View initView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_me, container, false);
+        return inflater.inflate(R.layout.fragment_me1, container, false);
     }
 
     @Override
@@ -102,16 +104,29 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
             , R.id.view_newbie_guide
             , R.id.view_about
             , R.id.view_call
+            , R.id.view_card
+            , R.id.tv_user_name
     })
     public void onViewClicked(View view) {
         if (isFastClick()) return;
         switch (view.getId()) {
+            case R.id.tv_user_name:
+                if (mPresenter.isLogin()) {
+                } else {
+                    bundle.clear();
+                    bundle.putInt(BundleTags.TYPE, 1);
+                    launchActivity(new Intent(mActivity, LoginActivity.class),bundle);
+                }
+                break;
             case R.id.tv_edit_info:
                 if (mPresenter.isLogin()) {
                     launchActivity(new Intent(mActivity, EditInfoActivity.class));
                 } else {
-                    DataHelper.setIntergerSF(mActivity, DataHelperTags.LOGIN_TYPE, 1);
-                    launchActivity(new Intent(mActivity, LoginActivity.class));
+//                    DataHelper.setIntergerSF(mActivity, DataHelperTags.LOGIN_TYPE, 1);
+//                    launchActivity(new Intent(mActivity, LoginActivity.class));
+                    bundle.clear();
+                    bundle.putInt(BundleTags.TYPE, 1);
+                    launchActivity(new Intent(mActivity, LoginActivity.class),bundle);
                 }
                 break;
             case R.id.view_order:
@@ -134,7 +149,10 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
                 break;
             case R.id.view_coupons:
                 if (mPresenter.isLogin()) {
-                    launchActivity(new Intent(mActivity, MyCouponsActivity.class));
+                    //TODO 我的优惠劵
+                    bundle.clear();
+                    bundle.putInt(BundleTags.TYPE, 1);
+                    launchActivity(new Intent(mActivity, OrderCouponActivity.class), bundle);
                 } else {
                     bundle.clear();
                     bundle.putInt(BundleTags.TYPE, 1);
@@ -183,25 +201,36 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
                 intent.setData(data);
                 launchActivity(intent);
                 break;
+            case R.id.view_card:
+                if (mPresenter.isLogin()) {
+                    launchActivity(new Intent(mActivity, MyCouponsActivity.class));
+                } else {
+                    bundle.clear();
+                    bundle.putInt(BundleTags.TYPE, 1);
+                    launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
+                }
+                break;
         }
     }
 
     @Override
     public void showLoginLayout() {
-        llAge.setVisibility(View.VISIBLE);
+//        llAge.setVisibility(View.VISIBLE);
         tvUserName.setVisibility(View.VISIBLE);
         tvUserRegion.setVisibility(View.VISIBLE);
-        tvUserOrg.setVisibility(View.VISIBLE);
+//        tvUserOrg.setVisibility(View.VISIBLE);
         tvEditInfo.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoginLayout() {
         ivAvatar.setImageResource(R.drawable.ic_avatar);
-        llAge.setVisibility(View.GONE);
-        tvUserName.setVisibility(View.GONE);
-        tvUserRegion.setVisibility(View.GONE);
-        tvUserOrg.setVisibility(View.GONE);
+//        llAge.setVisibility(View.GONE);
+        tvUserName.setVisibility(View.VISIBLE);
+        tvUserRegion.setVisibility(View.VISIBLE);
+        tvUserName.setText("立即登录");
+        tvUserRegion.setText("时光不回头，当下最重要。");
+//        tvUserOrg.setVisibility(View.GONE);
         tvEditInfo.setVisibility(View.GONE);
     }
 
@@ -228,42 +257,42 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
 
     @Override
     public void setOrg(String organizationName) {
-        tvUserOrg.setText(organizationName);
-        tvUserOrg.setVisibility(View.VISIBLE);
+//        tvUserOrg.setText(organizationName);
+//        tvUserOrg.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void setAge(String age) {
-        llAge.setVisibility(View.VISIBLE);
-        tvUserAge.setText(age);
+//        llAge.setVisibility(View.VISIBLE);
+//        tvUserAge.setText(age);
     }
 
     @Override
     public void hideOrgLayout() {
-        tvUserOrg.setVisibility(View.GONE);
+//        tvUserOrg.setVisibility(View.GONE);
     }
 
     @Override
     public void hideAgeLayout() {
-        llAge.setVisibility(View.GONE);
+//        llAge.setVisibility(View.GONE);
     }
 
     @Override
     public void setSex(int bg, int color, int icon) {
-        llAge.setVisibility(View.VISIBLE);
-        llAge.setBackgroundResource(bg);
-        tvUserAge.setTextColor(color);
-        ivUserSex.setImageResource(icon);
+//        llAge.setVisibility(View.VISIBLE);
+//        llAge.setBackgroundResource(bg);
+//        tvUserAge.setTextColor(color);
+//        ivUserSex.setImageResource(icon);
     }
 
     @Override
     public void hideSexIcon() {
-        ivUserSex.setVisibility(View.GONE);
+//        ivUserSex.setVisibility(View.GONE);
     }
 
     @Override
     public void showSexIcon() {
-        ivUserSex.setVisibility(View.VISIBLE);
+//        ivUserSex.setVisibility(View.VISIBLE);
     }
 
     @Override

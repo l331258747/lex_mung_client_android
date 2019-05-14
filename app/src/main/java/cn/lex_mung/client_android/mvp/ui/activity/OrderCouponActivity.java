@@ -10,6 +10,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.model.CameraPosition;
@@ -44,8 +46,13 @@ public class OrderCouponActivity extends BaseActivity<OrderCouponPresenter> impl
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.ll_tip)
+    LinearLayout llTip;
+    @BindView(R.id.tv_no_coupon)
+    TextView tvNoCoupon;
 
     int couponId;
+    int type;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -64,11 +71,26 @@ public class OrderCouponActivity extends BaseActivity<OrderCouponPresenter> impl
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        type = bundleIntent.getInt(BundleTags.TYPE,0);
+
         couponId = bundleIntent.getInt(BundleTags.ID,-1);
         if(couponId == 0)
             couponId = -1;
 
         mPresenter.onCreate(smartRefreshLayout,couponId);
+
+        setMyCouponLayout();
+    }
+
+    public void setMyCouponLayout(){
+        if(type == 0) return;
+        llTip.setVisibility(View.GONE);
+        tvNoCoupon.setVisibility(View.GONE);
+    }
+
+    @Override
+    public int getType() {
+        return type;
     }
 
     @Override
