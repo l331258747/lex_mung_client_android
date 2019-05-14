@@ -5,9 +5,9 @@
     <string name="PeerScreenActivity">筛选</string>
     <string name="LoginActivity">登录</string>
     <string name="EditInfoActivity">编辑信息</string>
-    <string name="FreeConsultActivity">免费简单咨询</string>
+    <string name="FreeConsultActivity">免费文字咨询</string>
     <string name="FreeConsultDetailActivity">免费咨询详情</string>
-    <string name="FastConsultActivity">专业深度咨询</string>
+    <string name="FastConsultActivity">快速电话咨询</string>
     <string name="MyAccountActivity">我的账户</string>
     <string name="TransactionListDetailsActivity">交易详情</string>
     <string name="TransactionListActivity">交易明细</string>
