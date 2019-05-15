@@ -66,7 +66,7 @@ public class LWebView extends WebView {
         this.setHorizontalScrollBarEnabled(false);
         this.setHorizontalScrollbarOverlay(false);
 
-        setWebViewClient(new MyWebViewClient(this));
+//        setWebViewClient(new MyWebViewClient(this));
     }
 
     public void synCookies(String url) {

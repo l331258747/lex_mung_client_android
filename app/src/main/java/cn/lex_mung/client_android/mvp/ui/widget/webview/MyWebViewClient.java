@@ -10,9 +10,15 @@ import android.webkit.WebViewClient;
 public class MyWebViewClient extends WebViewClient {
 
     WebView webView;
+    boolean isJump;//支持跳转
 
     public MyWebViewClient(WebView webView) {
+        this(webView,false);
+    }
+
+    public MyWebViewClient(WebView webView,boolean isJump) {
         this.webView = webView;
+        this.isJump = isJump;
     }
 
     @Override
@@ -31,6 +37,9 @@ public class MyWebViewClient extends WebViewClient {
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
         // 不重写会调用系统浏览器
 //        view.loadUrl(url);//跳转
+        if(isJump){
+            view.loadUrl(url);//跳转
+        }
         return true;
     }
 

@@ -27,6 +27,7 @@ import cn.lex_mung.client_android.mvp.model.entity.other.WebGoPayEntity;
 import cn.lex_mung.client_android.mvp.presenter.WebPresenter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.webview.LWebView;
+import cn.lex_mung.client_android.mvp.ui.widget.webview.MyWebViewClient;
 import cn.lex_mung.client_android.utils.GsonUtil;
 import cn.lex_mung.client_android.utils.LogUtil;
 import me.zl.mvp.base.BaseActivity;
@@ -53,6 +54,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
     private String title;
     private String des;
     private String image;
+    private boolean isJump;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -100,6 +102,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             des = bundleIntent.getString(BundleTags.DES);
             image = bundleIntent.getString(BundleTags.IMAGE);
             isShare = bundleIntent.getBoolean(BundleTags.IS_SHARE, true);
+            isJump = bundleIntent.getBoolean(BundleTags.STATE,false);
         }
         if (isShare) {
             tvRight.setVisibility(View.VISIBLE);
@@ -132,6 +135,8 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
                 super.onProgressChanged(view, newProgress);
             }
         });
+
+        webView.setWebViewClient(new MyWebViewClient(webView,isJump));
 //        webView.setWebViewClient(new WebViewClient() {
 //            @Override
 //            public boolean shouldOverrideUrlLoading(WebView view, String urls) {
