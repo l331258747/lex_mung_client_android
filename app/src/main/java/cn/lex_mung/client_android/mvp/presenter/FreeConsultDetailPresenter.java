@@ -118,7 +118,7 @@ public class FreeConsultDetailPresenter extends BasePresenter<FreeConsultDetailC
         if (consultationId == 0) return;
         mModel.getFreeConsultDetail(consultationId)
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(3, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -142,7 +142,7 @@ public class FreeConsultDetailPresenter extends BasePresenter<FreeConsultDetailC
     public void getFreeConsultReplyList(boolean isAdd) {
         mModel.getFreeConsultReplyList(consultationId, pageNum)
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(3, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> {
                     if (!isAdd) {
                         mRootView.showLoading("");

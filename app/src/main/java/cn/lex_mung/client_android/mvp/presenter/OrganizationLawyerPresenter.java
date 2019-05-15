@@ -118,7 +118,7 @@ public class OrganizationLawyerPresenter extends BasePresenter<OrganizationLawye
         if (DataHelper.getBooleanSF(mApplication, DataHelperTags.IS_LOGIN_SUCCESS)) {
             mModel.getLawyerList1(pageNum, RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                     .subscribeOn(Schedulers.io())
-                    .retryWhen(new RetryWithDelay(3, 2))
+                    .retryWhen(new RetryWithDelay(0, 0))
                     .doOnSubscribe(disposable -> {
                         if (isShowLoading) {
                             mRootView.showLoading("");
@@ -151,7 +151,7 @@ public class OrganizationLawyerPresenter extends BasePresenter<OrganizationLawye
         } else {
             mModel.getLawyerList(pageNum, RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                     .subscribeOn(Schedulers.io())
-                    .retryWhen(new RetryWithDelay(3, 2))
+                    .retryWhen(new RetryWithDelay(0, 0))
                     .doOnSubscribe(disposable -> {
                         if (isShowLoading) {
                             mRootView.showLoading("");

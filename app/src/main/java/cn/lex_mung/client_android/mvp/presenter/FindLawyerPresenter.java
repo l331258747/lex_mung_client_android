@@ -206,7 +206,7 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
         } else {
             mModel.getLawyerList(pageNum, RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                     .subscribeOn(Schedulers.io())
-                    .retryWhen(new RetryWithDelay(3, 2))
+                    .retryWhen(new RetryWithDelay(0, 0))
                     .doOnSubscribe(disposable -> {
                         if (isShowLoading) {
                             mRootView.showLoading("");
@@ -232,7 +232,7 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
     private void getBusinessType() {
         mModel.getBusinessType()
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(3, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> {
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())

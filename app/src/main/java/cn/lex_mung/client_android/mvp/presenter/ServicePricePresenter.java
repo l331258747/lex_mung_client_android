@@ -99,7 +99,7 @@ public class ServicePricePresenter extends BasePresenter<ServicePriceContract.Mo
     private void expertPrice() {
         mModel.expertPrice(entity.getMemberId())
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(1, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -128,7 +128,7 @@ public class ServicePricePresenter extends BasePresenter<ServicePriceContract.Mo
 
         mModel.sendCall(entity.getMemberId())
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(1, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))

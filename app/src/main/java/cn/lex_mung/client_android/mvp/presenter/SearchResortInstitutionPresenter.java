@@ -77,7 +77,7 @@ public class SearchResortInstitutionPresenter extends BasePresenter<SearchResort
         String json = new Gson().toJson(map);
         mModel.getCourt(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), json))
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(3, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -107,7 +107,7 @@ public class SearchResortInstitutionPresenter extends BasePresenter<SearchResort
         String json = new Gson().toJson(map);
         mModel.getProcuratorate(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), json))
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(3, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())

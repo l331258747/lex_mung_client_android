@@ -77,7 +77,7 @@ public class MyCouponsPresenter extends BasePresenter<MyCouponsContract.Model, M
     private void getCouponsList(boolean isAdd) {
         mModel.getCouponsList(pageNum)
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(3, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> {
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())

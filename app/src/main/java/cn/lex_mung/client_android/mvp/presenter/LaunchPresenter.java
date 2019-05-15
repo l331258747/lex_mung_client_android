@@ -64,7 +64,7 @@ public class LaunchPresenter extends BasePresenter<LaunchContract.Model, LaunchC
     private void getAllDepreg() {
         mModel.appStartUp()
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(1, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> {
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -74,6 +74,10 @@ public class LaunchPresenter extends BasePresenter<LaunchContract.Model, LaunchC
                 .subscribe(new ErrorHandleSubscriber<BaseResponse>(mErrorHandler) {
                     @Override
                     public void onNext(BaseResponse baseResponse) {
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {//如果不这样设置，会导致进入登录页面。在进入mainactivity
                     }
                 });
     }

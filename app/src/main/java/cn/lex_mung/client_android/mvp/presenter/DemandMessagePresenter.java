@@ -83,7 +83,7 @@ public class DemandMessagePresenter extends BasePresenter<DemandMessageContract.
     public void getDemandMessageList() {
         mModel.getDemandMessageList()
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(3, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> {
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())

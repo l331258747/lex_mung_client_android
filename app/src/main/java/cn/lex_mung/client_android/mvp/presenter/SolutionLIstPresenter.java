@@ -91,7 +91,7 @@ public class SolutionLIstPresenter extends BasePresenter<SolutionLIstContract.Mo
         map.put("pageSize", 10);
         mModel.getSolutionList(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(1, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> {
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())

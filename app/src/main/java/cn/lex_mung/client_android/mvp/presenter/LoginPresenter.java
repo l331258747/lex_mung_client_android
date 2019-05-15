@@ -97,7 +97,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
         map.put("code", code);
         mModel.getCode(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(1, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -128,7 +128,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
         code = (int) ((Math.random() * 9 + 1) * 100000);
         mModel.getCode(phone)
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(1, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -169,7 +169,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
         String json = new Gson().toJson(map);
         mModel.login(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), json))
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(3, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -214,7 +214,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
     public void getAgreement() {
         mModel.lawyerRegisterAgreementUrl()
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(3, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())

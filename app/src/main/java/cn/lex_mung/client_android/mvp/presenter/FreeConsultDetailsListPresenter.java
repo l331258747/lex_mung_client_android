@@ -117,7 +117,7 @@ public class FreeConsultDetailsListPresenter extends BasePresenter<FreeConsultDe
     private void getFreeConsultReplyDetailList(boolean isAdd) {
         mModel.getFreeConsultReplyDetailList(consultationId, lawyerId, pageNum)
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(3, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> {
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -165,7 +165,7 @@ public class FreeConsultDetailsListPresenter extends BasePresenter<FreeConsultDe
         map.put("lawyerId", lawyerId);
         mModel.lawyerReply(consultationId, RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(1, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -191,7 +191,7 @@ public class FreeConsultDetailsListPresenter extends BasePresenter<FreeConsultDe
     public void deleteReply(int consultationReplyId, int position, Dialog dialog) {
         mModel.deleteReply(consultationReplyId)
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(3, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())

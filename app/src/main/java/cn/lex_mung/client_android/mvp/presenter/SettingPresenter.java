@@ -44,7 +44,7 @@ public class SettingPresenter extends BasePresenter<SettingContract.Model, Setti
     public void checkVersion() {
         mModel.checkVersion()
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(3, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading("正在检查版本信息..."))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -67,7 +67,7 @@ public class SettingPresenter extends BasePresenter<SettingContract.Model, Setti
     public void logout(Dialog dialog) {
         mModel.logout()
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(3, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading("正在退出账号..."))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())

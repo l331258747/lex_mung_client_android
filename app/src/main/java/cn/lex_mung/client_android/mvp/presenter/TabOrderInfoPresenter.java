@@ -49,7 +49,7 @@ public class TabOrderInfoPresenter extends BasePresenter<TabOrderInfoContract.Mo
     public void getRequirementDetail(int anInt) {
         mModel.requirementDetail(anInt)
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(1, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())

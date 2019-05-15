@@ -125,7 +125,7 @@ public class SystemMessagePresenter extends BasePresenter<SystemMessageContract.
     public void getSystemMessageList(boolean isAdd) {
         mModel.getSystemMessageList(pageNum)
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(3, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> {
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -157,7 +157,7 @@ public class SystemMessagePresenter extends BasePresenter<SystemMessageContract.
     public void allSetRead(Dialog dialog) {
         mModel.allSetRead(1)
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(3, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -183,7 +183,7 @@ public class SystemMessagePresenter extends BasePresenter<SystemMessageContract.
     private void setRead(int pushMessageId) {
         mModel.setRead(pushMessageId)
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(3, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> {
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())

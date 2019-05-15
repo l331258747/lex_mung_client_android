@@ -90,7 +90,7 @@ public class FeedbackPresenter extends BasePresenter<FeedbackContract.Model, Fee
     public void getFeedbackType() {
         mModel.getFeedbackType()
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(3, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -140,7 +140,7 @@ public class FeedbackPresenter extends BasePresenter<FeedbackContract.Model, Fee
         }
         mModel.uploadFeedback(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(1, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -281,7 +281,7 @@ public class FeedbackPresenter extends BasePresenter<FeedbackContract.Model, Fee
         RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpg"), file);
         mModel.uploadImage(requestBody, MultipartBody.Part.createFormData("file", file.getName(), requestFile))
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(3, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())

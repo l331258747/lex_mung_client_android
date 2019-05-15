@@ -452,7 +452,7 @@ public class MessageChatPresenter extends BasePresenter<MessageChatContract.Mode
     private void getRequirementStatus() {
         mModel.getRequirementStatus(id)
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(3, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())

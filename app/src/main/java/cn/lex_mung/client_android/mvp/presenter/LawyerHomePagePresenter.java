@@ -89,7 +89,7 @@ public class LawyerHomePagePresenter extends BasePresenter<LawyerHomePageContrac
         if (DataHelper.getBooleanSF(mApplication, DataHelperTags.IS_LOGIN_SUCCESS)) {
             mModel.getLawsHomePagerBase1(id)
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(1, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> {
                     if (isShowLoading) mRootView.showLoading("");
                 })
@@ -108,7 +108,7 @@ public class LawyerHomePagePresenter extends BasePresenter<LawyerHomePageContrac
                 });} else {
             mModel.getLawsHomePagerBase(id)
                     .subscribeOn(Schedulers.io())
-                    .retryWhen(new RetryWithDelay(1, 2))
+                    .retryWhen(new RetryWithDelay(0, 0))
                     .doOnSubscribe(disposable -> mRootView.showLoading(""))
                     .subscribeOn(AndroidSchedulers.mainThread())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -240,7 +240,7 @@ public class LawyerHomePagePresenter extends BasePresenter<LawyerHomePageContrac
     public void follow() {
         mModel.follow(id)
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(3, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -261,7 +261,7 @@ public class LawyerHomePagePresenter extends BasePresenter<LawyerHomePageContrac
     public void unFollow() {
         mModel.unFollow(id)
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(3, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -310,7 +310,7 @@ public class LawyerHomePagePresenter extends BasePresenter<LawyerHomePageContrac
     private void expertPrice() {
         mModel.expertPrice(entity.getMemberId())
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(1, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -339,7 +339,7 @@ public class LawyerHomePagePresenter extends BasePresenter<LawyerHomePageContrac
 
         mModel.sendCall(entity.getMemberId())
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(1, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))

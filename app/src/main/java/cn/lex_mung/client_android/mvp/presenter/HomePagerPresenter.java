@@ -84,7 +84,8 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
     private void loginInfo(Message message) {
         switch (message.what) {
             case LOGOUT:
-                onResume();
+//                onResume();
+                mRootView.hideUnreadMessageCount();
                 break;
         }
     }
@@ -130,7 +131,7 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
         }
         mModel.getBanner()
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(1, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> {
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -156,7 +157,7 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
         Map<String, Object> map = new HashMap<>();
         mModel.getSolutionType(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(1, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> {
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -177,7 +178,7 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
     private void getHomepageRequirementType() {
         mModel.getHomepageRequirementType()
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(1, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> {
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -221,6 +222,10 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                                 mRootView.hideUnreadMessageCount();
                             }
                         }
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {//不添加这个导致菊花一直转，查看菊花一直转就找401返回值
                     }
                 });
     }

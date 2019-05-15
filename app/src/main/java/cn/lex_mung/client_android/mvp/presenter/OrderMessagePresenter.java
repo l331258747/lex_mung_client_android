@@ -128,7 +128,7 @@ public class OrderMessagePresenter extends BasePresenter<OrderMessageContract.Mo
     public void getOrderMessageList(boolean isAdd) {
         mModel.getOrderMessageList(pageNum)
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(3, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> {
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -161,7 +161,7 @@ public class OrderMessagePresenter extends BasePresenter<OrderMessageContract.Mo
     public void allSetRead(Dialog dialog) {
         mModel.allSetRead(2)
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(3, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -187,7 +187,7 @@ public class OrderMessagePresenter extends BasePresenter<OrderMessageContract.Mo
     private void setRead(int pushMessageId) {
         mModel.setRead(pushMessageId)
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(3, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> {
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())

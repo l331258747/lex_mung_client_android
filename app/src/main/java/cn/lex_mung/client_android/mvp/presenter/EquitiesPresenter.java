@@ -207,7 +207,7 @@ public class EquitiesPresenter extends BasePresenter<EquitiesContract.Model, Equ
         }else{
             mModel.getEquitiesDetails(orgId, orgLevelId)
                     .subscribeOn(Schedulers.io())
-                    .retryWhen(new RetryWithDelay(1, 2))
+                    .retryWhen(new RetryWithDelay(0, 0))
                     .doOnSubscribe(disposable -> {
                     })
                     .subscribeOn(AndroidSchedulers.mainThread())
@@ -245,7 +245,7 @@ public class EquitiesPresenter extends BasePresenter<EquitiesContract.Model, Equ
         map.put("orgId", orgId);
         mModel.getLawyerList(1, RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(1, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> {
                 })
                 .subscribeOn(AndroidSchedulers.mainThread())

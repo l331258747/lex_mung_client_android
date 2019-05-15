@@ -166,7 +166,7 @@ public class EditInfoPresenter extends BasePresenter<EditInfoContract.Model, Edi
         map.put("parentId", 0);
         mModel.getIndustryList(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(3, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -190,7 +190,7 @@ public class EditInfoPresenter extends BasePresenter<EditInfoContract.Model, Edi
     private void getUserInfoDetail() {
         mModel.getUserInfoDetail()
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(3, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -384,7 +384,7 @@ public class EditInfoPresenter extends BasePresenter<EditInfoContract.Model, Edi
         RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpg"), file);
         mModel.uploadImage(requestBody, MultipartBody.Part.createFormData("file", file.getName(), requestFile))
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(3, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -517,7 +517,7 @@ public class EditInfoPresenter extends BasePresenter<EditInfoContract.Model, Edi
         }
         mModel.updateUserInfo(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(1, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())

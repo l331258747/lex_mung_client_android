@@ -69,7 +69,7 @@ public class JoinEquitiesOrgPresenter extends BasePresenter<JoinEquitiesOrgContr
         if (DataHelper.getBooleanSF(mApplication, DataHelperTags.IS_LOGIN_SUCCESS)) {
             mModel.getEquitiesDetails1(orgId, levelId)
                     .subscribeOn(Schedulers.io())
-                    .retryWhen(new RetryWithDelay(3, 2))
+                    .retryWhen(new RetryWithDelay(0, 0))
                     .doOnSubscribe(disposable -> mRootView.showLoading(""))
                     .subscribeOn(AndroidSchedulers.mainThread())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -87,7 +87,7 @@ public class JoinEquitiesOrgPresenter extends BasePresenter<JoinEquitiesOrgContr
         } else {
             mModel.getEquitiesDetails(orgId, levelId)
                     .subscribeOn(Schedulers.io())
-                    .retryWhen(new RetryWithDelay(3, 2))
+                    .retryWhen(new RetryWithDelay(0, 0))
                     .doOnSubscribe(disposable -> mRootView.showLoading(""))
                     .subscribeOn(AndroidSchedulers.mainThread())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -146,7 +146,7 @@ public class JoinEquitiesOrgPresenter extends BasePresenter<JoinEquitiesOrgContr
         map.put("institutionName", workUnit);
         mModel.joinEquitiesOrg(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(1, 2))
+                .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
