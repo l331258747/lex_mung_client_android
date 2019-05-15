@@ -56,6 +56,7 @@ import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.DataHelper;
+import me.zl.mvp.utils.StringUtils;
 
 public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implements HomePagerContract.View {
     @Inject
@@ -177,6 +178,9 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                 if(TextUtils.isEmpty(linkValue))
                     return;
                 if(linkValue.indexOf("orgId=") != -1){
+                    //用来跳转
+                    String orgId = StringUtils.getValueByName(linkValue,"orgId");
+
                     ((MainActivity) mActivity).switchPage(2);
                     return;
                 }
@@ -192,6 +196,9 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                 bundle.putString(BundleTags.DES, "");
                 bundle.putString(BundleTags.IMAGE, bean.getImage());
                 bundle.putBoolean(BundleTags.IS_SHARE, false);
+                if(linkValue.indexOf("couponId=") != -1){
+                    bundle.putBoolean(BundleTags.STATE, false);
+                }
                 launchActivity(new Intent(mActivity, WebActivity.class), bundle);
             } catch (Exception ignored) {
             }

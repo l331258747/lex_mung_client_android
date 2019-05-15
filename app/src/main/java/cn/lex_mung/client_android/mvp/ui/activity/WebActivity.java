@@ -102,7 +102,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             des = bundleIntent.getString(BundleTags.DES);
             image = bundleIntent.getString(BundleTags.IMAGE);
             isShare = bundleIntent.getBoolean(BundleTags.IS_SHARE, true);
-            isJump = bundleIntent.getBoolean(BundleTags.STATE,false);
+            isJump = bundleIntent.getBoolean(BundleTags.STATE,true);
         }
         if (isShare) {
             tvRight.setVisibility(View.VISIBLE);
@@ -137,6 +137,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
         });
 
         webView.setWebViewClient(new MyWebViewClient(webView,isJump));
+
 //        webView.setWebViewClient(new WebViewClient() {
 //            @Override
 //            public boolean shouldOverrideUrlLoading(WebView view, String urls) {
