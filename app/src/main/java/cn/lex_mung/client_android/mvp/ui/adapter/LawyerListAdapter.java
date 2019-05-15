@@ -34,7 +34,7 @@ public class LawyerListAdapter extends BaseQuickAdapter<LawyerEntity.LawyerBean.
                             .isCircle(true)
                             .build());
         } else {
-            helper.setImageResource(R.id.item_iv_avatar, R.drawable.ic_avatar);
+            helper.setImageResource(R.id.item_iv_avatar, R.drawable.ic_lawyer_avatar);
         }
         helper.setText(R.id.item_tv_score, "综合得分:" + item.getLawyerWeight());
         helper.setText(R.id.item_tv_name, item.getMemberName());

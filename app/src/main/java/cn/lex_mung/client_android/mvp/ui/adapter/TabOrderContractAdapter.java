@@ -5,9 +5,12 @@ import android.text.TextUtils;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.google.gson.Gson;
 import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
 
 import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.app.DataHelperTags;
+import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocGetEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.ListBean;
 import me.zl.mvp.http.imageloader.ImageLoader;
@@ -15,10 +18,12 @@ import me.zl.mvp.utils.DataHelper;
 
 public class TabOrderContractAdapter extends BaseQuickAdapter<ListBean, BaseViewHolder> {
     private ImageLoader mImageLoader;
+    private int userId;
 
-    public TabOrderContractAdapter(ImageLoader imageLoader) {
+    public TabOrderContractAdapter(int userId,ImageLoader imageLoader) {
         super(R.layout.item_tab_order_contract);
         mImageLoader = imageLoader;
+        this.userId = userId;
     }
 
     @Override
@@ -66,7 +71,12 @@ public class TabOrderContractAdapter extends BaseQuickAdapter<ListBean, BaseView
                             .isCircle(true)
                             .build());
         }else{
-            helper.setImageDrawable(R.id.iv_head,ContextCompat.getDrawable(mContext,R.drawable.ic_avatar));
+            if(item.getCreate_member_id() == userId){
+                helper.setImageDrawable(R.id.iv_head,ContextCompat.getDrawable(mContext,R.drawable.ic_avatar));
+            }else{
+                helper.setImageDrawable(R.id.iv_head,ContextCompat.getDrawable(mContext,R.drawable.ic_lawyer_avatar));
+            }
+
         }
     }
 }

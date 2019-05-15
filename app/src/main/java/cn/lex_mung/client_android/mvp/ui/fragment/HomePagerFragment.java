@@ -47,6 +47,7 @@ import cn.lex_mung.client_android.mvp.ui.activity.LawyerListActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MainActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MessageActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.OrganizationLawyerActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.HomePageRequirementTypeAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
@@ -178,10 +179,12 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                 if(TextUtils.isEmpty(linkValue))
                     return;
                 if(linkValue.indexOf("orgId=") != -1){
+                    //((MainActivity) mActivity).switchPage(2);
                     //用来跳转
                     String orgId = StringUtils.getValueByName(linkValue,"orgId");
-
-                    ((MainActivity) mActivity).switchPage(2);
+                    bundle.clear();
+                    bundle.putInt(BundleTags.ID, Integer.valueOf(orgId));
+                    launchActivity(new Intent(mActivity,OrganizationLawyerActivity.class),bundle);
                     return;
                 }
                 if(linkValue.indexOf("needLogin=1") != -1 && !DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)){

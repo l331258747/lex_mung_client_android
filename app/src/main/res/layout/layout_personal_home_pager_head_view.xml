@@ -84,7 +84,7 @@
             android:id="@+id/iv_avatar"
             android:layout_width="@dimen/qb_px_175"
             android:layout_height="@dimen/qb_px_175"
-            android:src="@drawable/ic_avatar"
+            android:src="@drawable/ic_lawyer_avatar"
             app:layout_constraintBottom_toBottomOf="@id/iv_avatar_bg"
             app:layout_constraintEnd_toEndOf="@id/iv_avatar_bg"
             app:layout_constraintStart_toStartOf="@id/iv_avatar_bg"

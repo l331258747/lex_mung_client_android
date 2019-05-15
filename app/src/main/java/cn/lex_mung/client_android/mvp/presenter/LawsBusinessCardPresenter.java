@@ -68,12 +68,13 @@ public class LawsBusinessCardPresenter extends BasePresenter<LawsBusinessCardCon
             }
             if (entity.getBaseInfo().getOrgTags() != null
                     && entity.getBaseInfo().getOrgTags().size() > 0) {
-                StringBuilder text = new StringBuilder();
-                for (OrgTagsEntity orgTagsEntity : entity.getBaseInfo().getOrgTags()) {
-                    text.append(orgTagsEntity.getTagName()).append("\n");
-                }
-                text.delete(text.length() - 1, text.length());
-                mRootView.setJoinLawyerTeam(text.toString());
+//                StringBuilder text = new StringBuilder();
+//                for (OrgTagsEntity orgTagsEntity : entity.getBaseInfo().getOrgTags()) {
+//                    text.append(orgTagsEntity.getTagName()).append("\n");
+//                }
+//                text.delete(text.length() - 1, text.length());
+//                mRootView.setJoinLawyerTeam(text.toString());
+                mRootView.setJoinLawyerTeam(entity.getBaseInfo().getOrgTags());
             } else {
                 num++;
                 mRootView.hideJoinLawyerTeamLayout();

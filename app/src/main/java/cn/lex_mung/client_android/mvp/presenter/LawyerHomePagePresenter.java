@@ -147,7 +147,7 @@ public class LawyerHomePagePresenter extends BasePresenter<LawyerHomePageContrac
             if (!TextUtils.isEmpty(entity.getIconImage())) {
                 mRootView.setAvatar(entity.getIconImage());
             } else {
-                mRootView.setAvatar(R.drawable.ic_avatar);
+                mRootView.setAvatar(R.drawable.ic_lawyer_avatar);
             }
             //姓名
             if (!TextUtils.isEmpty(entity.getMemberName())) {

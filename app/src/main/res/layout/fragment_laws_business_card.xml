@@ -137,18 +137,31 @@
             app:layout_constraintStart_toEndOf="@id/iv_join_lawyer_team"
             app:layout_constraintTop_toTopOf="@id/iv_join_lawyer_team" />
 
-        <TextView
-            android:id="@+id/tv_join_lawyer_team"
+        <!--<TextView-->
+            <!--android:id="@+id/tv_join_lawyer_team"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="@dimen/qb_px_20"-->
+            <!--android:includeFontPadding="false"-->
+            <!--android:lineSpacingExtra="@dimen/qb_px_15"-->
+            <!--android:textColor="@color/c_717171"-->
+            <!--android:textSize="13sp"-->
+            <!--app:layout_constraintEnd_toStartOf="@id/guideline3"-->
+            <!--app:layout_constraintStart_toEndOf="@id/guideline2"-->
+            <!--app:layout_constraintTop_toBottomOf="@id/iv_join_lawyer_team" />-->
+
+        <LinearLayout
+            android:id="@+id/ll_join_lawyer_team"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/qb_px_20"
+            android:orientation="vertical"
             android:includeFontPadding="false"
             android:lineSpacingExtra="@dimen/qb_px_15"
             android:textColor="@color/c_717171"
             android:textSize="13sp"
             app:layout_constraintEnd_toStartOf="@id/guideline3"
             app:layout_constraintStart_toEndOf="@id/guideline2"
-            app:layout_constraintTop_toBottomOf="@id/iv_join_lawyer_team" />
+            app:layout_constraintTop_toBottomOf="@id/iv_join_lawyer_team"/>
 
         <View
             android:id="@+id/view_3"
@@ -156,7 +169,7 @@
             android:layout_height="@dimen/qb_px_1"
             android:layout_marginTop="@dimen/qb_px_50"
             android:background="@color/c_dbdbdb"
-            app:layout_constraintTop_toBottomOf="@id/tv_join_lawyer_team" />
+            app:layout_constraintTop_toBottomOf="@id/ll_join_lawyer_team" />
 
         <ImageView
             android:id="@+id/iv_work"
@@ -165,7 +178,7 @@
             android:layout_marginTop="@dimen/qb_px_80"
             android:src="@drawable/ic_personal_home_page_work"
             app:layout_constraintStart_toStartOf="@id/guideline2"
-            app:layout_constraintTop_toBottomOf="@id/tv_join_lawyer_team" />
+            app:layout_constraintTop_toBottomOf="@id/ll_join_lawyer_team" />
 
         <TextView
             android:id="@+id/tv_work_text"

@@ -1,5 +1,8 @@
 package cn.lex_mung.client_android.mvp.contract;
 
+import java.util.List;
+
+import cn.lex_mung.client_android.mvp.model.entity.OrgTagsEntity;
 import cn.lex_mung.client_android.mvp.ui.adapter.PersonalHomePageEducationAdapter;
 import cn.lex_mung.client_android.mvp.ui.adapter.PersonalHomePageWorkAdapter;
 
@@ -18,7 +21,9 @@ public interface LawsBusinessCardContract {
 
         void hidePersonalHonorLayout();
 
-        void setJoinLawyerTeam(String toString);
+//        void setJoinLawyerTeam(String toString);
+
+        void setJoinLawyerTeam(List<OrgTagsEntity> orgTagsEntities);
 
         void hideJoinLawyerTeamLayout();
 

@@ -183,7 +183,7 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
         if (DataHelper.getBooleanSF(mApplication, DataHelperTags.IS_LOGIN_SUCCESS)) {
             mModel.getLawyerList1(pageNum, RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                     .subscribeOn(Schedulers.io())
-                    .retryWhen(new RetryWithDelay(3, 2))
+                    .retryWhen(new RetryWithDelay(0, 0))
                     .doOnSubscribe(disposable -> {
                         if (isShowLoading) {
                             mRootView.showLoading("");
@@ -293,6 +293,7 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
             case LAWYER_LIST_SCREEN_INFO_LIST_ID:
                 mRootView.setScreenColor(AppUtils.getColor(mApplication, R.color.c_06a66a));
                 list.clear();
+                screenMap.clear();
                 requireTypeId = (int)message.obj;
                 screenMap.put("require", new RequireEntity(requireTypeId, 0, 0));
                 pageNum = 1;

@@ -92,7 +92,7 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
     }
 
     private void initAdapter() {
-        adapter = new TabOrderContractAdapter(mImageLoader);
+        adapter = new TabOrderContractAdapter(userInfoDetailsEntity.getMemberId(),mImageLoader);
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;
             ListBean bean = adapter.getItem(position);

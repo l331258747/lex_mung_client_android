@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +16,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.List;
+
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
+import cn.lex_mung.client_android.mvp.model.entity.OrgTagsEntity;
+import cn.lex_mung.client_android.mvp.ui.activity.OrganizationLawyerActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.PersonalHomePageEducationAdapter;
 import cn.lex_mung.client_android.mvp.ui.adapter.PersonalHomePageWorkAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
@@ -30,6 +37,7 @@ import cn.lex_mung.client_android.mvp.contract.LawsBusinessCardContract;
 import cn.lex_mung.client_android.mvp.presenter.LawsBusinessCardPresenter;
 
 import cn.lex_mung.client_android.R;
+import me.zl.mvp.utils.StringUtils;
 
 public class LawsBusinessCardFragment extends BaseFragment<LawsBusinessCardPresenter> implements LawsBusinessCardContract.View {
     @BindView(R.id.iv_personal_resume)
@@ -48,8 +56,10 @@ public class LawsBusinessCardFragment extends BaseFragment<LawsBusinessCardPrese
     ImageView ivJoinLawyerTeam;
     @BindView(R.id.tv_join_lawyer_team_text)
     TextView tvJoinLawyerTeamText;
-    @BindView(R.id.tv_join_lawyer_team)
-    TextView tvJoinLawyerTeam;
+//    @BindView(R.id.tv_join_lawyer_team)
+//    TextView tvJoinLawyerTeam;
+    @BindView(R.id.ll_join_lawyer_team)
+    LinearLayout llJoinLawyerTeam;
     @BindView(R.id.iv_work)
     ImageView ivWork;
     @BindView(R.id.tv_work_text)
@@ -130,7 +140,8 @@ public class LawsBusinessCardFragment extends BaseFragment<LawsBusinessCardPrese
     @Override
     public void hideJoinLawyerTeamLayout() {
         tvJoinLawyerTeamText.setVisibility(View.GONE);
-        tvJoinLawyerTeam.setVisibility(View.GONE);
+//        tvJoinLawyerTeam.setVisibility(View.GONE);
+        llJoinLawyerTeam.setVisibility(View.GONE);
         ivJoinLawyerTeam.setVisibility(View.GONE);
         view3.setVisibility(View.GONE);
     }
@@ -161,9 +172,28 @@ public class LawsBusinessCardFragment extends BaseFragment<LawsBusinessCardPrese
     }
 
 
+//    @Override
+//    public void setJoinLawyerTeam(String toString) {
+//        tvJoinLawyerTeam.setText(toString);
+//    }
+
     @Override
-    public void setJoinLawyerTeam(String toString) {
-        tvJoinLawyerTeam.setText(toString);
+    public void setJoinLawyerTeam(List<OrgTagsEntity> orgTagsEntities) {
+        for (int i=0;i<orgTagsEntities.size();i++){
+            TextView tv = new TextView(mActivity);
+            OrgTagsEntity entity = orgTagsEntities.get(i);
+            tv.setText(entity.getTagName());
+            tv.setTextColor(ContextCompat.getColor(mActivity,R.color.c_717171));
+            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP,13);
+            tv.setPadding(0,AppUtils.dip2px(mActivity,15),0,0);
+            tv.setOnClickListener(v -> {
+                bundle.clear();
+                bundle.putInt(BundleTags.ID, Integer.valueOf(StringUtils.getValueByName(entity.getLink(),"id")));
+                launchActivity(new Intent(mActivity,OrganizationLawyerActivity.class),bundle);
+            });
+            llJoinLawyerTeam.addView(tv);
+        }
+
     }
 
     @Override
