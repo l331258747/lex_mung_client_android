@@ -246,8 +246,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_search:
-//                ((MainActivity) mActivity).switchPage(2);
-                launchActivity(new Intent(mActivity, FreeConsultMainActivity.class));
+                ((MainActivity) mActivity).switchPage(2);
                 break;
             case R.id.iv_message:
                 if (mPresenter.isLogin()) {
