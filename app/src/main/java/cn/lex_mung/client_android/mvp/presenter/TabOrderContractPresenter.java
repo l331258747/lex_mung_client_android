@@ -83,12 +83,12 @@ public class TabOrderContractPresenter extends BasePresenter<TabOrderContractCon
 
         this.smartRefreshLayout = smartRefreshLayout;
         this.orderNo = orderNo;
+        userInfoDetailsEntity = new Gson().fromJson(DataHelper.getStringSF(mApplication, DataHelperTags.USER_INFO_DETAIL), UserInfoDetailsEntity.class);
 
         initAdapter();
 
         getList(false);
 
-        userInfoDetailsEntity = new Gson().fromJson(DataHelper.getStringSF(mApplication, DataHelperTags.USER_INFO_DETAIL), UserInfoDetailsEntity.class);
     }
 
     private void initAdapter() {
