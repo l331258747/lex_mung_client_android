@@ -53,8 +53,12 @@
     <color name="c_EEC897">#eec897</color>
     <color name="c_26CD8D">#26CD8D</color>
     <color name="c_b89b4b">#b89b4b</color>
+    <color name="c_EDCA95">#EDCA95</color>
     <color name="c_33000000">#33000000</color>
 
     <color name="down_color">#eceded</color>
     <color name="float_transparent">#00000000</color>
+
+    <color name="color_text">#323232</color>
+    <color name="color_window_background">#ffffff</color>
 </resources>

@@ -8,6 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowContentTransitions">true</item>
+
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/color_text</item>
+        <item name="android:windowBackground">@color/color_window_background</item>
     </style>
 
     <style name="alert_dialog" parent="android:Theme.Dialog">

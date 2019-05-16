@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/qb_px_40"
+    android:layout_marginRight="@dimen/qb_px_40">
+
+
+    <View
+        android:id="@+id/view_title"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_48"
+        android:layout_marginTop="@dimen/qb_px_30"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_head"
+        android:layout_width="@dimen/qb_px_48"
+        android:layout_height="@dimen/qb_px_48"
+        android:src="@drawable/ic_avatar"
+        app:layout_constraintTop_toTopOf="@+id/view_title" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/qb_px_20"
+        android:text="匿名用户"
+        android:textColor="@color/c_323232"
+        app:layout_constraintBottom_toBottomOf="@+id/view_title"
+        app:layout_constraintStart_toEndOf="@+id/iv_head"
+        app:layout_constraintTop_toTopOf="@+id/view_title" />
+
+    <TextView
+        android:id="@+id/tv_area"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/qb_px_20"
+        android:layout_marginBottom="@dimen/qb_px_3"
+        android:text="湖南省-长沙市"
+        android:textColor="@color/c_b4b4b4"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_name"
+        app:layout_constraintStart_toEndOf="@+id/tv_name" />
+
+    <TextView
+        android:id="@+id/tv_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_10_00_all_edca95"
+        android:paddingLeft="@dimen/qb_px_20"
+        android:paddingTop="@dimen/qb_px_3"
+        android:paddingRight="@dimen/qb_px_20"
+        android:paddingBottom="@dimen/qb_px_3"
+        android:text="婚姻家事"
+        android:textColor="@color/c_EDCA95"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/view_title"
+        app:layout_constraintEnd_toEndOf="@+id/view_title"
+        app:layout_constraintTop_toTopOf="@+id/view_title" />
+
+
+    <View
+        android:id="@+id/view_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/qb_px_30"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_title" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="3"
+        android:textColor="@color/c_323232"
+        app:layout_constraintTop_toTopOf="@+id/view_content"
+        android:text="啊是的噶双方都噶范德萨啊是的噶啥事阿萨德刚阿萨德广发斯蒂芬阿斯蒂芬阿斯蒂芬啊是的噶双方都噶范德萨啊是的噶啥事阿萨德刚阿萨德广发斯蒂芬阿斯蒂芬阿斯蒂芬啊是的噶双方都噶范德萨啊是的噶啥事阿萨德刚阿萨德广发斯蒂芬阿斯蒂芬阿斯蒂芬啊是的噶双方都噶范德萨啊是的噶啥事阿萨德刚阿萨德广发斯蒂芬阿斯蒂芬阿斯蒂芬" />
+
+
+    <View
+        android:id="@+id/view_bottom"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/qb_px_30"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_comment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_content" />
+
+    <ImageView
+        android:id="@+id/iv_comment"
+        android:layout_width="@dimen/qb_px_30"
+        android:layout_height="@dimen/qb_px_30"
+        android:src="@drawable/ic_free_title_comment"
+        app:layout_constraintTop_toTopOf="@+id/view_bottom" />
+
+    <TextView
+        android:id="@+id/tv_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/qb_px_20"
+        android:text="0条回复"
+        android:textColor="@color/c_b4b4b4"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/view_bottom"
+        app:layout_constraintStart_toEndOf="@+id/iv_comment"
+        app:layout_constraintTop_toTopOf="@+id/view_bottom" />
+
+    <ImageView
+        android:id="@+id/iv_time"
+        android:layout_width="@dimen/qb_px_30"
+        android:layout_height="@dimen/qb_px_30"
+        android:layout_marginLeft="@dimen/qb_px_40"
+        android:src="@drawable/ic_free_title_time"
+        app:layout_constraintStart_toEndOf="@+id/tv_comment"
+        app:layout_constraintTop_toTopOf="@+id/view_bottom" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/qb_px_20"
+        android:text="刚刚"
+        android:textColor="@color/c_b4b4b4"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/view_bottom"
+        app:layout_constraintStart_toEndOf="@+id/iv_time"
+        app:layout_constraintTop_toTopOf="@+id/view_bottom" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_1"
+        android:layout_marginTop="@dimen/qb_px_30"
+        android:background="@color/c_f0f0f0"
+        app:layout_constraintTop_toBottomOf="@+id/view_bottom" />
+
+</android.support.constraint.ConstraintLayout>

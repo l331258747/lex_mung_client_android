@@ -26,6 +26,7 @@ import cn.lex_mung.client_android.BuildConfig;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.utils.LogUtil;
 import me.zl.mvp.base.delegate.AppLifecycles;
+import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.DataHelper;
 import timber.log.Timber;
 
@@ -73,22 +74,16 @@ public class AppLifecyclesImpl implements AppLifecycles {
         QbSdk.initX5Environment(application,  cb);
 
 
-        ApplicationInfo appInfo;
-        String channel = "website";
-        try {
-            appInfo = application.getPackageManager().getApplicationInfo(application.getPackageName(),
-                    PackageManager.GET_META_DATA);
-            channel = appInfo.metaData.getString("JPUSH_CHANNEL");
-        } catch (PackageManager.NameNotFoundException ignored) {
-        }
-        DataHelper.setStringSF(application, DataHelperTags.CHANNEL, channel);
-
+        String JPushChannel = AppUtils.getMetaData(application,"JPUSH_CHANNEL");
         //极光
         JPushInterface.setDebugMode(isDebug);
-        JPushInterface.setChannel(application, channel);
+        JPushInterface.setChannel(application, JPushChannel);
         JPushInterface.init(application);
         JMessageClient.setDebugMode(isDebug);
         JMessageClient.init(application, true);
+
+        String UMChannel = AppUtils.getMetaData(application,"UMENG_CHANNEL");
+        DataHelper.setStringSF(application, DataHelperTags.CHANNEL, UMChannel);
 
         //友盟
         UMConfigure.init(application, UMConfigure.DEVICE_TYPE_PHONE, "");

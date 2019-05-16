@@ -33,6 +33,10 @@
 
     <declare-styleable name="EmptyView">
         <attr name="EmptyView_bg" format="reference"/>
+        <attr name="EmptyView_btn" format="string"/>
+        <attr name="EmptyView_img" format="reference"/>
+        <attr name="EmptyView_content" format="string"/>
+        <attr name="EmptyView_content_text_color" format="reference"/>
     </declare-styleable>
 
 </resources>

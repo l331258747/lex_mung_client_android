@@ -2,8 +2,10 @@ package me.zl.mvp.utils;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -659,5 +661,18 @@ public class AppUtils {
             e.printStackTrace();
         }
         return vh;
+    }
+
+    //"JPUSH_CHANNEL"
+    public static String getMetaData(Application application, String metaName){
+        ApplicationInfo appInfo;
+        String channel = metaName;
+        try {
+            appInfo = application.getPackageManager().getApplicationInfo(application.getPackageName(),
+                    PackageManager.GET_META_DATA);
+            channel = appInfo.metaData.getString(metaName);
+        } catch (PackageManager.NameNotFoundException ignored) {
+        }
+        return channel;
     }
 }

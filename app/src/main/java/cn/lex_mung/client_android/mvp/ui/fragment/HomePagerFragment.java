@@ -43,6 +43,7 @@ import cn.lex_mung.client_android.mvp.model.entity.home.NormalBean;
 import cn.lex_mung.client_android.mvp.presenter.HomePagerPresenter;
 import cn.lex_mung.client_android.mvp.ui.activity.FastConsultActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultMainActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerListActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MainActivity;
@@ -245,7 +246,8 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_search:
-                ((MainActivity) mActivity).switchPage(2);
+//                ((MainActivity) mActivity).switchPage(2);
+                launchActivity(new Intent(mActivity, FreeConsultMainActivity.class));
                 break;
             case R.id.iv_message:
                 if (mPresenter.isLogin()) {
