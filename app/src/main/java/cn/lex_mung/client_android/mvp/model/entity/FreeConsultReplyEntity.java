@@ -26,6 +26,8 @@ public class FreeConsultReplyEntity {
      * navigatepageNums : [1,2]
      */
 
+
+
     private int pageNum;
     private int pageSize;
     private int size;

@@ -40,6 +40,7 @@
         app:layout_constraintTop_toTopOf="@+id/view_title" />
 
     <TextView
+        android:id="@+id/tv_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/round_10_00_all_edca95"
@@ -92,7 +93,7 @@
         android:id="@+id/iv_comment"
         android:layout_width="@dimen/qb_px_30"
         android:layout_height="@dimen/qb_px_30"
-        android:src="@drawable/ic_free_title_comment"
+        android:src="@drawable/ic_free_comment"
         app:layout_constraintStart_toStartOf="@+id/view_bottom"
         app:layout_constraintTop_toTopOf="@+id/view_bottom" />
 
@@ -113,11 +114,12 @@
         android:layout_width="@dimen/qb_px_30"
         android:layout_height="@dimen/qb_px_30"
         android:layout_marginLeft="@dimen/qb_px_40"
-        android:src="@drawable/ic_free_title_time"
+        android:src="@drawable/ic_free_time"
         app:layout_constraintStart_toEndOf="@+id/tv_comment"
         app:layout_constraintTop_toTopOf="@+id/view_bottom" />
 
     <TextView
+        android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/qb_px_20"

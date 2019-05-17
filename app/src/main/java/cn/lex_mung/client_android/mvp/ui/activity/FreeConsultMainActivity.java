@@ -9,30 +9,34 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.umeng.analytics.MobclickAgent;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.lex_mung.client_android.app.decoration.SpacesItemDecoration;
+import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.app.DataHelperTags;
+import cn.lex_mung.client_android.di.component.DaggerFreeConsultMainComponent;
 import cn.lex_mung.client_android.di.module.FreeConsultMainModule;
+import cn.lex_mung.client_android.mvp.contract.FreeConsultMainContract;
+import cn.lex_mung.client_android.mvp.presenter.FreeConsultMainPresenter;
 import cn.lex_mung.client_android.mvp.ui.adapter.FreeConsultMainAdapter;
-import cn.lex_mung.client_android.mvp.ui.adapter.MyOrderAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
-
 import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
+import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.utils.AppUtils;
-
-import cn.lex_mung.client_android.di.component.DaggerFreeConsultMainComponent;
-import cn.lex_mung.client_android.mvp.contract.FreeConsultMainContract;
-import cn.lex_mung.client_android.mvp.presenter.FreeConsultMainPresenter;
-
-import cn.lex_mung.client_android.R;
+import me.zl.mvp.utils.DataHelper;
 
 public class FreeConsultMainActivity extends BaseActivity<FreeConsultMainPresenter> implements FreeConsultMainContract.View {
+
+    @Inject
+    ImageLoader mImageLoader;
 
     @BindView(R.id.titleView)
     TitleView titleView;
@@ -57,7 +61,14 @@ public class FreeConsultMainActivity extends BaseActivity<FreeConsultMainPresent
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_btn:
-                showMessage("发布");
+                MobclickAgent.onEvent(mActivity, "w_y_shouye_index_mfzx");
+                if (DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
+                    launchActivity(new Intent(mActivity, FreeConsultActivity.class));
+                } else {
+                    bundle.clear();
+                    bundle.putInt(BundleTags.TYPE, 1);
+                    launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
+                }
                 break;
         }
     }
@@ -77,7 +88,13 @@ public class FreeConsultMainActivity extends BaseActivity<FreeConsultMainPresent
         mPresenter.onCreate(smartRefreshLayout);
 
         titleView.getRightTv().setOnClickListener(v -> {
-            launchActivity(new Intent(mActivity,FreeConsultListActivity.class));
+            if (DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
+                launchActivity(new Intent(mActivity,FreeConsultListActivity.class));
+            } else {
+                bundle.clear();
+                bundle.putInt(BundleTags.TYPE, 1);
+                launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
+            }
         });
     }
 

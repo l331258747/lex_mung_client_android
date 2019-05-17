@@ -7,12 +7,16 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.BindView;
 import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.app.decoration.SpacesItemDecoration;
 import cn.lex_mung.client_android.di.component.DaggerFreeConsultListComponent;
 import cn.lex_mung.client_android.di.module.FreeConsultListModule;
@@ -24,6 +28,7 @@ import cn.lex_mung.client_android.mvp.ui.widget.EmptyView;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
+import me.zl.mvp.utils.DataHelper;
 
 public class FreeConsultListActivity extends BaseActivity<FreeConsultListPresenter> implements FreeConsultListContract.View {
 
@@ -52,6 +57,16 @@ public class FreeConsultListActivity extends BaseActivity<FreeConsultListPresent
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         mPresenter.onCreate(smartRefreshLayout);
+        emptyView.getBtn().setOnClickListener(v -> {
+            MobclickAgent.onEvent(mActivity, "w_y_shouye_index_mfzx");
+            if (DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
+                launchActivity(new Intent(mActivity, FreeConsultActivity.class));
+            } else {
+                bundle.clear();
+                bundle.putInt(BundleTags.TYPE, 1);
+                launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
+            }
+        });
     }
 
     @Override
@@ -68,8 +83,10 @@ public class FreeConsultListActivity extends BaseActivity<FreeConsultListPresent
     }
 
     @Override
-    public void setEmptyView(FreeConsultListAdapter adapter) {
-        adapter.setEmptyView(R.layout.layout_empty_view, (ViewGroup) recyclerView.getParent());
+    public void setEmptyView(boolean isShow) {
+//        adapter.setEmptyView(R.layout.layout_empty_view, (ViewGroup) recyclerView.getParent());
+        emptyView.setVisibility(isShow?View.VISIBLE:View.GONE);
+        smartRefreshLayout.setVisibility(isShow?View.GONE:View.VISIBLE);
     }
 
     @Override

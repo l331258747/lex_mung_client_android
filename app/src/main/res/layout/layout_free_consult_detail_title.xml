@@ -3,25 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/qb_px_40"
-    android:layout_marginRight="@dimen/qb_px_40">
-
+    android:layout_height="wrap_content">
 
     <View
         android:id="@+id/view_title"
         android:layout_width="0dp"
-        android:layout_height="@dimen/qb_px_48"
+        android:layout_height="@dimen/qb_px_102"
+        android:layout_marginLeft="@dimen/qb_px_40"
         android:layout_marginTop="@dimen/qb_px_30"
+        android:layout_marginRight="@dimen/qb_px_40"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/iv_head"
-        android:layout_width="@dimen/qb_px_48"
-        android:layout_height="@dimen/qb_px_48"
+        android:layout_width="@dimen/qb_px_102"
+        android:layout_height="@dimen/qb_px_102"
         android:src="@drawable/ic_avatar"
+        app:layout_constraintStart_toStartOf="@+id/view_title"
         app:layout_constraintTop_toTopOf="@+id/view_title" />
 
     <TextView
@@ -31,7 +31,7 @@
         android:layout_marginLeft="@dimen/qb_px_20"
         android:text="匿名用户"
         android:textColor="@color/c_323232"
-        app:layout_constraintBottom_toBottomOf="@+id/view_title"
+        app:layout_constraintBottom_toTopOf="@+id/tv_area"
         app:layout_constraintStart_toEndOf="@+id/iv_head"
         app:layout_constraintTop_toTopOf="@+id/view_title" />
 
@@ -44,8 +44,9 @@
         android:text="湖南省-长沙市"
         android:textColor="@color/c_b4b4b4"
         android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_name"
-        app:layout_constraintStart_toEndOf="@+id/tv_name" />
+        app:layout_constraintBottom_toBottomOf="@+id/view_title"
+        app:layout_constraintStart_toEndOf="@+id/iv_head"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
     <TextView
         android:id="@+id/tv_type"
@@ -68,7 +69,9 @@
         android:id="@+id/view_content"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/qb_px_40"
         android:layout_marginTop="@dimen/qb_px_30"
+        android:layout_marginRight="@dimen/qb_px_40"
         app:layout_constraintBottom_toBottomOf="@+id/tv_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -76,19 +79,22 @@
 
     <TextView
         android:id="@+id/tv_content"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:maxLines="3"
+        android:text="啊是的噶双蒂芬"
         android:textColor="@color/c_323232"
-        app:layout_constraintTop_toTopOf="@+id/view_content"
-        android:text="啊是的噶双方都噶范德萨啊是的噶啥事阿萨德刚阿萨德广发斯蒂芬阿斯蒂芬阿斯蒂芬啊是的噶双方都噶范德萨啊是的噶啥事阿萨德刚阿萨德广发斯蒂芬阿斯蒂芬阿斯蒂芬啊是的噶双方都噶范德萨啊是的噶啥事阿萨德刚阿萨德广发斯蒂芬阿斯蒂芬阿斯蒂芬啊是的噶双方都噶范德萨啊是的噶啥事阿萨德刚阿萨德广发斯蒂芬阿斯蒂芬阿斯蒂芬" />
+        app:layout_constraintEnd_toEndOf="@+id/view_content"
+        app:layout_constraintStart_toStartOf="@+id/view_content"
+        app:layout_constraintTop_toTopOf="@+id/view_content" />
 
 
     <View
         android:id="@+id/view_bottom"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/qb_px_40"
         android:layout_marginTop="@dimen/qb_px_30"
+        android:layout_marginRight="@dimen/qb_px_40"
         app:layout_constraintBottom_toBottomOf="@+id/iv_comment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -99,6 +105,7 @@
         android:layout_width="@dimen/qb_px_30"
         android:layout_height="@dimen/qb_px_30"
         android:src="@drawable/ic_free_comment"
+        app:layout_constraintStart_toStartOf="@+id/view_bottom"
         app:layout_constraintTop_toTopOf="@+id/view_bottom" />
 
     <TextView
@@ -136,9 +143,87 @@
 
     <View
         android:layout_width="0dp"
-        android:layout_height="@dimen/qb_px_1"
+        android:layout_height="@dimen/qb_px_30"
         android:layout_marginTop="@dimen/qb_px_30"
         android:background="@color/c_f0f0f0"
         app:layout_constraintTop_toBottomOf="@+id/view_bottom" />
+
+    <LinearLayout
+        android:id="@+id/ll_empty"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_29"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_bottom"
+        tools:visibility="visible">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qb_px_1"
+            android:layout_marginLeft="@dimen/qb_px_40"
+            android:layout_marginRight="@dimen/qb_px_40"
+            android:background="@color/c_f0f0f0" />
+
+        <cn.lex_mung.client_android.mvp.ui.widget.EmptyView2
+            android:id="@+id/emptyView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:EmptyView_bg="@color/c_ff"
+            app:EmptyView_btn="快速咨询"
+            app:EmptyView_content2="您的咨询暂时还没有律师回复、如着急处理，建议发起快速咨询，律师5-10分钟内快速回电，迅速解决您的困惑。"
+            app:EmptyView_img="@drawable/ic_empty_free"
+            tools:visibility="visible" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qb_px_1"
+            android:layout_marginLeft="@dimen/qb_px_40"
+            android:layout_marginRight="@dimen/qb_px_40"
+            android:background="@color/c_f0f0f0" />
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/qb_px_15"
+            android:layout_marginEnd="@dimen/qb_px_15"
+            android:layout_marginBottom="@dimen/qb_px_20"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_basic_info"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/qb_px_83"
+                android:layout_marginStart="@dimen/qb_px_30"
+                android:gravity="bottom"
+                android:text="推荐婚姻家事律师"
+                android:textColor="@color/c_323232"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_basic_info"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/qb_px_10"
+                android:layout_marginBottom="@dimen/qb_px_5"
+                android:background="@drawable/ic_personal_home_page_tag"
+                app:layout_constraintBottom_toBottomOf="@id/tv_basic_info"
+                app:layout_constraintEnd_toEndOf="@id/tv_basic_info"
+                app:layout_constraintStart_toStartOf="@id/tv_basic_info" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_lawyer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/c_f7f7f7" />
+
+    </LinearLayout>
+
 
 </android.support.constraint.ConstraintLayout>

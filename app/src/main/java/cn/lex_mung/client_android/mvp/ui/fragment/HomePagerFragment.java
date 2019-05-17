@@ -246,7 +246,6 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_search:
-//                launchActivity(new Intent(mActivity, FreeConsultMainActivity.class));
                 ((MainActivity) mActivity).switchPage(2);
                 break;
             case R.id.iv_message:
@@ -259,14 +258,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                 }
                 break;
             case R.id.view_free_consult:
-                MobclickAgent.onEvent(mActivity, "w_y_shouye_index_mfzx");
-                if (mPresenter.isLogin()) {
-                    launchActivity(new Intent(mActivity, FreeConsultActivity.class));
-                } else {
-                    bundle.clear();
-                    bundle.putInt(BundleTags.TYPE, 1);
-                    launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
-                }
+                launchActivity(new Intent(mActivity, FreeConsultMainActivity.class));
                 break;
             case R.id.view_fast_consult:
                 MobclickAgent.onEvent(mActivity, "w_y_shouye_index_kszx");

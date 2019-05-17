@@ -42,6 +42,8 @@ import cn.lex_mung.client_android.mvp.model.entity.UnreadMessageCountEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UploadImageEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.VersionEntity;
+import cn.lex_mung.client_android.mvp.model.entity.free.CommonFreeTextEntity;
+import cn.lex_mung.client_android.mvp.model.entity.free.FreeTextBizinfoEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.RequirementTypeV3Entity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocGetEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocUploadEntity;
@@ -251,6 +253,7 @@ public interface CommonService {
     @POST("client/freeText/post")
     Observable<BaseResponse<FreeConsultEntity>> releaseFreeConsult(@Body RequestBody body);
 
+
     /**
      * 获取咨询详情
      *
@@ -266,6 +269,19 @@ public interface CommonService {
      */
     @GET("lawyer/freeText/{consultationId}/reply/{pageNum}")
     Observable<BaseResponse<FreeConsultReplyEntity>> getConsultReplyList(@Path("consultationId") int consultationId, @Path("pageNum") int pageNum);
+
+    ///common/freeText/v2/{consultationId}
+    //GET
+    //文字咨询详情v2
+    @GET("common/freeText/v2/{consultationId}")
+    Observable<BaseResponse<FreeConsultEntity>> commonFreeText(@Path("consultationId") int id);
+
+    ///lawyer/freeText/v2/{consultationId}/reply/{pageNum}/{pageSize}
+    //GET
+    //文字咨询回复列表v2
+    @GET("lawyer/freeText/v2/{consultationId}/reply/{pageNum}/{pageSize}")
+    Observable<BaseResponse<FreeConsultReplyEntity>> lawyerFreeText(@Path("consultationId") int consultationId, @Path("pageNum") int pageNum, @Path("pageSize") int pageSize);
+
 
     /**
      * 获取咨询详情回复详情列表
@@ -626,4 +642,15 @@ public interface CommonService {
     @POST("client/quick/pay")
     Observable<BaseResponse<QuickPayEntity>> quickPay(@Body RequestBody body);
 
+    ///freeText/bizinfo
+    //GET
+    //获取免费咨询运营日数据
+    @GET("freeText/bizinfo")
+    Observable<BaseResponse<FreeTextBizinfoEntity>> freeTextBizinfo();
+
+    ///common/freeText/v2
+    //POST
+    //文字咨询列表v2
+    @POST("common/freeText/v2")
+    Observable<BaseResponse<CommonFreeTextEntity>> commonFreeText(@Body RequestBody body);
 }

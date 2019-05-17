@@ -7,7 +7,7 @@ ext {
             targetSdkVersion : 28,
             versionCode      : 214,
             versionName      : "2.1.4",
-            isprod : true
+            isprod : false
     ]
 
     version = [

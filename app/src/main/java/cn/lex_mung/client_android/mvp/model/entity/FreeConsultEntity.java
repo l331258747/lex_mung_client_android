@@ -185,6 +185,9 @@ public class FreeConsultEntity implements Serializable {
     }
 
     public String getMemberName() {
+        if(isHide == 1){
+            return "匿名用户";
+        }
         return memberName;
     }
 
@@ -202,6 +205,10 @@ public class FreeConsultEntity implements Serializable {
 
     public String getCategoryName() {
         return categoryName;
+    }
+
+    public String getCategoryNameTitle() {
+        return "推荐"+categoryName+"律师";
     }
 
     public void setCategoryName(String categoryName) {

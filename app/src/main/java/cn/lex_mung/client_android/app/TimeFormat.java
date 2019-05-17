@@ -3,14 +3,14 @@ package cn.lex_mung.client_android.app;
 import android.annotation.SuppressLint;
 import android.text.TextUtils;
 
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import cn.jiguang.api.JCoreInterface;
 
 public class TimeFormat {
-    private static String s1 = "yyyy-MM-dd HH:mm:ss";
+    public static final String s1 = "yyyy-MM-dd HH:mm:ss";
 
     @SuppressLint("SimpleDateFormat")
     public static String getTime(String timeStamp) {
@@ -74,6 +74,43 @@ public class TimeFormat {
                 return minuteFormat + "分" + secondFormat + "秒";
         }
         return dayFormat + "天 " + hourFormat + "时" + minuteFormat + "分" + secondFormat + "秒";
+    }
+
+    // string类型转换为long类型
+    // strTime要转换的String类型的时间
+    // formatType时间格式
+    // strTime的时间格式和formatType的时间格式必须相同
+    public static long strToLong(String strTime, String formatType){
+        Date date = str2Date(strTime, formatType); // String类型转成date类型
+        if (date == null) {
+            return 0;
+        } else {
+            long currentTime = dateToLong(date); // date类型转成long类型
+            return currentTime;
+        }
+    }
+
+    // date类型转换为long类型
+    // date要转换的date类型的时间
+    public static long dateToLong(Date date) {
+        return date.getTime();
+    }
+
+    //String 转 date
+    public static Date str2Date(String dateStr) {
+        return str2Date(dateStr,s1);
+    }
+    //String 转 date
+    public static Date str2Date(String dateStr, String format) {
+        SimpleDateFormat df;
+        df = new SimpleDateFormat(format);
+        try {
+            return df.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return new Date();
     }
 
     /**

@@ -23,6 +23,8 @@ public class FreeConsultReplyListEntity {
      * replyCount : 0
      */
 
+
+
     private int consultationReplyId;
     private String consultationNumber;
     private int lawyerId;
@@ -40,6 +42,15 @@ public class FreeConsultReplyListEntity {
     private String memberRegion;
     private int memberSex;
     private int replyCount;
+    /**
+     * memberHonorTitle : 全国人大代表/政协委员
+     * minAmount : 0
+     * lawyerPositionName : 律所主任
+     */
+
+    private String memberHonorTitle;
+    private int minAmount;
+    private String lawyerPositionName;
 
     public int getConsultationReplyId() {
         return consultationReplyId;
@@ -175,5 +186,29 @@ public class FreeConsultReplyListEntity {
 
     public void setReplyCount(int replyCount) {
         this.replyCount = replyCount;
+    }
+
+    public String getMemberHonorTitle() {
+        return memberHonorTitle;
+    }
+
+    public void setMemberHonorTitle(String memberHonorTitle) {
+        this.memberHonorTitle = memberHonorTitle;
+    }
+
+    public int getMinAmount() {
+        return minAmount;
+    }
+
+    public void setMinAmount(int minAmount) {
+        this.minAmount = minAmount;
+    }
+
+    public String getLawyerPositionName() {
+        return lawyerPositionName;
+    }
+
+    public void setLawyerPositionName(String lawyerPositionName) {
+        this.lawyerPositionName = lawyerPositionName;
     }
 }

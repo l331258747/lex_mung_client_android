@@ -1,0 +1,226 @@
+package cn.lex_mung.client_android.mvp.presenter;
+
+import android.app.Application;
+import android.support.annotation.NonNull;
+import android.view.View;
+
+import com.google.gson.Gson;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.inject.Inject;
+
+import cn.lex_mung.client_android.mvp.contract.FreeConsultDetail1Contract;
+import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
+import cn.lex_mung.client_android.mvp.model.entity.FreeConsultEntity;
+import cn.lex_mung.client_android.mvp.model.entity.FreeConsultReplyEntity;
+import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity;
+import cn.lex_mung.client_android.mvp.ui.adapter.FreeConsultDetail1Adapter;
+import cn.lex_mung.client_android.mvp.ui.adapter.LawyerListAdapter;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
+import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
+import me.zl.mvp.di.scope.ActivityScope;
+import me.zl.mvp.http.imageloader.ImageLoader;
+import me.zl.mvp.integration.AppManager;
+import me.zl.mvp.mvp.BasePresenter;
+import me.zl.mvp.utils.RxLifecycleUtils;
+import okhttp3.RequestBody;
+
+
+@ActivityScope
+public class FreeConsultDetail1Presenter extends BasePresenter<FreeConsultDetail1Contract.Model, FreeConsultDetail1Contract.View> {
+    @Inject
+    RxErrorHandler mErrorHandler;
+    @Inject
+    Application mApplication;
+    @Inject
+    ImageLoader mImageLoader;
+    @Inject
+    AppManager mAppManager;
+
+    private int pageNum;
+    private int totalNum;
+    private FreeConsultDetail1Adapter adapter;
+    private SmartRefreshLayout smartRefreshLayout;
+
+    private int consultationId;
+
+    private View layout;
+
+    private int ConsultationTypeId;
+
+    private  LawyerListAdapter lawyerListAdapter;
+
+    @Inject
+    public FreeConsultDetail1Presenter(FreeConsultDetail1Contract.Model model, FreeConsultDetail1Contract.View rootView) {
+        super(model, rootView);
+    }
+
+    public void onCreate(SmartRefreshLayout smartRefreshLayout) {
+        this.smartRefreshLayout = smartRefreshLayout;
+        initAdapter();
+        initLawyerAdapter();
+        getList(false);
+        getInfo();
+    }
+
+    public void setTitleLayout(View layout){
+        this.layout = layout;
+    }
+
+    public void setConsultationId(int consultationId) {
+        this.consultationId = consultationId;
+    }
+
+    private void initAdapter() {
+        adapter = new FreeConsultDetail1Adapter(mImageLoader);
+        adapter.addHeaderView(layout);
+        adapter.setOnItemClickListener((adapter1, view, position) -> {
+            if (isFastClick()) return;
+            mRootView.showMessage("详情");
+
+        });
+        smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                if (pageNum < totalNum) {
+                    pageNum = pageNum + 1;
+                    getList(true);
+                } else {
+                    smartRefreshLayout.finishLoadMoreWithNoMoreData();
+                }
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                pageNum = 1;
+                getList(false);
+            }
+        });
+        mRootView.initRecyclerView(adapter);
+    }
+
+    private void initLawyerAdapter(){
+        lawyerListAdapter = new LawyerListAdapter(mImageLoader);
+        lawyerListAdapter.setOnItemClickListener((adapter1, view, position) -> {
+            if (isFastClick()) return;
+            mRootView.showMessage("律师详情");
+
+        });
+        mRootView.setLawyerList(lawyerListAdapter);
+    }
+
+
+
+    public void getInfo(){
+        mModel.commonFreeText(consultationId)
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> {
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<FreeConsultEntity>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<FreeConsultEntity> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            mRootView.setData(baseResponse.getData());
+                            ConsultationTypeId = baseResponse.getData().getConsultationTypeId();
+
+                            //TODO 根据回复数量 空页面展示，加载不同的 Adapter
+                            if(baseResponse.getData().getReplyCount() == 0){
+                                mRootView.setEmptyView(true);
+                                getLawyerList();
+                            }else{
+                                mRootView.setEmptyView(false);
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void getList(boolean isAdd){
+        mModel.lawyerFreeText(consultationId,pageNum,10)
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> {
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<FreeConsultReplyEntity>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<FreeConsultReplyEntity> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            totalNum = baseResponse.getData().getPages();
+                            pageNum = baseResponse.getData().getPageNum();
+
+                            if (isAdd) {
+                                adapter.addData(baseResponse.getData().getList());
+                                smartRefreshLayout.finishLoadMore();
+                            } else {
+                                smartRefreshLayout.finishRefresh();
+                                adapter.setNewData(baseResponse.getData().getList());
+
+                                if (totalNum == pageNum) {
+                                    smartRefreshLayout.finishLoadMoreWithNoMoreData();
+                                }
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void getLawyerList(){
+        Map<String, Object> map = new HashMap<>();
+        map.put("sort", 0);
+        map.put("regionId", 0);
+        map.put("businessTypeId", ConsultationTypeId);
+        mModel.getLawyerList(1, RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> {
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<LawyerEntity>(mErrorHandler) {
+                    @Override
+                    public void onNext(LawyerEntity baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            if(baseResponse.getData().getList().size() > 3){
+                                List<LawyerEntity.LawyerBean.ListBean> datas = new ArrayList<>();
+                                for (int i=0;i<3;i++){
+                                    datas.add(baseResponse.getData().getList().get(i));
+                                    lawyerListAdapter.setNewData(datas);
+                                }
+                            }else{
+                                lawyerListAdapter.setNewData(baseResponse.getData().getList());
+                            }
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.mErrorHandler = null;
+        this.mAppManager = null;
+        this.mImageLoader = null;
+        this.mApplication = null;
+    }
+}
