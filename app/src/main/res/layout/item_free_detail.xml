@@ -195,6 +195,7 @@
         android:paddingLeft="@dimen/qb_px_10"
         android:paddingTop="@dimen/qb_px_5"
         android:paddingRight="@dimen/qb_px_10"
+        android:visibility="gone"
         android:paddingBottom="@dimen/qb_px_5"
         app:layout_constraintBottom_toBottomOf="@+id/view_bottom"
         app:layout_constraintStart_toEndOf="@+id/tv_time"

@@ -21,6 +21,7 @@ import cn.lex_mung.client_android.mvp.contract.MyOrderContract;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.OrderEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
+import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultDetail1Activity;
 import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultDetailActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MessageChatActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.OrderDetailTabActivity;
@@ -77,7 +78,7 @@ public class MyOrderPresenter extends BasePresenter<MyOrderContract.Model, MyOrd
                 case 1://文字咨询
                     bundle.clear();
                     bundle.putInt(BundleTags.ID, entity.getId());
-                    mRootView.launchActivity(new Intent(mApplication, FreeConsultDetailActivity.class), bundle);
+                    mRootView.launchActivity(new Intent(mApplication, FreeConsultDetail1Activity.class), bundle);
                     break;
                 case 5://客户需求
                     if(entity.getIsHot() == 1){
