@@ -76,7 +76,8 @@ public class OrderCouponActivity extends BaseActivity<OrderCouponPresenter> impl
         couponId = bundleIntent.getInt(BundleTags.ID,-1);
         if(couponId == 0)
             couponId = -1;
-
+        mPresenter.setType(bundleIntent.getInt(BundleTags.TYPE,0));
+        mPresenter.setOrderAmount(bundleIntent.getDouble(BundleTags.MONEY,0));
         mPresenter.onCreate(smartRefreshLayout,couponId);
 
         setMyCouponLayout();
@@ -96,7 +97,6 @@ public class OrderCouponActivity extends BaseActivity<OrderCouponPresenter> impl
     @Override
     public void initRecyclerView(OrderCouponAdapter adapter) {
         AppUtils.configRecyclerView(recyclerView, new LinearLayoutManager(mActivity));
-        recyclerView.addItemDecoration(new SpacesItemDecoration(0, AppUtils.dip2px(mActivity, AppUtils.getXmlDef(mActivity, R.dimen.qb_px_35))));
         recyclerView.setAdapter(adapter);
         adapter.setEmptyView(R.layout.layout_loading_view, (ViewGroup) recyclerView.getParent());
     }

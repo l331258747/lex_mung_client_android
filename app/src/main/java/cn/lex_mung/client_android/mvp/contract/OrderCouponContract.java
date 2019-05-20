@@ -30,7 +30,9 @@ public interface OrderCouponContract {
 
     interface Model extends IModel {
 
-        Observable<BaseResponse<OrderCouponEntity>> quickCoupon(int pageNum);
+        Observable<BaseResponse<OrderCouponEntity>> quickCoupon(int pageNum,double orderAmount);
+
+        Observable<BaseResponse<OrderCouponEntity>> requireCoupon(int pageNum);
 
     }
 }

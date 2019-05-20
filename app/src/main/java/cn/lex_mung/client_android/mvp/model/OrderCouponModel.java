@@ -43,13 +43,25 @@ public class OrderCouponModel extends BaseModel implements OrderCouponContract.M
     }
 
     @Override
-    public Observable<BaseResponse<OrderCouponEntity>> quickCoupon(int pageNum) {
+    public Observable<BaseResponse<OrderCouponEntity>> quickCoupon(int pageNum,double orderAmount) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("pageNum", pageNum);
+        map.put("pageSize", 10);
+        map.put("orderAmount", orderAmount);
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map));
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .quickCoupon(body);
+    }
+
+    @Override
+    public Observable<BaseResponse<OrderCouponEntity>> requireCoupon(int pageNum) {
         Map<String, Object> map = new HashMap<>();
         map.put("pageNum", pageNum);
         map.put("pageSize", 10);
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map));
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
-                .quickCoupon(body);
+                .requireCoupon(body);
     }
 }

@@ -354,8 +354,14 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
                 }
                 break;
             case R.id.view_discount_way:
+                if(orderPrice <= 0){
+                    showMessage("请先选择问题类型");
+                    return;
+                }
                 bundle.clear();
                 bundle.putInt(BundleTags.ID, couponId);//优惠劵id
+                bundle.putInt(BundleTags.TYPE,0);
+                bundle.putDouble(BundleTags.MONEY,orderPrice);
                 launchActivity(new Intent(mActivity, OrderCouponActivity.class), bundle);
                 break;
         }

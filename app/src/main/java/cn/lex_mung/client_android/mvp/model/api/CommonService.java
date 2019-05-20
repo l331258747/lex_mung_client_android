@@ -665,4 +665,10 @@ public interface CommonService {
                                                                      @Path("pageNum") int pageNum,
                                                                      @Path("pageSize") int pageSize);
 
+    ///client/require/coupon
+    //POST
+    //用户优惠券列表
+    @POST("client/require/coupon")
+    Observable<BaseResponse<OrderCouponEntity>> requireCoupon(@Body RequestBody body);
+
 }

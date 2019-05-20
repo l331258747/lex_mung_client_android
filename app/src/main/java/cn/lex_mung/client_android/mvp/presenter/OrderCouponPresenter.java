@@ -50,6 +50,13 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
     private SmartRefreshLayout smartRefreshLayout;
 
     private int couponId;
+    private int type;
+
+    private double orderAmount;
+
+    public void setOrderAmount(double orderAmount) {
+        this.orderAmount = orderAmount;
+    }
 
     @Inject
     public OrderCouponPresenter(OrderCouponContract.Model model, OrderCouponContract.View rootView) {
@@ -60,7 +67,11 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
         this.smartRefreshLayout = smartRefreshLayout;
         this.couponId = couponId;
         initAdapter();
-        getCouponsList(false);
+        getList(false);
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     private void initAdapter() {
@@ -82,7 +93,7 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 if (pageNum < totalNum) {
                     pageNum = pageNum + 1;
-                    getCouponsList(true);
+                    getList(true);
                 } else {
                     smartRefreshLayout.finishLoadMoreWithNoMoreData();
                 }
@@ -91,16 +102,55 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 pageNum = 1;
-                getCouponsList(false);
+                getList(false);
             }
         });
         mRootView.initRecyclerView(adapter);
     }
 
-
+    private void getList(boolean isAdd){
+        if(type == 1){
+            getMeCouponsList(isAdd);
+        }else{
+            getCouponsList(isAdd);
+        }
+    }
 
     private void getCouponsList(boolean isAdd) {
-        mModel.quickCoupon(pageNum)
+        mModel.quickCoupon(pageNum, orderAmount)
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> {
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<OrderCouponEntity>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<OrderCouponEntity> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            totalNum = baseResponse.getData().getPages();
+                            pageNum = baseResponse.getData().getPageNum();
+
+                            if (isAdd) {
+                                adapter.addData(baseResponse.getData().getList());
+                                smartRefreshLayout.finishLoadMore();
+                            } else {
+                                mRootView.setEmptyView(adapter);
+                                smartRefreshLayout.finishRefresh();
+                                adapter.setNewData(baseResponse.getData().getList());
+                                if (totalNum == pageNum) {
+                                    smartRefreshLayout.finishLoadMoreWithNoMoreData();
+                                }
+                            }
+                        }
+                    }
+                });
+    }
+
+    private void getMeCouponsList(boolean isAdd){
+        mModel.requireCoupon(pageNum)
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> {
