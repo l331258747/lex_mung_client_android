@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultDetail1Activity;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -89,7 +90,7 @@ public class OrderMessagePresenter extends BasePresenter<OrderMessageContract.Mo
                         bundle.clear();
                         bundle.putInt(BundleTags.ID, bean.getBusiId());
                         intent.putExtras(bundle);
-                        intent.setClass(mApplication, FreeConsultDetailActivity.class);
+                        intent.setClass(mApplication, FreeConsultDetail1Activity.class);
                         break;
                     case 241:
                         intent.setClass(mApplication, MyOrderActivity.class);

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultDetail1Activity;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -200,7 +201,7 @@ public class FreeConsultPresenter extends BasePresenter<FreeConsultContract.Mode
                             entity.setRegion(region);
                             Bundle bundle = new Bundle();
                             bundle.putSerializable(BundleTags.ENTITY, entity);
-                            mRootView.launchActivity(new Intent(mApplication, FreeConsultDetailActivity.class), bundle);
+                            mRootView.launchActivity(new Intent(mApplication, FreeConsultDetail1Activity.class), bundle);
                             mRootView.killMyself();
                         }
                     }

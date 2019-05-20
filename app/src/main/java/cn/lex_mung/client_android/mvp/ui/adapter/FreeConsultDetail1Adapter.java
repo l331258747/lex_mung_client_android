@@ -40,6 +40,7 @@ public class FreeConsultDetail1Adapter extends BaseQuickAdapter<FreeConsultReply
         helper.setText(R.id.tv_area,item.getLawyerFirm());
         helper.setText(R.id.tv_title2,item.getLawyerPositionName());
         helper.setText(R.id.tv_call,item.getMinAmountStr());
+        helper.setGone(R.id.iv_verify,true);
 
         helper.setText(R.id.tv_content,item.getContent());
 

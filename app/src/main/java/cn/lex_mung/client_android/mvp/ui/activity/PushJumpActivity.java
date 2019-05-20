@@ -71,7 +71,7 @@ public class PushJumpActivity extends BaseActivity<PushJumpPresenter> implements
                         bundle.clear();
                         bundle.putInt(BundleTags.ID, entity.getBusiId());
                         intent.putExtras(bundle);
-                        intent.setClass(mActivity, FreeConsultDetailActivity.class);
+                        intent.setClass(mActivity, FreeConsultDetail1Activity.class);
                     } else {
                         intent.setClass(mActivity, LoginActivity.class);
                     }

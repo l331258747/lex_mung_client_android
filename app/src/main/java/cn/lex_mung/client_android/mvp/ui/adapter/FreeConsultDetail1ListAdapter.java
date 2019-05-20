@@ -61,9 +61,11 @@ public class FreeConsultDetail1ListAdapter extends BaseQuickAdapter<FreeConsultR
         if(item.getType() == 1){
             helper.setGone(R.id.ll_call,true);
             helper.setGone(R.id.tv_title2,true);
+            helper.setGone(R.id.iv_verify,true);
         }else{
             helper.setGone(R.id.ll_call,false);
             helper.setGone(R.id.tv_title2,false);
+            helper.setGone(R.id.iv_verify,false);
 
             if(userInfoDetailsEntity.getMemberId() == item.getMemberId()){
                 helper.setGone(R.id.ll_delete,true);

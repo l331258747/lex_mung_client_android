@@ -24,6 +24,15 @@
         android:src="@drawable/ic_avatar"
         app:layout_constraintTop_toTopOf="@+id/view_title" />
 
+    <ImageView
+        android:id="@+id/iv_verify"
+        android:layout_width="@dimen/qb_px_30"
+        android:layout_height="@dimen/qb_px_30"
+        android:visibility="gone"
+        android:src="@drawable/ic_green_verify"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_head"
+        app:layout_constraintEnd_toEndOf="@+id/iv_head"/>
+
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
@@ -195,8 +204,8 @@
         android:paddingLeft="@dimen/qb_px_10"
         android:paddingTop="@dimen/qb_px_5"
         android:paddingRight="@dimen/qb_px_10"
-        android:visibility="gone"
         android:paddingBottom="@dimen/qb_px_5"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/view_bottom"
         app:layout_constraintStart_toEndOf="@+id/tv_time"
         app:layout_constraintTop_toTopOf="@+id/view_bottom">
