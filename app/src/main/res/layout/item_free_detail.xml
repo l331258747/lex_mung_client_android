@@ -115,19 +115,18 @@
         android:layout_height="wrap_content"
         android:text="啊是的噶双方都噶范德萨啊是的噶啥事阿萨德刚阿萨德广发斯蒂芬阿斯蒂芬阿斯蒂芬啊是的噶双方都噶范德萨啊是的噶啥事阿萨德刚阿萨德广发斯蒂芬阿斯蒂芬阿斯蒂芬啊是的噶双方都噶范德萨啊是的噶啥事阿萨德刚阿萨德广发斯蒂芬阿斯蒂芬阿斯蒂芬啊是的噶双方都噶范德萨啊是的噶啥事阿萨德刚阿萨德广发斯蒂芬阿斯蒂芬阿斯蒂芬"
         android:textColor="@color/c_323232"
-        app:layout_constraintStart_toStartOf="@+id/view_content"
         app:layout_constraintEnd_toEndOf="@+id/view_content"
+        app:layout_constraintStart_toStartOf="@+id/view_content"
         app:layout_constraintTop_toTopOf="@+id/view_content" />
 
     <View
         android:id="@+id/view_bottom"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/qb_px_30"
+        android:layout_height="@dimen/qb_px_40"
         android:layout_marginLeft="@dimen/qb_px_20"
-        app:layout_constraintBottom_toBottomOf="@+id/ll_comment"
-        app:layout_constraintStart_toEndOf="@+id/iv_head"
+        android:layout_marginTop="@dimen/qb_px_30"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_head"
         app:layout_constraintTop_toBottomOf="@+id/view_content" />
 
     <LinearLayout
@@ -138,18 +137,17 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/qb_px_10"
-        app:layout_constraintStart_toStartOf="@+id/view_bottom"
         android:paddingTop="@dimen/qb_px_5"
         android:paddingRight="@dimen/qb_px_10"
         android:paddingBottom="@dimen/qb_px_5"
+        app:layout_constraintStart_toStartOf="@+id/view_bottom"
         app:layout_constraintTop_toTopOf="@+id/view_bottom">
 
         <ImageView
             android:id="@+id/iv_comment"
             android:layout_width="@dimen/qb_px_30"
             android:layout_height="@dimen/qb_px_30"
-            android:src="@drawable/ic_free_green_comment"
-            app:layout_constraintTop_toTopOf="@+id/view_bottom" />
+            android:src="@drawable/ic_free_green_comment" />
 
         <TextView
             android:id="@+id/tv_comment"
@@ -158,10 +156,7 @@
             android:layout_marginLeft="@dimen/qb_px_20"
             android:text="0条回复"
             android:textColor="@color/c_27CD8D"
-            android:textSize="10sp"
-            app:layout_constraintBottom_toBottomOf="@+id/view_bottom"
-            app:layout_constraintStart_toEndOf="@+id/iv_comment"
-            app:layout_constraintTop_toTopOf="@+id/view_bottom" />
+            android:textSize="10sp" />
 
     </LinearLayout>
 
@@ -169,14 +164,15 @@
         android:id="@+id/iv_time"
         android:layout_width="@dimen/qb_px_30"
         android:layout_height="@dimen/qb_px_30"
+        android:layout_marginLeft="@dimen/qb_px_40"
         android:src="@drawable/ic_free_time"
         app:layout_constraintBottom_toBottomOf="@+id/view_bottom"
-        android:layout_marginLeft="@dimen/qb_px_40"
-        app:layout_goneMarginLeft="@dimen/qb_px_0"
         app:layout_constraintStart_toEndOf="@+id/ll_comment"
-        app:layout_constraintTop_toTopOf="@+id/view_bottom" />
+        app:layout_constraintTop_toTopOf="@+id/view_bottom"
+        app:layout_goneMarginLeft="@dimen/qb_px_0" />
 
     <TextView
+        android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/qb_px_20"
@@ -187,11 +183,47 @@
         app:layout_constraintStart_toEndOf="@+id/iv_time"
         app:layout_constraintTop_toTopOf="@+id/view_bottom" />
 
+
+    <!--删除-->
+    <LinearLayout
+        android:id="@+id/ll_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/qb_px_40"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/qb_px_10"
+        android:paddingTop="@dimen/qb_px_5"
+        android:paddingRight="@dimen/qb_px_10"
+        android:paddingBottom="@dimen/qb_px_5"
+        app:layout_constraintBottom_toBottomOf="@+id/view_bottom"
+        app:layout_constraintStart_toEndOf="@+id/tv_time"
+        app:layout_constraintTop_toTopOf="@+id/view_bottom">
+
+        <ImageView
+            android:id="@+id/iv_delete"
+            android:layout_width="@dimen/qb_px_30"
+            android:layout_height="@dimen/qb_px_30"
+            android:src="@drawable/ic_free_delete" />
+
+        <TextView
+            android:id="@+id/tv_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/qb_px_20"
+            android:text="删除"
+            android:textColor="@color/c_b4b4b4"
+            android:textSize="10sp" />
+
+    </LinearLayout>
+
+
     <View
         android:layout_width="0dp"
         android:layout_height="@dimen/qb_px_1"
         android:layout_marginTop="@dimen/qb_px_30"
         android:background="@color/c_f0f0f0"
         app:layout_constraintTop_toBottomOf="@+id/view_bottom" />
+
 
 </android.support.constraint.ConstraintLayout>

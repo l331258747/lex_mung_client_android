@@ -45,8 +45,8 @@ public class FreeConsultReplyEntity {
     private boolean hasPreviousPage;
     private boolean hasNextPage;
     private int navigatePages;
-    private List<FreeConsultReplyListEntity> list;
     private List<Integer> navigatepageNums;
+    private List<FreeConsultReplyListEntity> list;
 
     public int getPageNum() {
         return pageNum;

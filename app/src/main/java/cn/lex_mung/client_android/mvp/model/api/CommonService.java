@@ -289,7 +289,9 @@ public interface CommonService {
      * @return BaseResponse
      */
     @GET("lawyer/freeText/{consultationId}/{lawyerId}/reply/detail/{pageNum}")
-    Observable<BaseResponse<FreeConsultReplyEntity>> getFreeConsultReplyList(@Path("consultationId") int consultationId, @Path("lawyerId") int lawyerId, @Path("pageNum") int pageNum);
+    Observable<BaseResponse<FreeConsultReplyEntity>> getFreeConsultReplyList(@Path("consultationId") int consultationId,
+                                                                             @Path("lawyerId") int lawyerId,
+                                                                             @Path("pageNum") int pageNum);
 
     /**
      * 用户回复
@@ -653,4 +655,14 @@ public interface CommonService {
     //文字咨询列表v2
     @POST("common/freeText/v2")
     Observable<BaseResponse<CommonFreeTextEntity>> commonFreeText(@Body RequestBody body);
+
+    ///lawyer/freeText/v2/{consultationId}/{lawyerId}/reply/detail/{pageNum}/{pageSize}
+    //GET
+    //文字咨询回复详情v2
+    @GET("lawyer/freeText/v2/{consultationId}/{lawyerId}/reply/detail/{pageNum}/{pageSize}")
+    Observable<BaseResponse<FreeConsultReplyEntity>> replyDetail(@Path("consultationId") int consultationId,
+                                                                     @Path("lawyerId") int lawyerId,
+                                                                     @Path("pageNum") int pageNum,
+                                                                     @Path("pageSize") int pageSize);
+
 }

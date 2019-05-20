@@ -65,7 +65,7 @@ public class TimeFormat {
         String hourFormat = hour < 10 ? "0" + String.valueOf(hour) : "" + hour;
         String dayFormat = hour < 10 ? "0" + String.valueOf(day) : "" + day;
 
-        switch (type){
+        switch (type) {
             case 0:
                 return dayFormat + "天" + hourFormat + "时" + minuteFormat + "分" + secondFormat + "秒";
             case 1:
@@ -80,7 +80,7 @@ public class TimeFormat {
     // strTime要转换的String类型的时间
     // formatType时间格式
     // strTime的时间格式和formatType的时间格式必须相同
-    public static long strToLong(String strTime, String formatType){
+    public static long strToLong(String strTime, String formatType) {
         Date date = str2Date(strTime, formatType); // String类型转成date类型
         if (date == null) {
             return 0;
@@ -98,8 +98,9 @@ public class TimeFormat {
 
     //String 转 date
     public static Date str2Date(String dateStr) {
-        return str2Date(dateStr,s1);
+        return str2Date(dateStr, s1);
     }
+
     //String 转 date
     public static Date str2Date(String dateStr, String format) {
         SimpleDateFormat df;
@@ -159,6 +160,11 @@ public class TimeFormat {
             if (oldMonth == newMonth) {
                 //同天
                 if (oldDay == newDay) {
+                    if (!TextUtils.isEmpty(newMinute) && !TextUtils.isEmpty(oldMinute) &&
+                            newMinute.length() > 0 && oldMinute.length() > 0 &&
+                            Integer.valueOf(newHour + newMinute) - Integer.valueOf(oldHour + oldMinute) <= 5) {
+                        return "刚刚";
+                    }
                     result = oldHour + ":" + oldMinute;
                 } else {
                     //不同天

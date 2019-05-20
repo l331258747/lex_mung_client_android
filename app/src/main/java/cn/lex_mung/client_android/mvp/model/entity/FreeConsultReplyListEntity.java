@@ -1,5 +1,7 @@
 package cn.lex_mung.client_android.mvp.model.entity;
 
+import cn.lex_mung.client_android.app.TimeFormat;
+
 public class FreeConsultReplyListEntity {
 
 
@@ -22,6 +24,7 @@ public class FreeConsultReplyListEntity {
      * memberSex : 0
      * replyCount : 0
      */
+
 
 
 
@@ -125,7 +128,16 @@ public class FreeConsultReplyListEntity {
     }
 
     public String getLawyerIconImage() {
+        if(!lawyerIconImage.startsWith("http")) return "";
         return lawyerIconImage;
+    }
+
+    public String getTypeImage(){//1律师，2用户
+        if(type == 1){
+            return getLawyerIconImage();
+        }else{
+            return getMemberIconImage();
+        }
     }
 
     public void setLawyerIconImage(String lawyerIconImage) {
@@ -134,6 +146,14 @@ public class FreeConsultReplyListEntity {
 
     public String getLawyerFirm() {
         return lawyerFirm;
+    }
+
+    public String getArea(){
+        if(type == 1){
+            return lawyerFirm;
+        }else{
+            return memberRegion;
+        }
     }
 
     public void setLawyerFirm(String lawyerFirm) {
@@ -152,11 +172,20 @@ public class FreeConsultReplyListEntity {
         return memberName;
     }
 
+    public String getTypeName(){
+        if(type == 1){
+            return lawyerName;
+        }else{
+            return memberName;
+        }
+    }
+
     public void setMemberName(String memberName) {
         this.memberName = memberName;
     }
 
     public String getMemberIconImage() {
+        if(!memberIconImage.startsWith("http")) return "";
         return memberIconImage;
     }
 
@@ -200,6 +229,10 @@ public class FreeConsultReplyListEntity {
         return minAmount;
     }
 
+    public String getMinAmountStr(){
+        return "电话咨询:"+minAmount+"元/分钟>";
+    }
+
     public void setMinAmount(int minAmount) {
         this.minAmount = minAmount;
     }
@@ -208,7 +241,23 @@ public class FreeConsultReplyListEntity {
         return lawyerPositionName;
     }
 
+    public String getTitle2(){
+        if(type == 1){
+            return lawyerPositionName;
+        }else{
+            return "";
+        }
+    }
+
     public void setLawyerPositionName(String lawyerPositionName) {
         this.lawyerPositionName = lawyerPositionName;
+    }
+
+    public String getReplyCountStr() {
+        return replyCount+"条回复";
+    }
+
+    public String getDateAddedStr(){
+        return TimeFormat.getTime(TimeFormat.strToLong(dateAdded,TimeFormat.s1));
     }
 }

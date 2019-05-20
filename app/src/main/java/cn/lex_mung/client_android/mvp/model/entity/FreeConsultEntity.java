@@ -2,6 +2,8 @@ package cn.lex_mung.client_android.mvp.model.entity;
 
 import java.io.Serializable;
 
+import cn.lex_mung.client_android.app.TimeFormat;
+
 public class FreeConsultEntity implements Serializable {
 
     /**
@@ -132,6 +134,10 @@ public class FreeConsultEntity implements Serializable {
         return dateAdded;
     }
 
+    public String getDateAddedStr(){
+        return TimeFormat.getTime(TimeFormat.strToLong(dateAdded,TimeFormat.s1));
+    }
+
     public void setDateAdded(String dateAdded) {
         this.dateAdded = dateAdded;
     }
@@ -191,11 +197,16 @@ public class FreeConsultEntity implements Serializable {
         return memberName;
     }
 
+    public String getReplyCountStr() {
+        return replyCount+"条回复";
+    }
+
     public void setMemberName(String memberName) {
         this.memberName = memberName;
     }
 
     public String getMemberIconImage() {
+        if(!memberIconImage.startsWith("http")) return "";
         return memberIconImage;
     }
 

@@ -124,8 +124,8 @@ public class FreeConsultDetail1Activity extends BaseActivity<FreeConsultDetail1P
         tv_area.setText(entity.getRegion());
         tv_type.setText(entity.getCategoryName());
         tv_content.setText(entity.getContent());
-        tv_comment.setText(entity.getReplyCount() + "");
-        tv_time.setText(entity.getDateAdded());
+        tv_comment.setText(entity.getReplyCountStr());
+        tv_time.setText(entity.getDateAddedStr());
         tv_basic_info.setText(entity.getCategoryNameTitle());
     }
 
@@ -142,7 +142,6 @@ public class FreeConsultDetail1Activity extends BaseActivity<FreeConsultDetail1P
     }
 
     public void setLawyerList(LawyerListAdapter lawyerListAdapter){
-        //TODO 推荐律师
         AppUtils.configRecyclerView(recycler_view_lawyer, new LinearLayoutManager(mActivity));
         recycler_view_lawyer.setAdapter(lawyerListAdapter);
     }
