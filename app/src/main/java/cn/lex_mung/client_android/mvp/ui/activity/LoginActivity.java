@@ -51,7 +51,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
-        return R.layout.activity_login;
+        return R.layout.activity_login2;
     }
 
     @Override

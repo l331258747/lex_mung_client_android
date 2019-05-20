@@ -72,13 +72,13 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
 
         @Override
         public void onTick(long l) {
-            mRootView.setCodeButtonStatus(false, "重新获取 (" + l / 1000 + ")", AppUtils.getColor(mApplication, R.color.c_b5b5b5));
+            mRootView.setCodeButtonStatus(false, "重新获取 (" + l / 1000 + ")", AppUtils.getColor(mApplication, R.color.c_b4b4b4));
 
         }
 
         @Override
         public void onFinish() {
-            mRootView.setCodeButtonStatus(true, "获取验证码", AppUtils.getColor(mApplication, R.color.c_06a66a));
+            mRootView.setCodeButtonStatus(true, "获取验证码", AppUtils.getColor(mApplication, R.color.c_b4b4b4));
         }
     }
 
