@@ -30,6 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/qb_px_20"
         android:text="匿名用户"
+        android:maxLength="6"
         android:textColor="@color/c_323232"
         app:layout_constraintBottom_toBottomOf="@+id/view_title"
         app:layout_constraintStart_toEndOf="@+id/iv_head"

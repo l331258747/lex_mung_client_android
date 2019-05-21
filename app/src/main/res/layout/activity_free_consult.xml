@@ -111,6 +111,7 @@
         app:layout_constraintTop_toTopOf="@id/view_user_region" />
 
     <TextView
+        android:id="@+id/tv_user_region_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/qb_px_20"
@@ -124,9 +125,12 @@
 
     <TextView
         android:id="@+id/tv_user_region"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/qb_px_50"
+        android:layout_marginStart="@dimen/qb_px_20"
+        app:layout_constraintStart_toEndOf="@+id/tv_user_region_title"
+        android:gravity="right"
         android:hint="@string/text_please_select_user_region"
         android:includeFontPadding="false"
         android:textColor="@color/c_717171"

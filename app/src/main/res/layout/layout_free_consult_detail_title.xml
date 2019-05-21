@@ -31,6 +31,7 @@
         android:layout_marginLeft="@dimen/qb_px_20"
         android:text="匿名用户"
         android:textColor="@color/c_323232"
+        android:maxLength="6"
         app:layout_constraintBottom_toTopOf="@+id/tv_area"
         app:layout_constraintStart_toEndOf="@+id/iv_head"
         app:layout_constraintTop_toTopOf="@+id/view_title" />

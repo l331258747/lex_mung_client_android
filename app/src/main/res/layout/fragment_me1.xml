@@ -70,9 +70,10 @@
             android:textColor="@color/c_323232"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:maxLength="6"
             android:visibility="gone"
             tools:visibility="visible"
-            tools:text="name"
+            tools:text="namenamename"
             app:layout_constraintStart_toStartOf="@id/guideline2"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="@dimen/qb_px_160"/>

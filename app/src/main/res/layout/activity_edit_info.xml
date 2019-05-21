@@ -107,7 +107,7 @@
                 android:layout_height="@dimen/qb_px_70"
                 android:layout_marginStart="@dimen/qb_px_30"
                 android:hint="@string/text_please_enter_user_name"
-                android:maxLength="14"
+                android:maxLength="6"
                 android:background="@color/c_ff"
                 android:textColor="@color/c_323232"
                 android:textColorHint="@color/c_b5b5b5"
