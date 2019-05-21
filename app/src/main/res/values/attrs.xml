@@ -40,4 +40,9 @@
         <attr name="EmptyView_content_text_color" format="reference"/>
     </declare-styleable>
 
+
+    <declare-styleable name="FolderTextView">
+        <attr name="foldline" format="integer" />
+    </declare-styleable>
+
 </resources>

@@ -74,15 +74,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_title" />
 
-    <TextView
+    <!--<TextView-->
+        <!--android:id="@+id/tv_content"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:maxLines="3"-->
+        <!--android:textColor="@color/c_323232"-->
+        <!--app:layout_constraintTop_toTopOf="@+id/view_content"-->
+        <!--android:text="啊是的噶双方都噶范德萨啊是的噶啥事阿萨德刚阿萨德广发斯蒂芬阿斯蒂芬阿斯蒂芬啊是的噶双方都噶范德萨啊是的噶啥事阿萨德刚阿萨德广发斯蒂芬阿斯蒂芬阿斯蒂芬啊是的噶双方都噶范德萨啊是的噶啥事阿萨德刚阿萨德广发斯蒂芬阿斯蒂芬阿斯蒂芬啊是的噶双方都噶范德萨啊是的噶啥事阿萨德刚阿萨德广发斯蒂芬阿斯蒂芬阿斯蒂芬" />-->
+
+    <cn.lex_mung.client_android.mvp.ui.widget.FolderTextView
         android:id="@+id/tv_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxLines="3"
+        app:foldline="3"
         android:textColor="@color/c_323232"
         app:layout_constraintTop_toTopOf="@+id/view_content"
-        android:text="啊是的噶双方都噶范德萨啊是的噶啥事阿萨德刚阿萨德广发斯蒂芬阿斯蒂芬阿斯蒂芬啊是的噶双方都噶范德萨啊是的噶啥事阿萨德刚阿萨德广发斯蒂芬阿斯蒂芬阿斯蒂芬啊是的噶双方都噶范德萨啊是的噶啥事阿萨德刚阿萨德广发斯蒂芬阿斯蒂芬阿斯蒂芬啊是的噶双方都噶范德萨啊是的噶啥事阿萨德刚阿萨德广发斯蒂芬阿斯蒂芬阿斯蒂芬" />
-
+        android:text="啊是的噶双方都噶范德萨啊是的噶啥事阿萨德刚阿萨德广发" />
 
     <View
         android:id="@+id/view_bottom"

@@ -9,12 +9,13 @@ import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
 
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.mvp.model.entity.free.CommonFreeTextEntity;
+import cn.lex_mung.client_android.mvp.ui.widget.FolderTextView;
 import me.zl.mvp.http.imageloader.ImageLoader;
 
 public class FreeConsultMainAdapter extends BaseQuickAdapter<CommonFreeTextEntity.ListBean, BaseViewHolder> {
 
     ImageLoader mImageLoader;
-    TextView tv_content;
+    FolderTextView tv_content;
 
     public FreeConsultMainAdapter(ImageLoader imageLoader) {
         super(R.layout.item_free_main);
