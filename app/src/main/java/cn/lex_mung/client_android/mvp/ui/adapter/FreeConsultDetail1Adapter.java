@@ -40,13 +40,19 @@ public class FreeConsultDetail1Adapter extends BaseQuickAdapter<FreeConsultReply
         helper.setText(R.id.tv_area,item.getLawyerFirm());
         helper.setText(R.id.tv_title2,item.getLawyerPositionName());
         helper.setText(R.id.tv_call,item.getMinAmountStr());
-        helper.setGone(R.id.iv_verify,true);
 
+        if(item.getMinAmount() <= 0){
+            helper.setGone(R.id.ll_call,false);
+        }else{
+            helper.setGone(R.id.ll_call,true);
+        }
+
+        helper.setGone(R.id.iv_verify,true);
         helper.setText(R.id.tv_content,item.getContent());
 
         helper.setText(R.id.tv_comment,item.getReplyCountStr());
         helper.setText(R.id.tv_time,item.getDateAddedStr());
 
-        helper.addOnClickListener(R.id.ll_call);
+        helper.addOnClickListener(R.id.view_title);
     }
 }

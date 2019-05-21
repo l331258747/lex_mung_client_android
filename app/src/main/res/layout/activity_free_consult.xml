@@ -156,7 +156,7 @@
         android:layout_height="@dimen/qb_px_500"
         android:background="@color/c_ff"
         android:gravity="start"
-        android:hint="@string/text_please_describe_your_problem"
+        android:hint="详细、完整的描述，将会得到更多专业律师的解答；为保护您的隐私，咨询时不要包含个人信息、公司名称等真实资料，请用“XX”“某某”代替；"
         android:maxLength="300"
         android:padding="@dimen/qb_px_35"
         android:textColor="@color/c_323232"

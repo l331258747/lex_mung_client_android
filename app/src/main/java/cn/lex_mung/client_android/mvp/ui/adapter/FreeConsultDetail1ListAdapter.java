@@ -74,11 +74,17 @@ public class FreeConsultDetail1ListAdapter extends BaseQuickAdapter<FreeConsultR
 
         if(helper.getAdapterPosition() == 0){
             helper.setGone(R.id.ll_comment,true);
+            if(item.getMinAmount() <= 0){
+                helper.setGone(R.id.ll_call,false);
+            }else{
+                helper.setGone(R.id.ll_call,true);
+            }
         }else{
             helper.setGone(R.id.ll_comment,false);
+            helper.setGone(R.id.ll_call,false);
         }
 
-        helper.addOnClickListener(R.id.ll_call);
+        helper.addOnClickListener(R.id.view_title);
         helper.addOnClickListener(R.id.ll_delete);
     }
 }

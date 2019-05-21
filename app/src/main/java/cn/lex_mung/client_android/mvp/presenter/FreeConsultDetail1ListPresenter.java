@@ -79,7 +79,7 @@ public class FreeConsultDetail1ListPresenter extends BasePresenter<FreeConsultDe
             FreeConsultReplyListEntity entity = adapter.getItem(position);
             if (entity == null) return;
             switch (view.getId()) {
-                case R.id.ll_call:
+                case R.id.view_title:
                     Bundle bundle = new Bundle();
                     bundle.clear();
                     bundle.putInt(BundleTags.ID, entity.getLawyerId());

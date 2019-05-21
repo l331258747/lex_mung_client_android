@@ -68,7 +68,8 @@ public class FreeConsultDetail1ListActivity extends BaseActivity<FreeConsultDeta
         mPresenter.setConsultationId(consultationId = bundleIntent.getInt(BundleTags.ID));
         mPresenter.setLawyerId(lawyerId = bundleIntent.getInt(BundleTags.LAWYER_ID));
         mPresenter.setReplyNum(bundleIntent.getInt(BundleTags.NUM));
-        tvBtn.setVisibility(bundleIntent.getBoolean(BundleTags.IS_SHOW,false)?View.VISIBLE:View.GONE);
+        isShow = bundleIntent.getBoolean(BundleTags.IS_SHOW,false);
+        tvBtn.setText(isShow?"追问":"发布免费文字咨询");
         mPresenter.onCreate(smartRefreshLayout);
     }
 
@@ -78,12 +79,15 @@ public class FreeConsultDetail1ListActivity extends BaseActivity<FreeConsultDeta
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_btn:
-                //TODO 回复
                 if (DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
-                    bundle.clear();
-                    bundle.putInt(BundleTags.ID,consultationId);
-                    bundle.putInt(BundleTags.LAWYER_ID,lawyerId);
-                    launchActivity(new Intent(mActivity, FreeConsultReplyActivity.class),bundle);
+                    if(isShow){
+                        bundle.clear();
+                        bundle.putInt(BundleTags.ID,consultationId);
+                        bundle.putInt(BundleTags.LAWYER_ID,lawyerId);
+                        launchActivity(new Intent(mActivity, FreeConsultReplyActivity.class),bundle);
+                    }else{
+                        launchActivity(new Intent(mActivity, FreeConsultActivity.class));
+                    }
                 } else {
                     bundle.clear();
                     bundle.putInt(BundleTags.TYPE, 1);
