@@ -112,7 +112,7 @@ public class FreeConsultDetail1Presenter extends BasePresenter<FreeConsultDetail
             bundle.putInt(BundleTags.ID, entity.getConsultationId());
             bundle.putInt(BundleTags.LAWYER_ID, entity.getLawyerId());
             bundle.putInt(BundleTags.NUM, entity.getReplyCount());
-            bundle.putBoolean(BundleTags.IS_SHOW, userInfoDetailsEntity.getMemberId() == memberId ? true : false);
+            bundle.putBoolean(BundleTags.IS_SHOW, (userInfoDetailsEntity != null && userInfoDetailsEntity.getMemberId() == memberId) ? true : false);
             mRootView.launchActivity(new Intent(mRootView.getActivity(), FreeConsultDetail1ListActivity.class), bundle);
         });
         adapter.setOnItemChildClickListener((adapter1, view, position) -> {

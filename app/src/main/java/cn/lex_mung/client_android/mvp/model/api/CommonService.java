@@ -283,7 +283,7 @@ public interface CommonService {
     ///lawyer/freeText/v2/{consultationId}/reply/{pageNum}/{pageSize}
     //GET
     //文字咨询回复列表v2
-    @GET("lawyer/freeText/v2/{consultationId}/reply/{pageNum}/{pageSize}")
+    @GET("common/freeText/v2/{consultationId}/reply/{pageNum}/{pageSize}")
     Observable<BaseResponse<FreeConsultReplyEntity>> lawyerFreeText(@Path("consultationId") int consultationId, @Path("pageNum") int pageNum, @Path("pageSize") int pageSize);
 
 
@@ -663,7 +663,7 @@ public interface CommonService {
     ///lawyer/freeText/v2/{consultationId}/{lawyerId}/reply/detail/{pageNum}/{pageSize}
     //GET
     //文字咨询回复详情v2
-    @GET("lawyer/freeText/v2/{consultationId}/{lawyerId}/reply/detail/{pageNum}/{pageSize}")
+    @GET("common/freeText/v2/{consultationId}/{lawyerId}/reply/detail/{pageNum}/{pageSize}")
     Observable<BaseResponse<FreeConsultReplyEntity>> replyDetail(@Path("consultationId") int consultationId,
                                                                      @Path("lawyerId") int lawyerId,
                                                                      @Path("pageNum") int pageNum,
