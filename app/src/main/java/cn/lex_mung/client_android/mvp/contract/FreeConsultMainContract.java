@@ -25,6 +25,6 @@ public interface FreeConsultMainContract {
     interface Model extends IModel {
         Observable<BaseResponse<FreeTextBizinfoEntity>> freeTextBizinfo();
 
-        Observable<BaseResponse<CommonFreeTextEntity>> commonFreeText(RequestBody body);
+        Observable<BaseResponse<CommonFreeTextEntity>> commonFreeText(RequestBody body,boolean isLogin);
     }
 }

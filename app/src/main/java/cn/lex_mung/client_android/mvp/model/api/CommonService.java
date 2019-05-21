@@ -660,6 +660,10 @@ public interface CommonService {
     @POST("common/freeText/v2")
     Observable<BaseResponse<CommonFreeTextEntity>> commonFreeText(@Body RequestBody body);
 
+    ///lawyer/freeText/v2
+    @POST("lawyer/freeText/v2")
+    Observable<BaseResponse<CommonFreeTextEntity>> lawyerFreeText(@Body RequestBody body);
+
     ///lawyer/freeText/v2/{consultationId}/{lawyerId}/reply/detail/{pageNum}/{pageSize}
     //GET
     //文字咨询回复详情v2

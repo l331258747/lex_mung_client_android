@@ -42,6 +42,6 @@ public class FreeConsultListModel extends BaseModel implements FreeConsultListCo
     public Observable<BaseResponse<CommonFreeTextEntity>> commonFreeText(RequestBody body) {
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
-                .commonFreeText(body);
+                .lawyerFreeText(body);
     }
 }
