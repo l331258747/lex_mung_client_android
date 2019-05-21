@@ -31,7 +31,7 @@ public interface FreeConsultDetail1Contract {
     }
 
     interface Model extends IModel {
-        Observable<BaseResponse<FreeConsultEntity>> commonFreeText(int id);
+        Observable<BaseResponse<FreeConsultEntity>> commonFreeText(int id,boolean isLogin);
 
         Observable<BaseResponse<FreeConsultReplyEntity>> lawyerFreeText(int consultationId, int pageNum, int pageSize);
 

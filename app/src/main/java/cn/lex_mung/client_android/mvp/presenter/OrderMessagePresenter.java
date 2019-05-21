@@ -89,6 +89,7 @@ public class OrderMessagePresenter extends BasePresenter<OrderMessageContract.Mo
                     case 240:
                         bundle.clear();
                         bundle.putInt(BundleTags.ID, bean.getBusiId());
+                        bundle.putBoolean(BundleTags.IS_SHOW,true);
                         intent.putExtras(bundle);
                         intent.setClass(mApplication, FreeConsultDetail1Activity.class);
                         break;

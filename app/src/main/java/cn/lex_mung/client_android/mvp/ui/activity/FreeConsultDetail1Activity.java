@@ -77,6 +77,7 @@ public class FreeConsultDetail1Activity extends BaseActivity<FreeConsultDetail1P
         getTitleView(layout);
         mPresenter.setTitleLayout(layout);
         mPresenter.setConsultationId(bundleIntent.getInt(BundleTags.ID,0));
+        mPresenter.setMe(bundleIntent.getBoolean(BundleTags.IS_SHOW,false));
         mPresenter.onCreate(smartRefreshLayout);
     }
 

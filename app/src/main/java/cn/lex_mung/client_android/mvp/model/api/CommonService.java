@@ -276,6 +276,10 @@ public interface CommonService {
     @GET("common/freeText/v2/{consultationId}")
     Observable<BaseResponse<FreeConsultEntity>> commonFreeText(@Path("consultationId") int id);
 
+    ///lawyer/freeText/v2/{consultationId}
+    @GET("lawyer/freeText/v2/{consultationId}")
+    Observable<BaseResponse<FreeConsultEntity>> lawyerFreeText(@Path("consultationId") int id);
+
     ///lawyer/freeText/v2/{consultationId}/reply/{pageNum}/{pageSize}
     //GET
     //文字咨询回复列表v2

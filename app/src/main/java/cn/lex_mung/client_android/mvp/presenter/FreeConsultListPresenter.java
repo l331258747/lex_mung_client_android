@@ -77,6 +77,7 @@ public class FreeConsultListPresenter extends BasePresenter<FreeConsultListContr
             CommonFreeTextEntity.ListBean bean = adapter.getItem(position);
             Bundle bundle = new Bundle();
             bundle.putInt(BundleTags.ID,bean.getConsultationId());
+            bundle.putBoolean(BundleTags.IS_SHOW,true);
             mRootView.launchActivity(new Intent(mApplication,FreeConsultDetail1Activity.class),bundle);
 
         });

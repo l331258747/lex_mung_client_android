@@ -78,6 +78,7 @@ public class MyOrderPresenter extends BasePresenter<MyOrderContract.Model, MyOrd
                 case 1://文字咨询
                     bundle.clear();
                     bundle.putInt(BundleTags.ID, entity.getId());
+                    bundle.putBoolean(BundleTags.IS_SHOW,true);
                     mRootView.launchActivity(new Intent(mApplication, FreeConsultDetail1Activity.class), bundle);
                     break;
                 case 5://客户需求

@@ -70,6 +70,7 @@ public class PushJumpActivity extends BaseActivity<PushJumpPresenter> implements
                     if (DataHelper.getBooleanSF(mActivity, IS_LOGIN_SUCCESS)) {
                         bundle.clear();
                         bundle.putInt(BundleTags.ID, entity.getBusiId());
+                        bundle.putBoolean(BundleTags.IS_SHOW,true);
                         intent.putExtras(bundle);
                         intent.setClass(mActivity, FreeConsultDetail1Activity.class);
                     } else {

@@ -193,14 +193,18 @@ public class FreeConsultPresenter extends BasePresenter<FreeConsultContract.Mode
                         if (baseResponse.isSuccess()) {
                             mRootView.showMessage("提交成功");
                             UserInfoDetailsEntity loginUserInfoEntity = new Gson().fromJson(DataHelper.getStringSF(mApplication, DataHelperTags.USER_INFO_DETAIL), UserInfoDetailsEntity.class);
-                            FreeConsultEntity entity = baseResponse.getData();
-                            entity.setCategoryName(consultType);
-                            entity.setMemberIconImage(loginUserInfoEntity.getIconImage());
-                            entity.setMemberName(loginUserInfoEntity.getMemberName());
-                            entity.setReplyCount(0);
-                            entity.setRegion(region);
+//                            FreeConsultEntity entity = baseResponse.getData();
+//                            entity.setCategoryName(consultType);
+//                            entity.setMemberIconImage(loginUserInfoEntity.getIconImage());
+//                            entity.setMemberName(loginUserInfoEntity.getMemberName());
+//                            entity.setReplyCount(0);
+//                            entity.setRegion(region);
+//                            Bundle bundle = new Bundle();
+//                            bundle.putSerializable(BundleTags.ENTITY, entity);
+
                             Bundle bundle = new Bundle();
-                            bundle.putSerializable(BundleTags.ENTITY, entity);
+                            bundle.putInt(BundleTags.ID, baseResponse.getData().getConsultationId());
+                            bundle.putBoolean(BundleTags.IS_SHOW,true);
                             mRootView.launchActivity(new Intent(mApplication, FreeConsultDetail1Activity.class), bundle);
                             mRootView.killMyself();
                         }

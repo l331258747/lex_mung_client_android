@@ -41,7 +41,12 @@ public class FreeConsultDetail1Model extends BaseModel implements FreeConsultDet
     }
 
     @Override
-    public Observable<BaseResponse<FreeConsultEntity>> commonFreeText(int id) {
+    public Observable<BaseResponse<FreeConsultEntity>> commonFreeText(int id,boolean isLogin) {
+        if(isLogin){
+            return mRepositoryManager
+                    .obtainRetrofitService(CommonService.class)
+                    .lawyerFreeText(id);
+        }
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .commonFreeText(id);

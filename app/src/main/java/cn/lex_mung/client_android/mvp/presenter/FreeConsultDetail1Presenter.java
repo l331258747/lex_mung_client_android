@@ -72,6 +72,7 @@ public class FreeConsultDetail1Presenter extends BasePresenter<FreeConsultDetail
 
     private LawyerListAdapter lawyerListAdapter;
     private UserInfoDetailsEntity userInfoDetailsEntity;
+    private boolean isMe;
 
     @Inject
     public FreeConsultDetail1Presenter(FreeConsultDetail1Contract.Model model, FreeConsultDetail1Contract.View rootView) {
@@ -85,6 +86,10 @@ public class FreeConsultDetail1Presenter extends BasePresenter<FreeConsultDetail
         initLawyerAdapter();
         getList(false);
         getInfo();
+    }
+
+    public void setMe(boolean me) {
+        isMe = me;
     }
 
     public void setTitleLayout(View layout) {
@@ -162,7 +167,7 @@ public class FreeConsultDetail1Presenter extends BasePresenter<FreeConsultDetail
 
 
     public void getInfo() {
-        mModel.commonFreeText(consultationId)
+        mModel.commonFreeText(consultationId,isMe)
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> {
@@ -179,7 +184,6 @@ public class FreeConsultDetail1Presenter extends BasePresenter<FreeConsultDetail
                             ConsultationTypeId = baseResponse.getData().getConsultationTypeId();
                             memberId = baseResponse.getData().getMemberId();
 
-                            //TODO 根据回复数量 空页面展示，加载不同的 Adapter
                             if (baseResponse.getData().getReplyCount() == 0) {
                                 mRootView.setEmptyView(true);
                                 getLawyerList();
