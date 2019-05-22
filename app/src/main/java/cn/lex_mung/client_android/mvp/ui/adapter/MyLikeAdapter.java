@@ -38,6 +38,8 @@ public class MyLikeAdapter extends BaseQuickAdapter<MyLikeEntity.ListBean, BaseV
                             .imageView(helper.getView(R.id.item_iv_avatar))
                             .isCircle(true)
                             .build());
+        }else{
+            helper.setImageResource(R.id.item_iv_avatar, R.drawable.ic_lawyer_avatar);
         }
         helper.setText(R.id.item_tv_name, item.getMemberName());
         helper.setText(R.id.item_tv_job, item.getMemberPositionName());
