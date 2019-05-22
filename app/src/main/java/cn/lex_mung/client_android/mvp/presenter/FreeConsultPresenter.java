@@ -127,9 +127,18 @@ public class FreeConsultPresenter extends BasePresenter<FreeConsultContract.Mode
                 DataHelper.getStringSF(mApplication, DataHelperTags.HOME_PAGE_SOLUTION_TYPE)
                 , new TypeToken<List<SolutionTypeEntity>>() {
                 }.getType()));
+//        for (SolutionTypeEntity entity : solutionTypeEntityList) {
+//            solutionTypeStringList.add(entity.getTypeName());
+//        }
+        List<SolutionTypeEntity> solutionTypeEntityList2 = new ArrayList<>();
+
         for (SolutionTypeEntity entity : solutionTypeEntityList) {
-            solutionTypeStringList.add(entity.getTypeName());
+            if (entity.getFreeText() == 1) {
+                solutionTypeStringList.add(entity.getTypeName());
+                solutionTypeEntityList2.add(entity);
+            }
         }
+        solutionTypeEntityList = solutionTypeEntityList2;
     }
 
     public void releaseFreeConsult(String content) {

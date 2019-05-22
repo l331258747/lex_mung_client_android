@@ -25,8 +25,13 @@ public class SolutionTypeEntity {
     private String createTime;
     private String updateTime;
     private int quick;
+    private int freeText;
     private int expert;
     private double price;
+
+    public int getFreeText() {
+        return freeText;
+    }
 
     public int getId() {
         return id;
