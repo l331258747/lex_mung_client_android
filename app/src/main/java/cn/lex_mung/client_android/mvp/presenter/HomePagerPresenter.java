@@ -4,31 +4,8 @@ import android.app.Application;
 import android.os.Message;
 import android.text.TextUtils;
 
-import cn.lex_mung.client_android.mvp.model.entity.home.RequirementTypeV3Entity;
-import cn.lex_mung.client_android.utils.GsonUtil;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
-import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
-import me.zl.mvp.integration.AppManager;
-import me.zl.mvp.di.scope.FragmentScope;
-import me.zl.mvp.mvp.BasePresenter;
-import me.zl.mvp.http.imageloader.ImageLoader;
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
-import me.zl.mvp.utils.DataHelper;
-import me.zl.mvp.utils.RxLifecycleUtils;
-import okhttp3.RequestBody;
-
-import javax.inject.Inject;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import cn.lex_mung.client_android.app.DataHelperTags;
-import cn.lex_mung.client_android.mvp.contract.HomePagerContract;
-import cn.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
-import cn.lex_mung.client_android.mvp.model.entity.BannerEntity;
-import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
-import cn.lex_mung.client_android.mvp.model.entity.UnreadMessageCountEntity;
 
 import org.simple.eventbus.Subscriber;
 
@@ -36,6 +13,29 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.inject.Inject;
+
+import cn.lex_mung.client_android.app.DataHelperTags;
+import cn.lex_mung.client_android.mvp.contract.HomePagerContract;
+import cn.lex_mung.client_android.mvp.model.entity.BannerEntity;
+import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
+import cn.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
+import cn.lex_mung.client_android.mvp.model.entity.UnreadMessageCountEntity;
+import cn.lex_mung.client_android.mvp.model.entity.home.RequirementTypeV3Entity;
+import cn.lex_mung.client_android.utils.GsonUtil;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
+import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
+import me.zl.mvp.di.scope.FragmentScope;
+import me.zl.mvp.http.imageloader.ImageLoader;
+import me.zl.mvp.integration.AppManager;
+import me.zl.mvp.mvp.BasePresenter;
+import me.zl.mvp.utils.DataHelper;
+import me.zl.mvp.utils.RxLifecycleUtils;
+import okhttp3.RequestBody;
 
 import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGIN_INFO;
 import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGOUT;

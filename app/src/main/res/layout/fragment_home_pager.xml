@@ -382,6 +382,24 @@
                         app:tabSelectedTextColor="@color/c_323232"
                         app:tabTextColor="@color/c_717171" />
 
+                    <!--
+                     <cn.lex_mung.client_android.mvp.ui.widget.myTabLayout.TabLayout
+                        android:id="@+id/tab_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/qb_px_90"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/c_ff"
+                        app:tabBackground="@null"
+                        app:tabGravity="fill"
+                        app:tabIndicatorColor="@color/c_A1EDD2"
+                        app:tabIndicatorHeight="@dimen/qb_px_10"
+                        app:tabMode="scrollable"
+                        app:tabSelectedTextColor="@color/c_323232"
+                        app:tabLineOffset="25dp"
+                        app:tabMarginBottom = "12dp"
+                        app:tabTextColor="@color/c_717171" />
+                    -->
+
                 </LinearLayout>
 
 

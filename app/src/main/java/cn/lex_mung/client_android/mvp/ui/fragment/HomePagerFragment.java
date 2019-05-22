@@ -42,7 +42,6 @@ import cn.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.NormalBean;
 import cn.lex_mung.client_android.mvp.presenter.HomePagerPresenter;
 import cn.lex_mung.client_android.mvp.ui.activity.FastConsultActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultMainActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerListActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
