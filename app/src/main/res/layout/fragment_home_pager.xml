@@ -82,6 +82,8 @@
             <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:layout_behavior="cn.lex_mung.client_android.app.behavior.FixAppBarLayoutBehavior"
+                app:elevation="0dp"
                 android:fitsSystemWindows="true">
 
                 <android.support.design.widget.CollapsingToolbarLayout
