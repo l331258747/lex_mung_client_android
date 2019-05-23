@@ -50,6 +50,7 @@ import cn.lex_mung.client_android.mvp.ui.activity.MessageActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.OrganizationLawyerActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.HomePageRequirementTypeAdapter;
+import cn.lex_mung.client_android.mvp.ui.dialog.HelpStepDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import me.zl.mvp.base.AdapterViewPager;
 import me.zl.mvp.base.BaseFragment;
@@ -63,7 +64,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     @Inject
     ImageLoader mImageLoader;
 
-//    @BindView(R.id.tv_message_count)
+    //    @BindView(R.id.tv_message_count)
 //    TextView tvMessageCount;
     @BindView(R.id.iv_message)
     ImageView iv_message;
@@ -176,18 +177,18 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                 if (isFastClick()) return;
                 BannerEntity.ListBean bean = mPresenter.getBannerList().get(position);
                 String linkValue = bean.getLinkValue();
-                if(TextUtils.isEmpty(linkValue))
+                if (TextUtils.isEmpty(linkValue))
                     return;
-                if(linkValue.indexOf("orgId=") != -1){
+                if (linkValue.indexOf("orgId=") != -1) {
                     //((MainActivity) mActivity).switchPage(2);
                     //用来跳转
-                    String orgId = StringUtils.getValueByName(linkValue,"orgId");
+                    String orgId = StringUtils.getValueByName(linkValue, "orgId");
                     bundle.clear();
                     bundle.putInt(BundleTags.ID, Integer.valueOf(orgId));
-                    launchActivity(new Intent(mActivity,OrganizationLawyerActivity.class),bundle);
+                    launchActivity(new Intent(mActivity, OrganizationLawyerActivity.class), bundle);
                     return;
                 }
-                if(linkValue.indexOf("needLogin=1") != -1 && !DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)){
+                if (linkValue.indexOf("needLogin=1") != -1 && !DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
                     bundle.clear();
                     bundle.putInt(BundleTags.TYPE, 1);
                     launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
@@ -199,7 +200,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                 bundle.putString(BundleTags.DES, "");
                 bundle.putString(BundleTags.IMAGE, bean.getImage());
                 bundle.putBoolean(BundleTags.IS_SHARE, false);
-                if(linkValue.indexOf("couponId=") != -1){
+                if (linkValue.indexOf("couponId=") != -1) {
                     bundle.putBoolean(BundleTags.STATE, false);
                 }
                 launchActivity(new Intent(mActivity, WebActivity.class), bundle);
@@ -245,7 +246,16 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_search:
-                ((MainActivity) mActivity).switchPage(2);
+//                ((MainActivity) mActivity).switchPage(2);
+
+                new HelpStepDialog(mActivity,
+                        dialog -> {
+                            showMessage("服务步骤页");
+                        }).setContent("服务助手平均每天帮助163名用户找到合适的法律服务和律师，它能帮助您解决如下问题：")
+                        .setContent2("· 不知道当前是否需要法律服务\n· 不知道选择说明样的律师\n· 不知道合适字的律师费用")
+                        .setCannelStr("不需要")
+                        .setSubmitStr("试试看").show();
+
                 break;
             case R.id.iv_message:
                 if (mPresenter.isLogin()) {
@@ -286,23 +296,23 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     public void setUnreadMessageCount(String count) {
 //        tvMessageCount.setText(count);
 //        tvMessageCount.setVisibility(View.VISIBLE);
-        iv_message.setImageDrawable(ContextCompat.getDrawable(mActivity,R.drawable.ic_message));
+        iv_message.setImageDrawable(ContextCompat.getDrawable(mActivity, R.drawable.ic_message));
     }
 
     @Override
     public void hideUnreadMessageCount() {
 //        tvMessageCount.setVisibility(View.GONE);
-        iv_message.setImageDrawable(ContextCompat.getDrawable(mActivity,R.drawable.ic_message_un));
+        iv_message.setImageDrawable(ContextCompat.getDrawable(mActivity, R.drawable.ic_message_un));
     }
 
     @Override
     public void setHotContract(List<NormalBean> datas) {
 
-        if(datas == null || datas.size() == 0)
+        if (datas == null || datas.size() == 0)
             return;
         tvHot1.setText(datas.get(0).getRequireTypeName());
         rlHot1.setOnClickListener(v -> contractClick(datas.get(0)));
-        if(datas.size() >= 2){
+        if (datas.size() >= 2) {
             tvHot2.setText(datas.get(1).getRequireTypeName());
             rlHot2.setOnClickListener(v -> contractClick(datas.get(1)));
         }
@@ -314,7 +324,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         rlHot3.setOnClickListener(v -> contractClick(datas.get(0)));
     }
 
-    public void contractClick(NormalBean entity){
+    public void contractClick(NormalBean entity) {
         if (entity == null) return;
         if (entity.getJumptype() == 1) {
             ((MainActivity) mActivity).switchPage(2);
