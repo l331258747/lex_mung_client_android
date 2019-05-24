@@ -25,6 +25,7 @@ import cn.lex_mung.client_android.mvp.ui.activity.HelpStepActivity;
 import cn.lex_mung.client_android.mvp.ui.dialog.EasyDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
+import cn.lex_mung.client_android.utils.LogUtil;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
@@ -48,6 +49,8 @@ public class HelpStep1Fragment extends BaseFragment<HelpStep1Presenter> implemen
 
     private WheelPicker wpProvince;
     private WheelPicker wpCity;
+
+    private int regionId;
 
     @Override
     public View initView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -115,9 +118,14 @@ public class HelpStep1Fragment extends BaseFragment<HelpStep1Presenter> implemen
         }
         wpProvince.setSelectedItemPosition(p1);
         wpCity.setSelectedItemPosition(p2);
+
+        mPresenter.setRegionId(mPresenter.getList().get(p1).getChild().get(p2).getRegionId());
+
         layout.findViewById(R.id.tv_cancel).setOnClickListener(v -> dismiss());
         layout.findViewById(R.id.tv_confirm).setOnClickListener(v -> {
             tvContent.setText(mPresenter.getRegion());
+            regionId = mPresenter.getRegionId();
+            LogUtil.e("reid:" + regionId);
             dismiss();
         });
     }
@@ -214,13 +222,16 @@ public class HelpStep1Fragment extends BaseFragment<HelpStep1Presenter> implemen
             if (string2 != null && string2.size() > 0) {
                 wpCity.setData(string2);
                 mPresenter.setCity(string2.get(0));
+                mPresenter.setRegionId(mPresenter.getList().get(position).getChild().get(0).getRegionId());//选择省级后，市级为下标0
             } else {
                 mPresenter.setCity("");
+                mPresenter.setRegionId(mPresenter.getList().get(position).getRegionId());//因为没有市级，选择省级下标
                 wpCity.setData(new ArrayList<>());
             }
             wpCity.setSelectedItemPosition(0);
         } else if (picker == wpCity) {
             mPresenter.setCity(data.toString());
+            mPresenter.setRegionId(mPresenter.getList().get(wpProvince.getCurrentItemPosition()).getChild().get(position).getRegionId());//选择市级为position
         }
     }
 }

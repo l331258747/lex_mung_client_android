@@ -42,6 +42,8 @@ public class HelpStep1Presenter extends BasePresenter<HelpStep1Contract.Model, H
     private String province = "";
     private String city = "";
     private String region = "";
+    private int regionId;
+
 
     @Inject
     public HelpStep1Presenter(HelpStep1Contract.Model model, HelpStep1Contract.View rootView) {
@@ -50,6 +52,10 @@ public class HelpStep1Presenter extends BasePresenter<HelpStep1Contract.Model, H
 
     public void onCreate(){
         new Thread(this::initJsonData).start();
+    }
+
+    public List<RegionEntity> getList() {
+        return list;
     }
 
     public List<String> getAllProv() {
@@ -74,6 +80,14 @@ public class HelpStep1Presenter extends BasePresenter<HelpStep1Contract.Model, H
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public void setRegionId(int regionId){
+        this.regionId = regionId;
+    }
+
+    public int getRegionId(){
+        return regionId;
     }
 
     public String getRegion() {
