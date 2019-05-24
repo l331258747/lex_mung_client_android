@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <cn.lex_mung.client_android.mvp.ui.widget.TitleView
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:TitleView_bg="@color/c_ff"
+        app:TitleView_left_img="@drawable/ic_back2"
+        app:TitleView_title="服务助手" />
+
+    <View
+        android:id="@+id/view_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_270"
+        android:background="@drawable/ic_help_step_titile_bg"
+        app:layout_constraintTop_toBottomOf="@+id/titleView" />
+
+    <cn.lex_mung.client_android.mvp.ui.widget.HelpStepView
+        android:id="@+id/view_help_step"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/qb_px_20"
+        android:layout_marginRight="@dimen/qb_px_20"
+        android:layout_marginTop="@dimen/qb_px_60"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view_title" />
+
+    <FrameLayout
+        android:id="@+id/fragment_tab"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleView"
+        android:background="@drawable/round_40_ffffff_top"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="@dimen/qb_px_230" />
+
+
+</android.support.constraint.ConstraintLayout>

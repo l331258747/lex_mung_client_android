@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/qb_px_30" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gl_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/qb_px_30" />
+
+
+    <View
+        android:id="@+id/view_select"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_80"
+        android:layout_marginTop="@dimen/qb_px_110"
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/qb_px_40"
+        android:layout_marginRight="@dimen/qb_px_40"
+        app:layout_constraintEnd_toEndOf="@id/gl_right"
+        app:layout_constraintStart_toStartOf="@id/gl_left"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_1"
+        android:background="@color/c_d7d7d7"
+        app:layout_constraintEnd_toEndOf="@+id/view_select"
+        app:layout_constraintStart_toStartOf="@+id/view_select"
+        app:layout_constraintTop_toTopOf="@+id/view_select" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="服务区域"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/view_select"
+        app:layout_constraintStart_toStartOf="@+id/view_select"
+        app:layout_constraintTop_toTopOf="@+id/view_select" />
+
+    <ImageView
+        android:id="@+id/iv_next"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/qb_px_35"
+        android:src="@drawable/ic_green_next2"
+        app:layout_constraintBottom_toBottomOf="@+id/view_select"
+        app:layout_constraintEnd_toEndOf="@+id/view_select"
+        app:layout_constraintTop_toTopOf="@+id/view_select" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/qb_px_20"
+        android:hint="请选择"
+        android:layout_marginLeft="@dimen/qb_px_20"
+        android:gravity="right"
+        app:layout_constraintStart_toEndOf="@+id/tv_title"
+        android:textColorHint="@color/c_1EC78A"
+        android:textColor="@color/c_1EC78A"
+        app:layout_constraintBottom_toBottomOf="@+id/view_select"
+        app:layout_constraintEnd_toStartOf="@+id/iv_next"
+        app:layout_constraintTop_toTopOf="@+id/view_select" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_1"
+        android:background="@color/c_d7d7d7"
+        app:layout_constraintBottom_toBottomOf="@+id/view_select"
+        app:layout_constraintEnd_toEndOf="@+id/view_select"
+        app:layout_constraintStart_toStartOf="@+id/view_select" />
+
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_30"
+        android:text="不同服务地域的法律服务会略有不同,请选择您需要提供法律服务的所在地."
+        app:layout_constraintEnd_toEndOf="@+id/view_select"
+        android:textColor="@color/c_d7d7d7"
+        app:layout_constraintStart_toStartOf="@+id/view_select"
+        app:layout_constraintTop_toBottomOf="@+id/view_select" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_200"
+        app:layout_constraintBottom_toTopOf="parent"
+        android:background="@drawable/ic_bottom_bg"/>
+
+    <TextView
+        android:id="@+id/tv_btn"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_80"
+        android:layout_marginBottom="@dimen/qb_px_50"
+        android:background="@drawable/round_40_1ec78a_all"
+        android:gravity="center"
+        android:text="下一步"
+        android:textColor="@color/c_ff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/gl_right"
+        app:layout_constraintStart_toStartOf="@id/gl_left" />
+
+    <View
+        android:id="@+id/view_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_1"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+</android.support.constraint.ConstraintLayout>

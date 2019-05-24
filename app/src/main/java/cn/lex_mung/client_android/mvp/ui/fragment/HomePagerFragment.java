@@ -43,6 +43,7 @@ import cn.lex_mung.client_android.mvp.model.entity.home.NormalBean;
 import cn.lex_mung.client_android.mvp.presenter.HomePagerPresenter;
 import cn.lex_mung.client_android.mvp.ui.activity.FastConsultActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultMainActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.HelpStepActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerListActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MainActivity;
@@ -248,13 +249,15 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
             case R.id.tv_search:
 //                ((MainActivity) mActivity).switchPage(2);
 
-                new HelpStepDialog(mActivity,
-                        dialog -> {
-                            showMessage("服务步骤页");
-                        }).setContent("服务助手平均每天帮助163名用户找到合适的法律服务和律师，它能帮助您解决如下问题：")
-                        .setContent2("· 不知道当前是否需要法律服务\n· 不知道选择说明样的律师\n· 不知道合适字的律师费用")
-                        .setCannelStr("不需要")
-                        .setSubmitStr("试试看").show();
+                launchActivity(new Intent(mActivity,HelpStepActivity.class));
+
+//                new HelpStepDialog(mActivity,
+//                        dialog -> {
+//                            launchActivity(new Intent(mActivity,HelpStepActivity.class));
+//                        }).setContent("服务助手平均每天帮助163名用户找到合适的法律服务和律师，它能帮助您解决如下问题：")
+//                        .setContent2("· 不知道当前是否需要法律服务\n· 不知道选择说明样的律师\n· 不知道合适字的律师费用")
+//                        .setCannelStr("不需要")
+//                        .setSubmitStr("试试看").show();
 
                 break;
             case R.id.iv_message:
