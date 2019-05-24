@@ -3,42 +3,32 @@ package cn.lex_mung.client_android.mvp.ui.fragment;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.lex_mung.client_android.mvp.model.entity.InstitutionListEntity;
-import cn.lex_mung.client_android.mvp.ui.activity.HelpStepActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.SelectResortInstitutionActivity;
-import cn.lex_mung.client_android.mvp.ui.adapter.HelpStep4Adapter;
-import cn.lex_mung.client_android.mvp.ui.adapter.ResortInstitutionAdapter;
-import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
-
-import me.zl.mvp.base.BaseFragment;
-import me.zl.mvp.di.component.AppComponent;
-import me.zl.mvp.integration.AppManager;
-import me.zl.mvp.utils.AppUtils;
-
+import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.component.DaggerHelpStep4Component;
 import cn.lex_mung.client_android.di.module.HelpStep4Module;
 import cn.lex_mung.client_android.mvp.contract.HelpStep4Contract;
+import cn.lex_mung.client_android.mvp.model.entity.help.RequireTypeBean;
 import cn.lex_mung.client_android.mvp.presenter.HelpStep4Presenter;
-
-import cn.lex_mung.client_android.R;
-
-import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO;
-import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_INSTITUTIONS;
+import cn.lex_mung.client_android.mvp.ui.activity.HelpStepActivity;
+import cn.lex_mung.client_android.mvp.ui.adapter.HelpStep4Adapter;
+import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import me.zl.mvp.base.BaseFragment;
+import me.zl.mvp.di.component.AppComponent;
+import me.zl.mvp.utils.AppUtils;
 
 public class HelpStep4Fragment extends BaseFragment<HelpStep4Presenter> implements HelpStep4Contract.View {
 
@@ -47,8 +37,17 @@ public class HelpStep4Fragment extends BaseFragment<HelpStep4Presenter> implemen
 
     HelpStep4Adapter adapter;
 
-    public static HelpStep4Fragment newInstance() {
+    int typeId = -1;
+
+    public int getTypeId() {
+        return typeId;
+    }
+
+    public static HelpStep4Fragment newInstance(List<RequireTypeBean> entitys) {
         HelpStep4Fragment fragment = new HelpStep4Fragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(BundleTags.LIST, (Serializable) entitys);
+        fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -72,7 +71,7 @@ public class HelpStep4Fragment extends BaseFragment<HelpStep4Presenter> implemen
         initAdapter();
         initRecyclerView();
 
-        mPresenter.getList();
+        mPresenter.setList((List<RequireTypeBean>)getArguments().getSerializable(BundleTags.LIST));
     }
 
 
@@ -81,13 +80,13 @@ public class HelpStep4Fragment extends BaseFragment<HelpStep4Presenter> implemen
         adapter = new HelpStep4Adapter();
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;
-            //TODO 选择
-
+            typeId = adapter.getItem(position).getRequireTypeId();
+            adapter.setSelection(typeId);
         });
     }
 
     @Override
-    public void setAdapter(List<String> list) {
+    public void setAdapter(List<RequireTypeBean> list) {
         adapter.setNewData(list);
     }
 
@@ -96,7 +95,11 @@ public class HelpStep4Fragment extends BaseFragment<HelpStep4Presenter> implemen
         if (isFastClick()) return;
         switch (view.getId()) {
             case R.id.tv_btn:
-                showMessage("完结");
+                if(typeId == -1){
+                    showMessage("请选择法律类型");
+                    return;
+                }
+                ((HelpStepActivity)getActivity()).goPreferredLawyer();
                 break;
         }
     }

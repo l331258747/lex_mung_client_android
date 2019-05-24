@@ -43,4 +43,7 @@ public class BundleTags {
     public static final String MOBILE  = "mobile";
     public static final String NUM  = "num";
     public static final String IS_SHOW  = "is_show";
+    public static final String SOLUTION_TYPE_ID = "solution_type_id";
+    public static final String AMOUNT_ID = "amount_id";
+
 }

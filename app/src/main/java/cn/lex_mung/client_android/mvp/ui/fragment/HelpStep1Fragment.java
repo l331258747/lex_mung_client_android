@@ -3,15 +3,12 @@ package cn.lex_mung.client_android.mvp.ui.fragment;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.aigestudio.wheelpicker.WheelPicker;
@@ -21,21 +18,18 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.lex_mung.client_android.mvp.ui.activity.HelpStepActivity;
-import cn.lex_mung.client_android.mvp.ui.dialog.EasyDialog;
-import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
-
-import cn.lex_mung.client_android.utils.LogUtil;
-import me.zl.mvp.base.BaseFragment;
-import me.zl.mvp.di.component.AppComponent;
-import me.zl.mvp.utils.AppUtils;
-
+import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.di.component.DaggerHelpStep1Component;
 import cn.lex_mung.client_android.di.module.HelpStep1Module;
 import cn.lex_mung.client_android.mvp.contract.HelpStep1Contract;
 import cn.lex_mung.client_android.mvp.presenter.HelpStep1Presenter;
-
-import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.mvp.ui.activity.HelpStepActivity;
+import cn.lex_mung.client_android.mvp.ui.dialog.EasyDialog;
+import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import cn.lex_mung.client_android.utils.LogUtil;
+import me.zl.mvp.base.BaseFragment;
+import me.zl.mvp.di.component.AppComponent;
+import me.zl.mvp.utils.AppUtils;
 
 public class HelpStep1Fragment extends BaseFragment<HelpStep1Presenter> implements HelpStep1Contract.View, WheelPicker.OnItemSelectedListener {
 
@@ -50,7 +44,11 @@ public class HelpStep1Fragment extends BaseFragment<HelpStep1Presenter> implemen
     private WheelPicker wpProvince;
     private WheelPicker wpCity;
 
-    private int regionId;
+    private int regionId = -1;
+
+    public int getRegionId() {
+        return regionId;
+    }
 
     @Override
     public View initView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -71,6 +69,10 @@ public class HelpStep1Fragment extends BaseFragment<HelpStep1Presenter> implemen
                 showSelectRegionDialog();
                 break;
             case R.id.tv_btn:
+                if(regionId == -1){
+                    showMessage("请选择服务区域");
+                   return;
+                }
                 ((HelpStepActivity)this.getActivity()).setIndex(1);
                 break;
         }

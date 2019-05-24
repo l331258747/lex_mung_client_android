@@ -3,37 +3,34 @@ package cn.lex_mung.client_android.mvp.ui.fragment;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.Serializable;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.lex_mung.client_android.mvp.ui.activity.HelpStepActivity;
-import cn.lex_mung.client_android.mvp.ui.adapter.HelpStep2Adapter;
-import cn.lex_mung.client_android.mvp.ui.adapter.HelpStep4Adapter;
-import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
-
-import cn.lex_mung.client_android.mvp.ui.widget.HelpStep2View;
-import cn.lex_mung.client_android.mvp.ui.widget.myTabLayout.TabLayout;
-import me.zl.mvp.base.BaseFragment;
-import me.zl.mvp.di.component.AppComponent;
-import me.zl.mvp.utils.AppUtils;
-
+import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.component.DaggerHelpStep2Component;
 import cn.lex_mung.client_android.di.module.HelpStep2Module;
 import cn.lex_mung.client_android.mvp.contract.HelpStep2Contract;
+import cn.lex_mung.client_android.mvp.model.entity.help.SolutionTypeBean;
+import cn.lex_mung.client_android.mvp.model.entity.help.SolutionTypeChildBean;
 import cn.lex_mung.client_android.mvp.presenter.HelpStep2Presenter;
-
-import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.mvp.ui.activity.HelpStepActivity;
+import cn.lex_mung.client_android.mvp.ui.adapter.HelpStep2Adapter;
+import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import cn.lex_mung.client_android.mvp.ui.widget.HelpStep2View;
+import me.zl.mvp.base.BaseFragment;
+import me.zl.mvp.di.component.AppComponent;
+import me.zl.mvp.utils.AppUtils;
 
 public class HelpStep2Fragment extends BaseFragment<HelpStep2Presenter> implements HelpStep2Contract.View {
 
@@ -44,8 +41,17 @@ public class HelpStep2Fragment extends BaseFragment<HelpStep2Presenter> implemen
 
     HelpStep2Adapter adapter;
 
-    public static HelpStep2Fragment newInstance() {
+    int typeId = -1;
+
+    public int getTypeId() {
+        return typeId;
+    }
+
+    public static HelpStep2Fragment newInstance(List<SolutionTypeBean> entitys) {
         HelpStep2Fragment fragment = new HelpStep2Fragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(BundleTags.LIST, (Serializable) entitys);
+        fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -69,10 +75,12 @@ public class HelpStep2Fragment extends BaseFragment<HelpStep2Presenter> implemen
         initAdapter();
         initRecyclerView();
 
-        mPresenter.getList(0);
+        mPresenter.setList((List<SolutionTypeBean>)getArguments().getSerializable(BundleTags.LIST));
+
+        mPresenter.getTabPosition(0);
 
         helpStep2View.setItemOnClick(position -> {
-            mPresenter.getList(position);
+            mPresenter.getTabPosition(position);
         });
     }
 
@@ -81,13 +89,13 @@ public class HelpStep2Fragment extends BaseFragment<HelpStep2Presenter> implemen
         adapter = new HelpStep2Adapter();
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;
-            //TODO 选择
-
+            typeId = adapter.getItem(position).getSolutionTypeId();
+            adapter.setSelection(typeId);
         });
     }
 
     @Override
-    public void setAdapter(List<String> list) {
+    public void setAdapter(List<SolutionTypeChildBean> list) {
         adapter.setNewData(list);
     }
 
@@ -101,6 +109,10 @@ public class HelpStep2Fragment extends BaseFragment<HelpStep2Presenter> implemen
         if (isFastClick()) return;
         switch (view.getId()) {
             case R.id.tv_btn:
+                if(typeId == -1){
+                    showMessage("请选择事件分类");
+                    return;
+                }
                 ((HelpStepActivity) this.getActivity()).setIndex(2);
                 break;
         }

@@ -12,16 +12,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.lex_mung.client_android.mvp.model.entity.RegionEntity;
-import me.zl.mvp.integration.AppManager;
-import me.zl.mvp.di.scope.FragmentScope;
-import me.zl.mvp.mvp.BasePresenter;
-import me.zl.mvp.http.imageloader.ImageLoader;
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
-
 import javax.inject.Inject;
 
 import cn.lex_mung.client_android.mvp.contract.HelpStep1Contract;
+import cn.lex_mung.client_android.mvp.model.entity.RegionEntity;
+import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.zl.mvp.di.scope.FragmentScope;
+import me.zl.mvp.http.imageloader.ImageLoader;
+import me.zl.mvp.integration.AppManager;
+import me.zl.mvp.mvp.BasePresenter;
 import me.zl.mvp.utils.LogUtils;
 
 

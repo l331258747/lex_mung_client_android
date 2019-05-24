@@ -21,6 +21,6 @@
         android:layout_width="@dimen/qb_px_30"
         android:layout_height="@dimen/qb_px_30"
         android:layout_gravity="center_vertical"
-        android:src="@drawable/round_100_1ec78a_all" />
+        android:src="@drawable/ic_radio_un" />
 
 </LinearLayout>

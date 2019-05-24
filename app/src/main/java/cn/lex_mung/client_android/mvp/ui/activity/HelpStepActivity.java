@@ -12,9 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.di.component.DaggerHelpStepComponent;
 import cn.lex_mung.client_android.di.module.HelpStepModule;
+import cn.lex_mung.client_android.mvp.contract.HelpStepContract;
+import cn.lex_mung.client_android.mvp.model.entity.help.HelpStepEntity;
+import cn.lex_mung.client_android.mvp.presenter.HelpStepPresenter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
-
 import cn.lex_mung.client_android.mvp.ui.fragment.HelpStep1Fragment;
 import cn.lex_mung.client_android.mvp.ui.fragment.HelpStep2Fragment;
 import cn.lex_mung.client_android.mvp.ui.fragment.HelpStep3Fragment;
@@ -23,12 +28,6 @@ import cn.lex_mung.client_android.mvp.ui.widget.HelpStepView;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
-
-import cn.lex_mung.client_android.di.component.DaggerHelpStepComponent;
-import cn.lex_mung.client_android.mvp.contract.HelpStepContract;
-import cn.lex_mung.client_android.mvp.presenter.HelpStepPresenter;
-
-import cn.lex_mung.client_android.R;
 
 public class HelpStepActivity extends BaseActivity<HelpStepPresenter> implements HelpStepContract.View {
 
@@ -39,6 +38,11 @@ public class HelpStepActivity extends BaseActivity<HelpStepPresenter> implements
 
     private int pageIndex = 0;//下标
     private List<Fragment> fragments = new ArrayList<>();
+
+    HelpStep1Fragment helpStep1Fragment;
+    HelpStep2Fragment helpStep2Fragment;
+    HelpStep3Fragment helpStep3Fragment;
+    HelpStep4Fragment helpStep4Fragment;
 
     @Override
     public void onBackPressed() {
@@ -65,6 +69,17 @@ public class HelpStepActivity extends BaseActivity<HelpStepPresenter> implements
                 .inject(this);
     }
 
+    public void goPreferredLawyer(){
+        bundle.clear();
+        bundle.putInt(BundleTags.REGION_ID,helpStep1Fragment.getRegionId());
+        bundle.putInt(BundleTags.SOLUTION_TYPE_ID,helpStep2Fragment.getTypeId());
+        bundle.putInt(BundleTags.AMOUNT_ID,helpStep3Fragment.getAmountId());
+        bundle.putInt(BundleTags.REQUIRE_TYPE_ID,helpStep4Fragment.getTypeId());
+//        launchActivity(new Intent(mActivity,),bundle);
+
+        finish();
+    }
+
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
         return R.layout.activity_help_step;
@@ -72,10 +87,15 @@ public class HelpStepActivity extends BaseActivity<HelpStepPresenter> implements
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        fragments.add(HelpStep1Fragment.newInstance());
-        fragments.add(HelpStep2Fragment.newInstance());
-        fragments.add(HelpStep3Fragment.newInstance());
-        fragments.add(HelpStep4Fragment.newInstance());
+        mPresenter.getData();
+    }
+
+    @Override
+    public void setFragment(HelpStepEntity entity){
+        fragments.add(helpStep1Fragment = HelpStep1Fragment.newInstance());
+        fragments.add(helpStep2Fragment = HelpStep2Fragment.newInstance(entity.getSolutionType()));
+        fragments.add(helpStep3Fragment = HelpStep3Fragment.newInstance(entity.getRequirementInvolveAmount()));
+        fragments.add(helpStep4Fragment = HelpStep4Fragment.newInstance(entity.getRequireType()));
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         for (Fragment fragment : fragments) {

@@ -12,22 +12,24 @@ import android.widget.TextView;
 
 import com.aigestudio.wheelpicker.WheelPicker;
 
+import java.io.Serializable;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.di.component.DaggerHelpStep3Component;
 import cn.lex_mung.client_android.di.module.HelpStep3Module;
+import cn.lex_mung.client_android.mvp.contract.HelpStep3Contract;
+import cn.lex_mung.client_android.mvp.model.entity.help.RequirementInvolveAmountBean;
 import cn.lex_mung.client_android.mvp.presenter.HelpStep3Presenter;
 import cn.lex_mung.client_android.mvp.ui.activity.HelpStepActivity;
 import cn.lex_mung.client_android.mvp.ui.dialog.EasyDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
-
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
-
-import cn.lex_mung.client_android.di.component.DaggerHelpStep3Component;
-import cn.lex_mung.client_android.mvp.contract.HelpStep3Contract;
-
-import cn.lex_mung.client_android.R;
 
 public class HelpStep3Fragment extends BaseFragment<HelpStep3Presenter> implements HelpStep3Contract.View {
 
@@ -38,8 +40,17 @@ public class HelpStep3Fragment extends BaseFragment<HelpStep3Presenter> implemen
 
     EasyDialog easyDialog;
 
-    public static HelpStep3Fragment newInstance() {
+    int amountId = -1;
+
+    public int getAmountId() {
+        return amountId;
+    }
+
+    public static HelpStep3Fragment newInstance(List<RequirementInvolveAmountBean> entitys) {
         HelpStep3Fragment fragment = new HelpStep3Fragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(BundleTags.LIST, (Serializable) entitys);
+        fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -60,7 +71,9 @@ public class HelpStep3Fragment extends BaseFragment<HelpStep3Presenter> implemen
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        mPresenter.onCreate();
+        if (getArguments() != null) {
+            mPresenter.onCreate((List<RequirementInvolveAmountBean>) getArguments().getSerializable(BundleTags.LIST));
+        }
     }
 
     /**
@@ -73,12 +86,16 @@ public class HelpStep3Fragment extends BaseFragment<HelpStep3Presenter> implemen
         WheelPicker wpConsultType = layout.findViewById(R.id.wheel_1);
         wpConsultType.setCurved(false);
         wpConsultType.setVisibleItemCount(6);
-        wpConsultType.setOnItemSelectedListener((picker, data, position) -> mPresenter.setMoney(data.toString()));
-        wpConsultType.setData(mPresenter.getMoneyList());
+        wpConsultType.setOnItemSelectedListener((picker, data, position) -> {
+            mPresenter.setMoney(data.toString());
+            mPresenter.setAmountId(mPresenter.getMoneyList().get(position).getAmountId());
+        });
+        wpConsultType.setData(mPresenter.getMoneyStrList());
         wpConsultType.setSelectedItemPosition(0);
         layout.findViewById(R.id.tv_cancel).setOnClickListener(v -> dismiss());
         layout.findViewById(R.id.tv_confirm).setOnClickListener(v -> {
             tvContent.setText(mPresenter.getMoney());
+            amountId = mPresenter.getAmountId();
             dismiss();
         });
     }
@@ -91,6 +108,10 @@ public class HelpStep3Fragment extends BaseFragment<HelpStep3Presenter> implemen
                 showSelectTypeDialog();
                 break;
             case R.id.tv_btn:
+                if(amountId == -1){
+                    showMessage("请选择涉案金额");
+                    return;
+                }
                 ((HelpStepActivity)this.getActivity()).setIndex(3);
                 break;
         }

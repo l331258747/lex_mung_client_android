@@ -5,14 +5,15 @@ import android.app.Application;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.lex_mung.client_android.mvp.contract.HelpStep3Contract;
-import me.zl.mvp.integration.AppManager;
-import me.zl.mvp.di.scope.FragmentScope;
-import me.zl.mvp.mvp.BasePresenter;
-import me.zl.mvp.http.imageloader.ImageLoader;
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
-
 import javax.inject.Inject;
+
+import cn.lex_mung.client_android.mvp.contract.HelpStep3Contract;
+import cn.lex_mung.client_android.mvp.model.entity.help.RequirementInvolveAmountBean;
+import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.zl.mvp.di.scope.FragmentScope;
+import me.zl.mvp.http.imageloader.ImageLoader;
+import me.zl.mvp.integration.AppManager;
+import me.zl.mvp.mvp.BasePresenter;
 
 
 @FragmentScope
@@ -26,8 +27,18 @@ public class HelpStep3Presenter extends BasePresenter<HelpStep3Contract.Model, H
     @Inject
     AppManager mAppManager;
 
-    private List<String> moneyList = new ArrayList<>();
+    private List<RequirementInvolveAmountBean> moneyList = new ArrayList<>();
+    private List<String> moneyStrList = new ArrayList<>();
     private String money;
+    private int amountId;
+
+    public int getAmountId() {
+        return amountId;
+    }
+
+    public void setAmountId(int amountId) {
+        this.amountId = amountId;
+    }
 
     public String getMoney() {
         return money;
@@ -37,8 +48,12 @@ public class HelpStep3Presenter extends BasePresenter<HelpStep3Contract.Model, H
         this.money = money;
     }
 
-    public List<String> getMoneyList() {
+    public List<RequirementInvolveAmountBean> getMoneyList() {
         return moneyList;
+    }
+
+    public List<String> getMoneyStrList() {
+        return moneyStrList;
     }
 
     @Inject
@@ -46,11 +61,11 @@ public class HelpStep3Presenter extends BasePresenter<HelpStep3Contract.Model, H
         super(model, rootView);
     }
 
-    public void onCreate(){
-        moneyList.add("1万");
-        moneyList.add("2万");
-        moneyList.add("3万");
-        moneyList.add("4万");
+    public void onCreate(List<RequirementInvolveAmountBean> datas){
+        for (RequirementInvolveAmountBean item : datas){
+            moneyStrList.add(item.getAmountName());
+        }
+        moneyList = datas;
     }
 
 

@@ -44,6 +44,7 @@ import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.VersionEntity;
 import cn.lex_mung.client_android.mvp.model.entity.free.CommonFreeTextEntity;
 import cn.lex_mung.client_android.mvp.model.entity.free.FreeTextBizinfoEntity;
+import cn.lex_mung.client_android.mvp.model.entity.help.HelpStepEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.RequirementTypeV3Entity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocGetEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocUploadEntity;
@@ -678,5 +679,11 @@ public interface CommonService {
     //用户优惠券列表
     @POST("client/require/coupon")
     Observable<BaseResponse<OrderCouponEntity>> requireCoupon(@Body RequestBody body);
+
+    ///assistant/filters
+    //GET
+    //获取服务助手步骤中筛选条件
+    @GET("assistant/filters")
+    Observable<BaseResponse<HelpStepEntity>> assistantFilters();
 
 }
