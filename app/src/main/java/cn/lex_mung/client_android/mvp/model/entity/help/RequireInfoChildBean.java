@@ -36,6 +36,7 @@ public class RequireInfoChildBean implements Serializable {
     private String dateAdded;
     private String dateModified;
     private String requireTypeName;
+    private String parentRequireTypeName;
     private int rstatus;
     private String iconImage;
     private String image;
@@ -115,6 +116,14 @@ public class RequireInfoChildBean implements Serializable {
 
     public String getRequireTypeName() {
         return requireTypeName;
+    }
+
+    public String getParentRequireTypeName() {
+        return parentRequireTypeName;
+    }
+
+    public void setParentRequireTypeName(String parentRequireTypeName) {
+        this.parentRequireTypeName = parentRequireTypeName;
     }
 
     public void setRequireTypeName(String requireTypeName) {

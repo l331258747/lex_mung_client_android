@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.constraint.Group;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -84,6 +85,8 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
     SimpleFlowLayout sflField;
     @BindView(R.id.iv_social_position)
     ImageView ivSocialPosition;
+    @BindView(R.id.group)
+    Group group;
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -120,8 +123,6 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        setTitleView();
-
         mPresenter.getData(0, 22, 1, 3);
 //        mPresenter.getData(bundleIntent.getInt(BundleTags.REGION_ID),
 //                bundleIntent.getInt(BundleTags.SOLUTION_TYPE_ID),
@@ -200,7 +201,7 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
                     bundle.clear();
                     bundle.putInt(BundleTags.ID, entity.getParentRequireTypeId());
                     bundle.putInt(BundleTags.TYPE, entity.getType());
-                    bundle.putString(BundleTags.TITLE, entity.getRequireTypeName());
+                    bundle.putString(BundleTags.TITLE, entity.getParentRequireTypeName());
                     bundle.putInt(BundleTags.MEMBER_ID, bean.getMemberId());
                     bundle.putString(BundleTags.REGION, bean.getRegion());
                     launchActivity(new Intent(mActivity, ReleaseDemandActivity.class), bundle);
@@ -275,9 +276,15 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
     }
 
     public void setTitleLayout(List<RecommendLawyerBean> beans) {
-        if (beans == null || beans.size() == 0) return;
-        bean = beans.get(0);
+        if (beans == null || beans.size() == 0){
+            group.setVisibility(View.GONE);
+            titleView.getTitleLlayout().setBackgroundResource(R.color.c_ff);
+            titleView.setTitle("优选律师");
+            return;
+        }
+        setTitleView();
 
+        bean = beans.get(0);
         imageView(bean.getIconImage(), bean.getBackgroundImage());
 
         tvScore.setText(bean.getMatchDegreeStr());
@@ -294,6 +301,7 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
                 for (int j = 0; j < item.getRequires().size(); j++) {
                     item.getRequires().get(j).setRequirementType(item.getRequirementType());
                     item.getRequires().get(j).setParentRequireTypeId(item.getRequireTypeId());
+                    item.getRequires().get(j).setParentRequireTypeName(item.getRequireTypeName());
                     requireInfoChildBeans.add(item.getRequires().get(j));
                 }
             }
@@ -311,6 +319,7 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
                     , ImageConfigImpl
                             .builder()
                             .url(imgUrl)
+                            .isCircle(true)
                             .imageView(ivHead)
                             .build());
 
@@ -322,7 +331,6 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
                     , ImageConfigImpl
                             .builder()
                             .url(imgUrl)
-                            .isCircle(true)
                             .imageView(ivBigImg)
                             .build());
         } else {

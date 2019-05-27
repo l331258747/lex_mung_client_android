@@ -31,6 +31,13 @@
                 android:orientation="vertical"
                 app:layout_constraintGuide_end="@dimen/qb_px_30" />
 
+            <android.support.constraint.Group
+                android:id="@+id/group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                app:constraint_referenced_ids="recycler_view,iv_social_position,view_filed_bottom,tv_social_position,sfl_field,tv_field,view_filed,iv_big_img,view_title,iv_head,tv_name,tv_name_2,tv_go" />
+
             <ImageView
                 android:id="@+id/iv_big_img"
                 android:layout_width="match_parent"
@@ -99,6 +106,7 @@
                 tools:text="哈喽哈喽哈喽" />
 
             <TextView
+                android:id="@+id/tv_go"
                 android:layout_width="@dimen/qb_px_180"
                 android:layout_height="@dimen/qb_px_50"
                 android:background="@drawable/round_40_1ec78a_all"
@@ -190,6 +198,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="@dimen/qb_px_45"
+                app:layout_goneMarginTop="@dimen/qb_px_100"
                 android:background="@drawable/round_20_f6f6f6_all"
                 app:layout_constraintBottom_toBottomOf="@+id/view_content_bottom"
                 app:layout_constraintEnd_toEndOf="@+id/gl_right"
