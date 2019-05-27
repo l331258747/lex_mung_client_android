@@ -92,6 +92,10 @@ public class TitleView extends RelativeLayout {
         rightTv.setVisibility(VISIBLE);
     }
 
+    public RelativeLayout getTitleLlayout(){
+        return titleLlayout;
+    }
+
     public void setRightIv(int resourceId) {
         rightIv.setImageDrawable(ContextCompat.getDrawable(context, resourceId));
         rightTv.setVisibility(VISIBLE);

@@ -92,6 +92,10 @@ public class HelpStep3Fragment extends BaseFragment<HelpStep3Presenter> implemen
         });
         wpConsultType.setData(mPresenter.getMoneyStrList());
         wpConsultType.setSelectedItemPosition(0);
+
+        mPresenter.setMoney(mPresenter.getMoneyList().get(0).getAmountName());
+        mPresenter.setAmountId(mPresenter.getMoneyList().get(0).getAmountId());
+
         layout.findViewById(R.id.tv_cancel).setOnClickListener(v -> dismiss());
         layout.findViewById(R.id.tv_confirm).setOnClickListener(v -> {
             tvContent.setText(mPresenter.getMoney());

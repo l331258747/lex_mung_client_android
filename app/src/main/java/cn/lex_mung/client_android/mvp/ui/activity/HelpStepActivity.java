@@ -75,7 +75,7 @@ public class HelpStepActivity extends BaseActivity<HelpStepPresenter> implements
         bundle.putInt(BundleTags.SOLUTION_TYPE_ID,helpStep2Fragment.getTypeId());
         bundle.putInt(BundleTags.AMOUNT_ID,helpStep3Fragment.getAmountId());
         bundle.putInt(BundleTags.REQUIRE_TYPE_ID,helpStep4Fragment.getTypeId());
-//        launchActivity(new Intent(mActivity,),bundle);
+        launchActivity(new Intent(mActivity,HelpStepLawyerActivity.class),bundle);
 
         finish();
     }

@@ -44,6 +44,7 @@ import cn.lex_mung.client_android.mvp.presenter.HomePagerPresenter;
 import cn.lex_mung.client_android.mvp.ui.activity.FastConsultActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultMainActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.HelpStepActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.HelpStepLawyerActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerListActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MainActivity;
@@ -249,7 +250,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
             case R.id.tv_search:
 //                ((MainActivity) mActivity).switchPage(2);
 
-                launchActivity(new Intent(mActivity,HelpStepActivity.class));
+                launchActivity(new Intent(mActivity,HelpStepLawyerActivity.class));
 
 //                new HelpStepDialog(mActivity,
 //                        dialog -> {
