@@ -123,11 +123,10 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        mPresenter.getData(0, 22, 1, 3);
-//        mPresenter.getData(bundleIntent.getInt(BundleTags.REGION_ID),
-//                bundleIntent.getInt(BundleTags.SOLUTION_TYPE_ID),
-//                bundleIntent.getInt(BundleTags.AMOUNT_ID),
-//                bundleIntent.getInt(BundleTags.REQUIRE_TYPE_ID));
+        mPresenter.getData(bundleIntent.getInt(BundleTags.REGION_ID),
+                bundleIntent.getInt(BundleTags.SOLUTION_TYPE_ID),
+                bundleIntent.getInt(BundleTags.AMOUNT_ID),
+                bundleIntent.getInt(BundleTags.REQUIRE_TYPE_ID));
     }
 
     private void setTitleView() {

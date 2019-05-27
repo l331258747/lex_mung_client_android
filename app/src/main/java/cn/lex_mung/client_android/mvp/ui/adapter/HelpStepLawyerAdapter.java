@@ -32,7 +32,7 @@ public class HelpStepLawyerAdapter extends BaseQuickAdapter<RequireInfoChildBean
             helper.setText(R.id.tv_money, AppUtils.getString(mContext, R.string.text_no_price));
             helper.setTextColor(R.id.tv_money, AppUtils.getColor(mContext, R.color.c_b5b5b5));
         } else {
-            helper.setText(R.id.tv_money, AppUtils.formatAmount(mContext, item.getMinAmount()) + "元/" + item.getUnit());
+            helper.setText(R.id.tv_money, item.getMinAmountStr());
             helper.setTextColor(R.id.tv_money, AppUtils.getColor(mContext, R.color.c_323232));
         }
 

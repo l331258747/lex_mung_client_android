@@ -3,6 +3,8 @@ package cn.lex_mung.client_android.mvp.model.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import me.zl.mvp.utils.StringUtils;
+
 public class BusinessEntity implements Serializable {
 
     /**
@@ -135,6 +137,10 @@ public class BusinessEntity implements Serializable {
 
     public double getMinAmount() {
         return minAmount;
+    }
+
+    public String getMinAmountStr(){
+        return StringUtils.getStringNum(minAmount);
     }
 
     public void setMinAmount(double minAmount) {

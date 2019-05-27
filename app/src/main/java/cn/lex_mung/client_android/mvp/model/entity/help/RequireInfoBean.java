@@ -29,7 +29,7 @@ public class RequireInfoBean {
     private int memberId;
     private int requireTypeId;
     private int requireTypeSectionId;
-    private int minAmount;
+    private double minAmount;
     private String creater;
     private String dateAdded;
     private String dateModified;
@@ -71,11 +71,11 @@ public class RequireInfoBean {
         this.requireTypeSectionId = requireTypeSectionId;
     }
 
-    public int getMinAmount() {
+    public double getMinAmount() {
         return minAmount;
     }
 
-    public void setMinAmount(int minAmount) {
+    public void setMinAmount(double minAmount) {
         this.minAmount = minAmount;
     }
 

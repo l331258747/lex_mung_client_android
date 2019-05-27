@@ -8,6 +8,7 @@ import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.mvp.model.entity.BusinessEntity;
 
 import me.zl.mvp.utils.AppUtils;
+import me.zl.mvp.utils.StringUtils;
 
 public class ReleaseDemandServiceTypeAdapter extends BaseQuickAdapter<BusinessEntity, BaseViewHolder> {
     private int pos = -1;
@@ -30,7 +31,8 @@ public class ReleaseDemandServiceTypeAdapter extends BaseQuickAdapter<BusinessEn
     protected void convert(BaseViewHolder helper, BusinessEntity item) {
         helper.setText(R.id.item_tv_title, item.getRequireTypeName());
         helper.setText(R.id.item_tv_content, item.getRequireTypeDescription());
-        helper.setText(R.id.item_tv_money, AppUtils.formatAmount(mContext, item.getMinAmount()));
+//        helper.setText(R.id.item_tv_money, AppUtils.formatAmount(mContext, item.getMinAmount()));
+        helper.setText(R.id.item_tv_money, item.getMinAmountStr());
         if (type == 1) {//固定价格
             helper.setText(R.id.item_tv_unit, String.format(mContext.getString(R.string.text_yuan_unit), item.getUnit()));
             helper.getView(R.id.item_iv_select).setVisibility(View.VISIBLE);

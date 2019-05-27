@@ -1,6 +1,7 @@
 package cn.lex_mung.client_android.mvp.model.entity;
 
 import cn.lex_mung.client_android.app.TimeFormat;
+import me.zl.mvp.utils.StringUtils;
 
 public class FreeConsultReplyListEntity {
 
@@ -52,7 +53,7 @@ public class FreeConsultReplyListEntity {
      */
 
     private String memberHonorTitle;
-    private int minAmount;
+    private double minAmount;
     private String lawyerPositionName;
 
     public int getConsultationReplyId() {
@@ -225,15 +226,15 @@ public class FreeConsultReplyListEntity {
         this.memberHonorTitle = memberHonorTitle;
     }
 
-    public int getMinAmount() {
+    public double getMinAmount() {
         return minAmount;
     }
 
     public String getMinAmountStr(){
-        return "电话咨询:"+minAmount+"元/分钟>";
+        return "电话咨询:"+StringUtils.getStringNum(minAmount) +"元/分钟>";
     }
 
-    public void setMinAmount(int minAmount) {
+    public void setMinAmount(double minAmount) {
         this.minAmount = minAmount;
     }
 

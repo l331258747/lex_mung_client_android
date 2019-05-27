@@ -3,6 +3,8 @@ package cn.lex_mung.client_android.mvp.model.entity.help;
 import java.io.Serializable;
 import java.util.List;
 
+import me.zl.mvp.utils.StringUtils;
+
 public class RequireInfoChildBean implements Serializable {
     /**
      * memberId : 60
@@ -31,7 +33,7 @@ public class RequireInfoChildBean implements Serializable {
     private int requireTypeId;
     private int parentRequireTypeId;
     private int requireTypeSectionId;
-    private int minAmount;
+    private double minAmount;
     private String creater;
     private String dateAdded;
     private String dateModified;
@@ -82,11 +84,15 @@ public class RequireInfoChildBean implements Serializable {
         this.requireTypeSectionId = requireTypeSectionId;
     }
 
-    public int getMinAmount() {
+    public double getMinAmount() {
         return minAmount;
     }
 
-    public void setMinAmount(int minAmount) {
+    public String getMinAmountStr(){
+        return StringUtils.getStringNum(minAmount) + "元/" + unit;
+    }
+
+    public void setMinAmount(double minAmount) {
         this.minAmount = minAmount;
     }
 
