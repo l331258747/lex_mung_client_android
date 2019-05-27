@@ -1,8 +1,9 @@
 package cn.lex_mung.client_android.mvp.model.entity.help;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class RequireInfoChildBean {
+public class RequireInfoChildBean implements Serializable {
     /**
      * memberId : 60
      * requireTypeId : 10
@@ -28,6 +29,7 @@ public class RequireInfoChildBean {
 
     private int memberId;
     private int requireTypeId;
+    private int parentRequireTypeId;
     private int requireTypeSectionId;
     private int minAmount;
     private String creater;
@@ -53,6 +55,14 @@ public class RequireInfoChildBean {
 
     public void setMemberId(int memberId) {
         this.memberId = memberId;
+    }
+
+    public int getParentRequireTypeId() {
+        return parentRequireTypeId;
+    }
+
+    public void setParentRequireTypeId(int parentRequireTypeId) {
+        this.parentRequireTypeId = parentRequireTypeId;
     }
 
     public int getRequireTypeId() {

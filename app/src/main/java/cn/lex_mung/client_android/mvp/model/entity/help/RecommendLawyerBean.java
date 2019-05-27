@@ -37,6 +37,7 @@ public class RecommendLawyerBean {
     private int sex;
     private String birthday;
     private String iconImage;
+    private String backgroundImage;
     private int regionId;
     private String region;
     private int memberPositionId;
@@ -50,6 +51,10 @@ public class RecommendLawyerBean {
     private List<BusinessInfoBean> businessInfo;
     private List<String> socialFunction;
     private List<RequireInfoBean> requireInfo;
+
+    public String getBackgroundImage() {
+        return backgroundImage;
+    }
 
     public int getMemberId() {
         return memberId;

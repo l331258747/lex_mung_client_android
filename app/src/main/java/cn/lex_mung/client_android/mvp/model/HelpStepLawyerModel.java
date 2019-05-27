@@ -9,7 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 import cn.lex_mung.client_android.mvp.model.api.CommonService;
+import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
+import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.help.HelpStepLawyerEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.integration.IRepositoryManager;
@@ -56,5 +58,19 @@ public class HelpStepLawyerModel extends BaseModel implements HelpStepLawyerCont
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .assistantRecommendLawyers(body);
+    }
+
+    @Override
+    public Observable<BaseResponse<ExpertPriceEntity>> expertPrice(int id) {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .expertPrice(id);
+    }
+
+    @Override
+    public Observable<BaseResponse<AgreementEntity>> sendCall(int id) {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .sendCall(id);
     }
 }

@@ -49,7 +49,7 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
     TextView tvTitle;
     @BindView(R.id.tv_lawyer_region)
     TextView tvLawyerRegion;
-//    @BindView(R.id.tv_lawyer_field)
+    //    @BindView(R.id.tv_lawyer_field)
 //    TextView tvLawyerField;
     @BindView(R.id.group_money)
     Group groupMoney;
@@ -120,7 +120,10 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
     public void initData(@Nullable Bundle savedInstanceState) {
         if (bundleIntent != null) {
             mPresenter.setType(bundleIntent.getInt(BundleTags.TYPE));
-            mPresenter.onCreate((LawsHomePagerBaseEntity) bundleIntent.getSerializable(BundleTags.ENTITY), bundleIntent.getInt(BundleTags.ID),bundleIntent.getString(BundleTags.TITLE));
+            mPresenter.onCreate(bundleIntent.getInt(BundleTags.MEMBER_ID),
+                    bundleIntent.getString(BundleTags.REGION),
+                    bundleIntent.getInt(BundleTags.ID),
+                    bundleIntent.getString(BundleTags.TITLE));
             tvTitle.setText(bundleIntent.getString(BundleTags.TITLE));
         }
     }
@@ -137,7 +140,7 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
         recyclerView.setAdapter(adapter);
     }
 
-//    @OnClick({R.id.view_lawyer_field, R.id.tv_wx, R.id.tv_zfb, R.id.tv_balance, R.id.tv_club_card, R.id.view_discount_way, R.id.tv_fast_consult_tip, R.id.tv_fast_consult_tip_1, R.id.bt_pay})
+    //    @OnClick({R.id.view_lawyer_field, R.id.tv_wx, R.id.tv_zfb, R.id.tv_balance, R.id.tv_club_card, R.id.view_discount_way, R.id.tv_fast_consult_tip, R.id.tv_fast_consult_tip_1, R.id.bt_pay})
     @OnClick({R.id.tv_wx, R.id.tv_zfb, R.id.tv_balance, R.id.tv_club_card, R.id.view_discount_way, R.id.tv_fast_consult_tip, R.id.tv_fast_consult_tip_1, R.id.bt_pay})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -176,7 +179,7 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
                 bundle.clear();
                 bundle.putInt(BundleTags.ID, mPresenter.getOrganizationLevId());
                 bundle.putInt(BundleTags.MEMBER_ID, mPresenter.getUserInfoDetailsEntity().getMemberId());
-                bundle.putInt(BundleTags.L_MEMBER_ID, mPresenter.getLawsHomePagerBaseEntity().getMemberId());
+                bundle.putInt(BundleTags.L_MEMBER_ID, mPresenter.getLawsHomePagerBaseEntityId());
                 launchActivity(new Intent(mActivity, DiscountWayActivity.class), bundle);
                 break;
             case R.id.tv_fast_consult_tip:

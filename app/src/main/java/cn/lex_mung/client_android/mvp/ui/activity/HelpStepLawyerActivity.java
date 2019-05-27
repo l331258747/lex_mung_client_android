@@ -13,7 +13,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,6 +32,8 @@ import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.di.component.DaggerHelpStepLawyerComponent;
 import cn.lex_mung.client_android.di.module.HelpStepLawyerModule;
 import cn.lex_mung.client_android.mvp.contract.HelpStepLawyerContract;
+import cn.lex_mung.client_android.mvp.model.entity.BusinessEntity;
+import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.help.BusinessInfoBean;
 import cn.lex_mung.client_android.mvp.model.entity.help.FilterBean;
 import cn.lex_mung.client_android.mvp.model.entity.help.HelpStepLawyerEntity;
@@ -41,6 +42,11 @@ import cn.lex_mung.client_android.mvp.model.entity.help.RequireInfoBean;
 import cn.lex_mung.client_android.mvp.model.entity.help.RequireInfoChildBean;
 import cn.lex_mung.client_android.mvp.presenter.HelpStepLawyerPresenter;
 import cn.lex_mung.client_android.mvp.ui.adapter.HelpStepLawyerAdapter;
+import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog;
+import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog2;
+import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog3;
+import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog4;
+import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog5;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.SimpleFlowLayout;
 import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
@@ -94,6 +100,9 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
     HelpStepLawyerAdapter adapter;
     RecommendLawyerBean bean;
 
+    CallFieldDialog3 callFieldDialog3;
+    CallFieldDialog4 callFieldDialog4;
+
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerHelpStepLawyerComponent
@@ -121,15 +130,15 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
     }
 
     private void setTitleView() {
-        scrollView.getViewTreeObserver().addOnScrollChangedListener(()->{
+        scrollView.getViewTreeObserver().addOnScrollChangedListener(() -> {
             int scrollY = scrollView.getScrollY();
-            if(scrollY <= 0){
+            if (scrollY <= 0) {
                 titleView.getTitleLlayout().setBackgroundResource(R.color.c_00);
                 titleView.setTitle("");
-            }else if(scrollY > 0 && scrollY <= 560){
+            } else if (scrollY > 0 && scrollY <= 560) {
                 titleView.getTitleLlayout().setBackgroundResource(R.color.c_00);
                 titleView.setTitle("");
-            }else{
+            } else {
                 titleView.getTitleLlayout().setBackgroundResource(R.color.c_ff);
                 titleView.setTitle("优选律师");
             }
@@ -180,9 +189,77 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
 
     public void initAdapter(List<RequireInfoChildBean> beans) {
         adapter = new HelpStepLawyerAdapter(beans);
-        adapter.setOnItemClickListener((adapter, view, position) -> {
+        adapter.setOnItemClickListener((adapter1, view, position) -> {
+            if (isFastClick()) return;
+            if (DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
+                RequireInfoChildBean entity = adapter.getItem(position);
+                if (entity == null) return;
 
+                if (entity.getRequirementType() == 1) {//发需求
+                    MobclickAgent.onEvent(mActivity, "w_y__shouye_jjfa_list_fbxq");
+                    bundle.clear();
+                    bundle.putInt(BundleTags.ID, entity.getParentRequireTypeId());
+                    bundle.putInt(BundleTags.TYPE, entity.getType());
+                    bundle.putString(BundleTags.TITLE, entity.getRequireTypeName());
+                    bundle.putInt(BundleTags.MEMBER_ID, bean.getMemberId());
+                    bundle.putString(BundleTags.REGION, bean.getRegion());
+                    launchActivity(new Intent(mActivity, ReleaseDemandActivity.class), bundle);
+                } else {//电话咨询
+                    MobclickAgent.onEvent(mActivity, "w_y_shouye_zjzx_detail_boda");
+                    mPresenter.expertPrice(bean.getMemberId());
+                }
+            } else {
+                bundle.clear();
+                bundle.putInt(BundleTags.TYPE, 1);
+                launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
+            }
         });
+    }
+
+    @Override
+    public void showDialDialog(ExpertPriceEntity entity) {
+        new CallFieldDialog2(mActivity
+                , dialog -> {
+            mPresenter.sendCall(bean.getMemberId(), entity.getCallCenterNo());
+            dialog.dismiss();
+        }
+                , entity).show();
+    }
+
+    @Override
+    public void showDial1Dialog(String string) {
+        callFieldDialog3 = new CallFieldDialog3(mActivity, string, dialog -> {
+            callFieldDialog4 = new CallFieldDialog4(mActivity, "现在关闭将无法联系律师\n是否继续关闭");
+            callFieldDialog4.show();
+            dialog.dismiss();
+        });
+        callFieldDialog3.show();
+    }
+
+    @Override
+    public void showToPayDialog(String s) {
+        new CallFieldDialog(mActivity, dialog -> {
+            MobclickAgent.onEvent(mActivity, "w_y_shouye_zjzx_detail_chongzhi");
+            launchActivity(new Intent(mActivity, AccountPayActivity.class));
+        }, s, "充值").show();
+    }
+
+    @Override
+    public void showToErrorDialog(String s) {
+        if (callFieldDialog3 != null && callFieldDialog3.isShowing()) {
+            callFieldDialog3.dismiss();
+        }
+
+        if (callFieldDialog4 != null && callFieldDialog4.isShowing()) {
+            callFieldDialog4.dismiss();
+        }
+
+        new CallFieldDialog5(mActivity, dialog -> {
+            Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "400-811-3060"));
+            startActivity(dialIntent);
+            dialog.dismiss();
+
+        }, s, "联系客服").show();
     }
 
     private void initRecyclerView() {
@@ -201,7 +278,7 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
         if (beans == null || beans.size() == 0) return;
         bean = beans.get(0);
 
-        imageView(bean.getIconImage());
+        imageView(bean.getIconImage(), bean.getBackgroundImage());
 
         tvScore.setText(bean.getMatchDegreeStr());
         tvName.setText(bean.getName());
@@ -216,6 +293,7 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
             if (item.getRequires() != null && item.getRequires().size() > 0) {
                 for (int j = 0; j < item.getRequires().size(); j++) {
                     item.getRequires().get(j).setRequirementType(item.getRequirementType());
+                    item.getRequires().get(j).setParentRequireTypeId(item.getRequireTypeId());
                     requireInfoChildBeans.add(item.getRequires().get(j));
                 }
             }
@@ -227,24 +305,28 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
         }
     }
 
-    public void imageView(String imgUrl) {
+    public void imageView(String imgUrl, String bigUrl) {
         if (!TextUtils.isEmpty(imgUrl)) {
             mImageLoader.loadImage(mActivity
                     , ImageConfigImpl
                             .builder()
                             .url(imgUrl)
-                            .imageView(ivBigImg)
+                            .imageView(ivHead)
                             .build());
+
+        } else {
+            ivHead.setImageDrawable(ContextCompat.getDrawable(mActivity, R.drawable.ic_lawyer_avatar));
+        }
+        if (!TextUtils.isEmpty(bigUrl)) {
             mImageLoader.loadImage(mActivity
                     , ImageConfigImpl
                             .builder()
                             .url(imgUrl)
                             .isCircle(true)
-                            .imageView(ivHead)
+                            .imageView(ivBigImg)
                             .build());
         } else {
             ivBigImg.setImageDrawable(ContextCompat.getDrawable(mActivity, R.drawable.ic_p_bg_1));
-            ivHead.setImageDrawable(ContextCompat.getDrawable(mActivity, R.drawable.ic_lawyer_avatar));
         }
     }
 

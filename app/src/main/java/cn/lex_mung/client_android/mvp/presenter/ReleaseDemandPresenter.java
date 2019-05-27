@@ -39,7 +39,6 @@ import cn.lex_mung.client_android.mvp.model.entity.BalanceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.BusinessEntity;
 import cn.lex_mung.client_android.mvp.model.entity.GeneralEntity;
-import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayResultEntity;
 import cn.lex_mung.client_android.mvp.model.entity.ReleaseDemandOrgMoneyEntity;
@@ -76,7 +75,9 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
     @Inject
     RxPermissions mRxPermissions;
 
-    private LawsHomePagerBaseEntity lawsHomePagerBaseEntity;
+//    private LawsHomePagerBaseEntity lawsHomePagerBaseEntity;
+    int lawsHomePagerBaseEntityId;
+    String lawsHomePagerBaseEntityRegion;
     private UserInfoDetailsEntity userInfoDetailsEntity;
     private ReleaseDemandOrgMoneyEntity entity;
 
@@ -144,8 +145,15 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
         return userInfoDetailsEntity;
     }
 
-    public LawsHomePagerBaseEntity getLawsHomePagerBaseEntity() {
-        return lawsHomePagerBaseEntity;
+//    public LawsHomePagerBaseEntity getLawsHomePagerBaseEntity() {
+//        return lawsHomePagerBaseEntity;
+//    }
+    public int getLawsHomePagerBaseEntityId() {
+        return lawsHomePagerBaseEntityId;
+    }
+
+    public String getLawsHomePagerBaseEntityRegion(){
+        return lawsHomePagerBaseEntityRegion;
     }
 
 //    public String getLawyerField() {
@@ -156,12 +164,15 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
 //        return fieldList;
 //    }
 
-    public void onCreate(LawsHomePagerBaseEntity lawsHomePagerBaseEntity, int requireTypeId,String requireTypeName) {
+//    public void onCreate(LawsHomePagerBaseEntity lawsHomePagerBaseEntity, int requireTypeId,String requireTypeName) {
+    public void onCreate(int lawsHomePagerBaseEntityId, String lawsHomePagerBaseEntityRegion, int requireTypeId,String requireTypeName) {
         initAdapter();
         this.requireTypeId =requireTypeId;
         this.requireTypeName = requireTypeName;
 
-        this.lawsHomePagerBaseEntity = lawsHomePagerBaseEntity;
+//        this.lawsHomePagerBaseEntity = lawsHomePagerBaseEntity;
+        this.lawsHomePagerBaseEntityRegion = lawsHomePagerBaseEntityRegion;
+        this.lawsHomePagerBaseEntityId = lawsHomePagerBaseEntityId;
         userInfoDetailsEntity = new Gson().fromJson(DataHelper.getStringSF(mApplication, DataHelperTags.USER_INFO_DETAIL), UserInfoDetailsEntity.class);
 
         if (type == 1) {
@@ -169,7 +180,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
         } else {
             mRootView.showProblemDescriptionLayout();
         }
-        mRootView.setRegion(lawsHomePagerBaseEntity.getRegion());
+        mRootView.setRegion(lawsHomePagerBaseEntityRegion);
 //        for (LawsHomePagerBaseEntity.ChildBean businessRadarBean : lawsHomePagerBaseEntity.getBusinessInfo()) {
 //            if(!TextUtils.isEmpty(businessRadarBean.getSolutionMarkName()))
 //                fieldList.add(businessRadarBean.getSolutionMarkName());
@@ -210,7 +221,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
 
     private void releaseDemandList(int id) {
         Map<String, Object> map = new HashMap<>();
-        map.put("memberId", lawsHomePagerBaseEntity.getMemberId());
+        map.put("memberId", lawsHomePagerBaseEntityId);
         map.put("parentId", id);
         mModel.releaseDemandList(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                 .subscribeOn(Schedulers.io())
@@ -275,7 +286,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
     private void getReleaseDemandOrgMoney() {
         Map<String, Object> map = new HashMap<>();
         map.put("memberId", userInfoDetailsEntity.getMemberId());
-        map.put("lmemberId", lawsHomePagerBaseEntity.getMemberId());
+        map.put("lmemberId", lawsHomePagerBaseEntityId);
         if (organizationLevId != 0) {
             map.put("organizationLevId", organizationLevId);
         }
@@ -368,8 +379,8 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
 //        if (lawyerFieldPosition > -1) {
 //            map.put("skillId", lawsHomePagerBaseEntity.getBusinessInfo().get(lawyerFieldPosition).getSolutionMarkId());
 //        }
-        map.put("targetLawyerId", lawsHomePagerBaseEntity.getMemberId());
-        map.put("lawyerRegionId", lawsHomePagerBaseEntity.getRegionId());
+        map.put("targetLawyerId", lawsHomePagerBaseEntityId);
+        map.put("lawyerRegionId", lawsHomePagerBaseEntityRegion);
 
         map.put("requirementTypeId", requireTypeId);
         map.put("requirementTypeName", requireTypeName);

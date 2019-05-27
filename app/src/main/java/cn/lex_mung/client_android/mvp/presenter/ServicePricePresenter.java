@@ -72,7 +72,8 @@ public class ServicePricePresenter extends BasePresenter<ServicePriceContract.Mo
                         bundle.putInt(BundleTags.ID, businessEntity.getRequireTypeId());
                         bundle.putInt(BundleTags.TYPE, businessEntity.getType());
                         bundle.putString(BundleTags.TITLE, businessEntity.getRequireTypeName());
-                        bundle.putSerializable(BundleTags.ENTITY, entity);
+                        bundle.putInt(BundleTags.MEMBER_ID, entity.getMemberId());
+                        bundle.putString(BundleTags.REGION, entity.getRegion());
                         mRootView.launchActivity(new Intent(mApplication, ReleaseDemandActivity.class), bundle);
                     } else {//电话咨询
                         MobclickAgent.onEvent(mApplication, "w_y_shouye_zjzx_detail_boda");
@@ -141,7 +142,7 @@ public class ServicePricePresenter extends BasePresenter<ServicePriceContract.Mo
                             70002：您好，当前律师可能正在繁忙，建议您改天再联系或者联系平台其他律师进行咨询。
                             70003：您好，该律师暂时无法接听您的电话，建议您联系平台其他律师或拨打客服热线400-811-3060及时处理。
                              */
-                            switch (baseResponse.getCode()){
+                            switch (baseResponse.getCode()) {
                                 case 70001:
                                     // 充值
                                     break;
