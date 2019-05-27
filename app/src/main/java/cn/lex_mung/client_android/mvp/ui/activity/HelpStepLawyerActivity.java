@@ -85,8 +85,8 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
     SimpleFlowLayout sflField;
     @BindView(R.id.iv_social_position)
     ImageView ivSocialPosition;
-    @BindView(R.id.group)
-    Group group;
+    @BindView(R.id.cl_info)
+    ConstraintLayout clInfo;
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -199,7 +199,7 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
                     MobclickAgent.onEvent(mActivity, "w_y__shouye_jjfa_list_fbxq");
                     bundle.clear();
                     bundle.putInt(BundleTags.ID, entity.getParentRequireTypeId());
-                    bundle.putInt(BundleTags.TYPE, entity.getType());
+                    bundle.putInt(BundleTags.TYPE, entity.getParentType());
                     bundle.putString(BundleTags.TITLE, entity.getParentRequireTypeName());
                     bundle.putInt(BundleTags.MEMBER_ID, bean.getMemberId());
                     bundle.putString(BundleTags.REGION, bean.getRegion());
@@ -276,7 +276,8 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
 
     public void setTitleLayout(List<RecommendLawyerBean> beans) {
         if (beans == null || beans.size() == 0){
-            group.setVisibility(View.GONE);
+            clInfo.setVisibility(View.GONE);
+
             titleView.getTitleLlayout().setBackgroundResource(R.color.c_ff);
             titleView.setTitle("优选律师");
             return;
@@ -301,6 +302,7 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
                     item.getRequires().get(j).setRequirementType(item.getRequirementType());
                     item.getRequires().get(j).setParentRequireTypeId(item.getRequireTypeId());
                     item.getRequires().get(j).setParentRequireTypeName(item.getRequireTypeName());
+                    item.getRequires().get(j).setParentType(item.getType());
                     requireInfoChildBeans.add(item.getRequires().get(j));
                 }
             }

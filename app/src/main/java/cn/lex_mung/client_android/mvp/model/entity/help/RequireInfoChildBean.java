@@ -45,12 +45,21 @@ public class RequireInfoChildBean implements Serializable {
     private String unit;
     private int parentId;
     private int type;
+    private int parentType;
     private String requireTypeDescription;
     private int requirementType;
     private int status;
     private int rcount;
     private List<?> requireTypes;
     private List<?> requires;
+
+    public int getParentType() {
+        return parentType;
+    }
+
+    public void setParentType(int parentType) {
+        this.parentType = parentType;
+    }
 
     public int getMemberId() {
         return memberId;
