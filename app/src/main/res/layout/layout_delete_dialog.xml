@@ -39,7 +39,7 @@
         android:layout_height="@dimen/qb_px_50"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="@dimen/qb_px_20"
+        android:layout_marginEnd="@dimen/qb_px_40"
         android:layout_marginBottom="@dimen/qb_px_20"
         android:gravity="center"
         android:includeFontPadding="false"
