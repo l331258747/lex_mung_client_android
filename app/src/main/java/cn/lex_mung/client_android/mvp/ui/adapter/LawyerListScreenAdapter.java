@@ -20,13 +20,17 @@ import cn.lex_mung.client_android.mvp.ui.activity.LawyerListScreenActivity;
 import me.zl.mvp.utils.AppUtils;
 
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO;
+import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_1;
+import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_INSTITUTIONS;
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_TYPE;
 
 public class LawyerListScreenAdapter extends BaseQuickAdapter<LawyerListScreenEntity, BaseViewHolder> {
     private LawyerListScreenActivity activity;
+    private boolean isFlag;
 
-    public LawyerListScreenAdapter() {
+    public LawyerListScreenAdapter(boolean isFlag) {
         super(null);
+        this.isFlag = isFlag;
         setMultiTypeDelegate(new MultiTypeDelegate<LawyerListScreenEntity>() {
             @Override
             protected int getItemType(LawyerListScreenEntity item) {
@@ -78,7 +82,11 @@ public class LawyerListScreenAdapter extends BaseQuickAdapter<LawyerListScreenEn
                                 && helper.getLayoutPosition() + 1 < getItemCount()) {
                             notifyItemChanged(helper.getLayoutPosition() + 1);
                         }
-                        AppUtils.post(LAWYER_LIST_SCREEN_INFO, LAWYER_LIST_SCREEN_INFO_TYPE, bean);
+                        if (isFlag) {
+                            AppUtils.post(LAWYER_LIST_SCREEN_INFO_1, LAWYER_LIST_SCREEN_INFO_INSTITUTIONS, bean);
+                        } else {
+                            AppUtils.post(LAWYER_LIST_SCREEN_INFO, LAWYER_LIST_SCREEN_INFO_INSTITUTIONS, bean);
+                        }
                     });
                     break;
                 case 2:

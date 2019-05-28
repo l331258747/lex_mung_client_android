@@ -69,7 +69,10 @@ public class HomeTableActivity extends BaseActivity<HomeTablePresenter> implemen
                 break;
             case R.id.ll_lawyer:
                 //TODO 需要类型id
-                launchActivity(new Intent(mActivity, LawyerListActivity.class));
+                bundle.clear();
+                bundle.putInt(BundleTags.ID, id);
+                bundle.putString(BundleTags.TITLE,title);
+                launchActivity(new Intent(mActivity, LawyerListActivity.class), bundle);
                 break;
         }
     }

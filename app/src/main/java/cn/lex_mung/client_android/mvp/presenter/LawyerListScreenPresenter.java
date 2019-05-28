@@ -102,7 +102,7 @@ public class LawyerListScreenPresenter extends BasePresenter<LawyerListScreenCon
     }
 
     private void initAdapter() {
-        adapter = new LawyerListScreenAdapter();
+        adapter = new LawyerListScreenAdapter(flag);
         adapter.setActivity(mRootView.getActivity());
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;

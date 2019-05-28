@@ -1,5 +1,7 @@
 package cn.lex_mung.client_android.mvp.contract;
 
+import android.app.Activity;
+
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.BusinessTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity;
@@ -19,6 +21,8 @@ public interface LawyerListContract {
         void initRecyclerView(LawyerListAdapter adapter);
 
         void setEmptyView(LawyerListAdapter adapter);
+
+        Activity getActivity();
     }
 
     interface Model extends IModel {

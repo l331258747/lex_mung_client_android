@@ -2,6 +2,7 @@ package cn.lex_mung.client_android.mvp.ui.activity;
 
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -92,6 +93,9 @@ public class LawyerListActivity extends BaseActivity<LawyerListPresenter> implem
 
     private EasyDialog easyDialog;
 
+    private int requireTypeId = -1;
+    private String requireTypeName = "";
+
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerLawyerListComponent
@@ -127,6 +131,14 @@ public class LawyerListActivity extends BaseActivity<LawyerListPresenter> implem
             mPresenter.setOrgId(bundleIntent.getInt(BundleTags.ORG_ID));
             mPresenter.setOrgLevId(bundleIntent.getInt(BundleTags.LEVEL));
         }
+
+        if (bundleIntent != null
+                && bundleIntent.containsKey(BundleTags.ID)) {
+            requireTypeId = bundleIntent.getInt(BundleTags.ID, -1);
+            requireTypeName = bundleIntent.getString(BundleTags.TITLE);
+        }
+        mPresenter.setRequireTypeId(requireTypeId,requireTypeName);
+
         mPresenter.onCreate(smartRefreshLayout);
         etSearch.setFilters(new InputFilter[]{CharacterHandler.emojiFilter});
         etSearch.setOnEditorActionListener((v, actionId, event) -> {
@@ -148,6 +160,11 @@ public class LawyerListActivity extends BaseActivity<LawyerListPresenter> implem
     @Override
     public void setEmptyView(LawyerListAdapter adapter) {
         adapter.setEmptyView(R.layout.layout_empty_view, (ViewGroup) recyclerView.getParent());
+    }
+
+    @Override
+    public Activity getActivity() {
+        return mActivity;
     }
 
     @OnClick({R.id.tv_search, R.id.ll_sort, R.id.ll_field, R.id.ll_region, R.id.ll_screen})
@@ -185,6 +202,7 @@ public class LawyerListActivity extends BaseActivity<LawyerListPresenter> implem
                 bundle.putInt(BundleTags.REGION_ID_1, mPresenter.getRegionId1());
                 bundle.putInt(BundleTags.REGION_ID_2, mPresenter.getRegionId2());
                 bundle.putSerializable(BundleTags.LIST, (Serializable) mPresenter.getList());
+                bundle.putInt(BundleTags.REQUIRE_TYPE_ID, requireTypeId);
                 launchActivity(new Intent(mActivity, LawyerListScreenActivity.class), bundle);
                 break;
         }

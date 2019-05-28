@@ -12,6 +12,7 @@ import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.mvp.model.entity.RequireEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerHomePageActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.LawyerListAdapter;
+import cn.lex_mung.client_android.mvp.ui.dialog.SingleTextDialog;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -88,6 +89,10 @@ public class LawyerListPresenter extends BasePresenter<LawyerListContract.Model,
     private LawyerListAdapter adapter;
     private SmartRefreshLayout smartRefreshLayout;
 
+    int requireTypeId;
+    String requireTypeName;
+    boolean isShow;
+
 
     @Inject
     public LawyerListPresenter(LawyerListContract.Model model, LawyerListContract.View rootView) {
@@ -105,6 +110,10 @@ public class LawyerListPresenter extends BasePresenter<LawyerListContract.Model,
         new Thread(this::initJsonData).start();
         getBusinessType();
         getConsultList(false, false);
+
+        if (requireTypeId != -1) {
+            isShow = true;
+        }
     }
 
     public void setOrgId(int orgId) {
@@ -246,6 +255,7 @@ public class LawyerListPresenter extends BasePresenter<LawyerListContract.Model,
                                         smartRefreshLayout.finishLoadMoreWithNoMoreData();
                                     }
                                 }
+                                showDialog(baseResponse.getData().getTotal());
                             }
                         }
                     });
@@ -279,9 +289,20 @@ public class LawyerListPresenter extends BasePresenter<LawyerListContract.Model,
                                         smartRefreshLayout.finishLoadMoreWithNoMoreData();
                                     }
                                 }
+
+                                showDialog(baseResponse.getData().getTotal());
                             }
                         }
                     });
+        }
+    }
+
+    private void showDialog(int num) {
+        if (isShow) {
+            new SingleTextDialog(mRootView.getActivity())
+                    .setContent("平台已为您优选" + num + "名提供" + requireTypeName + "服务的律师,平台根据执业经验、社会资源、专业知识进行综合排序，您可以在筛选中对您的选择进行修改")
+                    .setSubmitStr("我知道了！").show();
+            isShow = false;
         }
     }
 
@@ -377,5 +398,17 @@ public class LawyerListPresenter extends BasePresenter<LawyerListContract.Model,
         this.mAppManager = null;
         this.mImageLoader = null;
         this.mApplication = null;
+    }
+
+    public void setRequireTypeId(int requireTypeId, String requireTypeName) {
+        this.requireTypeId = requireTypeId;
+        this.requireTypeName = requireTypeName;
+        if (requireTypeId != -1) {
+            mRootView.setScreenColor(AppUtils.getColor(mApplication, R.color.c_06a66a));
+            list.clear();
+            screenMap.clear();
+            screenMap.put("require", new RequireEntity(requireTypeId, 0, 0));
+            pageNum = 1;
+        }
     }
 }
