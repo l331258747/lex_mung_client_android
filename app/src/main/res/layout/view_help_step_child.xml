@@ -15,21 +15,19 @@
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
-            <ImageView
-                android:id="@+id/iv_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/ic_help_step_1" />
-
             <TextView
                 android:id="@+id/tv_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:textSize="11sp"
+                android:background="@drawable/round_40_1ec78a_all"
+                android:paddingLeft="@dimen/qb_px_20"
+                android:paddingTop="@dimen/qb_px_5"
+                android:paddingRight="@dimen/qb_px_20"
+                android:paddingBottom="@dimen/qb_px_5"
                 android:text="服务地域"
-                android:textColor="@color/c_737373" />
+                android:textColor="@color/c_737373"
+                android:textSize="12sp" />
 
         </RelativeLayout>
 
@@ -38,22 +36,20 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1">
-
-            <ImageView
-                android:id="@+id/iv_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/ic_help_step_2" />
 
             <TextView
                 android:id="@+id/tv_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:textSize="11sp"
+                android:background="@drawable/round_40_1ec78a_all"
+                android:paddingLeft="@dimen/qb_px_20"
+                android:paddingTop="@dimen/qb_px_5"
+                android:paddingRight="@dimen/qb_px_20"
+                android:paddingBottom="@dimen/qb_px_5"
                 android:text="事件分类"
-                android:textColor="@color/c_737373" />
+                android:textColor="@color/c_737373"
+                android:textSize="12sp" />
 
         </RelativeLayout>
 
@@ -62,21 +58,19 @@
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
-            <ImageView
-                android:id="@+id/iv_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/ic_help_step_3" />
-
             <TextView
                 android:id="@+id/tv_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:textSize="11sp"
+                android:background="@drawable/round_40_1ec78a_all"
+                android:paddingLeft="@dimen/qb_px_20"
+                android:paddingTop="@dimen/qb_px_5"
+                android:paddingRight="@dimen/qb_px_20"
+                android:paddingBottom="@dimen/qb_px_5"
                 android:text="标的额"
-                android:textColor="@color/c_737373" />
+                android:textColor="@color/c_737373"
+                android:textSize="12sp" />
 
         </RelativeLayout>
 
@@ -85,8 +79,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/qb_px_20"
         android:layout_marginLeft="@dimen/qb_px_80"
+        android:layout_marginTop="@dimen/qb_px_20"
         android:layout_marginRight="@dimen/qb_px_80"
         android:gravity="center"
         android:orientation="horizontal">
@@ -103,8 +97,6 @@
             android:id="@+id/iv_line_1"
             android:layout_width="0dp"
             android:layout_height="@dimen/qb_px_4"
-            android:layout_marginLeft="@dimen/qb_px_5"
-            android:layout_marginRight="@dimen/qb_px_5"
             android:layout_weight="1"
             android:background="@color/c_737373" />
 
@@ -112,14 +104,12 @@
             android:id="@+id/iv_select_2"
             android:layout_width="@dimen/qb_px_20"
             android:layout_height="@dimen/qb_px_20"
-            android:src="@drawable/round_100_737373_all" />
+            android:src="@drawable/round_100_00_all_737373" />
 
         <ImageView
             android:id="@+id/iv_line_2"
             android:layout_width="0dp"
             android:layout_height="@dimen/qb_px_4"
-            android:layout_marginLeft="@dimen/qb_px_5"
-            android:layout_marginRight="@dimen/qb_px_5"
             android:layout_weight="1"
             android:background="@color/c_737373" />
 
@@ -127,7 +117,7 @@
             android:id="@+id/iv_select_3"
             android:layout_width="@dimen/qb_px_20"
             android:layout_height="@dimen/qb_px_20"
-            android:src="@drawable/round_100_737373_all" />
+            android:src="@drawable/round_100_00_all_1ec78a" />
 
     </LinearLayout>
 

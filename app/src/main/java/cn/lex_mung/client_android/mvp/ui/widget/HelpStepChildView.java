@@ -14,9 +14,9 @@ import cn.lex_mung.client_android.R;
 public class HelpStepChildView extends LinearLayout {
 
     Context context;
-    ImageView iv_1,iv_2,iv_3;
-    TextView tv_1,tv_2,tv_3;
-    ImageView iv_select_1,iv_select_2,iv_select_3;
+    TextView tv_1, tv_2, tv_3;
+    ImageView iv_select_1, iv_select_2, iv_select_3;
+    ImageView iv_line_1, iv_line_2;
 
     public HelpStepChildView(Context context) {
         this(context, null);
@@ -33,10 +33,6 @@ public class HelpStepChildView extends LinearLayout {
 
         View view = LayoutInflater.from(context).inflate(R.layout.view_help_step_child, this, true);
 
-        iv_1 = findViewById(R.id.iv_1);
-        iv_2 = findViewById(R.id.iv_2);
-        iv_3 = findViewById(R.id.iv_3);
-
         tv_1 = findViewById(R.id.tv_1);
         tv_2 = findViewById(R.id.tv_2);
         tv_3 = findViewById(R.id.tv_3);
@@ -45,59 +41,69 @@ public class HelpStepChildView extends LinearLayout {
         iv_select_2 = findViewById(R.id.iv_select_2);
         iv_select_3 = findViewById(R.id.iv_select_3);
 
+        iv_line_1 = findViewById(R.id.iv_line_1);
+        iv_line_2 = findViewById(R.id.iv_line_2);
+
         setProgress(0);
 
     }
 
 
-    public void setProgress(int progress){
-        switch (progress){
+    public void setProgress(int progress) {
+        switch (progress) {
             case 0:
-                iv_select_1.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.round_100_1ec78a_all));
-                iv_select_2.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.round_100_737373_all));
-                iv_select_3.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.round_100_737373_all));
+                iv_select_1.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.round_100_1ec78a_all));//实心绿
+                iv_select_2.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.round_100_00_all_737373));//空心灰
+                iv_select_3.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.round_100_737373_all));//实心灰
 
-                iv_1.setVisibility(VISIBLE);
-                iv_2.setVisibility(INVISIBLE);
-                iv_3.setVisibility(INVISIBLE);
+                iv_line_1.setBackgroundColor(ContextCompat.getColor(context, R.color.c_737373));
+                iv_line_2.setBackgroundColor(ContextCompat.getColor(context, R.color.c_737373));
 
-                tv_1.setVisibility(INVISIBLE);
-                tv_2.setVisibility(VISIBLE);
-                tv_3.setVisibility(VISIBLE);
+                tv_1.setBackground(ContextCompat.getDrawable(context, R.drawable.round_40_1ec78a_all));
+                tv_1.setTextColor(ContextCompat.getColor(context, R.color.c_ff));
+
+                tv_2.setBackground(null);
+                tv_2.setTextColor(ContextCompat.getColor(context, R.color.c_737373));
+                tv_3.setBackground(null);
+                tv_3.setTextColor(ContextCompat.getColor(context, R.color.c_737373));
 
                 break;
             case 1:
-                iv_select_1.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.round_100_737373_all));
-                iv_select_2.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.round_100_1ec78a_all));
-                iv_select_3.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.round_100_737373_all));
+                iv_select_1.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.round_100_1ec78a_all));//实心绿
+                iv_select_2.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.round_100_00_all_1ec78a));//空心绿
+                iv_select_3.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.round_100_737373_all));//实心灰
 
-                iv_1.setVisibility(INVISIBLE);
-                iv_2.setVisibility(VISIBLE);
-                iv_3.setVisibility(INVISIBLE);
+                iv_line_1.setBackgroundColor(ContextCompat.getColor(context, R.color.c_1EC78A));
+                iv_line_2.setBackgroundColor(ContextCompat.getColor(context, R.color.c_737373));
 
-                tv_1.setVisibility(VISIBLE);
-                tv_2.setVisibility(INVISIBLE);
-                tv_3.setVisibility(VISIBLE);
+                tv_1.setBackground(null);
+                tv_1.setTextColor(ContextCompat.getColor(context, R.color.c_1EC78A));
+
+                tv_2.setBackground(ContextCompat.getDrawable(context, R.drawable.round_40_1ec78a_all));
+                tv_2.setTextColor(ContextCompat.getColor(context, R.color.c_ff));
+
+                tv_3.setBackground(null);
+                tv_3.setTextColor(ContextCompat.getColor(context, R.color.c_737373));
 
                 break;
             case 2:
-                iv_select_1.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.round_100_737373_all));
-                iv_select_2.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.round_100_737373_all));
-                iv_select_3.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.round_100_1ec78a_all));
+                iv_select_1.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.round_100_1ec78a_all));//实心绿
+                iv_select_2.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.round_100_00_all_1ec78a));//空心绿
+                iv_select_3.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.round_100_1ec78a_all));//实心灰
 
+                iv_line_1.setBackgroundColor(ContextCompat.getColor(context, R.color.c_1EC78A));
+                iv_line_2.setBackgroundColor(ContextCompat.getColor(context, R.color.c_1EC78A));
 
-                iv_1.setVisibility(INVISIBLE);
-                iv_2.setVisibility(INVISIBLE);
-                iv_3.setVisibility(VISIBLE);
+                tv_1.setBackground(null);
+                tv_1.setTextColor(ContextCompat.getColor(context, R.color.c_1EC78A));
+                tv_2.setBackground(null);
+                tv_2.setTextColor(ContextCompat.getColor(context, R.color.c_1EC78A));
 
-                tv_1.setVisibility(VISIBLE);
-                tv_2.setVisibility(VISIBLE);
-                tv_3.setVisibility(INVISIBLE);
+                tv_3.setBackground(ContextCompat.getDrawable(context, R.drawable.round_40_1ec78a_all));
+                tv_3.setTextColor(ContextCompat.getColor(context, R.color.c_ff));
+
                 break;
         }
 
     }
-
-
-
 }
