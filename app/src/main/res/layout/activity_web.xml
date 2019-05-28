@@ -9,17 +9,18 @@
         layout="@layout/toolbar" />
 
     <!--<WebView-->
-        <!--android:id="@+id/web_view"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_below="@+id/toolbar" />-->
+    <!--android:id="@+id/web_view"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_below="@+id/toolbar" />-->
 
     <cn.lex_mung.client_android.mvp.ui.widget.webview.LWebView
         android:id="@+id/web_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="none"
-        android:layout_below="@+id/toolbar"/>
+        android:layout_below="@+id/toolbar"
+        android:layout_above="@+id/ll_bottom"
+        android:scrollbars="none" />
 
 
     <View
@@ -27,4 +28,37 @@
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_alignParentBottom="true" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/qb_px_20"
+        android:paddingBottom="@dimen/qb_px_40">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="不知道怎么办，直接找律师问问！"
+            android:textColor="@color/c_1EC78A"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/qb_px_80"
+            android:layout_marginLeft="@dimen/qb_px_40"
+            android:layout_marginTop="@dimen/qb_px_20"
+            android:layout_marginRight="@dimen/qb_px_40"
+            android:background="@drawable/round_100_1ec78a_all"
+            android:gravity="center"
+            android:text="立即询问"
+            android:textColor="@color/c_ff" />
+
+    </LinearLayout>
+
 </RelativeLayout>
