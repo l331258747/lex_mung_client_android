@@ -418,4 +418,20 @@
         </android.support.design.widget.CoordinatorLayout>
 
     </android.support.constraint.ConstraintLayout>
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        app:elevation="6dp"
+        app:pressedTranslationZ="12dp"
+        app:borderWidth="0dp"
+        app:fabSize="normal"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="@dimen/qb_px_50"
+        android:layout_marginBottom="@dimen/qb_px_50"
+        android:src="@drawable/ic_field_dialog_close" />
+
 </RelativeLayout>

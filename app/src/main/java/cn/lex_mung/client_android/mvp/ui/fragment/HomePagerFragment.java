@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -90,6 +91,8 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     TextView tvHot2;
     @BindView(R.id.tv_hot_3)
     TextView tvHot3;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
 
     private List<Fragment> fragments = new ArrayList<>();
     private List<String> titles = new ArrayList<>();
@@ -138,6 +141,10 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         initRecyclerView();
         initBanner();
         mPresenter.getBanner();
+
+        fab.setOnClickListener(v -> {
+            launchActivity(new Intent(mActivity,HelpStepActivity.class));
+        });
     }
 
     @Override
@@ -334,6 +341,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
 
             bundle.clear();
             bundle.putInt(BundleTags.ID, entity.getRequireTypeId());
+            bundle.putString(BundleTags.TITLE, entity.getRequireTypeName());
             launchActivity(new Intent(mActivity, HelpStepChildActivity.class), bundle);
 
         } else {

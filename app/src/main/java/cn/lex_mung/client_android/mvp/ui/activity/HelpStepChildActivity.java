@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.widget.FrameLayout;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import cn.lex_mung.client_android.mvp.ui.fragment.HelpStep3Fragment;
 import cn.lex_mung.client_android.mvp.ui.fragment.HelpStep4Fragment;
 import cn.lex_mung.client_android.mvp.ui.widget.HelpStepChildView;
 import cn.lex_mung.client_android.mvp.ui.widget.HelpStepView;
+import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
@@ -37,6 +39,8 @@ public class HelpStepChildActivity extends BaseActivity<HelpStepChildPresenter> 
 
     @BindView(R.id.view_help_step)
     HelpStepChildView helpStepView;
+    @BindView(R.id.titleView)
+    TitleView titleView;
 
     private int pageIndex = 0;//下标
     private List<Fragment> fragments = new ArrayList<>();
@@ -62,14 +66,14 @@ public class HelpStepChildActivity extends BaseActivity<HelpStepChildPresenter> 
         return true;
     }
 
-    public void goPreferredLawyer(){
+    public void goPreferredLawyer() {
         bundle.clear();
-        bundle.putInt(BundleTags.REGION_ID,helpStep1Fragment.getRegionId());
-        bundle.putInt(BundleTags.SOLUTION_TYPE_ID,helpStep2Fragment.getTypeId());
-        bundle.putInt(BundleTags.AMOUNT_ID,helpStep3Fragment.getAmountId());
-        bundle.putInt(BundleTags.REQUIRE_TYPE_ID,requireTypeId);
+        bundle.putInt(BundleTags.REGION_ID, helpStep1Fragment.getRegionId());
+        bundle.putInt(BundleTags.SOLUTION_TYPE_ID, helpStep2Fragment.getTypeId());
+        bundle.putInt(BundleTags.AMOUNT_ID, helpStep3Fragment.getAmountId());
+        bundle.putInt(BundleTags.REQUIRE_TYPE_ID, requireTypeId);
 
-        launchActivity(new Intent(mActivity,HelpStepLawyerActivity.class),bundle);
+        launchActivity(new Intent(mActivity, HelpStepLawyerActivity.class), bundle);
 
         finish();
     }
@@ -92,14 +96,18 @@ public class HelpStepChildActivity extends BaseActivity<HelpStepChildPresenter> 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         requireTypeId = bundleIntent.getInt(BundleTags.ID);
+        if (!TextUtils.isEmpty(bundleIntent.getString(BundleTags.TITLE))) {
+            titleView.setTitle(bundleIntent.getString(BundleTags.TITLE));
+        }
+
         mPresenter.getData();
     }
 
     @Override
-    public void setFragment(HelpStepEntity entity){
+    public void setFragment(HelpStepEntity entity) {
         fragments.add(helpStep1Fragment = HelpStep1Fragment.newInstance(true));
-        fragments.add(helpStep2Fragment = HelpStep2Fragment.newInstance(true,entity.getSolutionType()));
-        fragments.add(helpStep3Fragment = HelpStep3Fragment.newInstance(true,entity.getRequirementInvolveAmount()));
+        fragments.add(helpStep2Fragment = HelpStep2Fragment.newInstance(true, entity.getSolutionType()));
+        fragments.add(helpStep3Fragment = HelpStep3Fragment.newInstance(true, entity.getRequirementInvolveAmount()));
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         for (Fragment fragment : fragments) {
