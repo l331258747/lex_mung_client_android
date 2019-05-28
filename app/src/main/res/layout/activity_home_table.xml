@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <cn.lex_mung.client_android.mvp.ui.widget.TitleView
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:TitleView_left_img="@drawable/ic_back2" />
+
+    <LinearLayout
+        android:id="@+id/ll_help"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="@dimen/qb_px_220"
+            android:layout_height="@dimen/qb_px_220"
+            android:src="@drawable/ic_home_table_help" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_35"
+            android:text="使用服务助手帮忙选律师" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_20"
+            android:text="适用于对法律服务市场不是很熟悉的用户"
+            android:textColor="@color/c_d8d8d8"
+            android:textSize="10sp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_lawyer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/qb_px_80"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="@dimen/qb_px_220"
+            android:layout_height="@dimen/qb_px_220"
+            android:src="@drawable/ic_home_table_lawyer" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_35"
+            android:text="自己选律师" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_20"
+            android:text="适用于熟悉法律服务市场\n明确知道当前所需"
+            android:gravity="center"
+            android:textColor="@color/c_d8d8d8"
+            android:textSize="10sp" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

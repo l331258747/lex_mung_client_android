@@ -67,9 +67,9 @@
             android:background="@drawable/round_100_ea5514_all"
             android:gravity="center"
             android:includeFontPadding="false"
-            android:visibility="gone"
             android:textColor="@color/c_ff"
             android:textSize="8sp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@id/iv_message"
             app:layout_constraintTop_toTopOf="@id/iv_message" />
 
@@ -82,9 +82,9 @@
             <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_behavior="cn.lex_mung.client_android.app.behavior.FixAppBarLayoutBehavior"
+                android:fitsSystemWindows="true"
                 app:elevation="0dp"
-                android:fitsSystemWindows="true">
+                app:layout_behavior="cn.lex_mung.client_android.app.behavior.FixAppBarLayoutBehavior">
 
                 <android.support.design.widget.CollapsingToolbarLayout
                     android:layout_width="match_parent"
@@ -311,9 +311,9 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:padding="@dimen/qb_px_20"
-                                        tools:text="更多起草\n审查合同"
                                         android:textColor="@color/c_4D4F5A"
-                                        android:textSize="14sp" />
+                                        android:textSize="14sp"
+                                        tools:text="更多起草\n审查合同" />
 
                                 </RelativeLayout>
 
@@ -364,8 +364,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/qb_px_40"
                     android:background="@color/c_ff"
+                    android:paddingLeft="@dimen/qb_px_40"
                     android:paddingRight="@dimen/qb_px_40">
 
                     <android.support.design.widget.TabLayout
@@ -403,7 +403,6 @@
                 </LinearLayout>
 
 
-
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/qb_px_1"
@@ -420,18 +419,14 @@
     </android.support.constraint.ConstraintLayout>
 
 
-    <android.support.design.widget.FloatingActionButton
+    <ImageView
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        app:elevation="6dp"
-        app:pressedTranslationZ="12dp"
-        app:borderWidth="0dp"
-        app:fabSize="normal"
         android:layout_alignParentBottom="true"
         android:layout_marginRight="@dimen/qb_px_50"
         android:layout_marginBottom="@dimen/qb_px_50"
-        android:src="@drawable/ic_field_dialog_close" />
+        android:src="@drawable/ic_help_floating" />
 
 </RelativeLayout>

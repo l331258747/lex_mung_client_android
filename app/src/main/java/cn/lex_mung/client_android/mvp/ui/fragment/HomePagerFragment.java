@@ -46,6 +46,7 @@ import cn.lex_mung.client_android.mvp.ui.activity.FastConsultActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultMainActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.HelpStepActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.HelpStepChildActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.HomeTableActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerListActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MessageActivity;
@@ -91,8 +92,6 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     TextView tvHot2;
     @BindView(R.id.tv_hot_3)
     TextView tvHot3;
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
 
     private List<Fragment> fragments = new ArrayList<>();
     private List<String> titles = new ArrayList<>();
@@ -142,9 +141,6 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         initBanner();
         mPresenter.getBanner();
 
-        fab.setOnClickListener(v -> {
-            launchActivity(new Intent(mActivity,HelpStepActivity.class));
-        });
     }
 
     @Override
@@ -250,6 +246,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
             , R.id.view_free_consult
             , R.id.view_fast_consult
             , R.id.view_experts_consult
+            , R.id.fab
     })
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -266,6 +263,9 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                         .setCannelStr("不需要")
                         .setSubmitStr("试试看").show();
 
+                break;
+            case R.id.fab:
+                launchActivity(new Intent(mActivity,HelpStepActivity.class));
                 break;
             case R.id.iv_message:
                 if (mPresenter.isLogin()) {
@@ -342,7 +342,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
             bundle.clear();
             bundle.putInt(BundleTags.ID, entity.getRequireTypeId());
             bundle.putString(BundleTags.TITLE, entity.getRequireTypeName());
-            launchActivity(new Intent(mActivity, HelpStepChildActivity.class), bundle);
+            launchActivity(new Intent(mActivity, HomeTableActivity.class), bundle);
 
         } else {
             bundle.clear();
