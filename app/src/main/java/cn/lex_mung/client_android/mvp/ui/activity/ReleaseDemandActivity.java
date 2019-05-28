@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Group;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -22,31 +23,29 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aigestudio.wheelpicker.WheelPicker;
+import com.umeng.analytics.MobclickAgent;
 
+import butterknife.BindView;
+import butterknife.OnClick;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.component.DaggerReleaseDemandComponent;
 import cn.lex_mung.client_android.di.module.ReleaseDemandModule;
 import cn.lex_mung.client_android.mvp.contract.ReleaseDemandContract;
-import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
 import cn.lex_mung.client_android.mvp.presenter.ReleaseDemandPresenter;
 import cn.lex_mung.client_android.mvp.ui.adapter.ReleaseDemandServiceTypeAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.DefaultDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.EasyDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
-
-import com.umeng.analytics.MobclickAgent;
-
-import butterknife.BindView;
-import butterknife.OnClick;
+import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
 
 public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> implements ReleaseDemandContract.View {
 
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
+    @BindView(R.id.titleView)
+    TitleView titleView;
     @BindView(R.id.tv_lawyer_region)
     TextView tvLawyerRegion;
     //    @BindView(R.id.tv_lawyer_field)
@@ -122,9 +121,19 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
             mPresenter.setType(bundleIntent.getInt(BundleTags.TYPE));
             mPresenter.onCreate(bundleIntent.getInt(BundleTags.MEMBER_ID),
                     bundleIntent.getString(BundleTags.REGION),
+                    bundleIntent.getInt(BundleTags.REGION_ID),
                     bundleIntent.getInt(BundleTags.ID),
                     bundleIntent.getString(BundleTags.TITLE));
-            tvTitle.setText(bundleIntent.getString(BundleTags.TITLE));
+            titleView.setTitle(bundleIntent.getString(BundleTags.TITLE));
+            if(bundleIntent.getInt(BundleTags.TYPE) == 2){
+                titleView.getRightTv().setVisibility(View.VISIBLE);
+                titleView.getRightTv().setText("历史需求");
+                titleView.getRightTv().setTextColor(ContextCompat.getColor(mActivity,R.color.c_1EC78A));
+                titleView.getRightTv().setOnClickListener(v -> {
+                    //TODO 历史需求 发布成功后进入律师推荐页面
+
+                });
+            }
         }
     }
 

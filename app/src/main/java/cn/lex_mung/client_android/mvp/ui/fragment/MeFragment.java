@@ -149,7 +149,6 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
                 break;
             case R.id.view_coupons:
                 if (mPresenter.isLogin()) {
-                    //TODO 我的优惠劵
                     bundle.clear();
                     bundle.putInt(BundleTags.TYPE, 1);
                     launchActivity(new Intent(mActivity, OrderCouponActivity.class), bundle);

@@ -78,6 +78,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
 //    private LawsHomePagerBaseEntity lawsHomePagerBaseEntity;
     int lawsHomePagerBaseEntityId;
     String lawsHomePagerBaseEntityRegion;
+    int lawsHomePagerBaseEntityRegionId;
     private UserInfoDetailsEntity userInfoDetailsEntity;
     private ReleaseDemandOrgMoneyEntity entity;
 
@@ -165,7 +166,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
 //    }
 
 //    public void onCreate(LawsHomePagerBaseEntity lawsHomePagerBaseEntity, int requireTypeId,String requireTypeName) {
-    public void onCreate(int lawsHomePagerBaseEntityId, String lawsHomePagerBaseEntityRegion, int requireTypeId,String requireTypeName) {
+    public void onCreate(int lawsHomePagerBaseEntityId, String lawsHomePagerBaseEntityRegion, int lawsHomePagerBaseEntityRegionId,int requireTypeId,String requireTypeName) {
         initAdapter();
         this.requireTypeId =requireTypeId;
         this.requireTypeName = requireTypeName;
@@ -173,6 +174,8 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
 //        this.lawsHomePagerBaseEntity = lawsHomePagerBaseEntity;
         this.lawsHomePagerBaseEntityRegion = lawsHomePagerBaseEntityRegion;
         this.lawsHomePagerBaseEntityId = lawsHomePagerBaseEntityId;
+        this.lawsHomePagerBaseEntityRegionId = lawsHomePagerBaseEntityRegionId;
+
         userInfoDetailsEntity = new Gson().fromJson(DataHelper.getStringSF(mApplication, DataHelperTags.USER_INFO_DETAIL), UserInfoDetailsEntity.class);
 
         if (type == 1) {
@@ -380,7 +383,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
 //            map.put("skillId", lawsHomePagerBaseEntity.getBusinessInfo().get(lawyerFieldPosition).getSolutionMarkId());
 //        }
         map.put("targetLawyerId", lawsHomePagerBaseEntityId);
-        map.put("lawyerRegionId", lawsHomePagerBaseEntityRegion);
+        map.put("lawyerRegionId", lawsHomePagerBaseEntityRegionId);
 
         map.put("requirementTypeId", requireTypeId);
         map.put("requirementTypeName", requireTypeName);
@@ -420,6 +423,8 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                             } else {
                                 mRootView.showMessage("需求发布成功，我们会尽快为您审核！");
                                 mRootView.killMyself();
+                                //TODO 进入律师推荐页面
+
                             }
                         } else {
                             mRootView.showMessage(baseResponse.getMessage());

@@ -203,6 +203,7 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
                     bundle.putString(BundleTags.TITLE, entity.getParentRequireTypeName());
                     bundle.putInt(BundleTags.MEMBER_ID, bean.getMemberId());
                     bundle.putString(BundleTags.REGION, bean.getRegion());
+                    bundle.putInt(BundleTags.REGION_ID, bean.getRegionId());
                     launchActivity(new Intent(mActivity, ReleaseDemandActivity.class), bundle);
                 } else {//电话咨询
                     MobclickAgent.onEvent(mActivity, "w_y_shouye_zjzx_detail_boda");

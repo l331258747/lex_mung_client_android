@@ -74,6 +74,7 @@ public class ServicePricePresenter extends BasePresenter<ServicePriceContract.Mo
                         bundle.putString(BundleTags.TITLE, businessEntity.getRequireTypeName());
                         bundle.putInt(BundleTags.MEMBER_ID, entity.getMemberId());
                         bundle.putString(BundleTags.REGION, entity.getRegion());
+                        bundle.putInt(BundleTags.REGION_ID, entity.getRegionId());
                         mRootView.launchActivity(new Intent(mApplication, ReleaseDemandActivity.class), bundle);
                     } else {//电话咨询
                         MobclickAgent.onEvent(mApplication, "w_y_shouye_zjzx_detail_boda");

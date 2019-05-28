@@ -5,9 +5,13 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
+    <cn.lex_mung.client_android.mvp.ui.widget.TitleView
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:TitleView_title="发布需求"
+        app:TitleView_left_img="@drawable/ic_back2"
+        app:TitleView_bg="@color/c_ff"/>
 
     <WebView
         android:id="@+id/web_view"
@@ -18,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/cl_bottom"
-        android:layout_below="@id/toolbar"
+        android:layout_below="@id/titleView"
         android:background="@color/c_f4f4f4"
         android:fillViewport="true"
         android:orientation="vertical"
