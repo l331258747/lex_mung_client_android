@@ -12,27 +12,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
-import cn.lex_mung.client_android.di.component.DaggerHelpStepComponent;
-import cn.lex_mung.client_android.di.module.HelpStepModule;
-import cn.lex_mung.client_android.mvp.contract.HelpStepContract;
+import cn.lex_mung.client_android.di.module.HelpStepChildModule;
 import cn.lex_mung.client_android.mvp.model.entity.help.HelpStepEntity;
-import cn.lex_mung.client_android.mvp.presenter.HelpStepPresenter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+
 import cn.lex_mung.client_android.mvp.ui.fragment.HelpStep1Fragment;
 import cn.lex_mung.client_android.mvp.ui.fragment.HelpStep2Fragment;
 import cn.lex_mung.client_android.mvp.ui.fragment.HelpStep3Fragment;
 import cn.lex_mung.client_android.mvp.ui.fragment.HelpStep4Fragment;
+import cn.lex_mung.client_android.mvp.ui.widget.HelpStepChildView;
 import cn.lex_mung.client_android.mvp.ui.widget.HelpStepView;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
 
-public class HelpStepActivity extends BaseActivity<HelpStepPresenter> implements HelpStepContract.View {
+import cn.lex_mung.client_android.di.component.DaggerHelpStepChildComponent;
+import cn.lex_mung.client_android.mvp.contract.HelpStepChildContract;
+import cn.lex_mung.client_android.mvp.presenter.HelpStepChildPresenter;
+
+import cn.lex_mung.client_android.R;
+
+public class HelpStepChildActivity extends BaseActivity<HelpStepChildPresenter> implements HelpStepChildContract.View {
 
     @BindView(R.id.view_help_step)
-    HelpStepView helpStepView;
+    HelpStepChildView helpStepView;
 
     private int pageIndex = 0;//下标
     private List<Fragment> fragments = new ArrayList<>();
@@ -40,7 +44,8 @@ public class HelpStepActivity extends BaseActivity<HelpStepPresenter> implements
     HelpStep1Fragment helpStep1Fragment;
     HelpStep2Fragment helpStep2Fragment;
     HelpStep3Fragment helpStep3Fragment;
-    HelpStep4Fragment helpStep4Fragment;
+
+    int requireTypeId;
 
     @Override
     public void onBackPressed() {
@@ -57,43 +62,44 @@ public class HelpStepActivity extends BaseActivity<HelpStepPresenter> implements
         return true;
     }
 
-    @Override
-    public void setupActivityComponent(@NonNull AppComponent appComponent) {
-        DaggerHelpStepComponent
-                .builder()
-                .appComponent(appComponent)
-                .helpStepModule(new HelpStepModule(this))
-                .build()
-                .inject(this);
-    }
-
     public void goPreferredLawyer(){
         bundle.clear();
         bundle.putInt(BundleTags.REGION_ID,helpStep1Fragment.getRegionId());
         bundle.putInt(BundleTags.SOLUTION_TYPE_ID,helpStep2Fragment.getTypeId());
         bundle.putInt(BundleTags.AMOUNT_ID,helpStep3Fragment.getAmountId());
-        bundle.putInt(BundleTags.REQUIRE_TYPE_ID,helpStep4Fragment.getTypeId());
+        bundle.putInt(BundleTags.REQUIRE_TYPE_ID,requireTypeId);
+
         launchActivity(new Intent(mActivity,HelpStepLawyerActivity.class),bundle);
 
         finish();
     }
 
     @Override
+    public void setupActivityComponent(@NonNull AppComponent appComponent) {
+        DaggerHelpStepChildComponent
+                .builder()
+                .appComponent(appComponent)
+                .helpStepChildModule(new HelpStepChildModule(this))
+                .build()
+                .inject(this);
+    }
+
+    @Override
     public int initView(@Nullable Bundle savedInstanceState) {
-        return R.layout.activity_help_step;
+        return R.layout.activity_help_step_child;
     }
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        requireTypeId = bundleIntent.getInt(BundleTags.ID);
         mPresenter.getData();
     }
 
     @Override
     public void setFragment(HelpStepEntity entity){
-        fragments.add(helpStep1Fragment = HelpStep1Fragment.newInstance());
-        fragments.add(helpStep2Fragment = HelpStep2Fragment.newInstance(entity.getSolutionType()));
-        fragments.add(helpStep3Fragment = HelpStep3Fragment.newInstance(entity.getRequirementInvolveAmount()));
-        fragments.add(helpStep4Fragment = HelpStep4Fragment.newInstance(entity.getRequireType()));
+        fragments.add(helpStep1Fragment = HelpStep1Fragment.newInstance(true));
+        fragments.add(helpStep2Fragment = HelpStep2Fragment.newInstance(true,entity.getSolutionType()));
+        fragments.add(helpStep3Fragment = HelpStep3Fragment.newInstance(true,entity.getRequirementInvolveAmount()));
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         for (Fragment fragment : fragments) {

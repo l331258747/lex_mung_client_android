@@ -44,10 +44,9 @@ import cn.lex_mung.client_android.mvp.presenter.HomePagerPresenter;
 import cn.lex_mung.client_android.mvp.ui.activity.FastConsultActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultMainActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.HelpStepActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.HelpStepLawyerActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.HelpStepChildActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerListActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.MainActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MessageActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.OrganizationLawyerActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
@@ -331,7 +330,12 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     public void contractClick(NormalBean entity) {
         if (entity == null) return;
         if (entity.getJumptype() == 1) {
-            ((MainActivity) mActivity).switchPage(2);
+//            ((MainActivity) mActivity).switchPage(2);
+
+            bundle.clear();
+            bundle.putInt(BundleTags.ID, entity.getRequireTypeId());
+            launchActivity(new Intent(mActivity, HelpStepChildActivity.class), bundle);
+
         } else {
             bundle.clear();
             bundle.putString(BundleTags.URL, entity.getJumpUrl());

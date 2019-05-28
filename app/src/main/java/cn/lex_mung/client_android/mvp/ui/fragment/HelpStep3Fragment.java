@@ -25,6 +25,7 @@ import cn.lex_mung.client_android.mvp.contract.HelpStep3Contract;
 import cn.lex_mung.client_android.mvp.model.entity.help.RequirementInvolveAmountBean;
 import cn.lex_mung.client_android.mvp.presenter.HelpStep3Presenter;
 import cn.lex_mung.client_android.mvp.ui.activity.HelpStepActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.HelpStepChildActivity;
 import cn.lex_mung.client_android.mvp.ui.dialog.EasyDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import me.zl.mvp.base.BaseFragment;
@@ -37,19 +38,27 @@ public class HelpStep3Fragment extends BaseFragment<HelpStep3Presenter> implemen
     TextView tvContent;
     @BindView(R.id.view_bottom)
     View viewBottom;
+    @BindView(R.id.tv_btn)
+    TextView tvBtn;
 
     EasyDialog easyDialog;
 
     int amountId = -1;
+    boolean isShow;
 
     public int getAmountId() {
         return amountId;
     }
 
     public static HelpStep3Fragment newInstance(List<RequirementInvolveAmountBean> entitys) {
+        return newInstance(false,entitys);
+    }
+
+    public static HelpStep3Fragment newInstance(boolean isShow, List<RequirementInvolveAmountBean> entitys) {
         HelpStep3Fragment fragment = new HelpStep3Fragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(BundleTags.LIST, (Serializable) entitys);
+        bundle.putBoolean(BundleTags.IS_SHOW, isShow);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -72,6 +81,10 @@ public class HelpStep3Fragment extends BaseFragment<HelpStep3Presenter> implemen
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         if (getArguments() != null) {
+            isShow = getArguments().getBoolean(BundleTags.IS_SHOW);
+            if(isShow){
+                tvBtn.setText("优选律师");
+            }
             mPresenter.onCreate((List<RequirementInvolveAmountBean>) getArguments().getSerializable(BundleTags.LIST));
         }
     }
@@ -116,7 +129,11 @@ public class HelpStep3Fragment extends BaseFragment<HelpStep3Presenter> implemen
                     showMessage("请选择涉案金额");
                     return;
                 }
-                ((HelpStepActivity)this.getActivity()).setIndex(3);
+                if(isShow){
+                    ((HelpStepChildActivity) this.getActivity()).goPreferredLawyer();
+                }else{
+                    ((HelpStepActivity) this.getActivity()).setIndex(3);
+                }
                 break;
         }
     }

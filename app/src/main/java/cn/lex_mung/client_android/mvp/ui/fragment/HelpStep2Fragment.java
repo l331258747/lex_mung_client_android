@@ -25,6 +25,7 @@ import cn.lex_mung.client_android.mvp.model.entity.help.SolutionTypeBean;
 import cn.lex_mung.client_android.mvp.model.entity.help.SolutionTypeChildBean;
 import cn.lex_mung.client_android.mvp.presenter.HelpStep2Presenter;
 import cn.lex_mung.client_android.mvp.ui.activity.HelpStepActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.HelpStepChildActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.HelpStep2Adapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.HelpStep2View;
@@ -42,15 +43,21 @@ public class HelpStep2Fragment extends BaseFragment<HelpStep2Presenter> implemen
     HelpStep2Adapter adapter;
 
     int typeId = -1;
+    boolean isShow;
 
     public int getTypeId() {
         return typeId;
     }
 
     public static HelpStep2Fragment newInstance(List<SolutionTypeBean> entitys) {
+        return newInstance(false, entitys);
+    }
+
+    public static HelpStep2Fragment newInstance(boolean isShow, List<SolutionTypeBean> entitys) {
         HelpStep2Fragment fragment = new HelpStep2Fragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(BundleTags.LIST, (Serializable) entitys);
+        bundle.putBoolean(BundleTags.IS_SHOW, isShow);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -72,10 +79,11 @@ public class HelpStep2Fragment extends BaseFragment<HelpStep2Presenter> implemen
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        isShow = getArguments().getBoolean(BundleTags.IS_SHOW,false);
         initAdapter();
         initRecyclerView();
 
-        mPresenter.setList((List<SolutionTypeBean>)getArguments().getSerializable(BundleTags.LIST));
+        mPresenter.setList((List<SolutionTypeBean>) getArguments().getSerializable(BundleTags.LIST));
 
         mPresenter.getTabPosition(0);
 
@@ -109,11 +117,15 @@ public class HelpStep2Fragment extends BaseFragment<HelpStep2Presenter> implemen
         if (isFastClick()) return;
         switch (view.getId()) {
             case R.id.tv_btn:
-                if(typeId == -1){
+                if (typeId == -1) {
                     showMessage("请选择事件分类");
                     return;
                 }
-                ((HelpStepActivity) this.getActivity()).setIndex(2);
+                if(isShow){
+                    ((HelpStepChildActivity) this.getActivity()).setIndex(2);
+                }else{
+                    ((HelpStepActivity) this.getActivity()).setIndex(2);
+                }
                 break;
         }
     }

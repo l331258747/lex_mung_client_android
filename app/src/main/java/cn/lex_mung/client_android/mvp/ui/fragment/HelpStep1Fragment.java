@@ -19,11 +19,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.component.DaggerHelpStep1Component;
 import cn.lex_mung.client_android.di.module.HelpStep1Module;
 import cn.lex_mung.client_android.mvp.contract.HelpStep1Contract;
 import cn.lex_mung.client_android.mvp.presenter.HelpStep1Presenter;
 import cn.lex_mung.client_android.mvp.ui.activity.HelpStepActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.HelpStepChildActivity;
 import cn.lex_mung.client_android.mvp.ui.dialog.EasyDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.utils.LogUtil;
@@ -46,6 +48,8 @@ public class HelpStep1Fragment extends BaseFragment<HelpStep1Presenter> implemen
 
     private int regionId = -1;
 
+    private boolean isShow;
+
     public int getRegionId() {
         return regionId;
     }
@@ -57,6 +61,7 @@ public class HelpStep1Fragment extends BaseFragment<HelpStep1Presenter> implemen
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        isShow = getArguments().getBoolean(BundleTags.IS_SHOW,false);
         mPresenter.onCreate();
     }
 
@@ -73,7 +78,11 @@ public class HelpStep1Fragment extends BaseFragment<HelpStep1Presenter> implemen
                     showMessage("请选择服务区域");
                    return;
                 }
-                ((HelpStepActivity)this.getActivity()).setIndex(1);
+                if(isShow){
+                    ((HelpStepChildActivity) this.getActivity()).setIndex(1);
+                }else{
+                    ((HelpStepActivity) this.getActivity()).setIndex(1);
+                }
                 break;
         }
     }
@@ -161,7 +170,14 @@ public class HelpStep1Fragment extends BaseFragment<HelpStep1Presenter> implemen
     }
 
     public static HelpStep1Fragment newInstance() {
+        return newInstance(false);
+    }
+
+    public static HelpStep1Fragment newInstance(boolean isShow) {
         HelpStep1Fragment fragment = new HelpStep1Fragment();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(BundleTags.IS_SHOW, isShow);
+        fragment.setArguments(bundle);
         return fragment;
     }
 
