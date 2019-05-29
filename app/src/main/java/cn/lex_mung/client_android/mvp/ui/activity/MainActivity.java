@@ -29,6 +29,7 @@ import cn.lex_mung.client_android.di.module.MainModule;
 import cn.lex_mung.client_android.mvp.contract.MainContract;
 import cn.lex_mung.client_android.mvp.model.api.Api;
 import cn.lex_mung.client_android.mvp.presenter.MainPresenter;
+import cn.lex_mung.client_android.mvp.ui.dialog.HelpStepDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.fragment.EquitiesFragment;
 import cn.lex_mung.client_android.mvp.ui.fragment.FindLawyerFragment;
@@ -76,6 +77,12 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        if (!DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_ONE_IN)) {
+            DataHelper.setBooleanSF(mActivity, DataHelperTags.IS_ONE_IN, true);
+            showHelpDialog();
+        }
+
+
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         bottomNavigationViewEx.enableAnimation(true);
         bottomNavigationViewEx.enableShiftingMode(false);
@@ -84,6 +91,16 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         initViewPager();
 
         setStatusColor(0);
+    }
+
+    public void showHelpDialog(){
+        new HelpStepDialog(mActivity,
+                dialog -> {
+                    launchActivity(new Intent(mActivity,HelpStepActivity.class));
+                }).setContent("服务助手平均每天帮助163名用户找到合适的法律服务和律师，它能帮助您解决如下问题：")
+                .setContent2("· 不知道当前是否需要法律服务\n· 不知道选择说明样的律师\n· 不知道合适字的律师费用")
+                .setCannelStr("不需要")
+                .setSubmitStr("试试看").show();
     }
 
     @Override

@@ -11,6 +11,7 @@ public class DataHelperTags {
     public static final String APP_ID = "app_id";
     public static final String ORDER_NO = "order_no";
     public static final String IS_SHOW_WELCOME = "is_show_welcome";//是否显示欢迎页面
+    public static final String IS_ONE_IN="is_one_in";//是否第一次进入
     public static final String HOME_PAGE_DATA_1 = "home_page_data_1";//首页数据1
     public static final String HOME_PAGE_BANNER = "home_page_banner";//首页数据banner
     public static final String HOME_PAGE_REQUIREMENT_TYPE = "HOME_PAGE_REQUIREMENT_TYPE";//首页数据需求类型
