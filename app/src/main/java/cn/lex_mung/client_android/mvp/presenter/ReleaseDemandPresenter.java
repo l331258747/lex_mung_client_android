@@ -9,6 +9,7 @@ import android.os.Message;
 import android.text.TextUtils;
 
 import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
+import cn.lex_mung.client_android.mvp.ui.activity.RecommendLawyerActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -202,7 +203,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
         mRootView.setClubCardBalance(String.format(
                 AppUtils.getString(mApplication, R.string.text_remaining_amount)
                 , AppUtils.formatAmount(mApplication, amountNew)));
-        releaseDemandList(requireTypeId);
+        releaseDemandList(requireTypeId);//获取子服务类型
     }
 
     private void initAdapter() {
@@ -215,7 +216,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
             if(type != 1) return;
             adapter.setPos(position);
             adapter.notifyDataSetChanged();
-            requireTypeId = entity.getRequireTypeId();
+            requireTypeId = entity.getRequireTypeId();//选择子服务类型后，用子id
             requireTypeName = entity.getRequireTypeName();
             getReleaseDemandOrgMoney();
         });
@@ -286,6 +287,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                 });
     }
 
+    //优惠方式
     private void getReleaseDemandOrgMoney() {
         Map<String, Object> map = new HashMap<>();
         map.put("memberId", userInfoDetailsEntity.getMemberId());
@@ -385,7 +387,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
         map.put("targetLawyerId", lawsHomePagerBaseEntityId);
         map.put("lawyerRegionId", lawsHomePagerBaseEntityRegionId);
 
-        map.put("requirementTypeId", requireTypeId);
+        map.put("requirementTypeId", requireTypeId);//固定价格，为子服务id，协商价格为父服务id
         map.put("requirementTypeName", requireTypeName);
         if (type == 1) {//固定价格
             map.put("maxCost", 0);
@@ -423,8 +425,14 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                             } else {
                                 mRootView.showMessage("需求发布成功，我们会尽快为您审核！");
                                 mRootView.killMyself();
-                                //TODO 进入律师推荐页面
-
+                                Bundle bundle = new Bundle();
+                                bundle.putInt(BundleTags.REQUIRE_TYPE_ID,requireTypeId);
+                                bundle.putString(BundleTags.REQUIRE_TYPE_NAME, requireTypeName);
+                                bundle.putInt(BundleTags.REGION_ID,lawsHomePagerBaseEntityRegionId);
+                                bundle.putInt(BundleTags.REQUIREMENT_ID,baseResponse.getData().getRequirementId());
+                                bundle.putString(BundleTags.MONEY,maxMoney);
+                                bundle.putString(BundleTags.CONTENT,content);
+                                mRootView.launchActivity(new Intent(mRootView.getActivity(),RecommendLawyerActivity.class),bundle);
                             }
                         } else {
                             mRootView.showMessage(baseResponse.getMessage());

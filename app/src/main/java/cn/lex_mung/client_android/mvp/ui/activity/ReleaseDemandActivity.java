@@ -100,6 +100,11 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
     private EasyDialog easyDialog;
     private DefaultDialog defaultDialog;
 
+    private int regionId;
+    private int requireTypeId;
+    private String requireTypeName;
+    private int lawyerId;
+
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerReleaseDemandComponent
@@ -119,19 +124,22 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
     public void initData(@Nullable Bundle savedInstanceState) {
         if (bundleIntent != null) {
             mPresenter.setType(bundleIntent.getInt(BundleTags.TYPE));
-            mPresenter.onCreate(bundleIntent.getInt(BundleTags.MEMBER_ID),
+            mPresenter.onCreate(
+                    lawyerId = bundleIntent.getInt(BundleTags.MEMBER_ID),
                     bundleIntent.getString(BundleTags.REGION),
-                    bundleIntent.getInt(BundleTags.REGION_ID),
-                    bundleIntent.getInt(BundleTags.ID),
-                    bundleIntent.getString(BundleTags.TITLE));
+                    regionId = bundleIntent.getInt(BundleTags.REGION_ID),
+                    requireTypeId = bundleIntent.getInt(BundleTags.ID),
+                    requireTypeName = bundleIntent.getString(BundleTags.TITLE));
             titleView.setTitle(bundleIntent.getString(BundleTags.TITLE));
             if(bundleIntent.getInt(BundleTags.TYPE) == 2){
                 titleView.getRightTv().setVisibility(View.VISIBLE);
                 titleView.getRightTv().setText("历史需求");
                 titleView.getRightTv().setTextColor(ContextCompat.getColor(mActivity,R.color.c_1EC78A));
                 titleView.getRightTv().setOnClickListener(v -> {
-                    //TODO 历史需求 发布成功后进入律师推荐页面
-
+                    bundle.clear();
+                    bundle.putInt(BundleTags.MEMBER_ID,lawyerId);
+                    bundle.putInt(BundleTags.REGION_ID,regionId);
+                    launchActivity(new Intent(mActivity,ReleaseDemandHistoryActivity.class),bundle);
                 });
             }
         }

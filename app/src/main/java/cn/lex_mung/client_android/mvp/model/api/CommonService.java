@@ -46,6 +46,7 @@ import cn.lex_mung.client_android.mvp.model.entity.free.CommonFreeTextEntity;
 import cn.lex_mung.client_android.mvp.model.entity.free.FreeTextBizinfoEntity;
 import cn.lex_mung.client_android.mvp.model.entity.help.HelpStepEntity;
 import cn.lex_mung.client_android.mvp.model.entity.help.HelpStepLawyerEntity;
+import cn.lex_mung.client_android.mvp.model.entity.help.HirstoryDemandEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.RequirementTypeV3Entity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocGetEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocUploadEntity;
@@ -500,6 +501,14 @@ public interface CommonService {
     Observable<BaseResponse<GeneralEntity>> releaseRequirement(@Body RequestBody body);
 
     /**
+     * 带支付的发需求
+     *
+     * @return BaseResponse
+     */
+    @POST("client/requirement/post")
+    Observable<BaseResponse<GeneralEntity>> releaseRequirement2(@Body RequestBody body);
+
+    /**
      * 获取未读消息数量
      *
      * @return BaseResponse
@@ -692,5 +701,17 @@ public interface CommonService {
     //获取推荐律师
     @POST("assistant/recommendLawyers")
     Observable<BaseResponse<HelpStepLawyerEntity>> assistantRecommendLawyers(@Body RequestBody body);
+
+    ///assistant/recommendLawyers/other
+    //POST
+    //获取其他推荐律师
+    @POST("assistant/recommendLawyers/other")
+    Observable<BaseResponse<HelpStepLawyerEntity>> assistantRecommendLawyersOther(@Body RequestBody body);
+
+    ///client/requirement/one
+    //GET
+    //用户最近一次完成的可协商类型需求
+    @POST("client/requirement/one")
+    Observable<BaseResponse<HirstoryDemandEntity>> clientRequirementOne(@Body RequestBody body);
 
 }

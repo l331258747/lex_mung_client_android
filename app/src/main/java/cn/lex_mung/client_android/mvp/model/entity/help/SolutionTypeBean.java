@@ -1,8 +1,9 @@
 package cn.lex_mung.client_android.mvp.model.entity.help;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class SolutionTypeBean {
+public class SolutionTypeBean implements Serializable {
 
     /**
      * solutionTypeId : 2

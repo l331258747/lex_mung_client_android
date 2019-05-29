@@ -50,8 +50,11 @@ import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MainActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MessageActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.OrganizationLawyerActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.RecommendLawyerActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.ReleaseDemandHistoryActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.HomePageRequirementTypeAdapter;
+import cn.lex_mung.client_android.mvp.ui.dialog.HelpStepDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import me.zl.mvp.base.AdapterViewPager;
 import me.zl.mvp.base.BaseFragment;
@@ -252,7 +255,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                 ((MainActivity) mActivity).switchPage(2);
                 break;
             case R.id.fab:
-                launchActivity(new Intent(mActivity,HelpStepActivity.class));
+                showHelpDialog();
                 break;
             case R.id.iv_message:
                 if (mPresenter.isLogin()) {
@@ -287,6 +290,16 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                 }
                 break;
         }
+    }
+
+    public void showHelpDialog(){
+        new HelpStepDialog(mActivity,
+                dialog -> {
+                    launchActivity(new Intent(mActivity,HelpStepActivity.class));
+                }).setContent("服务助手平均每天帮助163名用户找到合适的法律服务和律师，它能帮助您解决如下问题：")
+                .setContent2("· 不知道当前是否需要法律服务\n· 不知道选择说明样的律师\n· 不知道合适字的律师费用")
+                .setCannelStr("不需要")
+                .setSubmitStr("试试看").show();
     }
 
     @Override

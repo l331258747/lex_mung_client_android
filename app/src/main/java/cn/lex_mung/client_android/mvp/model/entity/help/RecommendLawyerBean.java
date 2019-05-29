@@ -51,6 +51,15 @@ public class RecommendLawyerBean {
     private List<BusinessInfoBean> businessInfo;
     private List<String> socialFunction;
     private List<RequireInfoBean> requireInfo;
+    private boolean isSend;
+
+    public boolean isSend() {
+        return isSend;
+    }
+
+    public void setSend(boolean send) {
+        isSend = send;
+    }
 
     public String getBackgroundImage() {
         return backgroundImage;
@@ -132,6 +141,10 @@ public class RecommendLawyerBean {
         return region;
     }
 
+    public String getArea(){
+        return region + " | " + institutionName;
+    }
+
     public void setRegion(String region) {
         this.region = region;
     }
@@ -146,6 +159,10 @@ public class RecommendLawyerBean {
 
     public String getMemberPositionName() {
         return memberPositionName;
+    }
+
+    public String getName3(){
+        return memberPositionName + " | " + practice;
     }
 
     public void setMemberPositionName(String memberPositionName) {

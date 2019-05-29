@@ -68,7 +68,6 @@ public class HomeTableActivity extends BaseActivity<HomeTablePresenter> implemen
                 goHelp();
                 break;
             case R.id.ll_lawyer:
-                //TODO 需要类型id
                 bundle.clear();
                 bundle.putInt(BundleTags.ID, id);
                 bundle.putString(BundleTags.TITLE,title);

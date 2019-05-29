@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginLeft="@dimen/qb_px_30"
+    android:layout_marginRight="@dimen/qb_px_30"
+    android:layout_marginBottom="@dimen/qb_px_30"
+    android:background="@drawable/shape_dash"
+    android:orientation="horizontal"
+    android:padding="@dimen/qb_px_30">
+
+    <ImageView
+        android:id="@+id/iv_head"
+        android:layout_width="@dimen/qb_px_100"
+        android:layout_height="@dimen/qb_px_100"
+        android:src="@drawable/ic_lawyer_avatar"
+        app:layout_constraintEnd_toEndOf="@+id/tv_btn"
+        app:layout_constraintStart_toStartOf="@+id/tv_btn" />
+
+    <TextView
+        android:id="@+id/tv_btn"
+        android:layout_width="@dimen/qb_px_130"
+        android:layout_height="@dimen/qb_px_35"
+        android:layout_marginTop="@dimen/qb_px_20"
+        android:background="@drawable/round_100_737373_all"
+        android:gravity="center"
+        android:text="发布需求"
+        android:textColor="@color/c_ff"
+        android:textSize="10sp"
+        app:layout_constraintTop_toBottomOf="@+id/iv_head" />
+
+    <View
+        android:id="@+id/view_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/qb_px_30"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_btn"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="盛浩"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/view_content" />
+
+    <TextView
+        android:id="@+id/tv_name_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/qb_px_20"
+        android:text="好几合伙人 | 执业3年"
+        android:textColor="@color/c_737373"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_name"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/tv_name" />
+
+    <TextView
+        android:id="@+id/tv_area"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_15"
+        android:text="湖南省·长沙市·芙蓉区 | 湖南芙蓉律师事务所"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@+id/view_content"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+    <TextView
+        android:id="@+id/tv_field_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_30"
+        android:text="擅长领域"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/view_content"
+        app:layout_constraintTop_toBottomOf="@+id/tv_area" />
+
+    <TextView
+        android:id="@+id/tv_field_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/qb_px_20"
+        tools:text="埃里克森党纪国法拉斯柯达国家暗示领导克己奉公拉速度快积分暗示领导看风景埃里克森党纪国法拉斯柯达国家暗示领导克己奉公拉速度快积分暗示领导看风景"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="@+id/view_content"
+        app:layout_constraintStart_toEndOf="@+id/tv_field_title"
+        app:layout_constraintTop_toTopOf="@+id/tv_field_title" />
+
+</android.support.constraint.ConstraintLayout>

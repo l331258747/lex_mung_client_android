@@ -1,6 +1,8 @@
 package cn.lex_mung.client_android.mvp.model.entity.help;
 
-public class RequireTypeBean {
+import java.io.Serializable;
+
+public class RequireTypeBean implements Serializable {
     /**
      * requireTypeId : 0
      * requireTypeNo :

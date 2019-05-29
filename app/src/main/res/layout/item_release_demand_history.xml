@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/qb_px_30"
+    android:background="@drawable/shape_dash"
+    android:orientation="horizontal"
+    android:padding="@dimen/qb_px_30">
+
+    <TextView
+        android:id="@+id/tv_type_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="需求类型："
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_type_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="诉讼仲裁"
+        app:layout_constraintStart_toEndOf="@+id/tv_type_title"
+        app:layout_constraintTop_toTopOf="@+id/tv_type_title" />
+
+    <TextView
+        android:id="@+id/tv_money_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_10"
+        android:text="愿意支付的律师费："
+        app:layout_constraintStart_toStartOf="@+id/gl_left"
+        app:layout_constraintTop_toBottomOf="@+id/tv_type_title" />
+
+    <TextView
+        android:id="@+id/tv_money_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="20000元"
+        app:layout_constraintStart_toEndOf="@+id/tv_money_title"
+        app:layout_constraintTop_toTopOf="@+id/tv_money_title" />
+
+
+    <TextView
+        android:id="@+id/tv_question_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_10"
+        android:text="问题描述："
+        app:layout_constraintStart_toStartOf="@+id/gl_left"
+        app:layout_constraintTop_toBottomOf="@+id/tv_money_title" />
+
+    <TextView
+        android:id="@+id/tv_question_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="婚姻家事"
+        app:layout_constraintStart_toEndOf="@+id/tv_question_title"
+        app:layout_constraintTop_toTopOf="@+id/tv_question_title" />
+
+    <TextView
+        android:id="@+id/tv_btn"
+        android:layout_width="@dimen/qb_px_180"
+        android:layout_height="@dimen/qb_px_50"
+        android:background="@drawable/round_100_1ec78a_all"
+        android:gravity="center"
+        android:text="发布需求"
+        android:textColor="@color/c_ff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</android.support.constraint.ConstraintLayout>
