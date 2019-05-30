@@ -13,6 +13,7 @@ import cn.lex_mung.client_android.mvp.model.entity.RequireEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerHomePageActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.LawyerListAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.SingleTextDialog;
+import cn.lex_mung.client_android.utils.BuryingPointHelp;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -183,6 +184,7 @@ public class LawyerListPresenter extends BasePresenter<LawyerListContract.Model,
         adapter = new LawyerListAdapter(mImageLoader);
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;
+            BuryingPointHelp.getInstance().onEvent(mRootView.getActivity(), "expert_consulation_detail","expert_consulation_lawyer_detail_click");
             LawyerEntity.LawyerBean.ListBean bean = adapter.getItem(position);
             if (bean == null) return;
             Bundle bundle = new Bundle();

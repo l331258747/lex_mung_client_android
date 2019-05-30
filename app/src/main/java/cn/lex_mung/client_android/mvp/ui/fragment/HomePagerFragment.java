@@ -56,6 +56,7 @@ import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.HomePageRequirementTypeAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.HelpStepDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import cn.lex_mung.client_android.utils.BuryingPointHelp;
 import me.zl.mvp.base.AdapterViewPager;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
@@ -148,6 +149,13 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     public void onResume() {
         super.onResume();
         mPresenter.onResume();
+        BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "first_page");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "first_page");
     }
 
     private void initAdapter() {
@@ -156,6 +164,16 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
             if (isFastClick()) return;
             NormalBean entity = adapter.getItem(position);
             contractClick(entity);
+
+            if(entity.getRequireTypeId() == 2){
+                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","litigation_arbitration_click");
+            }else if(entity.getRequireTypeId() == 9){
+                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","meeting_offline_click");
+            }else if(entity.getRequireTypeId() == 6){
+                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","expert_consulation_click");
+            }else{
+                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","legal_card_click");
+            }
         });
     }
 
@@ -255,6 +273,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                 ((MainActivity) mActivity).switchPage(2);
                 break;
             case R.id.fab:
+                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","assistant_click");
                 showHelpDialog();
                 break;
             case R.id.iv_message:
@@ -267,10 +286,11 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                 }
                 break;
             case R.id.view_free_consult:
+                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","free_text_click");
                 launchActivity(new Intent(mActivity, FreeConsultMainActivity.class));
                 break;
             case R.id.view_fast_consult:
-                MobclickAgent.onEvent(mActivity, "w_y_shouye_index_kszx");
+                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","quick_consultation_click");
                 if (mPresenter.isLogin()) {
                     launchActivity(new Intent(mActivity, FastConsultActivity.class));
                 } else {
@@ -280,7 +300,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                 }
                 break;
             case R.id.view_experts_consult:
-                MobclickAgent.onEvent(mActivity, "w_y_shouye_index_zjzx");
+                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","expert_consultation_click");
                 if (mPresenter.isLogin()) {
                     launchActivity(new Intent(mActivity, LawyerListActivity.class));
                 } else {
@@ -292,10 +312,10 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         }
     }
 
-    public void showHelpDialog(){
+    public void showHelpDialog() {
         new HelpStepDialog(mActivity,
                 dialog -> {
-                    launchActivity(new Intent(mActivity,HelpStepActivity.class));
+                    launchActivity(new Intent(mActivity, HelpStepActivity.class));
                 }).setContent("服务助手平均每天帮助163名用户找到合适的法律服务和律师，它能帮助您解决如下问题：")
                 .setContent2("· 不知道当前是否需要法律服务\n· 不知道选择说明样的律师\n· 不知道合适字的律师费用")
                 .setCannelStr("不需要")
@@ -321,17 +341,26 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         if (datas == null || datas.size() == 0)
             return;
         tvHot1.setText(datas.get(0).getRequireTypeName());
-        rlHot1.setOnClickListener(v -> contractClick(datas.get(0)));
+        rlHot1.setOnClickListener(v -> {
+            contractClick(datas.get(0));
+            BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","hot_service_1_click");
+        });
         if (datas.size() >= 2) {
             tvHot2.setText(datas.get(1).getRequireTypeName());
-            rlHot2.setOnClickListener(v -> contractClick(datas.get(1)));
+            rlHot2.setOnClickListener(v -> {
+                contractClick(datas.get(1));
+                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","hot_service_2_click");
+            });
         }
     }
 
     @Override
     public void setMoreContract(List<NormalBean> datas) {
         tvHot3.setText(datas.get(0).getRequireTypeName());
-        rlHot3.setOnClickListener(v -> contractClick(datas.get(0)));
+        rlHot3.setOnClickListener(v -> {
+            contractClick(datas.get(0));
+            BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","hot_service_more_click");
+        });
     }
 
     public void contractClick(NormalBean entity) {

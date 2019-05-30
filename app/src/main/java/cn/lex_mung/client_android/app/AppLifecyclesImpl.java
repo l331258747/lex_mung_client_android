@@ -97,6 +97,8 @@ public class AppLifecyclesImpl implements AppLifecycles {
         createNotificationChannel(application);
 
         CrashReport.initCrashReport(application, "d35b524e94", isDebug);
+
+        LogUtil.setShowLog(!isDebug);
     }
 
     @TargetApi(Build.VERSION_CODES.O)

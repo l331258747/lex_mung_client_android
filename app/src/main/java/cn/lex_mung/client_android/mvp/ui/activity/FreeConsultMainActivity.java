@@ -27,6 +27,7 @@ import cn.lex_mung.client_android.mvp.presenter.FreeConsultMainPresenter;
 import cn.lex_mung.client_android.mvp.ui.adapter.FreeConsultMainAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
+import cn.lex_mung.client_android.utils.BuryingPointHelp;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
@@ -88,6 +89,7 @@ public class FreeConsultMainActivity extends BaseActivity<FreeConsultMainPresent
         mPresenter.onCreate(smartRefreshLayout);
 
         titleView.getRightTv().setOnClickListener(v -> {
+            BuryingPointHelp.getInstance().onEvent(mActivity, "free_consulation_detail","free_consulation_my_consultation_click");
             if (DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
                 launchActivity(new Intent(mActivity,FreeConsultListActivity.class));
             } else {
@@ -144,5 +146,17 @@ public class FreeConsultMainActivity extends BaseActivity<FreeConsultMainPresent
     @Override
     public void killMyself() {
         finish();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BuryingPointHelp.getInstance().onActivityResumed(mActivity, "free_consulation_list");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        BuryingPointHelp.getInstance().onActivityPaused(mActivity, "free_consulation_list");
     }
 }

@@ -34,6 +34,7 @@ import cn.lex_mung.client_android.mvp.ui.adapter.FreeConsultDetail1Adapter;
 import cn.lex_mung.client_android.mvp.ui.adapter.LawyerListAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.EmptyView2;
+import cn.lex_mung.client_android.utils.BuryingPointHelp;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
@@ -186,5 +187,17 @@ public class FreeConsultDetail1Activity extends BaseActivity<FreeConsultDetail1P
     @Override
     public void killMyself() {
         finish();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BuryingPointHelp.getInstance().onActivityResumed(mActivity, "free_consulation_detail");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        BuryingPointHelp.getInstance().onActivityPaused(mActivity, "free_consulation_detail");
     }
 }

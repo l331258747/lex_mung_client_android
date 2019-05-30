@@ -13,6 +13,7 @@ import cn.lex_mung.client_android.di.module.HomeTableModule;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
 import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
+import cn.lex_mung.client_android.utils.BuryingPointHelp;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
@@ -65,9 +66,11 @@ public class HomeTableActivity extends BaseActivity<HomeTablePresenter> implemen
         if (isFastClick()) return;
         switch (view.getId()) {
             case R.id.ll_help:
+                BuryingPointHelp.getInstance().onEvent(mActivity, "litigation_arbitration_detail","litigation_arbitration_assistant_click");
                 goHelp();
                 break;
             case R.id.ll_lawyer:
+                BuryingPointHelp.getInstance().onEvent(mActivity, "litigation_arbitration_detail","litigation_arbitration_search_lawyer_click");
                 bundle.clear();
                 bundle.putInt(BundleTags.ID, id);
                 bundle.putString(BundleTags.TITLE,title);
@@ -110,5 +113,17 @@ public class HomeTableActivity extends BaseActivity<HomeTablePresenter> implemen
     @Override
     public void killMyself() {
         finish();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BuryingPointHelp.getInstance().onActivityResumed(mActivity, "litigation_arbitration_detial");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        BuryingPointHelp.getInstance().onActivityPaused(mActivity, "litigation_arbitration_detial");
     }
 }

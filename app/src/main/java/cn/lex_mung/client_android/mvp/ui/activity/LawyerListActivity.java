@@ -31,6 +31,7 @@ import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.lex_mung.client_android.utils.BuryingPointHelp;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
@@ -107,15 +108,15 @@ public class LawyerListActivity extends BaseActivity<LawyerListPresenter> implem
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
-        MobclickAgent.onPageStart("w_y_shouye_zjzx_detail");
+        BuryingPointHelp.getInstance().onActivityResumed(mActivity, "expert_consulation_detail");
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
-        MobclickAgent.onPageEnd("w_y_shouye_zjzx_detail");
+        BuryingPointHelp.getInstance().onActivityPaused(mActivity, "expert_consulation_detail");
     }
 
     @Override

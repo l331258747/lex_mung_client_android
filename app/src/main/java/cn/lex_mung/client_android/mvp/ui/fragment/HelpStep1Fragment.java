@@ -28,6 +28,7 @@ import cn.lex_mung.client_android.mvp.ui.activity.HelpStepActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.HelpStepChildActivity;
 import cn.lex_mung.client_android.mvp.ui.dialog.EasyDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import cn.lex_mung.client_android.utils.BuryingPointHelp;
 import cn.lex_mung.client_android.utils.LogUtil;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
@@ -74,6 +75,7 @@ public class HelpStep1Fragment extends BaseFragment<HelpStep1Presenter> implemen
                 showSelectRegionDialog();
                 break;
             case R.id.tv_btn:
+                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","assistant_city_next_click");
                 if(regionId == -1){
                     showMessage("请选择服务区域");
                    return;
@@ -251,5 +253,17 @@ public class HelpStep1Fragment extends BaseFragment<HelpStep1Presenter> implemen
             mPresenter.setCity(data.toString());
             mPresenter.setRegionId(mPresenter.getList().get(wpProvince.getCurrentItemPosition()).getChild().get(position).getRegionId());//选择市级为position
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "assistant_city");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "assistant_city");
     }
 }

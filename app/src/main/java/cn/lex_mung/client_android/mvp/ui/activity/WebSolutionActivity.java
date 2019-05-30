@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.utils.BuryingPointHelp;
 
 public class WebSolutionActivity extends WebActivity {
     @BindView(R.id.ll_bottom)
@@ -22,6 +23,7 @@ public class WebSolutionActivity extends WebActivity {
        ll_bottom.setVisibility(View.VISIBLE);
         tv_btn.setOnClickListener(v -> {
             launchActivity(new Intent(mActivity,WebSolutionSelectActivity.class));
+            BuryingPointHelp.getInstance().onEvent(mActivity, "solution_detail","solution_detail_post_free_text_click");
         });
 
     }

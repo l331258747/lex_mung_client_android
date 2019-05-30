@@ -36,6 +36,7 @@ import org.simple.eventbus.Subscriber;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.lex_mung.client_android.utils.BuryingPointHelp;
 import cn.lex_mung.client_android.utils.LogUtil;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
@@ -223,6 +224,8 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
 
             mPresenter.getCoupon();
             dismiss();
+
+            BuryingPointHelp.getInstance().onEvent(mActivity, "quick_consultation","quick_consultation_goodat_click");
         });
     }
 
@@ -338,7 +341,7 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
                 mPresenter.setPayType(3);
                 break;
             case R.id.bt_pay:
-                MobclickAgent.onEvent(mActivity, "w_y_shouye_kszx_detail_kszxtj");
+                BuryingPointHelp.getInstance().onEvent(mActivity, "quick_consultation","quick_consultation_post_click");
                 mPresenter.pay(etUserName.getText().toString(), webView.getSettings().getUserAgentString());
                 break;
             case R.id.tv_change_phone_number:
@@ -437,14 +440,14 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
-        MobclickAgent.onPageStart("w_y_shouye_kszx_detail");
+        BuryingPointHelp.getInstance().onActivityResumed(mActivity, "quick_consultation");
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
-        MobclickAgent.onPageEnd("w_y_shouye_kszx_detail");
+        BuryingPointHelp.getInstance().onActivityPaused(mActivity, "quick_consultation");
     }
 }

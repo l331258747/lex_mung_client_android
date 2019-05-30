@@ -33,6 +33,7 @@ import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultDetail1ListActivity
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerHomePageActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.FreeConsultDetail1Adapter;
 import cn.lex_mung.client_android.mvp.ui.adapter.LawyerListAdapter;
+import cn.lex_mung.client_android.utils.BuryingPointHelp;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
@@ -121,6 +122,7 @@ public class FreeConsultDetail1Presenter extends BasePresenter<FreeConsultDetail
             if (entity == null) return;
             switch (view.getId()) {
                 case R.id.view_title:
+                    BuryingPointHelp.getInstance().onEvent(mRootView.getActivity(), "free_consulation_detail","free_consulation_lawyer_detail_click");
                     Bundle bundle = new Bundle();
                     bundle.clear();
                     bundle.putInt(BundleTags.ID, entity.getLawyerId());

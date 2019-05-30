@@ -33,6 +33,7 @@ import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.lex_mung.client_android.utils.BuryingPointHelp;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
@@ -504,5 +505,17 @@ public class FindLawyerFragment extends BaseFragment<FindLawyerPresenter> implem
     @Override
     public void killMyself() {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "search_lawyer");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "search_lawyer");
     }
 }

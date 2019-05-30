@@ -28,6 +28,7 @@ import cn.lex_mung.client_android.mvp.ui.activity.HelpStepActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.HelpStepChildActivity;
 import cn.lex_mung.client_android.mvp.ui.dialog.EasyDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import cn.lex_mung.client_android.utils.BuryingPointHelp;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
@@ -125,6 +126,7 @@ public class HelpStep3Fragment extends BaseFragment<HelpStep3Presenter> implemen
                 showSelectTypeDialog();
                 break;
             case R.id.tv_btn:
+                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","assistant_target_amount_next_click");
                 if(amountId == -1){
                     showMessage("请选择涉案金额");
                     return;
@@ -208,5 +210,17 @@ public class HelpStep3Fragment extends BaseFragment<HelpStep3Presenter> implemen
     @Override
     public void killMyself() {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "assistant_target_amount");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "assistant_target_amount");
     }
 }

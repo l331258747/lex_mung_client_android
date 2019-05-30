@@ -18,6 +18,7 @@ import cn.lex_mung.client_android.mvp.ui.adapter.SolutionAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
 import butterknife.BindView;
+import cn.lex_mung.client_android.utils.BuryingPointHelp;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
@@ -83,6 +84,7 @@ public class SolutionLIstFragment extends BaseFragment<SolutionLIstPresenter> im
         solutionAdapter = new SolutionAdapter(mImageLoader);
         solutionAdapter.setOnItemClickListener((adapter, view, position) -> {
             if (isFastClick()) return;
+            BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","solution_click");
             SolutionListEntity.ListBean bean = solutionAdapter.getItem(position);
             if (bean == null) return;
             bean.setHelpNumber(bean.getHelpNumber() + 1);

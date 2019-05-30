@@ -26,6 +26,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.lex_mung.client_android.utils.BuryingPointHelp;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
@@ -67,15 +68,15 @@ public class FreeConsultActivity extends BaseActivity<FreeConsultPresenter> impl
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
-        MobclickAgent.onPageStart("w_y_shouye_mfzx_wz_list");
+        BuryingPointHelp.getInstance().onActivityResumed(mActivity, "free_consulation_post");
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
-        MobclickAgent.onPageEnd("w_y_shouye_mfzx_wz_list");
+        BuryingPointHelp.getInstance().onActivityPaused(mActivity, "free_consulation_post");
     }
 
     @Override
@@ -89,7 +90,7 @@ public class FreeConsultActivity extends BaseActivity<FreeConsultPresenter> impl
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_right:
-                MobclickAgent.onEvent(mActivity, "w_y_shouye_mfzx_wz_list_wztj");
+                BuryingPointHelp.getInstance().onEvent(mActivity, "free_consulation_detail","free_consulation_post_click");
                 mPresenter.releaseFreeConsult(etInput.getText().toString());
                 break;
             case R.id.view_consult_type:

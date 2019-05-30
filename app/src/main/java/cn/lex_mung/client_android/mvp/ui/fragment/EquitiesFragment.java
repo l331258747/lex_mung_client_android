@@ -40,6 +40,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.lex_mung.client_android.utils.BuryingPointHelp;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
@@ -131,6 +132,13 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
     public void onResume() {
         super.onResume();
 //        mPresenter.onResume();//bug1 出现菊花转个不停
+        BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "vip");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "vip");
     }
 
     @OnClick({R.id.view_add, R.id.view_trading_details, R.id.view_examine_all_equities, R.id.view_all_lawyer})

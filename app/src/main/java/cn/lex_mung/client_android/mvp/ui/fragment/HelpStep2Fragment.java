@@ -29,6 +29,7 @@ import cn.lex_mung.client_android.mvp.ui.activity.HelpStepChildActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.HelpStep2Adapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.HelpStep2View;
+import cn.lex_mung.client_android.utils.BuryingPointHelp;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
@@ -117,6 +118,7 @@ public class HelpStep2Fragment extends BaseFragment<HelpStep2Presenter> implemen
         if (isFastClick()) return;
         switch (view.getId()) {
             case R.id.tv_btn:
+                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","assistant_goodat_next_click");
                 if (typeId == -1) {
                     showMessage("请选择事件分类");
                     return;
@@ -169,5 +171,17 @@ public class HelpStep2Fragment extends BaseFragment<HelpStep2Presenter> implemen
     @Override
     public void killMyself() {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "assistant_goodat_fields");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "assistant_goodat_fields");
     }
 }

@@ -30,4 +30,6 @@ public class DataHelperTags {
     public static final String ORDER_MONEY = "order_money";//订单金额
     public static final String LOGIN_TYPE = "login_type";
     public static final String REQUIREMENT_ID = "requirement_id";
+    public static final String TIME_UUID = "time_uuid";
+    public static final String TIME_UUID_DAY = "time_uuid_day";
 }
