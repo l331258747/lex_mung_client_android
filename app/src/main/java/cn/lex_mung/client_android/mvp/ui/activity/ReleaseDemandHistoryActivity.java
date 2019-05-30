@@ -14,22 +14,17 @@ import android.widget.TextView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import butterknife.BindView;
+import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.di.component.DaggerReleaseDemandHistoryComponent;
 import cn.lex_mung.client_android.di.module.ReleaseDemandHistoryModule;
-import cn.lex_mung.client_android.mvp.ui.adapter.MyOrderAdapter;
-import cn.lex_mung.client_android.mvp.ui.adapter.OrderCouponAdapter;
+import cn.lex_mung.client_android.mvp.contract.ReleaseDemandHistoryContract;
+import cn.lex_mung.client_android.mvp.presenter.ReleaseDemandHistoryPresenter;
 import cn.lex_mung.client_android.mvp.ui.adapter.ReleaseDemandHistoryAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
-
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
-
-import cn.lex_mung.client_android.di.component.DaggerReleaseDemandHistoryComponent;
-import cn.lex_mung.client_android.mvp.contract.ReleaseDemandHistoryContract;
-import cn.lex_mung.client_android.mvp.presenter.ReleaseDemandHistoryPresenter;
-
-import cn.lex_mung.client_android.R;
 
 public class ReleaseDemandHistoryActivity extends BaseActivity<ReleaseDemandHistoryPresenter> implements ReleaseDemandHistoryContract.View {
 

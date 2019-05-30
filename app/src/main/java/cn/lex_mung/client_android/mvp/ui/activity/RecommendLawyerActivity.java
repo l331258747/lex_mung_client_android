@@ -58,6 +58,7 @@ public class RecommendLawyerActivity extends BaseActivity<RecommendLawyerPresent
         mPresenter.setRequireTypeName(bundleIntent.getString(BundleTags.REQUIRE_TYPE_NAME));
         mPresenter.setMoney(bundleIntent.getString(BundleTags.MONEY));
         mPresenter.setContent(bundleIntent.getString(BundleTags.CONTENT));
+        mPresenter.setLMemberId(bundleIntent.getInt(BundleTags.L_MEMBER_ID));
 
         mPresenter.onCreate();
     }

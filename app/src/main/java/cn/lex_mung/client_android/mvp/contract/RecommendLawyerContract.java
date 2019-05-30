@@ -24,7 +24,8 @@ public interface RecommendLawyerContract {
         Observable<BaseResponse<HelpStepLawyerEntity>> assistantRecommendLawyersOther(int regionId,
                                                                                       int solutionTypeId,
                                                                                       int amountId,
-                                                                                      int requireTypeId);
+                                                                                      int requireTypeId,
+                                                                                      int memberId);
 
         Observable<BaseResponse<GeneralEntity>> releaseRequirement2(RequestBody body);
     }

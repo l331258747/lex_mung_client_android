@@ -65,7 +65,7 @@ public class RecommendLawyerPresenter extends BasePresenter<RecommendLawyerContr
 
     public void onCreate() {
         initAdapter();
-        getData(regionId, 3, 0, requireTypeId);//TODO solutionTypeId 修改
+        getData(regionId, 0, 0, requireTypeId,lMemberId);//TODO solutionTypeId 修改
     }
 
     private void initAdapter() {
@@ -96,8 +96,9 @@ public class RecommendLawyerPresenter extends BasePresenter<RecommendLawyerContr
     public void getData(int regionId,
                         int solutionTypeId,
                         int amountId,
-                        int requireTypeId) {
-        mModel.assistantRecommendLawyersOther(regionId, solutionTypeId, amountId, requireTypeId)
+                        int requireTypeId,
+                        int lMemberId) {
+        mModel.assistantRecommendLawyersOther(regionId, solutionTypeId, amountId, requireTypeId, lMemberId)
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
@@ -204,5 +205,10 @@ public class RecommendLawyerPresenter extends BasePresenter<RecommendLawyerContr
     String content;
     public void setContent(String content) {
         this.content = content;
+    }
+
+    int lMemberId;
+    public void setLMemberId(int lMemberId) {
+        this.lMemberId = lMemberId;
     }
 }

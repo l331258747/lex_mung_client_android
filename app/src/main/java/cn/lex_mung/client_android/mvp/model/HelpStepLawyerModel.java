@@ -48,12 +48,14 @@ public class HelpStepLawyerModel extends BaseModel implements HelpStepLawyerCont
     public Observable<BaseResponse<HelpStepLawyerEntity>> assistantRecommendLawyers(int regionId,
                                                                                     int solutionTypeId,
                                                                                     int amountId,
-                                                                                    int requireTypeId) {
+                                                                                    int requireTypeId,
+                                                                                    int memberId) {
         Map<String, Object> map = new HashMap<>();
         map.put("regionId",regionId);
         map.put("solutionTypeId",solutionTypeId);
         map.put("requireTypeId",requireTypeId);
         map.put("amountId",amountId);
+        map.put("memberId",memberId);
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map));
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)

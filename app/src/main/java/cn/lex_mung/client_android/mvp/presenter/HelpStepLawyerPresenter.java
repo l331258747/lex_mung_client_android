@@ -44,8 +44,9 @@ public class HelpStepLawyerPresenter extends BasePresenter<HelpStepLawyerContrac
     public void getData(int regionId,
                         int solutionTypeId,
                         int amountId,
-                        int requireTypeId) {
-        mModel.assistantRecommendLawyers(regionId, solutionTypeId, amountId, requireTypeId)
+                        int requireTypeId,
+                        int memberId) {
+        mModel.assistantRecommendLawyers(regionId, solutionTypeId, amountId, requireTypeId,memberId)
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))

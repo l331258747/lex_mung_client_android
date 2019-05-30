@@ -126,7 +126,8 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
         mPresenter.getData(bundleIntent.getInt(BundleTags.REGION_ID),
                 bundleIntent.getInt(BundleTags.SOLUTION_TYPE_ID),
                 bundleIntent.getInt(BundleTags.AMOUNT_ID),
-                bundleIntent.getInt(BundleTags.REQUIRE_TYPE_ID));
+                bundleIntent.getInt(BundleTags.REQUIRE_TYPE_ID),
+                0);
     }
 
     private void setTitleView() {

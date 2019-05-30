@@ -193,6 +193,7 @@ public class ReleaseDemandHistoryPresenter extends BasePresenter<ReleaseDemandHi
                             bundle.putString(BundleTags.REQUIRE_TYPE_NAME, requireTypeName);
                             bundle.putInt(BundleTags.REGION_ID, regionId);
                             bundle.putInt(BundleTags.REQUIREMENT_ID,baseResponse.getData().getRequirementId());
+                            bundle.putInt(BundleTags.L_MEMBER_ID,lawyerId);
                             bundle.putString(BundleTags.MONEY,maxMoney);
                             bundle.putString(BundleTags.CONTENT,content);
                             mRootView.launchActivity(new Intent(mRootView.getActivity(), RecommendLawyerActivity.class), bundle);
