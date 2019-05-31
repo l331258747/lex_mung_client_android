@@ -80,7 +80,9 @@ public class WebSolutionSelectActivity extends BaseActivity<WebSolutionSelectPre
             case R.id.ll_lawyer:
                 MobclickAgent.onEvent(mActivity, "w_y_shouye_index_zjzx");
                 if (DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
-                    launchActivity(new Intent(mActivity, LawyerListActivity.class));
+                    bundle.clear();
+                    bundle.putInt(BundleTags.ID, 8);
+                    launchActivity(new Intent(mActivity, LawyerListActivity.class), bundle);
                 } else {
                     bundle.clear();
                     bundle.putInt(BundleTags.TYPE, 2);

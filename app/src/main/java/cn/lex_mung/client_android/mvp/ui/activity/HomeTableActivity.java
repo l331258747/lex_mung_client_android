@@ -93,7 +93,6 @@ public class HomeTableActivity extends BaseActivity<HomeTablePresenter> implemen
                 }
                 bundle.clear();
                 bundle.putInt(BundleTags.ID, id);
-                bundle.putString(BundleTags.TITLE,title);
                 launchActivity(new Intent(mActivity, LawyerListActivity.class), bundle);
                 break;
         }

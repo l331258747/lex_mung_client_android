@@ -302,7 +302,9 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
             case R.id.view_experts_consult:
                 BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","expert_consultation_click");
                 if (mPresenter.isLogin()) {
-                    launchActivity(new Intent(mActivity, LawyerListActivity.class));
+                    bundle.clear();
+                    bundle.putInt(BundleTags.ID, 8);
+                    launchActivity(new Intent(mActivity, LawyerListActivity.class), bundle);
                 } else {
                     bundle.clear();
                     bundle.putInt(BundleTags.TYPE, 2);

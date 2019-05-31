@@ -92,7 +92,6 @@ public class LawyerListPresenter extends BasePresenter<LawyerListContract.Model,
 
     int requireTypeId;
     String requireTypeName;
-    boolean isShow;
 
 
     @Inject
@@ -111,10 +110,6 @@ public class LawyerListPresenter extends BasePresenter<LawyerListContract.Model,
         new Thread(this::initJsonData).start();
         getBusinessType();
         getConsultList(false, false);
-
-        if (requireTypeId != -1) {
-            isShow = true;
-        }
     }
 
     public void setOrgId(int orgId) {
@@ -271,7 +266,6 @@ public class LawyerListPresenter extends BasePresenter<LawyerListContract.Model,
                                         smartRefreshLayout.finishLoadMoreWithNoMoreData();
                                     }
                                 }
-                                showDialog(baseResponse.getData().getTotal());
                             }
                         }
                     });
@@ -305,20 +299,9 @@ public class LawyerListPresenter extends BasePresenter<LawyerListContract.Model,
                                         smartRefreshLayout.finishLoadMoreWithNoMoreData();
                                     }
                                 }
-
-                                showDialog(baseResponse.getData().getTotal());
                             }
                         }
                     });
-        }
-    }
-
-    private void showDialog(int num) {
-        if (isShow) {
-            new SingleTextDialog(mRootView.getActivity())
-                    .setContent("平台已为您优选" + num + "名提供" + requireTypeName + "服务的律师,平台根据执业经验、社会资源、专业知识进行综合排序，您可以在筛选中对您的选择进行修改")
-                    .setSubmitStr("我知道了！").show();
-            isShow = false;
         }
     }
 
@@ -416,9 +399,8 @@ public class LawyerListPresenter extends BasePresenter<LawyerListContract.Model,
         this.mApplication = null;
     }
 
-    public void setRequireTypeId(int requireTypeId, String requireTypeName) {
+    public void setRequireTypeId(int requireTypeId) {
         this.requireTypeId = requireTypeId;
-        this.requireTypeName = requireTypeName;
         if (requireTypeId != -1) {
             mRootView.setScreenColor(AppUtils.getColor(mApplication, R.color.c_06a66a));
             list.clear();

@@ -95,7 +95,6 @@ public class LawyerListActivity extends BaseActivity<LawyerListPresenter> implem
     private EasyDialog easyDialog;
 
     private int requireTypeId = -1;
-    private String requireTypeName = "";
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -162,9 +161,8 @@ public class LawyerListActivity extends BaseActivity<LawyerListPresenter> implem
         if (bundleIntent != null
                 && bundleIntent.containsKey(BundleTags.ID)) {
             requireTypeId = bundleIntent.getInt(BundleTags.ID, -1);
-            requireTypeName = bundleIntent.getString(BundleTags.TITLE);
         }
-        mPresenter.setRequireTypeId(requireTypeId, requireTypeName);
+        mPresenter.setRequireTypeId(requireTypeId);
 
         mPresenter.onCreate(smartRefreshLayout);
         etSearch.setFilters(new InputFilter[]{CharacterHandler.emojiFilter});
