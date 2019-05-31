@@ -70,6 +70,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         return true;
     }
 
+
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
         return R.layout.activity_main;
@@ -81,7 +82,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
             DataHelper.setBooleanSF(mActivity, DataHelperTags.IS_ONE_IN, true);
             showHelpDialog();
         }
-
 
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         bottomNavigationViewEx.enableAnimation(true);

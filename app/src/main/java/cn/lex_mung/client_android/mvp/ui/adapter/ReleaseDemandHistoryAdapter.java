@@ -19,7 +19,7 @@ public class ReleaseDemandHistoryAdapter extends BaseQuickAdapter<HirstoryDemand
     @Override
     protected void convert(BaseViewHolder helper, HirstoryDemandEntity.ListBean item) {
         helper.setText(R.id.tv_type_content,item.getTypeName());
-        helper.setText(R.id.tv_money_content,item.getRequirementExtendValue());
+        helper.setText(R.id.tv_money_content,item.getRequirementExtendValueStr());
         helper.setText(R.id.tv_question_content,item.getContent());
 
         helper.addOnClickListener(R.id.tv_btn);
