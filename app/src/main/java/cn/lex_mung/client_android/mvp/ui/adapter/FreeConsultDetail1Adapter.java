@@ -1,6 +1,7 @@
 package cn.lex_mung.client_android.mvp.ui.adapter;
 
 import android.text.TextUtils;
+import android.view.TextureView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -41,7 +42,7 @@ public class FreeConsultDetail1Adapter extends BaseQuickAdapter<FreeConsultReply
         helper.setText(R.id.tv_title2,item.getLawyerPositionName());
         helper.setText(R.id.tv_call,item.getMinAmountStr());
 
-        if(item.getMinAmount() <= 0){
+        if(TextUtils.isEmpty(item.getMinAmount())){
             helper.setGone(R.id.ll_call,false);
         }else{
             helper.setGone(R.id.ll_call,true);

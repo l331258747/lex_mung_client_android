@@ -53,7 +53,7 @@ public class FreeConsultReplyListEntity {
      */
 
     private String memberHonorTitle;
-    private double minAmount;
+    private String minAmount;
     private String lawyerPositionName;
 
     public int getConsultationReplyId() {
@@ -226,15 +226,15 @@ public class FreeConsultReplyListEntity {
         this.memberHonorTitle = memberHonorTitle;
     }
 
-    public double getMinAmount() {
+    public String getMinAmount() {
         return minAmount;
     }
 
     public String getMinAmountStr(){
-        return "电话咨询:"+StringUtils.getStringNum(minAmount) +"元/分钟>";
+        return "电话咨询:"+ minAmount +"元/分钟>";
     }
 
-    public void setMinAmount(double minAmount) {
+    public void setMinAmount(String minAmount) {
         this.minAmount = minAmount;
     }
 

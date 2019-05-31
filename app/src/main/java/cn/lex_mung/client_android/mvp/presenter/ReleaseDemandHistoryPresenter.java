@@ -134,12 +134,10 @@ public class ReleaseDemandHistoryPresenter extends BasePresenter<ReleaseDemandHi
                             } else {
                                 mRootView.setEmptyView(adapter);
                                 smartRefreshLayout.finishRefresh();
+                                adapter.setNewData(baseResponse.getData().getList());
                                 if(adapter.getData() == null || adapter.getData().size() == 0){
                                     mRootView.setTipHide(false);
-                                }else{
-                                    mRootView.setTipHide(true);
                                 }
-                                adapter.setNewData(baseResponse.getData().getList());
                                 if (totalNum == pageNum) {
                                     smartRefreshLayout.finishLoadMoreWithNoMoreData();
                                 }

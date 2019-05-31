@@ -294,6 +294,10 @@ public class HirstoryDemandEntity {
             return requirementExtendValue;
         }
 
+        public String getRequirementExtendValueStr() {
+            return requirementExtendValue + "元";
+        }
+
         public void setRequirementExtendValue(String requirementExtendValue) {
             this.requirementExtendValue = requirementExtendValue;
         }

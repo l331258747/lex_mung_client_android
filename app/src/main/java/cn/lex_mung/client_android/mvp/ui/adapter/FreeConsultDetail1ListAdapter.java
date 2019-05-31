@@ -74,7 +74,7 @@ public class FreeConsultDetail1ListAdapter extends BaseQuickAdapter<FreeConsultR
 
         if(helper.getAdapterPosition() == 0){
             helper.setGone(R.id.ll_comment,true);
-            if(item.getMinAmount() <= 0){
+            if(TextUtils.isEmpty(item.getMinAmount())){
                 helper.setGone(R.id.ll_call,false);
             }else{
                 helper.setGone(R.id.ll_call,true);
