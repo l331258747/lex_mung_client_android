@@ -109,6 +109,8 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
     CallFieldDialog3 callFieldDialog3;
     CallFieldDialog4 callFieldDialog4;
 
+    int requireTypeId;
+
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerHelpStepLawyerComponent
@@ -129,7 +131,7 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
         mPresenter.getData(bundleIntent.getInt(BundleTags.REGION_ID),
                 bundleIntent.getInt(BundleTags.SOLUTION_TYPE_ID),
                 bundleIntent.getInt(BundleTags.AMOUNT_ID),
-                bundleIntent.getInt(BundleTags.REQUIRE_TYPE_ID),
+                requireTypeId = bundleIntent.getInt(BundleTags.REQUIRE_TYPE_ID),
                 0);
     }
 
@@ -161,7 +163,20 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.view_title:
-                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_lawyer_detail_click");
+                switch (requireTypeId) {
+                    case 2:
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "litigation_arbitration_detail", "litigation_arbitration_assistant_lawyer_detail_click");
+                        break;
+                    case 9:
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "meeting_detail", "meeting_assistant_lawyer_detail_click");
+                        break;
+                    case 6:
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "enterprise_detail", "enterprise_detail_assistant_lawyer_detail_click");
+                        break;
+                    default:
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_lawyer_detail_click");
+                        break;
+                }
                 bundle.clear();
                 bundle.putInt(BundleTags.ID, bean.getMemberId());
                 launchActivity(new Intent(mActivity, LawyerHomePageActivity.class), bundle);
@@ -177,7 +192,20 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
                 }
                 break;
             case R.id.view_bottom_call:
-                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_quick_consultation_click");
+                switch (requireTypeId) {
+                    case 2:
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "litigation_arbitration_detail", "litigation_arbitration_assistant_quick_consultation_click");
+                        break;
+                    case 9:
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "meeting_detail", "meeting_assistant_quick_consultation_click");
+                        break;
+                    case 6:
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "enterprise_detail", "enterprise_detail_assistant_quick_consultation_click");
+                        break;
+                    default:
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_quick_consultation_click");
+                        break;
+                }
                 if (DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
                     launchActivity(new Intent(mActivity, FastConsultActivity.class));
                 } else {
@@ -208,21 +236,42 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
                 if (entity == null) return;
 
                 if (entity.getRequirementType() == 1) {//发需求
-                    if (entity.getParentRequireTypeId() == 3) {//起草合同
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_draw_contract_click");
-                    } else if (entity.getParentRequireTypeId() == 4) {//律师函
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_lawyer_letter_click");
-                    } else if (entity.getParentRequireTypeId() == 2) {//诉讼仲裁
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_arbitration_click");
-                    } else if (entity.getRequireTypeId() == 9) {//线下见面
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_meeting_offline_click");
-                    } else if (entity.getRequireTypeId() == 6) {//企业顾问
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_legal_adviser_click");
-                    } else if (entity.getRequireTypeId() == 30) {//审查合同
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_review_contract_click");
-                    } else if (entity.getRequireTypeId() == 5) {//意见书
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_legal_opinion_click");
+
+                    switch (requireTypeId) {
+                        case 2:
+                            if (entity.getParentRequireTypeId() == 2) {
+                                BuryingPointHelp.getInstance().onEvent(mActivity, "litigation_arbitration_detail", "litigation_arbitration_assistant_arbitration_click");
+                            }
+                            break;
+                        case 9:
+                            if (entity.getParentRequireTypeId() == 9) {
+                                BuryingPointHelp.getInstance().onEvent(mActivity, "meeting_detail", "meeting_assistant_meeting_click");
+                            }
+                            break;
+                        case 6:
+                            if (entity.getParentRequireTypeId() == 6) {
+                                BuryingPointHelp.getInstance().onEvent(mActivity, "enterprise_detail", "enterprise_detail_assistant_service_click");
+                            }
+                            break;
+                        default:
+                            if (entity.getParentRequireTypeId() == 3) {//起草合同
+                                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_draw_contract_click");
+                            } else if (entity.getParentRequireTypeId() == 4) {//律师函
+                                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_lawyer_letter_click");
+                            } else if (entity.getParentRequireTypeId() == 2) {//诉讼仲裁
+                                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_arbitration_click");
+                            } else if (entity.getRequireTypeId() == 9) {//线下见面
+                                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_meeting_offline_click");
+                            } else if (entity.getRequireTypeId() == 6) {//企业顾问
+                                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_legal_adviser_click");
+                            } else if (entity.getRequireTypeId() == 30) {//审查合同
+                                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_review_contract_click");
+                            } else if (entity.getRequireTypeId() == 5) {//意见书
+                                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_legal_opinion_click");
+                            }
+                            break;
                     }
+
                     bundle.clear();
                     bundle.putInt(BundleTags.ID, entity.getParentRequireTypeId());
                     bundle.putInt(BundleTags.TYPE, entity.getParentType());
@@ -232,7 +281,21 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
                     bundle.putInt(BundleTags.REGION_ID, bean.getRegionId());
                     launchActivity(new Intent(mActivity, ReleaseDemandActivity.class), bundle);
                 } else {//电话咨询
-                    BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_phone_click");
+
+                    switch (requireTypeId) {
+                        case 2:
+                            BuryingPointHelp.getInstance().onEvent(mActivity, "litigation_arbitration_detail", "litigation_arbitration_assistant_phone_click");
+                            break;
+                        case 9:
+                            BuryingPointHelp.getInstance().onEvent(mActivity, "meeting_detail", "meeting_assistant_phone_click");
+                            break;
+                        case 6:
+                            BuryingPointHelp.getInstance().onEvent(mActivity, "enterprise_detail", "enterprise_detail_assistant_phone_click");
+                            break;
+                        default:
+                            BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_phone_click");
+                            break;
+                    }
                     mPresenter.expertPrice(bean.getMemberId());
                 }
             } else {

@@ -258,12 +258,44 @@ public class HelpStep1Fragment extends BaseFragment<HelpStep1Presenter> implemen
     @Override
     public void onResume() {
         super.onResume();
-        BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "assistant_city");
+//        BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "assistant_city");
+
+        if(isShow){
+            switch (((HelpStepChildActivity) this.getActivity()).getRequireTypeId()){
+                case 2:
+                    BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "litigation_arbitration_assistant_city");
+                    break;
+                case 9:
+                    BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "meeting_assistant_city");
+                    break;
+                case 6:
+                    BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "enterprise_assistant_city");
+                    break;
+            }
+        }else{
+            BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "assistant_city");
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "assistant_city");
+//        BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "assistant_city");
+
+        if(isShow){
+            switch (((HelpStepChildActivity) this.getActivity()).getRequireTypeId()){
+                case 2:
+                    BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "litigation_arbitration_assistant_city");
+                    break;
+                case 9:
+                    BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "meeting_assistant_city");
+                    break;
+                case 6:
+                    BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "enterprise_assistant_city");
+                    break;
+            }
+        }else{
+            BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "assistant_city");
+        }
     }
 }

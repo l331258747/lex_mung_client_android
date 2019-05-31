@@ -110,13 +110,39 @@ public class LawyerListActivity extends BaseActivity<LawyerListPresenter> implem
     @Override
     public void onResume() {
         super.onResume();
-        BuryingPointHelp.getInstance().onActivityResumed(mActivity, "expert_consulation_detail");
+        switch (requireTypeId) {
+            case 2:
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "litigation_arbitration_search_lawyer");
+                break;
+            case 9:
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "meeting_assistant_search_lawyer");
+                break;
+            case 6:
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "enterprise_assistant_search_lawyer");
+                break;
+            default:
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "expert_consulation_detail");
+                break;
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        BuryingPointHelp.getInstance().onActivityPaused(mActivity, "expert_consulation_detail");
+        switch (requireTypeId) {
+            case 2:
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "litigation_arbitration_search_lawyer");
+                break;
+            case 9:
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "meeting_assistant_search_lawyer");
+                break;
+            case 6:
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "enterprise_assistant_search_lawyer");
+                break;
+            default:
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "expert_consulation_detail");
+                break;
+        }
     }
 
     @Override
@@ -138,7 +164,7 @@ public class LawyerListActivity extends BaseActivity<LawyerListPresenter> implem
             requireTypeId = bundleIntent.getInt(BundleTags.ID, -1);
             requireTypeName = bundleIntent.getString(BundleTags.TITLE);
         }
-        mPresenter.setRequireTypeId(requireTypeId,requireTypeName);
+        mPresenter.setRequireTypeId(requireTypeId, requireTypeName);
 
         mPresenter.onCreate(smartRefreshLayout);
         etSearch.setFilters(new InputFilter[]{CharacterHandler.emojiFilter});

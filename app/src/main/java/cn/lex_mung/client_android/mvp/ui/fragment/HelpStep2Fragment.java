@@ -176,12 +176,44 @@ public class HelpStep2Fragment extends BaseFragment<HelpStep2Presenter> implemen
     @Override
     public void onResume() {
         super.onResume();
-        BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "assistant_goodat_fields");
+//        BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "assistant_goodat_fields");
+
+        if(isShow){
+            switch (((HelpStepChildActivity) this.getActivity()).getRequireTypeId()){
+                case 2:
+                    BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "litigation_arbitration_assistant_goodat");
+                    break;
+                case 9:
+                    BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "meeting_assistant_goodat");
+                    break;
+                case 6:
+                    BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "enterprise_assistant_goodat");
+                    break;
+            }
+        }else{
+            BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "assistant_goodat_fields");
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "assistant_goodat_fields");
+//        BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "assistant_goodat_fields");
+
+        if(isShow){
+            switch (((HelpStepChildActivity) this.getActivity()).getRequireTypeId()){
+                case 2:
+                    BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "litigation_arbitration_assistant_goodat");
+                    break;
+                case 9:
+                    BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "meeting_assistant_goodat");
+                    break;
+                case 6:
+                    BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "enterprise_assistant_goodat");
+                    break;
+            }
+        }else{
+            BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "assistant_goodat_fields");
+        }
     }
 }

@@ -66,11 +66,31 @@ public class HomeTableActivity extends BaseActivity<HomeTablePresenter> implemen
         if (isFastClick()) return;
         switch (view.getId()) {
             case R.id.ll_help:
-                BuryingPointHelp.getInstance().onEvent(mActivity, "litigation_arbitration_detail","litigation_arbitration_assistant_click");
+                switch (id) {
+                    case 2:
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "litigation_arbitration_detail", "litigation_arbitration_assistant_click");
+                        break;
+                    case 9:
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "meeting_detail", "meeting_assistant_click");
+                        break;
+                    case 6:
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "enterprise_detail", "enterprise_detail_assistant_click");
+                        break;
+                }
                 goHelp();
                 break;
             case R.id.ll_lawyer:
-                BuryingPointHelp.getInstance().onEvent(mActivity, "litigation_arbitration_detail","litigation_arbitration_search_lawyer_click");
+                switch (id) {
+                    case 2:
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "litigation_arbitration_detail", "litigation_arbitration_search_lawyer_click");
+                        break;
+                    case 9:
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "meeting_detail", "meeting_assistant_search_lawyer_click");
+                        break;
+                    case 6:
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "enterprise_detail", "enterprise_detail_assistant_search_lawyer_click");
+                        break;
+                }
                 bundle.clear();
                 bundle.putInt(BundleTags.ID, id);
                 bundle.putString(BundleTags.TITLE,title);
@@ -118,12 +138,35 @@ public class HomeTableActivity extends BaseActivity<HomeTablePresenter> implemen
     @Override
     public void onResume() {
         super.onResume();
-        BuryingPointHelp.getInstance().onActivityResumed(mActivity, "litigation_arbitration_detial");
+        switch (id){
+            case 2:
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "litigation_arbitration_detial");
+                break;
+            case 9:
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "meeting_detail");
+                break;
+            case 6:
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "enterprise_detail");
+                break;
+        }
+//        BuryingPointHelp.getInstance().onActivityResumed(mActivity, "litigation_arbitration_detial");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        BuryingPointHelp.getInstance().onActivityPaused(mActivity, "litigation_arbitration_detial");
+//        BuryingPointHelp.getInstance().onActivityPaused(mActivity, "litigation_arbitration_detial");
+
+        switch (id){
+            case 2:
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "litigation_arbitration_detial");
+                break;
+            case 9:
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "meeting_detail");
+                break;
+            case 6:
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "enterprise_detail");
+                break;
+        }
     }
 }

@@ -184,7 +184,21 @@ public class LawyerListPresenter extends BasePresenter<LawyerListContract.Model,
         adapter = new LawyerListAdapter(mImageLoader);
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;
-            BuryingPointHelp.getInstance().onEvent(mRootView.getActivity(), "expert_consulation_detail","expert_consulation_lawyer_detail_click");
+
+            switch (requireTypeId) {
+                case 2:
+                    BuryingPointHelp.getInstance().onEvent(mRootView.getActivity(), "litigation_arbitration_detail","litigation_arbitration_lawyer_detail_click");
+                    break;
+                case 9:
+                    BuryingPointHelp.getInstance().onEvent(mRootView.getActivity(), "meeting_detail","meeting_assistant_lawyer_detail_click");
+                    break;
+                case 6:
+                    BuryingPointHelp.getInstance().onEvent(mRootView.getActivity(), "enterprise_detail","enterprise_detail_assistant_lawyer_detail_click");
+                    break;
+                default:
+                    BuryingPointHelp.getInstance().onEvent(mRootView.getActivity(), "expert_consulation_detail","expert_consulation_lawyer_detail_click");
+                    break;
+            }
             LawyerEntity.LawyerBean.ListBean bean = adapter.getItem(position);
             if (bean == null) return;
             Bundle bundle = new Bundle();

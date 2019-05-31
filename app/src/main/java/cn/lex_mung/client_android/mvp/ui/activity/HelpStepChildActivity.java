@@ -51,6 +51,10 @@ public class HelpStepChildActivity extends BaseActivity<HelpStepChildPresenter> 
 
     int requireTypeId;
 
+    public int getRequireTypeId() {
+        return requireTypeId;
+    }
+
     @Override
     public void onBackPressed() {
         if (pageIndex > 0) {
