@@ -1,5 +1,7 @@
 package cn.lex_mung.client_android.mvp.model.entity;
 
+import me.zl.mvp.utils.StringUtils;
+
 public class ExpertPriceEntity {
 
     /**
@@ -70,8 +72,8 @@ public class ExpertPriceEntity {
         return lawyerPrice;
     }
 
-    public String getLawyerPriceInt(){
-        return ((int) lawyerPrice ) + "";
+    public String getLawyerPriceStr(){
+        return StringUtils.getStringNum(lawyerPrice);
     }
 
     public void setLawyerPrice(double lawyerPrice) {

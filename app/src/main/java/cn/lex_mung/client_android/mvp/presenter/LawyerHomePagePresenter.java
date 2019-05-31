@@ -325,7 +325,8 @@ public class LawyerHomePagePresenter extends BasePresenter<LawyerHomePageContrac
                                 mRootView.showDialDialog(entity);
                             } else {
                                 String string = String.format(mApplication.getString(R.string.text_call_consult_tip_4)
-                                        , entity.getLawyerPriceInt()
+                                        , entity.getLawyerPriceStr()
+                                        , entity.getBalanceUnit()
                                         , entity.getPriceUnit());
                                 mRootView.showToPayDialog(string);
                             }

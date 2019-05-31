@@ -46,10 +46,10 @@ public class CallFieldDialog2 extends Dialog {
         TextView tvContent = findViewById(R.id.tv_content);
         TextView tvContent2 = findViewById(R.id.tv_content2);
         TextView tvContent3 = findViewById(R.id.tv_content3);
-        String string = "律师咨询价格为%1$s元/%2$s";
+        String string = "律师咨询价格为%1$s%2$s/%3$s";
         String string2 = "您拥有%1$s的专属权益，优惠后价格为<font color=\"#3dd790\">%2$s元/%3$s</font>";
         String string3 = "您的通话我们将按照秒为单位进行计费，前%1$s免费通话，您当前账户余额可通话时长%2$s";
-        StringUtils.setHtml(tvContent,String.format(string,entity.getLawyerPriceInt(),entity.getPriceUnit()));
+        StringUtils.setHtml(tvContent,String.format(string,entity.getLawyerPriceStr(),entity.getBalanceUnit(),entity.getPriceUnit()));
         if (!TextUtils.isEmpty(entity.getOrgnizationName())) {//有权益
             tvContent2.setVisibility(View.VISIBLE);
             StringUtils.setHtml(tvContent2,String.format(string2,entity.getOrgnizationName(),entity.getFavorablePriceInt(),entity.getPriceUnit()));

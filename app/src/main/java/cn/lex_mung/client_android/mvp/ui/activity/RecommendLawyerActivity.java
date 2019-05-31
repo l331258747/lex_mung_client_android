@@ -63,6 +63,11 @@ public class RecommendLawyerActivity extends BaseActivity<RecommendLawyerPresent
         mPresenter.onCreate();
     }
 
+    @Override
+    public void onBackPressed() {
+        AppManager.getAppManager().killAllNotClass(MainActivity.class);
+    }
+
     @OnClick({R.id.tv_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {

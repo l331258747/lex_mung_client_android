@@ -271,7 +271,7 @@
     <string name="text_warm_prompt">温馨提示</string>
     <string name="text_call_consult_tip_3">为保护您的个人权益，我们将先为您联系律师，请注意接听%s的电话</string>
 
-    <string name="text_call_consult_tip_4"><Data><![CDATA[<b>律师咨询价格为</b><font color="#3dd790"><b>%1$s元/%2$s</b></font><br>您的账户不足，请充值]]></Data></string>
+    <string name="text_call_consult_tip_4"><Data><![CDATA[<b>律师咨询价格为</b><font color="#3dd790"><b>%1$s%2$s/%3$s</b></font><br>您的账户不足，请充值]]></Data></string>
 
     <string name="text_lawyer_region">律师所在区域</string>
     <string name="text_lawyer_field">律师擅长领域</string>
