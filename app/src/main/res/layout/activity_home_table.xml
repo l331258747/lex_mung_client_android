@@ -65,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/qb_px_20"
-            android:text="适用于熟悉法律服务市场\n明确知道当前所需"
+            android:text="适用于熟悉法律服务市场\n明确知道当前所需服务的用户"
             android:gravity="center"
             android:textColor="@color/c_d8d8d8"
             android:textSize="10sp" />

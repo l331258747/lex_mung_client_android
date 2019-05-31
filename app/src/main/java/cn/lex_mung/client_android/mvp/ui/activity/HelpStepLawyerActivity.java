@@ -48,6 +48,7 @@ import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog2;
 import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog3;
 import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog4;
 import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog5;
+import cn.lex_mung.client_android.mvp.ui.dialog.DefaultDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.SimpleFlowLayout;
 import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
@@ -55,6 +56,7 @@ import cn.lex_mung.client_android.utils.BuryingPointHelp;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
+import me.zl.mvp.integration.AppManager;
 import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.DataHelper;
 
@@ -131,6 +133,13 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
                 0);
     }
 
+    @Override
+    public void onBackPressed() {
+        new DefaultDialog(mActivity, dialog -> {
+            AppManager.getAppManager().killAllNotClass(MainActivity.class);
+        }, "现在返回您将回到首页，您可以在首页右上角的消息中查看需求的进展情况！", "确认返回", "取消").show();
+    }
+
     private void setTitleView() {
         scrollView.getViewTreeObserver().addOnScrollChangedListener(() -> {
             int scrollY = scrollView.getScrollY();
@@ -152,13 +161,13 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.view_title:
-                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","assistant_success_lawyer_detail_click");
+                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_lawyer_detail_click");
                 bundle.clear();
                 bundle.putInt(BundleTags.ID, bean.getMemberId());
                 launchActivity(new Intent(mActivity, LawyerHomePageActivity.class), bundle);
                 break;
             case R.id.view_bottom_txt:
-                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","assistant_success_free_text_click");
+                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_free_text_click");
                 if (DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
                     launchActivity(new Intent(mActivity, FreeConsultActivity.class));
                 } else {
@@ -168,7 +177,7 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
                 }
                 break;
             case R.id.view_bottom_call:
-                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","assistant_success_quick_consultation_click");
+                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_quick_consultation_click");
                 if (DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
                     launchActivity(new Intent(mActivity, FastConsultActivity.class));
                 } else {
@@ -199,20 +208,20 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
                 if (entity == null) return;
 
                 if (entity.getRequirementType() == 1) {//发需求
-                    if(entity.getParentRequireTypeId() == 3){//起草合同
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","assistant_success_draw_contract_click");
-                    }else if(entity.getParentRequireTypeId() == 4){//律师函
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","assistant_success_lawyer_letter_click");
-                    }else if(entity.getParentRequireTypeId() == 2){//诉讼仲裁
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","assistant_success_arbitration_click");
-                    }else if(entity.getRequireTypeId() == 9){//线下见面
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","assistant_success_meeting_offline_click");
-                    }else if(entity.getRequireTypeId() == 6){//企业顾问
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","assistant_success_legal_adviser_click");
-                    }else if(entity.getRequireTypeId() == 30){//审查合同
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","assistant_success_review_contract_click");
-                    }else if(entity.getRequireTypeId() == 5){//意见书
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","assistant_success_legal_opinion_click");
+                    if (entity.getParentRequireTypeId() == 3) {//起草合同
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_draw_contract_click");
+                    } else if (entity.getParentRequireTypeId() == 4) {//律师函
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_lawyer_letter_click");
+                    } else if (entity.getParentRequireTypeId() == 2) {//诉讼仲裁
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_arbitration_click");
+                    } else if (entity.getRequireTypeId() == 9) {//线下见面
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_meeting_offline_click");
+                    } else if (entity.getRequireTypeId() == 6) {//企业顾问
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_legal_adviser_click");
+                    } else if (entity.getRequireTypeId() == 30) {//审查合同
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_review_contract_click");
+                    } else if (entity.getRequireTypeId() == 5) {//意见书
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_legal_opinion_click");
                     }
                     bundle.clear();
                     bundle.putInt(BundleTags.ID, entity.getParentRequireTypeId());
@@ -223,7 +232,7 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
                     bundle.putInt(BundleTags.REGION_ID, bean.getRegionId());
                     launchActivity(new Intent(mActivity, ReleaseDemandActivity.class), bundle);
                 } else {//电话咨询
-                    BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","assistant_success_phone_click");
+                    BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_phone_click");
                     mPresenter.expertPrice(bean.getMemberId());
                 }
             } else {
@@ -293,7 +302,7 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
     }
 
     public void setTitleLayout(List<RecommendLawyerBean> beans) {
-        if (beans == null || beans.size() == 0){
+        if (beans == null || beans.size() == 0) {
             clInfo.setVisibility(View.GONE);
 
             titleView.getTitleLlayout().setBackgroundResource(R.color.c_ff);

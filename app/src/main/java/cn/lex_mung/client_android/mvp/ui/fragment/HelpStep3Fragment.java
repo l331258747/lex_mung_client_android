@@ -128,7 +128,7 @@ public class HelpStep3Fragment extends BaseFragment<HelpStep3Presenter> implemen
             case R.id.tv_btn:
                 BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","assistant_target_amount_next_click");
                 if(amountId == -1){
-                    showMessage("请选择涉案金额");
+                    showMessage("请选择涉及金额");
                     return;
                 }
                 if(isShow){

@@ -48,7 +48,7 @@
                 android:paddingLeft="@dimen/qb_px_20"
                 android:paddingRight="@dimen/qb_px_20"
                 android:textSize="12sp"
-                android:text="事件分类"
+                android:text="事项分类"
                 android:textColor="@color/c_737373" />
 
         </RelativeLayout>

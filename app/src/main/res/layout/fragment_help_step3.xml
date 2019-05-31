@@ -88,7 +88,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/qb_px_30"
-        android:text="涉及金额是法律服务中一项重要的判断依据,会直接影响到推荐费您的法律服务."
+        android:text="涉及金额是法律服务中一项重要的判断依据,会直接影响到推荐给您的法律服务."
         app:layout_constraintEnd_toEndOf="@+id/view_select"
         android:textColor="@color/c_d7d7d7"
         app:layout_constraintStart_toStartOf="@+id/view_select"

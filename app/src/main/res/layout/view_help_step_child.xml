@@ -47,7 +47,7 @@
                 android:paddingTop="@dimen/qb_px_5"
                 android:paddingRight="@dimen/qb_px_20"
                 android:paddingBottom="@dimen/qb_px_5"
-                android:text="事件分类"
+                android:text="事项分类"
                 android:textColor="@color/c_737373"
                 android:textSize="12sp" />
 

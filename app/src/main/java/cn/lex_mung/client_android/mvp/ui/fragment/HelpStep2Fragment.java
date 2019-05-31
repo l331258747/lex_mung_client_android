@@ -120,7 +120,7 @@ public class HelpStep2Fragment extends BaseFragment<HelpStep2Presenter> implemen
             case R.id.tv_btn:
                 BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","assistant_goodat_next_click");
                 if (typeId == -1) {
-                    showMessage("请选择事件分类");
+                    showMessage("请选择事项分类");
                     return;
                 }
                 if(isShow){
