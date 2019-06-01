@@ -60,7 +60,9 @@ public class WebSolutionSelectActivity extends BaseActivity<WebSolutionSelectPre
             case R.id.ll_txt:
                 MobclickAgent.onEvent(mActivity, "w_y_shouye_index_mfzx");
                 if (DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
-                    launchActivity(new Intent(mActivity, FreeConsultActivity.class));
+                    bundle.clear();
+                    bundle.putInt(BundleTags.BURYING_POINT,1);
+                    launchActivity(new Intent(mActivity, FreeConsultActivity.class),bundle);
                 } else {
                     bundle.clear();
                     bundle.putInt(BundleTags.TYPE, 1);
@@ -70,7 +72,9 @@ public class WebSolutionSelectActivity extends BaseActivity<WebSolutionSelectPre
             case R.id.ll_call:
                 MobclickAgent.onEvent(mActivity, "w_y_shouye_index_kszx");
                 if (DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
-                    launchActivity(new Intent(mActivity, FastConsultActivity.class));
+                    bundle.clear();
+                    bundle.putInt(BundleTags.BURYING_POINT,1);
+                    launchActivity(new Intent(mActivity, FastConsultActivity.class),bundle);
                 } else {
                     bundle.clear();
                     bundle.putInt(BundleTags.TYPE, 2);

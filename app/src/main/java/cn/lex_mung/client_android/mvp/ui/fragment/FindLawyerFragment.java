@@ -128,9 +128,9 @@ public class FindLawyerFragment extends BaseFragment<FindLawyerPresenter> implem
             return;
         }
         if (isVisibleToUser) {
-            MobclickAgent.onPageStart("w_y_zls_index");
+            BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "search_lawyer");
         } else {
-            MobclickAgent.onPageEnd("w_y_zls_index");
+            BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "search_lawyer");
         }
     }
 
@@ -505,17 +505,5 @@ public class FindLawyerFragment extends BaseFragment<FindLawyerPresenter> implem
     @Override
     public void killMyself() {
 
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "search_lawyer");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "search_lawyer");
     }
 }

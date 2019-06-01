@@ -110,6 +110,7 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
     CallFieldDialog4 callFieldDialog4;
 
     int requireTypeId;
+    int buryingPointId = -1;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -128,6 +129,7 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        buryingPointId = bundleIntent.getInt(BundleTags.BURYING_POINT,-1);
         mPresenter.getData(bundleIntent.getInt(BundleTags.REGION_ID),
                 bundleIntent.getInt(BundleTags.SOLUTION_TYPE_ID),
                 bundleIntent.getInt(BundleTags.AMOUNT_ID),
@@ -533,12 +535,42 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
     @Override
     public void onResume() {
         super.onResume();
-        BuryingPointHelp.getInstance().onActivityResumed(mActivity, "assistant_success");
+        if(buryingPointId == 1){
+            switch (requireTypeId){
+                case 2:
+                    BuryingPointHelp.getInstance().onActivityResumed(mActivity, "litigation_arbitration_assistant_success");
+                    break;
+                case 9:
+                    BuryingPointHelp.getInstance().onActivityResumed(mActivity, "meeting_assistant_success");
+                    break;
+                case 6:
+                    BuryingPointHelp.getInstance().onActivityResumed(mActivity, "enterprise_assistant_success");
+                    break;
+            }
+        }else{
+            BuryingPointHelp.getInstance().onActivityResumed(mActivity, "assistant_success");
+        }
+
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        BuryingPointHelp.getInstance().onActivityPaused(mActivity, "assistant_success");
+        if(buryingPointId == 1){
+            switch (requireTypeId){
+                case 2:
+                    BuryingPointHelp.getInstance().onActivityPaused(mActivity, "litigation_arbitration_assistant_success");
+                    break;
+                case 9:
+                    BuryingPointHelp.getInstance().onActivityPaused(mActivity, "meeting_assistant_success");
+                    break;
+                case 6:
+                    BuryingPointHelp.getInstance().onActivityPaused(mActivity, "enterprise_assistant_success");
+                    break;
+            }
+        }else{
+            BuryingPointHelp.getInstance().onActivityPaused(mActivity, "assistant_success");
+        }
+
     }
 }

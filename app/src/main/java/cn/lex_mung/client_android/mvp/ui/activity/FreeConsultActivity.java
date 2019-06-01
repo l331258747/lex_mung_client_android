@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.aigestudio.wheelpicker.WheelPicker;
 import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.component.DaggerFreeConsultComponent;
 import cn.lex_mung.client_android.di.module.FreeConsultModule;
 import cn.lex_mung.client_android.mvp.contract.FreeConsultContract;
@@ -52,6 +53,8 @@ public class FreeConsultActivity extends BaseActivity<FreeConsultPresenter> impl
     private WheelPicker wpProvince;
     private WheelPicker wpCity;
 
+    private int buryingPointId = -1;
+
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerFreeConsultComponent
@@ -70,17 +73,28 @@ public class FreeConsultActivity extends BaseActivity<FreeConsultPresenter> impl
     @Override
     public void onResume() {
         super.onResume();
-        BuryingPointHelp.getInstance().onActivityResumed(mActivity, "free_consulation_post");
+        if(buryingPointId == 1){
+            BuryingPointHelp.getInstance().onActivityResumed(mActivity, "free_consulation_from_solution");
+        }else{
+            BuryingPointHelp.getInstance().onActivityResumed(mActivity, "free_consulation_post");
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        BuryingPointHelp.getInstance().onActivityPaused(mActivity, "free_consulation_post");
+        if(buryingPointId == 1){
+            BuryingPointHelp.getInstance().onActivityPaused(mActivity, "free_consulation_from_solution");
+        }else{
+            BuryingPointHelp.getInstance().onActivityPaused(mActivity, "free_consulation_post");
+        }
     }
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        if (bundleIntent != null) {
+            buryingPointId = bundleIntent.getInt(BundleTags.BURYING_POINT, -1);
+        }
         tvRight.setText(R.string.text_submit);
         tvRight.setVisibility(View.VISIBLE);
         mPresenter.onCreate();

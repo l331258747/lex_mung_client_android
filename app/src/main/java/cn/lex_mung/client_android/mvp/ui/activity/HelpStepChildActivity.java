@@ -76,6 +76,7 @@ public class HelpStepChildActivity extends BaseActivity<HelpStepChildPresenter> 
         bundle.putInt(BundleTags.SOLUTION_TYPE_ID, helpStep2Fragment.getTypeId());
         bundle.putInt(BundleTags.AMOUNT_ID, helpStep3Fragment.getAmountId());
         bundle.putInt(BundleTags.REQUIRE_TYPE_ID, requireTypeId);
+        bundle.putInt(BundleTags.BURYING_POINT,1);
 
         launchActivity(new Intent(mActivity, HelpStepLawyerActivity.class), bundle);
 

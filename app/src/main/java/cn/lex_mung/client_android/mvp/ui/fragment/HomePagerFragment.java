@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,7 @@ import cn.lex_mung.client_android.mvp.ui.adapter.HomePageRequirementTypeAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.HelpStepDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.utils.BuryingPointHelp;
+import cn.lex_mung.client_android.utils.LogUtil;
 import me.zl.mvp.base.AdapterViewPager;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
@@ -128,9 +130,9 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
             return;
         }
         if (isVisibleToUser) {
-            MobclickAgent.onPageStart("w_y_shouye_index");
+            BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "first_page");
         } else {
-            MobclickAgent.onPageEnd("w_y_shouye_index");
+            BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "first_page");
         }
     }
 
@@ -149,13 +151,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     public void onResume() {
         super.onResume();
         mPresenter.onResume();
-        BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "first_page");
-    }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "first_page");
     }
 
     private void initAdapter() {
@@ -394,6 +390,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         banner.start();
     }
 
+    boolean isClick = false;
     @Override
     public void setSolutionType(List<SolutionTypeEntity> list) {
         for (SolutionTypeEntity entity : list) {
@@ -403,6 +400,26 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(new AdapterViewPager(getChildFragmentManager(), fragments, titles));
         tabLayout.setupWithViewPager(viewPager);
+
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                if(!isClick){//会执行两次
+                    BuryingPointHelp.getInstance().onEvent(mActivity, "solution_detail","solution_type_click");
+                    isClick = true;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+                isClick = false;
+            }
+        });
     }
 
     @Override

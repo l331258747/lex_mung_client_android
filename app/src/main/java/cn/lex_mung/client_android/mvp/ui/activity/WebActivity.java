@@ -28,6 +28,7 @@ import cn.lex_mung.client_android.mvp.presenter.WebPresenter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.webview.LWebView;
 import cn.lex_mung.client_android.mvp.ui.widget.webview.MyWebViewClient;
+import cn.lex_mung.client_android.utils.BuryingPointHelp;
 import cn.lex_mung.client_android.utils.GsonUtil;
 import cn.lex_mung.client_android.utils.LogUtil;
 import me.zl.mvp.base.BaseActivity;
@@ -74,7 +75,16 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
     @Override
     protected void onResume() {
         super.onResume();
-        MobclickAgent.onPageStart("w_y_shouye_jjfa_list");
+        if(!TextUtils.isEmpty(url)){
+            if(url.indexOf("contractList.html") > -1){
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "more_contract");
+
+            }else if(url.indexOf("solution.html") > -1){
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "solution_detail");
+            }else if(url.indexOf("member") > -1){
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "enterprise_legal_card");
+            }
+        }
         mPresenter.onResume();
         webView.onWebResume();
     }
@@ -82,7 +92,15 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
     @Override
     protected void onPause() {
         super.onPause();
-        MobclickAgent.onPageEnd("w_y_shouye_jjfa_list");
+        if(!TextUtils.isEmpty(url)){
+            if(url.indexOf("contractList.html") > -1){
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "more_contract");
+            }else if(url.indexOf("solution.html") > -1){
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "solution_detail");
+            }else if(url.indexOf("member") > -1){
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "enterprise_legal_card");
+            }
+        }
         webView.onWebPause();
     }
 

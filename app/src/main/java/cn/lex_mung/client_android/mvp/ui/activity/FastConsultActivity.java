@@ -107,6 +107,8 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
     private String consultType = "";
     private int pos = -1 ;
 
+    private int buryingPointId = -1;
+
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerFastConsultComponent
@@ -175,6 +177,9 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        if (bundleIntent != null) {
+            buryingPointId = bundleIntent.getInt(BundleTags.BURYING_POINT, -1);
+        }
         mPresenter.onCreate();
         setPriceLayout(0,0,0);
         setCouponLayout(null,false);
@@ -442,12 +447,21 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
     @Override
     public void onResume() {
         super.onResume();
-        BuryingPointHelp.getInstance().onActivityResumed(mActivity, "quick_consultation");
+        if(buryingPointId == 1){
+            BuryingPointHelp.getInstance().onActivityResumed(mActivity, "quick_consulation_from_solution");
+        }else{
+            BuryingPointHelp.getInstance().onActivityResumed(mActivity, "quick_consultation");
+        }
+
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        BuryingPointHelp.getInstance().onActivityPaused(mActivity, "quick_consultation");
+        if(buryingPointId == 1){
+            BuryingPointHelp.getInstance().onActivityPaused(mActivity, "quick_consulation_from_solution");
+        }else{
+            BuryingPointHelp.getInstance().onActivityPaused(mActivity, "quick_consultation");
+        }
     }
 }

@@ -47,5 +47,6 @@ public class BundleTags {
     public static final String SOLUTION_TYPE_ID = "solution_type_id";
     public static final String AMOUNT_ID = "amount_id";
     public static final String CONTENT = "content";
+    public static final String BURYING_POINT = "burying_point";
 
 }
