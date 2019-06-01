@@ -13,6 +13,7 @@ import java.util.UUID;
 
 import cn.lex_mung.client_android.BuildConfig;
 import cn.lex_mung.client_android.app.DataHelperTags;
+import cn.lex_mung.client_android.mvp.model.api.Api;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.DeviceUtils;
@@ -26,8 +27,8 @@ import okhttp3.Response;
 import static cn.lex_mung.client_android.app.DataHelperTags.IS_LOGIN_SUCCESS;
 
 public class BuryingPointHelp {
-    public static final String EVENT_URL = "https://api-test.lex-mung.com/static/e.gif";
-    public static final String PAGE_URL = "https://api-test.lex-mung.com/static/p.gif";
+    public static final String EVENT_URL = Api.APP_DOMAIN + "static/e.gif";
+    public static final String PAGE_URL = Api.APP_DOMAIN + "static/p.gif";
 
     private volatile static BuryingPointHelp INSTANCE;
 
@@ -56,7 +57,7 @@ public class BuryingPointHelp {
         LogUtil.e("onFragmentResumed:pageName:" + pageName);
         LogUtil.e("onFragmentResumed:pageEvent:" + "start");
         MobclickAgent.onPageStart(pageName);
-        sendHttp(EVENT_URL, getPageData(mActivity, pageName, "start"));
+        sendHttp(PAGE_URL, getPageData(mActivity, pageName, "start"));
     }
 
     //fragment 页面 （服务器，友盟）
@@ -64,21 +65,21 @@ public class BuryingPointHelp {
         LogUtil.e("onFragmentPaused:pageName:" + pageName);
         LogUtil.e("onFragmentPaused:pageEvent:" + "end");
         MobclickAgent.onPageEnd(pageName);
-        sendHttp(EVENT_URL, getPageData(mActivity, pageName, "end"));
+        sendHttp(PAGE_URL, getPageData(mActivity, pageName, "end"));
     }
 
     //activity 页面（服务器）
     public void onActivityResumed(Activity mActivity, String pageName) {
         LogUtil.e("onActivityResumed:pageName:" + pageName);
         LogUtil.e("onActivityResumed:pageEvent:" + "start");
-        sendHttp(EVENT_URL, getPageData(mActivity, pageName, "start"));
+        sendHttp(PAGE_URL, getPageData(mActivity, pageName, "start"));
     }
 
     //activity 页面（服务器）
     public void onActivityPaused(Activity mActivity, String pageName) {
         LogUtil.e("onActivityPaused:pageName:" + pageName);
         LogUtil.e("onActivityPaused:pageEvent:" + "end");
-        sendHttp(EVENT_URL, getPageData(mActivity, pageName, "end"));
+        sendHttp(PAGE_URL, getPageData(mActivity, pageName, "end"));
     }
 
 
