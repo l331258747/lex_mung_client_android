@@ -262,13 +262,13 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_lawyer_letter_click");
                             } else if (entity.getParentRequireTypeId() == 2) {//诉讼仲裁
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_arbitration_click");
-                            } else if (entity.getRequireTypeId() == 9) {//线下见面
+                            } else if (entity.getParentRequireTypeId() == 9) {//线下见面
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_meeting_offline_click");
-                            } else if (entity.getRequireTypeId() == 6) {//企业顾问
+                            } else if (entity.getParentRequireTypeId() == 6) {//企业顾问
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_legal_adviser_click");
-                            } else if (entity.getRequireTypeId() == 30) {//审查合同
+                            } else if (entity.getParentRequireTypeId() == 30) {//审查合同
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_review_contract_click");
-                            } else if (entity.getRequireTypeId() == 5) {//意见书
+                            } else if (entity.getParentRequireTypeId() == 5) {//意见书
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_legal_opinion_click");
                             }
                             break;
