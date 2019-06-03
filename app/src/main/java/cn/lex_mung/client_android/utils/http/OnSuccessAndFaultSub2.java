@@ -3,8 +3,6 @@ package cn.lex_mung.client_android.utils.http;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ParseException;
-import android.text.TextUtils;
-import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
@@ -32,7 +30,7 @@ import retrofit2.HttpException;
 import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGIN_INFO;
 import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGOUT;
 
-public class OnSuccessAndFaultSub2 extends ErrorHandleSubscriber<BaseResponse> {
+public class OnSuccessAndFaultSub2<T extends BaseResponse> extends ErrorHandleSubscriber<T> {
 
     Context context;
 
@@ -42,7 +40,7 @@ public class OnSuccessAndFaultSub2 extends ErrorHandleSubscriber<BaseResponse> {
     }
 
     @Override
-    public void onNext(BaseResponse t) {
+    public void onNext(T t) {
         LogUtil.e("code:"+t.getCode());
         LogUtil.e("msg:"+t.getMessage());
         LogUtil.e("data:"+t.getData());
@@ -82,7 +80,7 @@ public class OnSuccessAndFaultSub2 extends ErrorHandleSubscriber<BaseResponse> {
             BaseResponse baseResponse = new BaseResponse();
             baseResponse.setCode(code);
             baseResponse.setMessage(message);
-            onNext(baseResponse);
+            onNext((T) baseResponse);
         }
     }
 
