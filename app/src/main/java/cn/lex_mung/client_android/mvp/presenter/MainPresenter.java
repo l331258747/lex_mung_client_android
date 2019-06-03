@@ -3,24 +3,32 @@ package cn.lex_mung.client_android.mvp.presenter;
 import android.app.Application;
 import android.content.Intent;
 
-import cn.jpush.im.android.api.JMessageClient;
-import cn.jpush.im.api.BasicCallback;
-import me.zl.mvp.integration.AppManager;
-import me.zl.mvp.di.scope.ActivityScope;
-import me.zl.mvp.mvp.BasePresenter;
-import me.zl.mvp.http.imageloader.ImageLoader;
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
-import me.zl.mvp.utils.AppUtils;
-import me.zl.mvp.utils.DataHelper;
-import me.zl.mvp.utils.LogUtils;
+import com.google.gson.Gson;
 
 import javax.inject.Inject;
 
-import com.google.gson.Gson;
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.api.BasicCallback;
 import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.mvp.contract.MainContract;
+import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
+import cn.lex_mung.client_android.mvp.model.entity.VersionEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.EditInfoActivity;
+import cn.lex_mung.client_android.utils.LogUtil;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
+import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
+import me.zl.mvp.di.scope.ActivityScope;
+import me.zl.mvp.http.imageloader.ImageLoader;
+import me.zl.mvp.integration.AppManager;
+import me.zl.mvp.mvp.BasePresenter;
+import me.zl.mvp.utils.AppUtils;
+import me.zl.mvp.utils.DataHelper;
+import me.zl.mvp.utils.LogUtils;
+import me.zl.mvp.utils.RxLifecycleUtils;
 
 @ActivityScope
 public class MainPresenter extends BasePresenter<MainContract.Model, MainContract.View> {
@@ -36,6 +44,43 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
     @Inject
     public MainPresenter(MainContract.Model model, MainContract.View rootView) {
         super(model, rootView);
+    }
+
+    public void checkVersion() {
+        mModel.checkVersion()
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> {})
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<VersionEntity>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<VersionEntity> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            if (baseResponse.getData().getHasUpdate() == 1) {//有更新
+                                mRootView.startDownload(baseResponse.getData());
+                                return;
+                            }
+                            LogUtil.e("您当前是最新版本!");
+                            setHelpDialog();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        super.onError(t);
+                        setHelpDialog();
+                    }
+                });
+    }
+
+    public void setHelpDialog(){
+        if (!DataHelper.getBooleanSF(mRootView.getActivity(), DataHelperTags.IS_ONE_IN)) {
+            DataHelper.setBooleanSF(mRootView.getActivity(), DataHelperTags.IS_ONE_IN, true);
+            mRootView.showHelpDialog();
+        }
     }
 
     public void onResume() {

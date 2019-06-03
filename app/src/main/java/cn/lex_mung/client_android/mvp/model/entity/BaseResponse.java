@@ -29,6 +29,22 @@ public class BaseResponse<T> implements Serializable {
         return message;
     }
 
+    public void setData(T data) {
+        this.data = data;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
+    }
+
     /**
      * 请求是否成功
      *

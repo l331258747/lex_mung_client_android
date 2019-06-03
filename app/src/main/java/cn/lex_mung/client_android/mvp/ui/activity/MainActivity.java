@@ -1,5 +1,6 @@
 package cn.lex_mung.client_android.mvp.ui.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,10 +25,12 @@ import cn.jpush.im.android.api.model.Message;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.app.DataHelperTags;
+import cn.lex_mung.client_android.app.DownloadUtils;
 import cn.lex_mung.client_android.di.component.DaggerMainComponent;
 import cn.lex_mung.client_android.di.module.MainModule;
 import cn.lex_mung.client_android.mvp.contract.MainContract;
 import cn.lex_mung.client_android.mvp.model.api.Api;
+import cn.lex_mung.client_android.mvp.model.entity.VersionEntity;
 import cn.lex_mung.client_android.mvp.presenter.MainPresenter;
 import cn.lex_mung.client_android.mvp.ui.dialog.HelpStepDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
@@ -78,10 +81,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        if (!DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_ONE_IN)) {
-            DataHelper.setBooleanSF(mActivity, DataHelperTags.IS_ONE_IN, true);
-            showHelpDialog();
-        }
+
+        mPresenter.checkVersion();
 
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         bottomNavigationViewEx.enableAnimation(true);
@@ -93,6 +94,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         setStatusColor(0);
     }
 
+    @Override
     public void showHelpDialog(){
         new HelpStepDialog(mActivity,
                 dialog -> {
@@ -255,5 +257,15 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 break;
         }
         return super.onKeyUp(keyCode, event);
+    }
+
+    @Override
+    public void startDownload(VersionEntity data) {
+        DownloadUtils.getInstance().update(mActivity, data);
+    }
+
+    @Override
+    public Activity getActivity() {
+        return this;
     }
 }

@@ -4,6 +4,10 @@ import android.app.Application;
 
 import com.google.gson.Gson;
 
+import cn.lex_mung.client_android.mvp.model.api.CommonService;
+import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
+import cn.lex_mung.client_android.mvp.model.entity.VersionEntity;
+import io.reactivex.Observable;
 import me.zl.mvp.integration.IRepositoryManager;
 import me.zl.mvp.mvp.BaseModel;
 
@@ -30,5 +34,12 @@ public class MainModel extends BaseModel implements MainContract.Model {
         super.onDestroy();
         this.mGson = null;
         this.mApplication = null;
+    }
+
+    @Override
+    public Observable<BaseResponse<VersionEntity>> checkVersion() {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .checkVersion();
     }
 }
