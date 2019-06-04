@@ -10,6 +10,7 @@ import cn.lex_mung.client_android.mvp.model.entity.SolutionListEntity;
 import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
 
 import me.zl.mvp.http.imageloader.ImageLoader;
+import me.zl.mvp.utils.AppUtils;
 
 public class SolutionAdapter extends BaseQuickAdapter<SolutionListEntity.ListBean, BaseViewHolder> {
     private ImageLoader mImageLoader;
@@ -33,6 +34,7 @@ public class SolutionAdapter extends BaseQuickAdapter<SolutionListEntity.ListBea
                     , ImageConfigImpl
                             .builder()
                             .url(item.getImage())
+                            .imageRadius(AppUtils.dip2px(mContext,10))
                             .imageView(helper.getView(R.id.item_iv_icon))
                             .build());
         }

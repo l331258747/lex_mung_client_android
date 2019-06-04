@@ -10,8 +10,8 @@
         android:id="@id/bannerViewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/qb_px_50"
-        android:layout_marginEnd="@dimen/qb_px_50"
+        android:layout_marginStart="@dimen/qb_px_40"
+        android:layout_marginEnd="@dimen/qb_px_40"
         android:clipChildren="false" />
 
     <RelativeLayout

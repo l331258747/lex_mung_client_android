@@ -24,7 +24,7 @@
             android:id="@+id/tv_search"
             android:layout_width="0dp"
             android:layout_height="@dimen/qb_px_70"
-            android:layout_marginStart="@dimen/qb_px_25"
+            android:layout_marginStart="@dimen/qb_px_40"
             android:layout_marginEnd="@dimen/qb_px_15"
             android:background="@drawable/round_40_ff_all"
             android:gravity="center_vertical"
@@ -40,10 +40,10 @@
 
         <ImageView
             android:id="@+id/iv_search"
-            android:layout_width="@dimen/qb_px_35"
-            android:layout_height="@dimen/qb_px_35"
+            android:layout_width="@dimen/qb_px_30"
+            android:layout_height="@dimen/qb_px_30"
             android:layout_marginStart="@dimen/qb_px_15"
-            android:src="@drawable/ic_search"
+            android:src="@drawable/ic_search2"
             android:transitionName="ivSearch"
             app:layout_constraintBottom_toBottomOf="@id/view"
             app:layout_constraintStart_toStartOf="@id/tv_search"
@@ -53,7 +53,7 @@
             android:id="@+id/iv_message"
             android:layout_width="@dimen/qb_px_70"
             android:layout_height="@dimen/qb_px_70"
-            android:layout_marginEnd="@dimen/qb_px_20"
+            android:layout_marginEnd="@dimen/qb_px_30"
             android:padding="@dimen/qb_px_10"
             android:src="@drawable/ic_message_un"
             app:layout_constraintBottom_toBottomOf="@id/view"
@@ -163,6 +163,7 @@
                                     android:layout_height="match_parent"
                                     android:padding="@dimen/qb_px_20"
                                     android:text="快速电话\n咨询"
+                                    android:textStyle="bold"
                                     android:textColor="@color/c_ff"
                                     android:textSize="16sp" />
 
@@ -187,6 +188,7 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
+                                    android:textStyle="bold"
                                     android:padding="@dimen/qb_px_20"
                                     android:text="专家权威\n咨询"
                                     android:textColor="@color/c_ff"
@@ -212,6 +214,7 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
+                                    android:textStyle="bold"
                                     android:padding="@dimen/qb_px_20"
                                     android:text="免费文字\n咨询"
                                     android:textColor="@color/c_ff"
@@ -258,8 +261,16 @@
                                     android:layout_height="wrap_content"
                                     android:padding="@dimen/qb_px_20"
                                     android:textColor="@color/c_4D4F5A"
+                                    android:textStyle="bold"
                                     android:textSize="14sp"
                                     tools:text="民间借贷\n起草审查合同" />
+
+                                <ImageView
+                                    android:layout_width="@dimen/qb_px_50"
+                                    android:layout_height="@dimen/qb_px_40"
+                                    android:layout_marginBottom="@dimen/qb_px_42"
+                                    android:layout_alignParentBottom="true"
+                                    android:src="@drawable/ic_next"/>
 
                             </RelativeLayout>
 
@@ -287,6 +298,7 @@
                                         android:id="@+id/tv_hot_2"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:textStyle="bold"
                                         android:padding="@dimen/qb_px_20"
                                         android:textColor="@color/c_4D4F5A"
                                         android:textSize="14sp"
@@ -310,6 +322,7 @@
                                         android:id="@+id/tv_hot_3"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:textStyle="bold"
                                         android:padding="@dimen/qb_px_20"
                                         android:textColor="@color/c_4D4F5A"
                                         android:textSize="14sp"
@@ -325,11 +338,9 @@
                             android:id="@+id/banner"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_marginStart="@dimen/qb_px_35"
                             android:layout_marginTop="@dimen/qb_px_60"
-                            android:layout_marginEnd="@dimen/qb_px_35"
                             app:banner_layout="@layout/banner1"
-                            app:layout_constraintDimensionRatio="h,16:7"
+                            app:layout_constraintDimensionRatio="h,67:26"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/ll_home_contract" />
@@ -421,12 +432,12 @@
 
     <ImageView
         android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/qb_px_150"
+        android:layout_height="@dimen/qb_px_150"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginRight="@dimen/qb_px_50"
-        android:layout_marginBottom="@dimen/qb_px_50"
+        android:layout_marginRight="@dimen/qb_px_20"
+        android:layout_marginBottom="@dimen/qb_px_20"
         android:src="@drawable/ic_help_floating" />
 
 </RelativeLayout>

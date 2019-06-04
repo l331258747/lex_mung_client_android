@@ -186,7 +186,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                         , ImageConfigImpl
                                 .builder()
                                 .url(path.toString())
-//                                .imageRadius(AppUtils.dip2px(mActivity,10))//图片存在bug
+                                .imageRadius(AppUtils.dip2px(mActivity,10))
                                 .imageView(imageView)
                                 .build());
             }

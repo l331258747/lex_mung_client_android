@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import me.zl.mvp.di.module.GlobalConfigModule;
@@ -75,7 +76,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy<ImageCo
         }
 
         if (config.isImageRadius()) {
-            glideRequest.transform(new RoundedCorners(config.getImageRadius()));
+            glideRequest.transforms(new CenterCrop(),new RoundedCorners(config.getImageRadius()));
         }
 
         if (config.isBlurImage()) {
