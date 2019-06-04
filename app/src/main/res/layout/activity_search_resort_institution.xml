@@ -35,11 +35,11 @@
             android:textSize="14sp" />
 
         <ImageView
-            android:layout_width="@dimen/qb_px_40"
-            android:layout_height="@dimen/qb_px_40"
+            android:layout_width="@dimen/qb_px_30"
+            android:layout_height="@dimen/qb_px_30"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/qb_px_25"
-            android:src="@drawable/ic_search" />
+            android:src="@drawable/ic_search2" />
 
         <Button
             android:id="@+id/bt_search"

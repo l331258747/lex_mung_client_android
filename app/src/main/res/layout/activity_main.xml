@@ -8,14 +8,13 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottom_navigation_view_ex"
-        android:background="@android:color/white" />
+        android:layout_above="@+id/bottom_navigation_view_ex"/>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/qb_px_1"
-        android:layout_above="@id/bottom_navigation_view_ex"
-        android:background="@color/c_b5b5b5" />
+        android:layout_height="@dimen/qb_px_140"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/ic_bottom_bg" />
 
     <cn.lex_mung.client_android.mvp.ui.widget.BottomNavigationViewEx
         android:id="@+id/bottom_navigation_view_ex"

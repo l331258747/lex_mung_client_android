@@ -48,12 +48,12 @@
                 android:transitionName="tvSearch" />
 
             <ImageView
-                android:layout_width="@dimen/qb_px_35"
-                android:layout_height="@dimen/qb_px_35"
+                android:layout_width="@dimen/qb_px_30"
+                android:layout_height="@dimen/qb_px_30"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/qb_px_15"
                 android:layout_toEndOf="@id/iv_back"
-                android:src="@drawable/ic_search"
+                android:src="@drawable/ic_search2"
                 android:transitionName="ivSearch" />
 
             <TextView
