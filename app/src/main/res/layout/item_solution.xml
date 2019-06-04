@@ -6,9 +6,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/white"
     android:orientation="vertical"
-    android:paddingStart="@dimen/qb_px_35"
+    android:paddingStart="@dimen/qb_px_40"
     android:paddingTop="@dimen/qb_px_30"
-    android:paddingEnd="@dimen/qb_px_35"
+    android:paddingEnd="@dimen/qb_px_40"
     android:paddingBottom="@dimen/qb_px_30">
 
     <TextView
@@ -19,6 +19,7 @@
         android:ellipsize="end"
         android:includeFontPadding="false"
         android:maxLines="2"
+        tools:text="以帮助"
         android:textColor="@color/c_323232"
         android:textSize="16sp"
         android:lineSpacingExtra="@dimen/qb_px_15"
