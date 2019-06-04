@@ -314,7 +314,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         new HelpStepDialog(mActivity,
                 dialog -> {
                     launchActivity(new Intent(mActivity, HelpStepActivity.class));
-                }).setContent("服务助手平均每天帮助163名用户找到合适的法律服务和律师，它能帮助您解决如下问题：")
+                }).setContent("服务助手平均每天帮助2561名用户找到合适的法律服务和律师，它能帮助您解决如下问题：")
                 .setContent2("· 不知道当前是否需要法律服务\n· 不知道选择什么样的律师\n· 不知道适合自己的律师费用")
                 .setCannelStr("不需要")
                 .setSubmitStr("试试看").show();

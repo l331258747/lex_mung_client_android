@@ -27,6 +27,7 @@ import cn.lex_mung.client_android.mvp.ui.activity.MessageChatActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.OrderDetailTabActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.OrderDetailsActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.MyOrderAdapter;
+import cn.lex_mung.client_android.mvp.ui.adapter.MyOrderAdapter2;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
@@ -53,7 +54,7 @@ public class MyOrderPresenter extends BasePresenter<MyOrderContract.Model, MyOrd
 
     private int pageNum;
     private int totalNum;
-    private MyOrderAdapter adapter;
+    private MyOrderAdapter2 adapter;
     private SmartRefreshLayout smartRefreshLayout;
 
     @Inject
@@ -68,7 +69,7 @@ public class MyOrderPresenter extends BasePresenter<MyOrderContract.Model, MyOrd
     }
 
     private void initAdapter() {
-        adapter = new MyOrderAdapter();
+        adapter = new MyOrderAdapter2(mImageLoader);
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;
             OrderEntity.ListBean entity = adapter.getItem(position);

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/qb_px_35"
+    android:layout_marginTop="@dimen/qb_px_35"
+    android:layout_marginEnd="@dimen/qb_px_35"
+    android:background="@drawable/button_withe_down_round"
+    android:paddingStart="@dimen/qb_px_30"
+    android:paddingTop="@dimen/qb_px_25"
+    android:paddingEnd="@dimen/qb_px_30"
+    android:paddingBottom="@dimen/qb_px_30">
+
+    <TextView
+        android:id="@+id/item_tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_5"
+        android:includeFontPadding="false"
+        android:maxLength="10"
+        android:textColor="@color/c_323232"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="标题标题标题标题标题标题标题" />
+
+
+    <TextView
+        android:id="@+id/item_tv_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/qb_px_15"
+        android:background="@drawable/round_100_f8f8f8_all_d8d8d8"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:paddingLeft="@dimen/qb_px_10"
+        android:paddingTop="@dimen/qb_px_4"
+        android:paddingRight="@dimen/qb_px_10"
+        android:paddingBottom="@dimen/qb_px_4"
+        android:textColor="@color/c_d8d8d8"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/item_tv_title"
+        app:layout_constraintStart_toEndOf="@+id/item_tv_title"
+        app:layout_constraintTop_toTopOf="@+id/item_tv_title"
+        tools:text="状态" />
+
+    <LinearLayout
+        android:id="@+id/ll_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:visibility="visible">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_money_unit2" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/qb_px_8"
+            android:includeFontPadding="false"
+            android:orientation="horizontal"
+            android:text="300"
+            android:textColor="@color/c_EB5514"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+
+    <View
+        android:id="@+id/view_line"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/qb_px_1"
+        android:layout_marginTop="@dimen/qb_px_30"
+        android:background="@color/c_f4f4f4"
+        app:layout_constraintTop_toBottomOf="@+id/item_tv_title" />
+
+    <TextView
+        android:id="@+id/item_tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_20"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        android:maxLines="2"
+        android:textColor="@color/c_737373"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@+id/view_line"
+        tools:text="内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容" />
+
+
+    <View
+        android:id="@+id/view_bottom"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_70"
+        android:layout_marginTop="@dimen/qb_px_30"
+        android:background="@drawable/round_40_f7f7f7_all"
+        app:layout_constraintTop_toBottomOf="@+id/item_tv_content" />
+
+    <ImageView
+        android:id="@+id/iv_head"
+        android:layout_width="@dimen/qb_px_50"
+        android:layout_height="@dimen/qb_px_50"
+        android:layout_marginStart="@dimen/qb_px_10"
+        app:layout_constraintBottom_toBottomOf="@+id/view_bottom"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view_bottom"
+        tools:src="@drawable/ic_avatar" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/qb_px_15"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/view_bottom"
+        app:layout_constraintStart_toEndOf="@+id/iv_head"
+        app:layout_constraintTop_toTopOf="@+id/view_bottom"
+        tools:text="姓名" />
+
+    <TextView
+        android:id="@+id/item_tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/qb_px_15"
+        android:layout_marginEnd="@dimen/qb_px_20"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/view_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view_bottom"
+        tools:text="时间" />
+
+    <!--<TextView-->
+    <!--android:id="@+id/item_tv_time"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:includeFontPadding="false"-->
+    <!--android:text="时间"-->
+    <!--android:textColor="@color/c_b5b5b5"-->
+    <!--android:textSize="12sp"-->
+    <!--app:layout_constraintBottom_toBottomOf="@id/item_view"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+
+</android.support.constraint.ConstraintLayout>

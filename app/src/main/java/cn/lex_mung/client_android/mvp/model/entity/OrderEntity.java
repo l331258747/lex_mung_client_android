@@ -3,6 +3,8 @@ package cn.lex_mung.client_android.mvp.model.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import me.zl.mvp.utils.StringUtils;
+
 public class OrderEntity implements Serializable {
 
     /**
@@ -257,6 +259,15 @@ public class OrderEntity implements Serializable {
         private int pageSize;
         private int typeId;
         private int isHot;
+        private int replyCount;
+
+        public int getReplyCount() {
+            return replyCount;
+        }
+
+        public String getReplyCountStr() {
+            return replyCount+"条回复";
+        }
 
         public int getIsHot() {
             return isHot;
@@ -410,6 +421,10 @@ public class OrderEntity implements Serializable {
             return lmemberName;
         }
 
+        public String getLmemberNameStr() {
+            return lmemberName + "律师";
+        }
+
         public void setLmemberName(String lmemberName) {
             this.lmemberName = lmemberName;
         }
@@ -456,6 +471,10 @@ public class OrderEntity implements Serializable {
 
         public double getBuyerPayAmount() {
             return buyerPayAmount;
+        }
+
+        public String getBuyerPayAmountStr() {
+            return StringUtils.getStringNum(buyerPayAmount);
         }
 
         public void setBuyerPayAmount(double buyerPayAmount) {

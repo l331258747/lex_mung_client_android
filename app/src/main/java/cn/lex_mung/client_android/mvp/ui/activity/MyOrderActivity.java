@@ -15,15 +15,21 @@ import cn.lex_mung.client_android.di.module.MyOrderModule;
 import cn.lex_mung.client_android.mvp.contract.MyOrderContract;
 import cn.lex_mung.client_android.mvp.presenter.MyOrderPresenter;
 import cn.lex_mung.client_android.mvp.ui.adapter.MyOrderAdapter;
+import cn.lex_mung.client_android.mvp.ui.adapter.MyOrderAdapter2;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
+import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.utils.AppUtils;
 
 public class MyOrderActivity extends BaseActivity<MyOrderPresenter> implements MyOrderContract.View {
+    @Inject
+    ImageLoader mImageLoader;
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -51,15 +57,14 @@ public class MyOrderActivity extends BaseActivity<MyOrderPresenter> implements M
     }
 
     @Override
-    public void initRecyclerView(MyOrderAdapter adapter) {
+    public void initRecyclerView(MyOrderAdapter2 adapter) {
         AppUtils.configRecyclerView(recyclerView, new LinearLayoutManager(mActivity));
-        recyclerView.addItemDecoration(new SpacesItemDecoration(0, AppUtils.dip2px(mActivity, AppUtils.getXmlDef(mActivity, R.dimen.qb_px_35))));
         recyclerView.setAdapter(adapter);
         adapter.setEmptyView(R.layout.layout_loading_view, (ViewGroup) recyclerView.getParent());
     }
 
     @Override
-    public void setEmptyView(MyOrderAdapter adapter) {
+    public void setEmptyView(MyOrderAdapter2 adapter) {
         adapter.setEmptyView(R.layout.layout_empty_view, (ViewGroup) recyclerView.getParent());
     }
 
