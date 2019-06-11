@@ -260,6 +260,11 @@ public class OrderEntity implements Serializable {
         private int typeId;
         private int isHot;
         private int replyCount;
+        private int status;
+
+        public int getStatus() {
+            return status;
+        }
 
         public int getReplyCount() {
             return replyCount;

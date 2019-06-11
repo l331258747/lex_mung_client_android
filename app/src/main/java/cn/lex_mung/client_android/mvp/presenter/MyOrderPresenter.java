@@ -83,23 +83,35 @@ public class MyOrderPresenter extends BasePresenter<MyOrderContract.Model, MyOrd
                     mRootView.launchActivity(new Intent(mApplication, FreeConsultDetail1Activity.class), bundle);
                     break;
                 case 5://客户需求
-                    if(entity.getIsHot() == 1){
-                        bundle.clear();
-                        bundle.putInt(BundleTags.ID, entity.getId());
-                        bundle.putString(BundleTags.ORDER_NO,entity.getOrderNo());
-                        bundle.putInt(BundleTags.STATE,entity.getOrderStatus());
-                        mRootView.launchActivity(new Intent(mApplication, OrderDetailTabActivity.class), bundle);
-                        return;
-                    }
+//                    if(entity.getIsHot() == 1){
+//                        bundle.clear();
+//                        bundle.putInt(BundleTags.ID, entity.getId());
+//                        bundle.putString(BundleTags.ORDER_NO,entity.getOrderNo());
+//                        bundle.putInt(BundleTags.STATE,entity.getOrderStatus());
+//                        mRootView.launchActivity(new Intent(mApplication, OrderDetailTabActivity.class), bundle);
+//                        return;
+//                    }
+//                    bundle.clear();
+//                    bundle.putInt(BundleTags.ID, entity.getLawyerMemberId());
+//                    bundle.putString(BundleTags.TITLE, entity.getMemberName());
+//                    mRootView.launchActivity(new Intent(mApplication, MessageChatActivity.class), bundle);
+
                     bundle.clear();
-                    bundle.putInt(BundleTags.ID, entity.getLawyerMemberId());
-                    bundle.putString(BundleTags.TITLE, entity.getMemberName());
-                    mRootView.launchActivity(new Intent(mApplication, MessageChatActivity.class), bundle);
+                    bundle.putInt(BundleTags.TYPE, entity.getTypeId());
+                    bundle.putInt(BundleTags.ID, entity.getId());
+                    bundle.putInt(BundleTags.IS_SHOW,entity.getIsHot());
+                    bundle.putString(BundleTags.TITLE,entity.getTypeName());
+                    bundle.putString(BundleTags.ORDER_NO,entity.getOrderNo());
+                    mRootView.launchActivity(new Intent(mApplication, OrderDetailsActivity.class), bundle);
+
                     break;
                 case 3:
                 case 4:
+                    bundle.clear();
                     bundle.putInt(BundleTags.TYPE, entity.getTypeId());
                     bundle.putInt(BundleTags.ID, entity.getId());
+                    bundle.putString(BundleTags.TITLE,entity.getOrderType());
+                    bundle.putString(BundleTags.ORDER_NO,entity.getOrderNo());
                     mRootView.launchActivity(new Intent(mApplication, OrderDetailsActivity.class), bundle);
                     break;
             }

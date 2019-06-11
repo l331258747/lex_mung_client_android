@@ -1,9 +1,15 @@
 package cn.lex_mung.client_android.mvp.contract;
 
+import android.app.Activity;
+import android.view.View;
+
+import java.util.List;
+
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.OrderDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.RemainEntity;
 
+import cn.lex_mung.client_android.mvp.model.entity.order.RequirementDetailEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.mvp.IView;
 import me.zl.mvp.mvp.IModel;
@@ -17,11 +23,15 @@ public interface OrderDetailsContract {
 
         void setOrderName(String businessType);
 
+        void setOrderStatus(String statusName);
+
         void setOrderType(String serviceType);
 
         void setOrderAmount(String s);
 
-        void setOrderStatus(String statusName);
+        void setOrderPayPrice(String s);
+
+        void setPayType(String s);
 
         void setOrderCustomer(String memberName);
 
@@ -37,12 +47,30 @@ public interface OrderDetailsContract {
 
         void call(String phone);
 
-        void setCouponLayout(String couponPrice, String amountPrice);
+        void setCouponLayout(int useCoupon, String couponPrice, String couponType);
+
+        void setCouponPrice(String s);
+        void setCouponType(String s);
+
+        void setInfoContent(String s);
+
+        void setOrderDetailView(int index);
+
+        void setBottomStatus(String btnName, int textColor, int bgColor, android.view.View.OnClickListener onClick);
+        void setBottomStatus(String btnName,int textColor,int bgColor,android.view.View.OnClickListener onClick,boolean isHide);
+        void setLawyerLayout(int id,String name,String nameContent,String headUrl);
+        void setLawyerClick(boolean isClick);
+
+        Activity getActivity();
     }
 
     interface Model extends IModel {
         Observable<BaseResponse<OrderDetailsEntity>> getOrderDetail(RequestBody body);
 
         Observable<BaseResponse<RemainEntity>> getUserPhone(String orderNo);
+
+        Observable<BaseResponse<List<RequirementDetailEntity>>> requirementDetail(int requirementId,String orderNo);
+
+
     }
 }

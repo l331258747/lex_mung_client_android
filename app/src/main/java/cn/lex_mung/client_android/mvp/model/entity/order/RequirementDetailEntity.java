@@ -2,6 +2,8 @@ package cn.lex_mung.client_android.mvp.model.entity.order;
 
 import java.util.List;
 
+import me.zl.mvp.utils.StringUtils;
+
 public class RequirementDetailEntity {
 
     int id;
@@ -15,7 +17,7 @@ public class RequirementDetailEntity {
     String regionName;
     int typeId;
     int orderStatus;
-    int payType;
+    String payType;
     float payAmount;
     int hasPay;
     String payFailReason;
@@ -57,6 +59,62 @@ public class RequirementDetailEntity {
     int requireType;
     int isReceipt;
     int requirementId;
+    double buyerPayAmount;
+    int couponType;
+    String couponName;
+
+    int useCoupon;
+    double couponDeductionAmount;
+    String description;
+    String rname;
+    String iconImage;
+    String institutionName;
+
+    public String getIconImage() {
+        return iconImage;
+    }
+
+    public String getLMemeberName2(){
+        return rname + " | " + institutionName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public double getCouponDeductionAmount() {
+        return couponDeductionAmount;
+    }
+
+    public String getCouponTypeStr() {//优惠券类型,1.会员卡，2.电子优惠券，3.线下优惠券，4.体验券，目前只做1和2
+        switch (couponType) {
+            case 1:
+                return "会员卡-" + couponName;
+            case 2:
+                return "电子优惠券-" + couponName;
+            case 3:
+                return "线下优惠券-" + couponName;
+            case 4:
+                return "体验券-" + couponName;
+        }
+        return "";
+    }
+
+    public int getUseCoupon() {
+        return useCoupon;
+    }
+
+    public String getCouponDeductionAmountStr() {
+        return StringUtils.getStringNum(couponDeductionAmount) + "元";
+    }
+
+    public double getBuyerPayAmount() {
+        return buyerPayAmount;
+    }
+
+    public String getBuyerPayAmountStr() {
+        return StringUtils.getStringNum(buyerPayAmount) + "元";
+    }
 
     public String getLmobile() {
         return lmobile;
@@ -129,8 +187,24 @@ public class RequirementDetailEntity {
     }
 
 
-    public int getPayType() {
+    public String getPayType() {
         return payType;
+    }
+
+    public String getPayTypeStr() {//1.微信，2支付宝，3余额，4会员卡，5百度）
+        switch (payType) {
+            case "1":
+                return "微信支付";
+            case "2":
+                return "支付宝支付";
+            case "3":
+                return "余额支付";
+            case "4":
+                return "会员卡支付";
+            case "5":
+                return "百度支付";
+        }
+        return payType + "支付";
     }
 
     public float getPayAmount() {
@@ -283,5 +357,19 @@ public class RequirementDetailEntity {
 
     public int getRequirementId() {
         return requirementId;
+    }
+
+    public String getStatusValue() {
+        if(status == -1)
+            return "支付未成功";
+        if(status == 1 && isReceipt == 0)
+            return "待接单";
+        if(isReceipt == 1)
+            return "已接单";
+        if(isReceipt == 1)
+            return "已拒单";
+        if(isReceipt == 3)
+            return "已完成";
+        return "";
     }
 }

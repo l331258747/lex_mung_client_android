@@ -638,6 +638,12 @@ public interface CommonService {
     ///lawyer/order/requirement/detail/{requirementId}
     //GET
     //付费需求详细信息
+    @GET("lawyer/order/requirement/detail/{requirementId}/{orderNo}")
+    Observable<BaseResponse<List<RequirementDetailEntity>>> requirementDetail(@Path("requirementId") int requirementId,@Path("orderNo") String orderNo);
+
+    ///lawyer/order/requirement/detail/{requirementId}
+    //GET
+    //付费需求详细信息
     @GET("lawyer/order/requirement/detail/{requirementId}")
     Observable<BaseResponse<List<RequirementDetailEntity>>> requirementDetail(@Path("requirementId") int requirementId);
 

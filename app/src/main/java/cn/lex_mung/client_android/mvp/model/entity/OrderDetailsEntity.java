@@ -2,6 +2,9 @@ package cn.lex_mung.client_android.mvp.model.entity;
 
 import java.util.List;
 
+import me.zl.mvp.utils.AppUtils;
+import me.zl.mvp.utils.StringUtils;
+
 public class OrderDetailsEntity {
 
 
@@ -289,6 +292,21 @@ public class OrderDetailsEntity {
         private double payAmount;
         private String orderAmount;
         private List<QuickTimeBean> quickTime;
+        private int callback;
+        private String institutionName;
+        private String lmobile;
+
+        public String getLmobile() {
+            return lmobile;
+        }
+
+        public String getInstitutionName() {
+            return institutionName;
+        }
+
+        public int getCallback() {
+            return callback;
+        }
 
         public int getId() {
             return id;
@@ -382,6 +400,22 @@ public class OrderDetailsEntity {
             return payType;
         }
 
+        public String getPayTypeStr() {//1.微信，2支付宝，3余额，4会员卡，5百度）
+            switch (payType) {
+                case "1":
+                    return "微信支付";
+                case "2":
+                    return "支付宝支付";
+                case "3":
+                    return "余额支付";
+                case "4":
+                    return "会员卡支付";
+                case "5":
+                    return "百度支付";
+            }
+            return payType + "支付";
+        }
+
         public void setPayType(String payType) {
             this.payType = payType;
         }
@@ -446,6 +480,10 @@ public class OrderDetailsEntity {
             return lmemberName;
         }
 
+        public String getLMemeberName2(){
+            return rname + " | " + institutionName;
+        }
+
         public void setLmemberName(String lmemberName) {
             this.lmemberName = lmemberName;
         }
@@ -500,6 +538,10 @@ public class OrderDetailsEntity {
 
         public double getBuyerPayAmount() {
             return buyerPayAmount;
+        }
+
+        public String getBuyerPayAmountStr() {
+            return StringUtils.getStringNum(buyerPayAmount) + "元";
         }
 
         public void setBuyerPayAmount(double buyerPayAmount) {
@@ -574,12 +616,30 @@ public class OrderDetailsEntity {
             return couponType;
         }
 
+        public String getCouponTypeStr() {//优惠券类型,1.会员卡，2.电子优惠券，3.线下优惠券，4.体验券，目前只做1和2
+            switch (couponType) {
+                case 1:
+                    return "会员卡-" + couponName;
+                case 2:
+                    return "电子优惠券-" + couponName;
+                case 3:
+                    return "线下优惠券-" + couponName;
+                case 4:
+                    return "体验券-" + couponName;
+            }
+            return "";
+        }
+
         public void setCouponType(int couponType) {
             this.couponType = couponType;
         }
 
         public double getCouponDeductionAmount() {
             return couponDeductionAmount;
+        }
+
+        public String getCouponDeductionAmountStr() {
+            return StringUtils.getStringNum(couponDeductionAmount) + "元";
         }
 
         public void setCouponDeductionAmount(double couponDeductionAmount) {
@@ -612,6 +672,10 @@ public class OrderDetailsEntity {
 
         public double getPayAmount() {
             return payAmount;
+        }
+
+        public String getPayAmountStr() {
+            return StringUtils.getStringNum(payAmount) + "元";
         }
 
         public void setPayAmount(double payAmount) {
