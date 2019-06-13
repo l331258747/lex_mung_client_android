@@ -27,7 +27,7 @@ public class SolutionTypeEntity {
     private int quick;
     private int freeText;
     private int expert;
-    private double price;
+    private float price;
 
     public int getFreeText() {
         return freeText;
@@ -113,11 +113,11 @@ public class SolutionTypeEntity {
         this.expert = expert;
     }
 
-    public double getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 }

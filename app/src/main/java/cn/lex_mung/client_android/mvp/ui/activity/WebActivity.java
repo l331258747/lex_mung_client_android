@@ -122,6 +122,9 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             isShare = bundleIntent.getBoolean(BundleTags.IS_SHARE, true);
             isJump = bundleIntent.getBoolean(BundleTags.STATE,true);
         }
+
+        LogUtil.e("url:" + url);
+
         if (isShare) {
             tvRight.setVisibility(View.VISIBLE);
             tvRight.setText(R.string.text_share);
@@ -132,9 +135,6 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
         tvTitle.setText(title);
         showLoading("");
         initWebView();
-
-
-        LogUtil.e("url:" + url);
 
     }
 

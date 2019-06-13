@@ -227,7 +227,7 @@ public class OrderDetailsPresenter extends BasePresenter<OrderDetailsContract.Mo
                             if (!TextUtils.isEmpty(bean.getCreateDate())) {//时间
                                 mRootView.setOrderTime(bean.getCreateDate());
                             }
-                            if (!TextUtils.isEmpty(bean.getTypeName())) {//商品名称
+                            if (!TextUtils.isEmpty(bean.getOrderType())) {//商品名称
                                 mRootView.setOrderName(bean.getOrderType());
                             }
                             if (!TextUtils.isEmpty(bean.getStatusValue())) {//订单状态
@@ -314,11 +314,22 @@ public class OrderDetailsPresenter extends BasePresenter<OrderDetailsContract.Mo
 //                                }
                             } else if (bean.getTypeId() == 3) {//专家咨询
                                 mRootView.setOrderDetailView(-1);
-                                mRootView.setBottomStatus("电话咨询", R.color.c_ff, R.color.c_1EC88B, v -> {
+                                mRootView.setLawyerClick(true);
+
+                                mRootView.setBottomStatus("继续拨打", R.color.c_ff, R.color.c_1EC88B, v -> {
                                     Intent dialIntent =  new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + bean.getLmobile()));
                                     mRootView.launchActivity(dialIntent);
-                                });//改成回调
-                                mRootView.setLawyerClick(true);
+                                });
+
+                                mRootView.setOrderStatus(null);//不需要
+
+                                if(bean.getCallTime() <= 0){
+                                    mRootView.setTalkTime("请等待律师接单");
+                                }else{
+                                    mRootView.setTalkTime(bean.getCallTimeStr());
+                                    if(!TextUtils.isEmpty(bean.getBeginTime()))
+                                    mRootView.setTalkRecord(bean.getBeginTime() + "    " + bean.getCallTimeStr());
+                                }
 
 //                                if(){//TODO 电话咨询展示不一样，  如果为未支付为null不显示价格信息
 //                                    mRootView.setOrderAmount(null);//订单价格

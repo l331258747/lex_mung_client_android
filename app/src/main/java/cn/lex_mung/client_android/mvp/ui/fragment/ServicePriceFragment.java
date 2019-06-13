@@ -11,8 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.umeng.analytics.MobclickAgent;
-
 import butterknife.BindView;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
@@ -22,14 +20,13 @@ import cn.lex_mung.client_android.mvp.contract.ServicePriceContract;
 import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
 import cn.lex_mung.client_android.mvp.presenter.ServicePricePresenter;
-import cn.lex_mung.client_android.mvp.ui.activity.AccountPayActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.MyAccountActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.ServicePriceAdapter;
-import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog;
-import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog2;
-import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog3;
-import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog4;
 import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog5;
+import cn.lex_mung.client_android.mvp.ui.dialog.CurrencyDialog;
+import cn.lex_mung.client_android.mvp.ui.dialog.CurrencyDialog2;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import cn.lex_mung.client_android.mvp.ui.dialog.OnlyTextDialog;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
@@ -38,8 +35,7 @@ public class ServicePriceFragment extends BaseFragment<ServicePricePresenter> im
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    CallFieldDialog3 callFieldDialog3;
-    CallFieldDialog4 callFieldDialog4;
+    LawsHomePagerBaseEntity lawsHomePagerBaseEntity;
 
     public static ServicePriceFragment newInstance(LawsHomePagerBaseEntity entity) {
         ServicePriceFragment fragment = new ServicePriceFragment();
@@ -67,9 +63,9 @@ public class ServicePriceFragment extends BaseFragment<ServicePricePresenter> im
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         if (getArguments() != null) {
-            LawsHomePagerBaseEntity entity = (LawsHomePagerBaseEntity) getArguments().getSerializable(BundleTags.ENTITY);
-            if (entity == null) return;
-            mPresenter.setEntity(entity);
+            lawsHomePagerBaseEntity = (LawsHomePagerBaseEntity) getArguments().getSerializable(BundleTags.ENTITY);
+            if (lawsHomePagerBaseEntity == null) return;
+            mPresenter.setEntity(lawsHomePagerBaseEntity);
         }
     }
 
@@ -77,26 +73,11 @@ public class ServicePriceFragment extends BaseFragment<ServicePricePresenter> im
     public void onResume() {
         super.onResume();
         mPresenter.onResume();
-    }
 
-    @Override
-    public void showDialDialog(ExpertPriceEntity entity) {
-        new CallFieldDialog2(mActivity
-                , dialog -> {
-            mPresenter.sendCall(entity.getCallCenterNo());
-            dialog.dismiss();
+        if(isGoCall){
+            showTestDialog2();
+            isGoCall = false;
         }
-                , entity).show();
-    }
-
-    @Override
-    public void showDial1Dialog(String string) {
-        callFieldDialog3 = new CallFieldDialog3(mActivity,string,dialog -> {
-            callFieldDialog4 = new CallFieldDialog4(mActivity,"现在关闭将无法联系律师\n是否继续关闭");
-            callFieldDialog4.show();
-            dialog.dismiss();
-        });
-        callFieldDialog3.show();
     }
 
     @Override
@@ -106,23 +87,7 @@ public class ServicePriceFragment extends BaseFragment<ServicePricePresenter> im
     }
 
     @Override
-    public void showToPayDialog(String s) {
-        new CallFieldDialog(mActivity, dialog -> {
-            MobclickAgent.onEvent(mActivity, "w_y_shouye_zjzx_detail_chongzhi");
-            launchActivity(new Intent(mActivity, AccountPayActivity.class));
-        }, s, "充值").show();
-    }
-
-    @Override
     public void showToErrorDialog(String s) {
-        if(callFieldDialog3 != null && callFieldDialog3.isShowing()){
-            callFieldDialog3.dismiss();
-        }
-
-        if(callFieldDialog4 != null && callFieldDialog4.isShowing()){
-            callFieldDialog4.dismiss();
-        }
-
         new CallFieldDialog5(mActivity, dialog -> {
             Intent dialIntent =  new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "400-811-3060"));
             startActivity(dialIntent);
@@ -170,5 +135,69 @@ public class ServicePriceFragment extends BaseFragment<ServicePricePresenter> im
     @Override
     public void killMyself() {
 
+    }
+
+    //-----电话
+
+    //查询余额不足
+    public void showBalanceNoDialog(ExpertPriceEntity entity){
+        showOnlyDialog(entity);
+        new Thread(() -> {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            mActivity.runOnUiThread(() -> {
+                onlyTextDialog.dismiss();
+                bundle.clear();
+                bundle.putSerializable(BundleTags.ENTITY,entity);
+                launchActivity(new Intent(mActivity, MyAccountActivity.class),bundle);
+            });
+        }).start();
+    }
+
+    OnlyTextDialog onlyTextDialog;
+    public void showOnlyDialog(ExpertPriceEntity entity){
+        String string = "当前余额剩余通话时长不足%1$s分钟，请充值余额。";
+        onlyTextDialog = new OnlyTextDialog(mActivity).setContent(String.format(string,entity.getMinimumDuration()));
+        onlyTextDialog.show();
+    }
+
+    //查看余额充足
+    public void showBalanceYesDialog(ExpertPriceEntity entity){
+        new CurrencyDialog2(mActivity,entity)
+                .setClickYes(dialog -> {
+                    mPresenter.sendCall(entity.getCallCenterNo());
+                })
+                .setClickNo(dialog -> {
+                    bundle.clear();
+                    bundle.putSerializable(BundleTags.ENTITY,entity);
+                    launchActivity(new Intent(mActivity, MyAccountActivity.class),bundle);
+                }).show();
+    }
+
+
+    boolean isGoCall = false;
+    @Override
+    public void GoCall(String str) {
+        Intent dialIntent =  new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + str));
+        startActivity(dialIntent);
+        isGoCall = true;
+    }
+
+    public void showTestDialog2(){
+        new CurrencyDialog(mActivity)
+                .showTitleBg(false)
+                .setContent("如问题仍然未解决，您可再次拨打。")
+                .setContentLineSpacing(R.dimen.qb_px_20)
+                .setContentSize(14)
+                .setSubmitStr("已解决")
+                .setCannelStr("再次致电")
+                .setClickNo(dialog -> {
+                    if (lawsHomePagerBaseEntity == null) return;
+                        mPresenter.setEntity(lawsHomePagerBaseEntity);
+                }).show();
     }
 }

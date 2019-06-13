@@ -9,6 +9,7 @@ import android.os.Message;
 import android.text.TextUtils;
 
 import cn.lex_mung.client_android.mvp.ui.adapter.MyAccountPayAdapter;
+import cn.lex_mung.client_android.utils.DecimalUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -149,7 +150,8 @@ public class AccountPayPresenter extends BasePresenter<AccountPayContract.Model,
                 }
                 break;
         }
-        long money = new BigDecimal(payMoney).multiply(new BigDecimal(100)).intValue();
+//        long money = new BigDecimal(payMoney).multiply(new BigDecimal(100)).intValue();
+        long money = (long) DecimalUtil.multiply(payMoney,100);
         Map<String, Object> map = new HashMap<>();
         map.put("money", money);
         map.put("type", payType);

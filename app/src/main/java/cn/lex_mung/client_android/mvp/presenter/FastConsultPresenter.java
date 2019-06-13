@@ -12,6 +12,7 @@ import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.QuickPayEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
+import cn.lex_mung.client_android.utils.DecimalUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -81,7 +82,7 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
     private List<String> solutionTypeStringList = new ArrayList<>();
     private String consultType;
     private int consultTypePos;
-    private double payMoney;
+    private float payMoney;
     private double balance;
     private int payType = 1;
     private String mobile;
@@ -230,13 +231,15 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
                 }
                 break;
         }
-        long money = new BigDecimal(payMoney).multiply(new BigDecimal(100)).intValue();
+//        long money = new BigDecimal(payMoney).multiply(new BigDecimal(100)).intValue();
+        long money = (long) DecimalUtil.multiply(payMoney,100);
         Map<String, Object> map = new HashMap<>();
         map.put("money", money);
         map.put("type", payType);
 
         if (mRootView.getCouponPrice() > 0) {
-            long moneyCoupon = new BigDecimal(mRootView.getCouponPrice()).multiply(new BigDecimal(100)).intValue();
+//            long moneyCoupon = new BigDecimal(mRootView.getCouponPrice()).multiply(new BigDecimal(100)).intValue();
+            long moneyCoupon = (long) DecimalUtil.multiply(mRootView.getCouponPrice(),100);
             map.put("deduction", moneyCoupon);//优惠金额
             map.put("useCoupon", 1);//使用优惠券
             map.put("other", mRootView.getCouponId());

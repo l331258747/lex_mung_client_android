@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 public class StringUtils {
 
+    //StringUtils.setHtml(tvContent,String.format(string,entity.getLawyerPriceStr(),entity.getBalanceUnit(),entity.getPriceUnit()));
     public static void setHtml(TextView tv, String content){
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
             tv.setText(Html.fromHtml(content,Html.FROM_HTML_MODE_LEGACY));
@@ -17,7 +18,15 @@ public class StringUtils {
         if((f * 100) % 100 == 0){
             return ((int) f) + "";
         }else{
-            return f+"";
+            int i = (int) (f * 100);
+            int a = i/100;
+            int b = i%100;
+            String result = a+"."+b;
+            if(result.endsWith("0")){
+                return result.substring(0,result.length()-1);
+            }
+            return result;
+
         }
     }
 

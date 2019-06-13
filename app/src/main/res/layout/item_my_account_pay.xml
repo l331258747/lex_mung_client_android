@@ -4,16 +4,38 @@
     android:layout_height="@dimen/qb_px_115"
     android:gravity="center">
 
-    <TextView
-        android:id="@+id/item_tv_price"
+    <LinearLayout
+        android:id="@+id/ll_price"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qb_px_80"
-        android:layout_toStartOf="@id/item_view"
-        android:background="@drawable/round_10_ffffff_all_06a66a"
         android:gravity="center"
-        android:includeFontPadding="false"
-        android:textColor="@color/c_06a66a"
-        android:textSize="18sp" />
+        android:background="@drawable/round_10_ff_all_ecc994"
+        android:layout_toStartOf="@id/item_view"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/item_tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="100"
+            android:textColor="@color/c_ecc994"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/item_tv_price_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/qb_px_5"
+            android:includeFontPadding="false"
+            android:text="元"
+            android:textColor="@color/c_ecc994"/>
+
+    </LinearLayout>
+
 
     <View
         android:id="@+id/item_view"

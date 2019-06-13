@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 
 import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
+import cn.lex_mung.client_android.mvp.model.entity.ExpertCallEntity;
 import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawyerTagsEntity;
@@ -60,14 +61,14 @@ public interface LawyerHomePageContract {
         void removeViews();
 
         //------电话
-        void showToPayDialog(String s);
         void showToErrorDialog(String s);
 
-        void showDialDialog(ExpertPriceEntity entity);
-
-        void showDial1Dialog(String s);
-
         void showCall(boolean isHide);
+
+        void showBalanceNoDialog(ExpertPriceEntity entity);
+        void showBalanceYesDialog(ExpertPriceEntity entity);
+
+        void GoCall(String str);
     }
 
     interface Model extends IModel {
@@ -82,6 +83,6 @@ public interface LawyerHomePageContract {
         //-----电话
         Observable<BaseResponse<ExpertPriceEntity>> expertPrice(int id);
 
-        Observable<BaseResponse<AgreementEntity>> sendCall(int id);
+        Observable<BaseResponse<ExpertCallEntity>> sendCall(int id);
     }
 }

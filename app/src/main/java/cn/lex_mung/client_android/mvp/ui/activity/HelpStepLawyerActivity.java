@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
-import android.support.constraint.Group;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,7 +16,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.umeng.analytics.MobclickAgent;
 import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
 
 import java.util.ArrayList;
@@ -33,7 +31,6 @@ import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.di.component.DaggerHelpStepLawyerComponent;
 import cn.lex_mung.client_android.di.module.HelpStepLawyerModule;
 import cn.lex_mung.client_android.mvp.contract.HelpStepLawyerContract;
-import cn.lex_mung.client_android.mvp.model.entity.BusinessEntity;
 import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.help.BusinessInfoBean;
 import cn.lex_mung.client_android.mvp.model.entity.help.FilterBean;
@@ -43,13 +40,12 @@ import cn.lex_mung.client_android.mvp.model.entity.help.RequireInfoBean;
 import cn.lex_mung.client_android.mvp.model.entity.help.RequireInfoChildBean;
 import cn.lex_mung.client_android.mvp.presenter.HelpStepLawyerPresenter;
 import cn.lex_mung.client_android.mvp.ui.adapter.HelpStepLawyerAdapter;
-import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog;
-import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog2;
-import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog3;
-import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog4;
 import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog5;
+import cn.lex_mung.client_android.mvp.ui.dialog.CurrencyDialog;
+import cn.lex_mung.client_android.mvp.ui.dialog.CurrencyDialog2;
 import cn.lex_mung.client_android.mvp.ui.dialog.DefaultDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import cn.lex_mung.client_android.mvp.ui.dialog.OnlyTextDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.SimpleFlowLayout;
 import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
 import cn.lex_mung.client_android.utils.BuryingPointHelp;
@@ -105,9 +101,6 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
 
     HelpStepLawyerAdapter adapter;
     RecommendLawyerBean bean;
-
-    CallFieldDialog3 callFieldDialog3;
-    CallFieldDialog4 callFieldDialog4;
 
     int requireTypeId;
     int buryingPointId = -1;
@@ -300,7 +293,7 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
                     } else {
                         BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_phone_click");
                     }
-                    mPresenter.expertPrice(bean.getMemberId());
+                    mPresenter.expertPrice(bean.getMemberName(),bean.getMemberId());
                 }
             } else {
                 bundle.clear();
@@ -311,43 +304,7 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
     }
 
     @Override
-    public void showDialDialog(ExpertPriceEntity entity) {
-        new CallFieldDialog2(mActivity
-                , dialog -> {
-            mPresenter.sendCall(bean.getMemberId(), entity.getCallCenterNo());
-            dialog.dismiss();
-        }
-                , entity).show();
-    }
-
-    @Override
-    public void showDial1Dialog(String string) {
-        callFieldDialog3 = new CallFieldDialog3(mActivity, string, dialog -> {
-            callFieldDialog4 = new CallFieldDialog4(mActivity, "现在关闭将无法联系律师\n是否继续关闭");
-            callFieldDialog4.show();
-            dialog.dismiss();
-        });
-        callFieldDialog3.show();
-    }
-
-    @Override
-    public void showToPayDialog(String s) {
-        new CallFieldDialog(mActivity, dialog -> {
-            MobclickAgent.onEvent(mActivity, "w_y_shouye_zjzx_detail_chongzhi");
-            launchActivity(new Intent(mActivity, AccountPayActivity.class));
-        }, s, "充值").show();
-    }
-
-    @Override
     public void showToErrorDialog(String s) {
-        if (callFieldDialog3 != null && callFieldDialog3.isShowing()) {
-            callFieldDialog3.dismiss();
-        }
-
-        if (callFieldDialog4 != null && callFieldDialog4.isShowing()) {
-            callFieldDialog4.dismiss();
-        }
-
         new CallFieldDialog5(mActivity, dialog -> {
             Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "400-811-3060"));
             startActivity(dialIntent);
@@ -552,7 +509,10 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
         } else {
             BuryingPointHelp.getInstance().onActivityResumed(mActivity, "assistant_success");
         }
-
+        if(isGoCall){
+            showTestDialog2();
+            isGoCall = false;
+        }
     }
 
     @Override
@@ -574,5 +534,67 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
             BuryingPointHelp.getInstance().onActivityPaused(mActivity, "assistant_success");
         }
 
+    }
+
+    //-----电话
+
+    boolean isGoCall = false;
+    @Override
+    public void GoCall(String str) {
+        Intent dialIntent =  new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + str));
+        startActivity(dialIntent);
+        isGoCall = true;
+    }
+
+    //查询余额不足
+    public void showBalanceNoDialog(ExpertPriceEntity entity){
+        showOnlyDialog(entity);
+        new Thread(() -> {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            runOnUiThread(() -> {
+                onlyTextDialog.dismiss();
+                bundle.clear();
+                bundle.putSerializable(BundleTags.ENTITY,entity);
+                launchActivity(new Intent(mActivity, MyAccountActivity.class),bundle);
+            });
+        }).start();
+    }
+
+    OnlyTextDialog onlyTextDialog;
+    public void showOnlyDialog(ExpertPriceEntity entity){
+        String string = "当前余额剩余通话时长不足%1$s分钟，请充值余额。";
+        onlyTextDialog = new OnlyTextDialog(mActivity).setContent(String.format(string,entity.getMinimumDuration()));
+        onlyTextDialog.show();
+    }
+
+    //查看余额充足
+    public void showBalanceYesDialog(ExpertPriceEntity entity){
+        new CurrencyDialog2(mActivity,entity)
+                .setClickYes(dialog -> {
+                    mPresenter.sendCall(bean.getMemberId(),entity.getCallCenterNo());
+                })
+                .setClickNo(dialog -> {
+                    bundle.clear();
+                    bundle.putSerializable(BundleTags.ENTITY,entity);
+                    launchActivity(new Intent(mActivity, MyAccountActivity.class),bundle);
+                }).show();
+    }
+
+    public void showTestDialog2(){
+        new CurrencyDialog(mActivity)
+                .showTitleBg(false)
+                .setContent("如问题仍然未解决，您可再次拨打。")
+                .setContentLineSpacing(R.dimen.qb_px_20)
+                .setContentSize(14)
+                .setSubmitStr("已解决")
+                .setCannelStr("再次致电")
+                .setClickNo(dialog -> {
+                    mPresenter.expertPrice(bean.getMemberName(), bean.getMemberId());
+                }).show();
     }
 }

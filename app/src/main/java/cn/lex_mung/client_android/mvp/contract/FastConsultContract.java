@@ -36,9 +36,9 @@ public interface FastConsultContract {
 
         int getCouponId();
 
-        double getCouponPrice();
+        float getCouponPrice();
 
-        void setPriceLayout(double orderPrice,double couponPrice,double payPrice);
+        void setPriceLayout(double orderPrice,float couponPrice,double payPrice);
     }
 
     interface Model extends IModel {

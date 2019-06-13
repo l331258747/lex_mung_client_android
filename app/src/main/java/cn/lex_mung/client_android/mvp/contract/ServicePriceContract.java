@@ -3,6 +3,7 @@ package cn.lex_mung.client_android.mvp.contract;
 import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.BusinessEntity;
+import cn.lex_mung.client_android.mvp.model.entity.ExpertCallEntity;
 import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
 
 import java.util.List;
@@ -16,17 +17,17 @@ public interface ServicePriceContract {
     interface View extends IView {
         void initRecyclerView(ServicePriceAdapter adapter);
 
-        void showToPayDialog(String s);
         void showToErrorDialog(String s);
 
-        void showDialDialog(ExpertPriceEntity entity);
+        void showBalanceNoDialog(ExpertPriceEntity entity);
+        void showBalanceYesDialog(ExpertPriceEntity entity);
 
-        void showDial1Dialog(String s);
+        void GoCall(String str);
     }
 
     interface Model extends IModel {
         Observable<BaseResponse<ExpertPriceEntity>> expertPrice(int id);
 
-        Observable<BaseResponse<AgreementEntity>> sendCall(int id);
+        Observable<BaseResponse<ExpertCallEntity>> sendCall(int id);
     }
 }

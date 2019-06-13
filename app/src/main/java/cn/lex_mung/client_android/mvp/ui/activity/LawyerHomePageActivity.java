@@ -38,13 +38,12 @@ import cn.lex_mung.client_android.mvp.contract.LawyerHomePageContract;
 import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
 import cn.lex_mung.client_android.mvp.presenter.LawyerHomePagePresenter;
-import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog;
-import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog2;
-import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog3;
-import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog4;
 import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog5;
+import cn.lex_mung.client_android.mvp.ui.dialog.CurrencyDialog;
+import cn.lex_mung.client_android.mvp.ui.dialog.CurrencyDialog2;
 import cn.lex_mung.client_android.mvp.ui.dialog.FieldDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import cn.lex_mung.client_android.mvp.ui.dialog.OnlyTextDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.NoScrollViewPager;
 import cn.lex_mung.client_android.mvp.ui.widget.SimpleFlowLayout;
 import me.zl.mvp.base.AdapterViewPager;
@@ -113,9 +112,6 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
     @BindView(R.id.tv_head_title)
     TextView tvHeadTitle;
 
-    CallFieldDialog3 callFieldDialog3;
-    CallFieldDialog4 callFieldDialog4;
-
     boolean isCall;
 
     @Override
@@ -143,6 +139,11 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
         super.onResume();
         MobclickAgent.onPageStart("app_l_wode_zhuye_detail");
         mPresenter.onResume();
+
+        if(isGoCall){
+            showTestDialog2();
+            isGoCall = false;
+        }
     }
 
     @Override
@@ -459,25 +460,6 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
 
 
     //-----电话
-    @Override
-    public void showDialDialog(ExpertPriceEntity entity) {
-        new CallFieldDialog2(mActivity
-                , dialog -> {
-            mPresenter.sendCall(entity.getCallCenterNo());
-            dialog.dismiss();
-        }
-                , entity).show();
-    }
-
-    @Override
-    public void showDial1Dialog(String string) {
-        callFieldDialog3 = new CallFieldDialog3(mActivity,string,dialog -> {
-            callFieldDialog4 = new CallFieldDialog4(mActivity,"现在关闭将无法联系律师\n是否继续关闭");
-            callFieldDialog4.show();
-            dialog.dismiss();
-        });
-        callFieldDialog3.show();
-    }
 
     @Override
     public void showCall(boolean isShow) {
@@ -489,23 +471,70 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
         }
     }
 
+    //查询余额不足
+    public void showBalanceNoDialog(ExpertPriceEntity entity){
+        showOnlyDialog(entity);
+        new Thread(() -> {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            runOnUiThread(() -> {
+                onlyTextDialog.dismiss();
+                bundle.clear();
+                bundle.putSerializable(BundleTags.ENTITY,entity);
+                launchActivity(new Intent(mActivity, MyAccountActivity.class),bundle);
+            });
+        }).start();
+    }
+
+    OnlyTextDialog onlyTextDialog;
+    public void showOnlyDialog(ExpertPriceEntity entity){
+        String string = "当前余额剩余通话时长不足%1$s分钟，请充值余额。";
+        onlyTextDialog = new OnlyTextDialog(mActivity).setContent(String.format(string,entity.getMinimumDuration()));
+        onlyTextDialog.show();
+    }
+
+    //查看余额充足
+    public void showBalanceYesDialog(ExpertPriceEntity entity){
+        new CurrencyDialog2(mActivity,entity)
+                .setClickYes(dialog -> {
+                    mPresenter.sendCall(entity.getCallCenterNo());
+                })
+                .setClickNo(dialog -> {
+                    bundle.clear();
+                    bundle.putSerializable(BundleTags.ENTITY,entity);
+                    launchActivity(new Intent(mActivity, MyAccountActivity.class),bundle);
+                }).show();
+    }
+
+
+    boolean isGoCall = false;
     @Override
-    public void showToPayDialog(String s) {
-        new CallFieldDialog(mActivity, dialog -> {
-            MobclickAgent.onEvent(mActivity, "w_y_shouye_zjzx_detail_chongzhi");
-            launchActivity(new Intent(mActivity, AccountPayActivity.class));
-        }, s, "充值").show();
+    public void GoCall(String str) {
+        Intent dialIntent =  new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + str));
+        startActivity(dialIntent);
+        isGoCall = true;
+    }
+
+    public void showTestDialog2(){
+        new CurrencyDialog(mActivity)
+                .showTitleBg(false)
+                .setContent("如问题仍然未解决，您可再次拨打。")
+                .setContentLineSpacing(R.dimen.qb_px_20)
+                .setContentSize(14)
+                .setSubmitStr("已解决")
+                .setCannelStr("再次致电")
+                .setClickNo(dialog -> {
+                    if(!isCall) return;
+                    mPresenter.setEntity();
+                }).show();
     }
 
     @Override
     public void showToErrorDialog(String s) {
-        if(callFieldDialog3 != null && callFieldDialog3.isShowing()){
-            callFieldDialog3.dismiss();
-        }
-        if(callFieldDialog4 != null && callFieldDialog4.isShowing()){
-            callFieldDialog4.dismiss();
-        }
-
         new CallFieldDialog5(mActivity, dialog -> {
             Intent dialIntent =  new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "400-811-3060"));
             startActivity(dialIntent);

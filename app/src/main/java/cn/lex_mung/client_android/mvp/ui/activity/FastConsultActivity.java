@@ -102,7 +102,7 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
 
     private int couponId;
     private double orderPrice;//订单原价
-    private double couponPrice;//优惠价格
+    private float couponPrice;//优惠价格
 
     private String consultType = "";
     private int pos = -1 ;
@@ -150,7 +150,7 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
 
     //设置价格
     @Override
-    public void setPriceLayout(double orderPrice,double couponPrice,double payPrice) {
+    public void setPriceLayout(double orderPrice,float couponPrice,double payPrice) {
 
         this.couponPrice = couponPrice;
 
@@ -164,7 +164,7 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
 
     //获取优惠价格
     @Override
-    public double getCouponPrice() {
+    public float getCouponPrice() {
         return couponPrice;
     }
 

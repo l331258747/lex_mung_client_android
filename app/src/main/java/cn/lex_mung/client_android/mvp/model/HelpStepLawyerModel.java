@@ -11,6 +11,7 @@ import java.util.Map;
 import cn.lex_mung.client_android.mvp.model.api.CommonService;
 import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
+import cn.lex_mung.client_android.mvp.model.entity.ExpertCallEntity;
 import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.help.HelpStepLawyerEntity;
 import io.reactivex.Observable;
@@ -70,7 +71,7 @@ public class HelpStepLawyerModel extends BaseModel implements HelpStepLawyerCont
     }
 
     @Override
-    public Observable<BaseResponse<AgreementEntity>> sendCall(int id) {
+    public Observable<BaseResponse<ExpertCallEntity>> sendCall(int id) {
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .sendCall(id);

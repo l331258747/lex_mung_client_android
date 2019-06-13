@@ -1,8 +1,10 @@
 package cn.lex_mung.client_android.mvp.model.entity;
 
+import java.io.Serializable;
+
 import me.zl.mvp.utils.StringUtils;
 
-public class ExpertPriceEntity {
+public class ExpertPriceEntity implements Serializable {
 
     /**
      * priceUnit : 小时
@@ -14,15 +16,52 @@ public class ExpertPriceEntity {
      */
 
     private String priceUnit;
-    private double lawyerPrice;
-    private double balance;
+    private float lawyerPrice;
+    private float balance;
     private String balanceUnit;
     private String freeTime;
     private String callCenterNo;
     private String orgnizationName;
-    private double favorablePrice;
+    private float favorablePrice;
     private String favorableTimeLen;
     private String originTimeLen;
+    private int minimumDuration;
+    private float minimumBalance;
+    private float minimumRecharge;
+    private String lawyerName;
+    private String agreementUrl;
+
+    public String getAgreementUrl() {
+        return agreementUrl;
+    }
+
+    public String getLawyerName() {
+        return lawyerName;
+    }
+
+    public String getPriceStr(){
+        return StringUtils.getStringNum(lawyerPrice) + balanceUnit + "/" + priceUnit;
+    }
+
+    public String getOrgnizationPriceStr(){
+        return StringUtils.getStringNum(favorablePrice) + balanceUnit + "/" + priceUnit;
+    }
+
+    public void setLawyerName(String lawyerName) {
+        this.lawyerName = lawyerName;
+    }
+
+    public float getMinimumRecharge() {
+        return minimumRecharge;
+    }
+
+    public float getMinimumBalance() {
+        return minimumBalance;
+    }
+
+    public int getMinimumDuration() {
+        return minimumDuration;
+    }
 
     public String getOrgnizationName() {
         return orgnizationName;
@@ -32,7 +71,7 @@ public class ExpertPriceEntity {
         this.orgnizationName = orgnizationName;
     }
 
-    public double getFavorablePrice() {
+    public float getFavorablePrice() {
         return favorablePrice;
     }
 
@@ -40,7 +79,11 @@ public class ExpertPriceEntity {
         return ((int) favorablePrice ) + "";
     }
 
-    public void setFavorablePrice(double favorablePrice) {
+    public String getFavorablePriceStr(){
+        return StringUtils.getStringNum(favorablePrice);
+    }
+
+    public void setFavorablePrice(float favorablePrice) {
         this.favorablePrice = favorablePrice;
     }
 
@@ -68,7 +111,7 @@ public class ExpertPriceEntity {
         this.priceUnit = priceUnit;
     }
 
-    public double getLawyerPrice() {
+    public float getLawyerPrice() {
         return lawyerPrice;
     }
 
@@ -76,15 +119,15 @@ public class ExpertPriceEntity {
         return StringUtils.getStringNum(lawyerPrice);
     }
 
-    public void setLawyerPrice(double lawyerPrice) {
+    public void setLawyerPrice(float lawyerPrice) {
         this.lawyerPrice = lawyerPrice;
     }
 
-    public double getBalance() {
+    public float getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(float balance) {
         this.balance = balance;
     }
 

@@ -4,23 +4,24 @@ import java.util.List;
 
 import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
+import cn.lex_mung.client_android.mvp.model.entity.ExpertCallEntity;
 import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.help.HelpStepLawyerEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.mvp.IModel;
 import me.zl.mvp.mvp.IView;
 
-
 public interface HelpStepLawyerContract {
+
     interface View extends IView {
         void setData(HelpStepLawyerEntity entity);
 
-        void showToPayDialog(String s);
         void showToErrorDialog(String s);
 
-        void showDialDialog(ExpertPriceEntity entity);
+        void showBalanceNoDialog(ExpertPriceEntity entity);
+        void showBalanceYesDialog(ExpertPriceEntity entity);
 
-        void showDial1Dialog(String s);
+        void GoCall(String str);
     }
 
     interface Model extends IModel {
@@ -32,6 +33,6 @@ public interface HelpStepLawyerContract {
 
         Observable<BaseResponse<ExpertPriceEntity>> expertPrice(int id);
 
-        Observable<BaseResponse<AgreementEntity>> sendCall(int id);
+        Observable<BaseResponse<ExpertCallEntity>> sendCall(int id);
     }
 }

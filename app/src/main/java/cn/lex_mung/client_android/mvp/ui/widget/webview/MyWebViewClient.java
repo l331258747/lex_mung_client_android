@@ -1,6 +1,8 @@
 package cn.lex_mung.client_android.mvp.ui.widget.webview;
 
+import android.net.http.SslError;
 import android.view.View;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
@@ -24,6 +26,12 @@ public class MyWebViewClient extends WebViewClient {
     @Override
     public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
 //        view.loadUrl("file:///android_asset/error.html");
+    }
+
+    @Override
+    public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+//        super.onReceivedSslError(view, handler, error);
+        handler.proceed();    //表示等待证书响应
     }
 
     @Override

@@ -11,6 +11,7 @@ import com.umeng.analytics.MobclickAgent;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BusinessEntity;
+import cn.lex_mung.client_android.mvp.model.entity.ExpertCallEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.ReleaseDemandActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.ServicePriceAdapter;
@@ -111,15 +112,12 @@ public class ServicePricePresenter extends BasePresenter<ServicePriceContract.Mo
                     @Override
                     public void onNext(BaseResponse<ExpertPriceEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
-                            ExpertPriceEntity entity = baseResponse.getData();
-                            if (entity.getBalance() > (entity.getLawyerPrice() / 60)) {
-                                mRootView.showDialDialog(entity);
+                            ExpertPriceEntity expertPriceEntity = baseResponse.getData();
+                            expertPriceEntity.setLawyerName(entity.getMemberName());
+                            if (expertPriceEntity.getMinimumRecharge() == 0) {
+                                mRootView.showBalanceYesDialog(expertPriceEntity);
                             } else {
-                                String string = String.format(mApplication.getString(R.string.text_call_consult_tip_4)
-                                        , entity.getLawyerPriceStr()
-                                        , entity.getBalanceUnit()
-                                        , entity.getPriceUnit());
-                                mRootView.showToPayDialog(string);
+                                mRootView.showBalanceNoDialog(expertPriceEntity);
                             }
                         }
                     }
@@ -127,7 +125,7 @@ public class ServicePricePresenter extends BasePresenter<ServicePriceContract.Mo
     }
 
     public void sendCall(String phone) {
-        mRootView.showDial1Dialog(String.format(mApplication.getString(R.string.text_call_consult_tip_3), phone));
+//        mRootView.showDial1Dialog(String.format(mApplication.getString(R.string.text_call_consult_tip_3), phone));
 
         mModel.sendCall(entity.getMemberId())
                 .subscribeOn(Schedulers.io())
@@ -135,11 +133,17 @@ public class ServicePricePresenter extends BasePresenter<ServicePriceContract.Mo
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<AgreementEntity>>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<ExpertCallEntity>>(mErrorHandler) {
                     @Override
-                    public void onNext(BaseResponse<AgreementEntity> baseResponse) {
-                        if (!baseResponse.isSuccess()) {
-                            /*
+                    public void onNext(BaseResponse<ExpertCallEntity> baseResponse) {
+                        if(baseResponse.isSuccess()){
+                            if(!TextUtils.isEmpty(baseResponse.getData().getPhone())){
+                                mRootView.GoCall(baseResponse.getData().getPhone());
+                            }else{
+                                mRootView.showMessage("电话为空");
+                            }
+                        }else{
+                             /*
                             70001：余额不足
                             70002：您好，当前律师可能正在繁忙，建议您改天再联系或者联系平台其他律师进行咨询。
                             70003：您好，该律师暂时无法接听您的电话，建议您联系平台其他律师或拨打客服热线400-811-3060及时处理。

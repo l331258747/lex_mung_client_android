@@ -38,8 +38,8 @@ public class QuickPayEntity {
     private int pageNum;
     private int pageSize;
     private double orderAmount;
-    private double payment;
-    private double deductionAmount;
+    private float payment;
+    private float deductionAmount;
 
     public int getMemberId() {
         return memberId;
@@ -97,11 +97,11 @@ public class QuickPayEntity {
         return orderAmount;
     }
 
-    public double getPayment() {
+    public float getPayment() {
         return payment;
     }
 
-    public double getDeductionAmount() {
+    public float getDeductionAmount() {
         return deductionAmount;
     }
 }

@@ -369,6 +369,16 @@ public class OrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> im
     @BindView(R.id.tv_info_no)
     TextView tv_info_no;
 
+    @BindView(R.id.ll_info_talk_time)
+    LinearLayout ll_info_talk_time;
+    @BindView(R.id.tv_info_talk_time)
+    TextView tv_info_talk_time;
+
+    @BindView(R.id.ll_info_talk_record)
+    LinearLayout ll_info_talk_record;
+    @BindView(R.id.tv_info_talk_record)
+    TextView tv_info_talk_record;
+
     @BindView(R.id.ll_info_time)
     LinearLayout ll_info_time;
     @BindView(R.id.tv_info_time)
@@ -613,6 +623,26 @@ public class OrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> im
     }
 
     @Override
+    public void setTalkTime(String s) {
+        if (TextUtils.isEmpty(s)) {
+            ll_info_talk_time.setVisibility(View.GONE);
+        } else {
+            ll_info_talk_time.setVisibility(View.VISIBLE);
+            tv_info_talk_time.setText(s);
+        }
+    }
+
+    @Override
+    public void setTalkRecord(String s) {
+        if (TextUtils.isEmpty(s)) {
+            ll_info_talk_record.setVisibility(View.GONE);
+        } else {
+            ll_info_talk_record.setVisibility(View.VISIBLE);
+            tv_info_talk_record.setText(s);
+        }
+    }
+
+    @Override
     public void setCouponLayout(int useCoupon, String couponPrice, String couponType) {
         if (useCoupon == 1) {
             ll_info_coupon_price.setVisibility(View.VISIBLE);
@@ -689,22 +719,42 @@ public class OrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> im
 
     @Override
     public void setOrderNo(String orderNo) {
-        tv_info_no.setText(orderNo);
+        if(TextUtils.isEmpty(orderNo)){
+            ll_info_no.setVisibility(View.GONE);
+        }else{
+            ll_info_no.setVisibility(View.VISIBLE);
+            tv_info_no.setText(orderNo);
+        }
     }
 
     @Override
     public void setOrderTime(String conversationStart) {
-        tv_info_time.setText(conversationStart);
+        if(TextUtils.isEmpty(orderNo)){
+            ll_info_time.setVisibility(View.GONE);
+        }else{
+            ll_info_time.setVisibility(View.VISIBLE);
+            tv_info_time.setText(conversationStart);
+        }
     }
 
     @Override
     public void setOrderName(String businessType) {
-        tv_info_name.setText(businessType);
+        if(TextUtils.isEmpty(orderNo)){
+            ll_info_name.setVisibility(View.GONE);
+        }else{
+            ll_info_name.setVisibility(View.VISIBLE);
+            tv_info_name.setText(businessType);
+        }
     }
 
     @Override
     public void setOrderType(String serviceType) {
-        tv_info_name.setText(serviceType);//咨询类型
+        if(TextUtils.isEmpty(orderNo)){
+            ll_info_name.setVisibility(View.GONE);
+        }else{
+            ll_info_name.setVisibility(View.VISIBLE);
+            tv_info_name.setText(serviceType);//咨询类型
+        }
     }
 
     @Override
@@ -715,12 +765,16 @@ public class OrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> im
             ll_info_order_price.setVisibility(View.VISIBLE);
             tv_info_order_price.setText(s);
         }
-
     }
 
     @Override
     public void setOrderStatus(String statusName) {
-        tv_info_status.setText(statusName);
+        if(TextUtils.isEmpty(statusName)){
+            ll_info_status.setVisibility(View.GONE);
+        }else{
+            ll_info_status.setVisibility(View.VISIBLE);
+            tv_info_status.setText(statusName);
+        }
     }
 
     @Override
@@ -731,7 +785,6 @@ public class OrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> im
             ll_info_pay_type.setVisibility(View.VISIBLE);
             tv_info_pay_type.setText(s);
         }
-
     }
 
     @Override
@@ -751,12 +804,22 @@ public class OrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> im
 
     @Override
     public void setCouponPrice(String s) {
-        tv_info_coupon_price.setText(s);
+        if(TextUtils.isEmpty(s)){
+            ll_info_coupon_price.setVisibility(View.GONE);
+        }else{
+            ll_info_coupon_price.setVisibility(View.VISIBLE);
+            tv_info_coupon_price.setText(s);
+        }
     }
 
     @Override
     public void setCouponType(String s) {
-        tv_info_coupon_type.setText(s);
+        if(TextUtils.isEmpty(s)){
+            ll_info_coupon_type.setVisibility(View.GONE);
+        }else{
+            ll_info_coupon_type.setVisibility(View.VISIBLE);
+            tv_info_coupon_type.setText(s);
+        }
     }
 
     @Override
@@ -771,7 +834,12 @@ public class OrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> im
 
     @Override
     public void setOrderTotal(String duration) {
-        tv_info_order_price.setText(duration);
+        if(TextUtils.isEmpty(duration)){
+            ll_info_order_price.setVisibility(View.GONE);
+        }else{
+            ll_info_order_price.setVisibility(View.VISIBLE);
+            tv_info_order_price.setText(duration);
+        }
     }
 
     @Override

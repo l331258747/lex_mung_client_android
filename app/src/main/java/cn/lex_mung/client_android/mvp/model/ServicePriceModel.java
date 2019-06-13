@@ -5,6 +5,7 @@ import android.app.Application;
 import com.google.gson.Gson;
 
 import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
+import cn.lex_mung.client_android.mvp.model.entity.ExpertCallEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.integration.IRepositoryManager;
 import me.zl.mvp.mvp.BaseModel;
@@ -45,7 +46,7 @@ public class ServicePriceModel extends BaseModel implements ServicePriceContract
     }
 
     @Override
-    public Observable<BaseResponse<AgreementEntity>> sendCall(int id) {
+    public Observable<BaseResponse<ExpertCallEntity>> sendCall(int id) {
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .sendCall(id);

@@ -14,6 +14,7 @@ import cn.lex_mung.client_android.mvp.model.entity.CouponsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.DemandMessageEntity;
 import cn.lex_mung.client_android.mvp.model.entity.EquitiesDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.EquitiesListEntity;
+import cn.lex_mung.client_android.mvp.model.entity.ExpertCallEntity;
 import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.FeedbackTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.FreeConsultEntity;
@@ -465,7 +466,7 @@ public interface CommonService {
      *
      * @return BaseResponse
      */
-    @GET("expert/price/{id}")
+    @GET("expert/price/{id}/v2")
     Observable<BaseResponse<ExpertPriceEntity>> expertPrice(@Path("id") int id);
 
     /**
@@ -602,8 +603,8 @@ public interface CommonService {
      *
      * @return BaseResponse
      */
-    @GET("client/expert/call/{id}")
-    Observable<BaseResponse<AgreementEntity>> sendCall(@Path("id") int id);
+    @GET("client/expert/call/{id}/v2")
+    Observable<BaseResponse<ExpertCallEntity>> sendCall(@Path("id") int id);
 
     /**
      * 用户上传订单文档

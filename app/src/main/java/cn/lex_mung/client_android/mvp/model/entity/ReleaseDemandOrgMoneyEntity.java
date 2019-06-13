@@ -30,8 +30,8 @@ public class ReleaseDemandOrgMoneyEntity {
     private String image;
     private int coupon1Count;
     private int requireTypeId;
-    private double amount;
-    private double amountDis;
+    private float amount;
+    private float amountDis;
     private double amountNew;
 
     public int getCouponId() {
@@ -138,19 +138,19 @@ public class ReleaseDemandOrgMoneyEntity {
         this.requireTypeId = requireTypeId;
     }
 
-    public double getAmount() {
+    public float getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 
-    public double getAmountDis() {
+    public float getAmountDis() {
         return amountDis;
     }
 
-    public void setAmountDis(double amountDis) {
+    public void setAmountDis(float amountDis) {
         this.amountDis = amountDis;
     }
 }

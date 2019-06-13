@@ -368,6 +368,10 @@ public class OrderDetailsEntity {
             return callTime;
         }
 
+        public String getCallTimeStr() {
+            return callTime + "";
+        }
+
         public void setCallTime(int callTime) {
             this.callTime = callTime;
         }

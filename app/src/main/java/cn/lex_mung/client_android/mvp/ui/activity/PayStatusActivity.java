@@ -86,14 +86,14 @@ public class PayStatusActivity extends BaseActivity<PayStatusPresenter> implemen
     public void showSuccessLayout(String s) {
         ivIcon.setImageResource(R.drawable.ic_pay_success);
         tvStatus.setText(s);
-        tvStatus.setTextColor(AppUtils.getColor(mActivity, R.color.c_06a66a));
+        tvStatus.setTextColor(AppUtils.getColor(mActivity, R.color.c_323232));
     }
 
     @Override
     public void showFailLayout(String s) {
         ivIcon.setImageResource(R.drawable.ic_pay_failure);
         tvStatus.setText(s);
-        tvStatus.setTextColor(AppUtils.getColor(mActivity, R.color.c_ea5514));
+        tvStatus.setTextColor(AppUtils.getColor(mActivity, R.color.c_323232));
     }
 
     @Override
@@ -114,7 +114,7 @@ public class PayStatusActivity extends BaseActivity<PayStatusPresenter> implemen
             AppManager.getAppManager().killActivity(ReleaseDemandActivity.class);
             AppUtils.post(PAY_INFO,PAY_CONFIRM);
         }
-        AppManager.getAppManager().killActivity(AccountPayActivity.class);
+        AppManager.getAppManager().killActivity(MyAccountActivity.class);
         killMyself();
     }
 

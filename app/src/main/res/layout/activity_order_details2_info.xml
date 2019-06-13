@@ -127,6 +127,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/qb_px_30"
         android:gravity="center"
+        android:visibility="gone"
+        tools:visibility="visible"
         android:orientation="horizontal">
 
         <TextView
@@ -150,6 +152,40 @@
             android:layout_height="wrap_content"
             android:textColor="@color/c_737373"
             tools:text="订单状态" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_info_talk_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_30"
+        android:gravity="center"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="通话时长"
+            android:textColor="@color/c_737373" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_2"
+            android:layout_marginLeft="@dimen/qb_px_20"
+            android:layout_marginRight="@dimen/qb_px_20"
+            android:layout_weight="1"
+            android:background="@drawable/shape_dash_line"
+            android:layerType="software" />
+
+        <TextView
+            android:id="@+id/tv_info_talk_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/c_737373"
+            tools:text="通话时长" />
 
     </LinearLayout>
 
@@ -193,6 +229,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/qb_px_30"
         android:gravity="center"
+        android:visibility="gone"
+        tools:visibility="visible"
         android:orientation="horizontal">
 
         <TextView
@@ -225,6 +263,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/qb_px_30"
         android:gravity="center"
+        android:visibility="gone"
+        tools:visibility="visible"
         android:orientation="horizontal">
 
         <TextView
@@ -257,6 +297,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/qb_px_30"
         android:gravity="center"
+        android:visibility="gone"
+        tools:visibility="visible"
         android:orientation="horizontal">
 
         <TextView
@@ -316,10 +358,46 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_info_talk_record"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_30"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="通话记录"
+            android:textColor="@color/c_737373" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_2"
+            android:layout_marginLeft="@dimen/qb_px_20"
+            android:layout_marginRight="@dimen/qb_px_20"
+            android:layout_weight="1"
+            android:background="@drawable/shape_dash_line"
+            android:layerType="software" />
+
+        <TextView
+            android:id="@+id/tv_info_talk_record"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/c_737373"
+            tools:text="通话记录" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/ll_info_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/qb_px_30"
+        android:visibility="gone"
+        tools:visibility="visible"
         android:orientation="horizontal">
 
         <TextView
