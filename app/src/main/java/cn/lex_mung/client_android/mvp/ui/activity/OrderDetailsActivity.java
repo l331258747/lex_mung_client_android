@@ -424,45 +424,6 @@ public class OrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> im
     @BindView(R.id.tv_info_content)
     TextView tv_info_content;
 
-//    @BindView(R.id.group_time)
-//    Group groupTime;
-//    @BindView(R.id.group_coupon)
-//    Group groupCoupon;
-//    @BindView(R.id.tv_time)
-//    TextView tvTime;
-//    @BindView(R.id.tv_order_number)
-//    TextView tvOrderNumber;
-//    @BindView(R.id.tv_order_date)
-//    TextView tvOrderDate;
-//    @BindView(R.id.tv_order_name)
-//    TextView tvOrderName;
-//    @BindView(R.id.tv_order_type_text)
-//    TextView tvOrderTypeText;
-//    @BindView(R.id.tv_order_type)
-//    TextView tvOrderType;
-//    @BindView(R.id.tv_order_price)
-//    TextView tvOrderPrice;
-//    @BindView(R.id.tv_order_coupon_price)
-//    TextView tvOrderCouponPrice;
-//    @BindView(R.id.tv_order_amount_price)
-//    TextView tvOrderAmountPrice;
-//    @BindView(R.id.tv_order_status)
-//    TextView tvOrderStatus;
-//    @BindView(R.id.group_time_1)
-//    Group groupTime1;
-//    @BindView(R.id.tv_order_customer)
-//    TextView tvOrderCustomer;
-//    @BindView(R.id.tv_order_time_start)
-//    TextView tvOrderTimeStart;
-//    @BindView(R.id.tv_order_time_end)
-//    TextView tvOrderTimeEnd;
-//    @BindView(R.id.tv_order_total)
-//    TextView tvOrderTotal;
-//    @BindView(R.id.tv_tip)
-//    TextView tvTip;
-//    @BindView(R.id.group_bottom)
-//    Group groupBottom;
-
     private MyCountDownTimer myCountDownTimer;
     private boolean isLawyerClick = false;
     private int typeId = -1;
@@ -487,13 +448,6 @@ public class OrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> im
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-//        titleView.getTitleTv().setTextColor(ContextCompat.getColor(mActivity, R.color.c_ff));
-//        StatusBarUtil.setTransparentForImageView(mActivity, null);
-//        int statusBarHeight = DeviceUtils.getStatusBarHeight(mActivity);
-//        RelativeLayout.LayoutParams lp1 = (RelativeLayout.LayoutParams) titleView.getLayoutParams();
-//        lp1.topMargin = statusBarHeight;
-//        titleView.setLayoutParams(lp1);
-
         if (bundleIntent != null) {
             if(!TextUtils.isEmpty(bundleIntent.getString(BundleTags.TITLE)))
                 titleView.setTitle(bundleIntent.getString(BundleTags.TITLE));
@@ -656,29 +610,6 @@ public class OrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> im
     }
 
     @Override
-    public void showLayout(int i) {
-        switch (i) {
-            case 1:
-                llCountDown.setVisibility(View.VISIBLE);
-//                groupTime1.setVisibility(View.VISIBLE);//律师信息
-                groupLawyer.setVisibility(View.VISIBLE);
-//                groupBottom.setVisibility(View.VISIBLE);
-                break;
-            case 2:
-//                groupTime1.setVisibility(View.VISIBLE);
-                groupLawyer.setVisibility(View.VISIBLE);
-                break;
-            case 3:
-//                tvTip.setText(AppUtils.getString(mActivity, R.string.text_order_details_tip_2));
-//                groupTime1.setVisibility(View.VISIBLE);
-                groupLawyer.setVisibility(View.VISIBLE);
-//                tvOrderTypeText.setVisibility(View.GONE);
-//                tvOrderType.setVisibility(View.GONE);
-                break;
-        }
-    }
-
-    @Override
     public void setLawyerClick(boolean isClick) {
         this.isLawyerClick = isClick;
         if(isClick){
@@ -788,57 +719,12 @@ public class OrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> im
     }
 
     @Override
-    public void setOrderCustomer(String memberName) {
-//        tvOrderCustomer.setText(memberName);//接单律师
-    }
-
-    @Override
-    public void setOrderStartTime(String conversationStart) {
-//        tvOrderTimeStart.setText(conversationStart);
-    }
-
-    @Override
-    public void setOrderEndTime(String conversationEnd) {
-//        tvOrderTimeEnd.setText(conversationEnd);
-    }
-
-    @Override
-    public void setCouponPrice(String s) {
-        if(TextUtils.isEmpty(s)){
-            ll_info_coupon_price.setVisibility(View.GONE);
-        }else{
-            ll_info_coupon_price.setVisibility(View.VISIBLE);
-            tv_info_coupon_price.setText(s);
-        }
-    }
-
-    @Override
-    public void setCouponType(String s) {
-        if(TextUtils.isEmpty(s)){
-            ll_info_coupon_type.setVisibility(View.GONE);
-        }else{
-            ll_info_coupon_type.setVisibility(View.VISIBLE);
-            tv_info_coupon_type.setText(s);
-        }
-    }
-
-    @Override
     public void setOrderPayPrice(String s) {
         if(TextUtils.isEmpty(s)){
             ll_info_pay_price.setVisibility(View.GONE);
         }else{
             ll_info_pay_price.setVisibility(View.VISIBLE);
             tv_info_pay_price.setText(s);
-        }
-    }
-
-    @Override
-    public void setOrderTotal(String duration) {
-        if(TextUtils.isEmpty(duration)){
-            ll_info_order_price.setVisibility(View.GONE);
-        }else{
-            ll_info_order_price.setVisibility(View.VISIBLE);
-            tv_info_order_price.setText(duration);
         }
     }
 

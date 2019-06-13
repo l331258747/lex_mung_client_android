@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.mvp.model.entity.order.RequirementDetailEntity;
+import cn.lex_mung.client_android.mvp.ui.activity.LawyerHomePageActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MessageChatActivity;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -150,7 +151,7 @@ public class OrderDetailsPresenter extends BasePresenter<OrderDetailsContract.Mo
                                     , bean.getCouponDeductionAmountStr()
                                     , bean.getCouponTypeStr());
 
-                            mRootView.setInfoContent(bean.getDescription());//需求内容 TODO
+                            mRootView.setInfoContent(bean.getDescription());//需求内容
 
                             mRootView.setLawyerLayout(bean.getLawyerMemberId(), bean.getLmemberName(), bean.getLMemeberName2(), bean.getIconImage());//显示律师
 
@@ -290,35 +291,14 @@ public class OrderDetailsPresenter extends BasePresenter<OrderDetailsContract.Mo
                                         mRootView.setLawyerClick(true);
                                         break;
                                 }
-
-//                                if (bean.getOrderStatus() == 5) {//已接单
-//                                    if (!TextUtils.isEmpty(bean.getLmemberName())) {
-//                                        mRootView.setOrderCustomer(bean.getLmemberName());
-//                                    }
-//                                    mRootView.setOrderRemain(bean.getRemainingTime() * 1000);
-//                                    mRootView.showLayout(1);
-//                                } else if (bean.getOrderStatus() > 5) {//已结束
-//                                    if (!TextUtils.isEmpty(bean.getLmemberName())) {
-//                                        mRootView.setOrderCustomer(bean.getLmemberName());//律师名字
-//                                    }
-//                                    if (!TextUtils.isEmpty(bean.getBeginTime())
-//                                            && !bean.getBeginTime().contains("1970")) {
-//                                        mRootView.setOrderStartTime(bean.getBeginTime() + "  开始");//通话开始时间
-//                                    }
-//                                    if (!TextUtils.isEmpty(bean.getEndTime())
-//                                            && !bean.getEndTime().contains("1970")) {
-//                                        mRootView.setOrderEndTime(bean.getEndTime() + "  结束");//通话结束时间
-//                                    }
-//                                    mRootView.setOrderTotal(bean.getTalkTime());//通话时长
-//                                    mRootView.showLayout(2);
-//                                }
                             } else if (bean.getTypeId() == 3) {//专家咨询
                                 mRootView.setOrderDetailView(-1);
                                 mRootView.setLawyerClick(true);
 
                                 mRootView.setBottomStatus("继续拨打", R.color.c_ff, R.color.c_1EC88B, v -> {
-                                    Intent dialIntent =  new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + bean.getLmobile()));
-                                    mRootView.launchActivity(dialIntent);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putInt(BundleTags.ID, bean.getLawyerMemberId());
+                                    mRootView.launchActivity(new Intent(mRootView.getActivity(), LawyerHomePageActivity.class), bundle);
                                 });
 
                                 mRootView.setOrderStatus(null);//不需要
@@ -330,33 +310,7 @@ public class OrderDetailsPresenter extends BasePresenter<OrderDetailsContract.Mo
                                     if(!TextUtils.isEmpty(bean.getBeginTime()))
                                     mRootView.setTalkRecord(bean.getBeginTime() + "    " + bean.getCallTimeStr());
                                 }
-
-//                                if(){//TODO 电话咨询展示不一样，  如果为未支付为null不显示价格信息
-//                                    mRootView.setOrderAmount(null);//订单价格
-//                                    mRootView.setOrderPayPrice(null);//支付价格
-//                                    mRootView.setPayType(null);//支付方式
-//                                }
-
-//                                if (!TextUtils.isEmpty(bean.getLmemberName())) {
-//                                    mRootView.setOrderCustomer(bean.getLmemberName());
-//                                }
-//                                if (!TextUtils.isEmpty(bean.getBeginTime())
-//                                        && !bean.getBeginTime().contains("1970")) {
-//                                    mRootView.setOrderStartTime(bean.getBeginTime() + "  开始");
-//                                }
-//                                if (!TextUtils.isEmpty(bean.getEndTime())
-//                                        && !bean.getEndTime().contains("1970")) {
-//                                    mRootView.setOrderEndTime(bean.getEndTime() + "  结束");
-//                                }
-//                                mRootView.setOrderTotal(bean.getTalkTime());
-//                                mRootView.showLayout(3);
                             }
-//                            else if(bean.getTypeId() == 5){// 需求的请求地址不一样
-//                                mRootView.setOrderDetailView(-1);
-//                                mRootView.setBottomStatus("查看详情", R.color.c_ff, R.color.c_1EC88B, true);//改成回调
-//                                mRootView.setLawyerClick(true);
-//
-//                            }
                         }
                     }
                 });

@@ -33,16 +33,6 @@ public interface OrderDetailsContract {
 
         void setPayType(String s);
 
-        void setOrderCustomer(String memberName);
-
-        void setOrderStartTime(String conversationStart);
-
-        void setOrderEndTime(String conversationEnd);
-
-        void setOrderTotal(String duration);
-
-        void showLayout(int i);
-
         void setOrderRemain(int remain);
 
         void call(String phone);
@@ -51,9 +41,6 @@ public interface OrderDetailsContract {
         void setTalkRecord(String s);
 
         void setCouponLayout(int useCoupon, String couponPrice, String couponType);
-
-        void setCouponPrice(String s);
-        void setCouponType(String s);
 
         void setInfoContent(String s);
 
