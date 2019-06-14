@@ -12,6 +12,8 @@ public interface PayStatusContract {
     interface View extends IView {
         void showSuccessLayout(String string);
 
+        void showSuccessLayout(String string,String btnStr);
+
         void showFailLayout(String s);
 
         void showReleaseDemandLayout(String tip, String orderNo, String payTime, String stringSF, String sf);

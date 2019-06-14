@@ -23,7 +23,7 @@
         android:layout_marginTop="@dimen/qb_px_60"
         android:includeFontPadding="false"
         android:text="@string/text_pay_success"
-        android:textColor="@color/c_06a66a"
+        android:textColor="@color/c_323232"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

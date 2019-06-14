@@ -140,7 +140,10 @@ public class FreeConsultMainPresenter extends BasePresenter<FreeConsultMainContr
 
         if(!isLogin && pageNum > 2){
             new DefaultDialog(mRootView.getActivity(),
-                    dialog -> mRootView.launchActivity(new Intent(mRootView.getActivity(), LoginActivity.class))
+                    dialog -> {
+                        mRootView.launchActivity(new Intent(mRootView.getActivity(), LoginActivity.class));
+                        dialog.dismiss();
+                    }
             ,"继续查看需要登录","去登陆","取消").show();
             smartRefreshLayout.finishLoadMore();
             return;

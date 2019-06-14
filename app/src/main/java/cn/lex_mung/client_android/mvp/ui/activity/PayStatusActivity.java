@@ -90,6 +90,12 @@ public class PayStatusActivity extends BaseActivity<PayStatusPresenter> implemen
     }
 
     @Override
+    public void showSuccessLayout(String s,String btnStr) {
+        showSuccessLayout(s);
+        btBack.setText(btnStr);
+    }
+
+    @Override
     public void showFailLayout(String s) {
         ivIcon.setImageResource(R.drawable.ic_pay_failure);
         tvStatus.setText(s);
@@ -107,12 +113,13 @@ public class PayStatusActivity extends BaseActivity<PayStatusPresenter> implemen
         btBack.setText(getString(R.string.text_confirm));
     }
 
+    //发布需求和快速电话咨询，按钮改为确定
     @OnClick(R.id.bt_back)
     public void onViewClicked() {
         if (isFastClick()) return;
         if (getString(R.string.text_confirm).equals(btBack.getText().toString())) {
             AppManager.getAppManager().killActivity(ReleaseDemandActivity.class);
-            AppUtils.post(PAY_INFO,PAY_CONFIRM);
+            AppUtils.post(PAY_INFO,PAY_CONFIRM);//这个是用来通知抢单页面的。
         }
         AppManager.getAppManager().killActivity(MyAccountActivity.class);
         killMyself();

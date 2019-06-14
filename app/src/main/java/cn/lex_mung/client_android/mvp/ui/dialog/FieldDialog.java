@@ -16,6 +16,9 @@ import cn.lex_mung.client_android.mvp.ui.adapter.PersonalHomePageFieldDialogAdap
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.utils.AppUtils;
 
+/**
+ * 擅长领域对话框
+ */
 public class FieldDialog extends Dialog {
 
     private ImageLoader mImageLoader;

@@ -7,43 +7,11 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import cn.lex_mung.client_android.app.BundleTags;
-import cn.lex_mung.client_android.app.DataHelperTags;
-import cn.lex_mung.client_android.mvp.model.entity.RequireEntity;
-import cn.lex_mung.client_android.mvp.ui.activity.LawyerHomePageActivity;
-import cn.lex_mung.client_android.mvp.ui.adapter.LawyerListAdapter;
-import cn.lex_mung.client_android.mvp.ui.dialog.SingleTextDialog;
-import cn.lex_mung.client_android.utils.BuryingPointHelp;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
-import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
-import me.zl.mvp.integration.AppManager;
-import me.zl.mvp.di.scope.ActivityScope;
-import me.zl.mvp.mvp.BasePresenter;
-import me.zl.mvp.http.imageloader.ImageLoader;
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
-import me.zl.mvp.utils.AppUtils;
-import me.zl.mvp.utils.DataHelper;
-import me.zl.mvp.utils.LogUtils;
-import me.zl.mvp.utils.RxLifecycleUtils;
-import okhttp3.RequestBody;
-
-import javax.inject.Inject;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-
-import cn.lex_mung.client_android.R;
-import cn.lex_mung.client_android.mvp.contract.LawyerListContract;
-import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
-import cn.lex_mung.client_android.mvp.model.entity.BusinessTypeEntity;
-import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity;
-import cn.lex_mung.client_android.mvp.model.entity.LawyerListScreenEntity;
-import cn.lex_mung.client_android.mvp.model.entity.RegionEntity;
 
 import org.simple.eventbus.Subscriber;
 
@@ -53,6 +21,36 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.inject.Inject;
+
+import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.app.DataHelperTags;
+import cn.lex_mung.client_android.mvp.contract.LawyerListContract;
+import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
+import cn.lex_mung.client_android.mvp.model.entity.BusinessTypeEntity;
+import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity;
+import cn.lex_mung.client_android.mvp.model.entity.LawyerListScreenEntity;
+import cn.lex_mung.client_android.mvp.model.entity.RegionEntity;
+import cn.lex_mung.client_android.mvp.model.entity.RequireEntity;
+import cn.lex_mung.client_android.mvp.ui.activity.LawyerHomePageActivity;
+import cn.lex_mung.client_android.mvp.ui.adapter.LawyerListAdapter;
+import cn.lex_mung.client_android.utils.BuryingPointHelp;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
+import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
+import me.zl.mvp.di.scope.ActivityScope;
+import me.zl.mvp.http.imageloader.ImageLoader;
+import me.zl.mvp.integration.AppManager;
+import me.zl.mvp.mvp.BasePresenter;
+import me.zl.mvp.utils.AppUtils;
+import me.zl.mvp.utils.DataHelper;
+import me.zl.mvp.utils.LogUtils;
+import me.zl.mvp.utils.RxLifecycleUtils;
+import okhttp3.RequestBody;
 
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_1;
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_INSTITUTIONS;

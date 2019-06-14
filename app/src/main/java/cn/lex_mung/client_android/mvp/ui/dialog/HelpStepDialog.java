@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import cn.lex_mung.client_android.R;
 
-
+/**
+ * 服务助手对话框
+ */
 public class HelpStepDialog extends Dialog {
     Context context;
     OnClickListener onClickListener;

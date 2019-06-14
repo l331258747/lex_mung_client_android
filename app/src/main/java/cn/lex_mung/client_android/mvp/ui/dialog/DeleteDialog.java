@@ -40,7 +40,7 @@ public class DeleteDialog extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_delete_dialog);
+        setContentView(R.layout.layout_delete_dialog2);
         initView();
     }
 

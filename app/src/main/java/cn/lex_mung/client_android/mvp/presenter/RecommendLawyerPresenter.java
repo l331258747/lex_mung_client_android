@@ -65,7 +65,7 @@ public class RecommendLawyerPresenter extends BasePresenter<RecommendLawyerContr
 
     public void onCreate() {
         initAdapter();
-        getData(regionId, 0, 0, requireTypeId,lMemberId);//TODO solutionTypeId 修改
+        getData(regionId, 0, 0, requireTypeId,lMemberId);
     }
 
     private void initAdapter() {

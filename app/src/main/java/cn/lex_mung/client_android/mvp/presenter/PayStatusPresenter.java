@@ -73,6 +73,9 @@ public class PayStatusPresenter extends BasePresenter<PayStatusContract.Model, P
                                         case PayStatusTags.PAY:
                                             mRootView.showSuccessLayout(mApplication.getString(R.string.text_pay_success));
                                             break;
+                                        case PayStatusTags.PAY_1:
+                                            mRootView.showSuccessLayout(mApplication.getString(R.string.text_pay_success),"专家咨询");
+                                            break;
                                         case PayStatusTags.RELEASE_DEMAND:
                                             mRootView.showReleaseDemandLayout(mApplication.getString(R.string.text_pay_status_tip)
                                                     , orderNo

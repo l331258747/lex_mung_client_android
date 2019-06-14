@@ -236,7 +236,11 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
                                 request.timeStamp = baseResponse.getData().getTimestamp();
                                 request.sign = baseResponse.getData().getSign();
                                 api.sendReq(request);
-                                DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.PAY);
+                                if(entity != null){
+                                    DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.PAY_1);
+                                }else{
+                                    DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.PAY);
+                                }
                             } else if (payType == 2) {//支付宝
                                 Runnable payRunnable = () -> {
                                     PayTask payTask = new PayTask(mRootView.getActivity());
@@ -250,7 +254,11 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
                                 Thread payThread = new Thread(payRunnable);
                                 payThread.start();
                             } else {//余额
-                                DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.PAY);
+                                if(entity != null){
+                                    DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.PAY_1);
+                                }else{
+                                    DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.PAY);
+                                }
                                 Bundle bundle = new Bundle();
                                 bundle.putString(BundleTags.ORDER_NO, DataHelper.getStringSF(mApplication, DataHelperTags.ORDER_NO));
                                 Intent intent = new Intent(mApplication, PayStatusActivity.class);
@@ -271,7 +279,11 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1: {
-                    DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.PAY);
+                    if(entity != null){
+                        DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.PAY_1);
+                    }else{
+                        DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.PAY);
+                    }
                     PayResultEntity payResult = new PayResultEntity((Map<String, String>) msg.obj);
                     Bundle bundle = new Bundle();
                     bundle.putString(BundleTags.ORDER_NO, DataHelper.getStringSF(mApplication, DataHelperTags.ORDER_NO));

@@ -9,7 +9,9 @@ import android.widget.TextView;
 
 import cn.lex_mung.client_android.R;
 
-
+/**
+ * 类似 toast 的 单条信息 对话框
+ */
 public class OnlyTextDialog extends Dialog {
     Context context;
 
