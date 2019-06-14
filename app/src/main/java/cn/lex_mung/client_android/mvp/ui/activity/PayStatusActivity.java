@@ -50,6 +50,8 @@ public class PayStatusActivity extends BaseActivity<PayStatusPresenter> implemen
     @BindView(R.id.bt_back)
     Button btBack;
 
+    boolean isSuccess = false;
+
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerPayStatusComponent
@@ -87,6 +89,7 @@ public class PayStatusActivity extends BaseActivity<PayStatusPresenter> implemen
         ivIcon.setImageResource(R.drawable.ic_pay_success);
         tvStatus.setText(s);
         tvStatus.setTextColor(AppUtils.getColor(mActivity, R.color.c_323232));
+        isSuccess = true;
     }
 
     @Override
@@ -100,6 +103,7 @@ public class PayStatusActivity extends BaseActivity<PayStatusPresenter> implemen
         ivIcon.setImageResource(R.drawable.ic_pay_failure);
         tvStatus.setText(s);
         tvStatus.setTextColor(AppUtils.getColor(mActivity, R.color.c_323232));
+        isSuccess = false;
     }
 
     @Override
@@ -121,7 +125,9 @@ public class PayStatusActivity extends BaseActivity<PayStatusPresenter> implemen
             AppManager.getAppManager().killActivity(ReleaseDemandActivity.class);
             AppUtils.post(PAY_INFO,PAY_CONFIRM);//这个是用来通知抢单页面的。
         }
-        AppManager.getAppManager().killActivity(MyAccountActivity.class);
+        if(isSuccess){//成功后把充值页面干掉，失败返回充值页面
+            AppManager.getAppManager().killActivity(MyAccountActivity.class);
+        }
         killMyself();
     }
 

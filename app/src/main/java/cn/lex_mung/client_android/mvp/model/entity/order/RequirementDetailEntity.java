@@ -70,6 +70,16 @@ public class RequirementDetailEntity {
     String iconImage;
     String institutionName;
 
+    double userPayAmount;
+
+    public double getUserPayAmount() {
+        return userPayAmount;
+    }
+
+    public String getUserPayAmountStr(){
+        return "¥ "+StringUtils.getStringNum(userPayAmount) + "元";
+    }
+
     public String getIconImage() {
         return iconImage;
     }
@@ -105,7 +115,7 @@ public class RequirementDetailEntity {
     }
 
     public String getCouponDeductionAmountStr() {
-        return StringUtils.getStringNum(couponDeductionAmount) + "元";
+        return "¥ "+StringUtils.getStringNum(couponDeductionAmount) + "元";
     }
 
     public double getBuyerPayAmount() {
@@ -113,7 +123,7 @@ public class RequirementDetailEntity {
     }
 
     public String getBuyerPayAmountStr() {
-        return StringUtils.getStringNum(buyerPayAmount) + "元";
+        return "¥ "+StringUtils.getStringNum(buyerPayAmount) + "元";
     }
 
     public String getLmobile() {
@@ -212,7 +222,7 @@ public class RequirementDetailEntity {
     }
 
     public String getPayAmountStr(){
-        return payAmount + "元";
+        return "¥ "+payAmount + "元";
     }
 
     public int getHasPay() {
@@ -329,6 +339,10 @@ public class RequirementDetailEntity {
 
     public String getLmemberName() {
         return lmemberName;
+    }
+
+    public String getLmemberNameStr() {
+        return lmemberName + "律师";
     }
 
     public String getStartTime() {

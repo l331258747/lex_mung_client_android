@@ -96,8 +96,8 @@ public class OrderDetailsPresenter extends BasePresenter<OrderDetailsContract.Mo
                 });
     }
 
-    public void getRequirementDetail(int anInt,String orderNo) {
-        mModel.requirementDetail(anInt,orderNo)
+    public void getRequirementDetail(int anInt, String orderNo) {
+        mModel.requirementDetail(anInt, orderNo)
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
@@ -109,10 +109,13 @@ public class OrderDetailsPresenter extends BasePresenter<OrderDetailsContract.Mo
                     @Override
                     public void onNext(BaseResponse<List<RequirementDetailEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
-                            if(baseResponse.getData() == null || baseResponse.getData().size() < 1)
+                            if (baseResponse.getData() == null || baseResponse.getData().size() < 1)
                                 return;
 
                             RequirementDetailEntity bean = baseResponse.getData().get(0);
+
+                            mRootView.setPhone(bean.getLmobile());
+                            mRootView.setIsReceipt(bean.getIsReceipt());
 
                             //必要
                             if (!TextUtils.isEmpty(bean.getOrderNo())) {//单号
@@ -128,22 +131,22 @@ public class OrderDetailsPresenter extends BasePresenter<OrderDetailsContract.Mo
                                 mRootView.setOrderStatus(bean.getStatusValue());
                             }
 
-                            if(bean.getBuyerPayAmount() > 0){
+                            if (bean.getBuyerPayAmount() > 0) {
                                 mRootView.setOrderAmount(bean.getBuyerPayAmountStr());//订单价格
-                            }else{
+                            } else {
                                 mRootView.setOrderAmount(null);//订单价格
                             }
 
-                            if(bean.getPayAmount() > 0){
-                                mRootView.setOrderPayPrice(bean.getPayAmountStr());//支付价格
-                            }else{
+                            if (bean.getUserPayAmount() > 0) {
+                                mRootView.setOrderPayPrice(bean.getUserPayAmountStr());//支付价格
+                            } else {
                                 mRootView.setOrderPayPrice(null);//订单价格
                             }
 
-                            if(!TextUtils.isEmpty(bean.getPayType()) && !bean.getPayType().equals("0")){
+                            if (!TextUtils.isEmpty(bean.getPayType()) && !bean.getPayType().equals("0")) {
                                 mRootView.setPayType(bean.getPayTypeStr());//支付方式
-                            }else{
-                                mRootView.setPayType(null);//订单价格
+                            } else {
+                                mRootView.setPayType(null);
                             }
 
                             //优惠
@@ -153,39 +156,39 @@ public class OrderDetailsPresenter extends BasePresenter<OrderDetailsContract.Mo
 
                             mRootView.setInfoContent(bean.getDescription());//需求内容
 
-                            mRootView.setLawyerLayout(bean.getLawyerMemberId(), bean.getLmemberName(), bean.getLMemeberName2(), bean.getIconImage());//显示律师
+                            mRootView.setLawyerLayout(bean.getLawyerMemberId(), bean.getLmemberNameStr(), bean.getLMemeberName2(), bean.getIconImage());//显示律师
 
                             //热门需求
-                            if(isHot == 1){
-                                if(bean.getStatus() == -1){
+                            if (isHot == 1) {
+                                if (bean.getStatus() == -1) {
                                     mRootView.setOrderDetailView(0);
-                                    mRootView.setBottomStatus("重新支付", R.color.c_ff, R.color.c_1EC88B, null,false);//改成回调
-                                }else if(bean.getStatus() == 1 && bean.getIsReceipt() == 0){
+                                    mRootView.setBottomStatus("重新支付", R.color.c_ff, R.color.c_1EC88B, null, false);//改成回调
+                                } else if (bean.getStatus() == 1 && bean.getIsReceipt() == 0) {
                                     mRootView.setOrderDetailView(1);
                                     mRootView.setBottomStatus("平台正在优选服务律师", R.color.c_ff, R.color.c_f0f0f0, null);//改成回调
-                                }else if(bean.getIsReceipt() == 1){
+                                } else if (bean.getIsReceipt() == 1) {
                                     mRootView.setOrderDetailView(2);
                                     mRootView.setBottomStatus("联系律师", R.color.c_ff, R.color.c_1EC88B, v -> {
-                                        Intent dialIntent =  new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + bean.getLmobile()));
+                                        Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + bean.getLmobile()));
 //                                        mRootView.getActivity().startActivity(dialIntent);
                                         mRootView.launchActivity(dialIntent);
                                     });
                                     mRootView.setLawyerClick(true);
 
-                                    mRootView.setOrderRemain(bean.getRemainingTime() * 1000);
-                                }else if(bean.getIsReceipt() == 2){
+                                    mRootView.setOrderRemain(bean.getRemainingTime() * 1000, "服务倒计时");
+                                } else if (bean.getIsReceipt() == 2) {
 
-                                }else if(bean.getIsReceipt() == 3){
+                                } else if (bean.getIsReceipt() == 3) {
                                     mRootView.setOrderDetailView(3);
                                     mRootView.setBottomStatus("已完成", R.color.c_737373, R.color.c_f0f0f0, null);
                                     mRootView.setLawyerClick(true);
                                 }
-                            }else{
-                                if(bean.getStatus() == -1){
+                            } else {
+                                if (bean.getStatus() == -1) {
                                     mRootView.setOrderDetailView(-1);
-                                    mRootView.setBottomStatus("重新支付", R.color.c_ff, R.color.c_1EC88B, null,false);//改成回调
+                                    mRootView.setBottomStatus("重新支付", R.color.c_ff, R.color.c_1EC88B, null, false);//改成回调
                                     mRootView.setLawyerClick(true);
-                                }else{
+                                } else {
                                     mRootView.setOrderDetailView(-1);
                                     mRootView.setBottomStatus("查看详情", R.color.c_ff, R.color.c_1EC88B, v -> {
                                         Bundle bundle = new Bundle();
@@ -235,21 +238,21 @@ public class OrderDetailsPresenter extends BasePresenter<OrderDetailsContract.Mo
                                 mRootView.setOrderStatus(bean.getStatusValue());
                             }
 
-                            if(bean.getBuyerPayAmount() > 0){
+                            if (bean.getBuyerPayAmount() > 0) {
                                 mRootView.setOrderAmount(bean.getBuyerPayAmountStr());//订单价格
-                            }else{
+                            } else {
                                 mRootView.setOrderAmount(null);//订单价格
                             }
 
-                            if(bean.getPayAmount() > 0){
+                            if (bean.getPayAmount() > 0) {
                                 mRootView.setOrderPayPrice(bean.getPayAmountStr());//支付价格
-                            }else{
+                            } else {
                                 mRootView.setOrderPayPrice(null);//订单价格
                             }
 
-                            if(!TextUtils.isEmpty(bean.getPayType()) && !bean.getPayType().equals("0")){
+                            if (!TextUtils.isEmpty(bean.getPayType()) && !bean.getPayType().equals("0")) {
                                 mRootView.setPayType(bean.getPayTypeStr());//支付方式
-                            }else{
+                            } else {
                                 mRootView.setPayType(null);//订单价格
                             }
 
@@ -267,22 +270,26 @@ public class OrderDetailsPresenter extends BasePresenter<OrderDetailsContract.Mo
                                 switch (bean.getOrderStatus()) {
                                     case 2:
                                         mRootView.setOrderDetailView(0);//改变topview 字和进度
-                                        mRootView.setBottomStatus("重新支付", R.color.c_ff, R.color.c_1EC88B, null,false);//改成回调
+                                        mRootView.setBottomStatus("重新支付", R.color.c_ff, R.color.c_1EC88B, null, false);//改成回调
                                         break;
                                     case 4:
                                         mRootView.setOrderDetailView(1);
                                         mRootView.setBottomStatus("平台正在优选服务律师", R.color.c_ff, R.color.c_f0f0f0, null);
                                         break;
                                     case 5:
-                                        mRootView.setOrderRemain(bean.getRemainingTime() * 1000);
+                                        mRootView.setOrderRemain(bean.getRemainingTime() * 1000, "剩余回电时间");
+
+
+                                        mRootView.setOrderDetailView(2);
+                                        mRootView.setBottomStatus("联系律师", R.color.c_ff, R.color.c_1EC88B, v -> {
+                                            Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + bean.getLmobile()));
+                                            mRootView.launchActivity(dialIntent);
+                                        });
 
                                         if (bean.getCallback() == 1) {
-                                            mRootView.setOrderDetailView(2);
-                                            mRootView.setBottomStatus("联系律师", R.color.c_ff, R.color.c_1EC88B, v -> {
-                                                Intent dialIntent =  new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + bean.getLmobile()));
-                                                mRootView.launchActivity(dialIntent);
-                                            });
                                             mRootView.setLawyerClick(true);
+                                        }else{
+                                            mRootView.setLawyerClick(false);
                                         }
                                         break;
                                     case 7:
@@ -303,12 +310,12 @@ public class OrderDetailsPresenter extends BasePresenter<OrderDetailsContract.Mo
 
                                 mRootView.setOrderStatus(null);//不需要
 
-                                if(bean.getCallTime() <= 0){
+                                if (bean.getCallTime() <= 0) {
                                     mRootView.setTalkTime("请等待律师接单");
-                                }else{
+                                } else {
                                     mRootView.setTalkTime(bean.getCallTimeStr());
-                                    if(!TextUtils.isEmpty(bean.getBeginTime()))
-                                    mRootView.setTalkRecord(bean.getBeginTime() + "    " + bean.getCallTimeStr());
+                                    if (!TextUtils.isEmpty(bean.getBeginTime()))
+                                        mRootView.setTalkRecord(bean.getBeginTime() + "    " + bean.getCallTimeStr());
                                 }
                             }
                         }

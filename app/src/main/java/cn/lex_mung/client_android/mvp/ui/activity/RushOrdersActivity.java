@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -144,7 +145,10 @@ public class RushOrdersActivity extends BaseActivity<RushOrdersPresenter> implem
                 if(orderBean == null) return;
                 bundle.clear();
                 bundle.putInt(BundleTags.ID, orderBean.getRequirementId());
+                bundle.putString(BundleTags.TITLE,"需求详情");
+                bundle.putInt(BundleTags.TYPE, 5);
                 bundle.putString(BundleTags.ORDER_NO,orderBean.getOrderNo());
+                bundle.putInt(BundleTags.IS_SHOW,1);
                 bundle.putInt(BundleTags.STATE,orderBean.getStatus());
                 launchActivity(new Intent(mActivity, OrderDetailTabActivity.class), bundle);
                 break;

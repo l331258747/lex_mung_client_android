@@ -97,20 +97,20 @@ public class MyOrderPresenter extends BasePresenter<MyOrderContract.Model, MyOrd
 //                    mRootView.launchActivity(new Intent(mApplication, MessageChatActivity.class), bundle);
 
                     bundle.clear();
-                    bundle.putInt(BundleTags.TYPE, entity.getTypeId());
                     bundle.putInt(BundleTags.ID, entity.getId());
-                    bundle.putInt(BundleTags.IS_SHOW,entity.getIsHot());
                     bundle.putString(BundleTags.TITLE,entity.getTypeName());
+                    bundle.putInt(BundleTags.TYPE, entity.getTypeId());
                     bundle.putString(BundleTags.ORDER_NO,entity.getOrderNo());
+                    bundle.putInt(BundleTags.IS_SHOW,entity.getIsHot());
                     mRootView.launchActivity(new Intent(mApplication, OrderDetailsActivity.class), bundle);
 
                     break;
                 case 3:
                 case 4:
                     bundle.clear();
-                    bundle.putInt(BundleTags.TYPE, entity.getTypeId());
                     bundle.putInt(BundleTags.ID, entity.getId());
                     bundle.putString(BundleTags.TITLE,entity.getOrderType());
+                    bundle.putInt(BundleTags.TYPE, entity.getTypeId());
                     bundle.putString(BundleTags.ORDER_NO,entity.getOrderNo());
                     mRootView.launchActivity(new Intent(mApplication, OrderDetailsActivity.class), bundle);
                     break;

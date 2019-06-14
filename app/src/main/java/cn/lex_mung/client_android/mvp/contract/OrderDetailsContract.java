@@ -33,7 +33,7 @@ public interface OrderDetailsContract {
 
         void setPayType(String s);
 
-        void setOrderRemain(int remain);
+        void setOrderRemain(int remain,String countDownStr);
 
         void call(String phone);
 
@@ -52,6 +52,9 @@ public interface OrderDetailsContract {
         void setLawyerClick(boolean isClick);
 
         Activity getActivity();
+
+        void setPhone(String phone);
+        void setIsReceipt(int isReceipt);
     }
 
     interface Model extends IModel {

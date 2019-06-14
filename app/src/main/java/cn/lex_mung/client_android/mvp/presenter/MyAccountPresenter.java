@@ -66,7 +66,7 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
     @Inject
     RxPermissions mRxPermissions;
 
-    private double balance;
+    private float balance;
 
     private MyAccountPayAdapter myAccountPayAdapter;
 
@@ -112,12 +112,13 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
         this.payMoney = payMoney;
         mRootView.setOrderMoney(StringUtils.getStringNum(payMoney));
 
+        float SelectMoney = DecimalUtil.add(balance, payMoney);//选择后的总金额
         if(entity != null){
             long time;
             if(!TextUtils.isEmpty(entity.getOrgnizationName())){
-                time = (long) DecimalUtil.divide(payMoney, entity.getFavorablePrice());
+                time = (long) DecimalUtil.divide(SelectMoney, entity.getFavorablePrice());
             }else{
-                time = (long) DecimalUtil.divide(payMoney, entity.getLawyerPrice());
+                time = (long) DecimalUtil.divide(SelectMoney, entity.getLawyerPrice());
             }
 
             String timeStr = StringUtils.getStringNum(time) + entity.getPriceUnit();

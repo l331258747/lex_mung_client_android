@@ -431,6 +431,9 @@ public class OrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> im
     private int id = -1;
     private String orderNo;
 
+    private String phone;
+    private int isReceipt;
+
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerOrderDetailsComponent
@@ -460,7 +463,11 @@ public class OrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> im
                 titleView.setRightTv("合同");
                 titleView.getRightTv().setTextColor(ContextCompat.getColor(mActivity, R.color.c_ff));
                 titleView.getRightTv().setOnClickListener(v -> {
-
+                    bundle.clear();
+                    bundle.putString(BundleTags.ORDER_NO, orderNo);//TODO 传递状态，1为可以发合同，0位展示空页面。
+                    bundle.putString(BundleTags.MOBILE, phone);
+                    bundle.putInt(BundleTags.STATE,isReceipt);
+                    launchActivity(new Intent(mActivity,OrderContractActivity.class),bundle);
                 });
             }
 
@@ -498,6 +505,16 @@ public class OrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> im
         }else{
             mPresenter.getOrderDetail();
         }
+    }
+
+    @Override
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    @Override
+    public void setIsReceipt(int isReceipt) {
+        this.isReceipt = isReceipt;
     }
 
     @Override
@@ -729,30 +746,31 @@ public class OrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> im
     }
 
     @Override
-    public void setOrderRemain(int remain) {
+    public void setOrderRemain(int remain,String countDownStr) {
         if (remain == 0) return;
         if (myCountDownTimer != null) {
             myCountDownTimer.cancel();
             myCountDownTimer = null;
         }
-        myCountDownTimer = new MyCountDownTimer(remain);
+        myCountDownTimer = new MyCountDownTimer(remain,countDownStr);
         myCountDownTimer.start();
         llCountDown.setVisibility(View.VISIBLE);
     }
 
     private class MyCountDownTimer extends CountDownTimer {
-        SimpleDateFormat sdf;
+        String countDownStr;
 
         @SuppressLint("SimpleDateFormat")
-        MyCountDownTimer(long millisInFuture) {
+        MyCountDownTimer(long millisInFuture,String countDownStr) {
             super(millisInFuture, 1000);
+            this.countDownStr = countDownStr;
         }
 
         @Override
         @SuppressLint({"SetTextI18n"})
         public void onTick(long l) {
             if (tvCountDown != null)
-                tvCountDown.setText("剩余回电时间: " + TimeFormat.countDownToStr(l, 0));
+                tvCountDown.setText(countDownStr + ": " + TimeFormat.countDownToStr(l, 0));
         }
 
         @Override

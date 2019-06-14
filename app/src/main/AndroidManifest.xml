@@ -161,14 +161,19 @@
             <!-- 要想在别的App上能成功调起App，必须添加intent过滤器 -->
             <!-- 协议部分，随便设置 -->
             <intent-filter>
-                <!--协议部分，随便设置-->
-                <data android:scheme="lex" android:host="client" android:path="/index" />
-                <!--下面这几行也必须得设置-->
-                <category android:name="android.intent.category.DEFAULT"/>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-            </intent-filter>
 
+                <!-- 协议部分，随便设置 -->
+                <data
+                    android:host="client"
+                    android:path="/index"
+                    android:scheme="lex" />
+                <!-- 下面这几行也必须得设置 -->
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".mvp.ui.activity.EditInfoActivity"
@@ -460,6 +465,12 @@
         <activity
             android:name=".mvp.ui.activity.RecommendLawyerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".mvp.ui.activity.OrderContractActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
     </application>
