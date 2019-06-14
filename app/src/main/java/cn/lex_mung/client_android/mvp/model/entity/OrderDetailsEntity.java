@@ -295,6 +295,7 @@ public class OrderDetailsEntity {
         private int callback;
         private String institutionName;
         private String lmobile;
+        private String calllength;
 
         public String getLmobile() {
             return lmobile;
@@ -705,6 +706,11 @@ public class OrderDetailsEntity {
             private int id;
             private String beginTime;
             private String endTime;
+            private String calllength;
+
+            public String getCalllength() {
+                return calllength;
+            }
 
             public int getId() {
                 return id;

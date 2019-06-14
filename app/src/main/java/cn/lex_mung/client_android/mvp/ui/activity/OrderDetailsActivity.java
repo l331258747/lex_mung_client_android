@@ -614,15 +614,22 @@ public class OrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> im
     }
 
     @Override
-    public void setCouponLayout(int useCoupon, String couponPrice, String couponType) {
-        if (useCoupon == 1) {
+    public void setCouponPrice(String couponPrice) {
+        if (TextUtils.isEmpty(couponPrice)) {
+            ll_info_coupon_price.setVisibility(View.GONE);
+        } else {
             ll_info_coupon_price.setVisibility(View.VISIBLE);
             tv_info_coupon_price.setText(couponPrice);
-            ll_info_coupon_type.setVisibility(View.VISIBLE);
-            tv_info_coupon_type.setText(couponType);
-        } else {
-            ll_info_coupon_price.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void setCouponName(String couponName) {
+        if (TextUtils.isEmpty(couponName)) {
             ll_info_coupon_type.setVisibility(View.GONE);
+        } else {
+            ll_info_coupon_type.setVisibility(View.VISIBLE);
+            tv_info_coupon_type.setText(couponName);
         }
     }
 

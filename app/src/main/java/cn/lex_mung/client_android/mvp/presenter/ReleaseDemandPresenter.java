@@ -88,6 +88,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
     private String requireTypeName;//当前选择的需求Name
     private int type;//1固定服务价格 2可协商服务价格
     private int organizationLevId = 0;//组织等级id
+    private int organizationId = 0;
 //    private String lawyerField;//选择的擅长领域name
 //    private int lawyerFieldPosition = -1;//选择的擅长领域
     private double balance;//当前余额
@@ -311,6 +312,8 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                         if (baseResponse.isSuccess()) {
                             entity = baseResponse.getData();
                             couponId = baseResponse.getData().getCouponId();
+                            organizationId = baseResponse.getData().getOrganizationId();
+
                             if (organizationLevId != -1) {
                                 organizationLevId = baseResponse.getData().getOrganizationLevId();
                             }
@@ -480,7 +483,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
         if (payType == 4
                 && couponId > 0) {//会员卡支付并且有会员卡
             map.put("useCoupon", 1);//使用优惠券
-            map.put("other", "{\"requirementId\":" + id + ",\"couponId\":" + couponId + "}");
+            map.put("other", "{\"requirementId\":" + id + ",\"couponId\":" + couponId +  ",\"orgId\":" + organizationId +"}");
         } else {
             map.put("useCoupon", 0);//不使用优惠券
             map.put("other", "{\"requirementId\":" + id + "}");

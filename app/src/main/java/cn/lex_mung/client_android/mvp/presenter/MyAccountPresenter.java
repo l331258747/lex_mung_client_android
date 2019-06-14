@@ -114,9 +114,19 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
         this.payMoney = payMoney;
         mRootView.setOrderMoney(StringUtils.getStringNum(payMoney));
 
-        float SelectMoney = DecimalUtil.add(balance, payMoney);//选择后的总金额
         if(entity != null){
             long time;
+            float SelectMoney;
+            String string2;
+
+            if(entity.getMinimumRecharge() > 0 && myAccountPayAdapterPosition == priceList.size() - 1){//如果最小充值金额大于0，和选择最后一个
+                SelectMoney = DecimalUtil.add(balance, payMoney);
+                string2 = "充值后即可与%1$s通话%2$s。";
+            }else{
+                SelectMoney = payMoney;
+                string2 = "充值后可增加与%1$s%2$s通话时长。";
+            }
+
             if(!TextUtils.isEmpty(entity.getOrgnizationName())){
                 time = (long) DecimalUtil.divide(SelectMoney, entity.getFavorablePrice());
             }else{
@@ -127,13 +137,7 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
             if(entity.getPriceUnit().equals("分钟") && time / 60 > 0){
                 timeStr = (time / 60) + "小时" + (time % 60) + "分钟";
             }
-            String string2 = "充值后即可与%1$s通话%2$s。";
-            String string22 = "充值后可增加与%1$s%2$s通话时长。";
-            if(entity.getMinimumRecharge() > 0 && myAccountPayAdapterPosition == priceList.size() - 1){
-                mRootView.setTip2(String.format(string2, entity.getLawyerName(), timeStr));
-            }else{
-                mRootView.setTip2(String.format(string22, entity.getLawyerName(), timeStr));
-            }
+            mRootView.setTip2(String.format(string2, entity.getLawyerName(), timeStr));
         }
     }
 
@@ -162,14 +166,16 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
         myAccountPayAdapter.setOnItemClickListener((adapter, view, position) -> {
             String money = myAccountPayAdapter.getItem(position);
             if (TextUtils.isEmpty(money)) return;
+            myAccountPayAdapterPosition = position;
+
             setPayMoney(Float.valueOf(money));
             myAccountPayAdapter.setPos(position);
             myAccountPayAdapter.notifyDataSetChanged();
-            myAccountPayAdapterPosition = position;
+
         });
         mRootView.initRecyclerView(myAccountPayAdapter);
-        setPayMoney(Float.valueOf(priceList.get(0)));
         myAccountPayAdapterPosition = 0;
+        setPayMoney(Float.valueOf(priceList.get(0)));
     }
 
     private void getPermission(String ua) {

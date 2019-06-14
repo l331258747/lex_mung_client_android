@@ -40,7 +40,9 @@ public interface OrderDetailsContract {
         void setTalkTime(String s);
         void setTalkRecord(String s);
 
-        void setCouponLayout(int useCoupon, String couponPrice, String couponType);
+        void setCouponPrice(String couponPrice);
+
+        void setCouponName(String couponName);
 
         void setInfoContent(String s);
 

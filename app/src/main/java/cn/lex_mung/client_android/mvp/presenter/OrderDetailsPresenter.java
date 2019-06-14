@@ -147,10 +147,17 @@ public class OrderDetailsPresenter extends BasePresenter<OrderDetailsContract.Mo
                                 mRootView.setPayType(null);
                             }
 
-                            //优惠
-                            mRootView.setCouponLayout(bean.getUseCoupon()
-                                    , bean.getCouponDeductionAmountStr()
-                                    , bean.getCouponNameStr());
+                            if(bean.getCouponDeductionAmount() > 0){
+                                mRootView.setCouponPrice(bean.getCouponDeductionAmountStr());
+                            } else{
+                                mRootView.setCouponPrice(null);
+                            }
+
+                            if (!TextUtils.isEmpty(bean.getCouponNameStr())) {//订单状态
+                                mRootView.setCouponName(bean.getCouponNameStr());
+                            }else{
+                                mRootView.setCouponPrice(null);
+                            }
 
                             mRootView.setInfoContent(bean.getDescription());//需求内容
 
@@ -254,10 +261,17 @@ public class OrderDetailsPresenter extends BasePresenter<OrderDetailsContract.Mo
                                 mRootView.setPayType(null);//订单价格
                             }
 
-                            //优惠
-                            mRootView.setCouponLayout(bean.getUseCoupon()
-                                    , bean.getCouponDeductionAmountStr()
-                                    , bean.getCouponNameStr());
+                            if(bean.getCouponDeductionAmount() > 0){
+                                mRootView.setCouponPrice(bean.getCouponDeductionAmountStr());
+                            } else{
+                                mRootView.setCouponPrice(null);
+                            }
+
+                            if (!TextUtils.isEmpty(bean.getCouponNameStr())) {//订单状态
+                                mRootView.setCouponName(bean.getCouponNameStr());
+                            }else{
+                                mRootView.setCouponPrice(null);
+                            }
 
                             mRootView.setInfoContent(null);
 
@@ -307,12 +321,12 @@ public class OrderDetailsPresenter extends BasePresenter<OrderDetailsContract.Mo
 
                                 mRootView.setOrderStatus(null);//不需要
 
-                                if (bean.getCallTime() <= 0) {
-                                    mRootView.setTalkTime("请等待律师接单");
+                                mRootView.setTalkTime(null);
+                                if (bean.getQuickTime() == null || bean.getQuickTime().size() == 0) {
+                                    mRootView.setTalkRecord("无");
                                 } else {
-                                    mRootView.setTalkTime(bean.getCallTimeStr());
-                                    if (!TextUtils.isEmpty(bean.getBeginTime()))
-                                        mRootView.setTalkRecord(bean.getBeginTime() + "    " + bean.getCallTimeStr());
+                                    if (!TextUtils.isEmpty(bean.getQuickTime().get(0).getBeginTime()))
+                                        mRootView.setTalkRecord(bean.getQuickTime().get(0).getBeginTime() + "，通话：" + bean.getQuickTime().get(0).getCalllength());
                                 }
                             }
                         }
