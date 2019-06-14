@@ -503,7 +503,7 @@ public class OrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> im
         if(typeId == 5){
             mPresenter.getRequirementDetail(id,orderNo);
         }else{
-            mPresenter.getOrderDetail();
+            mPresenter.getOrderDetail(orderNo);
         }
     }
 

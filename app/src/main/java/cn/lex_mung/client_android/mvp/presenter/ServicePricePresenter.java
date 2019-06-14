@@ -59,7 +59,7 @@ public class ServicePricePresenter extends BasePresenter<ServicePriceContract.Mo
 
     public void setEntity(LawsHomePagerBaseEntity entity) {
         this.entity = entity;
-        ServicePriceAdapter adapter = new ServicePriceAdapter(entity.getRequireInfo());
+        ServicePriceAdapter adapter = new ServicePriceAdapter(entity.getRequireInfo(),entity.getMinimumDuration());
         adapter.setOnItemChildClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;
             Bundle bundle = new Bundle();

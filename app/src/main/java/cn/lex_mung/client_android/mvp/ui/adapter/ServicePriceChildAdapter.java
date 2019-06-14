@@ -14,8 +14,11 @@ import me.zl.mvp.utils.AppUtils;
 
 public class ServicePriceChildAdapter extends BaseQuickAdapter<BusinessEntity, BaseViewHolder> {
 
-    ServicePriceChildAdapter(List<BusinessEntity> list) {
+    String minimumDuration;
+
+    ServicePriceChildAdapter(List<BusinessEntity> list,String minimumDuration) {
         super(R.layout.item_service_price_child, list);
+        this.minimumDuration = minimumDuration;
     }
 
     @Override
@@ -25,8 +28,8 @@ public class ServicePriceChildAdapter extends BaseQuickAdapter<BusinessEntity, B
             helper.setText(R.id.item_tv_price, AppUtils.getString(mContext, R.string.text_no_price));
             helper.setTextColor(R.id.item_tv_price, AppUtils.getColor(mContext, R.color.c_b5b5b5));
         } else {
-            if(item.getRequirementType() == 2 && !TextUtils.isEmpty(item.getMiniDuration())){
-                helper.setText(R.id.item_tv_price, item.getMinAmountStr() + "元/" + item.getUnit() + "(" + item.getMiniDuration() + ")");
+            if(item.getRequirementType() == 2 && !TextUtils.isEmpty(minimumDuration)){
+                helper.setText(R.id.item_tv_price, item.getMinAmountStr() + "元/" + item.getUnit() + "(" + minimumDuration + ")");
             }else{
                 helper.setText(R.id.item_tv_price, item.getMinAmountStr() + "元/" + item.getUnit());
             }

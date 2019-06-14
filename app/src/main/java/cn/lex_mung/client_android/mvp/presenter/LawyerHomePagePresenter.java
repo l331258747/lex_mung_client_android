@@ -81,12 +81,12 @@ public class LawyerHomePagePresenter extends BasePresenter<LawyerHomePageContrac
     }
 
     public void getLawsHomePagerBase() {
-        String json;
-        if (!TextUtils.isEmpty(json = DataHelper.getString(mApplication, DataHelperTags.LAWS_HOME_PAGER_BASE + "_" + id, "_" + id))) {
-            entity = new Gson().fromJson(json, LawsHomePagerBaseEntity.class);
-            setData();
-            isShowLoading = false;
-        }
+//        String json;
+//        if (!TextUtils.isEmpty(json = DataHelper.getString(mApplication, DataHelperTags.LAWS_HOME_PAGER_BASE + "_" + id, "_" + id))) {
+//            entity = new Gson().fromJson(json, LawsHomePagerBaseEntity.class);
+//            setData();
+//            isShowLoading = false;
+//        }
         if (DataHelper.getBooleanSF(mApplication, DataHelperTags.IS_LOGIN_SUCCESS)) {
             mModel.getLawsHomePagerBase1(id)
                     .subscribeOn(Schedulers.io())

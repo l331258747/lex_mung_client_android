@@ -58,6 +58,11 @@ public class LawsHomePagerBaseEntity implements Serializable {
     private PracticeInfoBean practiceInfo;
     private List<String> socialFunction;
     private List<BusinessEntity> requireInfo;
+    private String minimumDuration;
+
+    public String getMinimumDuration() {
+        return minimumDuration;
+    }
 
     public boolean showCall(){
         if(requireInfo == null) return false;

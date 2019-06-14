@@ -156,7 +156,7 @@ public class OrderDetailsPresenter extends BasePresenter<OrderDetailsContract.Mo
                             if (!TextUtils.isEmpty(bean.getCouponNameStr())) {//订单状态
                                 mRootView.setCouponName(bean.getCouponNameStr());
                             }else{
-                                mRootView.setCouponPrice(null);
+                                mRootView.setCouponName(null);
                             }
 
                             mRootView.setInfoContent(bean.getDescription());//需求内容
@@ -210,10 +210,11 @@ public class OrderDetailsPresenter extends BasePresenter<OrderDetailsContract.Mo
                 });
     }
 
-    public void getOrderDetail() {
+    public void getOrderDetail(String orderNo) {
         Map<String, Object> map = new HashMap<>();
         map.put("typeId", type);
         map.put("id", id);
+        map.put("orderNo", orderNo);
         mModel.getOrderDetail(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))
@@ -289,6 +290,7 @@ public class OrderDetailsPresenter extends BasePresenter<OrderDetailsContract.Mo
                                         mRootView.setBottomStatus("平台正在优选服务律师", R.color.c_ff, R.color.c_f0f0f0, null);
                                         break;
                                     case 5:
+                                    case 6:
                                         mRootView.setOrderRemain(bean.getRemainingTime() * 1000, "剩余回电时间");
 
 
@@ -326,7 +328,7 @@ public class OrderDetailsPresenter extends BasePresenter<OrderDetailsContract.Mo
                                     mRootView.setTalkRecord("无");
                                 } else {
                                     if (!TextUtils.isEmpty(bean.getQuickTime().get(0).getBeginTime()))
-                                        mRootView.setTalkRecord(bean.getQuickTime().get(0).getBeginTime() + "，通话：" + bean.getQuickTime().get(0).getCalllength());
+                                        mRootView.setTalkRecord(bean.getQuickTime().get(0).getBeginTime() + "\n通话：" + bean.getQuickTime().get(0).getCalllength());
                                 }
                             }
                         }

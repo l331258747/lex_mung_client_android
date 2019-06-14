@@ -387,7 +387,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/c_737373"
-            tools:text="通话记录" />
+            tools:text="2019-15-15 12:12:12,\n通话:20小时54分钟30秒" />
 
     </LinearLayout>
 

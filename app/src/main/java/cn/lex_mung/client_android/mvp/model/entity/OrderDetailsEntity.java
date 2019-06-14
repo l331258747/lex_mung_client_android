@@ -484,11 +484,12 @@ public class OrderDetailsEntity {
         public String getLmemberName() {
             return lmemberName;
         }
+
         public String getLmemberNameStr() {
             return lmemberName + "律师";
         }
 
-        public String getLMemeberName2(){
+        public String getLMemeberName2() {
             return rname + " | " + institutionName;
         }
 
@@ -549,7 +550,7 @@ public class OrderDetailsEntity {
         }
 
         public String getBuyerPayAmountStr() {
-            return "¥ "+StringUtils.getStringNum(buyerPayAmount) + "元";
+            return "¥ " + StringUtils.getStringNum(buyerPayAmount) + "元";
         }
 
         public void setBuyerPayAmount(double buyerPayAmount) {
@@ -637,7 +638,7 @@ public class OrderDetailsEntity {
         }
 
         public String getCouponDeductionAmountStr() {
-            return "¥ "+StringUtils.getStringNum(couponDeductionAmount) + "元";
+            return "¥ " + StringUtils.getStringNum(couponDeductionAmount) + "元";
         }
 
         public void setCouponDeductionAmount(double couponDeductionAmount) {
@@ -673,7 +674,7 @@ public class OrderDetailsEntity {
         }
 
         public String getPayAmountStr() {
-            return "¥ "+StringUtils.getStringNum(payAmount) + "元";
+            return "¥ " + StringUtils.getStringNum(payAmount) + "元";
         }
 
         public void setPayAmount(double payAmount) {
@@ -706,10 +707,20 @@ public class OrderDetailsEntity {
             private int id;
             private String beginTime;
             private String endTime;
-            private String calllength;
+            private int callLength;
 
             public String getCalllength() {
-                return calllength;
+                long hours = callLength / 3600;//转换小时数
+                callLength = callLength % 3600;//剩余秒数
+                long minutes = callLength / 60;//转换分钟
+                callLength = callLength % 60;//剩余秒数
+                if(hours > 0){
+                    return hours + "小时" + minutes + "分" + callLength + "秒";
+                }
+                if(minutes > 0){
+                    return minutes + "分" + callLength + "秒";
+                }
+                return callLength + "秒";
             }
 
             public int getId() {

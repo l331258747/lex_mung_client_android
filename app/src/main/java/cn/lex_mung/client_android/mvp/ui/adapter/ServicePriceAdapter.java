@@ -15,8 +15,11 @@ import me.zl.mvp.utils.AppUtils;
 
 public class ServicePriceAdapter extends BaseQuickAdapter<BusinessEntity, BaseViewHolder> {
 
-    public ServicePriceAdapter(List<BusinessEntity> list) {
+    String minimumDuration;
+
+    public ServicePriceAdapter(List<BusinessEntity> list,String minimumDuration) {
         super(R.layout.item_service_price, list);
+        this.minimumDuration = minimumDuration;
     }
 
     @Override
@@ -27,7 +30,7 @@ public class ServicePriceAdapter extends BaseQuickAdapter<BusinessEntity, BaseVi
         } else {
             helper.setText(R.id.item_tv_release, mContext.getString(R.string.text_telephone_counseling));
         }
-        ServicePriceChildAdapter adapter = new ServicePriceChildAdapter(item.getRequires());
+        ServicePriceChildAdapter adapter = new ServicePriceChildAdapter(item.getRequires(),minimumDuration);
         RecyclerView recyclerView = helper.getView(R.id.recycler_view);
         AppUtils.configRecyclerView(recyclerView, new LinearLayoutManager(mContext));
         recyclerView.setAdapter(adapter);

@@ -38,11 +38,6 @@ public class BusinessEntity implements Serializable {
     private String requireTypeDescription;
     private int requirementType;
     private int rcount;
-    private String miniDuration;
-
-    public String getMiniDuration() {
-        return miniDuration;
-    }
 
     public String getIconImage() {
         return iconImage;
