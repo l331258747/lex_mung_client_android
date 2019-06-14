@@ -270,10 +270,7 @@ public class MyAccountActivity extends BaseActivity<MyAccountPresenter> implemen
     }
 
     public void setTip2(String str){
-        String string2 = "充值后即可与%1$s通话%2$s分钟。";
-        tvTip2.setText(String.format(string2,
-                entity.getLawyerName(),
-                str));
+        tvTip2.setText(str);
     }
 
     @Override

@@ -75,6 +75,8 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
 
     private boolean flag = false;
     private ExpertPriceEntity entity;
+    private int myAccountPayAdapterPosition;
+    private List<String> priceList;
 
     @Inject
     public MyAccountPresenter(MyAccountContract.Model model, MyAccountContract.View rootView) {
@@ -125,7 +127,13 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
             if(entity.getPriceUnit().equals("分钟") && time / 60 > 0){
                 timeStr = (time / 60) + "小时" + (time % 60) + "分钟";
             }
-            mRootView.setTip2(timeStr);
+            String string2 = "充值后即可与%1$s通话%2$s。";
+            String string22 = "充值后可增加与%1$s%2$s通话时长。";
+            if(entity.getMinimumRecharge() > 0 && myAccountPayAdapterPosition == priceList.size() - 1){
+                mRootView.setTip2(String.format(string2, entity.getLawyerName(), timeStr));
+            }else{
+                mRootView.setTip2(String.format(string22, entity.getLawyerName(), timeStr));
+            }
         }
     }
 
@@ -135,7 +143,7 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
 
     public void onCreate(ExpertPriceEntity entity) {
         this.entity = entity;
-        List<String> priceList = new ArrayList<>();
+        priceList = new ArrayList<>();
         priceList.add("1000");
         priceList.add("500");
         priceList.add("300");
@@ -157,9 +165,11 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
             setPayMoney(Float.valueOf(money));
             myAccountPayAdapter.setPos(position);
             myAccountPayAdapter.notifyDataSetChanged();
+            myAccountPayAdapterPosition = position;
         });
         mRootView.initRecyclerView(myAccountPayAdapter);
         setPayMoney(Float.valueOf(priceList.get(0)));
+        myAccountPayAdapterPosition = 0;
     }
 
     private void getPermission(String ua) {

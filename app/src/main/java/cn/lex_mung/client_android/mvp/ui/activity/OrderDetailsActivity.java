@@ -640,6 +640,7 @@ public class OrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> im
     public void setLawyerLayout(int id, String name, String nameContent, String headUrl) {
         if (id > 0) {
             groupLawyer.setVisibility(View.VISIBLE);
+            ivHeadTip.setVisibility(View.VISIBLE);
             tvName.setText(name);
             tvNameContent.setText(nameContent);
             if (!TextUtils.isEmpty(headUrl)) {
@@ -662,6 +663,7 @@ public class OrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> im
             });
         } else {
             groupLawyer.setVisibility(View.GONE);
+            ivHeadTip.setVisibility(View.GONE);
         }
     }
 

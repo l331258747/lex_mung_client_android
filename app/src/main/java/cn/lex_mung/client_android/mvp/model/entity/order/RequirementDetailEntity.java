@@ -96,18 +96,8 @@ public class RequirementDetailEntity {
         return couponDeductionAmount;
     }
 
-    public String getCouponTypeStr() {//优惠券类型,1.会员卡，2.电子优惠券，3.线下优惠券，4.体验券，目前只做1和2
-        switch (couponType) {
-            case 1:
-                return "会员卡-" + couponName;
-            case 2:
-                return "电子优惠券-" + couponName;
-            case 3:
-                return "线下优惠券-" + couponName;
-            case 4:
-                return "体验券-" + couponName;
-        }
-        return "";
+    public String getCouponNameStr() {//优惠券类型,1.会员卡，2.电子优惠券，3.线下优惠券，4.体验券，目前只做1和2
+        return couponName;
     }
 
     public int getUseCoupon() {

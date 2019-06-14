@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone"
                 app:constraint_referenced_ids="view_lawyer,iv_lawyer_name_bg,
-                iv_lawyer_name,iv_head_tip,tv_name,tv_name_content,iv_head"
+                iv_lawyer_name,tv_name,tv_name_content,iv_head"
                 tools:visibility="visible" />
 
             <View

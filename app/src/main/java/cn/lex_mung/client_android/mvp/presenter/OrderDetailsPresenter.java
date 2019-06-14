@@ -20,7 +20,6 @@ import me.zl.mvp.di.scope.ActivityScope;
 import me.zl.mvp.mvp.BasePresenter;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
-import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.RxLifecycleUtils;
 import okhttp3.RequestBody;
 
@@ -32,7 +31,6 @@ import cn.lex_mung.client_android.mvp.contract.OrderDetailsContract;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.OrderDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.RemainEntity;
-import zlc.season.rxdownload3.core.Status;
 
 import java.util.HashMap;
 import java.util.List;
@@ -152,7 +150,7 @@ public class OrderDetailsPresenter extends BasePresenter<OrderDetailsContract.Mo
                             //优惠
                             mRootView.setCouponLayout(bean.getUseCoupon()
                                     , bean.getCouponDeductionAmountStr()
-                                    , bean.getCouponTypeStr());
+                                    , bean.getCouponNameStr());
 
                             mRootView.setInfoContent(bean.getDescription());//需求内容
 
@@ -259,11 +257,11 @@ public class OrderDetailsPresenter extends BasePresenter<OrderDetailsContract.Mo
                             //优惠
                             mRootView.setCouponLayout(bean.getUseCoupon()
                                     , bean.getCouponDeductionAmountStr()
-                                    , bean.getCouponTypeStr());
+                                    , bean.getCouponNameStr());
 
                             mRootView.setInfoContent(null);
 
-                            mRootView.setLawyerLayout(bean.getLawyerMemberId(), bean.getLmemberName(), bean.getLMemeberName2(), bean.getIconImage());//显示律师
+                            mRootView.setLawyerLayout(bean.getLawyerMemberId(), bean.getLmemberNameStr(), bean.getLMemeberName2(), bean.getIconImage());//显示律师
 
                             if (bean.getTypeId() == 4) {//快速抢单
 
@@ -282,8 +280,7 @@ public class OrderDetailsPresenter extends BasePresenter<OrderDetailsContract.Mo
 
                                         mRootView.setOrderDetailView(2);
                                         mRootView.setBottomStatus("联系律师", R.color.c_ff, R.color.c_1EC88B, v -> {
-                                            Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + bean.getLmobile()));
-                                            mRootView.launchActivity(dialIntent);
+                                            getUserPhone();
                                         });
 
                                         if (bean.getCallback() == 1) {

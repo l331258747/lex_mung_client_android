@@ -483,6 +483,9 @@ public class OrderDetailsEntity {
         public String getLmemberName() {
             return lmemberName;
         }
+        public String getLmemberNameStr() {
+            return lmemberName + "律师";
+        }
 
         public String getLMemeberName2(){
             return rname + " | " + institutionName;
@@ -545,7 +548,7 @@ public class OrderDetailsEntity {
         }
 
         public String getBuyerPayAmountStr() {
-            return StringUtils.getStringNum(buyerPayAmount) + "元";
+            return "¥ "+StringUtils.getStringNum(buyerPayAmount) + "元";
         }
 
         public void setBuyerPayAmount(double buyerPayAmount) {
@@ -620,18 +623,8 @@ public class OrderDetailsEntity {
             return couponType;
         }
 
-        public String getCouponTypeStr() {//优惠券类型,1.会员卡，2.电子优惠券，3.线下优惠券，4.体验券，目前只做1和2
-            switch (couponType) {
-                case 1:
-                    return "会员卡-" + couponName;
-                case 2:
-                    return "电子优惠券-" + couponName;
-                case 3:
-                    return "线下优惠券-" + couponName;
-                case 4:
-                    return "体验券-" + couponName;
-            }
-            return "";
+        public String getCouponNameStr() {//优惠券类型,1.会员卡，2.电子优惠券，3.线下优惠券，4.体验券，目前只做1和2
+            return couponName;
         }
 
         public void setCouponType(int couponType) {
@@ -643,7 +636,7 @@ public class OrderDetailsEntity {
         }
 
         public String getCouponDeductionAmountStr() {
-            return StringUtils.getStringNum(couponDeductionAmount) + "元";
+            return "¥ "+StringUtils.getStringNum(couponDeductionAmount) + "元";
         }
 
         public void setCouponDeductionAmount(double couponDeductionAmount) {
@@ -679,7 +672,7 @@ public class OrderDetailsEntity {
         }
 
         public String getPayAmountStr() {
-            return StringUtils.getStringNum(payAmount) + "元";
+            return "¥ "+StringUtils.getStringNum(payAmount) + "元";
         }
 
         public void setPayAmount(double payAmount) {
