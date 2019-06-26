@@ -117,14 +117,17 @@
 
     <TextView
         android:id="@+id/tv_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/qb_px_15"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/view_bottom"
         app:layout_constraintStart_toEndOf="@+id/iv_head"
+        app:layout_constraintEnd_toStartOf="@+id/item_tv_time"
+        android:maxLines="1"
+        android:ellipsize="end"
         app:layout_constraintTop_toTopOf="@+id/view_bottom"
-        tools:text="姓名" />
+        tools:text="姓名姓名姓名姓" />
 
     <TextView
         android:id="@+id/item_tv_time"

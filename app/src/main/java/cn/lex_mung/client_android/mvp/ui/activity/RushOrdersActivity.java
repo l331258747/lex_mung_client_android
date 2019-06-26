@@ -150,7 +150,7 @@ public class RushOrdersActivity extends BaseActivity<RushOrdersPresenter> implem
                 bundle.putString(BundleTags.ORDER_NO,orderBean.getOrderNo());
                 bundle.putInt(BundleTags.IS_SHOW,1);
                 bundle.putInt(BundleTags.STATE,orderBean.getStatus());
-                launchActivity(new Intent(mActivity, OrderDetailTabActivity.class), bundle);
+                launchActivity(new Intent(mActivity, OrderDetailsActivity.class), bundle);
                 break;
         }
     }
