@@ -28,6 +28,11 @@ public class LawyerListScreenAdapter extends BaseQuickAdapter<LawyerListScreenEn
     private LawyerListScreenActivity activity;
     private boolean isFlag;
 
+    private int[] colors = {R.drawable.round_100_1ec88b_all,
+            R.drawable.round_100_f6c41e_all,
+            R.drawable.round_100_c270ff_all,
+            R.drawable.round_100_f02457_all};
+
     public LawyerListScreenAdapter(boolean isFlag) {
         super(null);
         this.isFlag = isFlag;
@@ -51,17 +56,12 @@ public class LawyerListScreenAdapter extends BaseQuickAdapter<LawyerListScreenEn
     protected void convert(BaseViewHolder helper, LawyerListScreenEntity item) {
         try {
             helper.setText(R.id.item_tv_title, item.getText());
+            helper.setImageResource(R.id.iv_point,colors[helper.getLayoutPosition() % 4]);
             switch (helper.getItemViewType()) {
                 case 0:
                     ((TextView) helper.getView(R.id.item_tv_content)).setHint(String.format(mContext.getString(R.string.text_please_select_1), item.getText()));
                     helper.setText(R.id.item_tv_content, item.getContent());
-                    if (item.getMargin() == 35) {
-                        helper.getView(R.id.item_35).setVisibility(View.VISIBLE);
-                        helper.getView(R.id.item_1).setVisibility(View.GONE);
-                    } else {
-                        helper.getView(R.id.item_35).setVisibility(View.GONE);
-                        helper.getView(R.id.item_1).setVisibility(View.VISIBLE);
-                    }
+                    helper.getView(R.id.item_1).setVisibility(View.VISIBLE);
                     break;
                 case 1:
                     RecyclerView recyclerView = helper.getView(R.id.recycler_view);
@@ -141,15 +141,15 @@ public class LawyerListScreenAdapter extends BaseQuickAdapter<LawyerListScreenEn
                     }
                     if ("requireTypeId".equals(getData().get(helper.getLayoutPosition() - 1).getPropKey())) {
                         if (getData().get(helper.getLayoutPosition() - 1).getPos() == 0) {
-                            etMinPrice.setBackgroundResource(R.drawable.round_10_f4f4f4_all);
-                            etMaxPrice.setBackgroundResource(R.drawable.round_10_f4f4f4_all);
+                            etMinPrice.setBackgroundResource(R.drawable.round_100_f4f4f4_all);
+                            etMaxPrice.setBackgroundResource(R.drawable.round_100_f4f4f4_all);
                             etMinPrice.setFocusable(false);
                             etMinPrice.setFocusableInTouchMode(false);
                             etMaxPrice.setFocusable(false);
                             etMaxPrice.setFocusableInTouchMode(false);
                         } else {
-                            etMinPrice.setBackgroundResource(R.drawable.round_10_ffffff_all_717171);
-                            etMaxPrice.setBackgroundResource(R.drawable.round_10_ffffff_all_717171);
+                            etMinPrice.setBackgroundResource(R.drawable.round_100_ffffff_all_717171);
+                            etMaxPrice.setBackgroundResource(R.drawable.round_100_ffffff_all_717171);
                             etMinPrice.setFocusable(true);
                             etMinPrice.setFocusableInTouchMode(true);
                             etMaxPrice.setFocusable(true);

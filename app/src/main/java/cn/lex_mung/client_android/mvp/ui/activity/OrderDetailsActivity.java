@@ -464,7 +464,7 @@ public class OrderDetailsActivity extends BaseActivity<OrderDetailsPresenter> im
                 titleView.getRightTv().setTextColor(ContextCompat.getColor(mActivity, R.color.c_ff));
                 titleView.getRightTv().setOnClickListener(v -> {
                     bundle.clear();
-                    bundle.putString(BundleTags.ORDER_NO, orderNo);//TODO 传递状态，1为可以发合同，0位展示空页面。
+                    bundle.putString(BundleTags.ORDER_NO, orderNo);//传递状态，1为可以发合同，0位展示空页面。
                     bundle.putString(BundleTags.MOBILE, phone);
                     bundle.putInt(BundleTags.STATE,isReceipt);
                     launchActivity(new Intent(mActivity,OrderContractActivity.class),bundle);

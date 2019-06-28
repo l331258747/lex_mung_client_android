@@ -5,9 +5,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
+    <cn.lex_mung.client_android.mvp.ui.widget.TitleView
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:TitleView_title="律师筛选"
+        app:TitleView_left_img="@drawable/ic_back2"
+        app:TitleView_right_text="重置"
+        app:TitleView_bg="@color/c_ff"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
@@ -18,40 +23,27 @@
         app:layout_constraintBottom_toTopOf="@id/view_horizontal_line"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/titleView" />
 
     <View
         android:id="@+id/view_horizontal_line"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qb_px_1"
         android:layout_marginBottom="@dimen/qb_px_120"
-        android:background="@color/c_b5b5b5"
         app:layout_constraintBottom_toBottomOf="parent" />
 
-    <Button
-        android:id="@+id/bt_reset"
-        android:layout_width="@dimen/qb_px_220"
-        android:layout_height="@dimen/qb_px_70"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/round_100_dbdcdc_all"
-        android:text="@string/text_reset"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/bt_confirm"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_horizontal_line" />
 
     <Button
         android:id="@+id/bt_confirm"
-        android:layout_width="@dimen/qb_px_220"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/qb_px_70"
         android:background="@drawable/round_100_06a66a_all"
+        android:layout_marginLeft="@dimen/qb_px_80"
+        android:layout_marginRight="@dimen/qb_px_80"
         android:text="@string/text_confirm"
         android:textColor="@android:color/white"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/bt_reset"
         app:layout_constraintTop_toBottomOf="@id/view_horizontal_line" />
 </android.support.constraint.ConstraintLayout>
