@@ -17,7 +17,6 @@ import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
@@ -32,8 +31,6 @@ import java.util.List;
 public class LawyerListScreenActivity extends BaseActivity<LawyerListScreenPresenter> implements LawyerListScreenContract.View {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-    @BindView(R.id.titleView)
-    TitleView titleView;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -59,8 +56,6 @@ public class LawyerListScreenActivity extends BaseActivity<LawyerListScreenPrese
             mPresenter.setRequireTypeId(bundleIntent.getInt(BundleTags.REQUIRE_TYPE_ID));
             mPresenter.setLawyerListScreenEntityList((List<LawyerListScreenEntity>) bundleIntent.getSerializable(BundleTags.LIST));
         }
-
-        titleView.getRightTv().setOnClickListener(v -> mPresenter.reset());
     }
 
     public void setPos(int pos) {
@@ -73,12 +68,15 @@ public class LawyerListScreenActivity extends BaseActivity<LawyerListScreenPrese
         recyclerView.setAdapter(adapter);
     }
 
-    @OnClick({R.id.bt_confirm})
+    @OnClick({R.id.bt_confirm,R.id.bt_reset})
     public void onViewClicked(View view) {
         if (isFastClick()) return;
         switch (view.getId()) {
             case R.id.bt_confirm:
                 mPresenter.confirm();
+                break;
+            case R.id.bt_reset:
+                mPresenter.reset();
                 break;
         }
     }

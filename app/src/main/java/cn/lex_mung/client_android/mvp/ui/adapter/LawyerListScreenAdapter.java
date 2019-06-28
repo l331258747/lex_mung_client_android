@@ -15,6 +15,7 @@ import com.chad.library.adapter.base.util.MultiTypeDelegate;
 
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.mvp.model.entity.LawyerListScreenEntity;
+import cn.lex_mung.client_android.mvp.model.entity.help.SolutionTypeBean;
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerListScreenActivity;
 
 import me.zl.mvp.utils.AppUtils;
@@ -70,7 +71,7 @@ public class LawyerListScreenAdapter extends BaseQuickAdapter<LawyerListScreenEn
                     LawyerListScreenChildAdapter adapter = new LawyerListScreenChildAdapter(item.getItems(), item.getPos());
                     recyclerView.setAdapter(adapter);
                     adapter.setOnItemClickListener((adapter1, view1, position) -> {
-                        LawyerListScreenEntity.ItemsBean bean = adapter.getItem(position);
+                        SolutionTypeBean bean = adapter.getItem(position);
                         if (bean == null) return;
                         adapter.setPos(position);
                         activity.setPos(helper.getLayoutPosition());

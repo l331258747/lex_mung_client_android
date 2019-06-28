@@ -13,6 +13,7 @@ import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.module.SelectListItemModule;
 import cn.lex_mung.client_android.mvp.model.entity.LawyerListScreenEntity;
 import cn.lex_mung.client_android.mvp.model.entity.SelectList;
+import cn.lex_mung.client_android.mvp.model.entity.help.SolutionTypeBean;
 import cn.lex_mung.client_android.mvp.ui.adapter.SelectListItemAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
@@ -128,7 +129,7 @@ public class SelectListItemActivity extends BaseActivity<SelectListItemPresenter
                     AppUtils.post(FEEDBACK_INFO, FEEDBACK_INFO_TYPE, adapter.getItem(position));
                     break;
                 case 5:
-                    LawyerListScreenEntity.ItemsBean bean = (LawyerListScreenEntity.ItemsBean) adapter.getItem(position);
+                    SolutionTypeBean bean = (SolutionTypeBean) adapter.getItem(position);
                     if (bean == null) return;
                     if (id == bean.getId()) {
                         bean.setId(0);

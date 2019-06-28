@@ -115,7 +115,7 @@ public interface CommonService {
      *
      * @return BaseResponse
      */
-    @GET("common/lawyer/search/page/v3")
+    @GET("common/lawyer/search/page/v4")
     Observable<BaseResponse<List<LawyerListScreenEntity>>> getPeerSearchList();
 
     /**

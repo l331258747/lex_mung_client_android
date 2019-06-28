@@ -15,6 +15,7 @@ import cn.lex_mung.client_android.mvp.model.entity.SocialTypeEntity;
 
 import java.util.List;
 
+import cn.lex_mung.client_android.mvp.model.entity.help.SolutionTypeBean;
 import me.zl.mvp.utils.AppUtils;
 
 /**
@@ -56,7 +57,7 @@ public class SelectListItemAdapter extends BaseQuickAdapter<SelectList, BaseView
                 helper.getView(R.id.item_tv_content).setVisibility(View.VISIBLE);
                 break;
             case 5:
-                LawyerListScreenEntity.ItemsBean bean = (LawyerListScreenEntity.ItemsBean) item;
+                SolutionTypeBean bean = (SolutionTypeBean) item;
                 if (id == bean.getId()) {
                     helper.getView(R.id.item_iv_select).setVisibility(View.VISIBLE);
                     helper.setTextColor(R.id.item_tv_title, AppUtils.getColor(mContext, R.color.c_06a66a));

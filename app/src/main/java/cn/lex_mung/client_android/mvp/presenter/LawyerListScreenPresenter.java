@@ -7,6 +7,9 @@ import android.os.Message;
 import android.text.TextUtils;
 
 import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.mvp.model.entity.help.SolutionTypeBean;
+import cn.lex_mung.client_android.mvp.model.entity.help.SolutionTypeChildBean;
+import cn.lex_mung.client_android.mvp.ui.activity.BusinessTypeSelectActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.SelectListItemActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.SelectResortInstitutionActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.LawyerListScreenAdapter;
@@ -37,6 +40,7 @@ import java.util.List;
 
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO;
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_1;
+import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_BUSINESS;
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_INSTITUTIONS;
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_LIST;
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_LIST_1;
@@ -111,6 +115,16 @@ public class LawyerListScreenPresenter extends BasePresenter<LawyerListScreenCon
                 return;
             }
             Bundle bundle = new Bundle();
+            if("businessTypeId".equals(entity.getPropKey())){
+                pos = position;
+                bundle.clear();
+                bundle.putSerializable(BundleTags.LIST, (Serializable) entity.getItems());
+                bundle.putBoolean(BundleTags.FLAG, isFlag());
+                bundle.putInt(BundleTags.ID, entity.getId());
+                mRootView.launchActivity(new Intent(mApplication, BusinessTypeSelectActivity.class), bundle);
+                return;
+            }
+
             if ("courtId".equals(entity.getPropKey())
                     || "procuratorateId".equals(entity.getPropKey())) {
                 pos = position;
@@ -187,7 +201,7 @@ public class LawyerListScreenPresenter extends BasePresenter<LawyerListScreenCon
         for (int i = 0; i < list.size(); i++) {
             LawyerListScreenEntity item = list.get(i);
             if (TextUtils.equals(item.getPropKey(), "requireTypeId")) {
-                List<LawyerListScreenEntity.ItemsBean> item2 = item.getItems();
+                List<SolutionTypeBean> item2 = item.getItems();
                 for (int j = 0; j < item2.size(); j++) {
                     if (item2.get(j).getId() == requireTypeId) {
                         item.setPos(j);
@@ -209,7 +223,7 @@ public class LawyerListScreenPresenter extends BasePresenter<LawyerListScreenCon
         LawyerListScreenEntity entity;
         switch (message.what) {
             case LAWYER_LIST_SCREEN_INFO_TYPE:
-                LawyerListScreenEntity.ItemsBean bean = (LawyerListScreenEntity.ItemsBean) message.obj;
+                SolutionTypeBean bean = (SolutionTypeBean) message.obj;
                 entity = list.get(pos);
                 entity.setContent(bean.getText());
                 entity.setId(bean.getId());
@@ -220,6 +234,13 @@ public class LawyerListScreenPresenter extends BasePresenter<LawyerListScreenCon
                 entity = list.get(pos);
                 entity.setContent(institutionListEntity.getInstitutionName());
                 entity.setId(institutionListEntity.getInstitutionId());
+                adapter.notifyItemChanged(pos, entity);
+                break;
+            case LAWYER_LIST_SCREEN_INFO_BUSINESS:
+                SolutionTypeChildBean bean1 = (SolutionTypeChildBean) message.obj;
+                entity = list.get(pos);
+                entity.setContent(bean1.getSolutionTypeName());
+                entity.setId(bean1.getSolutionTypeId());
                 adapter.notifyItemChanged(pos, entity);
                 break;
         }
@@ -235,7 +256,7 @@ public class LawyerListScreenPresenter extends BasePresenter<LawyerListScreenCon
         LawyerListScreenEntity entity;
         switch (message.what) {
             case LAWYER_LIST_SCREEN_INFO_TYPE:
-                LawyerListScreenEntity.ItemsBean bean = (LawyerListScreenEntity.ItemsBean) message.obj;
+                SolutionTypeBean bean = (SolutionTypeBean) message.obj;
                 entity = list.get(pos);
                 entity.setContent(bean.getText());
                 entity.setId(bean.getId());
@@ -246,6 +267,13 @@ public class LawyerListScreenPresenter extends BasePresenter<LawyerListScreenCon
                 entity = list.get(pos);
                 entity.setContent(institutionListEntity.getInstitutionName());
                 entity.setId(institutionListEntity.getInstitutionId());
+                adapter.notifyItemChanged(pos, entity);
+                break;
+            case LAWYER_LIST_SCREEN_INFO_BUSINESS:
+                SolutionTypeChildBean bean1 = (SolutionTypeChildBean) message.obj;
+                entity = list.get(pos);
+                entity.setContent(bean1.getSolutionTypeName());
+                entity.setId(bean1.getSolutionTypeId());
                 adapter.notifyItemChanged(pos, entity);
                 break;
         }

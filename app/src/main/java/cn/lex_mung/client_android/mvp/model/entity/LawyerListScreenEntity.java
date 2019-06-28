@@ -3,6 +3,9 @@ package cn.lex_mung.client_android.mvp.model.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import cn.lex_mung.client_android.mvp.model.entity.help.SolutionTypeBean;
+import cn.lex_mung.client_android.mvp.model.entity.help.SolutionTypeChildBean;
+
 public class LawyerListScreenEntity implements Serializable, SelectList {
 
     public LawyerListScreenEntity(String propKey, String text, int isTile) {
@@ -27,7 +30,7 @@ public class LawyerListScreenEntity implements Serializable, SelectList {
     private int isTile;
     private int margin;
 
-    private List<ItemsBean> items;
+    private List<SolutionTypeBean> items;
     private int id;
     private int pos;
     private String content;
@@ -106,37 +109,13 @@ public class LawyerListScreenEntity implements Serializable, SelectList {
         this.margin = margin;
     }
 
-    public List<ItemsBean> getItems() {
+    public List<SolutionTypeBean> getItems() {
         return items;
     }
 
-    public void setItems(List<ItemsBean> items) {
+    public void setItems(List<SolutionTypeBean> items) {
         this.items = items;
     }
 
-    public static class ItemsBean implements Serializable, SelectList {
-        /**
-         * id : 1
-         * text : 不限
-         */
 
-        private int id;
-        private String text;
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public String getText() {
-            return text;
-        }
-
-        public void setText(String text) {
-            this.text = text;
-        }
-    }
 }

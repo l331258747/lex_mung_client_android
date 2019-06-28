@@ -45,6 +45,7 @@ import java.util.List;
 import java.util.Map;
 
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO;
+import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_BUSINESS;
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_INSTITUTIONS;
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_LIST;
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_LIST_1;
@@ -288,6 +289,7 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
                 break;
             case LAWYER_LIST_SCREEN_INFO_TYPE:
             case LAWYER_LIST_SCREEN_INFO_INSTITUTIONS:
+            case LAWYER_LIST_SCREEN_INFO_BUSINESS:
                 mRootView.setScreenColor(AppUtils.getColor(mApplication, R.color.c_06a66a));
                 break;
             case LAWYER_LIST_SCREEN_INFO_LIST_ID:

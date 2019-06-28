@@ -400,7 +400,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     public void setSolutionType(List<SolutionTypeEntity> list) {
         for (SolutionTypeEntity entity : list) {
             fragments.add(SolutionLIstFragment.newInstance(entity.getId()));
-            titles.add(entity.getTypeName());
+            titles.add(entity.getAlias());
         }
         viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(new AdapterViewPager(getChildFragmentManager(), fragments, titles));

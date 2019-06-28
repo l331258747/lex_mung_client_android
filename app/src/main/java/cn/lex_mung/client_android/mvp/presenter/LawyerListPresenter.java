@@ -53,6 +53,7 @@ import me.zl.mvp.utils.RxLifecycleUtils;
 import okhttp3.RequestBody;
 
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_1;
+import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_BUSINESS;
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_INSTITUTIONS;
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_LIST;
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_LIST_1;
@@ -362,6 +363,7 @@ public class LawyerListPresenter extends BasePresenter<LawyerListContract.Model,
                 break;
             case LAWYER_LIST_SCREEN_INFO_TYPE:
             case LAWYER_LIST_SCREEN_INFO_INSTITUTIONS:
+            case LAWYER_LIST_SCREEN_INFO_BUSINESS:
                 mRootView.setScreenColor(AppUtils.getColor(mApplication, R.color.c_06a66a));
                 break;
         }

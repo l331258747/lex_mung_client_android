@@ -3,7 +3,9 @@ package cn.lex_mung.client_android.mvp.model.entity.help;
 import java.io.Serializable;
 import java.util.List;
 
-public class SolutionTypeBean implements Serializable {
+import cn.lex_mung.client_android.mvp.model.entity.SelectList;
+
+public class SolutionTypeBean implements Serializable,SelectList {
 
     /**
      * solutionTypeId : 2
@@ -18,6 +20,24 @@ public class SolutionTypeBean implements Serializable {
     private int isGroup;
     private String description;
     private List<SolutionTypeChildBean> child;
+    private int id;
+    private String text;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getText() {
+        return text;
+    }
 
     public int getSolutionTypeId() {
         return solutionTypeId;

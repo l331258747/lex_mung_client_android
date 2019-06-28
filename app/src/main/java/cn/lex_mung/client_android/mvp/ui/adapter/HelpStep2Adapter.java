@@ -18,6 +18,7 @@ public class HelpStep2Adapter extends BaseQuickAdapter<SolutionTypeChildBean, Ba
     }
 
     public void setSelection(int typeId){
+        if(typeId <= 0) return;
         this.typeId = typeId;
         notifyDataSetChanged();
     }

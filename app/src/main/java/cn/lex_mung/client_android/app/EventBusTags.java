@@ -63,13 +63,14 @@ public interface EventBusTags {
     }
 
     interface LAWYER_LIST_SCREEN_INFO {
-        String LAWYER_LIST_SCREEN_INFO = "lawyer_list_screen_info";
-        String LAWYER_LIST_SCREEN_INFO_1 = "lawyer_list_screen_info_1";
-        int LAWYER_LIST_SCREEN_INFO_TYPE = 100;
-        int LAWYER_LIST_SCREEN_INFO_INSTITUTIONS = 101;
-        int LAWYER_LIST_SCREEN_INFO_LIST = 102;
-        int LAWYER_LIST_SCREEN_INFO_LIST_1 = 103;
-        int LAWYER_LIST_SCREEN_INFO_LIST_ID = 104;
+        String LAWYER_LIST_SCREEN_INFO = "lawyer_list_screen_info";//律师列表fragment
+        String LAWYER_LIST_SCREEN_INFO_1 = "lawyer_list_screen_info_1";//律师列表activity
+        int LAWYER_LIST_SCREEN_INFO_TYPE = 100;//筛选列表1
+        int LAWYER_LIST_SCREEN_INFO_INSTITUTIONS = 101;//筛选列表2
+        int LAWYER_LIST_SCREEN_INFO_BUSINESS = 105;//筛选列表2
+        int LAWYER_LIST_SCREEN_INFO_LIST = 102;//确定
+        int LAWYER_LIST_SCREEN_INFO_LIST_1 = 103;//重置
+        int LAWYER_LIST_SCREEN_INFO_LIST_ID = 104;//律师服务id
     }
 
     interface MESSAGE_INFO {

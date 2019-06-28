@@ -155,6 +155,7 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
 
     private void getSolutionType() {
         Map<String, Object> map = new HashMap<>();
+        map.put("freeSolution",1);
         mModel.getSolutionType(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))
