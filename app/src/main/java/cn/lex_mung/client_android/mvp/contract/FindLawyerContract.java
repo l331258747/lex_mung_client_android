@@ -16,6 +16,8 @@ public interface FindLawyerContract {
         void setAdapter(List<LawyerEntity.LawyerBean.ListBean> list, boolean isAdd);
 
         void setScreenColor(int color);
+
+        void setField(int id,String name);
     }
 
     interface Model extends IModel {

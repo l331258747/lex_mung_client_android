@@ -28,6 +28,11 @@ public class SolutionTypeEntity {
     private int freeText;
     private int expert;
     private float price;
+    private int freeSolution;
+
+    public int getFreeSolution() {
+        return freeSolution;
+    }
 
     public int getFreeText() {
         return freeText;

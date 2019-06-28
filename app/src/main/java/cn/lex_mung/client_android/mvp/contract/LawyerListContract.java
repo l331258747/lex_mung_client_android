@@ -23,6 +23,8 @@ public interface LawyerListContract {
         void setEmptyView(LawyerListAdapter adapter);
 
         Activity getActivity();
+
+        void setField(int id,String name);
     }
 
     interface Model extends IModel {

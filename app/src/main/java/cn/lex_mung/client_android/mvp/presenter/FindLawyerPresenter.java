@@ -179,6 +179,9 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
             map.put("lawyerName", lawyerName);
         }
         if (screenMap != null && screenMap.size() > 0) {
+            if(fieldId > 0){
+                screenMap.remove("businessTypeId");
+            }
             map.putAll(screenMap);
         }
         if (DataHelper.getBooleanSF(mApplication, DataHelperTags.IS_LOGIN_SUCCESS)) {
@@ -271,7 +274,10 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
                             } else {
                                 screenMap.put("require", new RequireEntity(list.get(i).getId(), 0, 0));
                             }
-                        } else {
+                        } else if(list.get(i).getPropKey().equals("businessTypeId")){
+                            screenMap.put(list.get(i).getPropKey(), list.get(i).getId());
+                            mRootView.setField(list.get(i).getId(),list.get(i).getContent());
+                        }else {
                             screenMap.put(list.get(i).getPropKey(), list.get(i).getId());
                         }
                     }
@@ -286,6 +292,7 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
                 pageNum = 1;
                 getConsultList(false, false);
                 mRootView.setScreenColor(AppUtils.getColor(mApplication, R.color.c_b5b5b5));
+                mRootView.setField(-1,null);
                 break;
             case LAWYER_LIST_SCREEN_INFO_TYPE:
             case LAWYER_LIST_SCREEN_INFO_INSTITUTIONS:

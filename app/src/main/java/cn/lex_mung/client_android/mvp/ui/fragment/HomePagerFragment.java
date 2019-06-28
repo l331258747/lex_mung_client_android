@@ -398,6 +398,15 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     boolean isClick = false;
     @Override
     public void setSolutionType(List<SolutionTypeEntity> list) {
+
+        List<SolutionTypeEntity> solutionTypeEntityList2 = new ArrayList<>();
+        for (SolutionTypeEntity entity : list) {
+            if (entity.getFreeSolution() == 1) {
+                solutionTypeEntityList2.add(entity);
+            }
+        }
+        list = solutionTypeEntityList2;
+
         for (SolutionTypeEntity entity : list) {
             fragments.add(SolutionLIstFragment.newInstance(entity.getId()));
             titles.add(entity.getAlias());

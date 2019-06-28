@@ -17,40 +17,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import cn.lex_mung.client_android.app.BundleTags;
-import cn.lex_mung.client_android.mvp.model.entity.BusinessTypeEntity;
-import cn.lex_mung.client_android.mvp.model.entity.ConsultTypeEntity;
-import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity;
-import cn.lex_mung.client_android.mvp.model.entity.RegionEntity;
-import cn.lex_mung.client_android.mvp.ui.activity.LawyerHomePageActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.LawyerListScreenActivity;
-import cn.lex_mung.client_android.mvp.ui.adapter.LawyerListAdapter;
-import cn.lex_mung.client_android.mvp.ui.adapter.LawyerListSortScreenAdapter;
-import cn.lex_mung.client_android.mvp.ui.adapter.LawyerLIstFieldScreenAdapter;
-import cn.lex_mung.client_android.mvp.ui.adapter.LawyerListRegionScreenAdapter;
-import cn.lex_mung.client_android.mvp.ui.dialog.EasyDialog;
-import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
-
-import butterknife.BindView;
-import butterknife.OnClick;
-import cn.lex_mung.client_android.utils.BuryingPointHelp;
-import me.zl.mvp.base.BaseFragment;
-import me.zl.mvp.di.component.AppComponent;
-import me.zl.mvp.http.imageloader.ImageLoader;
-import me.zl.mvp.utils.AppUtils;
-import me.zl.mvp.utils.CharacterHandler;
-import me.zl.mvp.utils.DeviceUtils;
-
-import cn.lex_mung.client_android.di.component.DaggerFindLawyerComponent;
-import cn.lex_mung.client_android.di.module.FindLawyerModule;
-import cn.lex_mung.client_android.mvp.contract.FindLawyerContract;
-import cn.lex_mung.client_android.mvp.presenter.FindLawyerPresenter;
-
-import cn.lex_mung.client_android.R;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-import com.umeng.analytics.MobclickAgent;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -58,6 +27,34 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.di.component.DaggerFindLawyerComponent;
+import cn.lex_mung.client_android.di.module.FindLawyerModule;
+import cn.lex_mung.client_android.mvp.contract.FindLawyerContract;
+import cn.lex_mung.client_android.mvp.model.entity.BusinessTypeEntity;
+import cn.lex_mung.client_android.mvp.model.entity.ConsultTypeEntity;
+import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity;
+import cn.lex_mung.client_android.mvp.model.entity.RegionEntity;
+import cn.lex_mung.client_android.mvp.presenter.FindLawyerPresenter;
+import cn.lex_mung.client_android.mvp.ui.activity.LawyerHomePageActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.LawyerListScreenActivity;
+import cn.lex_mung.client_android.mvp.ui.adapter.LawyerLIstFieldScreenAdapter;
+import cn.lex_mung.client_android.mvp.ui.adapter.LawyerListAdapter;
+import cn.lex_mung.client_android.mvp.ui.adapter.LawyerListRegionScreenAdapter;
+import cn.lex_mung.client_android.mvp.ui.adapter.LawyerListSortScreenAdapter;
+import cn.lex_mung.client_android.mvp.ui.dialog.EasyDialog;
+import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import cn.lex_mung.client_android.utils.BuryingPointHelp;
+import me.zl.mvp.base.BaseFragment;
+import me.zl.mvp.di.component.AppComponent;
+import me.zl.mvp.http.imageloader.ImageLoader;
+import me.zl.mvp.utils.AppUtils;
+import me.zl.mvp.utils.CharacterHandler;
+import me.zl.mvp.utils.DeviceUtils;
 
 public class FindLawyerFragment extends BaseFragment<FindLawyerPresenter> implements FindLawyerContract.View {
     @Inject
@@ -219,6 +216,8 @@ public class FindLawyerFragment extends BaseFragment<FindLawyerPresenter> implem
                 bundle.putInt(BundleTags.REGION_ID_1, mPresenter.getRegionId1());
                 bundle.putInt(BundleTags.REGION_ID_2, mPresenter.getRegionId2());
                 bundle.putInt(BundleTags.REQUIRE_TYPE_ID, mPresenter.getRequireTypeId());
+                bundle.putInt(BundleTags.BUSINESS_ID, mPresenter.getFieldId());
+                bundle.putString(BundleTags.BUSINESS_NAME, tvField.getText().toString());
                 bundle.putSerializable(BundleTags.LIST, (Serializable) mPresenter.getList());
                 launchActivity(new Intent(mActivity, LawyerListScreenActivity.class), bundle);
                 break;
@@ -383,11 +382,29 @@ public class FindLawyerFragment extends BaseFragment<FindLawyerPresenter> implem
             mPresenter.setFieldId(entity.getBusinessTypeId());
             tvField.setText(entity.getBusinessTypeName());
 
+            setScreenColor(AppUtils.getColor(mActivity, R.color.c_06a66a));
+
             mPresenter.setPageNum(1);
             mPresenter.getConsultList(false, true);
 
             dismiss();
         });
+    }
+
+    @Override
+    public void setField(int id,String name){
+        if(id <= 0){
+            position2 = 0;
+            position22 = -1;
+            mPresenter.setFieldId(0);
+            tvField.setText(R.string.text_all_field);
+            return;
+        }
+
+        position2 = 0;
+        position22 = -1;
+        mPresenter.setFieldId(id);
+        tvField.setText(name);
     }
 
     @SuppressLint("InflateParams")

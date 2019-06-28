@@ -66,6 +66,9 @@ public class LawyerListScreenPresenter extends BasePresenter<LawyerListScreenCon
     private int regionId2;
     private int requireTypeId;
 
+    private String businessName;
+    private int businessId;
+
     @Inject
     public LawyerListScreenPresenter(LawyerListScreenContract.Model model, LawyerListScreenContract.View rootView) {
         super(model, rootView);
@@ -78,7 +81,39 @@ public class LawyerListScreenPresenter extends BasePresenter<LawyerListScreenCon
             getPeerSearchList();
         } else {
             adapter.setNewData(list);
+            setBusinessLayout();
         }
+    }
+
+    public void setBusinessLayout(){
+        List<LawyerListScreenEntity> list = adapter.getData();
+        for (int i=0;i<list.size();i++){
+            LawyerListScreenEntity entity = list.get(i);
+            if(entity.getPropKey().equals("businessTypeId")){
+                if(businessId <=0){
+                    entity.setContent("");
+                    entity.setId(0);
+                    adapter.notifyItemChanged(i, entity);
+                    return;
+                }
+                entity.setContent(businessName);
+                entity.setId(businessId);
+                adapter.notifyItemChanged(i, entity);
+                return;
+            }
+        }
+    }
+
+    public void setBusinessName(String businessName) {
+        if(businessId <=0){
+            this.businessName = "";
+            return;
+        }
+        this.businessName = businessName;
+    }
+
+    public void setBusinessId(int businessId) {
+        this.businessId = businessId;
     }
 
     public void setPos(int pos) {
@@ -190,6 +225,7 @@ public class LawyerListScreenPresenter extends BasePresenter<LawyerListScreenCon
                             list.addAll(baseResponse.getData());
                             setSelectRequireTypeId(list);
                             adapter.setNewData(list);
+                            setBusinessLayout();
                         }
                     }
                 });
@@ -238,6 +274,7 @@ public class LawyerListScreenPresenter extends BasePresenter<LawyerListScreenCon
                 break;
             case LAWYER_LIST_SCREEN_INFO_BUSINESS:
                 SolutionTypeChildBean bean1 = (SolutionTypeChildBean) message.obj;
+                if(bean1 == null) return;
                 entity = list.get(pos);
                 entity.setContent(bean1.getSolutionTypeName());
                 entity.setId(bean1.getSolutionTypeId());
@@ -271,6 +308,7 @@ public class LawyerListScreenPresenter extends BasePresenter<LawyerListScreenCon
                 break;
             case LAWYER_LIST_SCREEN_INFO_BUSINESS:
                 SolutionTypeChildBean bean1 = (SolutionTypeChildBean) message.obj;
+                if(bean1 == null) return;
                 entity = list.get(pos);
                 entity.setContent(bean1.getSolutionTypeName());
                 entity.setId(bean1.getSolutionTypeId());
