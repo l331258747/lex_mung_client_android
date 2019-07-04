@@ -5,13 +5,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.aigestudio.wheelpicker.WheelPicker;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -22,32 +25,45 @@ import cn.lex_mung.client_android.di.component.DaggerHelpStep2Component;
 import cn.lex_mung.client_android.di.module.HelpStep2Module;
 import cn.lex_mung.client_android.mvp.contract.HelpStep2Contract;
 import cn.lex_mung.client_android.mvp.model.entity.help.SolutionTypeBean;
-import cn.lex_mung.client_android.mvp.model.entity.help.SolutionTypeChildBean;
 import cn.lex_mung.client_android.mvp.presenter.HelpStep2Presenter;
 import cn.lex_mung.client_android.mvp.ui.activity.HelpStepActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.HelpStepChildActivity;
-import cn.lex_mung.client_android.mvp.ui.adapter.HelpStep2Adapter;
+import cn.lex_mung.client_android.mvp.ui.dialog.EasyDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
-import cn.lex_mung.client_android.mvp.ui.widget.HelpStep2View;
 import cn.lex_mung.client_android.utils.BuryingPointHelp;
+import cn.lex_mung.client_android.utils.LogUtil;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
 
-public class HelpStep2Fragment extends BaseFragment<HelpStep2Presenter> implements HelpStep2Contract.View {
+public class HelpStep2Fragment extends BaseFragment<HelpStep2Presenter> implements HelpStep2Contract.View,WheelPicker.OnItemSelectedListener  {
 
-    @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
-    @BindView(R.id.view_help_step_2)
-    HelpStep2View helpStep2View;
+    @BindView(R.id.tv_content)
+    TextView tvContent;
+    @BindView(R.id.view_bottom)
+    View viewBottom;
 
-    HelpStep2Adapter adapter;
+    EasyDialog easyDialog;
+
+    private WheelPicker wpProvince;
+    private WheelPicker wpCity;
 
     int typeId = -1;
     boolean isShow;
 
     public int getTypeId() {
         return typeId;
+    }
+
+    @Override
+    public View initView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_help_step2, container, false);
+    }
+
+    @Override
+    public void initData(@Nullable Bundle savedInstanceState) {
+        isShow = getArguments().getBoolean(BundleTags.IS_SHOW,false);
+        mPresenter.setList((List<SolutionTypeBean>) getArguments().getSerializable(BundleTags.LIST));
     }
 
     public static HelpStep2Fragment newInstance(List<SolutionTypeBean> entitys) {
@@ -73,54 +89,18 @@ public class HelpStep2Fragment extends BaseFragment<HelpStep2Presenter> implemen
                 .inject(this);
     }
 
-    @Override
-    public View initView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_help_step2, container, false);
-    }
 
-    @Override
-    public void initData(@Nullable Bundle savedInstanceState) {
-        isShow = getArguments().getBoolean(BundleTags.IS_SHOW,false);
-        initAdapter();
-        initRecyclerView();
-
-        mPresenter.setList((List<SolutionTypeBean>) getArguments().getSerializable(BundleTags.LIST));
-
-        mPresenter.getTabPosition(0);
-
-        helpStep2View.setItemOnClick(position -> {
-            mPresenter.getTabPosition(position);
-        });
-    }
-
-    @SuppressLint("SetTextI18n")
-    private void initAdapter() {
-        adapter = new HelpStep2Adapter();
-        adapter.setOnItemClickListener((adapter1, view, position) -> {
-            if (isFastClick()) return;
-            typeId = adapter.getItem(position).getSolutionTypeId();
-            adapter.setSelection(typeId);
-        });
-    }
-
-    @Override
-    public void setAdapter(List<SolutionTypeChildBean> list) {
-        adapter.setNewData(list);
-    }
-
-    private void initRecyclerView() {
-        AppUtils.configRecyclerView(recyclerView, new LinearLayoutManager(mActivity));
-        recyclerView.setAdapter(adapter);
-    }
-
-    @OnClick({R.id.tv_btn})
+    @OnClick({R.id.view_select, R.id.tv_btn})
     public void onViewClicked(View view) {
         if (isFastClick()) return;
         switch (view.getId()) {
+            case R.id.view_select:
+                showSelectRegionDialog();
+                break;
             case R.id.tv_btn:
                 BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","assistant_goodat_next_click");
-                if (typeId == -1) {
-                    showMessage("请选择事项分类");
+                if(typeId == -1){
+                    showMessage("请选择服务事项");
                     return;
                 }
                 if(isShow){
@@ -129,6 +109,109 @@ public class HelpStep2Fragment extends BaseFragment<HelpStep2Presenter> implemen
                     ((HelpStepActivity) this.getActivity()).setIndex(2);
                 }
                 break;
+        }
+    }
+
+    /**
+     * 选择地区
+     */
+    @SuppressLint("InflateParams")
+    private void showSelectRegionDialog() {
+        View layout = getLayoutInflater().inflate(R.layout.layout_wheel_picker_dialog, null);
+        initDialog(layout);
+        wpProvince = layout.findViewById(R.id.wheel_1);
+        wpCity = layout.findViewById(R.id.wheel_2);
+        layout.findViewById(R.id.wheel_3).setVisibility(View.GONE);
+        wpProvince.setCurved(false);
+        wpCity.setCurved(false);
+
+        wpCity.setVisibility(View.VISIBLE);
+
+        wpProvince.setVisibleItemCount(6);
+        wpCity.setVisibleItemCount(6);
+
+        wpProvince.setOnItemSelectedListener(this);
+        wpCity.setOnItemSelectedListener(this);
+
+        wpProvince.setData(mPresenter.getAllProv());
+        int p1 = 0;
+        int p2 = 0;
+        if (TextUtils.isEmpty(mPresenter.getProvince())) {
+            mPresenter.setProvince(mPresenter.getAllProv().get(p1));
+        } else {
+            p1 = mPresenter.getAllProv().indexOf(mPresenter.getProvince());
+        }
+        List<String> string2 = mPresenter.getCityMap().get(mPresenter.getProvince());
+        if (string2 != null && string2.size() > 0) {
+            wpCity.setData(string2);
+            if (TextUtils.isEmpty(mPresenter.getCity())) {
+                mPresenter.setCity(string2.get(p2));
+            } else {
+                p2 = string2.indexOf(mPresenter.getCity());
+            }
+        } else {
+            wpCity.setData(new ArrayList<>());
+        }
+        wpProvince.setSelectedItemPosition(p1);
+        wpCity.setSelectedItemPosition(p2);
+
+        mPresenter.setTypeId(mPresenter.getList().get(p1).getChild().get(p2).getSolutionTypeId());
+
+        layout.findViewById(R.id.tv_cancel).setOnClickListener(v -> dismiss());
+        layout.findViewById(R.id.tv_confirm).setOnClickListener(v -> {
+            tvContent.setText(mPresenter.getRegion());
+            typeId = mPresenter.getTypeId();
+            LogUtil.e("reid:" + typeId);
+            dismiss();
+        });
+    }
+
+    /**
+     * 关闭dialog
+     */
+    private void dismiss() {
+        if (easyDialog != null) {
+            easyDialog.dismiss();
+        }
+    }
+
+    /**
+     * 初始化dialog
+     */
+    private void initDialog(View layout) {
+        easyDialog = new EasyDialog(mActivity)
+                .setLayout(layout)
+                .setVisibility(View.GONE)
+                .setGravity(EasyDialog.GRAVITY_TOP)
+                .setBackgroundColor(AppUtils.getColor(mActivity, R.color.c_00))
+                .setLocationByAttachedView(viewBottom)
+                .setAnimationTranslationShow(EasyDialog.DIRECTION_Y, 200, 1000, 0)
+                .setAnimationTranslationDismiss(EasyDialog.DIRECTION_Y, 200, 0, 1000)
+                .setTouchOutsideDismiss(false)
+                .setMatchParent(true)
+                .setMarginLeftAndRight(0, 0)
+                .setOutsideColor(AppUtils.getColor(mActivity, R.color.c_50))
+                .show();
+    }
+
+    @Override
+    public void onItemSelected(WheelPicker picker, Object data, int position) {
+        if (picker == wpProvince) {
+            mPresenter.setProvince(data.toString());
+            List<String> string2 = mPresenter.getCityMap().get(data.toString());
+            if (string2 != null && string2.size() > 0) {
+                wpCity.setData(string2);
+                mPresenter.setCity(string2.get(0));
+                mPresenter.setTypeId(mPresenter.getList().get(position).getChild().get(0).getSolutionTypeId());//选择省级后，市级为下标0
+            } else {
+                mPresenter.setCity("");
+                mPresenter.setTypeId(mPresenter.getList().get(position).getSolutionTypeId());//因为没有市级，选择省级下标
+                wpCity.setData(new ArrayList<>());
+            }
+            wpCity.setSelectedItemPosition(0);
+        } else if (picker == wpCity) {
+            mPresenter.setCity(data.toString());
+            mPresenter.setTypeId(mPresenter.getList().get(wpProvince.getCurrentItemPosition()).getChild().get(position).getSolutionTypeId());//选择市级为position
         }
     }
 
@@ -176,8 +259,6 @@ public class HelpStep2Fragment extends BaseFragment<HelpStep2Presenter> implemen
     @Override
     public void onResume() {
         super.onResume();
-//        BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "assistant_goodat_fields");
-
         if(isShow){
             switch (((HelpStepChildActivity) this.getActivity()).getRequireTypeId()){
                 case 2:
@@ -198,8 +279,6 @@ public class HelpStep2Fragment extends BaseFragment<HelpStep2Presenter> implemen
     @Override
     public void onPause() {
         super.onPause();
-//        BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "assistant_goodat_fields");
-
         if(isShow){
             switch (((HelpStepChildActivity) this.getActivity()).getRequireTypeId()){
                 case 2:

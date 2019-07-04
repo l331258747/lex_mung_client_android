@@ -9,7 +9,6 @@ import me.zl.mvp.mvp.IView;
 
 public interface HelpStep2Contract {
     interface View extends IView {
-        void setAdapter(List<SolutionTypeChildBean> datas);
     }
 
     interface Model extends IModel {

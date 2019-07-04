@@ -20,24 +20,79 @@
         app:layout_constraintGuide_end="@dimen/qb_px_30" />
 
 
-    <cn.lex_mung.client_android.mvp.ui.widget.HelpStep2View
-        android:id="@+id/view_help_step_2"
+    <View
+        android:id="@+id/view_select"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/gl_right"
-        app:layout_constraintStart_toStartOf="@id/gl_left" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:overScrollMode="never"
-        android:scrollbars="none"
-        android:layout_marginTop="@dimen/qb_px_30"
-        app:layout_constraintBottom_toTopOf="@+id/tv_btn"
+        android:layout_height="@dimen/qb_px_80"
+        android:layout_marginTop="@dimen/qb_px_110"
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/qb_px_40"
+        android:layout_marginRight="@dimen/qb_px_40"
         app:layout_constraintEnd_toEndOf="@id/gl_right"
         app:layout_constraintStart_toStartOf="@id/gl_left"
-        app:layout_constraintTop_toBottomOf="@+id/view_help_step_2" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_1"
+        android:background="@color/c_d7d7d7"
+        app:layout_constraintEnd_toEndOf="@+id/view_select"
+        app:layout_constraintStart_toStartOf="@+id/view_select"
+        app:layout_constraintTop_toTopOf="@+id/view_select" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="服务事项"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/view_select"
+        app:layout_constraintStart_toStartOf="@+id/view_select"
+        app:layout_constraintTop_toTopOf="@+id/view_select" />
+
+    <ImageView
+        android:id="@+id/iv_next"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/qb_px_35"
+        android:src="@drawable/ic_green_next2"
+        app:layout_constraintBottom_toBottomOf="@+id/view_select"
+        app:layout_constraintEnd_toEndOf="@+id/view_select"
+        app:layout_constraintTop_toTopOf="@+id/view_select" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/qb_px_20"
+        android:hint="请选择"
+        android:layout_marginLeft="@dimen/qb_px_20"
+        android:gravity="right"
+        app:layout_constraintStart_toEndOf="@+id/tv_title"
+        android:textColorHint="@color/c_1EC78A"
+        android:textColor="@color/c_1EC78A"
+        app:layout_constraintBottom_toBottomOf="@+id/view_select"
+        app:layout_constraintEnd_toStartOf="@+id/iv_next"
+        app:layout_constraintTop_toTopOf="@+id/view_select" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_1"
+        android:background="@color/c_d7d7d7"
+        app:layout_constraintBottom_toBottomOf="@+id/view_select"
+        app:layout_constraintEnd_toEndOf="@+id/view_select"
+        app:layout_constraintStart_toStartOf="@+id/view_select" />
+
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_30"
+        android:text="根据您的事项，我们将通过大数据匹配擅长该分类的律师进行优选推荐。"
+        app:layout_constraintEnd_toEndOf="@+id/view_select"
+        android:textColor="@color/c_d7d7d7"
+        app:layout_constraintStart_toStartOf="@+id/view_select"
+        app:layout_constraintTop_toBottomOf="@+id/view_select" />
 
     <View
         android:layout_width="match_parent"
@@ -57,6 +112,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/gl_right"
         app:layout_constraintStart_toStartOf="@id/gl_left" />
+
+    <View
+        android:id="@+id/view_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_1"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 
 </android.support.constraint.ConstraintLayout>

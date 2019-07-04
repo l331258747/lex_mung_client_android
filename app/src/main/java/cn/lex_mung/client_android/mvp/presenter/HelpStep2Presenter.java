@@ -1,10 +1,11 @@
 package cn.lex_mung.client_android.mvp.presenter;
 
 import android.app.Application;
-import android.text.TextUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -29,25 +30,57 @@ public class HelpStep2Presenter extends BasePresenter<HelpStep2Contract.Model, H
     @Inject
     AppManager mAppManager;
 
-    List<SolutionTypeChildBean> datas1, datas2, datas3;
+    private List<SolutionTypeBean> list;
+    private List<String> allProv = new ArrayList<>();//所有的省
+    private Map<String, List<String>> cityMap = new HashMap<>();//key:省p---value:市n  value是一个集合
+    private String province = "";
+    private String city = "";
+    private String region = "";
+    private int typeId;
 
     @Inject
     public HelpStep2Presenter(HelpStep2Contract.Model model, HelpStep2Contract.View rootView) {
         super(model, rootView);
     }
 
-    public void getTabPosition(int i) {
-        switch (i) {
-            case 0:
-                mRootView.setAdapter(datas1);
-                break;
-            case 1:
-                mRootView.setAdapter(datas2);
-                break;
-            case 2:
-                mRootView.setAdapter(datas3);
-                break;
-        }
+    public List<SolutionTypeBean> getList() {
+        return list;
+    }
+
+    public List<String> getAllProv() {
+        return allProv;
+    }
+
+    public Map<String, List<String>> getCityMap() {
+        return cityMap;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public int getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
+    }
+
+    public String getRegion() {
+        return region = province + "-" + city;
     }
 
     @Override
@@ -60,22 +93,15 @@ public class HelpStep2Presenter extends BasePresenter<HelpStep2Contract.Model, H
     }
 
     public void setList(List<SolutionTypeBean> datas) {
-        datas1 = new ArrayList<>();
-        datas3 = new ArrayList<>();
-        datas2 = new ArrayList<>();
-        for (SolutionTypeBean item : datas) {
-
-            if (item.getChild() == null || item.getChild().size() == 0) {
-                continue;
+        list = datas;
+        for (SolutionTypeBean entity : list == null ? new ArrayList<SolutionTypeBean>() : list) {
+            allProv.add(entity.getSolutionTypeName());//封装所有的省
+            //所有的市
+            List<String> allCity = new ArrayList<>();//所有市的长度
+            for (SolutionTypeChildBean entity1 : entity.getChild() == null ? new ArrayList<SolutionTypeChildBean>() : entity.getChild()) {
+                allCity.add(entity1.getSolutionTypeName());//封装市集合
             }
-
-            if (TextUtils.equals(item.getSolutionTypeName(), "个人类")) {
-                datas1 = item.getChild();
-            } else if (TextUtils.equals(item.getSolutionTypeName(), "商事类")) {
-                datas2 = item.getChild();
-            } else if (TextUtils.equals(item.getSolutionTypeName(), "刑事类")) {
-                datas3 = item.getChild();
-            }
+            cityMap.put(entity.getSolutionTypeName(), allCity);//某个省取出所有的市,
         }
     }
 }
