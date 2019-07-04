@@ -131,6 +131,7 @@ public class FreeConsultPresenter extends BasePresenter<FreeConsultContract.Mode
 
         for (SolutionTypeEntity entity : solutionTypeEntityList) {
             if (entity.getFreeText() == 1) {
+                solutionTypeStringList.add(entity.getTypeName());
                 solutionTypeEntityList2.add(entity);
             }
         }

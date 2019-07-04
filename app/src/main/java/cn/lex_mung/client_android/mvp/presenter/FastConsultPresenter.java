@@ -145,6 +145,7 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
 
         for (SolutionTypeEntity entity : solutionTypeEntityList) {
             if (entity.getQuick() == 1) {
+                solutionTypeStringList.add(entity.getTypeName());
                 solutionTypeEntityList2.add(entity);
             }
         }

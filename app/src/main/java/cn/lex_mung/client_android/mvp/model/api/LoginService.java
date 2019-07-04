@@ -20,7 +20,8 @@ public interface LoginService {
      *
      * @return BaseResponse
      */
-    @GET("https://api-test.lex-mung.com/code/{phone}")
+//    @GET("https://api-test.lex-mung.com/code/{phone}")
+    @GET("code/{phone}")
     Observable<BaseResponse<TokenEntity>> getCode(@Path("phone") String phone);
 
     /**

@@ -14,6 +14,7 @@ public interface Api {
     String J_PUSH_TEST = "57ec233e4815f11235b32395";
     String APP_DOMAIN_TEST = "https://api-test.lex-mung.com/";
 //    String APP_DOMAIN_TEST = "https://api.lex-mung.com/";
+//    String APP_DOMAIN_TEST = "https://cpu.lex-mung.com/api/client/";
 
     String J_PUSH_PROD = "0c63ef9cdb0385d0ab13f6dd";
     String APP_DOMAIN_PROD = "https://api.lex-mung.com/";
