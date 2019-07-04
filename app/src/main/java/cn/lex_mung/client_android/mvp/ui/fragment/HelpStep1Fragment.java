@@ -1,10 +1,14 @@
 package cn.lex_mung.client_android.mvp.ui.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,12 +27,15 @@ import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.component.DaggerHelpStep1Component;
 import cn.lex_mung.client_android.di.module.HelpStep1Module;
 import cn.lex_mung.client_android.mvp.contract.HelpStep1Contract;
+import cn.lex_mung.client_android.mvp.model.entity.LocationEntity;
 import cn.lex_mung.client_android.mvp.presenter.HelpStep1Presenter;
 import cn.lex_mung.client_android.mvp.ui.activity.HelpStepActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.HelpStepChildActivity;
+import cn.lex_mung.client_android.mvp.ui.dialog.DefaultDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.EasyDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.utils.BuryingPointHelp;
+import cn.lex_mung.client_android.utils.LocationUtil;
 import cn.lex_mung.client_android.utils.LogUtil;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
@@ -64,6 +71,32 @@ public class HelpStep1Fragment extends BaseFragment<HelpStep1Presenter> implemen
     public void initData(@Nullable Bundle savedInstanceState) {
         isShow = getArguments().getBoolean(BundleTags.IS_SHOW,false);
         mPresenter.onCreate();
+
+        mPresenter.getLocationPermission();
+    }
+
+    @Override
+    public void getLocation(){
+        LocationUtil locationUtil = new LocationUtil();
+        tvContent.setText("定位中...");
+        tvContent.setEnabled(false);
+        locationUtil.startLocation(getActivity().getApplicationContext(),new LocationUtil.LocationListener() {
+            @Override
+            public void getAdress(int code, LocationEntity adress) {
+                LogUtil.e("code:" + code + " adress:" + adress);
+                if(code == 0){
+                    if(mPresenter.getCityStrToData(adress.getCity())){
+                        tvContent.setText(mPresenter.getRegion());
+                        regionId = mPresenter.getRegionId();
+                        LogUtil.e("reid:" + regionId);
+                        tvContent.setEnabled(true);
+                    }
+                }else{
+                    tvContent.setText("");
+                    tvContent.setEnabled(true);
+                }
+            }
+        });
     }
 
 
@@ -258,8 +291,6 @@ public class HelpStep1Fragment extends BaseFragment<HelpStep1Presenter> implemen
     @Override
     public void onResume() {
         super.onResume();
-//        BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "assistant_city");
-
         if(isShow){
             switch (((HelpStepChildActivity) this.getActivity()).getRequireTypeId()){
                 case 2:
@@ -275,13 +306,16 @@ public class HelpStep1Fragment extends BaseFragment<HelpStep1Presenter> implemen
         }else{
             BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "assistant_city");
         }
+
+        if(isGoPermisstions){
+            isGoPermisstions = false;
+            getLocation();
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-//        BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "assistant_city");
-
         if(isShow){
             switch (((HelpStepChildActivity) this.getActivity()).getRequireTypeId()){
                 case 2:
@@ -296,6 +330,33 @@ public class HelpStep1Fragment extends BaseFragment<HelpStep1Presenter> implemen
             }
         }else{
             BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "assistant_city");
+        }
+    }
+
+    @Override
+    public Fragment getFragment() {
+        return this;
+    }
+
+    private DefaultDialog defaultDialog;
+    private boolean isGoPermisstions;
+
+    @Override
+    public void showToAppInfoDialog() {
+        if (defaultDialog == null) {
+            defaultDialog = new DefaultDialog(mActivity, dialog -> {
+                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                intent.setData(Uri.parse("package:" + mActivity.getPackageName()));
+                startActivity(intent);
+                dialog.dismiss();
+                isGoPermisstions = true;
+            }
+                    , getString(R.string.text_manual_open_permissions)
+                    , getString(R.string.text_to_open)
+                    , getString(R.string.text_cancel));
+        }
+        if (!defaultDialog.isShowing()) {
+            defaultDialog.show();
         }
     }
 }
