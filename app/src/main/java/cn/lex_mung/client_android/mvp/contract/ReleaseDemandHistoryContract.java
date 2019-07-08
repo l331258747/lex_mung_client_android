@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import java.util.List;
 
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.GeneralEntity;
 import cn.lex_mung.client_android.mvp.model.entity.help.HirstoryDemandEntity;
@@ -28,6 +29,6 @@ public interface ReleaseDemandHistoryContract {
     interface Model extends IModel {
         Observable<BaseResponse<GeneralEntity>> releaseRequirement2(RequestBody body);
 
-        Observable<BaseResponse<HirstoryDemandEntity>> clientRequirementOne(int pageNum);
+        Observable<BaseResponse<BaseListEntity<HirstoryDemandEntity>>> clientRequirementOne(int pageNum);
     }
 }

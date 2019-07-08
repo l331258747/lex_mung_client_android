@@ -3,6 +3,7 @@ package cn.lex_mung.client_android.mvp.presenter;
 import android.app.Application;
 import android.text.TextUtils;
 
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -47,7 +48,7 @@ public class SolutionLIstPresenter extends BasePresenter<SolutionLIstContract.Mo
     private int id;
 
     private boolean isFlag = true;
-    private List<SolutionListEntity.ListBean> listBeans = new ArrayList<>();
+    private List<SolutionListEntity> listBeans = new ArrayList<>();
 
     @Inject
     public SolutionLIstPresenter(SolutionLIstContract.Model model, SolutionLIstContract.View rootView) {
@@ -75,7 +76,7 @@ public class SolutionLIstPresenter extends BasePresenter<SolutionLIstContract.Mo
             try {
                 String json = DataHelper.getStringSF(mApplication, DataHelperTags.HOME_PAGE_SOLUTION_LIST + "_" + id);
                 if (!TextUtils.isEmpty(json)) {
-                    List<SolutionListEntity.ListBean> listBeans = new Gson().fromJson(json, new TypeToken<List<SolutionListEntity.ListBean>>() {
+                    List<SolutionListEntity> listBeans = new Gson().fromJson(json, new TypeToken<List<SolutionListEntity>>() {
                     }.getType());
                     if (listBeans != null) {
                         mRootView.setAdapter(listBeans, false);
@@ -98,9 +99,9 @@ public class SolutionLIstPresenter extends BasePresenter<SolutionLIstContract.Mo
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<SolutionListEntity>>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<SolutionListEntity>>>(mErrorHandler) {
                     @Override
-                    public void onNext(BaseResponse<SolutionListEntity> baseResponse) {
+                    public void onNext(BaseResponse<BaseListEntity<SolutionListEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             totalNum = baseResponse.getData().getPages();
                             pageNum = baseResponse.getData().getPageNum();

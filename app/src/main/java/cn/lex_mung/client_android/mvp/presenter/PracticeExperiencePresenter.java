@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.CaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
@@ -167,7 +168,7 @@ public class PracticeExperiencePresenter extends BasePresenter<PracticeExperienc
         caseAdapter = new PersonalHomePageCaseAdapter();
         caseAdapter.setOnItemClickListener((adapter, view, position) -> {
             if (isFastClick()) return;
-            CaseListEntity.ListBean bean = caseAdapter.getItem(position);
+            CaseListEntity bean = caseAdapter.getItem(position);
             if (bean == null) return;
             Bundle bundle = new Bundle();
             bundle.clear();
@@ -202,9 +203,9 @@ public class PracticeExperiencePresenter extends BasePresenter<PracticeExperienc
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<CaseListEntity>>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<CaseListEntity>>>(mErrorHandler) {
                     @Override
-                    public void onNext(BaseResponse<CaseListEntity> baseResponse) {
+                    public void onNext(BaseResponse<BaseListEntity<CaseListEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             totalNum = baseResponse.getData().getPages();
                             pageNum = baseResponse.getData().getPageNum();

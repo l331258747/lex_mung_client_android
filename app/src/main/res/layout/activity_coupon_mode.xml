@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/c_f7f7f7"
+    android:orientation="vertical">
+
+    <cn.lex_mung.client_android.mvp.ui.widget.TitleView
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:TitleView_left_img="@drawable/ic_back2"
+        app:TitleView_title="优惠方式" />
+
+    <cn.lex_mung.client_android.mvp.ui.widget.myTabLayout.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_90"
+        android:layout_alignParentBottom="true"
+        android:background="@color/c_ff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleView"
+        app:tabBackground="@null"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/c_A1EDD2"
+        app:tabIndicatorHeight="@dimen/qb_px_10"
+        app:tabLineOffset="25dp"
+        app:tabMarginBottom="12dp"
+        app:tabSelectedTextColor="@color/c_323232"
+        app:tabTextColor="@color/c_717171" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_no_coupon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tab_layout" />
+
+    <TextView
+        android:id="@+id/tv_no_coupon"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_100"
+        android:background="@color/c_26CD8D"
+        android:gravity="center"
+        android:text="不使用优惠券"
+        android:textColor="@color/c_ff"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>

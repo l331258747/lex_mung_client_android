@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultDetail1Activity;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -77,7 +78,7 @@ public class OrderMessagePresenter extends BasePresenter<OrderMessageContract.Mo
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             try {
                 if (isFastClick()) return;
-                MessageEntity.ListBean bean = adapter.getItem(position);
+                MessageEntity bean = adapter.getItem(position);
                 if (bean == null) return;
                 bean.setIsRead(1);
                 adapter.setData(position, bean);
@@ -137,9 +138,9 @@ public class OrderMessagePresenter extends BasePresenter<OrderMessageContract.Mo
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<MessageEntity>>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<MessageEntity>>>(mErrorHandler) {
                     @Override
-                    public void onNext(BaseResponse<MessageEntity> baseResponse) {
+                    public void onNext(BaseResponse<BaseListEntity<MessageEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             totalNum = baseResponse.getData().getPages();
                             pageNum = baseResponse.getData().getPageNum();
@@ -174,8 +175,8 @@ public class OrderMessagePresenter extends BasePresenter<OrderMessageContract.Mo
                     public void onNext(BaseResponse baseResponse) {
                         if (baseResponse.isSuccess()) {
                             AppUtils.postInt(UN_READ_MESSAGE_NUM, SET_ORDER_UN_READ_MESSAGE_NUM, 0);
-                            List<MessageEntity.ListBean> list = new ArrayList<>();
-                            for (MessageEntity.ListBean bean : adapter.getData()) {
+                            List<MessageEntity> list = new ArrayList<>();
+                            for (MessageEntity bean : adapter.getData()) {
                                 bean.setIsRead(1);
                                 list.add(bean);
                             }

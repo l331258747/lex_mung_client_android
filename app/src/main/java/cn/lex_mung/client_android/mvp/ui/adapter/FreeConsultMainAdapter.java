@@ -12,7 +12,7 @@ import cn.lex_mung.client_android.mvp.model.entity.free.CommonFreeTextEntity;
 import cn.lex_mung.client_android.mvp.ui.widget.FolderTextView;
 import me.zl.mvp.http.imageloader.ImageLoader;
 
-public class FreeConsultMainAdapter extends BaseQuickAdapter<CommonFreeTextEntity.ListBean, BaseViewHolder> {
+public class FreeConsultMainAdapter extends BaseQuickAdapter<CommonFreeTextEntity, BaseViewHolder> {
 
     ImageLoader mImageLoader;
     FolderTextView tv_content;
@@ -23,7 +23,7 @@ public class FreeConsultMainAdapter extends BaseQuickAdapter<CommonFreeTextEntit
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, CommonFreeTextEntity.ListBean item) {
+    protected void convert(BaseViewHolder helper, CommonFreeTextEntity item) {
         tv_content = helper.getView(R.id.tv_content);
 //        TextViewEllipsize.setEllipsize(tv_content
 //                ,item.getContent()

@@ -4,6 +4,10 @@ import android.app.Application;
 
 import com.google.gson.Gson;
 
+import cn.lex_mung.client_android.mvp.model.api.CommonService;
+import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
+import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
+import io.reactivex.Observable;
 import me.zl.mvp.integration.IRepositoryManager;
 import me.zl.mvp.mvp.BaseModel;
 
@@ -31,5 +35,12 @@ public class WebModel extends BaseModel implements WebContract.Model {
         super.onDestroy();
         this.mGson = null;
         this.mApplication = null;
+    }
+
+    @Override
+    public Observable<BaseResponse<UserInfoDetailsEntity>> getUserInfoDetail() {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .getUserInfoDetail();
     }
 }

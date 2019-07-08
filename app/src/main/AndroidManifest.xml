@@ -272,7 +272,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".mvp.ui.activity.MyCouponsActivity"
+            android:name=".mvp.ui.activity.MyCardActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/text_coupons"
             android:launchMode="singleTask"
@@ -475,6 +475,12 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".mvp.ui.activity.BusinessTypeSelectActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".mvp.ui.activity.CouponModeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"

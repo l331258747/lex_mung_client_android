@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.google.gson.Gson;
 
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.integration.IRepositoryManager;
 import me.zl.mvp.mvp.BaseModel;
@@ -45,7 +46,7 @@ public class OrderMessageModel extends BaseModel implements OrderMessageContract
     }
 
     @Override
-    public Observable<BaseResponse<MessageEntity>> getOrderMessageList(int pageNum) {
+    public Observable<BaseResponse<BaseListEntity<MessageEntity>>> getOrderMessageList(int pageNum) {
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .getOrderMessageList(pageNum);

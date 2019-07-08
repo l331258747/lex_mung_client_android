@@ -1,5 +1,6 @@
 package cn.lex_mung.client_android.mvp.contract;
 
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.CaseListEntity;
 import cn.lex_mung.client_android.mvp.ui.adapter.PersonalHomePageCaseAdapter;
@@ -51,6 +52,6 @@ public interface PracticeExperienceContract {
     }
 
     interface Model extends IModel {
-        Observable<BaseResponse<CaseListEntity>> getCaseList(RequestBody body);
+        Observable<BaseResponse<BaseListEntity<CaseListEntity>>> getCaseList(RequestBody body);
     }
 }

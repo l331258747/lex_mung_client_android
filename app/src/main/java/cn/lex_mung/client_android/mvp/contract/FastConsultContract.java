@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BalanceEntity;
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.OrderStatusEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayEntity;
@@ -32,7 +33,7 @@ public interface FastConsultContract {
 
 //        void setMoney(String money);
 
-        void setCouponLayout(OrderCouponEntity.ListBean bean, boolean showToast);
+        void setCouponLayout(OrderCouponEntity bean, boolean showToast);
 
         int getCouponId();
 
@@ -50,7 +51,7 @@ public interface FastConsultContract {
 
         Observable<BaseResponse<AgreementEntity>> tariffExplanationUrl();
 
-        Observable<BaseResponse<OrderCouponEntity>> quickCoupon();
+        Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> quickCoupon();
 
         Observable<BaseResponse<QuickPayEntity>> quickPay(int couponId, double orderAmount);
     }

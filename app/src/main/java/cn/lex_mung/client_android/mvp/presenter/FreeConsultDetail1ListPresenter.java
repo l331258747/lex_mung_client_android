@@ -6,9 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.NonNull;
-import android.view.View;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -20,8 +18,8 @@ import javax.inject.Inject;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.mvp.contract.FreeConsultDetail1ListContract;
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
-import cn.lex_mung.client_android.mvp.model.entity.FreeConsultReplyEntity;
 import cn.lex_mung.client_android.mvp.model.entity.FreeConsultReplyListEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerHomePageActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.FreeConsultDetail1ListAdapter;
@@ -34,7 +32,6 @@ import me.zl.mvp.di.scope.ActivityScope;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.integration.AppManager;
 import me.zl.mvp.mvp.BasePresenter;
-import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.RxLifecycleUtils;
 
 import static cn.lex_mung.client_android.app.EventBusTags.CONSULT_INFO.EDIT_CONSULT_DETAILS_REPLY_COUNT;
@@ -120,9 +117,9 @@ public class FreeConsultDetail1ListPresenter extends BasePresenter<FreeConsultDe
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<FreeConsultReplyEntity>>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<FreeConsultReplyListEntity>>>(mErrorHandler) {
                     @Override
-                    public void onNext(BaseResponse<FreeConsultReplyEntity> baseResponse) {
+                    public void onNext(BaseResponse<BaseListEntity<FreeConsultReplyListEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             totalNum = baseResponse.getData().getPages();
                             pageNum = baseResponse.getData().getPageNum();

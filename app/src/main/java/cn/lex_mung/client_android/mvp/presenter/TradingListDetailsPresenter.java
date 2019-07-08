@@ -32,7 +32,7 @@ public class TradingListDetailsPresenter extends BasePresenter<TradingListDetail
         super(model, rootView);
     }
 
-    public void setBean(TradingListEntity.ListBean bean) {
+    public void setBean(TradingListEntity bean) {
 //        if ("快速咨询".equals(bean.getOrderType())
 //                || "专家咨询".equals(bean.getOrderType())) {
         if ("专家咨询".equals(bean.getOrderType())) {

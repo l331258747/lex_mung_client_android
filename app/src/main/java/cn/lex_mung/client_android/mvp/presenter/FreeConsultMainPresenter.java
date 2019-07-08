@@ -21,6 +21,7 @@ import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.mvp.contract.FreeConsultMainContract;
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.free.CommonFreeTextEntity;
 import cn.lex_mung.client_android.mvp.model.entity.free.FreeTextBizinfoEntity;
@@ -83,7 +84,7 @@ public class FreeConsultMainPresenter extends BasePresenter<FreeConsultMainContr
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;
 
-            CommonFreeTextEntity.ListBean bean = adapter.getItem(position);
+            CommonFreeTextEntity bean = adapter.getItem(position);
             Bundle bundle = new Bundle();
             bundle.putInt(BundleTags.ID,bean.getConsultationId());
             mRootView.launchActivity(new Intent(mApplication,FreeConsultDetail1Activity.class),bundle);
@@ -164,9 +165,9 @@ public class FreeConsultMainPresenter extends BasePresenter<FreeConsultMainContr
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<CommonFreeTextEntity>>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<CommonFreeTextEntity>>>(mErrorHandler) {
                     @Override
-                    public void onNext(BaseResponse<CommonFreeTextEntity> baseResponse) {
+                    public void onNext(BaseResponse<BaseListEntity<CommonFreeTextEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             totalNum = baseResponse.getData().getPages();
                             pageNum = baseResponse.getData().getPageNum();

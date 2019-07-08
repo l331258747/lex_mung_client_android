@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/c_f7f7f7"
     android:orientation="vertical">
 
     <cn.lex_mung.client_android.mvp.ui.widget.TitleView
@@ -10,49 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:TitleView_left_img="@drawable/ic_back2"
-        app:TitleView_title="优惠劵" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline_left"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/qb_px_40" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="@dimen/qb_px_40" />
-
-    <LinearLayout
-        android:id="@+id/ll_tip"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@id/guideline_right"
-        app:layout_constraintStart_toStartOf="@id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/titleView">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:includeFontPadding="false"
-            android:text="·"
-            android:textColor="@color/c_b4b4b4"
-            android:textSize="30sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/qb_px_10"
-            android:text=" 使用会员卡无法使用优惠劵、优惠劵不可以叠加使用"
-            android:textColor="@color/c_b4b4b4"
-            android:textSize="12sp" />
-
-    </LinearLayout>
+        app:TitleView_title="优惠方式" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/smart_refresh_layout"
@@ -61,7 +20,7 @@
         app:layout_constraintBottom_toTopOf="@+id/tv_no_coupon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ll_tip">
+        app:layout_constraintTop_toBottomOf="@+id/titleView">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
@@ -75,7 +34,7 @@
         android:id="@+id/tv_no_coupon"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qb_px_100"
-        android:text="不使用优惠劵"
+        android:text="不使用优惠券"
         android:textColor="@color/c_ff"
         android:gravity="center"
         android:background="@color/c_26CD8D"

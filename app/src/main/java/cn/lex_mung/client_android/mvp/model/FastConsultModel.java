@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.QuickPayEntity;
 import io.reactivex.Observable;
@@ -74,7 +75,7 @@ public class FastConsultModel extends BaseModel implements FastConsultContract.M
     }
 
     @Override
-    public Observable<BaseResponse<OrderCouponEntity>> quickCoupon() {
+    public Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> quickCoupon() {
         Map<String, Object> map = new HashMap<>();
         map.put("pageNum", 1);
         map.put("pageSize", 10);

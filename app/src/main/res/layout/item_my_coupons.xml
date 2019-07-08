@@ -1,36 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginLeft="@dimen/qb_px_20"
-    android:layout_marginRight="@dimen/qb_px_20"
+    android:layout_marginLeft="@dimen/qb_px_35"
+    android:layout_marginTop="@dimen/qb_px_35"
+    android:layout_marginRight="@dimen/qb_px_35"
     android:gravity="center"
     android:orientation="horizontal">
 
     <cn.lex_mung.client_android.mvp.ui.widget.RoundImageView
         android:id="@+id/item_iv_icon"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/qb_px_230"
         android:scaleType="matrix"
-        tools:src="@drawable/ic_p_bg_1"
-        app:layout_constraintDimensionRatio="h,32:9"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:src="@drawable/ic_update_top_round" />
+
+    <View
+        android:id="@+id/view_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/ic_card_selected"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/item_iv_icon"
+        app:layout_constraintEnd_toEndOf="@+id/item_iv_icon"
+        app:layout_constraintStart_toStartOf="@+id/item_iv_icon"
+        app:layout_constraintTop_toTopOf="@+id/item_iv_icon"
+        tools:visibility="visible" />
+
+    <!--优惠卡-->
 
     <TextView
-        android:id="@+id/item_tv_certified"
-        android:layout_width="@dimen/qb_px_100"
-        android:layout_height="@dimen/qb_px_30"
-        android:layout_marginEnd="@dimen/qb_px_35"
-        android:layout_marginBottom="@dimen/qb_px_35"
-        android:background="@drawable/round_100_cea769_all"
-        android:gravity="center"
-        android:includeFontPadding="false"
-        android:text="@string/text_certified"
+        android:id="@+id/tv_coupon_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/qb_px_35"
+        android:text="查看详情"
         android:textColor="@color/c_ff"
-        android:textSize="12sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!--卡包-->
+    <TextView
+        android:id="@+id/tv_card_club_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/qb_px_35"
+        android:text="余额：1234645"
+        android:visibility="gone"
+        android:textColor="@color/c_ff"
+        tools:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/fl_card_club_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:padding="@dimen/qb_px_35"
+        tools:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/round_100_33ffffff_all"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:paddingLeft="@dimen/qb_px_30"
+            android:paddingTop="@dimen/qb_px_8"
+            android:paddingRight="@dimen/qb_px_30"
+            android:paddingBottom="@dimen/qb_px_8"
+            android:text="去使用"
+            android:textColor="@color/c_ff" />
+
+    </FrameLayout>
+
 </android.support.constraint.ConstraintLayout>

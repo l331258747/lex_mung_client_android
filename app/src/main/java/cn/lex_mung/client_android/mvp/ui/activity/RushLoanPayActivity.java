@@ -12,6 +12,7 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
@@ -23,6 +24,7 @@ import cn.lex_mung.client_android.di.module.RushLoanPayModule;
 import cn.lex_mung.client_android.mvp.ui.dialog.DefaultDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
+import cn.lex_mung.client_android.mvp.ui.widget.PayTypeView;
 import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
@@ -41,18 +43,13 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
 
     @BindView(R.id.titleView)
     TitleView titleView;
+    @BindView(R.id.payTypeView)
+    PayTypeView payTypeView;
 
-    @BindView(R.id.iv_select_wx)
-    ImageView ivSelectWx;
-    @BindView(R.id.iv_select_zfb)
-    ImageView ivSelectZfb;
-
-    @BindView(R.id.tv_balance_count)
-    TextView tvBalanceCount;
-    @BindView(R.id.iv_select_balance)
-    ImageView ivSelectBalance;
     @BindView(R.id.tv_order_money)
     TextView tvOrderMoney;
+    @BindView(R.id.tv_commodity)
+    TextView tvCommodity;
     @BindView(R.id.web_view)
     WebView webView;
 
@@ -85,9 +82,15 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
             mPresenter.setPayMoney(bundleIntent.getFloat(BundleTags.MONEY));
             mPresenter.setRequireTypeName(bundleIntent.getString(BundleTags.TITLE));
 
-            titleView.setTitle(bundleIntent.getString(BundleTags.TITLE));
-            tvOrderMoney.setText(bundleIntent.getFloat(BundleTags.MONEY) + "");
+            tvOrderMoney.setText("¥ "+bundleIntent.getFloat(BundleTags.MONEY));
+
+            payTypeView.setOrderPrice("¥ "+bundleIntent.getFloat(BundleTags.MONEY));
+            tvCommodity.setText(bundleIntent.getString(BundleTags.TITLE));
         }
+
+        payTypeView.setItemOnClick(type -> {
+            mPresenter.setPayType(type);
+        });
     }
 
     @Override
@@ -96,40 +99,6 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
         mPresenter.getUserBalance();
     }
 
-
-    @OnClick({R.id.tv_wx, R.id.tv_zfb, R.id.tv_balance, R.id.tv_club_card, R.id.bt_pay})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.tv_wx:
-                ivSelectWx.setImageResource(R.drawable.ic_show_select);
-                ivSelectZfb.setImageResource(R.drawable.ic_hide_select);
-                ivSelectBalance.setImageResource(R.drawable.ic_hide_select);
-                mPresenter.setPayType(1);
-                break;
-            case R.id.tv_zfb:
-                ivSelectWx.setImageResource(R.drawable.ic_hide_select);
-                ivSelectZfb.setImageResource(R.drawable.ic_show_select);
-                ivSelectBalance.setImageResource(R.drawable.ic_hide_select);
-                mPresenter.setPayType(2);
-                break;
-            case R.id.tv_balance:
-                ivSelectWx.setImageResource(R.drawable.ic_hide_select);
-                ivSelectZfb.setImageResource(R.drawable.ic_hide_select);
-                ivSelectBalance.setImageResource(R.drawable.ic_show_select);
-                mPresenter.setPayType(3);
-                break;
-            case R.id.tv_club_card:
-                ivSelectWx.setImageResource(R.drawable.ic_hide_select);
-                ivSelectZfb.setImageResource(R.drawable.ic_hide_select);
-                ivSelectBalance.setImageResource(R.drawable.ic_hide_select);
-                mPresenter.setPayType(4);
-                break;
-            case R.id.bt_pay:
-//                MobclickAgent.onEvent(mActivity, "w_y__shouye_jjfa_list_fbxqqr");
-                mPresenter.releaseRequirement(webView.getSettings().getUserAgentString());
-                break;
-        }
-    }
 
     @Override
     public void showLoading(@NonNull String message) {
@@ -201,7 +170,7 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
 
     @Override
     public void setBalance(String balance) {
-        tvBalanceCount.setText(balance);
+        payTypeView.setBalancePrice(balance);
     }
 
     @Override

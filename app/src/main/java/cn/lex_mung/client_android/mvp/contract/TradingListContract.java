@@ -1,5 +1,6 @@
 package cn.lex_mung.client_android.mvp.contract;
 
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.TradingListEntity;
 
@@ -12,10 +13,10 @@ import okhttp3.RequestBody;
 
 public interface TradingListContract {
     interface View extends IView {
-        void setAdapter(List<TradingListEntity.ListBean> list, boolean isAdd);
+        void setAdapter(List<TradingListEntity> list, boolean isAdd);
     }
 
     interface Model extends IModel {
-        Observable<BaseResponse<TradingListEntity>> getTradingList(RequestBody body);
+        Observable<BaseResponse<BaseListEntity<TradingListEntity>>> getTradingList(RequestBody body);
     }
 }

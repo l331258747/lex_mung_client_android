@@ -307,5 +307,11 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             launchActivity(new Intent(mActivity, FastConsultActivity.class));
         }
 
+        @JavascriptInterface
+        public void setToken(String token){
+            DataHelper.setStringSF(mActivity, DataHelperTags.TOKEN, token);
+            DataHelper.setBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS, true);
+            mPresenter.getUserInfoDetail();
+        }
     }
 }

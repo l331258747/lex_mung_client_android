@@ -1,8 +1,8 @@
 package cn.lex_mung.client_android.mvp.contract;
 
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.OrderEntity;
-import cn.lex_mung.client_android.mvp.ui.adapter.MyOrderAdapter;
 
 import cn.lex_mung.client_android.mvp.ui.adapter.MyOrderAdapter2;
 import io.reactivex.Observable;
@@ -19,6 +19,6 @@ public interface MyOrderContract {
     }
 
     interface Model extends IModel {
-        Observable<BaseResponse<OrderEntity>> getOrderList(RequestBody body);
+        Observable<BaseResponse<BaseListEntity<OrderEntity>>> getOrderList(RequestBody body);
     }
 }

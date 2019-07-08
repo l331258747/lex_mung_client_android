@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.google.gson.Gson;
 
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.integration.IRepositoryManager;
 import me.zl.mvp.mvp.BaseModel;
@@ -12,20 +13,20 @@ import me.zl.mvp.di.scope.ActivityScope;
 
 import javax.inject.Inject;
 
-import cn.lex_mung.client_android.mvp.contract.MyCouponsContract;
+import cn.lex_mung.client_android.mvp.contract.MyCardContract;
 import cn.lex_mung.client_android.mvp.model.api.CommonService;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.CouponsEntity;
 
 @ActivityScope
-public class MyCouponsModel extends BaseModel implements MyCouponsContract.Model {
+public class MyCardModel extends BaseModel implements MyCardContract.Model {
     @Inject
     Gson mGson;
     @Inject
     Application mApplication;
 
     @Inject
-    public MyCouponsModel(IRepositoryManager repositoryManager) {
+    public MyCardModel(IRepositoryManager repositoryManager) {
         super(repositoryManager);
     }
 
@@ -37,7 +38,7 @@ public class MyCouponsModel extends BaseModel implements MyCouponsContract.Model
     }
 
     @Override
-    public Observable<BaseResponse<CouponsEntity>> getCouponsList(int pageNum) {
+    public Observable<BaseResponse<BaseListEntity<CouponsEntity>>> getCouponsList(int pageNum) {
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .getCouponsList(pageNum);

@@ -12,7 +12,7 @@ import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.utils.AppUtils;
 
-public class SolutionAdapter extends BaseQuickAdapter<SolutionListEntity.ListBean, BaseViewHolder> {
+public class SolutionAdapter extends BaseQuickAdapter<SolutionListEntity, BaseViewHolder> {
     private ImageLoader mImageLoader;
 
     public SolutionAdapter(ImageLoader imageLoader) {
@@ -21,7 +21,7 @@ public class SolutionAdapter extends BaseQuickAdapter<SolutionListEntity.ListBea
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, SolutionListEntity.ListBean item) {
+    protected void convert(BaseViewHolder helper, SolutionListEntity item) {
         helper.setText(R.id.item_tv_title, item.getTitle());
         String string = mContext.getString(R.string.text_has_helped)
                 + "<font color=\"#1EC88C\">"

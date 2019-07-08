@@ -6,6 +6,7 @@ import cn.lex_mung.client_android.mvp.model.entity.AboutEntity;
 import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BalanceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BannerEntity;
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.BusinessEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BusinessTypeEntity;
@@ -18,7 +19,6 @@ import cn.lex_mung.client_android.mvp.model.entity.ExpertCallEntity;
 import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.FeedbackTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.FreeConsultEntity;
-import cn.lex_mung.client_android.mvp.model.entity.FreeConsultReplyEntity;
 import cn.lex_mung.client_android.mvp.model.entity.FreeConsultReplyListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.GeneralEntity;
 import cn.lex_mung.client_android.mvp.model.entity.IndustryEntity;
@@ -84,7 +84,7 @@ public interface CommonService {
      * @return BaseResponse
      */
     @POST("case/list")
-    Observable<BaseResponse<CaseListEntity>> getCaseList(@Body RequestBody body);
+    Observable<BaseResponse<BaseListEntity<CaseListEntity>>> getCaseList(@Body RequestBody body);
 
     /**
      * 首页banner
@@ -92,7 +92,7 @@ public interface CommonService {
      * @return BaseResponse
      */
     @GET("banner")
-    Observable<BaseResponse<BannerEntity>> getBanner();
+    Observable<BaseResponse<BaseListEntity<BannerEntity>>> getBanner();
 
     /**
      * 首页解决方案类型
@@ -108,7 +108,7 @@ public interface CommonService {
      * @return BaseResponse
      */
     @POST("solution/list")
-    Observable<BaseResponse<SolutionListEntity>> getSolutionList(@Body RequestBody body);
+    Observable<BaseResponse<BaseListEntity<SolutionListEntity>>> getSolutionList(@Body RequestBody body);
 
     /**
      * 获取律师筛选条件
@@ -272,7 +272,7 @@ public interface CommonService {
      * @return BaseResponse
      */
     @GET("lawyer/freeText/{consultationId}/reply/{pageNum}")
-    Observable<BaseResponse<FreeConsultReplyEntity>> getConsultReplyList(@Path("consultationId") int consultationId, @Path("pageNum") int pageNum);
+    Observable<BaseResponse<BaseListEntity<FreeConsultReplyListEntity>>> getConsultReplyList(@Path("consultationId") int consultationId, @Path("pageNum") int pageNum);
 
     ///common/freeText/v2/{consultationId}
     //GET
@@ -288,7 +288,7 @@ public interface CommonService {
     //GET
     //文字咨询回复列表v2
     @GET("common/freeText/v2/{consultationId}/reply/{pageNum}/{pageSize}")
-    Observable<BaseResponse<FreeConsultReplyEntity>> lawyerFreeText(@Path("consultationId") int consultationId, @Path("pageNum") int pageNum, @Path("pageSize") int pageSize);
+    Observable<BaseResponse<BaseListEntity<FreeConsultReplyListEntity>>> lawyerFreeText(@Path("consultationId") int consultationId, @Path("pageNum") int pageNum, @Path("pageSize") int pageSize);
 
 
     /**
@@ -297,7 +297,7 @@ public interface CommonService {
      * @return BaseResponse
      */
     @GET("lawyer/freeText/{consultationId}/{lawyerId}/reply/detail/{pageNum}")
-    Observable<BaseResponse<FreeConsultReplyEntity>> getFreeConsultReplyList(@Path("consultationId") int consultationId,
+    Observable<BaseResponse<BaseListEntity<FreeConsultReplyListEntity>>> getFreeConsultReplyList(@Path("consultationId") int consultationId,
                                                                              @Path("lawyerId") int lawyerId,
                                                                              @Path("pageNum") int pageNum);
 
@@ -323,7 +323,7 @@ public interface CommonService {
      * @return BaseResponse
      */
     @POST("client/member/order")
-    Observable<BaseResponse<OrderEntity>> getOrderList(@Body RequestBody body);
+    Observable<BaseResponse<BaseListEntity<OrderEntity>>> getOrderList(@Body RequestBody body);
 
     /**
      * 我的订单详情
@@ -331,7 +331,7 @@ public interface CommonService {
      * @return BaseResponse
      */
     @POST("client/member/order/detail")
-    Observable<BaseResponse<OrderDetailsEntity>> getOrderDetail(@Body RequestBody body);
+    Observable<BaseResponse<BaseListEntity<OrderDetailsEntity>>> getOrderDetail(@Body RequestBody body);
 
     /**
      * 获取用户余额
@@ -363,7 +363,7 @@ public interface CommonService {
      * @return BaseResponse
      */
     @POST("client/amount/detail")
-    Observable<BaseResponse<TradingListEntity>> getTradingList(@Body RequestBody body);
+    Observable<BaseResponse<BaseListEntity<TradingListEntity>>> getTradingList(@Body RequestBody body);
 
     /**
      * 获取关注律师列表
@@ -371,7 +371,7 @@ public interface CommonService {
      * @return BaseResponse
      */
     @POST("lawyer/member/myfollow")
-    Observable<BaseResponse<MyLikeEntity>> getMyLikeList(@Body RequestBody body);
+    Observable<BaseResponse<BaseListEntity<MyLikeEntity>>> getMyLikeList(@Body RequestBody body);
 
     /**
      * 查询订单支付状态
@@ -540,7 +540,7 @@ public interface CommonService {
      * @return BaseResponse
      */
     @GET("client/message/order")
-    Observable<BaseResponse<MessageEntity>> getOrderMessageList(@Query("pageNum") int pageNum);
+    Observable<BaseResponse<BaseListEntity<MessageEntity>>> getOrderMessageList(@Query("pageNum") int pageNum);
 
     /**
      * 获取系统消息列表
@@ -548,7 +548,7 @@ public interface CommonService {
      * @return BaseResponse
      */
     @GET("client/message/system")
-    Observable<BaseResponse<MessageEntity>> getSystemMessageList(@Query("pageNum") int pageNum);
+    Observable<BaseResponse<BaseListEntity<MessageEntity>>> getSystemMessageList(@Query("pageNum") int pageNum);
 
     /**
      * 获取需求消息列表
@@ -564,7 +564,7 @@ public interface CommonService {
      * @return BaseResponse
      */
     @GET("client/rights/couponlist")
-    Observable<BaseResponse<CouponsEntity>> getCouponsList(@Query("pageNum") int pageNum);
+    Observable<BaseResponse<BaseListEntity<CouponsEntity>>> getCouponsList(@Query("pageNum") int pageNum);
 
     /**
      * 获取快速咨询订单用户号码
@@ -658,7 +658,7 @@ public interface CommonService {
     //POST
     //用户快速电话咨询优惠券列表
     @POST("client/quick/coupon")
-    Observable<BaseResponse<OrderCouponEntity>> quickCoupon(@Body RequestBody body);
+    Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> quickCoupon(@Body RequestBody body);
 
     ///client/quick/pay
     //POST
@@ -676,17 +676,17 @@ public interface CommonService {
     //POST
     //文字咨询列表v2
     @POST("common/freeText/v2")
-    Observable<BaseResponse<CommonFreeTextEntity>> commonFreeText(@Body RequestBody body);
+    Observable<BaseResponse<BaseListEntity<CommonFreeTextEntity>>> commonFreeText(@Body RequestBody body);
 
     ///lawyer/freeText/v2
     @POST("lawyer/freeText/v2")
-    Observable<BaseResponse<CommonFreeTextEntity>> lawyerFreeText(@Body RequestBody body);
+    Observable<BaseResponse<BaseListEntity<CommonFreeTextEntity>>> lawyerFreeText(@Body RequestBody body);
 
     ///lawyer/freeText/v2/{consultationId}/{lawyerId}/reply/detail/{pageNum}/{pageSize}
     //GET
     //文字咨询回复详情v2
     @GET("common/freeText/v2/{consultationId}/{lawyerId}/reply/detail/{pageNum}/{pageSize}")
-    Observable<BaseResponse<FreeConsultReplyEntity>> replyDetail(@Path("consultationId") int consultationId,
+    Observable<BaseResponse<BaseListEntity<FreeConsultReplyListEntity>>> replyDetail(@Path("consultationId") int consultationId,
                                                                      @Path("lawyerId") int lawyerId,
                                                                      @Path("pageNum") int pageNum,
                                                                      @Path("pageSize") int pageSize);
@@ -695,7 +695,7 @@ public interface CommonService {
     //POST
     //用户优惠券列表
     @POST("client/require/coupon")
-    Observable<BaseResponse<OrderCouponEntity>> requireCoupon(@Body RequestBody body);
+    Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> requireCoupon(@Body RequestBody body);
 
     ///assistant/filters
     //GET
@@ -719,6 +719,6 @@ public interface CommonService {
     //GET
     //用户最近一次完成的可协商类型需求
     @POST("client/requirement/one")
-    Observable<BaseResponse<HirstoryDemandEntity>> clientRequirementOne(@Body RequestBody body);
+    Observable<BaseResponse<BaseListEntity<HirstoryDemandEntity>>> clientRequirementOne(@Body RequestBody body);
 
 }

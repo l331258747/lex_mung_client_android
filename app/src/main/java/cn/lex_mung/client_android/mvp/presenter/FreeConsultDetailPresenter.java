@@ -4,6 +4,8 @@ import android.app.Application;
 import android.os.Message;
 import android.text.TextUtils;
 
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
+import cn.lex_mung.client_android.mvp.model.entity.FreeConsultReplyListEntity;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -25,7 +27,6 @@ import cn.lex_mung.client_android.app.TimeFormat;
 import cn.lex_mung.client_android.mvp.contract.FreeConsultDetailContract;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.FreeConsultEntity;
-import cn.lex_mung.client_android.mvp.model.entity.FreeConsultReplyEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 
 import org.simple.eventbus.Subscriber;
@@ -152,9 +153,9 @@ public class FreeConsultDetailPresenter extends BasePresenter<FreeConsultDetailC
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<FreeConsultReplyEntity>>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<FreeConsultReplyListEntity>>>(mErrorHandler) {
                     @Override
-                    public void onNext(BaseResponse<FreeConsultReplyEntity> baseResponse) {
+                    public void onNext(BaseResponse<BaseListEntity<FreeConsultReplyListEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             if (!isAdd) {
                                 mRootView.setTime(TimeFormat.getTime(entity.getDateAdded()));

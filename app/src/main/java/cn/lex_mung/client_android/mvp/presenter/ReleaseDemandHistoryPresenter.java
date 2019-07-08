@@ -20,6 +20,7 @@ import java.util.Map;
 
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.FreeConsultReplyListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.GeneralEntity;
@@ -83,7 +84,7 @@ public class ReleaseDemandHistoryPresenter extends BasePresenter<ReleaseDemandHi
         adapter = new ReleaseDemandHistoryAdapter();
         adapter.setOnItemChildClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;
-            HirstoryDemandEntity.ListBean entity = adapter.getItem(position);
+            HirstoryDemandEntity entity = adapter.getItem(position);
             if (entity == null) return;
             switch (view.getId()) {
                 case R.id.tv_btn:
@@ -122,9 +123,9 @@ public class ReleaseDemandHistoryPresenter extends BasePresenter<ReleaseDemandHi
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<HirstoryDemandEntity>>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<HirstoryDemandEntity>>>(mErrorHandler) {
                     @Override
-                    public void onNext(BaseResponse<HirstoryDemandEntity> baseResponse) {
+                    public void onNext(BaseResponse<BaseListEntity<HirstoryDemandEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             totalNum = baseResponse.getData().getPages();
                             pageNum = baseResponse.getData().getPageNum();

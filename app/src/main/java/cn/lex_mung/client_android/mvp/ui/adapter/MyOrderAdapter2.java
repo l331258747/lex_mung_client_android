@@ -11,7 +11,7 @@ import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.mvp.model.entity.OrderEntity;
 import me.zl.mvp.http.imageloader.ImageLoader;
 
-public class MyOrderAdapter2 extends BaseQuickAdapter<OrderEntity.ListBean, BaseViewHolder> {
+public class MyOrderAdapter2 extends BaseQuickAdapter<OrderEntity, BaseViewHolder> {
 
     private ImageLoader mImageLoader;
 
@@ -21,7 +21,7 @@ public class MyOrderAdapter2 extends BaseQuickAdapter<OrderEntity.ListBean, Base
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, OrderEntity.ListBean item) {
+    protected void convert(BaseViewHolder helper, OrderEntity item) {
         helper.setText(R.id.item_tv_time, item.getCreateDate());
         if(item.getTypeId() == 5){
             helper.setText(R.id.item_tv_title, item.getTypeName());

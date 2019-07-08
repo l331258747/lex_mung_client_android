@@ -85,7 +85,7 @@ public class SolutionLIstFragment extends BaseFragment<SolutionLIstPresenter> im
         solutionAdapter.setOnItemClickListener((adapter, view, position) -> {
             if (isFastClick()) return;
             BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","solution_click");
-            SolutionListEntity.ListBean bean = solutionAdapter.getItem(position);
+            SolutionListEntity bean = solutionAdapter.getItem(position);
             if (bean == null) return;
             bean.setHelpNumber(bean.getHelpNumber() + 1);
             solutionAdapter.setData(position, bean);
@@ -113,7 +113,7 @@ public class SolutionLIstFragment extends BaseFragment<SolutionLIstPresenter> im
     }
 
     @Override
-    public void setAdapter(List<SolutionListEntity.ListBean> list, boolean isAdd) {
+    public void setAdapter(List<SolutionListEntity> list, boolean isAdd) {
         if (isAdd) {
             solutionAdapter.addData(list);
             smartRefreshLayout.finishLoadMore();

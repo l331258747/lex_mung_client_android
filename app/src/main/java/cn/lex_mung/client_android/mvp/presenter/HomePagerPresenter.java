@@ -19,6 +19,7 @@ import javax.inject.Inject;
 import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.mvp.contract.HomePagerContract;
 import cn.lex_mung.client_android.mvp.model.entity.BannerEntity;
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UnreadMessageCountEntity;
@@ -51,9 +52,11 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
     @Inject
     AppManager mAppManager;
 
+    private String quickUrl;
+
     private boolean isLogin = false;
 
-    private List<BannerEntity.ListBean> bannerList = new ArrayList<>();
+    private List<BannerEntity> bannerList = new ArrayList<>();
     private boolean isFlag = true;
 
     private UnreadMessageCountEntity unreadMessageCountEntity;
@@ -63,7 +66,7 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
         super(model, rootView);
     }
 
-    public List<BannerEntity.ListBean> getBannerList() {
+    public List<BannerEntity> getBannerList() {
         return bannerList;
     }
 
@@ -73,6 +76,10 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
 
     public UnreadMessageCountEntity getUnreadMessageCountEntity() {
         return unreadMessageCountEntity;
+    }
+
+    public String getQuickUrl(){
+        return quickUrl;
     }
 
     /**
@@ -102,7 +109,7 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
             try {
                 String bannerJson = DataHelper.getStringSF(mApplication, DataHelperTags.HOME_PAGE_BANNER);
                 if (!TextUtils.isEmpty(bannerJson)) {
-                    List<BannerEntity.ListBean> listBeans = new Gson().fromJson(bannerJson, new TypeToken<List<BannerEntity.ListBean>>() {
+                    List<BannerEntity> listBeans = new Gson().fromJson(bannerJson, new TypeToken<List<BannerEntity>>() {
                     }.getType());
                     if (listBeans != null) {
                         bannerList.clear();
@@ -138,9 +145,9 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<BannerEntity>>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<BannerEntity>>>(mErrorHandler) {
                     @Override
-                    public void onNext(BaseResponse<BannerEntity> baseResponse) {
+                    public void onNext(BaseResponse<BaseListEntity<BannerEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             bannerList.clear();
                             bannerList.addAll(baseResponse.getData().getList());
@@ -193,6 +200,7 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                             DataHelper.setStringSF(mApplication, DataHelperTags.HOME_PAGE_REQUIREMENT_TYPE, new Gson().toJson(baseResponse.getData()));
                             mRootView.setHotContract(baseResponse.getData().getHot());
                             mRootView.setMoreContract(baseResponse.getData().getMore());
+                            quickUrl = baseResponse.getData().getQuickUrl();
                         }
                     }
                 });

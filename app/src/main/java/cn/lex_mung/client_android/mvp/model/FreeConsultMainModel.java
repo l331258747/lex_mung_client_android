@@ -5,6 +5,7 @@ import android.app.Application;
 import com.google.gson.Gson;
 
 import cn.lex_mung.client_android.mvp.model.api.CommonService;
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.free.CommonFreeTextEntity;
 import cn.lex_mung.client_android.mvp.model.entity.free.FreeTextBizinfoEntity;
@@ -47,7 +48,7 @@ public class FreeConsultMainModel extends BaseModel implements FreeConsultMainCo
     }
 
     @Override
-    public Observable<BaseResponse<CommonFreeTextEntity>> commonFreeText(RequestBody body,boolean isLogin) {
+    public Observable<BaseResponse<BaseListEntity<CommonFreeTextEntity>>> commonFreeText(RequestBody body, boolean isLogin) {
         if(isLogin){
             return mRepositoryManager
                     .obtainRetrofitService(CommonService.class)

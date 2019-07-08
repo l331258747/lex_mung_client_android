@@ -19,7 +19,7 @@ import java.util.Date;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.utils.AppUtils;
 
-public class MyLikeAdapter extends BaseQuickAdapter<MyLikeEntity.ListBean, BaseViewHolder> {
+public class MyLikeAdapter extends BaseQuickAdapter<MyLikeEntity, BaseViewHolder> {
     private ImageLoader mImageLoader;
 
     public MyLikeAdapter(ImageLoader imageLoader) {
@@ -29,7 +29,7 @@ public class MyLikeAdapter extends BaseQuickAdapter<MyLikeEntity.ListBean, BaseV
 
     @Override
     @SuppressLint("SimpleDateFormat")
-    protected void convert(BaseViewHolder helper, MyLikeEntity.ListBean item) {
+    protected void convert(BaseViewHolder helper, MyLikeEntity item) {
         if (!TextUtils.isEmpty(item.getIconImage())) {
             mImageLoader.loadImage(mContext
                     , ImageConfigImpl

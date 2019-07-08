@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import java.util.List;
 
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.OrderStatusEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
@@ -30,9 +31,9 @@ public interface OrderCouponContract {
 
     interface Model extends IModel {
 
-        Observable<BaseResponse<OrderCouponEntity>> quickCoupon(int pageNum,double orderAmount);
+        Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> quickCoupon(int pageNum, double orderAmount);
 
-        Observable<BaseResponse<OrderCouponEntity>> requireCoupon(int pageNum);
+        Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> requireCoupon(int pageNum);
 
     }
 }

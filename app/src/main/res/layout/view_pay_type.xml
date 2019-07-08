@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_pay_type"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/qb_px_30">
+
+    <RelativeLayout
+        android:id="@+id/rl_pay_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_pay_type"
+            android:layout_width="@dimen/qb_px_32"
+            android:layout_height="@dimen/qb_px_32"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_pay_type" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/qb_px_30"
+            android:layout_toEndOf="@+id/iv_pay_type"
+            android:text="支付方式"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_1"
+        android:layout_marginTop="@dimen/qb_px_30"
+        android:layout_marginBottom="@dimen/qb_px_20"
+        android:background="@color/c_f7f7f7" />
+
+    <RelativeLayout
+        android:id="@+id/rl_wx"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10">
+
+        <ImageView
+            android:id="@+id/iv_wx"
+            android:layout_width="@dimen/qb_px_32"
+            android:layout_height="@dimen/qb_px_32"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_pay_wx" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/qb_px_30"
+            android:layout_toEndOf="@+id/iv_wx"
+            android:text="微信支付" />
+
+        <ImageView
+            android:id="@+id/iv_select_wx"
+            android:layout_width="@dimen/qb_px_35"
+            android:layout_height="@dimen/qb_px_35"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_show_select" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_zfb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10">
+
+        <ImageView
+            android:id="@+id/iv_zfb"
+            android:layout_width="@dimen/qb_px_32"
+            android:layout_height="@dimen/qb_px_32"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_pay_zfb" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/qb_px_30"
+            android:layout_toEndOf="@+id/iv_zfb"
+            android:text="支付宝支付" />
+
+        <ImageView
+            android:id="@+id/iv_select_zfb"
+            android:layout_width="@dimen/qb_px_35"
+            android:layout_height="@dimen/qb_px_35"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_hide_select" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_balance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10">
+
+        <ImageView
+            android:id="@+id/iv_balance"
+            android:layout_width="@dimen/qb_px_32"
+            android:layout_height="@dimen/qb_px_32"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_pay_balance2" />
+
+        <TextView
+            android:id="@+id/tv_tv_balance_count_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/qb_px_30"
+            android:layout_toEndOf="@+id/iv_balance"
+            android:text="余额支付" />
+
+        <TextView
+            android:id="@+id/tv_balance_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/tv_tv_balance_count_title"
+            android:text="（¥ 32.12）" />
+
+        <ImageView
+            android:id="@+id/iv_select_balance"
+            android:layout_width="@dimen/qb_px_35"
+            android:layout_height="@dimen/qb_px_35"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_hide_select" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_member"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10">
+
+        <ImageView
+            android:id="@+id/iv_member"
+            android:layout_width="@dimen/qb_px_32"
+            android:layout_height="@dimen/qb_px_32"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_pay_member" />
+
+        <TextView
+            android:id="@+id/tv_tv_member_count_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/qb_px_30"
+            android:layout_toEndOf="@+id/iv_member"
+            android:text="会员卡支付" />
+
+        <TextView
+            android:id="@+id/tv_member_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/tv_tv_member_count_title"
+            android:text="（¥ 32.12）" />
+
+
+        <ImageView
+            android:id="@+id/iv_select_member"
+            android:layout_width="@dimen/qb_px_35"
+            android:layout_height="@dimen/qb_px_35"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_hide_select" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10">
+
+        <ImageView
+            android:id="@+id/iv_group"
+            android:layout_width="@dimen/qb_px_32"
+            android:layout_height="@dimen/qb_px_32"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_pay_group" />
+
+        <TextView
+            android:id="@+id/tv_group_count_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/qb_px_30"
+            android:layout_toEndOf="@+id/iv_group"
+            android:text="集团卡支付" />
+
+        <TextView
+            android:id="@+id/tv_group_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/tv_group_count_title"
+            android:text="（¥ 32.12）" />
+
+
+        <ImageView
+            android:id="@+id/iv_select_group"
+            android:layout_width="@dimen/qb_px_35"
+            android:layout_height="@dimen/qb_px_35"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_hide_select" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_pay_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_20">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/tv_pay_price"
+            android:text="小计："
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_pay_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="¥ 31"
+            android:textColor="@color/c_EB5514"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+</LinearLayout>

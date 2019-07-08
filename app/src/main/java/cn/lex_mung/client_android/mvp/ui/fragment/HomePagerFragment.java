@@ -1,14 +1,10 @@
 package cn.lex_mung.client_android.mvp.ui.fragment;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.UiThread;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -29,7 +25,6 @@ import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -38,15 +33,14 @@ import butterknife.OnClick;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.app.DataHelperTags;
-import cn.lex_mung.client_android.app.PayStatusTags;
 import cn.lex_mung.client_android.di.component.DaggerHomePagerComponent;
 import cn.lex_mung.client_android.di.module.HomePagerModule;
 import cn.lex_mung.client_android.mvp.contract.HomePagerContract;
 import cn.lex_mung.client_android.mvp.model.entity.BannerEntity;
-import cn.lex_mung.client_android.mvp.model.entity.PayResultEntity;
 import cn.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.NormalBean;
 import cn.lex_mung.client_android.mvp.presenter.HomePagerPresenter;
+import cn.lex_mung.client_android.mvp.ui.activity.CouponModeActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.FastConsultActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultMainActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.HelpStepActivity;
@@ -56,13 +50,10 @@ import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MainActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MessageActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.OrganizationLawyerActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.PayStatusActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.HomePageRequirementTypeAdapter;
-import cn.lex_mung.client_android.mvp.ui.dialog.CurrencyDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.HelpStepDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
-import cn.lex_mung.client_android.mvp.ui.dialog.OnlyTextDialog;
 import cn.lex_mung.client_android.utils.BuryingPointHelp;
 import me.zl.mvp.base.AdapterViewPager;
 import me.zl.mvp.base.BaseFragment;
@@ -199,7 +190,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         banner.setOnBannerListener(position -> {
             try {
                 if (isFastClick()) return;
-                BannerEntity.ListBean bean = mPresenter.getBannerList().get(position);
+                BannerEntity bean = mPresenter.getBannerList().get(position);
                 String linkValue = bean.getLinkValue();
                 if (TextUtils.isEmpty(linkValue))
                     return;
@@ -271,7 +262,10 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_search:
-                ((MainActivity) mActivity).switchPage(2);
+//                ((MainActivity) mActivity).switchPage(2);
+
+                launchActivity(new Intent(mActivity, CouponModeActivity.class));
+
                 break;
             case R.id.fab:
                 BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","assistant_click");
@@ -293,7 +287,17 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
             case R.id.view_fast_consult:
                 BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","quick_consultation_click");
                 if (mPresenter.isLogin()) {
-                    launchActivity(new Intent(mActivity, FastConsultActivity.class));
+                    if(!TextUtils.isEmpty(mPresenter.getQuickUrl())){
+                        bundle.clear();
+                        bundle.putString(BundleTags.URL, mPresenter.getQuickUrl());
+                        bundle.putString(BundleTags.TITLE, "快速电话咨询");
+                        bundle.putBoolean(BundleTags.IS_SHARE, false);
+                        launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+                    }else{
+//                        launchActivity(new Intent(mActivity, FastConsultActivity.class));
+                        showMessage("快速咨询地址为空");
+                    }
+
                 } else {
                     bundle.clear();
                     bundle.putInt(BundleTags.TYPE, 2);
@@ -386,9 +390,9 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     }
 
     @Override
-    public void setBannerAdapter(List<BannerEntity.ListBean> bannerList) {
+    public void setBannerAdapter(List<BannerEntity> bannerList) {
         List<String> imageList = new ArrayList<>();
-        for (BannerEntity.ListBean bean : bannerList) {
+        for (BannerEntity bean : bannerList) {
             imageList.add(bean.getImage());
         }
         banner.setImages(imageList);

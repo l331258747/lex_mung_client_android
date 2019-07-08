@@ -3,6 +3,8 @@ package cn.lex_mung.client_android.mvp.presenter;
 import android.app.Application;
 import android.support.annotation.NonNull;
 
+import cn.lex_mung.client_android.mvp.contract.MyCardContract;
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -16,16 +18,16 @@ import me.zl.mvp.utils.RxLifecycleUtils;
 
 import javax.inject.Inject;
 
-import cn.lex_mung.client_android.mvp.contract.MyCouponsContract;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.CouponsEntity;
-import cn.lex_mung.client_android.mvp.ui.adapter.MyCouponsAdapter;
+import cn.lex_mung.client_android.mvp.ui.adapter.MyCardAdapter;
+
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 @ActivityScope
-public class MyCouponsPresenter extends BasePresenter<MyCouponsContract.Model, MyCouponsContract.View> {
+public class MyCardPresenter extends BasePresenter<MyCardContract.Model, MyCardContract.View> {
     @Inject
     RxErrorHandler mErrorHandler;
     @Inject
@@ -38,11 +40,11 @@ public class MyCouponsPresenter extends BasePresenter<MyCouponsContract.Model, M
     private int pageNum;
     private int totalNum;
 
-    private MyCouponsAdapter adapter;
+    private MyCardAdapter adapter;
     private SmartRefreshLayout smartRefreshLayout;
 
     @Inject
-    public MyCouponsPresenter(MyCouponsContract.Model model, MyCouponsContract.View rootView) {
+    public MyCardPresenter(MyCardContract.Model model, MyCardContract.View rootView) {
         super(model, rootView);
     }
 
@@ -53,7 +55,10 @@ public class MyCouponsPresenter extends BasePresenter<MyCouponsContract.Model, M
     }
 
     private void initAdapter() {
-        adapter = new MyCouponsAdapter(mImageLoader);
+        adapter = new MyCardAdapter(mImageLoader);
+        adapter.setOnItemClickListener((adapter1, iew, position) -> {
+            mRootView.showMessage("去使用");
+        });
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -84,9 +89,9 @@ public class MyCouponsPresenter extends BasePresenter<MyCouponsContract.Model, M
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<CouponsEntity>>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<CouponsEntity>>>(mErrorHandler) {
                     @Override
-                    public void onNext(BaseResponse<CouponsEntity> baseResponse) {
+                    public void onNext(BaseResponse<BaseListEntity<CouponsEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             totalNum = baseResponse.getData().getPages();
                             pageNum = baseResponse.getData().getPageNum();

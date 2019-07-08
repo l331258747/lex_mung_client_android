@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.lex_mung.client_android.mvp.model.api.CommonService;
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.GeneralEntity;
 import cn.lex_mung.client_android.mvp.model.entity.help.HirstoryDemandEntity;
@@ -51,7 +52,7 @@ public class ReleaseDemandHistoryModel extends BaseModel implements ReleaseDeman
     }
 
     @Override
-    public Observable<BaseResponse<HirstoryDemandEntity>> clientRequirementOne(int pageNum) {
+    public Observable<BaseResponse<BaseListEntity<HirstoryDemandEntity>>> clientRequirementOne(int pageNum) {
         Map<String, Object> map = new HashMap<>();
         map.put("pageNum",pageNum);
         map.put("pageSize",10);

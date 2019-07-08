@@ -9,12 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import cn.lex_mung.client_android.R;
-import cn.lex_mung.client_android.app.decoration.SpacesItemDecoration;
 import cn.lex_mung.client_android.di.component.DaggerMyOrderComponent;
 import cn.lex_mung.client_android.di.module.MyOrderModule;
 import cn.lex_mung.client_android.mvp.contract.MyOrderContract;
 import cn.lex_mung.client_android.mvp.presenter.MyOrderPresenter;
-import cn.lex_mung.client_android.mvp.ui.adapter.MyOrderAdapter;
 import cn.lex_mung.client_android.mvp.ui.adapter.MyOrderAdapter2;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;

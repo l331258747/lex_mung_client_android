@@ -8,14 +8,14 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.mvp.model.entity.CaseListEntity;
 
-public class PersonalHomePageCaseAdapter extends BaseQuickAdapter<CaseListEntity.ListBean, BaseViewHolder> {
+public class PersonalHomePageCaseAdapter extends BaseQuickAdapter<CaseListEntity, BaseViewHolder> {
 
     public PersonalHomePageCaseAdapter() {
         super(R.layout.item_personal_home_page_case);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, CaseListEntity.ListBean item) {
+    protected void convert(BaseViewHolder helper, CaseListEntity item) {
         helper.setText(R.id.item_tv_title, item.getTitle());
         helper.setText(R.id.item_tv_content, item.getCourtopinion());
         if (helper.getLayoutPosition() == getItemCount() - 1) {

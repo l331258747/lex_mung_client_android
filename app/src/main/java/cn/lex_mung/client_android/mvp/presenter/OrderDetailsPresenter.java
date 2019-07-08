@@ -8,6 +8,7 @@ import android.text.TextUtils;
 
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RequirementDetailEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerHomePageActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MessageChatActivity;
@@ -223,11 +224,11 @@ public class OrderDetailsPresenter extends BasePresenter<OrderDetailsContract.Mo
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<OrderDetailsEntity>>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<OrderDetailsEntity>>>(mErrorHandler) {
                     @Override
-                    public void onNext(BaseResponse<OrderDetailsEntity> baseResponse) {
+                    public void onNext(BaseResponse<BaseListEntity<OrderDetailsEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
-                            OrderDetailsEntity.ListBean bean;
+                            OrderDetailsEntity bean;
                             bean = baseResponse.getData().getList().get(0);
 
                             //必要

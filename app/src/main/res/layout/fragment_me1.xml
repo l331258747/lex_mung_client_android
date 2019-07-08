@@ -265,7 +265,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
-            android:text="优惠劵"
+            android:text="优惠券"
             android:textColor="@color/c_323232"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@id/view_coupons"

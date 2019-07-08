@@ -11,7 +11,7 @@ import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
 
 import me.zl.mvp.http.imageloader.ImageLoader;
 
-public class SystemMessageAdapter extends BaseQuickAdapter<MessageEntity.ListBean, BaseViewHolder> {
+public class SystemMessageAdapter extends BaseQuickAdapter<MessageEntity, BaseViewHolder> {
     private ImageLoader mImageLoader;
 
     public SystemMessageAdapter(ImageLoader imageLoader) {
@@ -20,7 +20,7 @@ public class SystemMessageAdapter extends BaseQuickAdapter<MessageEntity.ListBea
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, MessageEntity.ListBean item) {
+    protected void convert(BaseViewHolder helper, MessageEntity item) {
         mImageLoader.loadImage(mContext
                 , ImageConfigImpl
                         .builder()

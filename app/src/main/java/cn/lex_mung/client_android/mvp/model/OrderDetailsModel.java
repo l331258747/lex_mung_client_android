@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RequirementDetailEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.integration.IRepositoryManager;
@@ -42,7 +43,7 @@ public class OrderDetailsModel extends BaseModel implements OrderDetailsContract
     }
 
     @Override
-    public Observable<BaseResponse<OrderDetailsEntity>> getOrderDetail(RequestBody body) {
+    public Observable<BaseResponse<BaseListEntity<OrderDetailsEntity>>> getOrderDetail(RequestBody body) {
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .getOrderDetail(body);

@@ -5,6 +5,7 @@ import android.view.View;
 
 import java.util.List;
 
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.OrderDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.RemainEntity;
@@ -60,7 +61,7 @@ public interface OrderDetailsContract {
     }
 
     interface Model extends IModel {
-        Observable<BaseResponse<OrderDetailsEntity>> getOrderDetail(RequestBody body);
+        Observable<BaseResponse<BaseListEntity<OrderDetailsEntity>>> getOrderDetail(RequestBody body);
 
         Observable<BaseResponse<RemainEntity>> getUserPhone(String orderNo);
 

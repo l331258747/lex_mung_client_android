@@ -6,7 +6,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.mvp.model.entity.free.CommonFreeTextEntity;
 
-public class FreeConsultListAdapter extends BaseQuickAdapter<CommonFreeTextEntity.ListBean, BaseViewHolder> {
+public class FreeConsultListAdapter extends BaseQuickAdapter<CommonFreeTextEntity, BaseViewHolder> {
 
 
     public FreeConsultListAdapter() {
@@ -14,7 +14,7 @@ public class FreeConsultListAdapter extends BaseQuickAdapter<CommonFreeTextEntit
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, CommonFreeTextEntity.ListBean item) {
+    protected void convert(BaseViewHolder helper, CommonFreeTextEntity item) {
         helper.setText(R.id.tv_status,item.getConsultationStatusStr());
         helper.setText(R.id.tv_content,item.getContent());
         helper.setText(R.id.tv_comment,item.getReplyCountStr());

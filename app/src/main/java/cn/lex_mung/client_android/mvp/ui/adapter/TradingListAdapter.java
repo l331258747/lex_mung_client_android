@@ -7,14 +7,14 @@ import cn.lex_mung.client_android.mvp.model.entity.TradingListEntity;
 
 import me.zl.mvp.utils.AppUtils;
 
-public class TradingListAdapter extends BaseQuickAdapter<TradingListEntity.ListBean, BaseViewHolder> {
+public class TradingListAdapter extends BaseQuickAdapter<TradingListEntity, BaseViewHolder> {
 
     public TradingListAdapter() {
         super(R.layout.item_trading_list);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, TradingListEntity.ListBean item) {
+    protected void convert(BaseViewHolder helper, TradingListEntity item) {
         helper.setText(R.id.item_tv_title, item.getOrderType());
         helper.setText(R.id.item_tv_time, item.getCreateDate());
         helper.setText(R.id.item_tv_status, "(" + item.getPayStatus() + ")");

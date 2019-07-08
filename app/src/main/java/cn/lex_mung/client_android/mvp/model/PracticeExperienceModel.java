@@ -5,6 +5,7 @@ import android.app.Application;
 import com.google.gson.Gson;
 
 import cn.lex_mung.client_android.mvp.model.api.CommonService;
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.CaseListEntity;
 import io.reactivex.Observable;
@@ -39,7 +40,7 @@ public class PracticeExperienceModel extends BaseModel implements PracticeExperi
     }
 
     @Override
-    public Observable<BaseResponse<CaseListEntity>> getCaseList(RequestBody body) {
+    public Observable<BaseResponse<BaseListEntity<CaseListEntity>>> getCaseList(RequestBody body) {
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .getCaseList(body);

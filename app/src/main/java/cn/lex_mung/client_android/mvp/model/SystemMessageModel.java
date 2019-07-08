@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.google.gson.Gson;
 
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.integration.IRepositoryManager;
 import me.zl.mvp.mvp.BaseModel;
@@ -44,7 +45,7 @@ public class SystemMessageModel extends BaseModel implements SystemMessageContra
     }
 
     @Override
-    public Observable<BaseResponse<MessageEntity>> getSystemMessageList(int pageNum) {
+    public Observable<BaseResponse<BaseListEntity<MessageEntity>>> getSystemMessageList(int pageNum) {
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .getSystemMessageList(pageNum);

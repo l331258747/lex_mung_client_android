@@ -1,5 +1,6 @@
 package cn.lex_mung.client_android.mvp.contract;
 
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.MessageEntity;
 import cn.lex_mung.client_android.mvp.ui.adapter.SystemMessageAdapter;
@@ -18,7 +19,7 @@ public interface SystemMessageContract {
     interface Model extends IModel {
         Observable<BaseResponse> allSetRead(int type);
 
-        Observable<BaseResponse<MessageEntity>> getSystemMessageList(int pageNum);
+        Observable<BaseResponse<BaseListEntity<MessageEntity>>> getSystemMessageList(int pageNum);
 
         Observable<BaseResponse> setRead(int id);
     }

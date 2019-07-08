@@ -8,7 +8,7 @@ import java.util.List;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.mvp.model.entity.help.HirstoryDemandEntity;
 
-public class ReleaseDemandHistoryAdapter extends BaseQuickAdapter<HirstoryDemandEntity.ListBean, BaseViewHolder> {
+public class ReleaseDemandHistoryAdapter extends BaseQuickAdapter<HirstoryDemandEntity, BaseViewHolder> {
 
 
     public ReleaseDemandHistoryAdapter() {
@@ -17,7 +17,7 @@ public class ReleaseDemandHistoryAdapter extends BaseQuickAdapter<HirstoryDemand
 
 
     @Override
-    protected void convert(BaseViewHolder helper, HirstoryDemandEntity.ListBean item) {
+    protected void convert(BaseViewHolder helper, HirstoryDemandEntity item) {
         helper.setText(R.id.tv_type_content,item.getTypeName());
         helper.setText(R.id.tv_money_content,item.getRequirementExtendValueStr());
         helper.setText(R.id.tv_question_content,item.getContent());

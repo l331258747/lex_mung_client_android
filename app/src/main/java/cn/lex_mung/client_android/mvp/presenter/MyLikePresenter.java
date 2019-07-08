@@ -2,6 +2,7 @@ package cn.lex_mung.client_android.mvp.presenter;
 
 import android.app.Application;
 
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -68,9 +69,9 @@ public class MyLikePresenter extends BasePresenter<MyLikeContract.Model, MyLikeC
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<MyLikeEntity>>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<MyLikeEntity>>>(mErrorHandler) {
                     @Override
-                    public void onNext(BaseResponse<MyLikeEntity> baseResponse) {
+                    public void onNext(BaseResponse<BaseListEntity<MyLikeEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             totalNum = baseResponse.getData().getPages();
                             pageNum = baseResponse.getData().getPageNum();

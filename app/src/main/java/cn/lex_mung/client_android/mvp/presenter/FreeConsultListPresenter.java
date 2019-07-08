@@ -20,6 +20,7 @@ import javax.inject.Inject;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.mvp.contract.FreeConsultListContract;
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.free.CommonFreeTextEntity;
@@ -74,7 +75,7 @@ public class FreeConsultListPresenter extends BasePresenter<FreeConsultListContr
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;
 
-            CommonFreeTextEntity.ListBean bean = adapter.getItem(position);
+            CommonFreeTextEntity bean = adapter.getItem(position);
             Bundle bundle = new Bundle();
             bundle.putInt(BundleTags.ID,bean.getConsultationId());
             bundle.putBoolean(BundleTags.IS_SHOW,true);
@@ -118,9 +119,9 @@ public class FreeConsultListPresenter extends BasePresenter<FreeConsultListContr
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<CommonFreeTextEntity>>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<CommonFreeTextEntity>>>(mErrorHandler) {
                     @Override
-                    public void onNext(BaseResponse<CommonFreeTextEntity> baseResponse) {
+                    public void onNext(BaseResponse<BaseListEntity<CommonFreeTextEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             totalNum = baseResponse.getData().getPages();
                             pageNum = baseResponse.getData().getPageNum();

@@ -124,9 +124,9 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
         return R.layout.activity_fast_consult;
     }
 
-    //设置优惠劵
+    //设置优惠券
     @Override
-    public void setCouponLayout(OrderCouponEntity.ListBean bean, boolean showToast) {
+    public void setCouponLayout(OrderCouponEntity bean, boolean showToast) {
         if(bean == null){
             tvDiscountWay.setText("");
             this.couponId = 0;
@@ -136,9 +136,9 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
 
         if(orderPrice < bean.getFullNum()){
             if(showToast){
-                showMessage("无法使用优惠劵");
+                showMessage("无法使用优惠券");
             }
-            LogUtil.e("无法使用优惠劵");
+            LogUtil.e("无法使用优惠券");
             return;
         }
 
@@ -235,13 +235,13 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
     }
 
     /**
-     * 更新优惠劵
+     * 更新优惠券
      */
     @Subscriber(tag = ORDER_COUPON)
     private void selectPlace(Message message) {
         switch (message.what) {
             case REFRESH_COUPON:
-                OrderCouponEntity.ListBean bean = (OrderCouponEntity.ListBean) message.obj;
+                OrderCouponEntity bean = (OrderCouponEntity) message.obj;
                 setCouponLayout(bean,true);
                 break;
         }
@@ -367,7 +367,7 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
                     return;
                 }
                 bundle.clear();
-                bundle.putInt(BundleTags.ID, couponId);//优惠劵id
+                bundle.putInt(BundleTags.ID, couponId);//优惠券id
                 bundle.putInt(BundleTags.TYPE,0);
                 bundle.putDouble(BundleTags.MONEY,orderPrice);
                 launchActivity(new Intent(mActivity, OrderCouponActivity.class), bundle);

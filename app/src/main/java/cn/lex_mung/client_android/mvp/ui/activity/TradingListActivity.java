@@ -70,7 +70,7 @@ public class TradingListActivity extends BaseActivity<TradingListPresenter> impl
         tradingListAdapter = new TradingListAdapter();
         tradingListAdapter.setOnItemClickListener((adapter, view, position) -> {
             if (isFastClick()) return;
-            TradingListEntity.ListBean bean = tradingListAdapter.getItem(position);
+            TradingListEntity bean = tradingListAdapter.getItem(position);
             if (bean == null) return;
             bundle.clear();
             bundle.putSerializable(BundleTags.ENTITY, bean);
@@ -101,7 +101,7 @@ public class TradingListActivity extends BaseActivity<TradingListPresenter> impl
     }
 
     @Override
-    public void setAdapter(List<TradingListEntity.ListBean> list, boolean isAdd) {
+    public void setAdapter(List<TradingListEntity> list, boolean isAdd) {
         if (isAdd) {
             tradingListAdapter.addData(list);
             smartRefreshLayout.finishLoadMore();

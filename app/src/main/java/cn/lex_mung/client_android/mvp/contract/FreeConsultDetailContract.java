@@ -1,8 +1,8 @@
 package cn.lex_mung.client_android.mvp.contract;
 
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.FreeConsultEntity;
-import cn.lex_mung.client_android.mvp.model.entity.FreeConsultReplyEntity;
 import cn.lex_mung.client_android.mvp.model.entity.FreeConsultReplyListEntity;
 
 import java.util.List;
@@ -38,6 +38,6 @@ public interface FreeConsultDetailContract {
     interface Model extends IModel {
         Observable<BaseResponse<FreeConsultEntity>> getFreeConsultDetail(@Path("consultationId") int id);
 
-        Observable<BaseResponse<FreeConsultReplyEntity>> getFreeConsultReplyList(int consultationId, int pageNum);
+        Observable<BaseResponse<BaseListEntity<FreeConsultReplyListEntity>>> getFreeConsultReplyList(int consultationId, int pageNum);
     }
 }

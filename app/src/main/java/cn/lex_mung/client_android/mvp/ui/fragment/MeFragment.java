@@ -9,12 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
-import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.di.component.DaggerMeComponent;
 import cn.lex_mung.client_android.di.module.MeModule;
 import cn.lex_mung.client_android.mvp.contract.MeContract;
@@ -23,7 +21,7 @@ import cn.lex_mung.client_android.mvp.ui.activity.AboutActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.EditInfoActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MyAccountActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.MyCouponsActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.MyCardActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MyLikeActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MyOrderActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.OrderCouponActivity;
@@ -40,8 +38,6 @@ import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.utils.AppUtils;
-import me.zl.mvp.utils.DataHelper;
-import me.zl.mvp.utils.StatusBarUtil;
 
 public class MeFragment extends BaseFragment<MePresenter> implements MeContract.View {
     @Inject
@@ -122,8 +118,6 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
                 if (mPresenter.isLogin()) {
                     launchActivity(new Intent(mActivity, EditInfoActivity.class));
                 } else {
-//                    DataHelper.setIntergerSF(mActivity, DataHelperTags.LOGIN_TYPE, 1);
-//                    launchActivity(new Intent(mActivity, LoginActivity.class));
                     bundle.clear();
                     bundle.putInt(BundleTags.TYPE, 1);
                     launchActivity(new Intent(mActivity, LoginActivity.class),bundle);
@@ -203,7 +197,7 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
                 break;
             case R.id.view_card:
                 if (mPresenter.isLogin()) {
-                    launchActivity(new Intent(mActivity, MyCouponsActivity.class));
+                    launchActivity(new Intent(mActivity, MyCardActivity.class));
                 } else {
                     bundle.clear();
                     bundle.putInt(BundleTags.TYPE, 1);

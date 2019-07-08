@@ -46,8 +46,6 @@ public class OrderCouponActivity extends BaseActivity<OrderCouponPresenter> impl
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-    @BindView(R.id.ll_tip)
-    LinearLayout llTip;
     @BindView(R.id.tv_no_coupon)
     TextView tvNoCoupon;
 
@@ -85,7 +83,6 @@ public class OrderCouponActivity extends BaseActivity<OrderCouponPresenter> impl
 
     public void setMyCouponLayout(){
         if(type == 0) return;
-        llTip.setVisibility(View.GONE);
         tvNoCoupon.setVisibility(View.GONE);
     }
 

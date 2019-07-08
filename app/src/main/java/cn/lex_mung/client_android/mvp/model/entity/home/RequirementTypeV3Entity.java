@@ -8,6 +8,11 @@ public class RequirementTypeV3Entity {
     private List<NormalBean> normal;
     private List<NormalBean> hot;
     private List<NormalBean> more;
+    private String quickUrl;
+
+    public String getQuickUrl() {
+        return quickUrl;
+    }
 
     public List<NormalBean> getNormal() {
         return normal;

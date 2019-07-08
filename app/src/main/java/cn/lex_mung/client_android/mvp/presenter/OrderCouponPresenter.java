@@ -13,6 +13,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import cn.lex_mung.client_android.mvp.contract.OrderCouponContract;
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
 import cn.lex_mung.client_android.mvp.ui.adapter.OrderCouponAdapter;
@@ -80,7 +81,7 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             if(mRootView.getType() != 0) return;
             if (isFastClick()) return;
-            OrderCouponEntity.ListBean entity = adapter.getItem(position);
+            OrderCouponEntity entity = adapter.getItem(position);
             if (entity == null) return;
             if(entity.getCouponStatus() == 2) return;//不可用
 
@@ -108,6 +109,7 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
         mRootView.initRecyclerView(adapter);
     }
 
+
     private void getList(boolean isAdd){
         if(type == 1){
             getMeCouponsList(isAdd);
@@ -126,9 +128,9 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<OrderCouponEntity>>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<OrderCouponEntity>>>(mErrorHandler) {
                     @Override
-                    public void onNext(BaseResponse<OrderCouponEntity> baseResponse) {
+                    public void onNext(BaseResponse<BaseListEntity<OrderCouponEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             totalNum = baseResponse.getData().getPages();
                             pageNum = baseResponse.getData().getPageNum();
@@ -159,9 +161,9 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<OrderCouponEntity>>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<OrderCouponEntity>>>(mErrorHandler) {
                     @Override
-                    public void onNext(BaseResponse<OrderCouponEntity> baseResponse) {
+                    public void onNext(BaseResponse<BaseListEntity<OrderCouponEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             totalNum = baseResponse.getData().getPages();
                             pageNum = baseResponse.getData().getPageNum();

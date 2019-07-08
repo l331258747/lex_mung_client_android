@@ -2,6 +2,7 @@ package cn.lex_mung.client_android.mvp.contract;
 
 import android.app.Activity;
 
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.free.CommonFreeTextEntity;
 import cn.lex_mung.client_android.mvp.model.entity.free.FreeTextBizinfoEntity;
@@ -25,6 +26,6 @@ public interface FreeConsultMainContract {
     interface Model extends IModel {
         Observable<BaseResponse<FreeTextBizinfoEntity>> freeTextBizinfo();
 
-        Observable<BaseResponse<CommonFreeTextEntity>> commonFreeText(RequestBody body,boolean isLogin);
+        Observable<BaseResponse<BaseListEntity<CommonFreeTextEntity>>> commonFreeText(RequestBody body, boolean isLogin);
     }
 }

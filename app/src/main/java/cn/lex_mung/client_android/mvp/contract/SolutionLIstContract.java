@@ -1,5 +1,6 @@
 package cn.lex_mung.client_android.mvp.contract;
 
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.SolutionListEntity;
 
@@ -13,11 +14,11 @@ import okhttp3.RequestBody;
 public interface SolutionLIstContract {
     interface View extends IView {
 
-        void setAdapter(List<SolutionListEntity.ListBean> list, boolean isAdd);
+        void setAdapter(List<SolutionListEntity> list, boolean isAdd);
     }
 
     interface Model extends IModel {
 
-        Observable<BaseResponse<SolutionListEntity>> getSolutionList(RequestBody body);
+        Observable<BaseResponse<BaseListEntity<SolutionListEntity>>> getSolutionList(RequestBody body);
     }
 }

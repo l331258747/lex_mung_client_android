@@ -71,7 +71,7 @@ public class MyLikeActivity extends BaseActivity<MyLikePresenter> implements MyL
         myLikeAdapter = new MyLikeAdapter(mImageLoader);
         myLikeAdapter.setOnItemClickListener((adapter, view, position) -> {
             if (isFastClick()) return;
-            MyLikeEntity.ListBean bean = myLikeAdapter.getItem(position);
+            MyLikeEntity bean = myLikeAdapter.getItem(position);
             if (bean == null) return;
             bundle.clear();
             bundle.putInt(BundleTags.ID, bean.getMemberId());
@@ -103,7 +103,7 @@ public class MyLikeActivity extends BaseActivity<MyLikePresenter> implements MyL
     }
 
     @Override
-    public void setAdapter(List<MyLikeEntity.ListBean> list, boolean isAdd) {
+    public void setAdapter(List<MyLikeEntity> list, boolean isAdd) {
         if (isAdd) {
             myLikeAdapter.addData(list);
             smartRefreshLayout.finishLoadMore();

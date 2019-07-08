@@ -8,6 +8,7 @@
     <color name="c_50">#50000000</color>
     <color name="c_ff">#ffffff</color>
     <color name="c_66ffffff">#66ffffff</color>
+    <color name="c_33ffffff">#33ffffff</color>
 
     <color name="c_999999">#999999</color>
     <color name="c_323232">#323232</color>
@@ -37,6 +38,9 @@
     <color name="c_555555">#555555</color>
     <color name="c_3DD790">#3DD790</color>
     <color name="c_78FAA0">#78FAA0</color>
+    <color name="c_2B2D41">#2B2D41</color>
+    <color name="c_DAB866">#DAB866</color>
+    <color name="c_FFF6E9">#FFF6E9</color>
 
 
     <color name="c_ddf6ed">#ddf6ed</color>

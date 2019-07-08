@@ -9,6 +9,7 @@ import android.os.Message;
 import android.text.TextUtils;
 
 import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.QuickPayEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
@@ -381,7 +382,7 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
                 });
     }
 
-    //获取优惠劵
+    //获取优惠券
     public void getCoupon(){
         mModel.quickCoupon()
                 .subscribeOn(Schedulers.io())
@@ -391,9 +392,9 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<OrderCouponEntity>>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<OrderCouponEntity>>>(mErrorHandler) {
                     @Override
-                    public void onNext(BaseResponse<OrderCouponEntity> baseResponse) {
+                    public void onNext(BaseResponse<BaseListEntity<OrderCouponEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             if(baseResponse.getData().getList() != null
                                     && baseResponse.getData().getList().size() > 0

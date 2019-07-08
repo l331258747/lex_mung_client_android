@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.lex_mung.client_android.mvp.model.api.CommonService;
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
 import io.reactivex.Observable;
@@ -43,7 +44,7 @@ public class OrderCouponModel extends BaseModel implements OrderCouponContract.M
     }
 
     @Override
-    public Observable<BaseResponse<OrderCouponEntity>> quickCoupon(int pageNum,double orderAmount) {
+    public Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> quickCoupon(int pageNum, double orderAmount) {
         Map<String, Object> map = new HashMap<>();
         map.put("pageNum", pageNum);
         map.put("pageSize", 10);
@@ -55,7 +56,7 @@ public class OrderCouponModel extends BaseModel implements OrderCouponContract.M
     }
 
     @Override
-    public Observable<BaseResponse<OrderCouponEntity>> requireCoupon(int pageNum) {
+    public Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> requireCoupon(int pageNum) {
         Map<String, Object> map = new HashMap<>();
         map.put("pageNum", pageNum);
         map.put("pageSize", 10);

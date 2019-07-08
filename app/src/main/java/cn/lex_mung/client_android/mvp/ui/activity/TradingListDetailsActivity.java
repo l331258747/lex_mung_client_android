@@ -68,7 +68,7 @@ public class TradingListDetailsActivity extends BaseActivity<TradingListDetailsP
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        mPresenter.setBean((TradingListEntity.ListBean) bundleIntent.getSerializable(BundleTags.ENTITY));
+        mPresenter.setBean((TradingListEntity) bundleIntent.getSerializable(BundleTags.ENTITY));
     }
 
     @Override

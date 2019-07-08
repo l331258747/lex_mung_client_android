@@ -18,15 +18,12 @@ import javax.inject.Inject;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.mvp.contract.MyOrderContract;
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.OrderEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultDetail1Activity;
-import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultDetailActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.MessageChatActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.OrderDetailTabActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.OrderDetailsActivity;
-import cn.lex_mung.client_android.mvp.ui.adapter.MyOrderAdapter;
 import cn.lex_mung.client_android.mvp.ui.adapter.MyOrderAdapter2;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -72,7 +69,7 @@ public class MyOrderPresenter extends BasePresenter<MyOrderContract.Model, MyOrd
         adapter = new MyOrderAdapter2(mImageLoader);
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;
-            OrderEntity.ListBean entity = adapter.getItem(position);
+            OrderEntity entity = adapter.getItem(position);
             if (entity == null) return;
             Bundle bundle = new Bundle();
             switch (entity.getTypeId()) {
@@ -151,9 +148,9 @@ public class MyOrderPresenter extends BasePresenter<MyOrderContract.Model, MyOrd
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<OrderEntity>>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<OrderEntity>>>(mErrorHandler) {
                     @Override
-                    public void onNext(BaseResponse<OrderEntity> baseResponse) {
+                    public void onNext(BaseResponse<BaseListEntity<OrderEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             totalNum = baseResponse.getData().getPages();
                             pageNum = baseResponse.getData().getPageNum();

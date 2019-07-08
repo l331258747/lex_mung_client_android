@@ -1,5 +1,6 @@
 package cn.lex_mung.client_android.mvp.contract;
 
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BannerEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
@@ -16,7 +17,7 @@ import okhttp3.RequestBody;
 
 public interface HomePagerContract {
     interface View extends IView {
-        void setBannerAdapter(List<BannerEntity.ListBean> list);
+        void setBannerAdapter(List<BannerEntity> list);
 
         void setSolutionType(List<SolutionTypeEntity> list);
 
@@ -31,7 +32,7 @@ public interface HomePagerContract {
     }
 
     interface Model extends IModel {
-        Observable<BaseResponse<BannerEntity>> getBanner();
+        Observable<BaseResponse<BaseListEntity<BannerEntity>>> getBanner();
 
         Observable<BaseResponse<List<SolutionTypeEntity>>> getSolutionType(RequestBody body);
 

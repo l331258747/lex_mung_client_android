@@ -5,6 +5,7 @@ import android.app.Application;
 import com.google.gson.Gson;
 
 import cn.lex_mung.client_android.mvp.model.api.CommonService;
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.free.CommonFreeTextEntity;
 import io.reactivex.Observable;
@@ -39,7 +40,7 @@ public class FreeConsultListModel extends BaseModel implements FreeConsultListCo
     }
 
     @Override
-    public Observable<BaseResponse<CommonFreeTextEntity>> commonFreeText(RequestBody body) {
+    public Observable<BaseResponse<BaseListEntity<CommonFreeTextEntity>>> commonFreeText(RequestBody body) {
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .lawyerFreeText(body);
