@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -41,19 +40,18 @@ import cn.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.NormalBean;
 import cn.lex_mung.client_android.mvp.presenter.HomePagerPresenter;
 import cn.lex_mung.client_android.mvp.ui.activity.CouponModeActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.FastConsultActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultMainActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.HelpStepActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.HomeTableActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerListActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.MainActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MessageActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.OrganizationLawyerActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.HomePageRequirementTypeAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.HelpStepDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import cn.lex_mung.client_android.mvp.ui.widget.myTabLayout.TabLayout;
 import cn.lex_mung.client_android.utils.BuryingPointHelp;
 import me.zl.mvp.base.AdapterViewPager;
 import me.zl.mvp.base.BaseFragment;
@@ -286,22 +284,21 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                 break;
             case R.id.view_fast_consult:
                 BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","quick_consultation_click");
-                if (mPresenter.isLogin()) {
-                    if(!TextUtils.isEmpty(DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL))){
-                        bundle.clear();
-                        bundle.putString(BundleTags.URL, DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL));
-                        bundle.putString(BundleTags.TITLE, "快速电话咨询");
-                        bundle.putBoolean(BundleTags.IS_SHARE, false);
-                        launchActivity(new Intent(mActivity, WebActivity.class), bundle);
-                    }else{
-//                        launchActivity(new Intent(mActivity, FastConsultActivity.class));
-                        showMessage("快速咨询地址为空");
-                    }
-
-                } else {
+//                if (mPresenter.isLogin()) {
+//                } else {
+//                    bundle.clear();
+//                    bundle.putInt(BundleTags.TYPE, 2);
+//                    launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
+//                }
+                if(!TextUtils.isEmpty(DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL))){
                     bundle.clear();
-                    bundle.putInt(BundleTags.TYPE, 2);
-                    launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
+                    bundle.putString(BundleTags.URL, DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL));
+                    bundle.putString(BundleTags.TITLE, "快速电话咨询");
+                    bundle.putBoolean(BundleTags.IS_SHARE, false);
+                    launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+                }else{
+//                        launchActivity(new Intent(mActivity, FastConsultActivity.class));
+                    showMessage("快速咨询地址为空");
                 }
                 break;
             case R.id.view_experts_consult:
@@ -416,9 +413,9 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
             titles.add(entity.getAlias());
         }
         viewPager.setOffscreenPageLimit(2);
-        viewPager.setAdapter(new AdapterViewPager(getChildFragmentManager(), fragments, titles));
+        viewPager.setAdapter(new AdapterViewPager(getChildFragmentManager(), fragments));
         tabLayout.setupWithViewPager(viewPager);
-
+        tabLayout.setMyStyle(viewPager,titles);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

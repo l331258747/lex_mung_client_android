@@ -29,6 +29,7 @@ import cn.lex_mung.client_android.mvp.contract.WebContract;
 import cn.lex_mung.client_android.mvp.model.entity.DeviceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.DeviceEntity2;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
+import cn.lex_mung.client_android.mvp.model.entity.other.WebGoOrderDetailEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.WebGoPayEntity;
 import cn.lex_mung.client_android.mvp.presenter.WebPresenter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
@@ -183,6 +184,11 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
         webView.loadUrl(url);
     }
 
+    public void goNext(String url){
+        webView.synCookies(url);
+        webView.loadUrl(url);
+    }
+
     @OnClick(R.id.tv_right)
     public void onViewClicked() {
         MobclickAgent.onEvent(mActivity, "w_y__shouye_jjfa_list_fenxiang");
@@ -326,7 +332,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
                     , uuid
                     , DeviceUtils.getAndroidId(mActivity,uuid)
                     , token
-                    , userInfoDetailsEntity.getMobile()
+                    , mPresenter.isLogin()?userInfoDetailsEntity.getMobile():""
             );
             return GsonUtil.convertVO2String(device);
         }
@@ -346,6 +352,27 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             DataHelper.setStringSF(mActivity, DataHelperTags.TOKEN, token);
             DataHelper.setBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS, true);
             mPresenter.getUserInfoDetail();
+        }
+
+        //goOrderDetail()  goOrderList()
+        @JavascriptInterface
+        public void goOrderList(){
+            launchActivity(new Intent(mActivity, MyOrderActivity.class));
+        }
+
+        @JavascriptInterface
+        public void goOrderDetail(String string){
+            if (TextUtils.isEmpty(string))
+                return;
+
+            WebGoOrderDetailEntity entity = GsonUtil.convertString2Object(string, WebGoOrderDetailEntity.class);
+
+            bundle.clear();
+            bundle.putInt(BundleTags.ID, entity.getOrderId());
+            bundle.putString(BundleTags.TITLE,"快速电话咨询");
+            bundle.putInt(BundleTags.TYPE, 4);
+            bundle.putString(BundleTags.ORDER_NO,entity.getOrderNo());
+            launchActivity(new Intent(mActivity, OrderDetailsActivity.class), bundle);
         }
     }
 }

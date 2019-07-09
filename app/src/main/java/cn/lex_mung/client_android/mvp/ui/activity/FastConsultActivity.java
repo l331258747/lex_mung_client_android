@@ -50,8 +50,6 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
 
     @BindView(R.id.tv_consult_type)
     TextView tvConsultType;
-//    @BindView(R.id.tv_money)
-//    TextView tvMoney;
     @BindView(R.id.et_contact_phone)
     EditText etContactPhone;
     @BindView(R.id.et_user_name)
@@ -82,20 +80,6 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
     View viewBottom;
     @BindView(R.id.web_view)
     WebView webView;
-//    @BindView(R.id.group_count)
-//    Group groupCount;
-//    @BindView(R.id.tv_count_1)
-//    TextView tvCount1;
-//    @BindView(R.id.tv_count_2)
-//    TextView tvCount2;
-//    @BindView(R.id.tv_count_3)
-//    TextView tvCount3;
-//    @BindView(R.id.tv_count_4)
-//    TextView tvCount4;
-//    @BindView(R.id.tv_count_5)
-//    TextView tvCount5;
-//    @BindView(R.id.tv_count_6)
-//    TextView tvCount6;
 
     private DefaultDialog defaultDialog;
     private EasyDialog easyDialog;

@@ -102,7 +102,6 @@
         <activity
             android:name=".mvp.ui.activity.WebActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity

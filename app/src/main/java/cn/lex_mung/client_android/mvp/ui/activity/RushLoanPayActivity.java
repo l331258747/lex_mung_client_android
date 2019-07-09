@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Message;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,15 +18,19 @@ import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
 
+import org.simple.eventbus.Subscriber;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.module.RushLoanPayModule;
+import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
 import cn.lex_mung.client_android.mvp.ui.dialog.DefaultDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
 import cn.lex_mung.client_android.mvp.ui.widget.PayTypeView;
 import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
+import cn.lex_mung.client_android.utils.LogUtil;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
@@ -35,6 +40,9 @@ import cn.lex_mung.client_android.mvp.contract.RushLoanPayContract;
 import cn.lex_mung.client_android.mvp.presenter.RushLoanPayPresenter;
 
 import cn.lex_mung.client_android.R;
+
+import static cn.lex_mung.client_android.app.EventBusTags.ORDER_COUPON.ORDER_COUPON;
+import static cn.lex_mung.client_android.app.EventBusTags.ORDER_COUPON.REFRESH_COUPON;
 
 /**
  * 抢单需求
@@ -52,6 +60,10 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
     TextView tvCommodity;
     @BindView(R.id.web_view)
     WebView webView;
+    @BindView(R.id.tv_discount_money)
+    TextView tvDiscountMoney;
+    @BindView(R.id.tv_discount_way)
+    TextView tvDiscountWay;
 
     @BindView(R.id.bt_pay)
     Button btPay;
@@ -96,9 +108,18 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
         payTypeView.setItemOnClick(type -> {
             mPresenter.setPayType(type);
         });
+
+        if(type == 1){
+            setPriceLayout(0,0,0);
+            setCouponLayout(null,false);
+
+            mPresenter.getCoupon();
+            mPresenter.setMoney();
+
+        }
     }
 
-    @OnClick({R.id.bt_pay})
+    @OnClick({R.id.bt_pay,R.id.rl_coupon_type})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.bt_pay:
@@ -107,6 +128,13 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
                 }else{//热门需求
                     mPresenter.releaseRequirement(webView.getSettings().getUserAgentString());
                 }
+                break;
+            case R.id.rl_coupon_type:
+                bundle.clear();
+                bundle.putInt(BundleTags.ID, couponId);//优惠券id
+                bundle.putInt(BundleTags.TYPE,0);
+                bundle.putDouble(BundleTags.MONEY,orderPrice);
+                launchActivity(new Intent(mActivity, OrderCouponActivity.class), bundle);
                 break;
         }
     }
@@ -185,6 +213,83 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
                 , getString(R.string.text_cancel))
                 .show();
     }
+
+    // ------- 优惠券 start
+    private int couponId;
+    private double orderPrice;//订单原价
+    private float couponPrice;//优惠价格
+    //设置优惠券
+    @Override
+    public void setCouponLayout(OrderCouponEntity bean, boolean showToast) {
+        if(bean == null){
+            tvDiscountWay.setText("");
+            tvDiscountMoney.setVisibility(View.GONE);
+            this.couponId = 0;
+            setPriceLayout(0,0,orderPrice);
+            return;
+        }
+
+        if(orderPrice < bean.getFullNum()){
+            if(showToast){
+                showMessage("无法使用优惠券");
+            }
+            LogUtil.e("无法使用优惠券");
+            return;
+        }
+
+        tvDiscountWay.setText(bean.getCouponName());
+        tvDiscountMoney.setVisibility(View.VISIBLE);
+        this.couponId = bean.getCouponId();
+
+        mPresenter.getPrice(couponId,orderPrice);
+    }
+
+    //设置价格
+    @Override
+    public void setPriceLayout(double orderPrice,float couponPrice,double payPrice) {
+        this.couponPrice = couponPrice;
+
+        tvOrderMoney.setText(String.format(
+                AppUtils.getString(mActivity, R.string.text_yuan_money)
+                , AppUtils.formatAmount(mActivity, payPrice)));
+        tvDiscountMoney.setText(String.format(
+                AppUtils.getString(mActivity, R.string.text_discount_money)
+                , AppUtils.formatAmount(mActivity, couponPrice)));
+    }
+
+    //获取优惠价格
+    @Override
+    public float getCouponPrice() {
+        return couponPrice;
+    }
+
+    //获取优惠id
+    @Override
+    public int getCouponId() {
+        return couponId;
+    }
+
+    //设置价格
+    @Override
+    public void setOrderMoney(String money,double orderMoney) {
+        tvOrderMoney.setText(money);
+        orderPrice = orderMoney;
+    }
+
+    /**
+     * 更新优惠券
+     */
+    @Subscriber(tag = ORDER_COUPON)
+    private void selectPlace(Message message) {
+        switch (message.what) {
+            case REFRESH_COUPON:
+                OrderCouponEntity bean = (OrderCouponEntity) message.obj;
+                setCouponLayout(bean,true);
+                break;
+        }
+    }
+
+    //--------优惠券 end
 
     @Override
     public void setBalance(String balance) {

@@ -3,9 +3,12 @@ package cn.lex_mung.client_android.mvp.contract;
 import android.app.Activity;
 
 import cn.lex_mung.client_android.mvp.model.entity.BalanceEntity;
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.OrderStatusEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayEntity;
+import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
+import cn.lex_mung.client_android.mvp.model.entity.order.QuickPayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RequirementCreateEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.mvp.IView;
@@ -22,6 +25,11 @@ public interface RushLoanPayContract {
         void setOrderMoney(String money);
         void showPayLayout();
 
+        void setCouponLayout(OrderCouponEntity bean, boolean showToast);
+        int getCouponId();
+        float getCouponPrice();
+        void setPriceLayout(double orderPrice,float couponPrice,double payPrice);
+        void setOrderMoney(String money,double orderMoney);
 
     }
 
@@ -31,6 +39,9 @@ public interface RushLoanPayContract {
         Observable<BaseResponse<BalanceEntity>> getUserBalance(int id);
 
         Observable<BaseResponse<OrderStatusEntity>> releaseFastConsult(RequestBody body);
+
+        Observable<BaseResponse<QuickPayEntity>> quickPay(int couponId, double orderAmount);
+        Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> quickCoupon();
 
     }
 }

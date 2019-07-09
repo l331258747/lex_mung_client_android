@@ -105,11 +105,13 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tv_discount_way"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/qb_px_20"
+                    android:gravity="right"
                     android:layout_toStartOf="@+id/iv_coupon_type_next"
-                    android:text="优惠方式" />
+                    android:hint="请选择优惠方式" />
 
                 <ImageView
                     android:id="@+id/iv_coupon_type_next"

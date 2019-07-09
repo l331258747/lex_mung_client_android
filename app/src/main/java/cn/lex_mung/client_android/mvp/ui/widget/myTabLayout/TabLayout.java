@@ -52,6 +52,7 @@ import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.content.res.AppCompatResources;
 import android.text.Layout;
+import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -73,6 +74,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import cn.lex_mung.client_android.R;
 
@@ -2240,4 +2242,70 @@ public class TabLayout extends HorizontalScrollView {
             mAutoRefresh = autoRefresh;
         }
     }
+
+    //------自定义方法 start
+    //draw 方法
+
+    //如果使用自定义viewPager.setAdapter(new AdapterViewPager(getChildFragmentManager(), fragments));
+    // 原生的tablayout用viewPager.setAdapter(new AdapterViewPager(getChildFragmentManager(), fragments, titles));
+    public void setMyStyle(ViewPager viewPager, List<String> titles){
+        for (int i = 0; i < getTabCount(); i++) {
+            TabLayout.Tab tab = getTabAt(i);
+            if (tab != null) {
+                tab.setCustomView(getTabView(i,titles));
+            }
+            if(i == 0){
+                View view = tab.getCustomView();
+                if (null != view && view instanceof TextView) {
+                    ((TextView) view).setTextSize(16);
+                    TextPaint paint = ((TextView) view).getPaint();
+                    paint.setFakeBoldText(true);
+                }
+            }
+        }
+
+        addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                //在这里可以设置选中状态下  tab字体显示样式
+                viewPager.setCurrentItem(tab.getPosition());
+                View view = tab.getCustomView();
+                if (null != view && view instanceof TextView) {
+                    ((TextView) view).setTextSize(16);
+                    TextPaint paint = ((TextView) view).getPaint();
+                    paint.setFakeBoldText(true);
+
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                View view = tab.getCustomView();
+                if (null != view && view instanceof TextView) {
+                    ((TextView) view).setTextSize(14);
+                    TextPaint paint = ((TextView) view).getPaint();
+                    paint.setFakeBoldText(false);
+                }
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+    }
+
+    /**
+     * 自定义Tab的View
+     * @param currentPosition
+     * @return
+     */
+    private View getTabView(int currentPosition,List<String> titles) {
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.layout_tab, null);
+        TextView textView = view.findViewById(R.id.tab_item_textview);
+        textView.setText(titles.get(currentPosition));
+        return view;
+    }
+
+    //------自定义方法 end
 }

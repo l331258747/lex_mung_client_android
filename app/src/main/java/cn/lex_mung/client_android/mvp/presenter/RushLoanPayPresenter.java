@@ -31,11 +31,14 @@ import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.app.PayStatusTags;
 import cn.lex_mung.client_android.mvp.contract.RushLoanPayContract;
 import cn.lex_mung.client_android.mvp.model.entity.BalanceEntity;
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.OrderStatusEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayResultEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
+import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
+import cn.lex_mung.client_android.mvp.model.entity.order.QuickPayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RequirementCreateEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.PayStatusActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.RushOrdersActivity;
@@ -389,13 +392,13 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
         map.put("money", money);
         map.put("type", payType);
 
-//        if (mRootView.getCouponPrice() > 0) {//TODO 优惠券
-////            long moneyCoupon = new BigDecimal(mRootView.getCouponPrice()).multiply(new BigDecimal(100)).intValue();
-//            long moneyCoupon = (long) DecimalUtil.multiply(mRootView.getCouponPrice(),100);
-//            map.put("deduction", moneyCoupon);//优惠金额
-//            map.put("useCoupon", 1);//使用优惠券
-//            map.put("other", mRootView.getCouponId());
-//        }
+        if (mRootView.getCouponPrice() > 0) {//TODO 优惠券
+//            long moneyCoupon = new BigDecimal(mRootView.getCouponPrice()).multiply(new BigDecimal(100)).intValue();
+            long moneyCoupon = (long) DecimalUtil.multiply(mRootView.getCouponPrice(),100);
+            map.put("deduction", moneyCoupon);//优惠金额
+            map.put("useCoupon", 1);//使用优惠券
+            map.put("other", mRootView.getCouponId());
+        }
 
         map.put("source", 2);
         map.put("product", 2);
@@ -552,6 +555,66 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
             }
         }
     };
+
+    //设置订单原价
+    public void setMoney() {
+        mRootView.setOrderMoney(String.format(
+                AppUtils.getString(mApplication, R.string.text_yuan_money)
+                , AppUtils.formatAmount(mApplication, payMoney)),payMoney);
+//        mRootView.setMoney(String.format(
+//                AppUtils.getString(mApplication, R.string.text_yuan_money)
+//                , AppUtils.formatAmount(mApplication, payMoney)));
+    }
+
+    //获取优惠券
+    public void getCoupon(){
+        mModel.quickCoupon()
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> mRootView.showLoading(""))
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<OrderCouponEntity>>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<BaseListEntity<OrderCouponEntity>> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            if(baseResponse.getData().getList() != null
+                                    && baseResponse.getData().getList().size() > 0
+                                    && baseResponse.getData().getList().get(0).getCouponStatus() == 1){
+                                mRootView.setCouponLayout(baseResponse.getData().getList().get(0),false);
+                            }else{
+                                mRootView.setCouponLayout(null,false);
+                            }
+                        }else{
+                            mRootView.setCouponLayout(null,false);
+                        }
+                    }
+                });
+    }
+
+    public void getPrice(int couponId,double orderAmount){
+        mModel.quickPay(couponId,orderAmount)
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> mRootView.showLoading(""))
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<QuickPayEntity>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<QuickPayEntity> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            mRootView.setPriceLayout(baseResponse.getData().getOrderAmount()
+                                    ,baseResponse.getData().getDeductionAmount()
+                                    ,baseResponse.getData().getPayment());
+                            payMoney = baseResponse.getData().getPayment();
+                        }
+                    }
+                });
+    }
 
     //快速咨询-end
 }
