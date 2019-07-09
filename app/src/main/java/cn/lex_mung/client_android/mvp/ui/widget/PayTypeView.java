@@ -105,7 +105,7 @@ public class PayTypeView extends LinearLayout implements View.OnClickListener {
                 iv_select_balance.setImageResource(R.drawable.ic_hide_select);
                 iv_select_member.setImageResource(R.drawable.ic_hide_select);
                 iv_select_group.setImageResource(R.drawable.ic_show_select);
-                type = 5;
+                type = 6;
                 break;
         }
         if(itemOnClick != null){

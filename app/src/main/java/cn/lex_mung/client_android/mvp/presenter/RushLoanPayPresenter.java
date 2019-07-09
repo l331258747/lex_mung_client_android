@@ -207,7 +207,7 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
         long money = (long) DecimalUtil.multiply(payMoney,100);
         Map<String, Object> map = new HashMap<>();
         map.put("money", money);//金额
-        map.put("type", payType);//支付类型 1微信 2支付宝 3余额支付 4会员卡支付
+        map.put("type", payType);//支付类型 1微信 2支付宝 3余额支付 4会员卡支付 5百度 6集团卡
         if (deduction > 0) {
             long moneyCoupon = (long) DecimalUtil.multiply(deduction,100);
             map.put("deduction", moneyCoupon);//优惠金额

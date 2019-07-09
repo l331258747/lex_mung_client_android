@@ -267,9 +267,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             if (mPresenter.isLogin()) {
                 bundle.clear();
                 bundle.putInt(BundleTags.ID, businessEntity.getRequireTypeId());
-//                bundle.putInt(BundleTags.TYPE, businessEntity.getType());//支付方式在下个页面选择、
                 bundle.putString(BundleTags.TITLE, businessEntity.getRequireTypeName());
-//                bundle.putSerializable(BundleTags.ENTITY, entity);//没有律师，不要律师信息
                 bundle.putFloat(BundleTags.MONEY, businessEntity.getMoney());
                 launchActivity(new Intent(mActivity, RushLoanPayActivity.class), bundle);
             } else {
