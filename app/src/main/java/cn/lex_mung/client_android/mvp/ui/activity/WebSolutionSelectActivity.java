@@ -72,9 +72,15 @@ public class WebSolutionSelectActivity extends BaseActivity<WebSolutionSelectPre
             case R.id.ll_call:
                 MobclickAgent.onEvent(mActivity, "w_y_shouye_index_kszx");
                 if (DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
+//                    bundle.clear();
+//                    bundle.putInt(BundleTags.BURYING_POINT,1);
+//                    launchActivity(new Intent(mActivity, FastConsultActivity.class),bundle);
                     bundle.clear();
+                    bundle.putString(BundleTags.URL, DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL));
                     bundle.putInt(BundleTags.BURYING_POINT,1);
-                    launchActivity(new Intent(mActivity, FastConsultActivity.class),bundle);
+                    bundle.putString(BundleTags.TITLE, "快速电话咨询");
+                    bundle.putBoolean(BundleTags.IS_SHARE, false);
+                    launchActivity(new Intent(mActivity, WebActivity.class), bundle);
                 } else {
                     bundle.clear();
                     bundle.putInt(BundleTags.TYPE, 2);

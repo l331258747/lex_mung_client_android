@@ -57,6 +57,8 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
     private String image;
     private boolean isJump;
 
+    private int buryingPointId;
+
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerWebComponent
@@ -78,11 +80,16 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
         if(!TextUtils.isEmpty(url)){
             if(url.indexOf("contractList.html") > -1){
                 BuryingPointHelp.getInstance().onActivityResumed(mActivity, "more_contract");
-
             }else if(url.indexOf("solution.html") > -1){
                 BuryingPointHelp.getInstance().onActivityResumed(mActivity, "solution_detail");
             }else if(url.indexOf("member") > -1){
                 BuryingPointHelp.getInstance().onActivityResumed(mActivity, "enterprise_legal_card");
+            }else if(url.indexOf("quick.html") > -1){
+                if(buryingPointId == 1){
+                    BuryingPointHelp.getInstance().onActivityResumed(mActivity, "quick_consulation_from_solution");
+                }else{
+                    BuryingPointHelp.getInstance().onActivityResumed(mActivity, "quick_consultation");
+                }
             }
         }
         mPresenter.onResume();
@@ -99,6 +106,12 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
                 BuryingPointHelp.getInstance().onActivityPaused(mActivity, "solution_detail");
             }else if(url.indexOf("member") > -1){
                 BuryingPointHelp.getInstance().onActivityPaused(mActivity, "enterprise_legal_card");
+            }else if(url.indexOf("quick.html") > -1){
+                if(buryingPointId == 1){
+                    BuryingPointHelp.getInstance().onActivityPaused(mActivity, "quick_consulation_from_solution");
+                }else{
+                    BuryingPointHelp.getInstance().onActivityPaused(mActivity, "quick_consultation");
+                }
             }
         }
         webView.onWebPause();
@@ -121,6 +134,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             image = bundleIntent.getString(BundleTags.IMAGE);
             isShare = bundleIntent.getBoolean(BundleTags.IS_SHARE, true);
             isJump = bundleIntent.getBoolean(BundleTags.STATE,true);
+            buryingPointId = bundleIntent.getInt(BundleTags.BURYING_POINT, -1);
         }
 
         LogUtil.e("url:" + url);
@@ -156,41 +170,11 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 
         webView.setWebViewClient(new MyWebViewClient(webView,isJump));
 
-//        webView.setWebViewClient(new WebViewClient() {
-//            @Override
-//            public boolean shouldOverrideUrlLoading(WebView view, String urls) {
-//                view.loadUrl(urls);
-//                return true;
-//            }
-//        });
-//        WebSettings webSettings = webView.getSettings();
-//        webSettings.setJavaScriptEnabled(true);
-//        webSettings.setSupportZoom(true);
-//        webSettings.setBuiltInZoomControls(true);
-//        webSettings.setUseWideViewPort(true);
-//        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-//        webSettings.setLoadWithOverviewMode(true);
-//        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
-//        webSettings.setDomStorageEnabled(true);
-//        webSettings.setBlockNetworkImage(false);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
-//        }
         webView.addJavascriptInterface(new AndroidToJs(), "JsBridgeApp");//h5 js调用 app.pay();
 
         webView.synCookies(url);
         webView.loadUrl(url);
     }
-
-//    public void synCookies(String url) {
-//        CookieSyncManager.createInstance(mActivity);
-//        CookieManager cookieManager = CookieManager.getInstance();
-//        cookieManager.setAcceptCookie(true);
-//        cookieManager.removeSessionCookie();//移除
-//        String cookieStr = "X-Token=" + DataHelper.getStringSF(mActivity, TOKEN) + ";Domain=.lex-mung.com;Path=/";
-//        cookieManager.setCookie(url, cookieStr);
-//        CookieSyncManager.getInstance().sync();
-//    }
 
     @OnClick(R.id.tv_right)
     public void onViewClicked() {
@@ -302,7 +286,12 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 
         @JavascriptInterface
         public void toldApp(){
-            launchActivity(new Intent(mActivity, FastConsultActivity.class));
+//            launchActivity(new Intent(mActivity, FastConsultActivity.class));
+            bundle.clear();
+            bundle.putString(BundleTags.URL, DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL));
+            bundle.putString(BundleTags.TITLE, "快速电话咨询");
+            bundle.putBoolean(BundleTags.IS_SHARE, false);
+            launchActivity(new Intent(mActivity, WebActivity.class), bundle);
         }
 
         @JavascriptInterface

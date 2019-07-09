@@ -287,9 +287,9 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
             case R.id.view_fast_consult:
                 BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","quick_consultation_click");
                 if (mPresenter.isLogin()) {
-                    if(!TextUtils.isEmpty(mPresenter.getQuickUrl())){
+                    if(!TextUtils.isEmpty(DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL))){
                         bundle.clear();
-                        bundle.putString(BundleTags.URL, mPresenter.getQuickUrl());
+                        bundle.putString(BundleTags.URL, DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL));
                         bundle.putString(BundleTags.TITLE, "快速电话咨询");
                         bundle.putBoolean(BundleTags.IS_SHARE, false);
                         launchActivity(new Intent(mActivity, WebActivity.class), bundle);

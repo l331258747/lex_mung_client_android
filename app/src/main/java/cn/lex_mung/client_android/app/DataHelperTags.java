@@ -32,4 +32,5 @@ public class DataHelperTags {
     public static final String REQUIREMENT_ID = "requirement_id";
     public static final String TIME_UUID = "time_uuid";
     public static final String TIME_UUID_DAY = "time_uuid_day";
+    public static final String QUICK_URL = "quick_url";
 }

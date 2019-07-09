@@ -99,7 +99,12 @@ public class FreeConsultDetail1Activity extends BaseActivity<FreeConsultDetail1P
         emptyView2.getBtn().setOnClickListener(v -> {
             MobclickAgent.onEvent(mActivity, "w_y_shouye_index_kszx");
             if (DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
-                launchActivity(new Intent(mActivity, FastConsultActivity.class));
+//                launchActivity(new Intent(mActivity, FastConsultActivity.class));
+                bundle.clear();
+                bundle.putString(BundleTags.URL, DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL));
+                bundle.putString(BundleTags.TITLE, "快速电话咨询");
+                bundle.putBoolean(BundleTags.IS_SHARE, false);
+                launchActivity(new Intent(mActivity, WebActivity.class), bundle);
             } else {
                 bundle.clear();
                 bundle.putInt(BundleTags.TYPE, 2);

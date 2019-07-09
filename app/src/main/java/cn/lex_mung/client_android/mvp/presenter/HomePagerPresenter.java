@@ -52,8 +52,6 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
     @Inject
     AppManager mAppManager;
 
-    private String quickUrl;
-
     private boolean isLogin = false;
 
     private List<BannerEntity> bannerList = new ArrayList<>();
@@ -76,10 +74,6 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
 
     public UnreadMessageCountEntity getUnreadMessageCountEntity() {
         return unreadMessageCountEntity;
-    }
-
-    public String getQuickUrl(){
-        return quickUrl;
     }
 
     /**
@@ -200,7 +194,7 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                             DataHelper.setStringSF(mApplication, DataHelperTags.HOME_PAGE_REQUIREMENT_TYPE, new Gson().toJson(baseResponse.getData()));
                             mRootView.setHotContract(baseResponse.getData().getHot());
                             mRootView.setMoreContract(baseResponse.getData().getMore());
-                            quickUrl = baseResponse.getData().getQuickUrl();
+                            DataHelper.setStringSF(mApplication, DataHelperTags.QUICK_URL,baseResponse.getData().getQuickUrl());
                         }
                     }
                 });
