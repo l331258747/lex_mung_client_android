@@ -10,11 +10,11 @@ public class WebGoOrderDetailEntity {
      * requireTypeName : 离婚|协议书
      */
 
-    private int orderId;
+    private int id;
     private String orderNo;
 
     public int getOrderId() {
-        return orderId;
+        return id;
     }
 
     public String getOrderNo() {

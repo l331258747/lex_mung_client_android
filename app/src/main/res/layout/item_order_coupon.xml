@@ -88,8 +88,10 @@
             android:paddingRight="@dimen/qb_px_20"
             android:includeFontPadding="false"
             android:paddingBottom="@dimen/qb_px_5"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:textColor="@color/c_DAB866"
-            tools:text="满1000减200" />
+            tools:text="满1000减200满1000减200满1000减200" />
 
         <TextView
             android:id="@+id/tv_type"

@@ -216,28 +216,4 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/rl_pay_price"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/qb_px_20">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toStartOf="@+id/tv_pay_price"
-            android:text="小计："
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tv_pay_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:text="¥ 31"
-            android:textColor="@color/c_EB5514"
-            android:textStyle="bold" />
-
-    </RelativeLayout>
-
 </LinearLayout>

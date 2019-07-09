@@ -11,35 +11,30 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.umeng.analytics.MobclickAgent;
 
 import org.simple.eventbus.Subscriber;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.di.component.DaggerRushLoanPayComponent;
 import cn.lex_mung.client_android.di.module.RushLoanPayModule;
+import cn.lex_mung.client_android.mvp.contract.RushLoanPayContract;
 import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
+import cn.lex_mung.client_android.mvp.model.entity.other.PayTypeEntity;
+import cn.lex_mung.client_android.mvp.presenter.RushLoanPayPresenter;
 import cn.lex_mung.client_android.mvp.ui.dialog.DefaultDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
-
-import cn.lex_mung.client_android.mvp.ui.widget.PayTypeView;
+import cn.lex_mung.client_android.mvp.ui.widget.PayTypeView2;
 import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
 import cn.lex_mung.client_android.utils.LogUtil;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
-
-import cn.lex_mung.client_android.di.component.DaggerRushLoanPayComponent;
-import cn.lex_mung.client_android.mvp.contract.RushLoanPayContract;
-import cn.lex_mung.client_android.mvp.presenter.RushLoanPayPresenter;
-
-import cn.lex_mung.client_android.R;
 
 import static cn.lex_mung.client_android.app.EventBusTags.ORDER_COUPON.ORDER_COUPON;
 import static cn.lex_mung.client_android.app.EventBusTags.ORDER_COUPON.REFRESH_COUPON;
@@ -51,11 +46,13 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
 
     @BindView(R.id.titleView)
     TitleView titleView;
-    @BindView(R.id.payTypeView)
-    PayTypeView payTypeView;
+    @BindView(R.id.payTypeView2)
+    PayTypeView2 payTypeView;
 
     @BindView(R.id.tv_order_money)
     TextView tvOrderMoney;
+    @BindView(R.id.tv_pay_price)
+    TextView tvPayPrice;
     @BindView(R.id.tv_commodity)
     TextView tvCommodity;
     @BindView(R.id.web_view)
@@ -71,9 +68,7 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
     TextView tvOrderMoneyText;
 
     private DefaultDialog defaultDialog;
-
     int type;
-
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -101,7 +96,7 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
 
             tvOrderMoney.setText("¥ "+bundleIntent.getFloat(BundleTags.MONEY));
 
-            payTypeView.setOrderPrice("¥ "+bundleIntent.getFloat(BundleTags.MONEY));
+            tvPayPrice.setText("¥ "+bundleIntent.getFloat(BundleTags.MONEY));
             tvCommodity.setText(bundleIntent.getString(BundleTags.TITLE));
         }
 
@@ -115,8 +110,10 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
 
             mPresenter.getCoupon();
             mPresenter.setMoney();
-
         }
+
+        mPresenter.getUserBalance();
+
     }
 
     @OnClick({R.id.bt_pay,R.id.rl_coupon_type})
@@ -142,7 +139,6 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
     @Override
     protected void onResume() {
         super.onResume();
-        mPresenter.getUserBalance();
     }
 
 
@@ -292,8 +288,14 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
     //--------优惠券 end
 
     @Override
-    public void setBalance(String balance) {
-        payTypeView.setBalancePrice(balance);
+    public void setBalance(double balance) {
+        PayTypeEntity entity = new PayTypeEntity();
+        entity.setIcon(R.drawable.ic_pay_balance2);
+        entity.setTitle("账户余额");
+        entity.setType(3);
+        entity.setSelected(false);
+        entity.setBalance(balance);
+        payTypeView.addPayTypeData(entity);
     }
 
     @Override

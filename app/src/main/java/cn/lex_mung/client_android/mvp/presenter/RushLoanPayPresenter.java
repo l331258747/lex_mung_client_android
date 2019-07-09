@@ -134,9 +134,7 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
                     public void onNext(BaseResponse<BalanceEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             balance = baseResponse.getData().getBalanceAmount();
-                            mRootView.setBalance(String.format(
-                                    AppUtils.getString(mApplication, R.string.text_remaining_amount)
-                                    , AppUtils.formatAmount(mApplication, balance)));
+                            mRootView.setBalance(balance);
                         }
                     }
                 });

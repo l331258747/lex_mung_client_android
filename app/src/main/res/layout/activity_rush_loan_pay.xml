@@ -71,12 +71,38 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rl_commodity"
                 android:layout_marginTop="@dimen/qb_px_30"
-                android:background="@drawable/round_20_ffffff_all">
+                android:background="@drawable/round_20_ffffff_all"
+                android:padding="@dimen/qb_px_30"
+                android:orientation="vertical">
 
-                <cn.lex_mung.client_android.mvp.ui.widget.PayTypeView
-                    android:id="@+id/payTypeView"
+                <cn.lex_mung.client_android.mvp.ui.widget.PayTypeView2
+                    android:id="@+id/payTypeView2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
+
+                <RelativeLayout
+                    android:id="@+id/rl_pay_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/qb_px_20">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toStartOf="@+id/tv_pay_price"
+                        android:text="小计："
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_pay_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:text="¥ 31"
+                        android:textColor="@color/c_EB5514"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
 
             </LinearLayout>
 

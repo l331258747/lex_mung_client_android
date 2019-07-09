@@ -21,7 +21,7 @@ public interface RushLoanPayContract {
         Activity getActivity();
         void showToAppInfoDialog();
         void showLackOfBalanceDialog();
-        void setBalance(String balance);
+        void setBalance(double balance);
         void setOrderMoney(String money);
         void showPayLayout();
 

@@ -289,7 +289,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                 });
     }
 
-    //优惠方式
+    //优惠方式：会员卡必须选择了某个权益组织才能显示
     private void getReleaseDemandOrgMoney() {
         Map<String, Object> map = new HashMap<>();
         map.put("memberId", userInfoDetailsEntity.getMemberId());

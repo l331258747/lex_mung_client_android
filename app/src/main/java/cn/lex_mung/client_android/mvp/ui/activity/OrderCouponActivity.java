@@ -33,6 +33,7 @@ import cn.lex_mung.client_android.mvp.contract.OrderCouponContract;
 import cn.lex_mung.client_android.mvp.presenter.OrderCouponPresenter;
 import cn.lex_mung.client_android.mvp.ui.adapter.OrderCouponAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
@@ -48,6 +49,8 @@ public class OrderCouponActivity extends BaseActivity<OrderCouponPresenter> impl
     RecyclerView recyclerView;
     @BindView(R.id.tv_no_coupon)
     TextView tvNoCoupon;
+    @BindView(R.id.titleView)
+    TitleView titleView;
 
     int couponId;
     int type;
@@ -84,6 +87,7 @@ public class OrderCouponActivity extends BaseActivity<OrderCouponPresenter> impl
     public void setMyCouponLayout(){
         if(type == 0) return;
         tvNoCoupon.setVisibility(View.GONE);
+        titleView.setTitle("我的优惠券");
     }
 
     @Override
