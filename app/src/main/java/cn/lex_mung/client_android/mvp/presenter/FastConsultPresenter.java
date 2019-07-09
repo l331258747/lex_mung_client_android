@@ -125,10 +125,6 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
 //                , AppUtils.formatAmount(mApplication, payMoney)));
     }
 
-    public String getConsultType() {
-        return consultType;
-    }
-
     public List<String> getSolutionTypeStringList() {
         return solutionTypeStringList;
     }

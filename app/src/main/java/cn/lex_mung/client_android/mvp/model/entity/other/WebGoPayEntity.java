@@ -13,6 +13,11 @@ public class WebGoPayEntity {
     private String money;
     private int requireTypeId;
     private String requireTypeName;
+    private String mobile;
+
+    public String getMobile() {
+        return mobile;
+    }
 
     public float getMoney() {
         if(TextUtils.isEmpty(money))
@@ -20,23 +25,12 @@ public class WebGoPayEntity {
         return Float.valueOf(money);
     }
 
-    public void setMoney(String money) {
-        this.money = money;
-    }
-
     public int getRequireTypeId() {
         return requireTypeId;
-    }
-
-    public void setRequireTypeId(int requireTypeId) {
-        this.requireTypeId = requireTypeId;
     }
 
     public String getRequireTypeName() {
         return requireTypeName;
     }
 
-    public void setRequireTypeName(String requireTypeName) {
-        this.requireTypeName = requireTypeName;
-    }
 }

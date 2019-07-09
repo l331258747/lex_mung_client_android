@@ -60,6 +60,9 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
 
     private DefaultDialog defaultDialog;
 
+    int type;
+
+
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerRushLoanPayComponent
@@ -81,6 +84,8 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
             mPresenter.setRequireTypeId(bundleIntent.getInt(BundleTags.ID));
             mPresenter.setPayMoney(bundleIntent.getFloat(BundleTags.MONEY));
             mPresenter.setRequireTypeName(bundleIntent.getString(BundleTags.TITLE));
+            mPresenter.setType(type = bundleIntent.getInt(BundleTags.TYPE));
+            mPresenter.setMobile(bundleIntent.getString(BundleTags.MOBILE));
 
             tvOrderMoney.setText("¥ "+bundleIntent.getFloat(BundleTags.MONEY));
 
@@ -91,6 +96,19 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
         payTypeView.setItemOnClick(type -> {
             mPresenter.setPayType(type);
         });
+    }
+
+    @OnClick({R.id.bt_pay})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.bt_pay:
+                if(type == 1){//快速咨询
+                    mPresenter.pay("name", webView.getSettings().getUserAgentString());//TODO
+                }else{//热门需求
+                    mPresenter.releaseRequirement(webView.getSettings().getUserAgentString());
+                }
+                break;
+        }
     }
 
     @Override

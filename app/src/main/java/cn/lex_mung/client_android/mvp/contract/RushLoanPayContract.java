@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import cn.lex_mung.client_android.mvp.model.entity.BalanceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
+import cn.lex_mung.client_android.mvp.model.entity.OrderStatusEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RequirementCreateEntity;
 import io.reactivex.Observable;
@@ -28,6 +29,8 @@ public interface RushLoanPayContract {
         Observable<BaseResponse<PayEntity>> pay(RequestBody body);
         Observable<BaseResponse<RequirementCreateEntity>> requirementCreate(RequestBody body);
         Observable<BaseResponse<BalanceEntity>> getUserBalance(int id);
+
+        Observable<BaseResponse<OrderStatusEntity>> releaseFastConsult(RequestBody body);
 
     }
 }

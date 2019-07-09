@@ -12,7 +12,10 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.umeng.analytics.MobclickAgent;
+
+import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -23,6 +26,9 @@ import cn.lex_mung.client_android.app.ShareUtils;
 import cn.lex_mung.client_android.di.component.DaggerWebComponent;
 import cn.lex_mung.client_android.di.module.WebModule;
 import cn.lex_mung.client_android.mvp.contract.WebContract;
+import cn.lex_mung.client_android.mvp.model.entity.DeviceEntity;
+import cn.lex_mung.client_android.mvp.model.entity.DeviceEntity2;
+import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.WebGoPayEntity;
 import cn.lex_mung.client_android.mvp.presenter.WebPresenter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
@@ -36,6 +42,7 @@ import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.integration.AppManager;
 import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.DataHelper;
+import me.zl.mvp.utils.DeviceUtils;
 
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO;
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_LIST_ID;
@@ -57,7 +64,8 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
     private String image;
     private boolean isJump;
 
-    private int buryingPointId;
+    private int buryingPointId;//快速电话咨询，用来判断从哪里进入的(正常，解决方案)
+    UserInfoDetailsEntity userInfoDetailsEntity;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -136,6 +144,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             isJump = bundleIntent.getBoolean(BundleTags.STATE,true);
             buryingPointId = bundleIntent.getInt(BundleTags.BURYING_POINT, -1);
         }
+        userInfoDetailsEntity = new Gson().fromJson(DataHelper.getStringSF(mActivity, DataHelperTags.USER_INFO_DETAIL), UserInfoDetailsEntity.class);
 
         LogUtil.e("url:" + url);
 
@@ -149,7 +158,6 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
         tvTitle.setText(title);
         showLoading("");
         initWebView();
-
     }
 
     private void initWebView() {
@@ -171,7 +179,6 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
         webView.setWebViewClient(new MyWebViewClient(webView,isJump));
 
         webView.addJavascriptInterface(new AndroidToJs(), "JsBridgeApp");//h5 js调用 app.pay();
-
         webView.synCookies(url);
         webView.loadUrl(url);
     }
@@ -247,7 +254,6 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             WebGoPayEntity businessEntity = GsonUtil.convertString2Object(string, WebGoPayEntity.class);
 
             if (isFastClick()) return;
-            Bundle bundle = new Bundle();
             if (mPresenter.isLogin()) {
                 bundle.clear();
                 bundle.putInt(BundleTags.ID, businessEntity.getRequireTypeId());
@@ -259,6 +265,23 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
                 bundle.putInt(BundleTags.TYPE, 1);
                 launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
             }
+        }
+
+        @JavascriptInterface
+        public void goQuickPay(String string) {
+            if (TextUtils.isEmpty(string))
+                return;
+
+            WebGoPayEntity businessEntity = GsonUtil.convertString2Object(string, WebGoPayEntity.class);
+
+            if (isFastClick()) return;
+            bundle.clear();
+            bundle.putInt(BundleTags.ID, businessEntity.getRequireTypeId());
+            bundle.putString(BundleTags.TITLE, businessEntity.getRequireTypeName());
+            bundle.putFloat(BundleTags.MONEY, businessEntity.getMoney());
+            bundle.putString(BundleTags.MOBILE,businessEntity.getMobile());
+            bundle.putInt(BundleTags.TYPE,1);
+            launchActivity(new Intent(mActivity, RushLoanPayActivity.class), bundle);
         }
 
         //电话
@@ -282,6 +305,30 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
         public String getToken() {
             String token = DataHelper.getStringSF(mActivity, DataHelperTags.TOKEN);
             return token;
+        }
+
+        @JavascriptInterface
+        public String getInfo() {
+            String token = DataHelper.getStringSF(mActivity, DataHelperTags.TOKEN);
+            String uuid;
+            if (DataHelper.contains(mActivity, DataHelperTags.UUID)) {//存在
+                uuid = DataHelper.getStringSF(mActivity, DataHelperTags.UUID);
+            } else {//不存在
+                uuid = UUID.randomUUID().toString();
+                DataHelper.setStringSF(mActivity, DataHelperTags.UUID, uuid);
+            }
+            DeviceEntity2 device = new DeviceEntity2(2
+                    , DeviceUtils.getVersionName(mActivity)
+                    , DeviceUtils.getVersionCode(mActivity)
+                    , DataHelper.getStringSF(mActivity, DataHelperTags.CHANNEL)
+                    , android.os.Build.BRAND + " " + android.os.Build.MODEL
+                    , android.os.Build.VERSION.RELEASE
+                    , uuid
+                    , DeviceUtils.getAndroidId(mActivity,uuid)
+                    , token
+                    , userInfoDetailsEntity.getMobile()
+            );
+            return GsonUtil.convertVO2String(device);
         }
 
         @JavascriptInterface
