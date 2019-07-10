@@ -9,6 +9,7 @@ import android.os.Message;
 import android.text.TextUtils;
 
 import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
+import cn.lex_mung.client_android.mvp.model.entity.OrgAmountEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.RecommendLawyerActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import cn.lex_mung.client_android.utils.DecimalUtil;
@@ -94,10 +95,12 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
     private double balance;//当前余额
     private double amountNew;//会员卡余额
     private int payType = 1;//支付方式
+    private int payTypeGroup;//支付方式为6 带的集团id（因为集团卡有多个）
     private int couponId;
 
     private float payMoney;//实付金额
     private float deduction;//优惠抵扣金额
+
 
     private boolean flag = false;
 
@@ -133,8 +136,9 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
 //        this.lawyerField = lawyerField;
 //    }
 
-    public void setPayType(int payType) {
+    public void setPayType(int payType,int payTypeGroup){
         this.payType = payType;
+        this.payTypeGroup = payTypeGroup;
     }
 
     public void setType(int type) {
@@ -470,13 +474,25 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
         map.put("source", 2);//来源 2app
         map.put("product", 5);//订单类型 5发需求
         map.put("ua", ua);//ua
-        if (payType == 4
-                && couponId > 0) {//会员卡支付并且有会员卡
+//        if (payType == 4 && couponId > 0) {//会员卡支付并且有会员卡
+        if (couponId > 0) {//会员卡支付并且有会员卡
             map.put("useCoupon", 1);//使用优惠券
-            map.put("other", "{\"requirementId\":" + id + ",\"couponId\":" + couponId +  ",\"orgId\":" + organizationLevId +"}");
+//            map.put("other", "{\"requirementId\":" + id + ",\"couponId\":" + couponId +  ",\"orgId\":" + organizationLevId +"}");
+
+            if(payType == 6){
+                map.put("other", "{\"requirementId\":" + id + ",\"couponId\":" + couponId +  ",\"orgId\":" + organizationLevId + ",\"groupCardId\":" + payTypeGroup + "}");
+            }else{
+                map.put("other", "{\"requirementId\":" + id + ",\"couponId\":" + couponId +  ",\"orgId\":" + organizationLevId +"}");
+            }
+
         } else {
             map.put("useCoupon", 0);//不使用优惠券
-            map.put("other", "{\"requirementId\":" + id + ",\"orgId\":" + organizationLevId + "}");
+            if(payType == 6){
+                map.put("other", "{\"requirementId\":" + id + ",\"orgId\":" + organizationLevId + ",\"groupCardId\":" + payTypeGroup +"}");
+            }else{
+                map.put("other", "{\"requirementId\":" + id + ",\"orgId\":" + organizationLevId + "}");
+            }
+
         }
         String sign = "money=" + money + "&type=" + payType + "&source=" + 2 + "&ua=" + ua;
         map.put("sign", AppUtils.encodeToMD5(sign));
@@ -577,6 +593,27 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                             bundle.putBoolean(BundleTags.IS_SHARE, false);
                             mRootView.launchActivity(new Intent(mApplication, WebActivity.class), bundle);
 
+                        }
+                    }
+                });
+    }
+
+    //集团余额
+    public void getGroupBalance(){
+        mModel.clientOrgAmount()
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> {
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<List<OrgAmountEntity>>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<List<OrgAmountEntity>> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            mRootView.setGroupBalance(baseResponse.getData());
                         }
                     }
                 });

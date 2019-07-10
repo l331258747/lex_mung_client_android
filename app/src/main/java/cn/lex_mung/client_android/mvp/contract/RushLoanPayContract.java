@@ -2,10 +2,13 @@ package cn.lex_mung.client_android.mvp.contract;
 
 import android.app.Activity;
 
+import java.util.List;
+
 import cn.lex_mung.client_android.mvp.model.entity.BalanceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.OrderStatusEntity;
+import cn.lex_mung.client_android.mvp.model.entity.OrgAmountEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.QuickPayEntity;
@@ -31,6 +34,8 @@ public interface RushLoanPayContract {
         void setPriceLayout(double orderPrice,float couponPrice,double payPrice);
         void setOrderMoney(String money,double orderMoney);
 
+        void setGroupBalance(List<OrgAmountEntity> list);
+
     }
 
     interface Model extends IModel {
@@ -43,5 +48,6 @@ public interface RushLoanPayContract {
         Observable<BaseResponse<QuickPayEntity>> quickPay(int couponId, double orderAmount);
         Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> quickCoupon();
 
+        Observable<BaseResponse<List<OrgAmountEntity>>> clientOrgAmount();
     }
 }

@@ -25,6 +25,7 @@ import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.component.DaggerRushLoanPayComponent;
 import cn.lex_mung.client_android.di.module.RushLoanPayModule;
 import cn.lex_mung.client_android.mvp.contract.RushLoanPayContract;
+import cn.lex_mung.client_android.mvp.model.entity.OrgAmountEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.PayTypeEntity;
 import cn.lex_mung.client_android.mvp.presenter.RushLoanPayPresenter;
@@ -103,8 +104,8 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
             tvCommodity.setText(bundleIntent.getString(BundleTags.TITLE));
         }
 
-        payTypeView.setItemOnClick(type -> {
-            mPresenter.setPayType(type);
+        payTypeView.setItemOnClick((type,type6Id) -> {
+            mPresenter.setPayType(type,type6Id);
         });
 
         if(type == 1){
@@ -120,6 +121,7 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
         }
 
         mPresenter.getUserBalance();
+        mPresenter.getGroupBalance();
 
     }
 
@@ -303,6 +305,22 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
         entity.setSelected(false);
         entity.setBalance(balance);
         payTypeView.addPayTypeData(entity);
+    }
+
+    @Override
+    public void setGroupBalance(List<OrgAmountEntity> list) {
+        if(list == null || list.size() == 0)
+            return;
+        for (int i=0;i<list.size();i++){
+            PayTypeEntity entity = new PayTypeEntity();
+            entity.setIcon(R.drawable.ic_pay_group);
+            entity.setTitle("集团卡余额");
+            entity.setType(6);
+            entity.setSelected(false);
+            entity.setBalance(list.get(i).getAmount());
+            entity.setGroupId(list.get(i).getCouponId());
+            payTypeView.addPayTypeData(entity);
+        }
     }
 
     @Override

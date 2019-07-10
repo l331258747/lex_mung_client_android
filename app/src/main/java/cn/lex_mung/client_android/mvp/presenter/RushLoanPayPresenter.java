@@ -34,6 +34,7 @@ import cn.lex_mung.client_android.mvp.model.entity.BalanceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.OrderStatusEntity;
+import cn.lex_mung.client_android.mvp.model.entity.OrgAmountEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayResultEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
@@ -84,6 +85,7 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
     private String requireTypeName;//当前选择的需求Name
     private double balance;//当前余额
     private int payType = 1;//支付方式
+    private int payTypeGroup;//支付方式为6 带的集团id（因为集团卡有多个）
     private int couponId;
 
     private float payMoney;//实付金额
@@ -96,8 +98,9 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
         this.requireTypeId = requireTypeId;
     }
 
-    public void setPayType(int payType) {
+    public void setPayType(int payType,int payTypeGroup) {
         this.payType = payType;
+        this.payTypeGroup = payTypeGroup;
     }
 
     public void setPayMoney(float payMoney){
@@ -226,14 +229,23 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
         map.put("source", 2);//来源 2app
         map.put("product", 5);//订单类型 5发需求
         map.put("ua", ua);//ua
-        if (payType == 4
-                && couponId > 0) {//会员卡支付并且有会员卡
-            map.put("useCoupon", 1);//使用优惠券
-            map.put("other", "{\"requirementId\":" + id + ",\"couponId\":" + couponId + "}");
-        } else {
-            map.put("useCoupon", 0);//不使用优惠券
+//        if (payType == 4
+//                && couponId > 0) {//会员卡支付并且有会员卡
+//            map.put("useCoupon", 1);//使用优惠券
+//            map.put("other", "{\"requirementId\":" + id + ",\"couponId\":" + couponId + "}");
+//        } else {
+//            map.put("useCoupon", 0);//不使用优惠券
+//            map.put("other", "{\"requirementId\":" + id + "}");
+//        }
+
+        map.put("useCoupon", 0);//不使用优惠券
+        if(payType == 6){
+            map.put("other", "{\"requirementId\":" + id + ",\"groupCardId\":" + payTypeGroup +"}");
+        }else{
             map.put("other", "{\"requirementId\":" + id + "}");
         }
+
+
         String sign = "money=" + money + "&type=" + payType + "&source=" + 2 + "&ua=" + ua;
         map.put("sign", AppUtils.encodeToMD5(sign));
         mModel.pay(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
@@ -395,7 +407,18 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
             long moneyCoupon = (long) DecimalUtil.multiply(mRootView.getCouponPrice(),100);
             map.put("deduction", moneyCoupon);//优惠金额
             map.put("useCoupon", 1);//使用优惠券
-            map.put("other", mRootView.getCouponId());
+
+//            map.put("other", mRootView.getCouponId());
+
+            if(payType == 6){
+                map.put("other", "{\"couponId\":" + mRootView.getCouponId() + ",\"groupCardId\":" + payTypeGroup +"}");
+            }else{
+                map.put("other", "{\"couponId\":" + mRootView.getCouponId() + "}");
+            }
+        }else{
+            if(payType == 6){
+                map.put("other", "{\"groupCardId\":" + payTypeGroup +"}");
+            }
         }
 
         map.put("source", 2);
@@ -615,4 +638,25 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
     }
 
     //快速咨询-end
+
+    //集团余额
+    public void getGroupBalance(){
+        mModel.clientOrgAmount()
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> {
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<List<OrgAmountEntity>>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<List<OrgAmountEntity>> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            mRootView.setGroupBalance(baseResponse.getData());
+                        }
+                    }
+                });
+    }
 }

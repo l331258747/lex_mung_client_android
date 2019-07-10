@@ -5,6 +5,7 @@ import android.app.Application;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import cn.lex_mung.client_android.mvp.model.api.CommonService;
@@ -12,6 +13,7 @@ import cn.lex_mung.client_android.mvp.model.entity.BalanceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.OrderStatusEntity;
+import cn.lex_mung.client_android.mvp.model.entity.OrgAmountEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.QuickPayEntity;
@@ -95,5 +97,12 @@ public class RushLoanPayModel extends BaseModel implements RushLoanPayContract.M
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .quickCoupon(body);
+    }
+
+    @Override
+    public Observable<BaseResponse<List<OrgAmountEntity>>> clientOrgAmount() {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .clientOrgAmount();
     }
 }

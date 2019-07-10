@@ -53,7 +53,7 @@ public class PayTypeView2 extends LinearLayout {
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             changeData(position);
             if(itemOnClick != null){
-                itemOnClick.onClick(list.get(position).getType());
+                itemOnClick.onClick(list.get(position).getType(),list.get(position).getGroupId());
             }
         });
 
@@ -100,7 +100,7 @@ public class PayTypeView2 extends LinearLayout {
 
 
     public interface ItemOnClick {
-        void onClick(int type);
+        void onClick(int type,int type6Id);
     }
 
     ItemOnClick itemOnClick;

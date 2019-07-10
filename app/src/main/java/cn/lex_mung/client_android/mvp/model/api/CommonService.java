@@ -31,6 +31,7 @@ import cn.lex_mung.client_android.mvp.model.entity.MyLikeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.OrderDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.OrderEntity;
 import cn.lex_mung.client_android.mvp.model.entity.OrderStatusEntity;
+import cn.lex_mung.client_android.mvp.model.entity.OrgAmountEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.RegionEntity;
 import cn.lex_mung.client_android.mvp.model.entity.ReleaseDemandOrgMoneyEntity;
@@ -727,11 +728,11 @@ public interface CommonService {
     @GET("common/online/url")
     Observable<BaseResponse<String>> clientOnlineUrl();
 
-    //https://api.lex-mung.com/client/org/amount
+    //https://cpu.lex-mung.com/client/org/amount
     ///client/org/amount
     //GET
     //获取用户集团卡余额
-    @GET("https://api.lex-mung.com/client/org/amount")
-    Observable<BaseResponse<String>> clientOrgAmount();
+    @GET("client/org/amount")
+    Observable<BaseResponse<List<OrgAmountEntity>>> clientOrgAmount();
 
 }

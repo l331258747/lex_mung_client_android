@@ -25,6 +25,8 @@ import android.widget.TextView;
 import com.aigestudio.wheelpicker.WheelPicker;
 import com.umeng.analytics.MobclickAgent;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.lex_mung.client_android.R;
@@ -32,6 +34,7 @@ import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.component.DaggerReleaseDemandComponent;
 import cn.lex_mung.client_android.di.module.ReleaseDemandModule;
 import cn.lex_mung.client_android.mvp.contract.ReleaseDemandContract;
+import cn.lex_mung.client_android.mvp.model.entity.OrgAmountEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.PayTypeEntity;
 import cn.lex_mung.client_android.mvp.presenter.ReleaseDemandPresenter;
 import cn.lex_mung.client_android.mvp.ui.adapter.ReleaseDemandServiceTypeAdapter;
@@ -135,6 +138,11 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
         }
 
         mPresenter.getUserBalance();
+        mPresenter.getGroupBalance();
+
+        payTypeView2.setItemOnClick((type,type6Id) -> {
+            mPresenter.setPayType(type,type6Id);
+        });
     }
 
     @Override
@@ -265,6 +273,22 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
         isClubCardBalance = true;
     }
 
+    @Override
+    public void setGroupBalance(List<OrgAmountEntity> list) {
+        if(list == null || list.size() == 0)
+            return;
+        for (int i=0;i<list.size();i++){
+            PayTypeEntity entity = new PayTypeEntity();
+            entity.setIcon(R.drawable.ic_pay_group);
+            entity.setTitle("集团卡余额");
+            entity.setType(6);
+            entity.setSelected(false);
+            entity.setBalance(list.get(i).getAmount());
+            entity.setGroupId(list.get(i).getCouponId());
+            payTypeView2.addPayTypeData(entity);
+        }
+    }
+
     /**
      * 选择问题类型
      */
@@ -387,4 +411,5 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
     public Activity getActivity() {
         return this;
     }
+
 }

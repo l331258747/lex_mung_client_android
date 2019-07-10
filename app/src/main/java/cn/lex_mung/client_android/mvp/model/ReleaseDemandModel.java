@@ -5,6 +5,7 @@ import android.app.Application;
 import com.google.gson.Gson;
 
 import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
+import cn.lex_mung.client_android.mvp.model.entity.OrgAmountEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.integration.IRepositoryManager;
 import me.zl.mvp.mvp.BaseModel;
@@ -84,5 +85,12 @@ public class ReleaseDemandModel extends BaseModel implements ReleaseDemandContra
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .tariffExplanationUrl();
+    }
+
+    @Override
+    public Observable<BaseResponse<List<OrgAmountEntity>>> clientOrgAmount() {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .clientOrgAmount();
     }
 }

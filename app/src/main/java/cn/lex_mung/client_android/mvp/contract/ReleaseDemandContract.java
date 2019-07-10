@@ -7,6 +7,7 @@ import cn.lex_mung.client_android.mvp.model.entity.BalanceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.BusinessEntity;
 import cn.lex_mung.client_android.mvp.model.entity.GeneralEntity;
+import cn.lex_mung.client_android.mvp.model.entity.OrgAmountEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.ReleaseDemandOrgMoneyEntity;
 import cn.lex_mung.client_android.mvp.ui.adapter.ReleaseDemandServiceTypeAdapter;
@@ -52,6 +53,8 @@ public interface ReleaseDemandContract {
         void hideFieldLayout();
 
         Activity getActivity();
+
+        void setGroupBalance(List<OrgAmountEntity> list);
     }
 
     interface Model extends IModel {
@@ -66,5 +69,7 @@ public interface ReleaseDemandContract {
         Observable<BaseResponse<PayEntity>> pay(RequestBody body);
 
         Observable<BaseResponse<AgreementEntity>> tariffExplanationUrl();
+
+        Observable<BaseResponse<List<OrgAmountEntity>>> clientOrgAmount();
     }
 }
