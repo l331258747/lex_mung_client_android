@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.simple.eventbus.Subscriber;
@@ -61,6 +62,8 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
     TextView tvDiscountMoney;
     @BindView(R.id.tv_discount_way)
     TextView tvDiscountWay;
+    @BindView(R.id.rl_coupon_type)
+    RelativeLayout rlCouponType;
 
     @BindView(R.id.bt_pay)
     Button btPay;
@@ -110,6 +113,10 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
 
             mPresenter.getCoupon();
             mPresenter.setMoney();
+
+            rlCouponType.setVisibility(View.VISIBLE);
+        }else{
+            rlCouponType.setVisibility(View.GONE);
         }
 
         mPresenter.getUserBalance();

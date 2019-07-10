@@ -721,4 +721,17 @@ public interface CommonService {
     @POST("client/requirement/one")
     Observable<BaseResponse<BaseListEntity<HirstoryDemandEntity>>> clientRequirementOne(@Body RequestBody body);
 
+    ////common/online/url
+    //GET
+    //获取在线咨询的H5链接(百度商桥地址)
+    @GET("common/online/url")
+    Observable<BaseResponse<String>> clientOnlineUrl();
+
+    //https://api.lex-mung.com/client/org/amount
+    ///client/org/amount
+    //GET
+    //获取用户集团卡余额
+    @GET("https://api.lex-mung.com/client/org/amount")
+    Observable<BaseResponse<String>> clientOrgAmount();
+
 }

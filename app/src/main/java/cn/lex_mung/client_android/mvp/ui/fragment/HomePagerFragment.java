@@ -45,6 +45,7 @@ import cn.lex_mung.client_android.mvp.ui.activity.HelpStepActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.HomeTableActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerListActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.MainActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MessageActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.OrganizationLawyerActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
@@ -138,6 +139,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         initRecyclerView();
         initBanner();
         mPresenter.getBanner();
+        mPresenter.getOnlineUrl();
 
     }
 
@@ -256,14 +258,21 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
             , R.id.view_fast_consult
             , R.id.view_experts_consult
             , R.id.fab
+            , R.id.fab_custom
     })
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.fab_custom:
+                if(!TextUtils.isEmpty(DataHelper.getStringSF(mActivity,DataHelperTags.ONLINE_URL))){
+                    bundle.clear();
+                    bundle.putString(BundleTags.URL, DataHelper.getStringSF(mActivity,DataHelperTags.ONLINE_URL));
+                    bundle.putString(BundleTags.TITLE, "在线咨询");
+                    bundle.putBoolean(BundleTags.IS_SHARE, false);
+                    launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+                }
+                break;
             case R.id.tv_search:
-//                ((MainActivity) mActivity).switchPage(2);
-
-                launchActivity(new Intent(mActivity, CouponModeActivity.class));
-
+                ((MainActivity) mActivity).switchPage(2);
                 break;
             case R.id.fab:
                 BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","assistant_click");

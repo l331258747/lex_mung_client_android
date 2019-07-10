@@ -232,6 +232,26 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                 });
     }
 
+    public void getOnlineUrl(){
+        mModel.clientOnlineUrl()
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> {
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<String>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<String> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            DataHelper.setStringSF(mApplication, DataHelperTags.ONLINE_URL,baseResponse.getData());
+                        }
+                    }
+                });
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();

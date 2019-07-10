@@ -60,7 +60,7 @@ public class PayTypeView2 extends LinearLayout {
         setPayTypeData();
     }
 
-    public void setPayTypeData(){
+    private void setPayTypeData(){
         list = new ArrayList<>();
         PayTypeEntity entity = new PayTypeEntity();
         entity.setTitle("微信支付");
@@ -88,7 +88,7 @@ public class PayTypeView2 extends LinearLayout {
         adapter.notifyDataSetChanged();
     }
 
-    public void changeData(int position) {
+    private void changeData(int position) {
         for (int i = 0; i < list.size(); i++) {
             list.get(i).setSelected(false);
         }

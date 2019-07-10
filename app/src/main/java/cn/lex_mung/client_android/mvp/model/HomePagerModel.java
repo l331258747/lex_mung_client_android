@@ -70,4 +70,11 @@ public class HomePagerModel extends BaseModel implements HomePagerContract.Model
                 .obtainRetrofitService(CommonService.class)
                 .getUnreadCount();
     }
+
+    @Override
+    public Observable<BaseResponse<String>> clientOnlineUrl() {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .clientOnlineUrl();
+    }
 }

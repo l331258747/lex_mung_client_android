@@ -200,11 +200,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                 + mApplication.getString(R.string.text_lex_transaction_process)
                 + "</font>";
         mRootView.setTip(string);
-        mRootView.hideClubCardBalance();
         mRootView.setOrderMoney(String.format(mApplication.getString(R.string.text_yuan_money), AppUtils.formatAmount(mApplication, 0)));
-        mRootView.setClubCardBalance(String.format(
-                AppUtils.getString(mApplication, R.string.text_remaining_amount)
-                , AppUtils.formatAmount(mApplication, amountNew)));
         releaseDemandList(requireTypeId);//获取子服务类型
     }
 
@@ -281,9 +277,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                     public void onNext(BaseResponse<BalanceEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             balance = baseResponse.getData().getBalanceAmount();
-                            mRootView.setBalance(String.format(
-                                    AppUtils.getString(mApplication, R.string.text_remaining_amount)
-                                    , AppUtils.formatAmount(mApplication, balance)));
+                            mRootView.setBalance(balance);
                         }
                     }
                 });
@@ -329,11 +323,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                             }
                             amountNew = entity.getAmountNew();
                             if (amountNew > 0) {
-                                mRootView.setClubCardBalance(String.format(
-                                        AppUtils.getString(mApplication, R.string.text_remaining_amount)
-                                        , AppUtils.formatAmount(mApplication, amountNew)));
-                            } else {
-                                mRootView.hideClubCardBalance();
+                                mRootView.setClubCardBalance(amountNew);
                             }
                         }
                     }

@@ -37,13 +37,11 @@ public interface ReleaseDemandContract {
 
         void hideDiscountMoney();
 
-        void setBalance(String balance);
+        void setBalance(double balance);
 
         void setDiscountWay(String organizationName);
 
-        void setClubCardBalance(String money);
-
-        void hideClubCardBalance();
+        void setClubCardBalance(double money);
 
         void setTip(String string);
 

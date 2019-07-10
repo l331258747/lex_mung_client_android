@@ -32,11 +32,13 @@ import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.component.DaggerReleaseDemandComponent;
 import cn.lex_mung.client_android.di.module.ReleaseDemandModule;
 import cn.lex_mung.client_android.mvp.contract.ReleaseDemandContract;
+import cn.lex_mung.client_android.mvp.model.entity.other.PayTypeEntity;
 import cn.lex_mung.client_android.mvp.presenter.ReleaseDemandPresenter;
 import cn.lex_mung.client_android.mvp.ui.adapter.ReleaseDemandServiceTypeAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.DefaultDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.EasyDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import cn.lex_mung.client_android.mvp.ui.widget.PayTypeView2;
 import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
@@ -62,18 +64,10 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
     Group groupPay;
     @BindView(R.id.et_problem_description)
     EditText etProblemDescription;
-    @BindView(R.id.iv_select_wx)
-    ImageView ivSelectWx;
-    @BindView(R.id.iv_select_zfb)
-    ImageView ivSelectZfb;
-    @BindView(R.id.tv_balance_count)
-    TextView tvBalanceCount;
-    @BindView(R.id.iv_select_balance)
-    ImageView ivSelectBalance;
-    @BindView(R.id.tv_club_card_count)
-    TextView tvClubCardCount;
-    @BindView(R.id.iv_select_club_card)
-    ImageView ivSelectClubCard;
+
+    @BindView(R.id.payTypeView2)
+    PayTypeView2 payTypeView2;
+
     @BindView(R.id.tv_discount_way)
     TextView tvDiscountWay;
     @BindView(R.id.tv_fast_consult_tip)
@@ -88,8 +82,6 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
     LinearLayout llLoading;
     @BindView(R.id.view_bottom)
     View viewBottom;
-    @BindView(R.id.cl_club_card)
-    ConstraintLayout clClubCard;
     @BindView(R.id.web_view)
     WebView webView;
     @BindView(R.id.bt_pay)
@@ -101,8 +93,6 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
     private DefaultDialog defaultDialog;
 
     private int regionId;
-    private int requireTypeId;
-    private String requireTypeName;
     private int lawyerId;
 
     @Override
@@ -117,7 +107,7 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
 
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
-        return R.layout.activity_release_demand;
+        return R.layout.activity_release_demand2;
     }
 
     @Override
@@ -128,8 +118,8 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
                     lawyerId = bundleIntent.getInt(BundleTags.MEMBER_ID),
                     bundleIntent.getString(BundleTags.REGION),
                     regionId = bundleIntent.getInt(BundleTags.REGION_ID),
-                    requireTypeId = bundleIntent.getInt(BundleTags.ID),
-                    requireTypeName = bundleIntent.getString(BundleTags.TITLE));
+                    bundleIntent.getInt(BundleTags.ID),
+                    bundleIntent.getString(BundleTags.TITLE));
             titleView.setTitle(bundleIntent.getString(BundleTags.TITLE));
             if(bundleIntent.getInt(BundleTags.TYPE) == 2){
                 titleView.getRightTv().setVisibility(View.VISIBLE);
@@ -143,12 +133,14 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
                 });
             }
         }
+
+        mPresenter.getUserBalance();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mPresenter.getUserBalance();
+//        mPresenter.getUserBalance();
     }
 
     @Override
@@ -158,40 +150,9 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
     }
 
     //    @OnClick({R.id.view_lawyer_field, R.id.tv_wx, R.id.tv_zfb, R.id.tv_balance, R.id.tv_club_card, R.id.view_discount_way, R.id.tv_fast_consult_tip, R.id.tv_fast_consult_tip_1, R.id.bt_pay})
-    @OnClick({R.id.tv_wx, R.id.tv_zfb, R.id.tv_balance, R.id.tv_club_card, R.id.view_discount_way, R.id.tv_fast_consult_tip, R.id.tv_fast_consult_tip_1, R.id.bt_pay})
+    @OnClick({R.id.view_discount_way, R.id.tv_fast_consult_tip, R.id.tv_fast_consult_tip_1, R.id.bt_pay})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-//            case R.id.view_lawyer_field:
-//                showSelectFieldDialog();
-//                break;
-            case R.id.tv_wx:
-                ivSelectWx.setImageResource(R.drawable.ic_show_select);
-                ivSelectZfb.setImageResource(R.drawable.ic_hide_select);
-                ivSelectBalance.setImageResource(R.drawable.ic_hide_select);
-                ivSelectClubCard.setImageResource(R.drawable.ic_hide_select);
-                mPresenter.setPayType(1);
-                break;
-            case R.id.tv_zfb:
-                ivSelectWx.setImageResource(R.drawable.ic_hide_select);
-                ivSelectZfb.setImageResource(R.drawable.ic_show_select);
-                ivSelectBalance.setImageResource(R.drawable.ic_hide_select);
-                ivSelectClubCard.setImageResource(R.drawable.ic_hide_select);
-                mPresenter.setPayType(2);
-                break;
-            case R.id.tv_balance:
-                ivSelectWx.setImageResource(R.drawable.ic_hide_select);
-                ivSelectZfb.setImageResource(R.drawable.ic_hide_select);
-                ivSelectBalance.setImageResource(R.drawable.ic_show_select);
-                ivSelectClubCard.setImageResource(R.drawable.ic_hide_select);
-                mPresenter.setPayType(3);
-                break;
-            case R.id.tv_club_card:
-                ivSelectWx.setImageResource(R.drawable.ic_hide_select);
-                ivSelectZfb.setImageResource(R.drawable.ic_hide_select);
-                ivSelectBalance.setImageResource(R.drawable.ic_hide_select);
-                ivSelectClubCard.setImageResource(R.drawable.ic_show_select);
-                mPresenter.setPayType(4);
-                break;
             case R.id.view_discount_way:
                 bundle.clear();
                 bundle.putInt(BundleTags.ID, mPresenter.getOrganizationLevId());
@@ -271,8 +232,16 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
     }
 
     @Override
-    public void setBalance(String balance) {
-        tvBalanceCount.setText(balance);
+    public void setBalance(double balance) {
+//        tvBalanceCount.setText(balance);
+
+        PayTypeEntity entity = new PayTypeEntity();
+        entity.setIcon(R.drawable.ic_pay_balance2);
+        entity.setTitle("账户余额");
+        entity.setType(3);
+        entity.setSelected(false);
+        entity.setBalance(balance);
+        payTypeView2.addPayTypeData(entity);
     }
 
     @Override
@@ -280,15 +249,20 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
         tvDiscountWay.setText(organizationName);
     }
 
+    boolean isClubCardBalance;
     @Override
-    public void setClubCardBalance(String money) {
-        tvClubCardCount.setText(money);
-        clClubCard.setVisibility(View.VISIBLE);
-    }
+    public void setClubCardBalance(double money) {
+        if(isClubCardBalance) return;
 
-    @Override
-    public void hideClubCardBalance() {
-        clClubCard.setVisibility(View.GONE);
+        PayTypeEntity entity = new PayTypeEntity();
+        entity.setIcon(R.drawable.ic_pay_club_card);
+        entity.setTitle("会员卡");
+        entity.setType(4);
+        entity.setSelected(false);
+        entity.setBalance(money);
+        payTypeView2.addPayTypeData(entity);
+
+        isClubCardBalance = true;
     }
 
     /**

@@ -39,5 +39,7 @@ public interface HomePagerContract {
         Observable<BaseResponse<RequirementTypeV3Entity>> getHomepageRequirementType();
 
         Observable<BaseResponse<UnreadMessageCountEntity>> getUnreadCount();
+
+        Observable<BaseResponse<String>> clientOnlineUrl();
     }
 }

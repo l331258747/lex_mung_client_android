@@ -435,7 +435,17 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_marginRight="@dimen/qb_px_20"
-        android:layout_marginBottom="@dimen/qb_px_20"
+        android:layout_marginBottom="@dimen/qb_px_170"
         android:src="@drawable/ic_help_floating" />
+
+    <ImageView
+        android:id="@+id/fab_custom"
+        android:layout_width="@dimen/qb_px_150"
+        android:layout_height="@dimen/qb_px_150"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="@dimen/qb_px_20"
+        android:layout_marginBottom="@dimen/qb_px_20"
+        android:src="@drawable/ic_custom_floating" />
 
 </RelativeLayout>
