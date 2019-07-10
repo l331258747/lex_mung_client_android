@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import butterknife.BindView;
+import cn.lex_mung.client_android.mvp.ui.activity.CouponModeActivity;
+import cn.lex_mung.client_android.mvp.ui.adapter.ComponModeAdapter1;
 import cn.lex_mung.client_android.mvp.ui.adapter.MyCardAdapter;
 import cn.lex_mung.client_android.mvp.ui.adapter.OrderCouponAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
@@ -59,7 +61,15 @@ public class CouponModeCouponFragment extends BaseFragment<CouponModeCouponPrese
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        mPresenter.setLMemberId(getCouponModeActivity().getlMemberId());
+        mPresenter.setMemberId(getCouponModeActivity().getMemberId());
+        mPresenter.setOrganizationLevId(getCouponModeActivity().getOrganizationLevId());
+        mPresenter.setCouponId(getCouponModeActivity().getSelectedId());
         mPresenter.onCreate(smartRefreshLayout);
+    }
+
+    public CouponModeActivity getCouponModeActivity(){
+        return (CouponModeActivity) getActivity();
     }
 
     @Override
@@ -68,20 +78,15 @@ public class CouponModeCouponFragment extends BaseFragment<CouponModeCouponPrese
     }
 
     @Override
-    public void initRecyclerView(OrderCouponAdapter adapter) {
+    public void initRecyclerView(ComponModeAdapter1 adapter) {
         AppUtils.configRecyclerView(recyclerView, new LinearLayoutManager(mActivity));
         recyclerView.setAdapter(adapter);
         adapter.setEmptyView(R.layout.layout_loading_view, (ViewGroup) recyclerView.getParent());
     }
 
     @Override
-    public void setEmptyView(OrderCouponAdapter adapter) {
+    public void setEmptyView(ComponModeAdapter1 adapter) {
         adapter.setEmptyView(R.layout.layout_empty_view, (ViewGroup) recyclerView.getParent());
-    }
-
-    @Override
-    public Fragment getFragment() {
-        return this;
     }
 
     @Override

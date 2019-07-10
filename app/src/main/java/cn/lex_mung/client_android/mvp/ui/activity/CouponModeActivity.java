@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.module.CouponModeModule;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
@@ -45,6 +47,7 @@ public class CouponModeActivity extends BaseActivity<CouponModePresenter> implem
     TextView tvNoCoupon;
 
     int selectedId;
+    int selectedType;//用来区分 优惠卡 优惠券
 
     private List<Fragment> fragments = new ArrayList<>();
     private List<String> titles = new ArrayList<>();
@@ -69,8 +72,19 @@ public class CouponModeActivity extends BaseActivity<CouponModePresenter> implem
         return R.layout.activity_coupon_mode;
     }
 
+    int organizationLevId;
+    int memberId;
+    int lMemberId;
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        if (bundleIntent != null) {
+            organizationLevId = bundleIntent.getInt(BundleTags.ID);
+            memberId = bundleIntent.getInt(BundleTags.MEMBER_ID);
+            lMemberId = bundleIntent.getInt(BundleTags.L_MEMBER_ID);
+
+            selectedId = bundleIntent.getInt(BundleTags.COUPON_ID);
+        }
+
         fragments.add(CouponModeCouponFragment.newInstance());
         fragments.add(CouponModeCardFragment.newInstance());
         titles.add("优惠卷");
@@ -79,7 +93,38 @@ public class CouponModeActivity extends BaseActivity<CouponModePresenter> implem
         viewPager.setAdapter(new AdapterViewPager(getSupportFragmentManager(), fragments));
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setMyStyle(viewPager,titles);
+    }
 
+    public int getSelectedType() {
+        return selectedType;
+    }
+
+    public int getSelectedId() {
+        return selectedId;
+    }
+
+    @OnClick({R.id.tv_no_coupon})
+    public void onViewClicked(View view) {
+        if (isFastClick()) return;
+        switch (view.getId()) {
+            case R.id.tv_no_coupon:
+                //TODO 不使用优惠券
+                //AppUtils.postInt(REFRESH, REFRESH_DISCOUNT_WAY, -1);
+                //killMyself();
+                break;
+        }
+    }
+
+    public int getOrganizationLevId() {
+        return organizationLevId;
+    }
+
+    public int getMemberId() {
+        return memberId;
+    }
+
+    public int getlMemberId() {
+        return lMemberId;
     }
 
     @Override

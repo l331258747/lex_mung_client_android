@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import cn.lex_mung.client_android.R;
-import cn.lex_mung.client_android.app.decoration.SpacesItemDecoration;
 import cn.lex_mung.client_android.di.component.DaggerMyCardComponent;
 import cn.lex_mung.client_android.di.module.MyCardModule;
 import cn.lex_mung.client_android.mvp.contract.MyCardContract;

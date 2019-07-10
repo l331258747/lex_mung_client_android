@@ -2,10 +2,8 @@ package cn.lex_mung.client_android.mvp.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,20 +13,18 @@ import android.view.ViewGroup;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import butterknife.BindView;
-import cn.lex_mung.client_android.mvp.ui.adapter.MyCardAdapter;
-import cn.lex_mung.client_android.mvp.ui.adapter.OrderCouponAdapter;
-import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
-
-import me.zl.mvp.base.BaseFragment;
-import me.zl.mvp.di.component.AppComponent;
-import me.zl.mvp.utils.AppUtils;
-
+import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.component.DaggerCouponModeCardComponent;
 import cn.lex_mung.client_android.di.module.CouponModeCardModule;
 import cn.lex_mung.client_android.mvp.contract.CouponModeCardContract;
 import cn.lex_mung.client_android.mvp.presenter.CouponModeCardPresenter;
-
-import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.mvp.ui.activity.CouponModeActivity;
+import cn.lex_mung.client_android.mvp.ui.adapter.ComponModeAdapter2;
+import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import me.zl.mvp.base.BaseFragment;
+import me.zl.mvp.di.component.AppComponent;
+import me.zl.mvp.utils.AppUtils;
 
 public class CouponModeCardFragment extends BaseFragment<CouponModeCardPresenter> implements CouponModeCardContract.View {
 
@@ -59,7 +55,14 @@ public class CouponModeCardFragment extends BaseFragment<CouponModeCardPresenter
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        mPresenter.setLMemberId(getCouponModeActivity().getlMemberId());
+        mPresenter.setMemberId(getCouponModeActivity().getMemberId());
+        mPresenter.setOrganizationLevId(getCouponModeActivity().getOrganizationLevId());
         mPresenter.onCreate(smartRefreshLayout);
+    }
+
+    public CouponModeActivity getCouponModeActivity(){
+        return (CouponModeActivity) getActivity();
     }
 
     @Override
@@ -104,14 +107,14 @@ public class CouponModeCardFragment extends BaseFragment<CouponModeCardPresenter
     }
 
     @Override
-    public void initRecyclerView(MyCardAdapter adapter) {
+    public void initRecyclerView(ComponModeAdapter2 adapter) {
         AppUtils.configRecyclerView(recyclerView, new LinearLayoutManager(mActivity));
         recyclerView.setAdapter(adapter);
         adapter.setEmptyView(R.layout.layout_loading_view, (ViewGroup) recyclerView.getParent());
     }
 
     @Override
-    public void setEmptyView(MyCardAdapter adapter) {
+    public void setEmptyView(ComponModeAdapter2 adapter) {
         adapter.setEmptyView(R.layout.layout_empty_view, (ViewGroup) recyclerView.getParent());
     }
 }

@@ -35,6 +35,7 @@ import cn.lex_mung.client_android.mvp.model.entity.OrgAmountEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.RegionEntity;
 import cn.lex_mung.client_android.mvp.model.entity.ReleaseDemandOrgMoneyEntity;
+import cn.lex_mung.client_android.mvp.model.entity.ReleaseDemandOrgMoneyEntity2;
 import cn.lex_mung.client_android.mvp.model.entity.RemainEntity;
 import cn.lex_mung.client_android.mvp.model.entity.RequirementStatusEntity;
 import cn.lex_mung.client_android.mvp.model.entity.SolutionListEntity;
@@ -493,6 +494,14 @@ public interface CommonService {
      */
     @POST("client/optimal/list")
     Observable<BaseResponse<List<ReleaseDemandOrgMoneyEntity>>> getOrgList(@Body RequestBody body);
+
+    /**
+     * 用户与律师共同加入的组织
+     *
+     * @return BaseResponse
+     */
+    @POST("client/optimal/list/v2")
+    Observable<BaseResponse<ReleaseDemandOrgMoneyEntity2>> getOrgList2(@Body RequestBody body);
 
     /**
      * 带支付的发需求

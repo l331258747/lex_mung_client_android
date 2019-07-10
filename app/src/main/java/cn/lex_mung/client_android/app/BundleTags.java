@@ -50,5 +50,6 @@ public class BundleTags {
     public static final String BURYING_POINT = "burying_point";
     public static final String BUSINESS_ID = "business_id";
     public static final String BUSINESS_NAME = "business_name";
+    public static final String COUPON_ID = "coupon_id";
 
 }

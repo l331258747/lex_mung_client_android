@@ -166,7 +166,10 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
                 bundle.putInt(BundleTags.ID, mPresenter.getOrganizationLevId());
                 bundle.putInt(BundleTags.MEMBER_ID, mPresenter.getUserInfoDetailsEntity().getMemberId());
                 bundle.putInt(BundleTags.L_MEMBER_ID, mPresenter.getLawsHomePagerBaseEntityId());
-                launchActivity(new Intent(mActivity, DiscountWayActivity.class), bundle);
+
+//                launchActivity(new Intent(mActivity, DiscountWayActivity.class), bundle);
+                bundle.putInt(BundleTags.L_MEMBER_ID, mPresenter.getCouponId());
+                launchActivity(new Intent(mActivity, CouponModeActivity.class), bundle);
                 break;
             case R.id.tv_fast_consult_tip:
             case R.id.tv_fast_consult_tip_1:

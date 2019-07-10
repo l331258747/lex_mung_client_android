@@ -136,6 +136,10 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
 //        this.lawyerField = lawyerField;
 //    }
 
+    public int getCouponId(){
+        return couponId;
+    }
+
     public void setPayType(int payType,int payTypeGroup){
         this.payType = payType;
         this.payTypeGroup = payTypeGroup;
