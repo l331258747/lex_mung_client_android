@@ -92,6 +92,7 @@ public interface EventBusTags {
         String REFRESH = "refresh";
         int REFRESH_CONSULT_DETAILS = 100;
         int REFRESH_DISCOUNT_WAY = 101;
+        int REFRESH_DISCOUNT_WAY2 = 1012;
         int REFRESH_UNREAD_MESSAGES_NUMBER = 102;
         int REFRESH_WX_PAY = 103;
     }

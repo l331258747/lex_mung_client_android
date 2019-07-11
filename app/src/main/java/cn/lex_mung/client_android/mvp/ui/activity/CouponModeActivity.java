@@ -21,6 +21,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.module.CouponModeModule;
+import cn.lex_mung.client_android.mvp.model.entity.other.CouponModeEntity;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
 import cn.lex_mung.client_android.mvp.ui.fragment.CouponModeCardFragment;
@@ -37,6 +38,9 @@ import cn.lex_mung.client_android.mvp.presenter.CouponModePresenter;
 
 import cn.lex_mung.client_android.R;
 
+import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH;
+import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH_DISCOUNT_WAY2;
+
 public class CouponModeActivity extends BaseActivity<CouponModePresenter> implements CouponModeContract.View {
 
     @BindView(R.id.tab_layout)
@@ -46,7 +50,10 @@ public class CouponModeActivity extends BaseActivity<CouponModePresenter> implem
     @BindView(R.id.tv_no_coupon)
     TextView tvNoCoupon;
 
-    int selectedId;
+    int orgId;
+    int memberId;
+    int lMemberId;
+    int couponId;
     int selectedType;//用来区分 优惠卡 优惠券
 
     private List<Fragment> fragments = new ArrayList<>();
@@ -72,17 +79,16 @@ public class CouponModeActivity extends BaseActivity<CouponModePresenter> implem
         return R.layout.activity_coupon_mode;
     }
 
-    int organizationLevId;
-    int memberId;
-    int lMemberId;
+
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         if (bundleIntent != null) {
-            organizationLevId = bundleIntent.getInt(BundleTags.ID);
             memberId = bundleIntent.getInt(BundleTags.MEMBER_ID);
             lMemberId = bundleIntent.getInt(BundleTags.L_MEMBER_ID);
 
-            selectedId = bundleIntent.getInt(BundleTags.COUPON_ID);
+            couponId = bundleIntent.getInt(BundleTags.COUPON_ID);
+            orgId = bundleIntent.getInt(BundleTags.ORG_ID);
+            selectedType = bundleIntent.getInt(BundleTags.COUPON_TYPE);
         }
 
         fragments.add(CouponModeCouponFragment.newInstance());
@@ -93,30 +99,10 @@ public class CouponModeActivity extends BaseActivity<CouponModePresenter> implem
         viewPager.setAdapter(new AdapterViewPager(getSupportFragmentManager(), fragments));
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setMyStyle(viewPager,titles);
-    }
 
-    public int getSelectedType() {
-        return selectedType;
-    }
-
-    public int getSelectedId() {
-        return selectedId;
-    }
-
-    @OnClick({R.id.tv_no_coupon})
-    public void onViewClicked(View view) {
-        if (isFastClick()) return;
-        switch (view.getId()) {
-            case R.id.tv_no_coupon:
-                //TODO 不使用优惠券
-                //AppUtils.postInt(REFRESH, REFRESH_DISCOUNT_WAY, -1);
-                //killMyself();
-                break;
+        if(selectedType == 1){
+            viewPager.setCurrentItem(1);
         }
-    }
-
-    public int getOrganizationLevId() {
-        return organizationLevId;
     }
 
     public int getMemberId() {
@@ -125,6 +111,34 @@ public class CouponModeActivity extends BaseActivity<CouponModePresenter> implem
 
     public int getlMemberId() {
         return lMemberId;
+    }
+
+    public int getSelectedType() {
+        return selectedType;
+    }
+
+    public int getCouponId() {
+        return couponId;
+    }
+
+    public int getOrgId(){
+        return orgId;
+    }
+
+    @OnClick({R.id.tv_no_coupon})
+    public void onViewClicked(View view) {
+        if (isFastClick()) return;
+        switch (view.getId()) {
+            case R.id.tv_no_coupon:
+                //TODO 不使用优惠券
+                CouponModeEntity couponModeEntity = new CouponModeEntity();
+                couponModeEntity.setOrgId(-1);
+                couponModeEntity.setCouponId(-1);
+                couponModeEntity.setType(1);
+                AppUtils.post(REFRESH, REFRESH_DISCOUNT_WAY2, couponModeEntity);
+                killMyself();
+                break;
+        }
     }
 
     @Override

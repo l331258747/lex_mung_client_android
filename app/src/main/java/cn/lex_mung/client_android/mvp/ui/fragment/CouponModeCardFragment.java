@@ -57,7 +57,8 @@ public class CouponModeCardFragment extends BaseFragment<CouponModeCardPresenter
     public void initData(@Nullable Bundle savedInstanceState) {
         mPresenter.setLMemberId(getCouponModeActivity().getlMemberId());
         mPresenter.setMemberId(getCouponModeActivity().getMemberId());
-        mPresenter.setOrganizationLevId(getCouponModeActivity().getOrganizationLevId());
+        mPresenter.setCouponType(getCouponModeActivity().getSelectedType());
+        mPresenter.setOrgId(getCouponModeActivity().getOrgId());
         mPresenter.onCreate(smartRefreshLayout);
     }
 

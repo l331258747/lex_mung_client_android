@@ -18,6 +18,7 @@ import cn.lex_mung.client_android.mvp.model.entity.CouponsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.ReleaseDemandOrgMoneyEntity2;
 import cn.lex_mung.client_android.mvp.model.entity.ReleaseDemandOrgMoneyEntityCoupon;
 import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
+import cn.lex_mung.client_android.mvp.model.entity.other.CouponModeEntity;
 import cn.lex_mung.client_android.mvp.ui.adapter.ComponModeAdapter1;
 import cn.lex_mung.client_android.mvp.ui.adapter.MyCardAdapter;
 import cn.lex_mung.client_android.mvp.ui.adapter.OrderCouponAdapter;
@@ -34,8 +35,12 @@ import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import javax.inject.Inject;
 
 import cn.lex_mung.client_android.mvp.contract.CouponModeCouponContract;
+import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.RxLifecycleUtils;
 import okhttp3.RequestBody;
+
+import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH;
+import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH_DISCOUNT_WAY2;
 
 
 @FragmentScope
@@ -55,10 +60,9 @@ public class CouponModeCouponPresenter extends BasePresenter<CouponModeCouponCon
     private int totalNum;
     private ComponModeAdapter1 adapter;
 
-    private int organizationLevId;
     private int memberId;
     private int lMemberId;
-
+    private int couponType;
     private int couponId;
 
     @Inject
@@ -78,8 +82,8 @@ public class CouponModeCouponPresenter extends BasePresenter<CouponModeCouponCon
         this.couponId = couponId;
     }
 
-    public void setOrganizationLevId(int organizationLevId) {
-        this.organizationLevId = organizationLevId;
+    public void setCouponType(int couponType){
+        this.couponType = couponType;
     }
 
     public void onCreate(SmartRefreshLayout smartRefreshLayout) {
@@ -90,14 +94,18 @@ public class CouponModeCouponPresenter extends BasePresenter<CouponModeCouponCon
 
     private void initAdapter() {
         adapter = new ComponModeAdapter1();
-        adapter.setCouponId(couponId);
+        adapter.setCouponId(couponType == 2?couponId:-1);
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;
             ReleaseDemandOrgMoneyEntityCoupon entity = adapter.getItem(position);
             if (entity == null) return;
-            //TODO
-            //AppUtils.postInt(REFRESH, REFRESH_DISCOUNT_WAY, entity.getOrganizationLevId());
-            //mRootView.getCouponModeActivity().killMyself();
+            CouponModeEntity couponModeEntity = new CouponModeEntity();
+            couponModeEntity.setCouponId(entity.getCouponId());
+            couponModeEntity.setOrgId(-1);
+            couponModeEntity.setOrgLevId(-1);
+            couponModeEntity.setType(2);
+            AppUtils.post(REFRESH, REFRESH_DISCOUNT_WAY2, couponModeEntity);
+            mRootView.getCouponModeActivity().killMyself();
         });
 
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {

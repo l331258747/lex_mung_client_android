@@ -10,6 +10,7 @@ import android.text.TextUtils;
 
 import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
 import cn.lex_mung.client_android.mvp.model.entity.OrgAmountEntity;
+import cn.lex_mung.client_android.mvp.model.entity.other.CouponModeEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.RecommendLawyerActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import cn.lex_mung.client_android.utils.DecimalUtil;
@@ -64,6 +65,7 @@ import java.util.Map;
 
 import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH;
 import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH_DISCOUNT_WAY;
+import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH_DISCOUNT_WAY2;
 
 @ActivityScope
 public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.Model, ReleaseDemandContract.View> {
@@ -78,7 +80,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
     @Inject
     RxPermissions mRxPermissions;
 
-//    private LawsHomePagerBaseEntity lawsHomePagerBaseEntity;
+    //    private LawsHomePagerBaseEntity lawsHomePagerBaseEntity;
     int lawsHomePagerBaseEntityId;
     String lawsHomePagerBaseEntityRegion;
     int lawsHomePagerBaseEntityRegionId;
@@ -89,14 +91,15 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
     private String requireTypeName;//当前选择的需求Name
     private int type;//1固定服务价格 2可协商服务价格
     private int organizationLevId = 0;//组织等级id
-//    private int organizationId = 0;
-//    private String lawyerField;//选择的擅长领域name
+    private int organizationId = 0;
+    //    private String lawyerField;//选择的擅长领域name
 //    private int lawyerFieldPosition = -1;//选择的擅长领域
     private double balance;//当前余额
     private double amountNew;//会员卡余额
     private int payType = 1;//支付方式
     private int payTypeGroup;//支付方式为6 带的集团id（因为集团卡有多个）
     private int couponId;
+    private int couponType = 1;//1优惠卡，2优惠券
 
     private float payMoney;//实付金额
     private float deduction;//优惠抵扣金额
@@ -121,9 +124,16 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
     @Subscriber(tag = REFRESH)
     private void refresh(Message message) {
         switch (message.what) {
-            case REFRESH_DISCOUNT_WAY:
-                organizationLevId = Integer.valueOf(message.obj.toString());
-                getReleaseDemandOrgMoney();
+//            case REFRESH_DISCOUNT_WAY:
+//                organizationLevId = Integer.valueOf(message.obj.toString());
+//                getReleaseDemandOrgMoney(1);
+//                break;
+            case REFRESH_DISCOUNT_WAY2:
+                CouponModeEntity entity = (CouponModeEntity) message.obj;
+                organizationLevId = entity.getOrgLevId();
+                organizationId = entity.getOrgId();
+                couponId = entity.getCouponId();
+                getReleaseDemandOrgMoney(entity.getType());
                 break;
         }
     }
@@ -136,17 +146,26 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
 //        this.lawyerField = lawyerField;
 //    }
 
-    public int getCouponId(){
+
+    public float getPayMoney() {
+        return payMoney;
+    }
+
+    public int getCouponId() {
         return couponId;
     }
 
-    public void setPayType(int payType,int payTypeGroup){
+    public void setPayType(int payType, int payTypeGroup) {
         this.payType = payType;
         this.payTypeGroup = payTypeGroup;
     }
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public int getOrganizationId() {
+        return organizationId;
     }
 
     public int getOrganizationLevId() {
@@ -157,14 +176,18 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
         return userInfoDetailsEntity;
     }
 
-//    public LawsHomePagerBaseEntity getLawsHomePagerBaseEntity() {
+    //    public LawsHomePagerBaseEntity getLawsHomePagerBaseEntity() {
 //        return lawsHomePagerBaseEntity;
 //    }
     public int getLawsHomePagerBaseEntityId() {
         return lawsHomePagerBaseEntityId;
     }
 
-    public String getLawsHomePagerBaseEntityRegion(){
+    public int getCouponType() {
+        return couponType;
+    }
+
+    public String getLawsHomePagerBaseEntityRegion() {
         return lawsHomePagerBaseEntityRegion;
     }
 
@@ -176,10 +199,10 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
 //        return fieldList;
 //    }
 
-//    public void onCreate(LawsHomePagerBaseEntity lawsHomePagerBaseEntity, int requireTypeId,String requireTypeName) {
-    public void onCreate(int lawsHomePagerBaseEntityId, String lawsHomePagerBaseEntityRegion, int lawsHomePagerBaseEntityRegionId,int requireTypeId,String requireTypeName) {
+    //    public void onCreate(LawsHomePagerBaseEntity lawsHomePagerBaseEntity, int requireTypeId,String requireTypeName) {
+    public void onCreate(int lawsHomePagerBaseEntityId, String lawsHomePagerBaseEntityRegion, int lawsHomePagerBaseEntityRegionId, int requireTypeId, String requireTypeName) {
         initAdapter();
-        this.requireTypeId =requireTypeId;
+        this.requireTypeId = requireTypeId;
         this.requireTypeName = requireTypeName;
 
 //        this.lawsHomePagerBaseEntity = lawsHomePagerBaseEntity;
@@ -219,12 +242,12 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
             BusinessEntity entity = adapter.getItem(position);
             if (entity == null) return;
             if (entity.getMinAmount() == 0) return;
-            if(type != 1) return;
+            if (type != 1) return;
             adapter.setPos(position);
             adapter.notifyDataSetChanged();
             requireTypeId = entity.getRequireTypeId();//选择子服务类型后，用子id
             requireTypeName = entity.getRequireTypeName();
-            getReleaseDemandOrgMoney();
+            getReleaseDemandOrgMoney(couponType);
         });
         mRootView.initRecyclerView(adapter);
     }
@@ -246,16 +269,16 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                     @Override
                     public void onNext(BaseResponse<List<BusinessEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
-                            if(type == 1){
+                            if (type == 1) {
                                 adapter.setNewData(baseResponse.getData());
                                 if (baseResponse.getData().size() == 1) {
                                     requireTypeId = baseResponse.getData().get(0).getRequireTypeId();
                                     requireTypeName = baseResponse.getData().get(0).getRequireTypeName();
                                 }
-                            }else{
+                            } else {
                                 List<BusinessEntity> entities = new ArrayList<>();
-                                for (BusinessEntity entity : baseResponse.getData()){
-                                    if(entity.getMinAmount() > 0){
+                                for (BusinessEntity entity : baseResponse.getData()) {
+                                    if (entity.getMinAmount() > 0) {
                                         entities.add(entity);
                                     }
                                 }
@@ -292,14 +315,21 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
     }
 
     //优惠方式：会员卡必须选择了某个权益组织才能显示
-    private void getReleaseDemandOrgMoney() {
+    private void getReleaseDemandOrgMoney(int type) {
         Map<String, Object> map = new HashMap<>();
         map.put("memberId", userInfoDetailsEntity.getMemberId());
         map.put("lmemberId", lawsHomePagerBaseEntityId);
+        map.put("type", type);
+        map.put("requireTypeId", requireTypeId);
+
         if (organizationLevId != 0) {
             map.put("organizationLevId", organizationLevId);
         }
-        map.put("requireTypeId", requireTypeId);
+
+        if (couponId > 0) {
+            map.put("couponId", couponId);
+        }
+
         mModel.getReleaseDemandOrgMoney(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))
@@ -313,26 +343,45 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                     public void onNext(BaseResponse<ReleaseDemandOrgMoneyEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             entity = baseResponse.getData();
-                            couponId = baseResponse.getData().getCouponId();
-//                            organizationId = baseResponse.getData().getOrganizationId();
-
-                            if (organizationLevId != -1) {
-                                organizationLevId = baseResponse.getData().getOrganizationLevId();
+                            if (type == 1) {
+                                couponType = 1;
+                                couponId = -1;
+                                organizationId = baseResponse.getData().getOrganizationId();
+                                if (organizationLevId != -1) {
+                                    organizationLevId = entity.getOrganizationLevId();
+                                }
+                                payMoney = entity.getAmount();
+                                mRootView.setOrderMoney(String.format(mApplication.getString(R.string.text_yuan_money), AppUtils.formatAmount(mApplication, entity.getAmount())));
+                                mRootView.setDiscountWay(entity.getOrganizationLevelName());
+                                if (entity.getAmountDis() > 0) {
+                                    deduction = entity.getAmountDis();
+                                    mRootView.setDiscountMoney(String.format(mApplication.getString(R.string.text_discount_money), AppUtils.formatAmount(mApplication, entity.getAmountDis())));
+                                } else {
+                                    mRootView.hideDiscountMoney();
+                                    deduction = 0;
+                                }
+                                amountNew = entity.getAmountNew();
+                                if (amountNew > 0) {
+                                    mRootView.setClubCardBalance(amountNew);
+                                }
+                            } else if (type == 2) {
+                                couponType = 2;
+                                couponId = entity.getCouponId();
+                                organizationId = -1;
+                                organizationLevId = -1;
+                                payMoney = entity.getPayment();
+                                mRootView.setOrderMoney(String.format(mApplication.getString(R.string.text_yuan_money), AppUtils.formatAmount(mApplication, entity.getPayment())));
+                                mRootView.setDiscountWay(entity.getCouponName());
+                                if (entity.getDeductionAmount() > 0) {
+                                    deduction = entity.getDeductionAmount();
+                                    mRootView.setDiscountMoney(String.format(mApplication.getString(R.string.text_discount_money), AppUtils.formatAmount(mApplication, entity.getDeductionAmount())));
+                                } else {
+                                    mRootView.hideDiscountMoney();
+                                    deduction = 0;
+                                }
                             }
-                            payMoney = entity.getAmount();
-                            mRootView.setOrderMoney(String.format(mApplication.getString(R.string.text_yuan_money), AppUtils.formatAmount(mApplication, entity.getAmount())));
-                            mRootView.setDiscountWay(entity.getOrganizationLevelName());
-                            if (entity.getAmountDis() > 0) {
-                                deduction = entity.getAmountDis();
-                                mRootView.setDiscountMoney(String.format(mApplication.getString(R.string.text_discount_money), AppUtils.formatAmount(mApplication, entity.getAmountDis())));
-                            } else {
-                                mRootView.hideDiscountMoney();
-                                deduction = 0;
-                            }
-                            amountNew = entity.getAmountNew();
-                            if (amountNew > 0) {
-                                mRootView.setClubCardBalance(amountNew);
-                            }
+                        } else {
+                            getReleaseDemandOrgMoney(2);
                         }
                     }
                 });
@@ -429,14 +478,14 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                                 mRootView.showMessage("需求发布成功，我们会尽快为您审核！");
                                 mRootView.killMyself();
                                 Bundle bundle = new Bundle();
-                                bundle.putInt(BundleTags.REQUIRE_TYPE_ID,requireTypeId);
+                                bundle.putInt(BundleTags.REQUIRE_TYPE_ID, requireTypeId);
                                 bundle.putString(BundleTags.REQUIRE_TYPE_NAME, requireTypeName);
-                                bundle.putInt(BundleTags.REGION_ID,lawsHomePagerBaseEntityRegionId);
-                                bundle.putInt(BundleTags.REQUIREMENT_ID,baseResponse.getData().getRequirementId());
-                                bundle.putInt(BundleTags.L_MEMBER_ID,lawsHomePagerBaseEntityId);
-                                bundle.putString(BundleTags.MONEY,maxMoney);
-                                bundle.putString(BundleTags.CONTENT,content);
-                                mRootView.launchActivity(new Intent(mRootView.getActivity(),RecommendLawyerActivity.class),bundle);
+                                bundle.putInt(BundleTags.REGION_ID, lawsHomePagerBaseEntityRegionId);
+                                bundle.putInt(BundleTags.REQUIREMENT_ID, baseResponse.getData().getRequirementId());
+                                bundle.putInt(BundleTags.L_MEMBER_ID, lawsHomePagerBaseEntityId);
+                                bundle.putString(BundleTags.MONEY, maxMoney);
+                                bundle.putString(BundleTags.CONTENT, content);
+                                mRootView.launchActivity(new Intent(mRootView.getActivity(), RecommendLawyerActivity.class), bundle);
                             }
                         } else {
                             mRootView.showMessage(baseResponse.getMessage());
@@ -467,12 +516,12 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
 
     private void pay(String ua, int id) {
 //        long money = new BigDecimal(payMoney).multiply(new BigDecimal(100)).intValue();
-        long money = (long) DecimalUtil.multiply(payMoney,100);
+        long money = (long) DecimalUtil.multiply(payMoney, 100);
         Map<String, Object> map = new HashMap<>();
         map.put("money", money);//金额
         map.put("type", payType);//支付类型 1微信 2支付宝 3余额支付 4会员卡支付 5百度 6集团卡
         if (deduction > 0) {
-            long moneyCoupon = (long) DecimalUtil.multiply(deduction,100);
+            long moneyCoupon = (long) DecimalUtil.multiply(deduction, 100);
             map.put("deduction", moneyCoupon);//优惠金额
         }
         map.put("source", 2);//来源 2app
@@ -483,17 +532,17 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
             map.put("useCoupon", 1);//使用优惠券
 //            map.put("other", "{\"requirementId\":" + id + ",\"couponId\":" + couponId +  ",\"orgId\":" + organizationLevId +"}");
 
-            if(payType == 6){
-                map.put("other", "{\"requirementId\":" + id + ",\"couponId\":" + couponId +  ",\"orgId\":" + organizationLevId + ",\"groupCardId\":" + payTypeGroup + "}");
-            }else{
-                map.put("other", "{\"requirementId\":" + id + ",\"couponId\":" + couponId +  ",\"orgId\":" + organizationLevId +"}");
+            if (payType == 6) {
+                map.put("other", "{\"requirementId\":" + id + ",\"couponId\":" + couponId + ",\"orgId\":" + organizationLevId + ",\"groupCardId\":" + payTypeGroup + "}");
+            } else {
+                map.put("other", "{\"requirementId\":" + id + ",\"couponId\":" + couponId + ",\"orgId\":" + organizationLevId + "}");
             }
 
         } else {
             map.put("useCoupon", 0);//不使用优惠券
-            if(payType == 6){
-                map.put("other", "{\"requirementId\":" + id + ",\"orgId\":" + organizationLevId + ",\"groupCardId\":" + payTypeGroup +"}");
-            }else{
+            if (payType == 6) {
+                map.put("other", "{\"requirementId\":" + id + ",\"orgId\":" + organizationLevId + ",\"groupCardId\":" + payTypeGroup + "}");
+            } else {
                 map.put("other", "{\"requirementId\":" + id + ",\"orgId\":" + organizationLevId + "}");
             }
 
@@ -603,7 +652,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
     }
 
     //集团余额
-    public void getGroupBalance(){
+    public void getGroupBalance() {
         mModel.clientOrgAmount()
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))

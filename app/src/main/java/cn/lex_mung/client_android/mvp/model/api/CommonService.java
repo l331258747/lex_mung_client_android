@@ -484,7 +484,7 @@ public interface CommonService {
      *
      * @return BaseResponse
      */
-    @POST("client/optimal")
+    @POST("client/optimal/v2")
     Observable<BaseResponse<ReleaseDemandOrgMoneyEntity>> getReleaseDemandOrgMoney(@Body RequestBody body);
 
     /**

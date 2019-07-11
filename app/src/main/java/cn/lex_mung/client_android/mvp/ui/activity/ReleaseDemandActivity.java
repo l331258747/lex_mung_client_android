@@ -162,13 +162,19 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.view_discount_way:
+                if(mPresenter.getPayMoney() <= 0){
+                    showMessage("请选择服务类型");
+                    return;
+                }
+
                 bundle.clear();
-                bundle.putInt(BundleTags.ID, mPresenter.getOrganizationLevId());
                 bundle.putInt(BundleTags.MEMBER_ID, mPresenter.getUserInfoDetailsEntity().getMemberId());
                 bundle.putInt(BundleTags.L_MEMBER_ID, mPresenter.getLawsHomePagerBaseEntityId());
 
 //                launchActivity(new Intent(mActivity, DiscountWayActivity.class), bundle);
-                bundle.putInt(BundleTags.L_MEMBER_ID, mPresenter.getCouponId());
+                bundle.putInt(BundleTags.COUPON_TYPE,mPresenter.getCouponType());
+                bundle.putInt(BundleTags.ORG_ID, mPresenter.getOrganizationId());
+                bundle.putInt(BundleTags.COUPON_ID, mPresenter.getCouponId());
                 launchActivity(new Intent(mActivity, CouponModeActivity.class), bundle);
                 break;
             case R.id.tv_fast_consult_tip:

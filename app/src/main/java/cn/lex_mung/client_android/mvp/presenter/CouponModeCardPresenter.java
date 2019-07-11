@@ -22,6 +22,7 @@ import cn.lex_mung.client_android.mvp.model.entity.ReleaseDemandOrgMoneyEntity;
 import cn.lex_mung.client_android.mvp.model.entity.ReleaseDemandOrgMoneyEntity2;
 import cn.lex_mung.client_android.mvp.model.entity.ReleaseDemandOrgMoneyEntityOptimal;
 import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
+import cn.lex_mung.client_android.mvp.model.entity.other.CouponModeEntity;
 import cn.lex_mung.client_android.mvp.ui.adapter.ComponModeAdapter2;
 import cn.lex_mung.client_android.mvp.ui.adapter.MyCardAdapter;
 import cn.lex_mung.client_android.mvp.ui.adapter.OrderCouponAdapter;
@@ -44,6 +45,8 @@ import okhttp3.RequestBody;
 
 import static cn.lex_mung.client_android.app.EventBusTags.ORDER_COUPON.ORDER_COUPON;
 import static cn.lex_mung.client_android.app.EventBusTags.ORDER_COUPON.REFRESH_COUPON;
+import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH;
+import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH_DISCOUNT_WAY2;
 
 
 @FragmentScope
@@ -63,11 +66,10 @@ public class CouponModeCardPresenter extends BasePresenter<CouponModeCardContrac
     private int totalNum;
     private ComponModeAdapter2 adapter;
 
-    private int organizationLevId;
     private int memberId;
     private int lMemberId;
-
-    private int couponId;
+    private int couponType;
+    private int orgId;
 
     @Inject
     public CouponModeCardPresenter(CouponModeCardContract.Model model, CouponModeCardContract.View rootView) {
@@ -82,12 +84,12 @@ public class CouponModeCardPresenter extends BasePresenter<CouponModeCardContrac
         this.lMemberId = lMemberId;
     }
 
-    public void setCouponId(int couponId) {
-        this.couponId = couponId;
+    public void setCouponType(int couponType) {
+        this.couponType = couponType;
     }
 
-    public void setOrganizationLevId(int organizationLevId) {
-        this.organizationLevId = organizationLevId;
+    public void setOrgId(int orgId) {
+        this.orgId = orgId;
     }
 
     public void onCreate(SmartRefreshLayout smartRefreshLayout) {
@@ -98,15 +100,18 @@ public class CouponModeCardPresenter extends BasePresenter<CouponModeCardContrac
 
     private void initAdapter() {
         adapter = new ComponModeAdapter2(mImageLoader,1);
-        adapter.setCardId(couponId);
+        adapter.setCardId(couponType == 1?orgId:-1);
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;
             ReleaseDemandOrgMoneyEntityOptimal entity = adapter.getItem(position);
             if (entity == null) return;
-            //TODO
-            //AppUtils.postInt(REFRESH, REFRESH_DISCOUNT_WAY, entity.getOrganizationLevId());
-            //mRootView.getCouponModeActivity().killMyself();
-
+            CouponModeEntity couponModeEntity = new CouponModeEntity();
+            couponModeEntity.setOrgId(entity.getOrganizationId());
+            couponModeEntity.setOrgLevId(entity.getOrganizationLevId());
+            couponModeEntity.setCouponId(-1);
+            couponModeEntity.setType(1);
+            AppUtils.post(REFRESH, REFRESH_DISCOUNT_WAY2, couponModeEntity);
+            mRootView.getCouponModeActivity().killMyself();
         });
 
         adapter.setOnItemChildClickListener((adapter2, view, position)->{

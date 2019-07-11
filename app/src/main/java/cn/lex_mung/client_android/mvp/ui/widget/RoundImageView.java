@@ -26,7 +26,8 @@ public class RoundImageView extends AppCompatImageView {
     public RoundImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         path = new Path();
-        round = AppUtils.dip2px(context, AppUtils.getXmlDef(context, R.dimen.qb_px_10));
+        round = AppUtils.dip2px(context, AppUtils.getXmlDef(context, R.dimen.qb_px_20));
+        round = AppUtils.dip2px(context, AppUtils.getXmlDef(context, R.dimen.qb_px_20));
     }
 
     @Override

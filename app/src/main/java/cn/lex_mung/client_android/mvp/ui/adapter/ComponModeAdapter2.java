@@ -55,7 +55,7 @@ public class ComponModeAdapter2 extends BaseQuickAdapter<ReleaseDemandOrgMoneyEn
             helper.setGone(R.id.fl_card_club_btn,false);
             helper.setGone(R.id.tv_coupon_card,true);
 
-            if (cardId == item.getCouponId()) {
+            if (cardId == item.getOrganizationId()) {
                 helper.setGone(R.id.view_bg,true);
             }else{
                 helper.setGone(R.id.view_bg,false);
