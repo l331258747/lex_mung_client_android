@@ -68,10 +68,8 @@ public class MyCardPresenter extends BasePresenter<MyCardContract.Model, MyCardC
             if (isFastClick()) return;
             CouponsEntity entity = adapter.getItem(position);
             if (entity == null) return;
-            if (!DataHelper.contains(mApplication, DataHelperTags.EQUITIES_ORG_ID)) {
-                DataHelper.setIntergerSF(mApplication, DataHelperTags.EQUITIES_ORG_ID, entity.getOrganizationId());
-                DataHelper.setIntergerSF(mApplication, DataHelperTags.EQUITIES_ORG_LEVEL_ID, entity.getOrganizationLevelNameId());
-            }
+            DataHelper.setIntergerSF(mApplication, DataHelperTags.EQUITIES_ORG_ID, entity.getOrganizationId());
+            DataHelper.setIntergerSF(mApplication, DataHelperTags.EQUITIES_ORG_LEVEL_ID, entity.getOrganizationLevelNameId());
             AppUtils.post(EQUITIES_REFRESH,EQUITIES_REFRESH_1);
             AppManager.getAppManager().killAllNotClass(MainActivity.class);
             ((MainActivity) AppManager.getAppManager().findActivity(MainActivity.class)).switchPage(1);
