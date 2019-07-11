@@ -109,7 +109,7 @@ public class CouponModeCardPresenter extends BasePresenter<CouponModeCardContrac
             if (entity == null) return;
             switch (view.getId()) {
                 case R.id.tv_coupon_card:
-                    mRootView.showDetailDialog("");//TODO 详情
+                    mRootView.showDetailDialog(entity.getExclusiveRights());
                     break;
             }
         });

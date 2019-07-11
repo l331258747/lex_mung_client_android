@@ -1,5 +1,7 @@
 package cn.lex_mung.client_android.mvp.model.entity;
 
+import android.text.TextUtils;
+
 public class ReleaseDemandOrgMoneyEntityOptimal {
 
 
@@ -50,6 +52,13 @@ public class ReleaseDemandOrgMoneyEntityOptimal {
     private int amountShip;
     private int useForOrgLevelIid;
     private int amountNew;
+    private String exclusiveRights;
+
+    public String getExclusiveRights() {
+        if(TextUtils.isEmpty(exclusiveRights))
+            return "无";
+        return exclusiveRights;
+    }
 
     public int getMemberId() {
         return memberId;

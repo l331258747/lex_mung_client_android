@@ -70,8 +70,7 @@ public class CouponModeCardFragment extends BaseFragment<CouponModeCardPresenter
     @Override
     public void showDetailDialog(String string) {
         new SingleTextDialog(mActivity)
-//                .setContent(string)
-                .setContent("阿斯顿福建拉水电费阿斯顿福建拉水电费阿斯顿福建拉水电费阿斯顿福建拉水电费阿斯顿福建拉水电费阿斯顿福建拉水电费阿斯顿福建拉水电费")
+                .setContent(string)
                 .setSubmitStr("知道了").show();
     }
 
