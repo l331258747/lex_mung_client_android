@@ -2,10 +2,8 @@ package cn.lex_mung.client_android.mvp.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,9 +14,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import butterknife.BindView;
 import cn.lex_mung.client_android.mvp.ui.activity.CouponModeActivity;
-import cn.lex_mung.client_android.mvp.ui.adapter.ComponModeAdapter1;
-import cn.lex_mung.client_android.mvp.ui.adapter.MyCardAdapter;
-import cn.lex_mung.client_android.mvp.ui.adapter.OrderCouponAdapter;
+import cn.lex_mung.client_android.mvp.ui.adapter.CouponModeCouponAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
 import me.zl.mvp.base.BaseFragment;
@@ -79,14 +75,14 @@ public class CouponModeCouponFragment extends BaseFragment<CouponModeCouponPrese
     }
 
     @Override
-    public void initRecyclerView(ComponModeAdapter1 adapter) {
+    public void initRecyclerView(CouponModeCouponAdapter adapter) {
         AppUtils.configRecyclerView(recyclerView, new LinearLayoutManager(mActivity));
         recyclerView.setAdapter(adapter);
         adapter.setEmptyView(R.layout.layout_loading_view, (ViewGroup) recyclerView.getParent());
     }
 
     @Override
-    public void setEmptyView(ComponModeAdapter1 adapter) {
+    public void setEmptyView(CouponModeCouponAdapter adapter) {
         adapter.setEmptyView(R.layout.layout_empty_view, (ViewGroup) recyclerView.getParent());
     }
 

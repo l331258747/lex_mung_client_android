@@ -381,7 +381,9 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                                 }
                             }
                         } else {
-                            getReleaseDemandOrgMoney(2);
+                            if(type == 1){
+                                getReleaseDemandOrgMoney(2);
+                            }
                         }
                     }
                 });

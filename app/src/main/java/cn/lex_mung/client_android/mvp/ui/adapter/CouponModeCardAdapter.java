@@ -7,21 +7,20 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
 
 import cn.lex_mung.client_android.R;
-import cn.lex_mung.client_android.mvp.model.entity.CouponsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.ReleaseDemandOrgMoneyEntityOptimal;
 import me.zl.mvp.http.imageloader.ImageLoader;
 
-public class ComponModeAdapter2 extends BaseQuickAdapter<ReleaseDemandOrgMoneyEntityOptimal, BaseViewHolder> {
+public class CouponModeCardAdapter extends BaseQuickAdapter<ReleaseDemandOrgMoneyEntityOptimal, BaseViewHolder> {
     private ImageLoader mImageLoader;
     int type = 0;
 
     private int cardId = -1;
 
-    public ComponModeAdapter2(ImageLoader imageLoader) {
+    public CouponModeCardAdapter(ImageLoader imageLoader) {
         this(imageLoader,0);
     }
 
-    public ComponModeAdapter2(ImageLoader imageLoader, int type) {
+    public CouponModeCardAdapter(ImageLoader imageLoader, int type) {
         super(R.layout.item_my_coupons);
         this.mImageLoader = imageLoader;
         this.type = type;

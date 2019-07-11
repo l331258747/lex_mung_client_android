@@ -2,30 +2,21 @@ package cn.lex_mung.client_android.mvp.presenter;
 
 import android.app.Application;
 import android.support.annotation.NonNull;
-import android.view.View;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
-import cn.lex_mung.client_android.mvp.model.entity.CouponsEntity;
-import cn.lex_mung.client_android.mvp.model.entity.ReleaseDemandOrgMoneyEntity;
 import cn.lex_mung.client_android.mvp.model.entity.ReleaseDemandOrgMoneyEntity2;
 import cn.lex_mung.client_android.mvp.model.entity.ReleaseDemandOrgMoneyEntityOptimal;
-import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.CouponModeEntity;
-import cn.lex_mung.client_android.mvp.ui.adapter.ComponModeAdapter2;
-import cn.lex_mung.client_android.mvp.ui.adapter.MyCardAdapter;
-import cn.lex_mung.client_android.mvp.ui.adapter.OrderCouponAdapter;
+import cn.lex_mung.client_android.mvp.ui.adapter.CouponModeCardAdapter;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -43,8 +34,6 @@ import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.RxLifecycleUtils;
 import okhttp3.RequestBody;
 
-import static cn.lex_mung.client_android.app.EventBusTags.ORDER_COUPON.ORDER_COUPON;
-import static cn.lex_mung.client_android.app.EventBusTags.ORDER_COUPON.REFRESH_COUPON;
 import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH;
 import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH_DISCOUNT_WAY2;
 
@@ -64,7 +53,7 @@ public class CouponModeCardPresenter extends BasePresenter<CouponModeCardContrac
 
     private int pageNum;
     private int totalNum;
-    private ComponModeAdapter2 adapter;
+    private CouponModeCardAdapter adapter;
 
     private int memberId;
     private int lMemberId;
@@ -99,7 +88,7 @@ public class CouponModeCardPresenter extends BasePresenter<CouponModeCardContrac
     }
 
     private void initAdapter() {
-        adapter = new ComponModeAdapter2(mImageLoader,1);
+        adapter = new CouponModeCardAdapter(mImageLoader,1);
         adapter.setCardId(couponType == 1?orgId:-1);
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;
@@ -120,7 +109,7 @@ public class CouponModeCardPresenter extends BasePresenter<CouponModeCardContrac
             if (entity == null) return;
             switch (view.getId()) {
                 case R.id.tv_coupon_card:
-                    mRootView.showMessage("详情");
+                    mRootView.showDetailDialog("");//TODO 详情
                     break;
             }
         });

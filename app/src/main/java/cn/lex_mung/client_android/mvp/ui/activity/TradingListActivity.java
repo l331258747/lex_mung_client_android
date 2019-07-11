@@ -12,13 +12,16 @@ import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.component.DaggerTradingListComponent;
 import cn.lex_mung.client_android.di.module.TradingListModule;
 import cn.lex_mung.client_android.mvp.contract.TradingListContract;
+import cn.lex_mung.client_android.mvp.model.entity.OrderEntity;
 import cn.lex_mung.client_android.mvp.model.entity.TradingListEntity;
+import cn.lex_mung.client_android.mvp.ui.adapter.MyOrderAdapter2;
 import cn.lex_mung.client_android.mvp.ui.adapter.TradingListAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
 import butterknife.BindView;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
+import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.utils.AppUtils;
 
 import cn.lex_mung.client_android.mvp.presenter.TradingListPresenter;
@@ -30,14 +33,18 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class TradingListActivity extends BaseActivity<TradingListPresenter> implements TradingListContract.View {
+    @Inject
+    ImageLoader mImageLoader;
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.smart_refresh_layout)
     SmartRefreshLayout smartRefreshLayout;
 
-    private TradingListAdapter tradingListAdapter;
+    private MyOrderAdapter2 tradingListAdapter;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -67,14 +74,46 @@ public class TradingListActivity extends BaseActivity<TradingListPresenter> impl
     }
 
     private void initAdapter() {
-        tradingListAdapter = new TradingListAdapter();
-        tradingListAdapter.setOnItemClickListener((adapter, view, position) -> {
+        tradingListAdapter = new MyOrderAdapter2(mImageLoader);
+//        tradingListAdapter.setOnItemClickListener((adapter, view, position) -> {
+//            if (isFastClick()) return;
+//            OrderEntity bean = tradingListAdapter.getItem(position);
+//            if (bean == null) return;
+//            bundle.clear();
+//            bundle.putSerializable(BundleTags.ENTITY, bean);
+//            launchActivity(new Intent(mActivity, TradingListDetailsActivity.class), bundle);
+//        });
+        tradingListAdapter.setOnItemClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;
-            TradingListEntity bean = tradingListAdapter.getItem(position);
-            if (bean == null) return;
-            bundle.clear();
-            bundle.putSerializable(BundleTags.ENTITY, bean);
-            launchActivity(new Intent(mActivity, TradingListDetailsActivity.class), bundle);
+            OrderEntity entity = tradingListAdapter.getItem(position);
+            if (entity == null) return;
+            Bundle bundle = new Bundle();
+            switch (entity.getTypeId()) {
+                case 1://文字咨询
+                    bundle.clear();
+                    bundle.putInt(BundleTags.ID, entity.getId());
+                    bundle.putBoolean(BundleTags.IS_SHOW,true);
+                    launchActivity(new Intent(mActivity, FreeConsultDetail1Activity.class), bundle);
+                    break;
+                case 5://客户需求
+                    bundle.clear();
+                    bundle.putInt(BundleTags.ID, entity.getId());
+                    bundle.putString(BundleTags.TITLE,entity.getTypeName());
+                    bundle.putInt(BundleTags.TYPE, entity.getTypeId());
+                    bundle.putString(BundleTags.ORDER_NO,entity.getOrderNo());
+                    bundle.putInt(BundleTags.IS_SHOW,entity.getIsHot());
+                    launchActivity(new Intent(mActivity, OrderDetailsActivity.class), bundle);
+                    break;
+                case 3:
+                case 4:
+                    bundle.clear();
+                    bundle.putInt(BundleTags.ID, entity.getId());
+                    bundle.putString(BundleTags.TITLE,entity.getOrderType());
+                    bundle.putInt(BundleTags.TYPE, entity.getTypeId());
+                    bundle.putString(BundleTags.ORDER_NO,entity.getOrderNo());
+                    launchActivity(new Intent(mActivity, OrderDetailsActivity.class), bundle);
+                    break;
+            }
         });
     }
 
@@ -101,7 +140,7 @@ public class TradingListActivity extends BaseActivity<TradingListPresenter> impl
     }
 
     @Override
-    public void setAdapter(List<TradingListEntity> list, boolean isAdd) {
+    public void setAdapter(List<OrderEntity> list, boolean isAdd) {
         if (isAdd) {
             tradingListAdapter.addData(list);
             smartRefreshLayout.finishLoadMore();

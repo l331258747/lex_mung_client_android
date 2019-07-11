@@ -5,6 +5,7 @@ import android.app.Application;
 import com.google.gson.Gson;
 
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
+import cn.lex_mung.client_android.mvp.model.entity.OrderEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.integration.IRepositoryManager;
 import me.zl.mvp.mvp.BaseModel;
@@ -39,7 +40,7 @@ public class TradingListModel extends BaseModel implements TradingListContract.M
     }
 
     @Override
-    public Observable<BaseResponse<BaseListEntity<TradingListEntity>>> getTradingList(RequestBody body) {
+    public Observable<BaseResponse<BaseListEntity<OrderEntity>>> getTradingList(RequestBody body) {
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .getTradingList(body);

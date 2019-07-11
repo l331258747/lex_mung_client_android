@@ -14,14 +14,15 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import butterknife.BindView;
 import cn.lex_mung.client_android.R;
-import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.component.DaggerCouponModeCardComponent;
 import cn.lex_mung.client_android.di.module.CouponModeCardModule;
 import cn.lex_mung.client_android.mvp.contract.CouponModeCardContract;
 import cn.lex_mung.client_android.mvp.presenter.CouponModeCardPresenter;
 import cn.lex_mung.client_android.mvp.ui.activity.CouponModeActivity;
-import cn.lex_mung.client_android.mvp.ui.adapter.ComponModeAdapter2;
+import cn.lex_mung.client_android.mvp.ui.adapter.CouponModeCardAdapter;
+import cn.lex_mung.client_android.mvp.ui.dialog.DefaultDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import cn.lex_mung.client_android.mvp.ui.dialog.SingleTextDialog;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
@@ -67,6 +68,14 @@ public class CouponModeCardFragment extends BaseFragment<CouponModeCardPresenter
     }
 
     @Override
+    public void showDetailDialog(String string) {
+        new SingleTextDialog(mActivity)
+//                .setContent(string)
+                .setContent("阿斯顿福建拉水电费阿斯顿福建拉水电费阿斯顿福建拉水电费阿斯顿福建拉水电费阿斯顿福建拉水电费阿斯顿福建拉水电费阿斯顿福建拉水电费")
+                .setSubmitStr("知道了").show();
+    }
+
+    @Override
     public void setData(@Nullable Object data) {
 
     }
@@ -108,14 +117,14 @@ public class CouponModeCardFragment extends BaseFragment<CouponModeCardPresenter
     }
 
     @Override
-    public void initRecyclerView(ComponModeAdapter2 adapter) {
+    public void initRecyclerView(CouponModeCardAdapter adapter) {
         AppUtils.configRecyclerView(recyclerView, new LinearLayoutManager(mActivity));
         recyclerView.setAdapter(adapter);
         adapter.setEmptyView(R.layout.layout_loading_view, (ViewGroup) recyclerView.getParent());
     }
 
     @Override
-    public void setEmptyView(ComponModeAdapter2 adapter) {
+    public void setEmptyView(CouponModeCardAdapter adapter) {
         adapter.setEmptyView(R.layout.layout_empty_view, (ViewGroup) recyclerView.getParent());
     }
 }

@@ -314,7 +314,7 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
         for (int i=0;i<list.size();i++){
             PayTypeEntity entity = new PayTypeEntity();
             entity.setIcon(R.drawable.ic_pay_group);
-            entity.setTitle("集团卡余额");
+            entity.setTitle(list.get(i).getCouponName());
             entity.setType(6);
             entity.setSelected(false);
             entity.setBalance(list.get(i).getAmount());

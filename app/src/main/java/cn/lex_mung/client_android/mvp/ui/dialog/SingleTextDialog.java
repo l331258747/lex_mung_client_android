@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.widget.TextView;
 
 import cn.lex_mung.client_android.R;
@@ -47,6 +48,7 @@ public class SingleTextDialog extends Dialog {
     private void initView() {
         tv_content = findViewById(R.id.tv_content);
         tv_submit = findViewById(R.id.tv_submit);
+        tv_content.setMovementMethod(ScrollingMovementMethod.getInstance());
 
 
         if (!TextUtils.isEmpty(submitStr)) {

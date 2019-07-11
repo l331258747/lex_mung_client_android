@@ -12,6 +12,11 @@ public class OrgAmountEntity {
     private int couponId;
     private int orgLevelId;
     private double amount;
+    private String couponName;
+
+    public String getCouponName() {
+        return couponName;
+    }
 
     public int getCouponId() {
         return couponId;

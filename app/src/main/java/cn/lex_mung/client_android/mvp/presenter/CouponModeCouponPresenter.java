@@ -8,20 +8,14 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
-import cn.lex_mung.client_android.mvp.model.entity.CouponsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.ReleaseDemandOrgMoneyEntity2;
 import cn.lex_mung.client_android.mvp.model.entity.ReleaseDemandOrgMoneyEntityCoupon;
-import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.CouponModeEntity;
-import cn.lex_mung.client_android.mvp.ui.adapter.ComponModeAdapter1;
-import cn.lex_mung.client_android.mvp.ui.adapter.MyCardAdapter;
-import cn.lex_mung.client_android.mvp.ui.adapter.OrderCouponAdapter;
+import cn.lex_mung.client_android.mvp.ui.adapter.CouponModeCouponAdapter;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -58,7 +52,7 @@ public class CouponModeCouponPresenter extends BasePresenter<CouponModeCouponCon
 
     private int pageNum;
     private int totalNum;
-    private ComponModeAdapter1 adapter;
+    private CouponModeCouponAdapter adapter;
 
     private int memberId;
     private int lMemberId;
@@ -93,7 +87,7 @@ public class CouponModeCouponPresenter extends BasePresenter<CouponModeCouponCon
     }
 
     private void initAdapter() {
-        adapter = new ComponModeAdapter1();
+        adapter = new CouponModeCouponAdapter();
         adapter.setCouponId(couponType == 2?couponId:-1);
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;

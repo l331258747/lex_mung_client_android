@@ -11,11 +11,11 @@ import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
 import me.zl.mvp.utils.AppUtils;
 
 
-public class ComponModeAdapter1 extends BaseQuickAdapter<ReleaseDemandOrgMoneyEntityCoupon, BaseViewHolder> {
+public class CouponModeCouponAdapter extends BaseQuickAdapter<ReleaseDemandOrgMoneyEntityCoupon, BaseViewHolder> {
 
     private int couponId = -1;
 
-    public ComponModeAdapter1() {
+    public CouponModeCouponAdapter() {
         super(R.layout.item_order_coupon);
     }
 

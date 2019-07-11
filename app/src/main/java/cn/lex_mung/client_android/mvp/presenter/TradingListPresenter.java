@@ -3,6 +3,7 @@ package cn.lex_mung.client_android.mvp.presenter;
 import android.app.Application;
 
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
+import cn.lex_mung.client_android.mvp.model.entity.OrderEntity;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -83,9 +84,9 @@ public class TradingListPresenter extends BasePresenter<TradingListContract.Mode
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<TradingListEntity>>>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<OrderEntity>>>(mErrorHandler) {
                     @Override
-                    public void onNext(BaseResponse<BaseListEntity<TradingListEntity>> baseResponse) {
+                    public void onNext(BaseResponse<BaseListEntity<OrderEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             totalNum = baseResponse.getData().getPages();
                             pageNum = baseResponse.getData().getPageNum();

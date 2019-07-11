@@ -364,8 +364,9 @@ public interface CommonService {
      *
      * @return BaseResponse
      */
-    @POST("client/amount/detail")
-    Observable<BaseResponse<BaseListEntity<TradingListEntity>>> getTradingList(@Body RequestBody body);
+//    @POST("client/amount/detail")
+    @POST("client/member/order/org")
+    Observable<BaseResponse<BaseListEntity<OrderEntity>>> getTradingList(@Body RequestBody body);
 
     /**
      * 获取关注律师列表
