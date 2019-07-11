@@ -34,6 +34,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static cn.lex_mung.client_android.app.EventBusTags.EQUITIES_REFRESH.EQUITIES_REFRESH;
+import static cn.lex_mung.client_android.app.EventBusTags.EQUITIES_REFRESH.EQUITIES_REFRESH_1;
 import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGIN_INFO;
 import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGOUT;
 
@@ -72,6 +74,18 @@ public class EquitiesPresenter extends BasePresenter<EquitiesContract.Model, Equ
         switch (message.what) {
             case LOGOUT:
                 onResume();
+                break;
+        }
+    }
+
+    /**
+     * 从卡包进入
+     */
+    @Subscriber(tag = EQUITIES_REFRESH)
+    private void equitiesRefresh(Message message) {
+        switch (message.what) {
+            case EQUITIES_REFRESH_1:
+                getEquitiesList_1();
                 break;
         }
     }

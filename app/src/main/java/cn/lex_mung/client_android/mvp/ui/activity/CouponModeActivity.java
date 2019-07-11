@@ -130,7 +130,6 @@ public class CouponModeActivity extends BaseActivity<CouponModePresenter> implem
         if (isFastClick()) return;
         switch (view.getId()) {
             case R.id.tv_no_coupon:
-                //TODO 不使用优惠券
                 CouponModeEntity couponModeEntity = new CouponModeEntity();
                 couponModeEntity.setOrgId(-1);
                 couponModeEntity.setCouponId(-1);

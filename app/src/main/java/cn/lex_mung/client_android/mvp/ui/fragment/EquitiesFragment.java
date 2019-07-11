@@ -115,7 +115,7 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
         }
         if (isVisibleToUser) {
             BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "vip");
-            mPresenter.onResume();//bug1 后加的
+            mPresenter.onResume();//bug1 出现后加的
         } else {
             BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "vip");
         }

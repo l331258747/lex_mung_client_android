@@ -402,7 +402,7 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
         map.put("money", money);
         map.put("type", payType);
 
-        if (mRootView.getCouponPrice() > 0) {//TODO 优惠券
+        if (mRootView.getCouponPrice() > 0) {
 //            long moneyCoupon = new BigDecimal(mRootView.getCouponPrice()).multiply(new BigDecimal(100)).intValue();
             long moneyCoupon = (long) DecimalUtil.multiply(mRootView.getCouponPrice(),100);
             map.put("deduction", moneyCoupon);//优惠金额

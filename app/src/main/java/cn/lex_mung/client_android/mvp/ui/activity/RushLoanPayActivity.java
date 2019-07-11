@@ -130,7 +130,7 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
         switch (view.getId()) {
             case R.id.bt_pay:
                 if(type == 1){//快速咨询
-                    mPresenter.pay("name", webView.getSettings().getUserAgentString());//TODO
+                    mPresenter.pay("name", webView.getSettings().getUserAgentString());
                 }else{//热门需求
                     mPresenter.releaseRequirement(webView.getSettings().getUserAgentString());
                 }

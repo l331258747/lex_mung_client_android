@@ -27,6 +27,16 @@ public class CouponsEntity {
     private String couponDesc;
     private String balance;
     private String consumeMoney;
+    private int organizationId;
+    private int organizationLevelNameId;
+
+    public int getOrganizationId() {
+        return organizationId;
+    }
+
+    public int getOrganizationLevelNameId() {
+        return organizationLevelNameId;
+    }
 
     public int getCouponId() {
         return couponId;

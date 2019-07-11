@@ -1,10 +1,13 @@
 package cn.lex_mung.client_android.mvp.presenter;
 
+import android.app.ActivityManager;
 import android.app.Application;
 import android.support.annotation.NonNull;
 
+import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.mvp.contract.MyCardContract;
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
+import cn.lex_mung.client_android.mvp.ui.activity.MainActivity;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -14,6 +17,8 @@ import me.zl.mvp.di.scope.ActivityScope;
 import me.zl.mvp.mvp.BasePresenter;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.zl.mvp.utils.AppUtils;
+import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.RxLifecycleUtils;
 
 import javax.inject.Inject;
@@ -25,6 +30,9 @@ import cn.lex_mung.client_android.mvp.ui.adapter.MyCardAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+
+import static cn.lex_mung.client_android.app.EventBusTags.EQUITIES_REFRESH.EQUITIES_REFRESH;
+import static cn.lex_mung.client_android.app.EventBusTags.EQUITIES_REFRESH.EQUITIES_REFRESH_1;
 
 @ActivityScope
 public class MyCardPresenter extends BasePresenter<MyCardContract.Model, MyCardContract.View> {
@@ -57,7 +65,17 @@ public class MyCardPresenter extends BasePresenter<MyCardContract.Model, MyCardC
     private void initAdapter() {
         adapter = new MyCardAdapter(mImageLoader);
         adapter.setOnItemClickListener((adapter1, iew, position) -> {
-            mRootView.showMessage("去使用");
+            if (isFastClick()) return;
+            CouponsEntity entity = adapter.getItem(position);
+            if (entity == null) return;
+            if (!DataHelper.contains(mApplication, DataHelperTags.EQUITIES_ORG_ID)) {
+                DataHelper.setIntergerSF(mApplication, DataHelperTags.EQUITIES_ORG_ID, entity.getOrganizationId());
+                DataHelper.setIntergerSF(mApplication, DataHelperTags.EQUITIES_ORG_LEVEL_ID, entity.getOrganizationLevelNameId());
+            }
+            AppUtils.post(EQUITIES_REFRESH,EQUITIES_REFRESH_1);
+            AppManager.getAppManager().killAllNotClass(MainActivity.class);
+            ((MainActivity) AppManager.getAppManager().findActivity(MainActivity.class)).switchPage(1);
+
         });
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override

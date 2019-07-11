@@ -117,4 +117,9 @@ public interface EventBusTags {
         String ORDER_COUPON = "order_coupon";
         int REFRESH_COUPON = 100;
     }
+
+    interface EQUITIES_REFRESH{
+        String EQUITIES_REFRESH = "equities_refresh";
+        int EQUITIES_REFRESH_1 = 100;
+    }
 }
