@@ -83,6 +83,10 @@ public class FreeConsultMainPresenter extends BasePresenter<FreeConsultMainContr
 
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;
+            if(!DataHelper.getBooleanSF(mApplication, DataHelperTags.IS_LOGIN_SUCCESS)){
+                mRootView.launchActivity(new Intent(mApplication, LoginActivity.class));
+                return;
+            }
 
             CommonFreeTextEntity bean = adapter.getItem(position);
             Bundle bundle = new Bundle();

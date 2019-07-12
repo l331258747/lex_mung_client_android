@@ -16,6 +16,7 @@ import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.lex_mung.client_android.mvp.ui.dialog.SingleTextDialog;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
@@ -65,6 +66,11 @@ public class AccountWithdrawalActivity extends BaseActivity<AccountWithdrawalPre
     public void setBalance(String balance) {
         tvRemainingAmount.setText(String.format(AppUtils.getString(mActivity, R.string.text_remaining_amount), balance));
         tvWithdrawalAmount.setText(String.format(AppUtils.getString(mActivity, R.string.text_yuan_money), balance));
+    }
+
+    @Override
+    public void showSuccessDialog(String string) {
+        new SingleTextDialog(mActivity).setSubmitStr("关闭").setContent(string).setOnClickListener(() -> killMyself()).show();
     }
 
     @OnClick({R.id.bt_withdrawal})

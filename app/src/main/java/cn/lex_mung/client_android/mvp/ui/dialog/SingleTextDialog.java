@@ -15,6 +15,7 @@ public class SingleTextDialog extends Dialog {
     Context context;
 
     TextView tv_content, tv_submit;
+    OnClickListener onClickListener;
 
     public SingleTextDialog(@NonNull Context context) {
         super(context, R.style.alert_dialog);
@@ -32,6 +33,11 @@ public class SingleTextDialog extends Dialog {
 
     public SingleTextDialog setContent(String contentStr) {
         this.contentStr = contentStr;
+        return this;
+    }
+
+    public SingleTextDialog setOnClickListener(OnClickListener onClickListener){
+        this.onClickListener = onClickListener;
         return this;
     }
 
@@ -61,6 +67,13 @@ public class SingleTextDialog extends Dialog {
 
         tv_submit.setOnClickListener(v -> {
             dismiss();
+            if(onClickListener != null){
+                onClickListener.onClick();
+            }
         });
+    }
+
+    public interface OnClickListener {
+        void onClick();
     }
 }

@@ -77,8 +77,7 @@ public class AccountWithdrawalPresenter extends BasePresenter<AccountWithdrawalC
                     @Override
                     public void onNext(BaseResponse baseResponse) {
                         if (baseResponse.isSuccess()) {
-                            mRootView.showMessage("提现成功");
-                            mRootView.killMyself();
+                            mRootView.showSuccessDialog("我们将在3-7个工作日内转账到您的支付宝账户中，请注意查收.");
                         }
                     }
                 });

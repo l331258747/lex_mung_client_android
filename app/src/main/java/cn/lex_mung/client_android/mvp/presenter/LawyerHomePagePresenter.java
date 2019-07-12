@@ -309,6 +309,10 @@ public class LawyerHomePagePresenter extends BasePresenter<LawyerHomePageContrac
         isLogin = DataHelper.getBooleanSF(mApplication, DataHelperTags.IS_LOGIN_SUCCESS);
     }
 
+    public boolean getLogin(){
+        return isLogin;
+    }
+
     private void expertPrice() {
         mModel.expertPrice(entity.getMemberId())
                 .subscribeOn(Schedulers.io())
