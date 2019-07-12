@@ -432,9 +432,9 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
     public void onResume() {
         super.onResume();
         if(buryingPointId == 1){
-            BuryingPointHelp.getInstance().onActivityResumed(mActivity, "quick_consulation_from_solution");
+            BuryingPointHelp.getInstance().onActivityResumed(mActivity, "quick_consulation_from_solution",getPair());
         }else{
-            BuryingPointHelp.getInstance().onActivityResumed(mActivity, "quick_consultation");
+            BuryingPointHelp.getInstance().onActivityResumed(mActivity, "quick_consultation",getPair());
         }
 
     }
@@ -443,9 +443,9 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
     public void onPause() {
         super.onPause();
         if(buryingPointId == 1){
-            BuryingPointHelp.getInstance().onActivityPaused(mActivity, "quick_consulation_from_solution");
+            BuryingPointHelp.getInstance().onActivityPaused(mActivity, "quick_consulation_from_solution",getPair());
         }else{
-            BuryingPointHelp.getInstance().onActivityPaused(mActivity, "quick_consultation");
+            BuryingPointHelp.getInstance().onActivityPaused(mActivity, "quick_consultation",getPair());
         }
     }
 }

@@ -197,12 +197,12 @@ public class FreeConsultDetail1Activity extends BaseActivity<FreeConsultDetail1P
     @Override
     public void onResume() {
         super.onResume();
-        BuryingPointHelp.getInstance().onActivityResumed(mActivity, "free_consulation_detail");
+        BuryingPointHelp.getInstance().onActivityResumed(mActivity, "free_consulation_detail",getPair());
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        BuryingPointHelp.getInstance().onActivityPaused(mActivity, "free_consulation_detail");
+        BuryingPointHelp.getInstance().onActivityPaused(mActivity, "free_consulation_detail",getPair());
     }
 }

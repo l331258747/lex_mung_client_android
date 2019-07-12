@@ -139,13 +139,13 @@ public class HomeTableActivity extends BaseActivity<HomeTablePresenter> implemen
         super.onResume();
         switch (id){
             case 2:
-                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "litigation_arbitration_detail");
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "litigation_arbitration_detail",getPair());
                 break;
             case 9:
-                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "meeting_detail");
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "meeting_detail",getPair());
                 break;
             case 6:
-                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "enterprise_detail");
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "enterprise_detail",getPair());
                 break;
         }
 //        BuryingPointHelp.getInstance().onActivityResumed(mActivity, "litigation_arbitration_detial");
@@ -158,13 +158,13 @@ public class HomeTableActivity extends BaseActivity<HomeTablePresenter> implemen
 
         switch (id){
             case 2:
-                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "litigation_arbitration_detail");
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "litigation_arbitration_detail",getPair());
                 break;
             case 9:
-                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "meeting_detail");
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "meeting_detail",getPair());
                 break;
             case 6:
-                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "enterprise_detail");
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "enterprise_detail",getPair());
                 break;
         }
     }

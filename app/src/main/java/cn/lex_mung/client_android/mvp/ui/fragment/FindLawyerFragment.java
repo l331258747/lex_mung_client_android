@@ -125,9 +125,9 @@ public class FindLawyerFragment extends BaseFragment<FindLawyerPresenter> implem
             return;
         }
         if (isVisibleToUser) {
-            BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "search_lawyer");
+            BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "search_lawyer",getPair());
         } else {
-            BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "search_lawyer");
+            BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "search_lawyer",getPair());
         }
     }
 

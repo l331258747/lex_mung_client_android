@@ -125,9 +125,9 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
             return;
         }
         if (isVisibleToUser) {
-            BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "first_page");
+            BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "first_page",getPair());
         } else {
-            BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "first_page");
+            BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "first_page",getPair());
         }
     }
 

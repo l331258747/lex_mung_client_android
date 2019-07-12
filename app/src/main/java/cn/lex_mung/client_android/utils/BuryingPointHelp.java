@@ -26,6 +26,9 @@ import okhttp3.Response;
 
 import static cn.lex_mung.client_android.app.DataHelperTags.IS_LOGIN_SUCCESS;
 
+/**
+ * 埋点
+ */
 public class BuryingPointHelp {
     public static final String EVENT_URL = Api.APP_DOMAIN + "static/e.gif";
     public static final String PAGE_URL = Api.APP_DOMAIN + "static/p.gif";
@@ -53,33 +56,33 @@ public class BuryingPointHelp {
     }
 
     //fragment 页面 （服务器，友盟）
-    public void onFragmentResumed(Activity mActivity, String pageName) {
+    public void onFragmentResumed(Activity mActivity, String pageName,long pair) {
         LogUtil.e("onFragmentResumed:pageName:" + pageName);
         LogUtil.e("onFragmentResumed:pageEvent:" + "start");
         MobclickAgent.onPageStart(pageName);
-        sendHttp(PAGE_URL, getPageData(mActivity, pageName, "start"));
+        sendHttp(PAGE_URL, getPageData(mActivity, pageName, "start",pair));
     }
 
     //fragment 页面 （服务器，友盟）
-    public void onFragmentPaused(Activity mActivity, String pageName) {
+    public void onFragmentPaused(Activity mActivity, String pageName,long pair) {
         LogUtil.e("onFragmentPaused:pageName:" + pageName);
         LogUtil.e("onFragmentPaused:pageEvent:" + "end");
         MobclickAgent.onPageEnd(pageName);
-        sendHttp(PAGE_URL, getPageData(mActivity, pageName, "end"));
+        sendHttp(PAGE_URL, getPageData(mActivity, pageName, "end",pair));
     }
 
     //activity 页面（服务器）
-    public void onActivityResumed(Activity mActivity, String pageName) {
+    public void onActivityResumed(Activity mActivity, String pageName,long pair) {
         LogUtil.e("onActivityResumed:pageName:" + pageName);
         LogUtil.e("onActivityResumed:pageEvent:" + "start");
-        sendHttp(PAGE_URL, getPageData(mActivity, pageName, "start"));
+        sendHttp(PAGE_URL, getPageData(mActivity, pageName, "start",pair));
     }
 
     //activity 页面（服务器）
-    public void onActivityPaused(Activity mActivity, String pageName) {
+    public void onActivityPaused(Activity mActivity, String pageName,long pair) {
         LogUtil.e("onActivityPaused:pageName:" + pageName);
         LogUtil.e("onActivityPaused:pageEvent:" + "end");
-        sendHttp(PAGE_URL, getPageData(mActivity, pageName, "end"));
+        sendHttp(PAGE_URL, getPageData(mActivity, pageName, "end",pair));
     }
 
 
@@ -104,7 +107,7 @@ public class BuryingPointHelp {
         });
     }
 
-    public Map<String, Object> getPageData(Activity mActivity, String pageName, String pageEvent) {
+    public Map<String, Object> getPageData(Activity mActivity, String pageName, String pageEvent,long pair) {
         Map<String, Object> map = new HashMap<>();
         /*
         1   session	会话id，有效期24小时，可前端自行生成保持24小时,最长128位	是	[string]	fdfdf-reregre-bjfdrem-fdrekre	查看
@@ -144,6 +147,7 @@ public class BuryingPointHelp {
         map.put("isDebug", BuildConfig.IS_PROD ? 0 : 1);
 //        map.put("longitude", 1);
 //        map.put("latitude", 1);
+        map.put("pair",pair);
         return map;
     }
 
@@ -187,6 +191,7 @@ public class BuryingPointHelp {
         map.put("isDebug", BuildConfig.IS_PROD ? 0 : 1);
 //        map.put("longitude", 1);
 //        map.put("latitude", 1);
+
         return map;
     }
 

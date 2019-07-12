@@ -114,10 +114,10 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
             return;
         }
         if (isVisibleToUser) {
-            BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "vip");
+            BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "vip",getPair());
             mPresenter.onResume();//bug1 出现后加的
         } else {
-            BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "vip");
+            BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "vip",getPair());
         }
     }
 

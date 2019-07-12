@@ -155,12 +155,12 @@ public class HelpStep4Fragment extends BaseFragment<HelpStep4Presenter> implemen
     @Override
     public void onResume() {
         super.onResume();
-        BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "assistant_service_item");
+        BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "assistant_service_item",getPair());
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "assistant_service_item");
+        BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "assistant_service_item",getPair());
     }
 }

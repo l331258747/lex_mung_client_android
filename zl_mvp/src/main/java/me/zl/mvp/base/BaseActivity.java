@@ -29,6 +29,7 @@ import me.zl.mvp.integration.cache.CacheType;
 import me.zl.mvp.integration.lifecycle.ActivityLifecycleable;
 import me.zl.mvp.mvp.IPresenter;
 import me.zl.mvp.utils.AppUtils;
+import me.zl.mvp.utils.LogUtils;
 import me.zl.mvp.utils.StatusBarUtil;
 
 /**
@@ -50,6 +51,8 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     protected Bundle bundleIntent;
 
     protected Dialog loading;
+
+    private long pair;
 
     @NonNull
     @Override
@@ -91,6 +94,12 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         }
         StatusBarUtil.setColor(mActivity, AppUtils.getColor(mActivity, R.color.theme), 0);
         initData(savedInstanceState);
+
+        pair = System.currentTimeMillis() / 1000;
+    }
+
+    public long getPair(){
+        return pair;
     }
 
     @Override

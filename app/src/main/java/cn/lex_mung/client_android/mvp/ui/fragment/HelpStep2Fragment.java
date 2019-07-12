@@ -262,17 +262,17 @@ public class HelpStep2Fragment extends BaseFragment<HelpStep2Presenter> implemen
         if(isShow){
             switch (((HelpStepChildActivity) this.getActivity()).getRequireTypeId()){
                 case 2:
-                    BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "litigation_arbitration_assistant_goodat");
+                    BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "litigation_arbitration_assistant_goodat",getPair());
                     break;
                 case 9:
-                    BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "meeting_assistant_goodat");
+                    BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "meeting_assistant_goodat",getPair());
                     break;
                 case 6:
-                    BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "enterprise_assistant_goodat");
+                    BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "enterprise_assistant_goodat",getPair());
                     break;
             }
         }else{
-            BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "assistant_goodat_fields");
+            BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "assistant_goodat_fields",getPair());
         }
     }
 
@@ -282,17 +282,17 @@ public class HelpStep2Fragment extends BaseFragment<HelpStep2Presenter> implemen
         if(isShow){
             switch (((HelpStepChildActivity) this.getActivity()).getRequireTypeId()){
                 case 2:
-                    BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "litigation_arbitration_assistant_goodat");
+                    BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "litigation_arbitration_assistant_goodat",getPair());
                     break;
                 case 9:
-                    BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "meeting_assistant_goodat");
+                    BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "meeting_assistant_goodat",getPair());
                     break;
                 case 6:
-                    BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "enterprise_assistant_goodat");
+                    BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "enterprise_assistant_goodat",getPair());
                     break;
             }
         }else{
-            BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "assistant_goodat_fields");
+            BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "assistant_goodat_fields",getPair());
         }
     }
 }

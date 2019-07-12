@@ -74,9 +74,9 @@ public class FreeConsultActivity extends BaseActivity<FreeConsultPresenter> impl
     public void onResume() {
         super.onResume();
         if(buryingPointId == 1){
-            BuryingPointHelp.getInstance().onActivityResumed(mActivity, "free_consulation_from_solution");
+            BuryingPointHelp.getInstance().onActivityResumed(mActivity, "free_consulation_from_solution",getPair());
         }else{
-            BuryingPointHelp.getInstance().onActivityResumed(mActivity, "free_consulation_post");
+            BuryingPointHelp.getInstance().onActivityResumed(mActivity, "free_consulation_post",getPair());
         }
     }
 
@@ -84,9 +84,9 @@ public class FreeConsultActivity extends BaseActivity<FreeConsultPresenter> impl
     public void onPause() {
         super.onPause();
         if(buryingPointId == 1){
-            BuryingPointHelp.getInstance().onActivityPaused(mActivity, "free_consulation_from_solution");
+            BuryingPointHelp.getInstance().onActivityPaused(mActivity, "free_consulation_from_solution",getPair());
         }else{
-            BuryingPointHelp.getInstance().onActivityPaused(mActivity, "free_consulation_post");
+            BuryingPointHelp.getInstance().onActivityPaused(mActivity, "free_consulation_post",getPair());
         }
     }
 

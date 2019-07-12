@@ -43,6 +43,8 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
     protected Dialog loading;
     protected View view;
 
+    private long pair;
+
     @NonNull
     @Override
     public synchronized Cache<String, Object> provideCache() {
@@ -69,8 +71,14 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        pair = System.currentTimeMillis() / 1000;
+
         mActivity = getActivity();
         return view = initView(inflater, container, savedInstanceState);
+    }
+
+    public long getPair(){
+        return pair;
     }
 
     @Override
