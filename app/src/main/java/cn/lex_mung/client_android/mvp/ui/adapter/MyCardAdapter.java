@@ -46,6 +46,7 @@ public class MyCardAdapter extends BaseQuickAdapter<CouponsEntity, BaseViewHolde
 
         if(type == 0){
             helper.setGone(R.id.tv_card_club_balance,true);
+            helper.setText(R.id.tv_card_club_balance,item.getBalanceStr());
             helper.setGone(R.id.fl_card_club_btn,true);
             helper.setGone(R.id.tv_coupon_card,false);
 

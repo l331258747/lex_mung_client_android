@@ -93,6 +93,7 @@ public class CouponModeCouponPresenter extends BasePresenter<CouponModeCouponCon
             if (isFastClick()) return;
             ReleaseDemandOrgMoneyEntityCoupon entity = adapter.getItem(position);
             if (entity == null) return;
+            if(entity.getCouponStatus() == 2) return;
             CouponModeEntity couponModeEntity = new CouponModeEntity();
             couponModeEntity.setCouponId(entity.getCouponId());
             couponModeEntity.setOrgId(-1);

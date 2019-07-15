@@ -2,6 +2,8 @@ package cn.lex_mung.client_android.mvp.model.entity;
 
 import java.util.List;
 
+import me.zl.mvp.utils.StringUtils;
+
 public class CouponsEntity {
 
     private int couponId;
@@ -25,7 +27,7 @@ public class CouponsEntity {
     private String canOverlayUse;
     private String status;
     private String couponDesc;
-    private String balance;
+    private double balance;
     private String consumeMoney;
     private int organizationId;
     private int organizationLevelNameId;
@@ -206,11 +208,18 @@ public class CouponsEntity {
         this.couponDesc = couponDesc;
     }
 
-    public String getBalance() {
+    public double getBalance() {
         return balance;
     }
 
-    public void setBalance(String balance) {
+    public String getBalanceStr(){
+        if(balance > 0)
+            return "余额：" + StringUtils.getStringNum(balance);
+        else
+            return "";
+    }
+
+    public void setBalance(double balance) {
         this.balance = balance;
     }
 
