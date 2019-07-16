@@ -88,6 +88,7 @@ public class PayTypeView2 extends LinearLayout {
             if(isHasTypeData(4)){
                 for (int i = 0;i<list.size();i++){
                     if(list.get(i).getType() == 4){
+                        entity.setSelected(list.get(i).isSelected());//保持选中状态
                         list.set(i,entity);
                     }
                 }
@@ -104,11 +105,17 @@ public class PayTypeView2 extends LinearLayout {
         if(isHasTypeData(type)){
             for (int i=0;i<list.size();i++){
                 if(list.get(i).getType() == type){
-                    list.remove(i);
+                    if(list.get(i).isSelected()){
+                        list.remove(i);
+                        changeData(0);//当为删除项为选中状态时，默认选中第一项
+                    }else{
+                        list.remove(i);
+                        adapter.notifyDataSetChanged();//非选中状态，保持原来选中项
+                    }
                 }
             }
+
         }
-        adapter.notifyDataSetChanged();
     }
 
     public boolean isHasTypeData(int type){

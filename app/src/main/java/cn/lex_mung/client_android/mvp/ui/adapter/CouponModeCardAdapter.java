@@ -44,6 +44,9 @@ public class CouponModeCardAdapter extends BaseQuickAdapter<ReleaseDemandOrgMone
             helper.setImageResource(R.id.item_iv_icon,R.drawable.ic_update_top_round);
         }
 
+
+        helper.setGone(R.id.view_disabled_bg,false);
+
         if(type == 0){
             helper.setGone(R.id.tv_card_club_balance,true);
             helper.setGone(R.id.fl_card_club_btn,true);
@@ -53,6 +56,10 @@ public class CouponModeCardAdapter extends BaseQuickAdapter<ReleaseDemandOrgMone
             helper.setGone(R.id.tv_card_club_balance,false);
             helper.setGone(R.id.fl_card_club_btn,false);
             helper.setGone(R.id.tv_coupon_card,true);
+
+            if(item.getOrgStatus() != 1){
+                helper.setGone(R.id.view_disabled_bg,true);
+            }
 
             if (cardId == item.getOrganizationId()) {
                 helper.setGone(R.id.view_bg,true);

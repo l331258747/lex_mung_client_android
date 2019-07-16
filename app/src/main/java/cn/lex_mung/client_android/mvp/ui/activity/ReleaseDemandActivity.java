@@ -175,6 +175,7 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
                 bundle.putInt(BundleTags.COUPON_TYPE,mPresenter.getCouponType());
                 bundle.putInt(BundleTags.ORG_ID, mPresenter.getOrganizationId());
                 bundle.putInt(BundleTags.COUPON_ID, mPresenter.getCouponId());
+                bundle.putInt(BundleTags.REQUIRE_TYPE_ID,mPresenter.getRequireTypeId());
                 launchActivity(new Intent(mActivity, CouponModeActivity.class), bundle);
                 break;
             case R.id.tv_fast_consult_tip:

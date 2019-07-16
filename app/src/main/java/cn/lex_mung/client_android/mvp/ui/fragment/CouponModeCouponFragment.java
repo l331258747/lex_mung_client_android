@@ -57,6 +57,7 @@ public class CouponModeCouponFragment extends BaseFragment<CouponModeCouponPrese
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        mPresenter.setRequireTypeId(getCouponModeActivity().getRequireTypeId());
         mPresenter.setLMemberId(getCouponModeActivity().getlMemberId());
         mPresenter.setMemberId(getCouponModeActivity().getMemberId());
         mPresenter.setCouponType(getCouponModeActivity().getSelectedType());

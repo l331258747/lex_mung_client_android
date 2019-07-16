@@ -55,6 +55,7 @@ public class CouponModeActivity extends BaseActivity<CouponModePresenter> implem
     int lMemberId;
     int couponId;
     int selectedType;//用来区分 优惠卡 优惠券
+    int requireTypeId;
 
     private List<Fragment> fragments = new ArrayList<>();
     private List<String> titles = new ArrayList<>();
@@ -89,6 +90,8 @@ public class CouponModeActivity extends BaseActivity<CouponModePresenter> implem
             couponId = bundleIntent.getInt(BundleTags.COUPON_ID);
             orgId = bundleIntent.getInt(BundleTags.ORG_ID);
             selectedType = bundleIntent.getInt(BundleTags.COUPON_TYPE);
+
+            requireTypeId = bundleIntent.getInt(BundleTags.REQUIRE_TYPE_ID);
         }
 
         fragments.add(CouponModeCouponFragment.newInstance());
@@ -103,6 +106,10 @@ public class CouponModeActivity extends BaseActivity<CouponModePresenter> implem
         if(selectedType == 1){
             viewPager.setCurrentItem(1);
         }
+    }
+
+    public int getRequireTypeId(){
+        return requireTypeId;
     }
 
     public int getMemberId() {

@@ -59,10 +59,15 @@ public class CouponModeCardPresenter extends BasePresenter<CouponModeCardContrac
     private int lMemberId;
     private int couponType;
     private int orgId;
+    private int requireTypeId;
 
     @Inject
     public CouponModeCardPresenter(CouponModeCardContract.Model model, CouponModeCardContract.View rootView) {
         super(model, rootView);
+    }
+
+    public void setRequireTypeId(int requireTypeId){
+        this.requireTypeId = requireTypeId;
     }
 
     public void setMemberId(int memberId) {
@@ -94,6 +99,7 @@ public class CouponModeCardPresenter extends BasePresenter<CouponModeCardContrac
             if (isFastClick()) return;
             ReleaseDemandOrgMoneyEntityOptimal entity = adapter.getItem(position);
             if (entity == null) return;
+            if(entity.getOrgStatus() == 0) return;
             CouponModeEntity couponModeEntity = new CouponModeEntity();
             couponModeEntity.setOrgId(entity.getOrganizationId());
             couponModeEntity.setOrgLevId(entity.getOrganizationLevId());
@@ -138,6 +144,7 @@ public class CouponModeCardPresenter extends BasePresenter<CouponModeCardContrac
         Map<String, Object> map = new HashMap<>();
         map.put("memberId", memberId);
         map.put("lmemberId", lMemberId);
+        map.put("requireTypeId",requireTypeId);
         mModel.getOrgList2(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))

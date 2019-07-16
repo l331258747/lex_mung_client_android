@@ -58,10 +58,15 @@ public class CouponModeCouponPresenter extends BasePresenter<CouponModeCouponCon
     private int lMemberId;
     private int couponType;
     private int couponId;
+    private int requireTypeId;
 
     @Inject
     public CouponModeCouponPresenter(CouponModeCouponContract.Model model, CouponModeCouponContract.View rootView) {
         super(model, rootView);
+    }
+
+    public void setRequireTypeId(int requireTypeId){
+        this.requireTypeId = requireTypeId;
     }
 
     public void setMemberId(int memberId) {
@@ -127,6 +132,7 @@ public class CouponModeCouponPresenter extends BasePresenter<CouponModeCouponCon
         Map<String, Object> map = new HashMap<>();
         map.put("memberId", memberId);
         map.put("lmemberId", lMemberId);
+        map.put("requireTypeId",requireTypeId);
         mModel.getOrgList2(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))

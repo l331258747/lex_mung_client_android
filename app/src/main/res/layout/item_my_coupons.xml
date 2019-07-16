@@ -31,6 +31,18 @@
         app:layout_constraintTop_toTopOf="@+id/item_iv_icon"
         tools:visibility="visible" />
 
+    <View
+        android:id="@+id/view_disabled_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/round_20_66f7f7f7_all"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/item_iv_icon"
+        app:layout_constraintEnd_toEndOf="@+id/item_iv_icon"
+        app:layout_constraintStart_toStartOf="@+id/item_iv_icon"
+        app:layout_constraintTop_toTopOf="@+id/item_iv_icon"
+        tools:visibility="visible" />
+
     <!--优惠卡-->
 
     <TextView
