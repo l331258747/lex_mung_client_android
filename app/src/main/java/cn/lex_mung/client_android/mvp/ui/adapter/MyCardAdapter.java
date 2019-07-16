@@ -44,14 +44,33 @@ public class MyCardAdapter extends BaseQuickAdapter<CouponsEntity, BaseViewHolde
             helper.setImageResource(R.id.item_iv_icon,R.drawable.ic_update_top_round);
         }
 
+        helper.setGone(R.id.tv_card_club_balance,false);
+        helper.setGone(R.id.tv_card_member_balance,false);
+        helper.setGone(R.id.ll__balance,false);
+
         if(type == 0){
-            helper.setGone(R.id.tv_card_club_balance,true);
-            helper.setText(R.id.tv_card_club_balance,item.getBalanceStr());
+            if(item.getCouponBalanceList()!= null && item.getCouponBalanceList().size() > 0){
+                helper.setGone(R.id.ll__balance,true);
+                for (CouponsEntity.CouponsChildEntity child:item.getCouponBalanceList()){
+                    if(child.getCouponType() == 5){
+                        helper.setGone(R.id.tv_card_club_balance,true);
+                        helper.setText(R.id.tv_card_club_balance,child.getBalanceStr());
+                    }
+                    if(child.getCouponType() == 1){
+                        helper.setGone(R.id.tv_card_member_balance,true);
+                        helper.setText(R.id.tv_card_member_balance,child.getBalanceStr());
+                    }
+                }
+            }
+
             helper.setGone(R.id.fl_card_club_btn,true);
             helper.setGone(R.id.tv_coupon_card,false);
 
         }else{
+            helper.setGone(R.id.ll__balance,false);
             helper.setGone(R.id.tv_card_club_balance,false);
+            helper.setGone(R.id.tv_card_member_balance,false);
+
             helper.setGone(R.id.fl_card_club_btn,false);
             helper.setGone(R.id.tv_coupon_card,true);
 

@@ -13,11 +13,11 @@
     <cn.lex_mung.client_android.mvp.ui.widget.RoundImageView
         android:id="@+id/item_iv_icon"
         android:layout_width="0dp"
-        android:layout_height="@dimen/qb_px_230"
+        android:layout_height="@dimen/qb_px_280"
         android:scaleType="matrix"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:src="@drawable/ic_update_top_round" />
+        tools:background="@drawable/ic_update_top_round" />
 
     <View
         android:id="@+id/view_bg"
@@ -44,28 +44,50 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!--卡包-->
-    <TextView
-        android:id="@+id/tv_card_club_balance"
+
+    <LinearLayout
+        android:id="@+id/ll__balance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/qb_px_35"
-        android:text="余额：1234645"
+        android:orientation="vertical"
         android:visibility="gone"
-        android:textColor="@color/c_ff"
         tools:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginLeft="@dimen/qb_px_35"
+        android:layout_marginBottom="@dimen/qb_px_35"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <!--卡包-->
+        <TextView
+            android:id="@+id/tv_card_club_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/c_ff"
+            android:visibility="gone"
+            tools:text="集团卡余额：1234645"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/tv_card_member_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/c_ff"
+            android:visibility="gone"
+            tools:text="会员卡余额：1234645"
+            tools:visibility="visible" />
+
+    </LinearLayout>
+
 
     <FrameLayout
         android:id="@+id/fl_card_club_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:padding="@dimen/qb_px_35"
-        tools:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:visibility="visible">
 
         <TextView
             android:layout_width="wrap_content"

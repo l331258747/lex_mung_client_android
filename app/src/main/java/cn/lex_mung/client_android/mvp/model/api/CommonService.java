@@ -574,7 +574,7 @@ public interface CommonService {
      *
      * @return BaseResponse
      */
-    @GET("client/rights/couponlist")
+    @GET("client/rights/couponlist/v2")
     Observable<BaseResponse<BaseListEntity<CouponsEntity>>> getCouponsList(@Query("pageNum") int pageNum);
 
     /**

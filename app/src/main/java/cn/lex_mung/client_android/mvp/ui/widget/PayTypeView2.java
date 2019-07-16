@@ -84,8 +84,40 @@ public class PayTypeView2 extends LinearLayout {
 
 
     public void addPayTypeData(PayTypeEntity entity){
-        list.add(entity);
+        if(entity.getType() == 4){//如果是会员卡，只能有一张，先判断是否存在，存在：替换，不存在：添加
+            if(isHasTypeData(4)){
+                for (int i = 0;i<list.size();i++){
+                    if(list.get(i).getType() == 4){
+                        list.set(i,entity);
+                    }
+                }
+            }else{
+                list.add(entity);
+            }
+        }else{
+            list.add(entity);
+        }
         adapter.notifyDataSetChanged();
+    }
+
+    public void removePayTYpeData(int type){
+        if(isHasTypeData(type)){
+            for (int i=0;i<list.size();i++){
+                if(list.get(i).getType() == type){
+                    list.remove(i);
+                }
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+    public boolean isHasTypeData(int type){
+        for (int i=0;i<list.size();i++){
+            if(type == list.get(i).getType()){
+                return true;
+            }
+        }
+        return false;
     }
 
     private void changeData(int position) {

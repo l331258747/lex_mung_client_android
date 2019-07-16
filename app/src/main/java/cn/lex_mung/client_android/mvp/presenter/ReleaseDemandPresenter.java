@@ -361,9 +361,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                                     deduction = 0;
                                 }
                                 amountNew = entity.getAmountNew();
-                                if (amountNew > 0) {
-                                    mRootView.setClubCardBalance(amountNew);
-                                }
+                                mRootView.setClubCardBalance(amountNew);
                             } else if (type == 2) {
                                 couponType = 2;
                                 couponId = entity.getCouponId();

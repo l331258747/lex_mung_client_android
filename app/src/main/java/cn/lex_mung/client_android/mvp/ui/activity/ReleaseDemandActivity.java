@@ -266,20 +266,20 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
         tvDiscountWay.setText(organizationName);
     }
 
-    boolean isClubCardBalance;
     @Override
     public void setClubCardBalance(double money) {
-        if(isClubCardBalance) return;
+        if(money > 0){
+            PayTypeEntity payTypeEntity = new PayTypeEntity();
+            payTypeEntity.setIcon(R.drawable.ic_pay_club_card);
+            payTypeEntity.setTitle("会员卡");
+            payTypeEntity.setType(4);
+            payTypeEntity.setSelected(false);
+            payTypeEntity.setBalance(money);
+            payTypeView2.addPayTypeData(payTypeEntity);
+        }else{
+            payTypeView2.removePayTYpeData(4);
+        }
 
-        PayTypeEntity entity = new PayTypeEntity();
-        entity.setIcon(R.drawable.ic_pay_club_card);
-        entity.setTitle("会员卡");
-        entity.setType(4);
-        entity.setSelected(false);
-        entity.setBalance(money);
-        payTypeView2.addPayTypeData(entity);
-
-        isClubCardBalance = true;
     }
 
     @Override

@@ -203,6 +203,8 @@ public class RequirementDetailEntity {
                 return "会员卡支付";
             case "5":
                 return "百度支付";
+            case "6":
+                return "集团卡支付";
         }
         return payType + "支付";
     }

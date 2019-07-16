@@ -1,5 +1,7 @@
 package cn.lex_mung.client_android.mvp.model.entity;
 
+import com.youth.banner.Banner;
+
 import java.util.List;
 
 import me.zl.mvp.utils.StringUtils;
@@ -31,6 +33,11 @@ public class CouponsEntity {
     private String consumeMoney;
     private int organizationId;
     private int organizationLevelNameId;
+    private List<CouponsChildEntity> couponBalanceList;
+
+    public List<CouponsChildEntity> getCouponBalanceList() {
+        return couponBalanceList;
+    }
 
     public int getOrganizationId() {
         return organizationId;
@@ -229,5 +236,38 @@ public class CouponsEntity {
 
     public void setConsumeMoney(String consumeMoney) {
         this.consumeMoney = consumeMoney;
+    }
+
+    public class CouponsChildEntity{
+        int couponId;
+        int couponType;//1.会员卡，2.电子优惠券，3.线下优惠券，4.体验券，5.集团卡
+        String couponTypeName;
+        String couponName;
+        double balance;
+
+        public int getCouponId() {
+            return couponId;
+        }
+
+        public int getCouponType() {
+            return couponType;
+        }
+
+        public String getCouponTypeName() {
+            return couponTypeName;
+        }
+
+        public String getCouponName() {
+            return couponName;
+        }
+
+        public double getBalance() {
+            return balance;
+        }
+
+        public String getBalanceStr(){
+            if(balance <=0) return "";
+            return couponTypeName+"余额：" + StringUtils.getStringNum(balance);
+        }
     }
 }
