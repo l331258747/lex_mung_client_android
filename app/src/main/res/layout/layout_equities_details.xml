@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nsv_equities_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -91,6 +92,39 @@
             app:layout_constraintEnd_toEndOf="@id/guideline3"
             app:layout_constraintStart_toStartOf="@id/guideline2"
             app:layout_constraintTop_toBottomOf="@id/iv_icon" />
+
+        <LinearLayout
+            android:id="@+id/ll__balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_equities_bg"
+            android:layout_marginLeft="@dimen/qb_px_35"
+            android:layout_marginBottom="@dimen/qb_px_35"
+            app:layout_constraintStart_toStartOf="@+id/iv_equities_bg">
+
+            <!--卡包-->
+            <TextView
+                android:id="@+id/tv_card_club_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/c_ff"
+                android:visibility="gone"
+                tools:text="集团卡余额：1234645"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_card_member_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/c_ff"
+                android:visibility="gone"
+                tools:text="会员卡余额：1234645"
+                tools:visibility="visible" />
+
+        </LinearLayout>
 
         <TextView
             android:layout_width="@dimen/qb_px_100"

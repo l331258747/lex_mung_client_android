@@ -39,6 +39,8 @@ public interface EquitiesContract {
         void setEquitiesBg(String image);
 
         void setLawyerAdapter(List<LawyerEntity.LawyerBean.ListBean> list);
+
+        void setBalance(List<EquitiesDetailsEntity.CouponsChildEntity> list);
     }
 
     interface Model extends IModel {

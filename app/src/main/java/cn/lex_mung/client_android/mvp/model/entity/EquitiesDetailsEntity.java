@@ -1,5 +1,9 @@
 package cn.lex_mung.client_android.mvp.model.entity;
 
+import java.util.List;
+
+import me.zl.mvp.utils.StringUtils;
+
 public class EquitiesDetailsEntity {
 
     /**
@@ -27,6 +31,11 @@ public class EquitiesDetailsEntity {
     private String image;
     private int memberCount;
     private int lawyerCount;
+    private List<CouponsChildEntity> couponList;
+
+    public List<CouponsChildEntity> getCouponList() {
+        return couponList;
+    }
 
     public int getOrganizationId() {
         return organizationId;
@@ -114,5 +123,38 @@ public class EquitiesDetailsEntity {
 
     public void setLawyerCount(int lawyerCount) {
         this.lawyerCount = lawyerCount;
+    }
+
+    public class CouponsChildEntity{
+        int couponId;
+        int couponType;//1.会员卡，2.电子优惠券，3.线下优惠券，4.体验券，5.集团卡
+        String couponTypeName;
+        String couponName;
+        double balance;
+
+        public int getCouponId() {
+            return couponId;
+        }
+
+        public int getCouponType() {
+            return couponType;
+        }
+
+        public String getCouponTypeName() {
+            return couponTypeName;
+        }
+
+        public String getCouponName() {
+            return couponName;
+        }
+
+        public double getBalance() {
+            return balance;
+        }
+
+        public String getBalanceStr(){
+            if(balance <=0) return "";
+            return couponTypeName+"余额：" + StringUtils.getStringNum(balance);
+        }
     }
 }

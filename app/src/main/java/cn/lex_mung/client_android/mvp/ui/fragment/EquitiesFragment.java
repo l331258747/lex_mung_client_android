@@ -19,6 +19,7 @@ import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.di.component.DaggerEquitiesComponent;
 import cn.lex_mung.client_android.di.module.EquitiesModule;
 import cn.lex_mung.client_android.mvp.contract.EquitiesContract;
+import cn.lex_mung.client_android.mvp.model.entity.EquitiesDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.EquitiesListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity;
 import cn.lex_mung.client_android.mvp.presenter.EquitiesPresenter;
@@ -31,6 +32,7 @@ import cn.lex_mung.client_android.mvp.ui.adapter.EquitiesAdapter;
 import cn.lex_mung.client_android.mvp.ui.adapter.LawyerListAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.RoundImageView;
+
 import com.umeng.analytics.MobclickAgent;
 import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
 
@@ -82,6 +84,13 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
     @BindView(R.id.ll_loading)
     LinearLayout llLoading;
 
+    @BindView(R.id.ll__balance)
+    LinearLayout ll__balance;
+    @BindView(R.id.tv_card_club_balance)
+    TextView tv_card_club_balance;
+    @BindView(R.id.tv_card_member_balance)
+    TextView tv_card_member_balance;
+
     private EquitiesAdapter equitiesAdapter1;
     private EquitiesAdapter equitiesAdapter2;
     private LawyerListAdapter lawyerListAdapter;
@@ -114,10 +123,10 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
             return;
         }
         if (isVisibleToUser) {
-            BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "vip",getPair());
+            BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "vip", getPair());
             mPresenter.onResume();//bug1 出现后加的
         } else {
-            BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "vip",getPair());
+            BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "vip", getPair());
         }
     }
 
@@ -249,6 +258,27 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
     @Override
     public void setLawyerAdapter(List<LawyerEntity.LawyerBean.ListBean> list) {
         lawyerListAdapter.setNewData(list);
+    }
+
+    @Override
+    public void setBalance(List<EquitiesDetailsEntity.CouponsChildEntity> list) {
+        tv_card_club_balance.setVisibility(View.GONE);
+        tv_card_member_balance.setVisibility(View.GONE);
+        ll__balance.setVisibility(View.GONE);
+
+        if (list != null && list.size() > 0) {
+            ll__balance.setVisibility(View.VISIBLE);
+            for (EquitiesDetailsEntity.CouponsChildEntity child : list) {
+                if (child.getCouponType() == 5) {
+                    tv_card_club_balance.setVisibility(View.VISIBLE);
+                    tv_card_club_balance.setText(child.getBalanceStr());
+                }
+                if (child.getCouponType() == 1) {
+                    tv_card_member_balance.setVisibility(View.VISIBLE);
+                    tv_card_member_balance.setText(child.getBalanceStr());
+                }
+            }
+        }
     }
 
     @Override

@@ -211,6 +211,7 @@ public class EquitiesPresenter extends BasePresenter<EquitiesContract.Model, Equ
                                 mRootView.setEquitiesExplain(entity.getRightsInterpret());
                                 mRootView.setOpenQualification(entity.getOpeningQualification());
                                 mRootView.setExclusiveEquities(entity.getExclusiveRights());
+                                mRootView.setBalance(entity.getCouponList());
                                 mRootView.showEquitiesDetails();
                                 getConsultList(orgId, orgLevelId);
                             }else{
