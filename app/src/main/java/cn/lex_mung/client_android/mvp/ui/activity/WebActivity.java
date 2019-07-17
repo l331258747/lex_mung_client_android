@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -81,6 +82,8 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
+        //webview中有一个输入框是在webview的底部，当我点击输入框的时候会弹出安卓的软键盘，这个时候我发现软键盘遮挡住了输入框
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE| WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         return R.layout.activity_web;
     }
 
@@ -284,6 +287,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
         @JavascriptInterface
         public void setToken(String token1){
             LogUtil.e("token:"+token1);
+            if(token1.equals("undefined")) return;
 
             DataHelper.setBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS, true);
             DataHelper.setStringSF(mActivity, DataHelperTags.TOKEN, token1);
