@@ -43,6 +43,7 @@ import cn.lex_mung.client_android.mvp.ui.dialog.EasyDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.PayTypeView2;
 import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
+import cn.lex_mung.client_android.utils.BuryingPointHelp;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
@@ -97,6 +98,7 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
 
     private int regionId;
     private int lawyerId;
+    private int requireTypeId;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -121,7 +123,7 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
                     lawyerId = bundleIntent.getInt(BundleTags.MEMBER_ID),
                     bundleIntent.getString(BundleTags.REGION),
                     regionId = bundleIntent.getInt(BundleTags.REGION_ID),
-                    bundleIntent.getInt(BundleTags.ID),
+                    requireTypeId = bundleIntent.getInt(BundleTags.ID),
                     bundleIntent.getString(BundleTags.TITLE));
             titleView.setTitle(bundleIntent.getString(BundleTags.TITLE));
             if(bundleIntent.getInt(BundleTags.TYPE) == 2){
@@ -183,7 +185,28 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
                 mPresenter.tariffExplanationUrl();
                 break;
             case R.id.bt_pay:
-                MobclickAgent.onEvent(mActivity, "w_y__shouye_jjfa_list_fbxqqr");
+
+                switch (requireTypeId){
+                    case 9:
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "meeting_offline_page","meeting_offline_page_pay_click");
+                        break;
+                    case 2:
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "litigation_arbitration_page","litigation_arbitration_page_pay_click");
+                        break;
+                    case 6:
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "legal_counsel_page","legal_counsel_page_pay_click");
+                        break;
+                    case 3:
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "draw_contract_page","draw_contract_page_pay_click");
+                        break;
+                    case 4:
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "lawyers_letter_page","lawyers_letter_page_pay_click");
+                        break;
+                    case 30:
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "review_of_contracts_page","review_of_contracts_page_pay_click");
+                        break;
+                }
+
                 mPresenter.releaseRequirement(webView.getSettings().getUserAgentString()
                         , etMaxMoney.getText().toString()
                         , etProblemDescription.getText().toString());

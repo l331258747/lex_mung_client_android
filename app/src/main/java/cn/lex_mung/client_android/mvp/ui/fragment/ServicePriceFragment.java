@@ -1,5 +1,6 @@
 package cn.lex_mung.client_android.mvp.ui.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import cn.lex_mung.client_android.mvp.contract.ServicePriceContract;
 import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
 import cn.lex_mung.client_android.mvp.presenter.ServicePricePresenter;
+import cn.lex_mung.client_android.mvp.ui.activity.LawyerHomePageActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MyAccountActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.ServicePriceAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog5;
@@ -67,6 +69,11 @@ public class ServicePriceFragment extends BaseFragment<ServicePricePresenter> im
             if (lawsHomePagerBaseEntity == null) return;
             mPresenter.setEntity(lawsHomePagerBaseEntity);
         }
+    }
+
+    @Override
+    public LawyerHomePageActivity getLawyerHomePageActivity(){
+        return (LawyerHomePageActivity) this.getActivity();
     }
 
     @Override

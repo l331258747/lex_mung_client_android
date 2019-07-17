@@ -15,6 +15,7 @@ import cn.lex_mung.client_android.mvp.model.entity.ExpertCallEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.ReleaseDemandActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.ServicePriceAdapter;
+import cn.lex_mung.client_android.utils.BuryingPointHelp;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -59,7 +60,7 @@ public class ServicePricePresenter extends BasePresenter<ServicePriceContract.Mo
 
     public void setEntity(LawsHomePagerBaseEntity entity) {
         this.entity = entity;
-        ServicePriceAdapter adapter = new ServicePriceAdapter(entity.getRequireInfo(),entity.getMinimumDuration());
+        ServicePriceAdapter adapter = new ServicePriceAdapter(entity.getRequireInfo(), entity.getMinimumDuration());
         adapter.setOnItemChildClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;
             Bundle bundle = new Bundle();
@@ -68,7 +69,161 @@ public class ServicePricePresenter extends BasePresenter<ServicePriceContract.Mo
                 if (businessEntity == null) return;
                 if (view.getId() == R.id.item_tv_release) {
                     if (businessEntity.getRequirementType() == 1) {//发需求
-                        MobclickAgent.onEvent(mApplication, "w_y__shouye_jjfa_list_fbxq");
+
+                        switch (mRootView.getLawyerHomePageActivity().getRequireTypeId()) {
+                            case 2://诉讼
+                                switch (businessEntity.getRequireTypeId()){
+                                    case 3://起草合同
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "litigation_arbitration_lawyer_detail","litigation_arbitration_lawyer_detail_contract_click");
+                                        break;
+                                    case 4://律师函
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "litigation_arbitration_lawyer_detail","litigation_arbitration_lawyer_detail_lawyers_letter_click");
+                                        break;
+                                    case 9://线下见面
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "litigation_arbitration_lawyer_detail","litigation_arbitration_lawyer_detail_meeting_offline_click");
+                                        break;
+                                    case 30://审查合同
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "litigation_arbitration_lawyer_detail","litigation_arbitration_lawyer_detail_review_of_contracts_click");
+                                        break;
+                                    case 6://法律顾问
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "litigation_arbitration_lawyer_detail","litigation_arbitration_lawyer_detail_legal_counsel_click");
+                                        break;
+                                    case 7://尽职调查
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "litigation_arbitration_lawyer_detail","litigation_arbitration_lawyer_detail_responsible_investigation_click");
+                                        break;
+                                    case 2://诉讼仲裁
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "litigation_arbitration_lawyer_detail","litigation_arbitration_lawyer_detail_litigation_arbitration_click");
+                                        break;
+                                }
+                                break;
+                            case 6://企业顾问
+                                switch (businessEntity.getRequireTypeId()){
+                                    case 3://起草合同
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "enterprise_offline_lawyer_detail","enterprise_offline_lawyer_detail_contract_click");
+                                        break;
+                                    case 4://律师函
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "enterprise_offline_lawyer_detail","enterprise_offline_lawyer_detail_lawyers_letter_click");
+                                        break;
+                                    case 9://线下见面
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "enterprise_offline_lawyer_detail","enterprise_offline_lawyer_detail_meeting_offline_click");
+                                        break;
+                                    case 30://审查合同
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "enterprise_offline_lawyer_detail","enterprise_offline_lawyer_detail_review_of_contracts_click");
+                                        break;
+                                    case 6://法律顾问
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "enterprise_offline_lawyer_detail","enterprise_offline_lawyer_detail_legal_counsel_click");
+                                        break;
+                                    case 7://尽职调查
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "enterprise_offline_lawyer_detail","enterprise_offline_lawyer_detail_responsible_investigation_click");
+                                        break;
+                                    case 2://诉讼仲裁
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "enterprise_offline_lawyer_detail","enterprise_offline_lawyer_detail_litigation_arbitration_click");
+                                        break;
+                                }
+                                break;
+                            case 9://线下见面
+                                switch (businessEntity.getRequireTypeId()){
+                                    case 3://起草合同
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "meeting_offline_lawyer_detail","meeting_offline_lawyer_detail_contract_click");
+                                        break;
+                                    case 4://律师函
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "meeting_offline_lawyer_detail","meeting_offline_lawyer_detail_lawyers_letter_click");
+                                        break;
+                                    case 9://线下见面
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "meeting_offline_lawyer_detail","meeting_offline_lawyer_detail_meeting_offline_click");
+                                        break;
+                                    case 30://审查合同
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "meeting_offline_lawyer_detail","meeting_offline_lawyer_detail_review_of_contracts_click");
+                                        break;
+                                    case 6://法律顾问
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "meeting_offline_lawyer_detail","meeting_offline_lawyer_detail_legal_counsel_click");
+                                        break;
+                                    case 7://尽职调查
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "meeting_offline_lawyer_detail","meeting_offline_lawyer_detail_responsible_investigation_click");
+                                        break;
+                                    case 2://诉讼仲裁
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "meeting_offline_lawyer_detail","meeting_offline_lawyer_detail_litigation_arbitration_click");
+                                        break;
+                                }
+                                break;
+                            case 8://专家咨询 电话咨询
+                                switch (businessEntity.getRequireTypeId()){
+                                    case 3://起草合同
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "expert_consulation_lawyer_detail","expert_consulation_lawyer_detail_contract_click");
+                                        break;
+                                    case 4://律师函
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "expert_consulation_lawyer_detail","expert_consulation_lawyer_detail_lawyers_letter_click");
+                                        break;
+                                    case 9://线下见面
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "expert_consulation_lawyer_detail","expert_consulation_lawyer_detail_meeting_offline_click");
+                                        break;
+                                    case 30://审查合同
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "expert_consulation_lawyer_detail","expert_consulation_lawyer_detail_review_of_contracts_click");
+                                        break;
+                                    case 6://法律顾问
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "expert_consulation_lawyer_detail","expert_consulation_lawyer_detail_legal_counsel_click");
+                                        break;
+                                    case 7://尽职调查
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "expert_consulation_lawyer_detail","expert_consulation_lawyer_detail_responsible_investigation_click");
+                                        break;
+                                    case 2://诉讼仲裁
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "expert_consulation_lawyer_detail","expert_consulation_lawyer_detail_litigation_arbitration_click");
+                                        break;
+                                }
+                                break;
+                            case 100://免费咨询
+                                switch (businessEntity.getRequireTypeId()){
+                                    case 3://起草合同
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "free_consulation_lawyer_detail","free_consulation_lawyer_detail_contract_click");
+                                        break;
+                                    case 4://律师函
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "free_consulation_lawyer_detail","free_consulation_lawyer_detail_lawyers_letter_click");
+                                        break;
+                                    case 9://线下见面
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "free_consulation_lawyer_detail","free_consulation_lawyer_detail_meeting_offline_click");
+                                        break;
+                                    case 30://审查合同
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "free_consulation_lawyer_detail","free_consulation_lawyer_detail_review_of_contracts_click");
+                                        break;
+                                    case 6://法律顾问
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "free_consulation_lawyer_detail","free_consulation_lawyer_detail_legal_counsel_click");
+                                        break;
+                                    case 7://尽职调查
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "free_consulation_lawyer_detail","free_consulation_lawyer_detail_responsible_investigation_click");
+                                        break;
+                                    case 2://诉讼仲裁
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "free_consulation_lawyer_detail","free_consulation_lawyer_detail_litigation_arbitration_click");
+                                        break;
+                                }
+                                break;
+                            default:
+                                switch (businessEntity.getRequireTypeId()){
+                                    case 3://起草合同
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "search_lawyer_detail","search_lawyer_detail_draw_contract_click");
+                                        break;
+                                    case 4://律师函
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "search_lawyer_detail","search_lawyer_detail_lawyers_letter_click");
+                                        break;
+                                    case 9://线下见面
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "search_lawyer_detail","search_lawyer_detail_meeting_offline_click");
+                                        break;
+                                    case 30://审查合同
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "search_lawyer_detail","search_lawyer_detail_review_of_contracts_click");
+                                        break;
+                                    case 6://法律顾问
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "search_lawyer_detail","search_lawyer_detail_legal_counsel_click");
+                                        break;
+                                    case 7://尽职调查
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "search_lawyer_detail","search_lawyer_detail_responsible_investigation_click");
+                                        break;
+                                    case 2://诉讼仲裁
+                                        BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "search_lawyer_detail","search_lawyer_detail_litigation_arbitration_click");
+                                        break;
+                                }
+                                break;
+                        }
+
+
                         bundle.clear();
                         bundle.putInt(BundleTags.ID, businessEntity.getRequireTypeId());
                         bundle.putInt(BundleTags.TYPE, businessEntity.getType());
@@ -78,7 +233,26 @@ public class ServicePricePresenter extends BasePresenter<ServicePriceContract.Mo
                         bundle.putInt(BundleTags.REGION_ID, entity.getRegionId());
                         mRootView.launchActivity(new Intent(mApplication, ReleaseDemandActivity.class), bundle);
                     } else {//电话咨询
-                        MobclickAgent.onEvent(mApplication, "w_y_shouye_zjzx_detail_boda");
+                        switch (mRootView.getLawyerHomePageActivity().getRequireTypeId()) {
+                            case 2://诉讼
+                                BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "litigation_arbitration_lawyer_detail","litigation_arbitration_lawyer_detail_phone_click");
+                                break;
+                            case 6://企业顾问
+                                BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "enterprise_offline_lawyer_detail","enterprise_offline_lawyer_detail_phone_click");
+                                break;
+                            case 9://线下见面
+                                BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "meeting_offline_lawyer_detail","meeting_offline_lawyer_detail_phone_click");
+                                break;
+                            case 8://专家咨询 电话咨询
+                                BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "expert_consulation_lawyer_detail","expert_consulation_lawyer_detail_phone_click");
+                                break;
+                            case 100://免费咨询
+                                BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "free_consulation_lawyer_detail","free_consulation_lawyer_detail_phone_click");
+                                break;
+                            default:
+                                BuryingPointHelp.getInstance().onEvent(mRootView.getLawyerHomePageActivity(), "search_lawyer_detail","search_lawyer_detail_phone_click");
+                                break;
+                        }
                         expertPrice();
                     }
                 }
@@ -136,13 +310,13 @@ public class ServicePricePresenter extends BasePresenter<ServicePriceContract.Mo
                 .subscribe(new ErrorHandleSubscriber<BaseResponse<ExpertCallEntity>>(mErrorHandler) {
                     @Override
                     public void onNext(BaseResponse<ExpertCallEntity> baseResponse) {
-                        if(baseResponse.isSuccess()){
-                            if(!TextUtils.isEmpty(baseResponse.getData().getPhone())){
+                        if (baseResponse.isSuccess()) {
+                            if (!TextUtils.isEmpty(baseResponse.getData().getPhone())) {
                                 mRootView.GoCall(baseResponse.getData().getPhone());
-                            }else{
+                            } else {
                                 mRootView.showMessage("电话为空");
                             }
-                        }else{
+                        } else {
                              /*
                             70001：余额不足
                             70002：您好，当前律师可能正在繁忙，建议您改天再联系或者联系平台其他律师进行咨询。

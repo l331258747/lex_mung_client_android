@@ -113,6 +113,7 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
     TextView tvHeadTitle;
 
     boolean isCall;
+    private int requireTypeId;//用来埋点用的
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -155,6 +156,7 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         if (bundleIntent != null) {
+            requireTypeId = bundleIntent.getInt(BundleTags.REQUIRE_TYPE_ID);
             mPresenter.setId(bundleIntent.getInt(BundleTags.ID));
             mPresenter.getLawsHomePagerBase();
         }
@@ -162,6 +164,10 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);//设置状态栏文字颜色为白色
         }
         initStatus();
+    }
+
+    public int getRequireTypeId() {
+        return requireTypeId;
     }
 
     /**

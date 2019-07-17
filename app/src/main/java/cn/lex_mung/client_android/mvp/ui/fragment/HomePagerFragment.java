@@ -162,7 +162,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
             }else if(entity.getRequireTypeId() == 9){
                 BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","meeting_offline_click");
             }else if(entity.getRequireTypeId() == 6){
-                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","expert_consulation_click");
+                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","legal_counsel_click");
             }else{
                 BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","legal_card_click");
             }
@@ -311,7 +311,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                 }
                 break;
             case R.id.view_experts_consult:
-                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","legal_adviser_click");
+                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","expert_consultation_click");
                 if (mPresenter.isLogin()) {
                     bundle.clear();
                     bundle.putInt(BundleTags.ID, 8);

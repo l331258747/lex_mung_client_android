@@ -163,11 +163,11 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
                         case 2:
                             BuryingPointHelp.getInstance().onEvent(mActivity, "litigation_arbitration_detail", "litigation_arbitration_assistant_lawyer_detail_click");
                             break;
-                        case 9:
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "meeting_detail", "meeting_assistant_lawyer_detail_click");
-                            break;
                         case 6:
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "enterprise_detail", "enterprise_detail_assistant_lawyer_detail_click");
+                            BuryingPointHelp.getInstance().onEvent(mActivity, "enterprise_detail", "enterprise_detail_assistant_lawyer_list_detail_click");
+                            break;
+                        case 9:
+                            BuryingPointHelp.getInstance().onEvent(mActivity, "meeting_detail", "meeting_assistant_lawyer_list_detail_click");
                             break;
                     }
                 } else {
@@ -178,7 +178,23 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
                 launchActivity(new Intent(mActivity, LawyerHomePageActivity.class), bundle);
                 break;
             case R.id.view_bottom_txt:
-                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_free_text_click");
+
+                if (buryingPointId == 1) {
+                    switch (requireTypeId) {
+                        case 2:
+                            BuryingPointHelp.getInstance().onEvent(mActivity, "litigation_arbitration_detail", "litigation_arbitration_assistant_free_consultation_click");
+                            break;
+                        case 6:
+                            BuryingPointHelp.getInstance().onEvent(mActivity, "enterprise_detail", "enterprise_detail_assistant_free_consultation_click");
+                            break;
+                        case 9:
+                            BuryingPointHelp.getInstance().onEvent(mActivity, "meeting_detail", "meeting_assistant_free_consultation_click");
+                            break;
+                    }
+                } else {
+                    BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_free_text_click");
+                }
+
                 if (DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
                     launchActivity(new Intent(mActivity, FreeConsultActivity.class));
                 } else {
@@ -193,11 +209,11 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
                         case 2:
                             BuryingPointHelp.getInstance().onEvent(mActivity, "litigation_arbitration_detail", "litigation_arbitration_assistant_quick_consultation_click");
                             break;
-                        case 9:
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "meeting_detail", "meeting_assistant_quick_consultation_click");
-                            break;
                         case 6:
                             BuryingPointHelp.getInstance().onEvent(mActivity, "enterprise_detail", "enterprise_detail_assistant_quick_consultation_click");
+                            break;
+                        case 9:
+                            BuryingPointHelp.getInstance().onEvent(mActivity, "meeting_detail", "meeting_assistant_quick_consultation_click");
                             break;
                     }
                 } else {
@@ -246,14 +262,14 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
                                     BuryingPointHelp.getInstance().onEvent(mActivity, "litigation_arbitration_detail", "litigation_arbitration_assistant_arbitration_click");
                                 }
                                 break;
-                            case 9:
-                                if (entity.getParentRequireTypeId() == 9) {
-                                    BuryingPointHelp.getInstance().onEvent(mActivity, "meeting_detail", "meeting_assistant_meeting_click");
-                                }
-                                break;
                             case 6:
                                 if (entity.getParentRequireTypeId() == 6) {
                                     BuryingPointHelp.getInstance().onEvent(mActivity, "enterprise_detail", "enterprise_detail_assistant_service_click");
+                                }
+                                break;
+                            case 9:
+                                if (entity.getParentRequireTypeId() == 9) {
+                                    BuryingPointHelp.getInstance().onEvent(mActivity, "meeting_detail", "meeting_assistant_meeting_click");
                                 }
                                 break;
                         }
@@ -288,11 +304,11 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
                             case 2:
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "litigation_arbitration_detail", "litigation_arbitration_assistant_phone_click");
                                 break;
-                            case 9:
-                                BuryingPointHelp.getInstance().onEvent(mActivity, "meeting_detail", "meeting_assistant_phone_click");
-                                break;
                             case 6:
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "enterprise_detail", "enterprise_detail_assistant_phone_click");
+                                break;
+                            case 9:
+                                BuryingPointHelp.getInstance().onEvent(mActivity, "meeting_detail", "meeting_assistant_phone_click");
                                 break;
                         }
                     } else {

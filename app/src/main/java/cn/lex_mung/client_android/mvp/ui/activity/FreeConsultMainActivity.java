@@ -62,7 +62,7 @@ public class FreeConsultMainActivity extends BaseActivity<FreeConsultMainPresent
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_btn:
-                MobclickAgent.onEvent(mActivity, "w_y_shouye_index_mfzx");
+                BuryingPointHelp.getInstance().onEvent(mActivity, "free_consulation_detail","free_consulation_list_post_click");
                 if (DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
                     launchActivity(new Intent(mActivity, FreeConsultActivity.class));
                 } else {

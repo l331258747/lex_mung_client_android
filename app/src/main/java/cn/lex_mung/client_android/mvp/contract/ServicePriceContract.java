@@ -8,6 +8,7 @@ import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
 
 import java.util.List;
 
+import cn.lex_mung.client_android.mvp.ui.activity.LawyerHomePageActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.ServicePriceAdapter;
 import io.reactivex.Observable;
 import me.zl.mvp.mvp.IView;
@@ -23,6 +24,9 @@ public interface ServicePriceContract {
         void showBalanceYesDialog(ExpertPriceEntity entity);
 
         void GoCall(String str);
+
+        LawyerHomePageActivity getLawyerHomePageActivity();
+
     }
 
     interface Model extends IModel {

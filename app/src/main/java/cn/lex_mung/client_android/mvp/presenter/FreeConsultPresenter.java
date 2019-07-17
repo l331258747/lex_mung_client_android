@@ -32,7 +32,6 @@ import cn.lex_mung.client_android.mvp.model.entity.FreeConsultEntity;
 import cn.lex_mung.client_android.mvp.model.entity.RegionEntity;
 import cn.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
-import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultDetailActivity;
 
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;

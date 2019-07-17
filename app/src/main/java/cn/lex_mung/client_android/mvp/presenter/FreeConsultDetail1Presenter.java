@@ -125,6 +125,7 @@ public class FreeConsultDetail1Presenter extends BasePresenter<FreeConsultDetail
                     Bundle bundle = new Bundle();
                     bundle.clear();
                     bundle.putInt(BundleTags.ID, entity.getLawyerId());
+                    bundle.putInt(BundleTags.REQUIRE_TYPE_ID,100);
                     mRootView.launchActivity(new Intent(mRootView.getActivity(), LawyerHomePageActivity.class), bundle);
                     break;
             }

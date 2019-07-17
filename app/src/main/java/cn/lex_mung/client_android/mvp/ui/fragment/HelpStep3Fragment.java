@@ -126,7 +126,23 @@ public class HelpStep3Fragment extends BaseFragment<HelpStep3Presenter> implemen
                 showSelectTypeDialog();
                 break;
             case R.id.tv_btn:
-                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","assistant_target_amount_next_click");
+
+                if(isShow){
+                    switch (((HelpStepChildActivity) this.getActivity()).getRequireTypeId()){
+                        case 2:
+                            BuryingPointHelp.getInstance().onEvent(mActivity, "litigation_arbitration_detail","litigation_arbitration_assistant_target_amount_next_click");
+                            break;
+                        case 6:
+                            BuryingPointHelp.getInstance().onEvent(mActivity, "enterprise_detail","enterprise_assistant_target_amount_next_click");
+                            break;
+                        case 9:
+                            BuryingPointHelp.getInstance().onEvent(mActivity, "meeting_detail","meeting_assistant_target_amount_next_click");
+                            break;
+                    }
+                }else{
+                    BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","assistant_target_amount_next_click");
+                }
+
                 if(amountId == -1){
                     showMessage("请选择涉及金额");
                     return;

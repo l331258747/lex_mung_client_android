@@ -30,7 +30,7 @@ import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.CharacterHandler;
 import me.zl.mvp.utils.DeviceUtils;
-
+//删除
 public class FreeConsultDetailsListActivity extends BaseActivity<FreeConsultDetailsListPresenter> implements FreeConsultDetailsListContract.View {
 
     @BindView(R.id.tv_title)

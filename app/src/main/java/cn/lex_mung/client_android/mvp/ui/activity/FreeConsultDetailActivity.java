@@ -32,7 +32,7 @@ import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.utils.AppUtils;
-
+//删除
 public class FreeConsultDetailActivity extends BaseActivity<FreeConsultDetailPresenter> implements FreeConsultDetailContract.View {
     @Inject
     ImageLoader mImageLoader;

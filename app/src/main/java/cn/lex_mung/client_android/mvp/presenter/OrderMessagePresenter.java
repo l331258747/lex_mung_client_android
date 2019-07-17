@@ -26,7 +26,6 @@ import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.mvp.contract.OrderMessageContract;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.MessageEntity;
-import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultDetailActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MyAccountActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MyOrderActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.OrderMessageAdapter;

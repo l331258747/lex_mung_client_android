@@ -43,6 +43,7 @@ import static cn.lex_mung.client_android.app.EventBusTags.CONSULT_INFO.EDIT_REPL
 import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH;
 import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH_CONSULT_DETAILS;
 
+//删除
 @ActivityScope
 public class FreeConsultDetailsListPresenter extends BasePresenter<FreeConsultDetailsListContract.Model, FreeConsultDetailsListContract.View> {
     @Inject

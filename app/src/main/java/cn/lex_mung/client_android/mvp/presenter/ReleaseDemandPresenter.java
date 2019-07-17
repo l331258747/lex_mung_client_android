@@ -278,10 +278,16 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                     public void onNext(BaseResponse<List<BusinessEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             if (type == 1) {
-                                adapter.setNewData(baseResponse.getData());
-                                if (baseResponse.getData().size() == 1) {
-                                    requireTypeId = baseResponse.getData().get(0).getRequireTypeId();
-                                    requireTypeName = baseResponse.getData().get(0).getRequireTypeName();
+                                List<BusinessEntity> entities = new ArrayList<>();
+                                for (BusinessEntity entity : baseResponse.getData()) {
+                                    if (entity.getMinAmount() > 0) {
+                                        entities.add(entity);
+                                    }
+                                }
+                                adapter.setNewData(entities);
+                                if (entities.size() == 1) {
+                                    requireTypeId = entities.get(0).getRequireTypeId();
+                                    requireTypeName = entities.get(0).getRequireTypeName();
                                 }
                             } else {
                                 List<BusinessEntity> entities = new ArrayList<>();
@@ -327,7 +333,8 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
         Map<String, Object> map = new HashMap<>();
         map.put("memberId", userInfoDetailsEntity.getMemberId());
         map.put("lmemberId", lawsHomePagerBaseEntityId);
-        map.put("type", type == -1 ? 1 : type);
+//        map.put("type", type == -1 ? 1 : type);
+        map.put("type", type);
         map.put("requireTypeId", requireTypeId);
 
         if (organizationLevId != 0) {
@@ -351,28 +358,30 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                     public void onNext(BaseResponse<ReleaseDemandOrgMoneyEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             entity = baseResponse.getData();
-                            if (type == 1 || type == -1) {
-                                couponType = 1;
-                                couponId = -1;
-                                organizationId = baseResponse.getData().getOrganizationId();
-                                if (organizationLevId != -1) {
-                                    organizationLevId = entity.getOrganizationLevId();
-                                }
-                                payMoney = entity.getAmount();
-                                mRootView.setOrderMoney(String.format(mApplication.getString(R.string.text_yuan_money), AppUtils.formatAmount(mApplication, entity.getAmount())));
-                                mRootView.setDiscountWay(entity.getOrganizationLevelName());
-                                if (entity.getAmountDis() > 0) {
-                                    deduction = entity.getAmountDis();
-                                    mRootView.setDiscountMoney(String.format(mApplication.getString(R.string.text_discount_money), AppUtils.formatAmount(mApplication, entity.getAmountDis())));
-                                } else {
-                                    mRootView.hideDiscountMoney();
-                                    deduction = 0;
-                                }
-                                amountNew = entity.getAmountNew();
-                                mRootView.setClubCardBalance(amountNew);
-                                if (type == 1 && baseResponse.getData().getOrgStatus() == 0)//权益卡不可用获取最优优惠券
+//                            if (type == 1 || type == -1) {
+                            if (type == 1) {
+                                if(baseResponse.getData().getOrgStatus() == 1){
+                                    couponType = 1;
+                                    couponId = -1;
+                                    organizationId = baseResponse.getData().getOrganizationId();
+                                    if (organizationLevId != -1) {
+                                        organizationLevId = entity.getOrganizationLevId();
+                                    }
+                                    payMoney = entity.getAmount();
+                                    mRootView.setOrderMoney(String.format(mApplication.getString(R.string.text_yuan_money), AppUtils.formatAmount(mApplication, entity.getAmount())));
+                                    mRootView.setDiscountWay(entity.getOrganizationLevelName());
+                                    if (entity.getAmountDis() > 0) {
+                                        deduction = entity.getAmountDis();
+                                        mRootView.setDiscountMoney(String.format(mApplication.getString(R.string.text_discount_money), AppUtils.formatAmount(mApplication, entity.getAmountDis())));
+                                    } else {
+                                        mRootView.hideDiscountMoney();
+                                        deduction = 0;
+                                    }
+                                    amountNew = entity.getAmountNew();
+                                    mRootView.setClubCardBalance(amountNew);
+                                }else{
                                     getReleaseDemandOrgMoney(2);
-
+                                }
                             } else if (type == 2) {
                                 couponType = 2;
                                 couponId = entity.getCouponId();

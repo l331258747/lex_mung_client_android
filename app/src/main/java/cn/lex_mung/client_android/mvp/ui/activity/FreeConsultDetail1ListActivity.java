@@ -27,6 +27,7 @@ import cn.lex_mung.client_android.mvp.presenter.FreeConsultDetail1ListPresenter;
 import cn.lex_mung.client_android.mvp.ui.adapter.FreeConsultDetail1ListAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.DeleteDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import cn.lex_mung.client_android.utils.BuryingPointHelp;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
@@ -79,6 +80,7 @@ public class FreeConsultDetail1ListActivity extends BaseActivity<FreeConsultDeta
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_btn:
+                BuryingPointHelp.getInstance().onEvent(mActivity, "free_consulation_detail","free_consulation_detail_post_click");
                 if (DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
                     if(isShow){
                         bundle.clear();
