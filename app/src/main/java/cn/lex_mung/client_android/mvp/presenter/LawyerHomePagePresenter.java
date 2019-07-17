@@ -296,7 +296,6 @@ public class LawyerHomePagePresenter extends BasePresenter<LawyerHomePageContrac
         if (isFastClick()) return;
         Bundle bundle = new Bundle();
         if (isLogin) {
-            MobclickAgent.onEvent(mApplication, "w_y_shouye_zjzx_detail_boda");
             expertPrice();
         } else {
             bundle.clear();

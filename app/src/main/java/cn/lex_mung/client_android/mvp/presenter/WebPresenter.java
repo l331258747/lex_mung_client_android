@@ -54,7 +54,7 @@ public class WebPresenter extends BasePresenter<WebContract.Model, WebContract.V
         isLogin = DataHelper.getBooleanSF(mApplication, DataHelperTags.IS_LOGIN_SUCCESS);
     }
 
-    public void getUserInfoDetail() {
+    public void getUserInfoDetail(onClickListener onClickLisenter) {
         mModel.getUserInfoDetail()
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))
@@ -70,9 +70,15 @@ public class WebPresenter extends BasePresenter<WebContract.Model, WebContract.V
                             String json = new Gson().toJson(baseResponse.getData());
                             DataHelper.setStringSF(mApplication, DataHelperTags.USER_INFO_DETAIL, json);
                             AppUtils.post(LOGIN_INFO, LOGIN);
+
+                            onClickLisenter.onClick();
                         }
                     }
                 });
+    }
+
+    public interface onClickListener{
+        void onClick();
     }
 
     @Override

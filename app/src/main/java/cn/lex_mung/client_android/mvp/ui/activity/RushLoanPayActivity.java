@@ -260,7 +260,7 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
                 , StringUtils.getStringNum(payPrice)));
         tvDiscountMoney.setText(String.format(
                 AppUtils.getString(mActivity, R.string.text_discount_money)
-                , StringUtils.getStringNum(payPrice)));
+                , StringUtils.getStringNum(couponPrice)));
     }
 
     //获取优惠价格

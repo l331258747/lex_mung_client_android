@@ -99,7 +99,10 @@ public class CouponModeCardPresenter extends BasePresenter<CouponModeCardContrac
             if (isFastClick()) return;
             ReleaseDemandOrgMoneyEntityOptimal entity = adapter.getItem(position);
             if (entity == null) return;
-            if(entity.getOrgStatus() == 0) return;
+            if(entity.getOrgStatus() == 0){
+                mRootView.showMessage("您选择的律师不是"+ entity.getOrganizationLevelName()+"专属服务律师");
+                return;
+            }
             CouponModeEntity couponModeEntity = new CouponModeEntity();
             couponModeEntity.setOrgId(entity.getOrganizationId());
             couponModeEntity.setOrgLevId(entity.getOrganizationLevId());

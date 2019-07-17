@@ -55,7 +55,7 @@ public class ReleaseDemandOrgMoneyEntityCoupon {
     private int fullNum;
     private int reduceNum;
     private String preferentialContent;
-    private int preferentialDiscount;
+    private double preferentialDiscount;
     private int deviceId;
     private String startTime;
     private String endTime;
@@ -161,11 +161,11 @@ public class ReleaseDemandOrgMoneyEntityCoupon {
         this.preferentialContent = preferentialContent;
     }
 
-    public int getPreferentialDiscount() {
+    public double getPreferentialDiscount() {
         return preferentialDiscount;
     }
 
-    public void setPreferentialDiscount(int preferentialDiscount) {
+    public void setPreferentialDiscount(double preferentialDiscount) {
         this.preferentialDiscount = preferentialDiscount;
     }
 

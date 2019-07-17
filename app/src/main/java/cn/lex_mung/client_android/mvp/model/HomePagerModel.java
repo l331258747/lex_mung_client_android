@@ -5,6 +5,7 @@ import android.app.Application;
 import com.google.gson.Gson;
 
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
+import cn.lex_mung.client_android.mvp.model.entity.home.OnlineUrlEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.RequirementTypeV3Entity;
 import io.reactivex.Observable;
 import me.zl.mvp.integration.IRepositoryManager;
@@ -72,7 +73,7 @@ public class HomePagerModel extends BaseModel implements HomePagerContract.Model
     }
 
     @Override
-    public Observable<BaseResponse<String>> clientOnlineUrl() {
+    public Observable<BaseResponse<OnlineUrlEntity>> clientOnlineUrl() {
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .clientOnlineUrl();

@@ -1,5 +1,6 @@
 package cn.lex_mung.client_android.mvp.ui.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -248,6 +249,11 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
         }
     }
 
+    @Override
+    public Activity getActivity() {
+        return this;
+    }
+
 
     public class AndroidToJs extends Object {
 
@@ -273,11 +279,34 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             }
         }
 
+        boolean isSetToken;
+
+        @JavascriptInterface
+        public void setToken(String token1){
+            LogUtil.e("token:"+token1);
+
+            DataHelper.setBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS, true);
+            DataHelper.setStringSF(mActivity, DataHelperTags.TOKEN, token1);
+//            mPresenter.getUserInfoDetail();
+            isSetToken = true;
+        }
+
         @JavascriptInterface
         public void goQuickPay(String string) {
             if (TextUtils.isEmpty(string))
                 return;
 
+            if(isSetToken){
+                mPresenter.getUserInfoDetail(()->{
+                    goRushLoanPayActivity(string);
+                });
+                isSetToken = false;
+            }else{
+                goRushLoanPayActivity(string);
+            }
+        }
+
+        public void goRushLoanPayActivity(String string){
             WebGoPayEntity businessEntity = GsonUtil.convertString2Object(string, WebGoPayEntity.class);
 
             if (isFastClick()) return;
@@ -345,13 +374,6 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             bundle.putString(BundleTags.TITLE, "快速电话咨询");
             bundle.putBoolean(BundleTags.IS_SHARE, false);
             launchActivity(new Intent(mActivity, WebActivity.class), bundle);
-        }
-
-        @JavascriptInterface
-        public void setToken(String token){
-            DataHelper.setStringSF(mActivity, DataHelperTags.TOKEN, token);
-            DataHelper.setBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS, true);
-            mPresenter.getUserInfoDetail();
         }
 
         //goOrderDetail()  goOrderList()

@@ -50,6 +50,7 @@ import cn.lex_mung.client_android.mvp.model.entity.free.FreeTextBizinfoEntity;
 import cn.lex_mung.client_android.mvp.model.entity.help.HelpStepEntity;
 import cn.lex_mung.client_android.mvp.model.entity.help.HelpStepLawyerEntity;
 import cn.lex_mung.client_android.mvp.model.entity.help.HirstoryDemandEntity;
+import cn.lex_mung.client_android.mvp.model.entity.home.OnlineUrlEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.RequirementTypeV3Entity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocGetEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocUploadEntity;
@@ -736,7 +737,7 @@ public interface CommonService {
     //GET
     //获取在线咨询的H5链接(百度商桥地址)
     @GET("common/online/url")
-    Observable<BaseResponse<String>> clientOnlineUrl();
+    Observable<BaseResponse<OnlineUrlEntity>> clientOnlineUrl();
 
     //https://cpu.lex-mung.com/client/org/amount
     ///client/org/amount

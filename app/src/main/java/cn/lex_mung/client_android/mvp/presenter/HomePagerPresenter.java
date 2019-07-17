@@ -23,6 +23,7 @@ import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UnreadMessageCountEntity;
+import cn.lex_mung.client_android.mvp.model.entity.home.OnlineUrlEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.RequirementTypeV3Entity;
 import cn.lex_mung.client_android.utils.GsonUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -242,11 +243,11 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<String>>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<OnlineUrlEntity>>(mErrorHandler) {
                     @Override
-                    public void onNext(BaseResponse<String> baseResponse) {
+                    public void onNext(BaseResponse<OnlineUrlEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
-                            DataHelper.setStringSF(mApplication, DataHelperTags.ONLINE_URL,baseResponse.getData());
+                            DataHelper.setStringSF(mApplication, DataHelperTags.ONLINE_URL,baseResponse.getData().getUrl());
                         }
                     }
                 });
