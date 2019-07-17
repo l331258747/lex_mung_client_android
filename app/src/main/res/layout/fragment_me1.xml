@@ -241,7 +241,7 @@
             android:layout_height="@dimen/qb_px_1"
             app:layout_constraintTop_toBottomOf="@+id/view_order"/>
 
-        <!--优惠卷-->
+        <!--优惠券-->
         <View
             android:id="@+id/view_coupons"
             android:layout_width="match_parent"

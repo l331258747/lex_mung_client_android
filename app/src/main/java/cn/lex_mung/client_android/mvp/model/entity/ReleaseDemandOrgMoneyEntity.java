@@ -100,7 +100,6 @@ public class ReleaseDemandOrgMoneyEntity {
     private String url;
     private String imageName;
 
-
     public int getCouponId() {
         return couponId;
     }

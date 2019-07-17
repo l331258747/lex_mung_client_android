@@ -29,6 +29,8 @@ public class PayTypeView2 extends LinearLayout {
     PayTypeAdapter adapter;
     List<PayTypeEntity> list;
 
+    boolean isFast;//用来判断是否初始化，第一次添加集团卡的时候变
+
     public PayTypeView2(Context context) {
         this(context, null);
     }
@@ -57,6 +59,7 @@ public class PayTypeView2 extends LinearLayout {
             }
         });
 
+        isFast = false;
         setPayTypeData();
     }
 
@@ -98,7 +101,17 @@ public class PayTypeView2 extends LinearLayout {
         }else{
             list.add(entity);
         }
-        adapter.notifyDataSetChanged();
+
+        if(entity.getType() == 6 && !isFast){//第一次添加集团卡，默认选中，
+            changeData(list.size() - 1);
+            if(itemOnClick != null){
+                itemOnClick.onClick(list.get(list.size() - 1).getType(),list.get(list.size() - 1).getGroupId());
+            }
+            isFast = true;
+        }else{
+            adapter.notifyDataSetChanged();
+        }
+
     }
 
     public void removePayTYpeData(int type){
@@ -108,6 +121,9 @@ public class PayTypeView2 extends LinearLayout {
                     if(list.get(i).isSelected()){
                         list.remove(i);
                         changeData(0);//当为删除项为选中状态时，默认选中第一项
+                        if(itemOnClick != null){
+                            itemOnClick.onClick(list.get(0).getType(),list.get(0).getGroupId());
+                        }
                     }else{
                         list.remove(i);
                         adapter.notifyDataSetChanged();//非选中状态，保持原来选中项
@@ -133,6 +149,8 @@ public class PayTypeView2 extends LinearLayout {
         }
         list.get(position).setSelected(true);
         adapter.notifyDataSetChanged();
+
+
     }
 
 

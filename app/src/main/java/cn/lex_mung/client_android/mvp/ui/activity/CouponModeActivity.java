@@ -94,16 +94,16 @@ public class CouponModeActivity extends BaseActivity<CouponModePresenter> implem
             requireTypeId = bundleIntent.getInt(BundleTags.REQUIRE_TYPE_ID);
         }
 
-        fragments.add(CouponModeCouponFragment.newInstance());
         fragments.add(CouponModeCardFragment.newInstance());
-        titles.add("优惠卷");
+        fragments.add(CouponModeCouponFragment.newInstance());
         titles.add("优惠卡");
+        titles.add("优惠券");
         viewPager.setOffscreenPageLimit(1);
         viewPager.setAdapter(new AdapterViewPager(getSupportFragmentManager(), fragments));
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setMyStyle(viewPager,titles);
 
-        if(selectedType == 1){
+        if(selectedType == 2){
             viewPager.setCurrentItem(1);
         }
     }
