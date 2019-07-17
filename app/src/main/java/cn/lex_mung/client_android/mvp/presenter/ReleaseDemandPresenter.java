@@ -27,6 +27,7 @@ import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.PermissionUtil;
 import me.zl.mvp.utils.RxLifecycleUtils;
+import me.zl.mvp.utils.StringUtils;
 import okhttp3.RequestBody;
 
 import javax.inject.Inject;
@@ -235,7 +236,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                 + mApplication.getString(R.string.text_lex_transaction_process)
                 + "</font>";
         mRootView.setTip(string);
-        mRootView.setOrderMoney(String.format(mApplication.getString(R.string.text_yuan_money), AppUtils.formatAmount(mApplication, 0)));
+        mRootView.setOrderMoney(String.format(mApplication.getString(R.string.text_yuan_money), StringUtils.getStringNum(0)));
         releaseDemandList(requireTypeId);//获取子服务类型
     }
 
@@ -368,11 +369,11 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                                         organizationLevId = entity.getOrganizationLevId();
                                     }
                                     payMoney = entity.getAmount();
-                                    mRootView.setOrderMoney(String.format(mApplication.getString(R.string.text_yuan_money), AppUtils.formatAmount(mApplication, entity.getAmount())));
+                                    mRootView.setOrderMoney(String.format(mApplication.getString(R.string.text_yuan_money), StringUtils.getStringNum(entity.getAmount())));
                                     mRootView.setDiscountWay(entity.getOrganizationLevelName());
                                     if (entity.getAmountDis() > 0) {
                                         deduction = entity.getAmountDis();
-                                        mRootView.setDiscountMoney(String.format(mApplication.getString(R.string.text_discount_money), AppUtils.formatAmount(mApplication, entity.getAmountDis())));
+                                        mRootView.setDiscountMoney(String.format(mApplication.getString(R.string.text_discount_money), StringUtils.getStringNum(entity.getAmountDis())));
                                     } else {
                                         mRootView.hideDiscountMoney();
                                         deduction = 0;
@@ -388,11 +389,11 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                                 organizationId = -1;
                                 organizationLevId = -1;
                                 payMoney = entity.getPayment();
-                                mRootView.setOrderMoney(String.format(mApplication.getString(R.string.text_yuan_money), AppUtils.formatAmount(mApplication, entity.getPayment())));
+                                mRootView.setOrderMoney(String.format(mApplication.getString(R.string.text_yuan_money), StringUtils.getStringNum(entity.getPayment())));
                                 mRootView.setDiscountWay(entity.getCouponName());
                                 if (entity.getDeductionAmount() > 0) {
                                     deduction = entity.getDeductionAmount();
-                                    mRootView.setDiscountMoney(String.format(mApplication.getString(R.string.text_discount_money), AppUtils.formatAmount(mApplication, entity.getDeductionAmount())));
+                                    mRootView.setDiscountMoney(String.format(mApplication.getString(R.string.text_discount_money), StringUtils.getStringNum(entity.getDeductionAmount())));
                                 } else {
                                     mRootView.hideDiscountMoney();
                                     deduction = 0;
@@ -580,7 +581,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                     public void onNext(BaseResponse<PayEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             DataHelper.setStringSF(mApplication, DataHelperTags.ORDER_TYPE, requireTypeName);
-                            DataHelper.setStringSF(mApplication, DataHelperTags.ORDER_MONEY, String.format(mApplication.getString(R.string.text_yuan_money), AppUtils.formatAmount(mApplication, entity.getAmount())));
+                            DataHelper.setStringSF(mApplication, DataHelperTags.ORDER_MONEY, String.format(mApplication.getString(R.string.text_yuan_money), StringUtils.getStringNum(entity.getAmount())));
                             DataHelper.setStringSF(mApplication, DataHelperTags.ORDER_NO, baseResponse.getData().getOrderNo());
                             if (payType == 1) {//微信
                                 DataHelper.setStringSF(mApplication, DataHelperTags.APP_ID, baseResponse.getData().getAppid());

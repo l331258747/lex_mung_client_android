@@ -34,7 +34,6 @@ public class ServicePriceChildAdapter extends BaseQuickAdapter<BusinessEntity, B
                 helper.setText(R.id.item_tv_price, item.getMinAmountStr() + "元/" + item.getUnit());
             }
 
-//            helper.setText(R.id.item_tv_price, AppUtils.formatAmount(mContext, item.getMinAmount()) + "元/" + item.getUnit());
             helper.setTextColor(R.id.item_tv_price, AppUtils.getColor(mContext, R.color.c_323232));
         }
     }

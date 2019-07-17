@@ -31,7 +31,6 @@ public class ReleaseDemandServiceTypeAdapter extends BaseQuickAdapter<BusinessEn
     protected void convert(BaseViewHolder helper, BusinessEntity item) {
         helper.setText(R.id.item_tv_title, item.getRequireTypeName());
         helper.setText(R.id.item_tv_content, item.getRequireTypeDescription());
-//        helper.setText(R.id.item_tv_money, AppUtils.formatAmount(mContext, item.getMinAmount()));
         helper.setText(R.id.item_tv_money, item.getMinAmountStr());
         if (type == 1) {//固定价格
             helper.setText(R.id.item_tv_unit, String.format(mContext.getString(R.string.text_yuan_unit), item.getUnit()));

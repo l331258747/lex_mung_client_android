@@ -37,6 +37,7 @@ import cn.lex_mung.client_android.utils.LogUtil;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
+import me.zl.mvp.utils.StringUtils;
 
 import static cn.lex_mung.client_android.app.EventBusTags.ORDER_COUPON.ORDER_COUPON;
 import static cn.lex_mung.client_android.app.EventBusTags.ORDER_COUPON.REFRESH_COUPON;
@@ -98,9 +99,9 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
             mPresenter.setType(type = bundleIntent.getInt(BundleTags.TYPE));
             mPresenter.setMobile(bundleIntent.getString(BundleTags.MOBILE));
 
-            tvOrderMoney.setText("¥ "+bundleIntent.getFloat(BundleTags.MONEY));
+            tvOrderMoney.setText("¥ "+ StringUtils.getStringNum(bundleIntent.getFloat(BundleTags.MONEY)));
 
-            tvPayPrice.setText("¥ "+bundleIntent.getFloat(BundleTags.MONEY));
+            tvPayPrice.setText("¥ "+StringUtils.getStringNum(bundleIntent.getFloat(BundleTags.MONEY)));
             tvCommodity.setText(bundleIntent.getString(BundleTags.TITLE));
         }
 
@@ -256,10 +257,10 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
 
         tvOrderMoney.setText(String.format(
                 AppUtils.getString(mActivity, R.string.text_yuan_money)
-                , AppUtils.formatAmount(mActivity, payPrice)));
+                , StringUtils.getStringNum(payPrice)));
         tvDiscountMoney.setText(String.format(
                 AppUtils.getString(mActivity, R.string.text_discount_money)
-                , AppUtils.formatAmount(mActivity, couponPrice)));
+                , StringUtils.getStringNum(payPrice)));
     }
 
     //获取优惠价格

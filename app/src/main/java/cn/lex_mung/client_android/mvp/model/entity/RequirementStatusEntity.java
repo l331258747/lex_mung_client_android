@@ -1,5 +1,7 @@
 package cn.lex_mung.client_android.mvp.model.entity;
 
+import android.text.TextUtils;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -50,6 +52,12 @@ public class RequirementStatusEntity implements Serializable {
 
     public String getAmount() {
         return amount;
+    }
+
+    public double getAmountNum(){
+        if(TextUtils.isEmpty(amount))
+            return 0;
+        return Double.valueOf(amount);
     }
 
     public void setAmount(String amount) {

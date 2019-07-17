@@ -42,6 +42,7 @@ import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.DeviceUtils;
+import me.zl.mvp.utils.StringUtils;
 
 import static cn.lex_mung.client_android.app.EventBusTags.ORDER_COUPON.ORDER_COUPON;
 import static cn.lex_mung.client_android.app.EventBusTags.ORDER_COUPON.REFRESH_COUPON;
@@ -140,10 +141,10 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
 
         tvOrderMoney.setText(String.format(
                 AppUtils.getString(mActivity, R.string.text_yuan_money)
-                , AppUtils.formatAmount(mActivity, payPrice)));
+                , StringUtils.getStringNum(payPrice)));
         tvDiscountMoney.setText(String.format(
                 AppUtils.getString(mActivity, R.string.text_discount_money)
-                , AppUtils.formatAmount(mActivity, couponPrice)));
+                , StringUtils.getStringNum(couponPrice)));
     }
 
     //获取优惠价格

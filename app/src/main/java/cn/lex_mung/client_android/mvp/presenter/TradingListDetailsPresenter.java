@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.mvp.contract.TradingListDetailsContract;
 import cn.lex_mung.client_android.mvp.model.entity.TradingListEntity;
+import me.zl.mvp.utils.StringUtils;
 
 @ActivityScope
 public class TradingListDetailsPresenter extends BasePresenter<TradingListDetailsContract.Model, TradingListDetailsContract.View> {
@@ -52,12 +53,12 @@ public class TradingListDetailsPresenter extends BasePresenter<TradingListDetail
             mRootView.setOrderAmount(bean.getBuyerPayAmount() + "元"
                     , "收入金额"
                     , AppUtils.getColor(mApplication, R.color.c_06a66a)
-                    , "+  " + AppUtils.formatAmount(mApplication, bean.getBuyerPayAmount()));
+                    , "+  " + StringUtils.getStringNum(bean.getBuyerPayAmount()));
         } else {
             mRootView.setOrderAmount(bean.getBuyerPayAmount() + "元"
                     , "支出金额"
                     , AppUtils.getColor(mApplication, R.color.c_323232)
-                    , AppUtils.formatAmount(mApplication, bean.getBuyerPayAmount()));
+                    , StringUtils.getStringNum(bean.getBuyerPayAmount()));
         }
         if (!TextUtils.isEmpty(bean.getPayStatus())) {
             mRootView.setOrderStatus(bean.getPayStatus());

@@ -11,6 +11,7 @@ import cn.lex_mung.client_android.mvp.model.entity.RequirementStatusEntity;
 import java.util.List;
 
 import me.zl.mvp.utils.AppUtils;
+import me.zl.mvp.utils.StringUtils;
 
 public class RequirementAdapter extends BaseQuickAdapter<RequirementStatusEntity, BaseViewHolder> {
 
@@ -40,7 +41,7 @@ public class RequirementAdapter extends BaseQuickAdapter<RequirementStatusEntity
             helper.setText(R.id.item_tv_service_type, item.getRequirementTypeName());
         }
         if (!TextUtils.isEmpty(item.getAmount())) {
-            helper.setText(R.id.item_tv_price, AppUtils.formatAmount(mContext, item.getAmount()) + "元");
+            helper.setText(R.id.item_tv_price, StringUtils.getStringNum(item.getAmountNum()) + "元");
             helper.getView(R.id.item_ll_price).setVisibility(View.VISIBLE);
         } else {
             helper.getView(R.id.item_ll_price).setVisibility(View.GONE);

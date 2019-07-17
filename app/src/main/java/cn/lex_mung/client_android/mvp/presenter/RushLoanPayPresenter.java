@@ -58,6 +58,7 @@ import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.PermissionUtil;
 import me.zl.mvp.utils.RxLifecycleUtils;
+import me.zl.mvp.utils.StringUtils;
 import okhttp3.RequestBody;
 
 import static cn.lex_mung.client_android.app.EventBusTags.PAY_INFO.PAY_CONFIRM;
@@ -117,7 +118,7 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
 
     public void onCreate() {
         mRootView.showPayLayout();
-        mRootView.setOrderMoney(String.format(mApplication.getString(R.string.text_yuan_money), AppUtils.formatAmount(mApplication, 0)));
+        mRootView.setOrderMoney(String.format(mApplication.getString(R.string.text_yuan_money), StringUtils.getStringNum(0)));
     }
 
 
@@ -261,7 +262,7 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
                     public void onNext(BaseResponse<PayEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             DataHelper.setStringSF(mApplication, DataHelperTags.ORDER_TYPE, requireTypeName);
-                            DataHelper.setStringSF(mApplication, DataHelperTags.ORDER_MONEY, String.format(mApplication.getString(R.string.text_yuan_money), AppUtils.formatAmount(mApplication, payMoney)));
+                            DataHelper.setStringSF(mApplication, DataHelperTags.ORDER_MONEY, String.format(mApplication.getString(R.string.text_yuan_money), StringUtils.getStringNum(payMoney)));
                             DataHelper.setStringSF(mApplication, DataHelperTags.ORDER_NO, baseResponse.getData().getOrderNo());
                             if (payType == 1) {//微信
                                 DataHelper.setStringSF(mApplication, DataHelperTags.APP_ID, baseResponse.getData().getAppid());
@@ -518,7 +519,7 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
                         if (baseResponse.isSuccess()) {
                             DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.FAST_CONSULT);
                             DataHelper.setStringSF(mApplication, DataHelperTags.ORDER_TYPE, requireTypeName);
-                            DataHelper.setStringSF(mApplication, DataHelperTags.ORDER_MONEY, String.format(mApplication.getString(R.string.text_yuan_money), AppUtils.formatAmount(mApplication, payMoney)));
+                            DataHelper.setStringSF(mApplication, DataHelperTags.ORDER_MONEY, String.format(mApplication.getString(R.string.text_yuan_money), StringUtils.getStringNum(payMoney)));
 
                             Bundle bundle = new Bundle();
                             bundle.putString(BundleTags.TYPE, "FAST_CONSULT");
@@ -581,10 +582,7 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
     public void setMoney() {
         mRootView.setOrderMoney(String.format(
                 AppUtils.getString(mApplication, R.string.text_yuan_money)
-                , AppUtils.formatAmount(mApplication, payMoney)),payMoney);
-//        mRootView.setMoney(String.format(
-//                AppUtils.getString(mApplication, R.string.text_yuan_money)
-//                , AppUtils.formatAmount(mApplication, payMoney)));
+                , StringUtils.getStringNum(payMoney)),payMoney);
     }
 
     //获取优惠券

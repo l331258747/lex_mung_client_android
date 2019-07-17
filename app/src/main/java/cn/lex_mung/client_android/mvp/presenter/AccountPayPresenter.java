@@ -23,6 +23,7 @@ import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.PermissionUtil;
 import me.zl.mvp.utils.RxLifecycleUtils;
+import me.zl.mvp.utils.StringUtils;
 import okhttp3.RequestBody;
 
 import javax.inject.Inject;
@@ -80,7 +81,7 @@ public class AccountPayPresenter extends BasePresenter<AccountPayContract.Model,
         this.payMoney = payMoney;
         mRootView.setOrderMoney(String.format(
                 AppUtils.getString(mApplication, R.string.text_yuan_money)
-                , AppUtils.formatAmount(mApplication, payMoney)));
+                , StringUtils.getStringNum(payMoney)));
     }
 
     public void setPayType(int payType) {

@@ -104,7 +104,7 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
                             balance = baseResponse.getData().getBalanceAmount();
                             mRootView.setBalance(String.format(
                                     AppUtils.getString(mApplication, R.string.text_yuan_money)
-                                    , AppUtils.formatAmount(mApplication, balance)));
+                                    , StringUtils.getStringNum(balance)));
                         }
                     }
                 });

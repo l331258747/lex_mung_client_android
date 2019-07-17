@@ -14,6 +14,7 @@ import me.zl.mvp.http.imageloader.ImageLoader;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.RxLifecycleUtils;
+import me.zl.mvp.utils.StringUtils;
 import okhttp3.RequestBody;
 
 import javax.inject.Inject;
@@ -46,7 +47,7 @@ public class AccountWithdrawalPresenter extends BasePresenter<AccountWithdrawalC
 
     public void setBalance(double balance) {
         this.balance = balance;
-        mRootView.setBalance(AppUtils.formatAmount(mApplication, balance));
+        mRootView.setBalance(StringUtils.getStringNum(balance));
     }
 
     public void withdrawal(String name, String account, String ua) {

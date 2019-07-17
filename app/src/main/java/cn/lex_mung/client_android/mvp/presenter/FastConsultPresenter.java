@@ -27,6 +27,7 @@ import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.PermissionUtil;
 import me.zl.mvp.utils.RxLifecycleUtils;
+import me.zl.mvp.utils.StringUtils;
 import okhttp3.RequestBody;
 
 import javax.inject.Inject;
@@ -119,10 +120,7 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
         payMoney = solutionTypeEntityList.get(position).getPrice();
         mRootView.setOrderMoney(String.format(
                 AppUtils.getString(mApplication, R.string.text_yuan_money)
-                , AppUtils.formatAmount(mApplication, payMoney)),payMoney);
-//        mRootView.setMoney(String.format(
-//                AppUtils.getString(mApplication, R.string.text_yuan_money)
-//                , AppUtils.formatAmount(mApplication, payMoney)));
+                , StringUtils.getStringNum(payMoney)),payMoney);
     }
 
     public List<String> getSolutionTypeStringList() {
@@ -170,7 +168,7 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
                             balance = baseResponse.getData().getBalanceAmount();
                             mRootView.setBalance(String.format(
                                     AppUtils.getString(mApplication, R.string.text_remaining_amount)
-                                    , AppUtils.formatAmount(mApplication, balance)));
+                                    , StringUtils.getStringNum(balance)));
                         }
                     }
                 });
@@ -359,7 +357,8 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
                         if (baseResponse.isSuccess()) {
                             DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.FAST_CONSULT);
                             DataHelper.setStringSF(mApplication, DataHelperTags.ORDER_TYPE, consultType);
-                            DataHelper.setStringSF(mApplication, DataHelperTags.ORDER_MONEY, String.format(mApplication.getString(R.string.text_yuan_money), AppUtils.formatAmount(mApplication, payMoney)));
+                            DataHelper.setStringSF(mApplication, DataHelperTags.ORDER_MONEY, String.format(mApplication.getString(R.string.text_yuan_money), StringUtils.getStringNum(payMoney)
+                            ));
 
                             Bundle bundle = new Bundle();
                             bundle.putString(BundleTags.TYPE, "FAST_CONSULT");

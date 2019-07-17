@@ -19,6 +19,7 @@ import cn.lex_mung.client_android.mvp.model.entity.help.SolutionTypeBean;
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerListScreenActivity;
 
 import me.zl.mvp.utils.AppUtils;
+import me.zl.mvp.utils.StringUtils;
 
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO;
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_1;
@@ -135,10 +136,10 @@ public class LawyerListScreenAdapter extends BaseQuickAdapter<LawyerListScreenEn
                         }
                     });
                     if (item.getMinPrice() > 0) {
-                        etMinPrice.setText(AppUtils.formatAmount(mContext, item.getMinPrice()));
+                        etMinPrice.setText(StringUtils.getStringNum(item.getMinPrice()));
                     }
                     if (item.getMaxPrice() > 0) {
-                        etMaxPrice.setText(AppUtils.formatAmount(mContext, item.getMaxPrice()));
+                        etMaxPrice.setText(StringUtils.getStringNum(item.getMaxPrice()));
                     }
                     if ("requireTypeId".equals(getData().get(helper.getLayoutPosition() - 1).getPropKey())) {
                         if (getData().get(helper.getLayoutPosition() - 1).getPos() == 0) {
