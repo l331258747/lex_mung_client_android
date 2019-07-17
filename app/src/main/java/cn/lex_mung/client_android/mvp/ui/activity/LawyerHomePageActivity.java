@@ -46,6 +46,7 @@ import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.OnlyTextDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.NoScrollViewPager;
 import cn.lex_mung.client_android.mvp.ui.widget.SimpleFlowLayout;
+import cn.lex_mung.client_android.utils.BuryingPointHelp;
 import me.zl.mvp.base.AdapterViewPager;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
@@ -292,6 +293,28 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
                 break;
             case R.id.iv_call:
                 if(!isCall) return;
+
+                switch (requireTypeId) {
+                    case 2://诉讼
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "litigation_arbitration_lawyer_detail","litigation_arbitration_lawyer_detail_phone_click");
+                        break;
+                    case 6://企业顾问
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "enterprise_offline_lawyer_detail","enterprise_offline_lawyer_detail_phone_click");
+                        break;
+                    case 9://线下见面
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "meeting_offline_lawyer_detail","meeting_offline_lawyer_detail_phone_click");
+                        break;
+                    case 8://专家咨询 电话咨询
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "expert_consulation_lawyer_detail","expert_consulation_lawyer_detail_phone_click");
+                        break;
+                    case 100://免费咨询
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "free_consulation_lawyer_detail","free_consulation_lawyer_detail_phone_click");
+                        break;
+                    default:
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "search_lawyer_detail","search_lawyer_detail_phone_click");
+                        break;
+                }
+
                 mPresenter.setEntity();
                 break;
             case R.id.iv_release:
