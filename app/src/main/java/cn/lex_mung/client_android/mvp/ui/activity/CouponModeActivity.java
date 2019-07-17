@@ -140,7 +140,7 @@ public class CouponModeActivity extends BaseActivity<CouponModePresenter> implem
                 CouponModeEntity couponModeEntity = new CouponModeEntity();
                 couponModeEntity.setOrgId(-1);
                 couponModeEntity.setCouponId(-1);
-                couponModeEntity.setType(1);
+                couponModeEntity.setType(-1);
                 couponModeEntity.setOrgLevId(-1);
                 AppUtils.post(REFRESH, REFRESH_DISCOUNT_WAY2, couponModeEntity);
                 killMyself();

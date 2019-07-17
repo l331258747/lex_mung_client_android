@@ -247,7 +247,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
             if (entity == null) return;
             if (entity.getMinAmount() == 0) return;//价格为0返回
             if (type != 1) return;//固定价格返回
-            if(adapter.getPos() == position) return;//重复选择返回
+            if (adapter.getPos() == position) return;//重复选择返回
             adapter.setPos(position);
             adapter.notifyDataSetChanged();
             requireTypeId = entity.getRequireTypeId();//选择子服务类型后，用子id
@@ -327,14 +327,14 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
         Map<String, Object> map = new HashMap<>();
         map.put("memberId", userInfoDetailsEntity.getMemberId());
         map.put("lmemberId", lawsHomePagerBaseEntityId);
-        map.put("type", type);
+        map.put("type", type == -1 ? 1 : type);
         map.put("requireTypeId", requireTypeId);
 
         if (organizationLevId != 0) {
             map.put("organizationLevId", organizationLevId);
         }
 
-        if (couponId > 0) {
+        if (couponId != 0) {
             map.put("couponId", couponId);
         }
 
@@ -351,29 +351,28 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                     public void onNext(BaseResponse<ReleaseDemandOrgMoneyEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             entity = baseResponse.getData();
-                            if (type == 1) {
-                                if(baseResponse.getData().getOrgStatus() == 1){//权益卡可用
-                                    couponType = 1;
-                                    couponId = -1;
-                                    organizationId = baseResponse.getData().getOrganizationId();
-                                    if (organizationLevId != -1) {
-                                        organizationLevId = entity.getOrganizationLevId();
-                                    }
-                                    payMoney = entity.getAmount();
-                                    mRootView.setOrderMoney(String.format(mApplication.getString(R.string.text_yuan_money), AppUtils.formatAmount(mApplication, entity.getAmount())));
-                                    mRootView.setDiscountWay(entity.getOrganizationLevelName());
-                                    if (entity.getAmountDis() > 0) {
-                                        deduction = entity.getAmountDis();
-                                        mRootView.setDiscountMoney(String.format(mApplication.getString(R.string.text_discount_money), AppUtils.formatAmount(mApplication, entity.getAmountDis())));
-                                    } else {
-                                        mRootView.hideDiscountMoney();
-                                        deduction = 0;
-                                    }
-                                    amountNew = entity.getAmountNew();
-                                    mRootView.setClubCardBalance(amountNew);
-                                }else{//权益卡不可用获取最优优惠券
-                                    getReleaseDemandOrgMoney(2);
+                            if (type == 1 || type == -1) {
+                                couponType = 1;
+                                couponId = -1;
+                                organizationId = baseResponse.getData().getOrganizationId();
+                                if (organizationLevId != -1) {
+                                    organizationLevId = entity.getOrganizationLevId();
                                 }
+                                payMoney = entity.getAmount();
+                                mRootView.setOrderMoney(String.format(mApplication.getString(R.string.text_yuan_money), AppUtils.formatAmount(mApplication, entity.getAmount())));
+                                mRootView.setDiscountWay(entity.getOrganizationLevelName());
+                                if (entity.getAmountDis() > 0) {
+                                    deduction = entity.getAmountDis();
+                                    mRootView.setDiscountMoney(String.format(mApplication.getString(R.string.text_discount_money), AppUtils.formatAmount(mApplication, entity.getAmountDis())));
+                                } else {
+                                    mRootView.hideDiscountMoney();
+                                    deduction = 0;
+                                }
+                                amountNew = entity.getAmountNew();
+                                mRootView.setClubCardBalance(amountNew);
+                                if (type == 1 && baseResponse.getData().getOrgStatus() == 0)//权益卡不可用获取最优优惠券
+                                    getReleaseDemandOrgMoney(2);
+
                             } else if (type == 2) {
                                 couponType = 2;
                                 couponId = entity.getCouponId();
