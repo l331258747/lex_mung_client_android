@@ -43,6 +43,7 @@ import cn.lex_mung.client_android.mvp.model.entity.order.QuickPayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RequirementCreateEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.PayStatusActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.RushOrdersActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import cn.lex_mung.client_android.utils.DecimalUtil;
 import cn.lex_mung.client_android.utils.LogUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -533,6 +534,7 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
                             intent.putExtras(bundle);
                             mRootView.launchActivity(intent);
                             mRootView.killMyself();
+                            AppManager.getAppManager().killActivity(WebActivity.class);//用来关闭快速咨询h5页面
                         }
                     }
                 });
