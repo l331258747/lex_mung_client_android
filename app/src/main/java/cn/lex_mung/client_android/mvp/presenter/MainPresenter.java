@@ -86,6 +86,10 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
     public void onResume() {
         if (DataHelper.getBooleanSF(mApplication, DataHelperTags.IS_LOGIN_SUCCESS)) {
             UserInfoDetailsEntity entity = new Gson().fromJson(DataHelper.getStringSF(mApplication, DataHelperTags.USER_INFO_DETAIL), UserInfoDetailsEntity.class);
+            if(entity == null){
+                DataHelper.setBooleanSF(mApplication, DataHelperTags.IS_LOGIN_SUCCESS,false);
+                return;
+            }
             String userId = "lex" + entity.getMemberId();
             String password = AppUtils.encodeToMD5(entity.getMobile());
             JMessageClient.login(userId, password, new BasicCallback() {
