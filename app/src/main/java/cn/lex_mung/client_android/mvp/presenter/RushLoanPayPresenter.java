@@ -117,12 +117,6 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
         this.requireTypeName = requireTypeName;
     }
 
-    public void onCreate() {
-        mRootView.showPayLayout();
-        mRootView.setOrderMoney(String.format(mApplication.getString(R.string.text_yuan_money), StringUtils.getStringNum(0)));
-    }
-
-
     public void getUserBalance() {
         UserInfoDetailsEntity userInfoDetailsEntity = new Gson().fromJson(DataHelper.getStringSF(mApplication, DataHelperTags.USER_INFO_DETAIL), UserInfoDetailsEntity.class);
         mModel.getUserBalance(userInfoDetailsEntity.getMemberId())

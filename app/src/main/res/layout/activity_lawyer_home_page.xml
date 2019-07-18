@@ -66,26 +66,26 @@
         android:paddingBottom="@dimen/qb_px_10">
 
         <TextView
-            android:id="@+id/iv_release"
-            android:layout_width="@dimen/qb_px_325"
-            android:layout_height="@dimen/qb_px_80"
-            android:layout_weight="1"
-            android:background="@drawable/round_40_06a66a_all"
-            android:gravity="center"
-            android:scaleType="fitCenter"
-            android:text="发布需求"
-            android:textColor="@color/c_ff" />
-
-        <TextView
             android:id="@+id/iv_call"
             android:layout_width="@dimen/qb_px_325"
             android:layout_height="@dimen/qb_px_80"
-            android:layout_marginLeft="@dimen/qb_px_50"
             android:layout_weight="1"
             android:background="@drawable/round_40_f7f7f7_all"
             android:gravity="center"
             android:scaleType="fitCenter"
             android:text="拨打电话"
+            android:textColor="@color/c_ff" />
+
+        <TextView
+            android:id="@+id/iv_release"
+            android:layout_width="@dimen/qb_px_325"
+            android:layout_height="@dimen/qb_px_80"
+            android:layout_marginLeft="@dimen/qb_px_50"
+            android:layout_weight="1"
+            android:background="@drawable/round_40_06a66a_all"
+            android:gravity="center"
+            android:scaleType="fitCenter"
+            android:text="发布需求"
             android:textColor="@color/c_ff" />
 
 

@@ -324,16 +324,4 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
         }
     }
 
-    @Override
-    public void setOrderMoney(String money) {
-        tvOrderMoney.setText(money);
-    }
-
-    @Override
-    public void showPayLayout() {
-        btPay.setText(R.string.text_pay_order);
-        tvOrderMoney.setVisibility(View.VISIBLE);
-        tvOrderMoneyText.setText(getString(R.string.text_order_money));
-        tvOrderMoneyText.setTextColor(AppUtils.getColor(mActivity, R.color.c_323232));
-    }
 }

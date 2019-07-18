@@ -25,8 +25,6 @@ public interface RushLoanPayContract {
         void showToAppInfoDialog();
         void showLackOfBalanceDialog();
         void setBalance(double balance);
-        void setOrderMoney(String money);
-        void showPayLayout();
 
         void setCouponLayout(OrderCouponEntity bean, boolean showToast);
         int getCouponId();
