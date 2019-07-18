@@ -72,20 +72,20 @@ public class SolutionLIstPresenter extends BasePresenter<SolutionLIstContract.Mo
     }
 
     public void getSolutionList(boolean isAdd) {
-        if (isFlag) {
-            try {
-                String json = DataHelper.getStringSF(mApplication, DataHelperTags.HOME_PAGE_SOLUTION_LIST + "_" + id);
-                if (!TextUtils.isEmpty(json)) {
-                    List<SolutionListEntity> listBeans = new Gson().fromJson(json, new TypeToken<List<SolutionListEntity>>() {
-                    }.getType());
-                    if (listBeans != null) {
-                        mRootView.setAdapter(listBeans, false);
-                    }
-                }
-            } catch (Exception ignored) {
-            }
-            isFlag = false;
-        }
+//        if (isFlag) {
+//            try {
+//                String json = DataHelper.getStringSF(mApplication, DataHelperTags.HOME_PAGE_SOLUTION_LIST + "_" + id);
+//                if (!TextUtils.isEmpty(json)) {
+//                    List<SolutionListEntity> listBeans = new Gson().fromJson(json, new TypeToken<List<SolutionListEntity>>() {
+//                    }.getType());
+//                    if (listBeans != null) {
+//                        mRootView.setAdapter(listBeans, false);
+//                    }
+//                }
+//            } catch (Exception ignored) {
+//            }
+//            isFlag = false;
+//        }
         Map<String, Object> map = new HashMap<>();
         map.put("typeId", id);
         map.put("pageNum", pageNum);

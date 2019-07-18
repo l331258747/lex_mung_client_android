@@ -100,37 +100,37 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
     }
 
     public void getBanner() {
-        if (isFlag) {
-            try {
-                String bannerJson = DataHelper.getStringSF(mApplication, DataHelperTags.HOME_PAGE_BANNER);
-                if (!TextUtils.isEmpty(bannerJson)) {
-                    List<BannerEntity> listBeans = new Gson().fromJson(bannerJson, new TypeToken<List<BannerEntity>>() {
-                    }.getType());
-                    if (listBeans != null) {
-                        bannerList.clear();
-                        bannerList.addAll(listBeans);
-                        mRootView.setBannerAdapter(bannerList);
-                    }
-                }
-                String solutionTypeJson = DataHelper.getStringSF(mApplication, DataHelperTags.HOME_PAGE_SOLUTION_TYPE);
-                if (!TextUtils.isEmpty(solutionTypeJson)) {
-                    List<SolutionTypeEntity> listBeans = new Gson().fromJson(solutionTypeJson, new TypeToken<List<SolutionTypeEntity>>() {
-                    }.getType());
-                    if (listBeans != null) {
-                        mRootView.setSolutionType(listBeans);
-                    }
-                }
-                String requirementTypeJson = DataHelper.getStringSF(mApplication, DataHelperTags.HOME_PAGE_REQUIREMENT_TYPE);
-                if (!TextUtils.isEmpty(requirementTypeJson)) {
-                    RequirementTypeV3Entity listBeans = GsonUtil.convertString2Object(requirementTypeJson,RequirementTypeV3Entity.class);
-                    if (listBeans != null) {
-                        mRootView.setRequirementTypeAdapter(listBeans.getNormal());
-                    }
-                }
-            } catch (Exception ignored) {
-            }
-            isFlag = false;
-        }
+//        if (isFlag) {
+//            try {
+//                String bannerJson = DataHelper.getStringSF(mApplication, DataHelperTags.HOME_PAGE_BANNER);
+//                if (!TextUtils.isEmpty(bannerJson)) {
+//                    List<BannerEntity> listBeans = new Gson().fromJson(bannerJson, new TypeToken<List<BannerEntity>>() {
+//                    }.getType());
+//                    if (listBeans != null) {
+//                        bannerList.clear();
+//                        bannerList.addAll(listBeans);
+//                        mRootView.setBannerAdapter(bannerList);
+//                    }
+//                }
+//                String solutionTypeJson = DataHelper.getStringSF(mApplication, DataHelperTags.HOME_PAGE_SOLUTION_TYPE);
+//                if (!TextUtils.isEmpty(solutionTypeJson)) {
+//                    List<SolutionTypeEntity> listBeans = new Gson().fromJson(solutionTypeJson, new TypeToken<List<SolutionTypeEntity>>() {
+//                    }.getType());
+//                    if (listBeans != null) {
+//                        mRootView.setSolutionType(listBeans);
+//                    }
+//                }
+//                String requirementTypeJson = DataHelper.getStringSF(mApplication, DataHelperTags.HOME_PAGE_REQUIREMENT_TYPE);
+//                if (!TextUtils.isEmpty(requirementTypeJson)) {
+//                    RequirementTypeV3Entity listBeans = GsonUtil.convertString2Object(requirementTypeJson,RequirementTypeV3Entity.class);
+//                    if (listBeans != null) {
+//                        mRootView.setRequirementTypeAdapter(listBeans.getNormal());
+//                    }
+//                }
+//            } catch (Exception ignored) {
+//            }
+//            isFlag = false;
+//        }
         mModel.getBanner()
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))
