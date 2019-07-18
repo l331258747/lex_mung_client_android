@@ -115,6 +115,7 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
     }
 
     private boolean isCreated = false;
+    private boolean isLoadOver = false;
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -124,7 +125,11 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
         }
         if (isVisibleToUser) {
             BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "vip", getPair());
-            mPresenter.onResume();//bug1 出现后加的
+            if(!isLoadOver){
+                mPresenter.onResume();//bug1 出现后加的
+                isLoadOver = true;
+            }
+
         } else {
             BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "vip", getPair());
         }

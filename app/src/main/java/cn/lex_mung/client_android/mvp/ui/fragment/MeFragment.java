@@ -47,16 +47,8 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
     ImageView ivAvatar;
     @BindView(R.id.tv_user_name)
     TextView tvUserName;
-//    @BindView(R.id.iv_user_sex)
-//    ImageView ivUserSex;
-//    @BindView(R.id.tv_user_age)
-//    TextView tvUserAge;
-//    @BindView(R.id.ll_age)
-//    RelativeLayout llAge;
     @BindView(R.id.tv_user_region)
     TextView tvUserRegion;
-//    @BindView(R.id.tv_user_org)
-//    TextView tvUserOrg;
     @BindView(R.id.tv_edit_info)
     TextView tvEditInfo;
 
@@ -81,13 +73,28 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        mPresenter.getAbout();
+        isCreated = true;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        if(!getUserVisibleHint()) return;
         mPresenter.loginStatusDispose();
+    }
+
+    private boolean isCreated = false;
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (!isCreated) {
+            return;
+        }
+        if (isVisibleToUser) {
+            mPresenter.loginStatusDispose();
+            if(mPresenter.getAboutEntity() == null)
+                mPresenter.getAbout();
+        }
     }
 
     @OnClick({
@@ -209,22 +216,18 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
 
     @Override
     public void showLoginLayout() {
-//        llAge.setVisibility(View.VISIBLE);
         tvUserName.setVisibility(View.VISIBLE);
         tvUserRegion.setVisibility(View.VISIBLE);
-//        tvUserOrg.setVisibility(View.VISIBLE);
         tvEditInfo.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoginLayout() {
         ivAvatar.setImageResource(R.drawable.ic_avatar);
-//        llAge.setVisibility(View.GONE);
         tvUserName.setVisibility(View.VISIBLE);
         tvUserRegion.setVisibility(View.VISIBLE);
         tvUserName.setText("立即登录");
         tvUserRegion.setText("时光不回头，当下最重要。");
-//        tvUserOrg.setVisibility(View.GONE);
         tvEditInfo.setVisibility(View.GONE);
     }
 
@@ -251,42 +254,30 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
 
     @Override
     public void setOrg(String organizationName) {
-//        tvUserOrg.setText(organizationName);
-//        tvUserOrg.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void setAge(String age) {
-//        llAge.setVisibility(View.VISIBLE);
-//        tvUserAge.setText(age);
     }
 
     @Override
     public void hideOrgLayout() {
-//        tvUserOrg.setVisibility(View.GONE);
     }
 
     @Override
     public void hideAgeLayout() {
-//        llAge.setVisibility(View.GONE);
     }
 
     @Override
     public void setSex(int bg, int color, int icon) {
-//        llAge.setVisibility(View.VISIBLE);
-//        llAge.setBackgroundResource(bg);
-//        tvUserAge.setTextColor(color);
-//        ivUserSex.setImageResource(icon);
     }
 
     @Override
     public void hideSexIcon() {
-//        ivUserSex.setVisibility(View.GONE);
     }
 
     @Override
     public void showSexIcon() {
-//        ivUserSex.setVisibility(View.VISIBLE);
     }
 
     @Override

@@ -53,6 +53,7 @@ import cn.lex_mung.client_android.mvp.ui.dialog.HelpStepDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.myTabLayout.TabLayout;
 import cn.lex_mung.client_android.utils.BuryingPointHelp;
+import cn.lex_mung.client_android.utils.LogUtil;
 import me.zl.mvp.base.AdapterViewPager;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
@@ -115,21 +116,6 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         return inflater.inflate(R.layout.fragment_home_pager, container, false);
     }
 
-    private boolean isCreated = false;
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (!isCreated) {
-            return;
-        }
-        if (isVisibleToUser) {
-            BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "first_page",getPair());
-        } else {
-            BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "first_page",getPair());
-        }
-    }
-
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         isCreated = true;
@@ -142,11 +128,27 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
 
     }
 
+    private boolean isCreated = false;
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (!isCreated) {
+            return;
+        }
+        if (isVisibleToUser) {
+            BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "first_page",getPair());
+            mPresenter.onResume();
+        } else {
+            BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "first_page",getPair());
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
+        if(!getUserVisibleHint()) return;
         mPresenter.onResume();
-
     }
 
     private void initAdapter() {
@@ -404,7 +406,6 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         banner.start();
     }
 
-    boolean isClick = false;
     @Override
     public void setSolutionType(List<SolutionTypeEntity> list) {
 
@@ -432,15 +433,11 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
 
             @Override
             public void onPageSelected(int i) {
-                if(!isClick){//会执行两次
-                    BuryingPointHelp.getInstance().onEvent(mActivity, "solution_detail","solution_type_click");
-                    isClick = true;
-                }
+                BuryingPointHelp.getInstance().onEvent(mActivity, "solution_detail","solution_type_click");
             }
 
             @Override
             public void onPageScrollStateChanged(int i) {
-                isClick = false;
             }
         });
     }

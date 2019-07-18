@@ -117,6 +117,8 @@ public class FindLawyerFragment extends BaseFragment<FindLawyerPresenter> implem
     }
 
     private boolean isCreated = false;
+    //是否已经加载过
+    public boolean isLoadOver = false;
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -126,6 +128,10 @@ public class FindLawyerFragment extends BaseFragment<FindLawyerPresenter> implem
         }
         if (isVisibleToUser) {
             BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "search_lawyer",getPair());
+            if(!isLoadOver){
+                mPresenter.onCreate();
+                isLoadOver = true;
+            }
         } else {
             BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "search_lawyer",getPair());
         }
@@ -134,7 +140,6 @@ public class FindLawyerFragment extends BaseFragment<FindLawyerPresenter> implem
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         isCreated = true;
-        mPresenter.onCreate();
         initAdapter();
         initRecyclerView();
         lawyerListAdapter.setEmptyView(R.layout.layout_loading_view, (ViewGroup) recyclerView.getParent());
