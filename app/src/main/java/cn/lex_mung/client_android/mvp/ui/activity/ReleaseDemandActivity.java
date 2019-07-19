@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.aigestudio.wheelpicker.WheelPicker;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -31,6 +32,7 @@ import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.component.DaggerReleaseDemandComponent;
 import cn.lex_mung.client_android.di.module.ReleaseDemandModule;
 import cn.lex_mung.client_android.mvp.contract.ReleaseDemandContract;
+import cn.lex_mung.client_android.mvp.model.entity.AmountBalanceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.OrgAmountEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.PayTypeEntity;
 import cn.lex_mung.client_android.mvp.presenter.ReleaseDemandPresenter;
@@ -51,8 +53,6 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
     TitleView titleView;
     @BindView(R.id.tv_lawyer_region)
     TextView tvLawyerRegion;
-    //    @BindView(R.id.tv_lawyer_field)
-//    TextView tvLawyerField;
     @BindView(R.id.group_money)
     Group groupMoney;
     @BindView(R.id.et_max_money)
@@ -87,8 +87,6 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
     WebView webView;
     @BindView(R.id.bt_pay)
     Button btPay;
-//    @BindView(R.id.group_lawyer_field)
-//    Group groupLawyerField;
 
     private EasyDialog easyDialog;
     private DefaultDialog defaultDialog;
@@ -136,8 +134,7 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
             }
         }
 
-        mPresenter.getUserBalance();
-        mPresenter.getGroupBalance();
+        mPresenter.getAllBalance();
 
         payTypeView2.setItemOnClick((type,type6Id) -> {
             mPresenter.setPayType(type,type6Id);
@@ -147,7 +144,6 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
     @Override
     protected void onResume() {
         super.onResume();
-//        mPresenter.getUserBalance();
     }
 
     @Override
@@ -156,7 +152,6 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
         recyclerView.setAdapter(adapter);
     }
 
-    //    @OnClick({R.id.view_lawyer_field, R.id.tv_wx, R.id.tv_zfb, R.id.tv_balance, R.id.tv_club_card, R.id.view_discount_way, R.id.tv_fast_consult_tip, R.id.tv_fast_consult_tip_1, R.id.bt_pay})
     @OnClick({R.id.view_discount_way, R.id.tv_fast_consult_tip, R.id.tv_fast_consult_tip_1, R.id.bt_pay})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -170,7 +165,6 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
                 bundle.putInt(BundleTags.MEMBER_ID, mPresenter.getUserInfoDetailsEntity().getMemberId());
                 bundle.putInt(BundleTags.L_MEMBER_ID, mPresenter.getLawsHomePagerBaseEntityId());
 
-//                launchActivity(new Intent(mActivity, DiscountWayActivity.class), bundle);
                 bundle.putInt(BundleTags.COUPON_TYPE,mPresenter.getCouponType());
                 bundle.putInt(BundleTags.ORG_ID, mPresenter.getOrganizationId());
                 bundle.putInt(BundleTags.COUPON_ID, mPresenter.getCouponId());
@@ -209,11 +203,6 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
                         , etProblemDescription.getText().toString());
                 break;
         }
-    }
-
-    @Override
-    public void hideFieldLayout() {
-//        groupLawyerField.setVisibility(View.GONE);
     }
 
     @Override
@@ -269,18 +258,6 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
         tvDiscountMoney.setVisibility(View.GONE);
     }
 
-    @Override
-    public void setBalance(double balance) {
-//        tvBalanceCount.setText(balance);
-
-        PayTypeEntity entity = new PayTypeEntity();
-        entity.setIcon(R.drawable.ic_pay_balance2);
-        entity.setTitle("账户余额");
-        entity.setType(3);
-        entity.setSelected(false);
-        entity.setBalance(balance);
-        payTypeView2.addPayTypeData(entity);
-    }
 
     @Override
     public void setDiscountWay(String organizationName) {
@@ -288,35 +265,51 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
     }
 
     @Override
-    public void setClubCardBalance(double money) {
-        if(money > 0){
+    public void setAllBalance(AmountBalanceEntity balanceEntity) {
+        List<PayTypeEntity> list = new ArrayList<>();
+        if (balanceEntity.getAmount() != null) {
+            PayTypeEntity entity = new PayTypeEntity();
+            entity.setIcon(R.drawable.ic_pay_balance2);
+            entity.setTitle("账户余额");
+            entity.setType(3);
+            entity.setSelected(false);
+            entity.setBalance(balanceEntity.getAmount().getBalanceAmount());
+            list.add(entity);
+        }
+
+        if (balanceEntity.getMemberCard() != null) {
             PayTypeEntity payTypeEntity = new PayTypeEntity();
             payTypeEntity.setIcon(R.drawable.ic_pay_club_card);
             payTypeEntity.setTitle("会员卡");
             payTypeEntity.setType(4);
             payTypeEntity.setSelected(false);
-            payTypeEntity.setBalance(money);
-            payTypeView2.addPayTypeData(payTypeEntity);
-        }else{
-            payTypeView2.removePayTYpeData(4);
+            payTypeEntity.setBalance(balanceEntity.getMemberCard().getAmountNew());
+            list.add(payTypeEntity);
         }
 
+        if (balanceEntity.getOrgAmounts() != null && balanceEntity.getOrgAmounts().size() > 0){
+            for (int i = 0; i < balanceEntity.getOrgAmounts().size(); i++) {
+                PayTypeEntity entity = new PayTypeEntity();
+                entity.setIcon(R.drawable.ic_pay_group);
+                entity.setTitle(balanceEntity.getOrgAmounts().get(i).getCouponName());
+                entity.setType(6);
+                entity.setSelected(false);
+                entity.setBalance(balanceEntity.getOrgAmounts().get(i).getAmount());
+                entity.setGroupId(balanceEntity.getOrgAmounts().get(i).getCouponId());
+                list.add(entity);
+            }
+        }
+        payTypeView2.setPayTYpeData(list);
+        setPayTypeViewSelect(mPresenter.getPayMoney());
     }
 
     @Override
-    public void setGroupBalance(List<OrgAmountEntity> list) {
-        if(list == null || list.size() == 0)
-            return;
-        for (int i=0;i<list.size();i++){
-            PayTypeEntity entity = new PayTypeEntity();
-            entity.setIcon(R.drawable.ic_pay_group);
-            entity.setTitle(list.get(i).getCouponName());
-            entity.setType(6);
-            entity.setSelected(false);
-            entity.setBalance(list.get(i).getAmount());
-            entity.setGroupId(list.get(i).getCouponId());
-            payTypeView2.addPayTypeData(entity);
-        }
+    public void setPayTypeViewSelect(double money) {
+        payTypeView2.setSelect(money);
+    }
+
+    public double getTypeBalance(int payType,int payTypeGroup){
+        return payTypeView2.getTypeBalance(payType,payTypeGroup);
     }
 
     /**
@@ -330,18 +323,12 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
         wpConsultType.setCurved(false);
         wpConsultType.setVisibleItemCount(6);
         wpConsultType.setOnItemSelectedListener((picker, data, position) -> {
-//            mPresenter.setLawyerField(data.toString());
-//            mPresenter.setLawyerFieldPosition(position);
         });
-//        wpConsultType.setData(mPresenter.getFieldList());
         wpConsultType.setSelectedItemPosition(0);
 
-//        mPresenter.setLawyerFieldPosition(0);
-//        mPresenter.setLawyerField(mPresenter.getFieldList().get(0));
 
         layout.findViewById(R.id.tv_cancel).setOnClickListener(v -> dismiss());
         layout.findViewById(R.id.tv_confirm).setOnClickListener(v -> {
-//            tvLawyerField.setText(mPresenter.getLawyerField());
             dismiss();
         });
     }

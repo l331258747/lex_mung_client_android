@@ -5,6 +5,7 @@ import android.app.Application;
 import com.google.gson.Gson;
 
 import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
+import cn.lex_mung.client_android.mvp.model.entity.AmountBalanceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.OrgAmountEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.integration.IRepositoryManager;
@@ -59,12 +60,12 @@ public class ReleaseDemandModel extends BaseModel implements ReleaseDemandContra
                 .getReleaseDemandOrgMoney(body);
     }
 
-    @Override
-    public Observable<BaseResponse<BalanceEntity>> getUserBalance(int id) {
-        return mRepositoryManager
-                .obtainRetrofitService(CommonService.class)
-                .getUserBalance(id);
-    }
+//    @Override
+//    public Observable<BaseResponse<BalanceEntity>> getUserBalance(int id) {
+//        return mRepositoryManager
+//                .obtainRetrofitService(CommonService.class)
+//                .getUserBalance(id);
+//    }
 
     @Override
     public Observable<BaseResponse<GeneralEntity>> releaseRequirement(RequestBody body) {
@@ -88,9 +89,22 @@ public class ReleaseDemandModel extends BaseModel implements ReleaseDemandContra
     }
 
     @Override
-    public Observable<BaseResponse<List<OrgAmountEntity>>> clientOrgAmount() {
-        return mRepositoryManager
-                .obtainRetrofitService(CommonService.class)
-                .clientOrgAmount();
+    public Observable<BaseResponse<AmountBalanceEntity>> amountBalance(int organizationLevId, RequestBody body) {
+        if(organizationLevId > 0){
+            return mRepositoryManager
+                    .obtainRetrofitService(CommonService.class)
+                    .amountBalance2(organizationLevId,body);
+        }else{
+            return mRepositoryManager
+                    .obtainRetrofitService(CommonService.class)
+                    .amountBalance(body);
+        }
     }
+
+//    @Override
+//    public Observable<BaseResponse<List<OrgAmountEntity>>> clientOrgAmount() {
+//        return mRepositoryManager
+//                .obtainRetrofitService(CommonService.class)
+//                .clientOrgAmount();
+//    }
 }

@@ -65,4 +65,17 @@ public class OrderCouponModel extends BaseModel implements OrderCouponContract.M
                 .obtainRetrofitService(CommonService.class)
                 .requireCoupon(body);
     }
+
+    @Override
+    public Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> optimalRequireList(int pageNum, double orderAmount,int productId) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("pageNum", pageNum);
+        map.put("pageSize", 10);
+        map.put("orderAmount", orderAmount);
+        map.put("productId", productId);
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map));
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .optimalRequireList(body);
+    }
 }

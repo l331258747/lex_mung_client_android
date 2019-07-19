@@ -9,6 +9,7 @@ import android.os.Message;
 import android.text.TextUtils;
 
 import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
+import cn.lex_mung.client_android.mvp.model.entity.AmountBalanceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.OrgAmountEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.CouponModeEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.RecommendLawyerActivity;
@@ -81,7 +82,6 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
     @Inject
     RxPermissions mRxPermissions;
 
-    //    private LawsHomePagerBaseEntity lawsHomePagerBaseEntity;
     int lawsHomePagerBaseEntityId;
     String lawsHomePagerBaseEntityRegion;
     int lawsHomePagerBaseEntityRegionId;
@@ -93,10 +93,6 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
     private int type;//1固定服务价格 2可协商服务价格
     private int organizationLevId = 0;//组织等级id
     private int organizationId = 0;
-    //    private String lawyerField;//选择的擅长领域name
-//    private int lawyerFieldPosition = -1;//选择的擅长领域
-    private double balance;//当前余额
-    private double amountNew;//会员卡余额
     private int payType = 1;//支付方式
     private int payTypeGroup;//支付方式为6 带的集团id（因为集团卡有多个）
     private int couponId;
@@ -107,8 +103,6 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
 
 
     private boolean flag = false;
-
-//    private List<String> fieldList = new ArrayList<>();
 
     private ReleaseDemandServiceTypeAdapter adapter;
 
@@ -125,10 +119,6 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
     @Subscriber(tag = REFRESH)
     private void refresh(Message message) {
         switch (message.what) {
-//            case REFRESH_DISCOUNT_WAY:
-//                organizationLevId = Integer.valueOf(message.obj.toString());
-//                getReleaseDemandOrgMoney(1);
-//                break;
             case REFRESH_DISCOUNT_WAY2:
                 CouponModeEntity entity = (CouponModeEntity) message.obj;
                 organizationLevId = entity.getOrgLevId();
@@ -138,15 +128,6 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                 break;
         }
     }
-
-//    public void setLawyerFieldPosition(int position) {
-//        lawyerFieldPosition = position;
-//    }
-
-//    public void setLawyerField(String lawyerField) {
-//        this.lawyerField = lawyerField;
-//    }
-
 
     public int getRequireTypeId() {
         return requireTypeId;
@@ -181,9 +162,6 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
         return userInfoDetailsEntity;
     }
 
-    //    public LawsHomePagerBaseEntity getLawsHomePagerBaseEntity() {
-//        return lawsHomePagerBaseEntity;
-//    }
     public int getLawsHomePagerBaseEntityId() {
         return lawsHomePagerBaseEntityId;
     }
@@ -192,25 +170,12 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
         return couponType;
     }
 
-    public String getLawsHomePagerBaseEntityRegion() {
-        return lawsHomePagerBaseEntityRegion;
-    }
 
-//    public String getLawyerField() {
-//        return lawyerField;
-//    }
-
-//    public List<String> getFieldList() {
-//        return fieldList;
-//    }
-
-    //    public void onCreate(LawsHomePagerBaseEntity lawsHomePagerBaseEntity, int requireTypeId,String requireTypeName) {
     public void onCreate(int lawsHomePagerBaseEntityId, String lawsHomePagerBaseEntityRegion, int lawsHomePagerBaseEntityRegionId, int requireTypeId, String requireTypeName) {
         initAdapter();
         this.requireTypeId = requireTypeId;
         this.requireTypeName = requireTypeName;
 
-//        this.lawsHomePagerBaseEntity = lawsHomePagerBaseEntity;
         this.lawsHomePagerBaseEntityRegion = lawsHomePagerBaseEntityRegion;
         this.lawsHomePagerBaseEntityId = lawsHomePagerBaseEntityId;
         this.lawsHomePagerBaseEntityRegionId = lawsHomePagerBaseEntityRegionId;
@@ -223,14 +188,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
             mRootView.showProblemDescriptionLayout();
         }
         mRootView.setRegion(lawsHomePagerBaseEntityRegion);
-//        for (LawsHomePagerBaseEntity.ChildBean businessRadarBean : lawsHomePagerBaseEntity.getBusinessInfo()) {
-//            if(!TextUtils.isEmpty(businessRadarBean.getSolutionMarkName()))
-//                fieldList.add(businessRadarBean.getSolutionMarkName());
-//        }
 
-//        if (fieldList.size() == 0) {
-//            mRootView.hideFieldLayout();
-//        }
         String string = mApplication.getString(R.string.text_release_demand_tip_2)
                 + "<font color=\"#1EC88C\">"
                 + mApplication.getString(R.string.text_lex_transaction_process)
@@ -307,28 +265,6 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                 });
     }
 
-    public void getUserBalance() {
-        UserInfoDetailsEntity userInfoDetailsEntity = new Gson().fromJson(DataHelper.getStringSF(mApplication, DataHelperTags.USER_INFO_DETAIL), UserInfoDetailsEntity.class);
-        mModel.getUserBalance(userInfoDetailsEntity.getMemberId())
-                .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(0, 0))
-                .doOnSubscribe(disposable -> {
-                })
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doFinally(() -> mRootView.hideLoading())
-                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<BalanceEntity>>(mErrorHandler) {
-                    @Override
-                    public void onNext(BaseResponse<BalanceEntity> baseResponse) {
-                        if (baseResponse.isSuccess()) {
-                            balance = baseResponse.getData().getBalanceAmount();
-                            mRootView.setBalance(balance);
-                        }
-                    }
-                });
-    }
-
     //优惠方式：会员卡必须选择了某个权益组织才能显示
     private void getReleaseDemandOrgMoney(int type) {
         Map<String, Object> map = new HashMap<>();
@@ -361,7 +297,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                             entity = baseResponse.getData();
 //                            if (type == 1 || type == -1) {
                             if (type == 1) {
-                                if(baseResponse.getData().getOrgStatus() == 1){
+                                if (baseResponse.getData().getOrgStatus() == 1) {
                                     couponType = 1;
                                     couponId = -1;
                                     organizationId = baseResponse.getData().getOrganizationId();
@@ -378,9 +314,8 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                                         mRootView.hideDiscountMoney();
                                         deduction = 0;
                                     }
-                                    amountNew = entity.getAmountNew();
-                                    mRootView.setClubCardBalance(amountNew);
-                                }else{
+                                    getAllBalance();
+                                } else {
                                     getReleaseDemandOrgMoney(2);
                                 }
                             } else if (type == 2) {
@@ -398,20 +333,15 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                                     mRootView.hideDiscountMoney();
                                     deduction = 0;
                                 }
-                                amountNew = 0;
-                                mRootView.setClubCardBalance(amountNew);
+                                getAllBalance();
                             }
+
                         }
                     }
                 });
     }
 
     public void releaseRequirement(String ua, String maxMoney, String content) {
-//        if (fieldList.size() > 0
-//                && lawyerFieldPosition == -1) {
-//            mRootView.showMessage(mApplication.getString(R.string.text_please_select_lawyer_field));
-//            return;
-//        }
         if (type == 1 && requireTypeId == -1) {
             mRootView.showMessage(mApplication.getString(R.string.text_please_select_service_type));
             return;
@@ -432,14 +362,20 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                     }
                     break;
                 case 3://余额支付
-                    if (payMoney > balance) {
+                    if (payMoney > mRootView.getTypeBalance(3,0)) {
                         mRootView.showLackOfBalanceDialog();
                         return;
                     }
                     break;
                 case 4://会员卡支付
-                    if (payMoney > amountNew) {
-                        mRootView.showMessage(mApplication.getString(R.string.text_members_card_lack_of_balance));
+                    if (payMoney > mRootView.getTypeBalance(4,0)) {
+                        mRootView.showMessage("会员卡余额不足");
+                        return;
+                    }
+                    break;
+                case 6://集团卡支付
+                    if (payMoney > mRootView.getTypeBalance(6,0)) {
+                        mRootView.showMessage("集团卡余额不足");
                         return;
                     }
                     break;
@@ -452,9 +388,6 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
         Map<String, Object> map = new HashMap<>();
         map.put("requirementId", 0);
         map.put("isFirst", 1);
-//        if (lawyerFieldPosition > -1) {
-//            map.put("skillId", lawsHomePagerBaseEntity.getBusinessInfo().get(lawyerFieldPosition).getSolutionMarkId());
-//        }
         map.put("targetLawyerId", lawsHomePagerBaseEntityId);
         map.put("lawyerRegionId", lawsHomePagerBaseEntityRegionId);
 
@@ -534,7 +467,6 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
     }
 
     private void pay(String ua, int id) {
-//        long money = new BigDecimal(payMoney).multiply(new BigDecimal(100)).intValue();
         long money = (long) DecimalUtil.multiply(payMoney, 100);
         Map<String, Object> map = new HashMap<>();
         map.put("money", money);//金额
@@ -670,9 +602,9 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                 });
     }
 
-    //集团余额
-    public void getGroupBalance() {
-        mModel.clientOrgAmount()
+    public void getAllBalance() {
+        Map<String, Object> map = new HashMap<>();
+        mModel.amountBalance(organizationLevId,RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> {
@@ -681,15 +613,16 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<List<OrgAmountEntity>>>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<AmountBalanceEntity>>(mErrorHandler) {
                     @Override
-                    public void onNext(BaseResponse<List<OrgAmountEntity>> baseResponse) {
+                    public void onNext(BaseResponse<AmountBalanceEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
-                            mRootView.setGroupBalance(baseResponse.getData());
+                            mRootView.setAllBalance(baseResponse.getData());
                         }
                     }
                 });
     }
+
 
     @Override
     public void onDestroy() {

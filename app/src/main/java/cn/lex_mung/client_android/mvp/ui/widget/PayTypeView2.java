@@ -54,23 +54,22 @@ public class PayTypeView2 extends LinearLayout {
 
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             changeData(position);
-            if(itemOnClick != null){
-                itemOnClick.onClick(list.get(position).getType(),list.get(position).getGroupId());
+            if (itemOnClick != null) {
+                itemOnClick.onClick(list.get(position).getType(), list.get(position).getGroupId());
             }
         });
 
         isFast = false;
-        setPayTypeData();
     }
 
-    private void setPayTypeData(){
+    public void setPayTYpeData(List<PayTypeEntity> entitys) {
         list = new ArrayList<>();
         PayTypeEntity entity = new PayTypeEntity();
         entity.setTitle("微信支付");
         entity.setType(1);
         entity.setBalance(-1);
         entity.setIcon(R.drawable.ic_pay_wx);
-        entity.setSelected(true);
+        entity.setSelected(false);
 
         PayTypeEntity entity2 = new PayTypeEntity();
         entity2.setTitle("支付宝支付");
@@ -82,82 +81,78 @@ public class PayTypeView2 extends LinearLayout {
         list.add(entity);
         list.add(entity2);
 
+        if (entitys != null && entitys.size() > 0) {
+            for (int i = 0; i < entitys.size(); i++) {
+                list.add(entitys.get(i));
+            }
+        }
+
         adapter.setNewData(list);
     }
 
+    public void setSelect(double money) {
+        if (list == null) return;
 
-    public void addPayTypeData(PayTypeEntity entity){
-        if(entity.getType() == 4){//如果是会员卡，只能有一张，先判断是否存在，存在：替换，不存在：添加
-            if(isHasTypeData(4)){
-                for (int i = 0;i<list.size();i++){
-                    if(list.get(i).getType() == 4){
-                        entity.setSelected(list.get(i).isSelected());//保持选中状态
-                        list.set(i,entity);
-                    }
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getType() == 6) {
+                if (money <= list.get(i).getBalance()) {
+                    changeData(i);
+                    return;
+                }
+            }
+        }
+
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getType() == 4) {
+                if (money <= list.get(i).getBalance()) {
+                    changeData(i);
+                    return;
+                }
+            }
+        }
+
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getType() == 3) {
+                if (money <= list.get(i).getBalance()) {
+                    changeData(i);
+                    return;
+                }
+            }
+        }
+
+        changeData(0);
+    }
+
+    public double getTypeBalance(int payType, int groupId) {
+        if(list == null) return 0;
+
+        for (int i = 0; i < list.size(); i++) {
+            if(payType == 6){
+                if (payType == list.get(i).getType() && list.get(i).getGroupId() == groupId) {
+                    return list.get(i).getBalance();
                 }
             }else{
-                list.add(entity);
-            }
-        }else{
-            list.add(entity);
-        }
-
-        if(entity.getType() == 6 && !isFast){//第一次添加集团卡，默认选中，
-            changeData(list.size() - 1);
-            if(itemOnClick != null){
-                itemOnClick.onClick(list.get(list.size() - 1).getType(),list.get(list.size() - 1).getGroupId());
-            }
-            isFast = true;
-        }else{
-            adapter.notifyDataSetChanged();
-        }
-
-    }
-
-    public void removePayTYpeData(int type){
-        if(isHasTypeData(type)){
-            for (int i=0;i<list.size();i++){
-                if(list.get(i).getType() == type){
-                    if(list.get(i).isSelected()){
-                        list.remove(i);
-                        changeData(0);//当为删除项为选中状态时，默认选中第一项
-                        if(itemOnClick != null){
-                            itemOnClick.onClick(list.get(0).getType(),list.get(0).getGroupId());
-                        }
-                    }else{
-                        list.remove(i);
-                        adapter.notifyDataSetChanged();//非选中状态，保持原来选中项
-                    }
+                if (payType == list.get(i).getType()) {
+                    return list.get(i).getBalance();
                 }
             }
-
         }
+        return 0;
     }
 
-    public boolean isHasTypeData(int type){
-        for (int i=0;i<list.size();i++){
-            if(type == list.get(i).getType()){
-                return true;
-            }
-        }
-        return false;
-    }
 
     private void changeData(int position) {
+        if(list == null) return;
+
         for (int i = 0; i < list.size(); i++) {
             list.get(i).setSelected(false);
         }
         list.get(position).setSelected(true);
         adapter.notifyDataSetChanged();
-
-
     }
 
-
-
-
     public interface ItemOnClick {
-        void onClick(int type,int type6Id);
+        void onClick(int type, int type6Id);
     }
 
     ItemOnClick itemOnClick;

@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import org.simple.eventbus.Subscriber;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -25,7 +26,7 @@ import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.component.DaggerRushLoanPayComponent;
 import cn.lex_mung.client_android.di.module.RushLoanPayModule;
 import cn.lex_mung.client_android.mvp.contract.RushLoanPayContract;
-import cn.lex_mung.client_android.mvp.model.entity.OrgAmountEntity;
+import cn.lex_mung.client_android.mvp.model.entity.AmountBalanceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.PayTypeEntity;
 import cn.lex_mung.client_android.mvp.presenter.RushLoanPayPresenter;
@@ -74,6 +75,11 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
 
     private DefaultDialog defaultDialog;
     int type;
+    int id;
+
+    private int couponId;
+    private float orderPrice;//订单原价
+    private float couponPrice;//优惠价格
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -93,62 +99,200 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         if (bundleIntent != null) {
-            mPresenter.setRequireTypeId(bundleIntent.getInt(BundleTags.ID));
-            mPresenter.setPayMoney(bundleIntent.getFloat(BundleTags.MONEY));
-            mPresenter.setRequireTypeName(bundleIntent.getString(BundleTags.TITLE));
-            mPresenter.setType(type = bundleIntent.getInt(BundleTags.TYPE));
-            mPresenter.setMobile(bundleIntent.getString(BundleTags.MOBILE));
-
-            tvOrderMoney.setText("¥ "+ StringUtils.getStringNum(bundleIntent.getFloat(BundleTags.MONEY)));
-
-            tvPayPrice.setText("¥ "+StringUtils.getStringNum(bundleIntent.getFloat(BundleTags.MONEY)));
             tvCommodity.setText(bundleIntent.getString(BundleTags.TITLE));
+
+            orderPrice = bundleIntent.getFloat(BundleTags.MONEY);
+            type = bundleIntent.getInt(BundleTags.TYPE);
+            id = bundleIntent.getInt(BundleTags.ID);
+
+            mPresenter.setRequireTypeId(id);
+            mPresenter.setRequireTypeName(bundleIntent.getString(BundleTags.TITLE));
+            mPresenter.setMobile(bundleIntent.getString(BundleTags.MOBILE));
+            mPresenter.setPayMoney(orderPrice);
+            mPresenter.setType(type);
         }
 
-        payTypeView.setItemOnClick((type,type6Id) -> {
-            mPresenter.setPayType(type,type6Id);
+        payTypeView.setItemOnClick((type, type6Id) -> {
+            mPresenter.setPayType(type, type6Id);
         });
 
-        if(type == 1){
-            setPriceLayout(0,0,0);
-            setCouponLayout(null,false);
+        initViewData();
 
-            mPresenter.getCoupon();
-            mPresenter.setMoney();
+        mPresenter.getAllBalance();
 
-            rlCouponType.setVisibility(View.VISIBLE);
-        }else{
-            rlCouponType.setVisibility(View.GONE);
-        }
-
-        mPresenter.getUserBalance();
-        mPresenter.getGroupBalance();
-
+        mPresenter.getCoupon(orderPrice,id);
     }
 
-    @OnClick({R.id.bt_pay,R.id.rl_coupon_type})
+    //默认布局和数据
+    public void initViewData() {
+        couponPrice = 0;
+        couponId = 0;
+
+        tvPayPrice.setText("¥ " + StringUtils.getStringNum(orderPrice));//小计
+        setPriceLayout(couponPrice, orderPrice);//实付价格，优惠价格
+        tvDiscountWay.setText("");//优惠券为空
+        tvDiscountMoney.setVisibility(View.GONE);//以优惠**元 隐藏
+    }
+
+    @OnClick({R.id.bt_pay, R.id.rl_coupon_type})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.bt_pay:
-                if(type == 1){//快速咨询
+                if (type == 1) {//快速咨询
                     mPresenter.pay("name", webView.getSettings().getUserAgentString());
-                }else{//热门需求
+                } else {//热门需求
                     mPresenter.releaseRequirement(webView.getSettings().getUserAgentString());
                 }
                 break;
             case R.id.rl_coupon_type:
                 bundle.clear();
                 bundle.putInt(BundleTags.ID, couponId);//优惠券id
-                bundle.putInt(BundleTags.TYPE,0);
-                bundle.putDouble(BundleTags.MONEY,orderPrice);
+                bundle.putInt(BundleTags.TYPE, type == 1?0:2);
+                bundle.putInt(BundleTags.REQUIREMENT_ID,id);
+                bundle.putDouble(BundleTags.MONEY, orderPrice);
                 launchActivity(new Intent(mActivity, OrderCouponActivity.class), bundle);
                 break;
         }
     }
 
+    // ------- 优惠券 start
+
+    //设置优惠券
     @Override
-    protected void onResume() {
-        super.onResume();
+    public void setCouponLayout(OrderCouponEntity bean, boolean showToast) {
+        if (bean == null) {
+            tvDiscountWay.setText("");
+            this.couponId = 0;
+            setPriceLayout(0, orderPrice);
+            return;
+        }
+
+        if (orderPrice < bean.getFullNum()) {
+            if (showToast) {
+                showMessage("无法使用优惠券");
+            }
+            LogUtil.e("无法使用优惠券");
+            return;
+        }
+
+        tvDiscountWay.setText(bean.getCouponName());
+        this.couponId = bean.getCouponId();
+
+        mPresenter.getPrice(couponId, orderPrice,id);
+    }
+
+    //设置价格
+    @Override
+    public void setPriceLayout(float couponPrice, double payPrice) {
+        this.couponPrice = couponPrice;
+
+        tvOrderMoney.setText(String.format(
+                AppUtils.getString(mActivity, R.string.text_yuan_money)
+                , StringUtils.getStringNum(payPrice)));
+        tvDiscountMoney.setText(String.format(
+                AppUtils.getString(mActivity, R.string.text_discount_money)
+                , StringUtils.getStringNum(couponPrice)));
+
+        if (couponPrice > 0) {
+            tvDiscountMoney.setVisibility(View.VISIBLE);
+        } else {
+            tvDiscountMoney.setVisibility(View.GONE);
+        }
+    }
+
+    //获取优惠价格
+    @Override
+    public float getCouponPrice() {
+        return couponPrice;
+    }
+
+    //获取优惠id
+    @Override
+    public int getCouponId() {
+        return couponId;
+    }
+
+    /**
+     * 更新优惠券
+     */
+    @Subscriber(tag = ORDER_COUPON)
+    private void selectPlace(Message message) {
+        switch (message.what) {
+            case REFRESH_COUPON:
+                OrderCouponEntity bean = (OrderCouponEntity) message.obj;
+                setCouponLayout(bean, true);
+                break;
+        }
+    }
+
+    //--------优惠券 end
+
+    @Override
+    public void setAllBalance(AmountBalanceEntity balanceEntity) {
+        List<PayTypeEntity> list = new ArrayList<>();
+        if (balanceEntity.getAmount() != null) {
+            PayTypeEntity entity = new PayTypeEntity();
+            entity.setIcon(R.drawable.ic_pay_balance2);
+            entity.setTitle("账户余额");
+            entity.setType(3);
+            entity.setSelected(false);
+            entity.setBalance(balanceEntity.getAmount().getBalanceAmount());
+            list.add(entity);
+        }
+        if (balanceEntity.getOrgAmounts() != null && balanceEntity.getOrgAmounts().size() > 0) {
+            for (int i = 0; i < balanceEntity.getOrgAmounts().size(); i++) {
+                PayTypeEntity entity = new PayTypeEntity();
+                entity.setIcon(R.drawable.ic_pay_group);
+                entity.setTitle(balanceEntity.getOrgAmounts().get(i).getCouponName());
+                entity.setType(6);
+                entity.setSelected(false);
+                entity.setBalance(balanceEntity.getOrgAmounts().get(i).getAmount());
+                entity.setGroupId(balanceEntity.getOrgAmounts().get(i).getCouponId());
+                list.add(entity);
+            }
+        }
+        payTypeView.setPayTYpeData(list);
+    }
+
+    public double getTypeBalance(int payType, int payTypeGroup) {
+        return payTypeView.getTypeBalance(payType, payTypeGroup);
+    }
+
+    @Override
+    public void setPayTypeViewSelect(double money) {
+        payTypeView.setSelect(money);
+    }
+
+    @Override
+    public Activity getActivity() {
+        return this;
+    }
+
+    @Override
+    public void showToAppInfoDialog() {
+        if (defaultDialog == null) {
+            defaultDialog = new DefaultDialog(mActivity, dialog -> {
+                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                intent.setData(Uri.parse("package:" + mActivity.getPackageName()));
+                startActivity(intent);
+                dialog.dismiss();
+            }
+                    , getString(R.string.text_manual_open_permissions)
+                    , getString(R.string.text_to_open)
+                    , getString(R.string.text_cancel));
+        }
+        if (!defaultDialog.isShowing()) {
+            defaultDialog.show();
+        }
+    }
+
+    @Override
+    public void showLackOfBalanceDialog() {
+        new DefaultDialog(mActivity, dialog -> launchActivity(new Intent(mActivity, MyAccountActivity.class))
+                , getString(R.string.text_lack_of_balance)
+                , getString(R.string.text_leave_for_top_up)
+                , getString(R.string.text_cancel))
+                .show();
     }
 
 
@@ -187,141 +331,4 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
     public void killMyself() {
         finish();
     }
-
-    @Override
-    public Activity getActivity() {
-        return this;
-    }
-
-    @Override
-    public void showToAppInfoDialog() {
-        if (defaultDialog == null) {
-            defaultDialog = new DefaultDialog(mActivity, dialog -> {
-                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                intent.setData(Uri.parse("package:" + mActivity.getPackageName()));
-                startActivity(intent);
-                dialog.dismiss();
-            }
-                    , getString(R.string.text_manual_open_permissions)
-                    , getString(R.string.text_to_open)
-                    , getString(R.string.text_cancel));
-        }
-        if (!defaultDialog.isShowing()) {
-            defaultDialog.show();
-        }
-    }
-
-    @Override
-    public void showLackOfBalanceDialog() {
-        new DefaultDialog(mActivity, dialog -> launchActivity(new Intent(mActivity, MyAccountActivity.class))
-                , getString(R.string.text_lack_of_balance)
-                , getString(R.string.text_leave_for_top_up)
-                , getString(R.string.text_cancel))
-                .show();
-    }
-
-    // ------- 优惠券 start
-    private int couponId;
-    private double orderPrice;//订单原价
-    private float couponPrice;//优惠价格
-    //设置优惠券
-    @Override
-    public void setCouponLayout(OrderCouponEntity bean, boolean showToast) {
-        if(bean == null){
-            tvDiscountWay.setText("");
-            tvDiscountMoney.setVisibility(View.GONE);
-            this.couponId = 0;
-            setPriceLayout(0,0,orderPrice);
-            return;
-        }
-
-        if(orderPrice < bean.getFullNum()){
-            if(showToast){
-                showMessage("无法使用优惠券");
-            }
-            LogUtil.e("无法使用优惠券");
-            return;
-        }
-
-        tvDiscountWay.setText(bean.getCouponName());
-        tvDiscountMoney.setVisibility(View.VISIBLE);
-        this.couponId = bean.getCouponId();
-
-        mPresenter.getPrice(couponId,orderPrice);
-    }
-
-    //设置价格
-    @Override
-    public void setPriceLayout(double orderPrice,float couponPrice,double payPrice) {
-        this.couponPrice = couponPrice;
-
-        tvOrderMoney.setText(String.format(
-                AppUtils.getString(mActivity, R.string.text_yuan_money)
-                , StringUtils.getStringNum(payPrice)));
-        tvDiscountMoney.setText(String.format(
-                AppUtils.getString(mActivity, R.string.text_discount_money)
-                , StringUtils.getStringNum(couponPrice)));
-    }
-
-    //获取优惠价格
-    @Override
-    public float getCouponPrice() {
-        return couponPrice;
-    }
-
-    //获取优惠id
-    @Override
-    public int getCouponId() {
-        return couponId;
-    }
-
-    //设置价格
-    @Override
-    public void setOrderMoney(String money,double orderMoney) {
-        tvOrderMoney.setText(money);
-        orderPrice = orderMoney;
-    }
-
-    /**
-     * 更新优惠券
-     */
-    @Subscriber(tag = ORDER_COUPON)
-    private void selectPlace(Message message) {
-        switch (message.what) {
-            case REFRESH_COUPON:
-                OrderCouponEntity bean = (OrderCouponEntity) message.obj;
-                setCouponLayout(bean,true);
-                break;
-        }
-    }
-
-    //--------优惠券 end
-
-    @Override
-    public void setBalance(double balance) {
-        PayTypeEntity entity = new PayTypeEntity();
-        entity.setIcon(R.drawable.ic_pay_balance2);
-        entity.setTitle("账户余额");
-        entity.setType(3);
-        entity.setSelected(false);
-        entity.setBalance(balance);
-        payTypeView.addPayTypeData(entity);
-    }
-
-    @Override
-    public void setGroupBalance(List<OrgAmountEntity> list) {
-        if(list == null || list.size() == 0)
-            return;
-        for (int i=0;i<list.size();i++){
-            PayTypeEntity entity = new PayTypeEntity();
-            entity.setIcon(R.drawable.ic_pay_group);
-            entity.setTitle(list.get(i).getCouponName());
-            entity.setType(6);
-            entity.setSelected(false);
-            entity.setBalance(list.get(i).getAmount());
-            entity.setGroupId(list.get(i).getCouponId());
-            payTypeView.addPayTypeData(entity);
-        }
-    }
-
 }

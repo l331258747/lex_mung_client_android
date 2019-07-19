@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.lex_mung.client_android.mvp.model.api.CommonService;
+import cn.lex_mung.client_android.mvp.model.entity.AmountBalanceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BalanceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
@@ -64,13 +65,6 @@ public class RushLoanPayModel extends BaseModel implements RushLoanPayContract.M
     }
 
     @Override
-    public Observable<BaseResponse<BalanceEntity>> getUserBalance(int id) {
-        return mRepositoryManager
-                .obtainRetrofitService(CommonService.class)
-                .getUserBalance(id);
-    }
-
-    @Override
     public Observable<BaseResponse<OrderStatusEntity>> releaseFastConsult(RequestBody body) {
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
@@ -89,10 +83,11 @@ public class RushLoanPayModel extends BaseModel implements RushLoanPayContract.M
     }
 
     @Override
-    public Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> quickCoupon() {
+    public Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> quickCoupon(float orderAmount) {
         Map<String, Object> map = new HashMap<>();
         map.put("pageNum", 1);
         map.put("pageSize", 10);
+        map.put("orderAmount", orderAmount);
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map));
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
@@ -100,9 +95,34 @@ public class RushLoanPayModel extends BaseModel implements RushLoanPayContract.M
     }
 
     @Override
-    public Observable<BaseResponse<List<OrgAmountEntity>>> clientOrgAmount() {
+    public Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> optimalRequireList(float orderAmount,int productId) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("pageNum", 1);
+        map.put("pageSize", 10);
+        map.put("orderAmount", orderAmount);
+        map.put("productId", productId);
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map));
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
-                .clientOrgAmount();
+                .optimalRequireList(body);
+    }
+
+    @Override
+    public Observable<BaseResponse<QuickPayEntity>> optimalRequire(int couponId, double orderAmount,int productId) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("couponId", couponId);
+        map.put("orderAmount", orderAmount);
+        map.put("productId", productId);
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map));
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .optimalRequire(body);
+    }
+
+    @Override
+    public Observable<BaseResponse<AmountBalanceEntity>> amountBalance(RequestBody body) {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .amountBalance(body);
     }
 }

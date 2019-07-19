@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import java.util.List;
 
+import cn.lex_mung.client_android.mvp.model.entity.AmountBalanceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BalanceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
@@ -24,28 +25,33 @@ public interface RushLoanPayContract {
         Activity getActivity();
         void showToAppInfoDialog();
         void showLackOfBalanceDialog();
-        void setBalance(double balance);
 
         void setCouponLayout(OrderCouponEntity bean, boolean showToast);
         int getCouponId();
         float getCouponPrice();
-        void setPriceLayout(double orderPrice,float couponPrice,double payPrice);
-        void setOrderMoney(String money,double orderMoney);
+        void setPriceLayout(float couponPrice,double payPrice);
 
-        void setGroupBalance(List<OrgAmountEntity> list);
+        void setAllBalance(AmountBalanceEntity entity);
+
+        void setPayTypeViewSelect(double money);
+
+        double getTypeBalance(int payType,int payTypeGroup);
 
     }
 
     interface Model extends IModel {
         Observable<BaseResponse<PayEntity>> pay(RequestBody body);
         Observable<BaseResponse<RequirementCreateEntity>> requirementCreate(RequestBody body);
-        Observable<BaseResponse<BalanceEntity>> getUserBalance(int id);
 
         Observable<BaseResponse<OrderStatusEntity>> releaseFastConsult(RequestBody body);
 
         Observable<BaseResponse<QuickPayEntity>> quickPay(int couponId, double orderAmount);
-        Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> quickCoupon();
+        Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> quickCoupon(float orderAmount);
 
-        Observable<BaseResponse<List<OrgAmountEntity>>> clientOrgAmount();
+        Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> optimalRequireList(float orderAmount,int productId);
+        Observable<BaseResponse<QuickPayEntity>> optimalRequire(int couponId, double orderAmount,int productId);
+
+
+        Observable<BaseResponse<AmountBalanceEntity>> amountBalance(RequestBody body);
     }
 }

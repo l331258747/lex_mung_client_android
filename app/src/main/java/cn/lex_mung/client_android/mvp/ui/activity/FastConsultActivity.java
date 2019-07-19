@@ -47,6 +47,7 @@ import me.zl.mvp.utils.StringUtils;
 import static cn.lex_mung.client_android.app.EventBusTags.ORDER_COUPON.ORDER_COUPON;
 import static cn.lex_mung.client_android.app.EventBusTags.ORDER_COUPON.REFRESH_COUPON;
 
+//删除
 public class FastConsultActivity extends BaseActivity<FastConsultPresenter> implements FastConsultContract.View {
 
     @BindView(R.id.tv_consult_type)

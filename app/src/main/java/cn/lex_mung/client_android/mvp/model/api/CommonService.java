@@ -4,6 +4,7 @@ import java.util.List;
 
 import cn.lex_mung.client_android.mvp.model.entity.AboutEntity;
 import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
+import cn.lex_mung.client_android.mvp.model.entity.AmountBalanceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BalanceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BannerEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
@@ -337,14 +338,6 @@ public interface CommonService {
     Observable<BaseResponse<BaseListEntity<OrderDetailsEntity>>> getOrderDetail(@Body RequestBody body);
 
     /**
-     * 获取用户余额
-     *
-     * @return BaseResponse
-     */
-    @GET("client/amount/balance/{id}")
-    Observable<BaseResponse<BalanceEntity>> getUserBalance(@Path("id") int id);
-
-    /**
      * 充值
      *
      * @return BaseResponse
@@ -672,18 +665,6 @@ public interface CommonService {
     @GET("client/order/doc/read/{repositoryId}")
     Observable<BaseResponse> docRead(@Path("repositoryId") String repositoryId);
 
-    ///client/quick/coupon
-    //POST
-    //用户快速电话咨询优惠券列表
-    @POST("client/quick/coupon")
-    Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> quickCoupon(@Body RequestBody body);
-
-    ///client/quick/pay
-    //POST
-    //用户快速电话咨询实付价格
-    @POST("client/quick/pay")
-    Observable<BaseResponse<QuickPayEntity>> quickPay(@Body RequestBody body);
-
     ///freeText/bizinfo
     //GET
     //获取免费咨询运营日数据
@@ -752,4 +733,47 @@ public interface CommonService {
     @GET("client/org/amount")
     Observable<BaseResponse<List<OrgAmountEntity>>> clientOrgAmount();
 
+    /**
+     * 获取用户余额
+     *
+     * @return BaseResponse
+     */
+    @GET("client/amount/balance/{id}")
+    Observable<BaseResponse<BalanceEntity>> getUserBalance(@Path("id") int id);
+
+    ///client/amount/balance/v2
+    //POST
+    //获取用户余额、会员卡、集团卡
+    @POST("client/amount/balance/v2")
+    Observable<BaseResponse<AmountBalanceEntity>> amountBalance(@Body RequestBody body);
+
+    ///client/amount/balance/v2/{organizationLevId}
+    //POST
+    //获取用户余额、会员卡、集团卡
+    @POST("client/amount/balance/v2/{organizationLevId}")
+    Observable<BaseResponse<AmountBalanceEntity>> amountBalance2(@Path("organizationLevId") int organizationLevId,@Body RequestBody body);
+
+    ///client/quick/coupon
+    //POST
+    //用户快速电话咨询优惠券列表
+    @POST("client/quick/coupon")
+    Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> quickCoupon(@Body RequestBody body);
+
+    ///client/quick/pay
+    //POST
+    //用户快速电话咨询实付价格
+    @POST("client/quick/pay")
+    Observable<BaseResponse<QuickPayEntity>> quickPay(@Body RequestBody body);
+
+    ///client/optimal/require/list
+    //POST
+    //用户热门需求优惠券列表
+    @POST("client/optimal/require/list")
+    Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> optimalRequireList(@Body RequestBody body);
+
+    ///client/optimal/require
+    //POST
+    //用户热门商品实付价格
+    @POST("client/optimal/require")
+    Observable<BaseResponse<QuickPayEntity>> optimalRequire(@Body RequestBody body);
 }

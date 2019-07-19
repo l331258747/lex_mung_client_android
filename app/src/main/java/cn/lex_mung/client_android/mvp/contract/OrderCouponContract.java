@@ -35,5 +35,7 @@ public interface OrderCouponContract {
 
         Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> requireCoupon(int pageNum);
 
+        Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> optimalRequireList(int pageNum, double orderAmount,int productId);
+
     }
 }

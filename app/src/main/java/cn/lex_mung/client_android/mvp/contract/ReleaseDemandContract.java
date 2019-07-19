@@ -3,6 +3,7 @@ package cn.lex_mung.client_android.mvp.contract;
 import android.app.Activity;
 
 import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
+import cn.lex_mung.client_android.mvp.model.entity.AmountBalanceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BalanceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.BusinessEntity;
@@ -38,11 +39,7 @@ public interface ReleaseDemandContract {
 
         void hideDiscountMoney();
 
-        void setBalance(double balance);
-
         void setDiscountWay(String organizationName);
-
-        void setClubCardBalance(double money);
 
         void setTip(String string);
 
@@ -50,11 +47,14 @@ public interface ReleaseDemandContract {
 
         void showLackOfBalanceDialog();
 
-        void hideFieldLayout();
-
         Activity getActivity();
 
-        void setGroupBalance(List<OrgAmountEntity> list);
+        void setAllBalance(AmountBalanceEntity balanceEntity);
+
+        void setPayTypeViewSelect(double money);
+
+        double getTypeBalance(int payType,int payTypeGroup);
+
     }
 
     interface Model extends IModel {
@@ -62,14 +62,12 @@ public interface ReleaseDemandContract {
 
         Observable<BaseResponse<ReleaseDemandOrgMoneyEntity>> getReleaseDemandOrgMoney(RequestBody body);
 
-        Observable<BaseResponse<BalanceEntity>> getUserBalance(int id);
-
         Observable<BaseResponse<GeneralEntity>> releaseRequirement(RequestBody body);
 
         Observable<BaseResponse<PayEntity>> pay(RequestBody body);
 
         Observable<BaseResponse<AgreementEntity>> tariffExplanationUrl();
 
-        Observable<BaseResponse<List<OrgAmountEntity>>> clientOrgAmount();
+        Observable<BaseResponse<AmountBalanceEntity>> amountBalance(int organizationLevId, RequestBody body);
     }
 }

@@ -52,6 +52,7 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
 
     private int couponId;
     private int type;
+    private int productId;
 
     private double orderAmount;
 
@@ -71,6 +72,10 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
         getList(false);
     }
 
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
     public void setType(int type) {
         this.type = type;
     }
@@ -79,7 +84,7 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
         adapter = new OrderCouponAdapter(mRootView.getActivity());
         adapter.setCouponId(couponId);
         adapter.setOnItemClickListener((adapter1, view, position) -> {
-            if(mRootView.getType() != 0) return;
+            if(mRootView.getType() == 1) return;
             if (isFastClick()) return;
             OrderCouponEntity entity = adapter.getItem(position);
             if (entity == null) return;
@@ -113,6 +118,8 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
     private void getList(boolean isAdd){
         if(type == 1){
             getMeCouponsList(isAdd);
+        }else if(type == 2){
+            getCouponsList2(isAdd);
         }else{
             getCouponsList(isAdd);
         }
@@ -120,6 +127,39 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
 
     private void getCouponsList(boolean isAdd) {
         mModel.quickCoupon(pageNum, orderAmount)
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> {
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<OrderCouponEntity>>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<BaseListEntity<OrderCouponEntity>> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            totalNum = baseResponse.getData().getPages();
+                            pageNum = baseResponse.getData().getPageNum();
+
+                            if (isAdd) {
+                                adapter.addData(baseResponse.getData().getList());
+                                smartRefreshLayout.finishLoadMore();
+                            } else {
+                                mRootView.setEmptyView(adapter);
+                                smartRefreshLayout.finishRefresh();
+                                adapter.setNewData(baseResponse.getData().getList());
+                                if (totalNum == pageNum) {
+                                    smartRefreshLayout.finishLoadMoreWithNoMoreData();
+                                }
+                            }
+                        }
+                    }
+                });
+    }
+
+    private void getCouponsList2(boolean isAdd) {
+        mModel.optimalRequireList(pageNum, orderAmount,productId)
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> {

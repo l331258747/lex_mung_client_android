@@ -78,6 +78,7 @@ public class OrderCouponActivity extends BaseActivity<OrderCouponPresenter> impl
         if(couponId == 0)
             couponId = -1;
         mPresenter.setType(bundleIntent.getInt(BundleTags.TYPE,0));
+        mPresenter.setProductId(bundleIntent.getInt(BundleTags.REQUIREMENT_ID,0));
         mPresenter.setOrderAmount(bundleIntent.getDouble(BundleTags.MONEY,0));
         mPresenter.onCreate(smartRefreshLayout,couponId);
 
@@ -85,9 +86,10 @@ public class OrderCouponActivity extends BaseActivity<OrderCouponPresenter> impl
     }
 
     public void setMyCouponLayout(){
-        if(type == 0) return;
-        tvNoCoupon.setVisibility(View.GONE);
-        titleView.setTitle("我的优惠券");
+        if(type == 1){
+            tvNoCoupon.setVisibility(View.GONE);
+            titleView.setTitle("我的优惠券");
+        }
     }
 
     @Override
