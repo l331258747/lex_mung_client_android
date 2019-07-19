@@ -97,6 +97,7 @@ public class PayTypeView2 extends LinearLayout {
             if (list.get(i).getType() == 6) {
                 if (money <= list.get(i).getBalance()) {
                     changeData(i);
+                    itemOnClick.onClick(list.get(i).getType(), list.get(i).getGroupId());
                     return;
                 }
             }
@@ -106,6 +107,7 @@ public class PayTypeView2 extends LinearLayout {
             if (list.get(i).getType() == 4) {
                 if (money <= list.get(i).getBalance()) {
                     changeData(i);
+                    itemOnClick.onClick(list.get(i).getType(), list.get(i).getGroupId());
                     return;
                 }
             }
@@ -115,12 +117,14 @@ public class PayTypeView2 extends LinearLayout {
             if (list.get(i).getType() == 3) {
                 if (money <= list.get(i).getBalance()) {
                     changeData(i);
+                    itemOnClick.onClick(list.get(i).getType(), list.get(i).getGroupId());
                     return;
                 }
             }
         }
 
         changeData(0);
+        itemOnClick.onClick(list.get(0).getType(), list.get(0).getGroupId());
     }
 
     public double getTypeBalance(int payType, int groupId) {

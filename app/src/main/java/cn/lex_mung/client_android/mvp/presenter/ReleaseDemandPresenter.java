@@ -374,7 +374,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                     }
                     break;
                 case 6://集团卡支付
-                    if (payMoney > mRootView.getTypeBalance(6,0)) {
+                    if (payMoney > mRootView.getTypeBalance(6,payTypeGroup)) {
                         mRootView.showMessage("集团卡余额不足");
                         return;
                     }

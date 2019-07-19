@@ -162,13 +162,13 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
                 }
                 break;
             case 3://余额支付
-                if (payMoney > mRootView.getTypeBalance(3,payTypeGroup)) {
+                if (payMoney > mRootView.getTypeBalance(3,0)) {
                     mRootView.showLackOfBalanceDialog();
                     return;
                 }
                 break;
             case 6://集团卡支付
-                if (payMoney > mRootView.getTypeBalance(6,0)) {
+                if (payMoney > mRootView.getTypeBalance(6,payTypeGroup)) {
                     mRootView.showMessage("集团卡余额不足");
                     return;
                 }
