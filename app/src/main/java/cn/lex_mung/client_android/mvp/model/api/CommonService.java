@@ -361,13 +361,19 @@ public interface CommonService {
     Observable<BaseResponse> withdraw(@Body RequestBody body);
 
     /**
+     * 权益用户订单列表
+     * @return
+     */
+    @POST("client/member/order/org")
+    Observable<BaseResponse<BaseListEntity<OrderEntity>>> getTradingList(@Body RequestBody body);
+
+    /**
      * 获取用户交易明细
      *
      * @return BaseResponse
      */
-//    @POST("client/amount/detail")
-    @POST("client/member/order/org")
-    Observable<BaseResponse<BaseListEntity<OrderEntity>>> getTradingList(@Body RequestBody body);
+    @POST("client/amount/detail")
+    Observable<BaseResponse<BaseListEntity<TradingListEntity>>> amountDetail(@Body RequestBody body);
 
     /**
      * 获取关注律师列表

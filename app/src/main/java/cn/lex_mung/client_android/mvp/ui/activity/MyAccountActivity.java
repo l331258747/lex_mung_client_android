@@ -311,7 +311,7 @@ public class MyAccountActivity extends BaseActivity<MyAccountPresenter> implemen
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.bt_detail://明细
-                launchActivity(new Intent(mActivity, TradingListActivity.class));
+                launchActivity(new Intent(mActivity, MyTradingListActivity.class));
                 break;
             case R.id.bt_withdrawal:
                 if (mPresenter.getBalance() > 0) {
