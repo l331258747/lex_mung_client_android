@@ -162,7 +162,7 @@
                     android:layout_width="wrap_content"
                     android:textColor="@color/c_737373"
                     android:layout_height="wrap_content"
-                    android:text="温馨提示：\n\n您在服务过程中遇到的任何问题，都可以拨打400-811-3060我们会有专业客服为您服务。" />
+                    android:text="温馨提示：\n\n您在服务过程中遇到的任何问题，都可以拨打400-811-3060，我们会有专业客服为您服务。" />
 
             </LinearLayout>
 

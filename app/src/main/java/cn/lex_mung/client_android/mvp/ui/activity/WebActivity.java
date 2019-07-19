@@ -272,6 +272,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             if (mPresenter.isLogin()) {
                 bundle.clear();
                 bundle.putInt(BundleTags.ID, businessEntity.getRequireTypeId());
+                bundle.putString(BundleTags.REQUIRE_TYPE_NAME, businessEntity.getRequireTypeName());
                 bundle.putString(BundleTags.TITLE, businessEntity.getRequireTypeName());
                 bundle.putFloat(BundleTags.MONEY, businessEntity.getMoney());
                 launchActivity(new Intent(mActivity, RushLoanPayActivity.class), bundle);
@@ -316,7 +317,8 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             if (isFastClick()) return;
             bundle.clear();
             bundle.putInt(BundleTags.ID, businessEntity.getRequireTypeId());
-            bundle.putString(BundleTags.TITLE, businessEntity.getRequireTypeName());
+            bundle.putString(BundleTags.REQUIRE_TYPE_NAME, businessEntity.getRequireTypeName());
+            bundle.putString(BundleTags.TITLE, "快速电话咨询");
             bundle.putFloat(BundleTags.MONEY, businessEntity.getMoney());
             bundle.putString(BundleTags.MOBILE,businessEntity.getMobile());
             bundle.putInt(BundleTags.TYPE,1);
@@ -372,12 +374,13 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 
         @JavascriptInterface
         public void toldApp(){
-//            launchActivity(new Intent(mActivity, FastConsultActivity.class));
-            bundle.clear();
-            bundle.putString(BundleTags.URL, DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL));
-            bundle.putString(BundleTags.TITLE, "快速电话咨询");
-            bundle.putBoolean(BundleTags.IS_SHARE, false);
-            launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+            if(!TextUtils.isEmpty(DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL))){
+                bundle.clear();
+                bundle.putString(BundleTags.URL, DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL));
+                bundle.putString(BundleTags.TITLE, "快速电话咨询");
+                bundle.putBoolean(BundleTags.IS_SHARE, false);
+                launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+            }
         }
 
         //goOrderDetail()  goOrderList()

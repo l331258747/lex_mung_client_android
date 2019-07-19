@@ -220,18 +220,14 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
                     BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_quick_consultation_click");
                 }
 
-                if (DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
-//                    launchActivity(new Intent(mActivity, FastConsultActivity.class));
+                if(!TextUtils.isEmpty(DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL))){
                     bundle.clear();
                     bundle.putString(BundleTags.URL, DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL));
                     bundle.putString(BundleTags.TITLE, "快速电话咨询");
                     bundle.putBoolean(BundleTags.IS_SHARE, false);
                     launchActivity(new Intent(mActivity, WebActivity.class), bundle);
-                } else {
-                    bundle.clear();
-                    bundle.putInt(BundleTags.TYPE, 2);
-                    launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
                 }
+
                 break;
             case R.id.tv_bottom_custom:
                 Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "400-811-3060"));

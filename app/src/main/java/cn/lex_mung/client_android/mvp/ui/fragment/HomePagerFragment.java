@@ -294,12 +294,6 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                 break;
             case R.id.view_fast_consult:
                 BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","quick_consultation_click");
-//                if (mPresenter.isLogin()) {
-//                } else {
-//                    bundle.clear();
-//                    bundle.putInt(BundleTags.TYPE, 2);
-//                    launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
-//                }
                 if(!TextUtils.isEmpty(DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL))){
                     bundle.clear();
                     bundle.putString(BundleTags.URL, DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL));
@@ -313,15 +307,9 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                 break;
             case R.id.view_experts_consult:
                 BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","expert_consultation_click");
-                if (mPresenter.isLogin()) {
-                    bundle.clear();
-                    bundle.putInt(BundleTags.ID, 8);
-                    launchActivity(new Intent(mActivity, LawyerListActivity.class), bundle);
-                } else {
-                    bundle.clear();
-                    bundle.putInt(BundleTags.TYPE, 2);
-                    launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
-                }
+                bundle.clear();
+                bundle.putInt(BundleTags.ID, 8);
+                launchActivity(new Intent(mActivity, LawyerListActivity.class), bundle);
                 break;
         }
     }

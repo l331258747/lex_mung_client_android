@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -70,22 +71,15 @@ public class WebSolutionSelectActivity extends BaseActivity<WebSolutionSelectPre
                 }
                 break;
             case R.id.ll_call:
-                MobclickAgent.onEvent(mActivity, "w_y_shouye_index_kszx");
-                if (DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
-//                    bundle.clear();
-//                    bundle.putInt(BundleTags.BURYING_POINT,1);
-//                    launchActivity(new Intent(mActivity, FastConsultActivity.class),bundle);
+
+                if(!TextUtils.isEmpty(DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL))){
                     bundle.clear();
                     bundle.putString(BundleTags.URL, DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL));
-                    bundle.putInt(BundleTags.BURYING_POINT,1);
                     bundle.putString(BundleTags.TITLE, "快速电话咨询");
                     bundle.putBoolean(BundleTags.IS_SHARE, false);
                     launchActivity(new Intent(mActivity, WebActivity.class), bundle);
-                } else {
-                    bundle.clear();
-                    bundle.putInt(BundleTags.TYPE, 2);
-                    launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
                 }
+
                 break;
             case R.id.ll_lawyer:
                 MobclickAgent.onEvent(mActivity, "w_y_shouye_index_zjzx");

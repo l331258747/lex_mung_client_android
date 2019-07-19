@@ -106,7 +106,7 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
             id = bundleIntent.getInt(BundleTags.ID);
 
             mPresenter.setRequireTypeId(id);
-            mPresenter.setRequireTypeName(bundleIntent.getString(BundleTags.TITLE));
+            mPresenter.setRequireTypeName(bundleIntent.getString(BundleTags.REQUIRE_TYPE_NAME));
             mPresenter.setMobile(bundleIntent.getString(BundleTags.MOBILE));
             mPresenter.setPayMoney(orderPrice);
             mPresenter.setType(type);
