@@ -171,10 +171,10 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
                 bundle.putInt(BundleTags.REQUIRE_TYPE_ID,mPresenter.getRequireTypeId());
                 launchActivity(new Intent(mActivity, CouponModeActivity.class), bundle);
                 break;
-            case R.id.tv_fast_consult_tip:
-            case R.id.tv_fast_consult_tip_1:
-                mPresenter.tariffExplanationUrl();
-                break;
+//            case R.id.tv_fast_consult_tip:
+//            case R.id.tv_fast_consult_tip_1:
+//                mPresenter.tariffExplanationUrl();
+//                break;
             case R.id.bt_pay:
 
                 switch (requireTypeId){
@@ -207,7 +207,8 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
 
     @Override
     public void setTip(String string) {
-        tvFastConsultTip.setText(Html.fromHtml(string));
+//        tvFastConsultTip.setText(Html.fromHtml(string));
+        tvFastConsultTip.setText(Html.fromHtml(""));
     }
 
     @Override
