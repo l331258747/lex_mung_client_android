@@ -181,7 +181,10 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             }
         });
 
-        webView.setWebViewClient(new MyWebViewClient(webView,isJump));
+        webView.setWebViewClient(new MyWebViewClient(webView,isJump,string -> {
+            Intent dialIntent2 = new Intent(Intent.ACTION_DIAL, Uri.parse(string));
+            startActivity(dialIntent2);
+        }));
 
         webView.addJavascriptInterface(new AndroidToJs(), "JsBridgeApp");//h5 js调用 app.pay();
         webView.synCookies(url);

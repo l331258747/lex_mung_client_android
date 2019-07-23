@@ -1,6 +1,7 @@
 package cn.lex_mung.client_android.mvp.ui.widget.webview;
 
 import android.net.http.SslError;
+import android.text.TextUtils;
 import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebResourceError;
@@ -8,19 +9,23 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import cn.lex_mung.client_android.utils.LogUtil;
+
 //图片过大处理
 public class MyWebViewClient extends WebViewClient {
 
     WebView webView;
     boolean isJump;//支持跳转
+    OnClickLisener onClickLisener;
 
     public MyWebViewClient(WebView webView) {
-        this(webView,false);
+        this(webView,false,null);
     }
 
-    public MyWebViewClient(WebView webView,boolean isJump) {
+    public MyWebViewClient(WebView webView,boolean isJump,OnClickLisener onClickLisener) {
         this.webView = webView;
         this.isJump = isJump;
+        this.onClickLisener = onClickLisener;
     }
 
     @Override
@@ -46,6 +51,18 @@ public class MyWebViewClient extends WebViewClient {
         // 不重写会调用系统浏览器
 //        view.loadUrl(url);//跳转
         if(isJump){
+            LogUtil.e("shouldOverrideUrlLoading url:" + url);
+
+            if(TextUtils.isEmpty(url))
+                return true;
+            if(url.startsWith("tel")){
+                if(onClickLisener == null) return true;
+                if(url.indexOf(":") == -1) return true;
+                if(url.split(":").length < 2) return true;
+                onClickLisener.onClick(url);
+                return true;
+            }
+
             view.loadUrl(url);//跳转
         }
         return true;
@@ -72,5 +89,9 @@ public class MyWebViewClient extends WebViewClient {
                 View.MeasureSpec.UNSPECIFIED);
         //重新测量
         webView.measure(w, h);
+    }
+
+    public interface OnClickLisener{
+        void onClick(String string);
     }
 }
