@@ -48,6 +48,7 @@ import cn.lex_mung.client_android.mvp.ui.activity.MainActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MessageActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.OrganizationLawyerActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.X5WebCommonActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.HomePageRequirementTypeAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.HelpStepDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
@@ -269,7 +270,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                     bundle.putString(BundleTags.URL, DataHelper.getStringSF(mActivity,DataHelperTags.ONLINE_URL));
                     bundle.putString(BundleTags.TITLE, "在线咨询");
                     bundle.putBoolean(BundleTags.IS_SHARE, false);
-                    launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+                    launchActivity(new Intent(mActivity, X5WebCommonActivity.class), bundle);
                 }
                 break;
             case R.id.tv_search:
