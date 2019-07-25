@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/qb_px_20"
+    android:paddingBottom="@dimen/qb_px_20">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:text="平台特色服务" />
+
+    <!--card 1 -->
+    <View
+        android:id="@+id/view_card1"
+        android:layout_width="@dimen/qb_px_286"
+        android:layout_height="@dimen/qb_px_230"
+        android:layout_marginTop="@dimen/qb_px_30"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+    <ImageView
+        android:id="@+id/iv_card1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="@+id/view_card1"
+        app:layout_constraintEnd_toEndOf="@+id/view_card1"
+        app:layout_constraintStart_toStartOf="@+id/view_card1"
+        app:layout_constraintTop_toTopOf="@+id/view_card1"
+        tools:src="@drawable/ic_home_quick" />
+
+    <TextView
+        android:id="@+id/tv_card1_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/qb_px_30"
+        android:layout_marginTop="@dimen/qb_px_30"
+        android:textColor="@color/c_ff"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/view_card1"
+        app:layout_constraintTop_toTopOf="@+id/view_card1"
+        tools:text="LEX法务卡" />
+
+    <TextView
+        android:id="@+id/tv_card1_content1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_15"
+        android:maxLines="1"
+        android:textColor="@color/c_ff"
+        android:textSize="11sp"
+        app:layout_constraintEnd_toEndOf="@+id/view_card1"
+        app:layout_constraintStart_toStartOf="@+id/tv_card1_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_card1_title"
+        tools:text="2万元2万元2万元2万元2万元2万元" />
+
+    <TextView
+        android:id="@+id/tv_card1_content2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_5"
+        android:maxLines="2"
+        android:textColor="@color/c_ff"
+        android:textSize="11sp"
+        app:layout_constraintEnd_toEndOf="@+id/view_card1"
+        app:layout_constraintStart_toStartOf="@+id/tv_card1_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_card1_content1"
+        tools:text="尊享专属律师团尊享专属律师团尊享专属律师团尊享专属律师团尊享专属律师团尊享专属律师团" />
+
+
+    <!--card 2 -->
+    <View
+        android:id="@+id/view_card2"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_108"
+        android:layout_marginLeft="@dimen/qb_px_15"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/view_card1"
+        app:layout_constraintTop_toTopOf="@+id/view_card1" />
+
+    <ImageView
+        android:id="@+id/iv_card2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="@+id/view_card2"
+        app:layout_constraintEnd_toEndOf="@+id/view_card2"
+        app:layout_constraintStart_toStartOf="@+id/view_card2"
+        app:layout_constraintTop_toTopOf="@+id/view_card2"
+        tools:src="@drawable/ic_help_lawyer_call" />
+
+    <ImageView
+        android:id="@+id/tv_card2_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/qb_px_30"
+        android:scaleType="fitXY"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/view_card2"
+        app:layout_constraintTop_toTopOf="@+id/view_card2"
+        tools:src="@drawable/ic_order_detail_go" />
+
+    <TextView
+        android:id="@+id/tv_card2_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/qb_px_30"
+        android:layout_marginTop="@dimen/qb_px_5"
+        android:includeFontPadding="false"
+        android:textColor="@color/c_ff"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/view_card2"
+        app:layout_constraintTop_toBottomOf="@+id/tv_card2_tag"
+        app:layout_goneMarginTop="@dimen/qb_px_30"
+        tools:text="LEX法务卡" />
+
+    <TextView
+        android:id="@+id/tv_card2_content1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:textColor="@color/c_ff"
+        android:textSize="11sp"
+        app:layout_constraintEnd_toEndOf="@+id/view_card2"
+        app:layout_constraintStart_toStartOf="@+id/tv_card2_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_card2_title"
+        tools:text="2万元2万元2万元2万元2万元2万元2万元2万元2万元" />
+
+    <!--card 3 -->
+    <View
+        android:id="@+id/view_card3"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_108"
+        android:layout_marginLeft="@dimen/qb_px_15"
+        android:layout_marginTop="@dimen/qb_px_15"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/view_card1"
+        app:layout_constraintTop_toBottomOf="@+id/view_card2" />
+
+    <ImageView
+        android:id="@+id/iv_card3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_help_lawyer_call"
+        app:layout_constraintBottom_toBottomOf="@+id/view_card3"
+        app:layout_constraintEnd_toEndOf="@+id/view_card3"
+        app:layout_constraintStart_toStartOf="@+id/view_card3"
+        app:layout_constraintTop_toTopOf="@+id/view_card3" />
+
+    <ImageView
+        android:id="@+id/tv_card3_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/qb_px_30"
+        android:scaleType="fitXY"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/view_card3"
+        app:layout_constraintTop_toTopOf="@+id/view_card3"
+        tools:src="@drawable/ic_order_detail_go" />
+
+    <TextView
+        android:id="@+id/tv_card3_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/qb_px_30"
+        android:layout_marginTop="@dimen/qb_px_5"
+        android:includeFontPadding="false"
+        android:textColor="@color/c_ff"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/view_card3"
+        app:layout_constraintTop_toBottomOf="@+id/tv_card3_tag"
+        app:layout_goneMarginTop="@dimen/qb_px_30"
+        tools:text="LEX法务卡" />
+
+    <TextView
+        android:id="@+id/tv_card3_content1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:textColor="@color/c_ff"
+        android:textSize="11sp"
+        app:layout_constraintEnd_toEndOf="@+id/view_card3"
+        android:maxLines="1"
+        app:layout_constraintStart_toStartOf="@+id/tv_card3_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_card3_title"
+        tools:text="2万元2万元2万元2万元2万元2万元2万元2万元2万元" />
+
+
+</android.support.constraint.ConstraintLayout>

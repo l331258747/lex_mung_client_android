@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -28,7 +29,6 @@ import cn.lex_mung.client_android.app.ShareUtils;
 import cn.lex_mung.client_android.di.component.DaggerWebComponent;
 import cn.lex_mung.client_android.di.module.WebModule;
 import cn.lex_mung.client_android.mvp.contract.WebContract;
-import cn.lex_mung.client_android.mvp.model.entity.DeviceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.DeviceEntity2;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.WebGoOrderDetailEntity;
@@ -59,6 +59,8 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
     LWebView webView;
     @BindView(R.id.view_dialog)
     View viewDialog;
+    @BindView(R.id.progressbar)
+    ProgressBar progressBar;
 
     private boolean isShare;
     private String url;
@@ -161,7 +163,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             tvRight.setVisibility(View.GONE);
         }
         tvTitle.setText(title);
-        showLoading("");
+//        showLoading("");
         initWebView();
     }
 
@@ -174,8 +176,10 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
+                progressBar.setProgress(newProgress);
                 if (newProgress == 100) {
-                    hideLoading();
+//                    hideLoading();
+                    progressBar.setVisibility(View.GONE);
                 }
                 super.onProgressChanged(view, newProgress);
             }
@@ -198,7 +202,6 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 
     @OnClick(R.id.tv_right)
     public void onViewClicked() {
-        MobclickAgent.onEvent(mActivity, "w_y__shouye_jjfa_list_fenxiang");
         if (!TextUtils.isEmpty(url)
                 && !TextUtils.isEmpty(title)) {
             ShareUtils.shareUrl(mActivity

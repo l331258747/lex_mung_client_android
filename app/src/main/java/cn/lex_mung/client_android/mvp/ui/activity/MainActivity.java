@@ -114,7 +114,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     private void setStatusColor(int position){
         if(position == 0){
-            StatusBarUtil.setColor(mActivity, AppUtils.getColor(mActivity, R.color.c_ddf6ed), 0);
+            StatusBarUtil.setColor(mActivity, AppUtils.getColor(mActivity, R.color.c_1EC88B), 0);
         }
 //        else if(position == 3){
 //            StatusBarUtil.setColor(mActivity, AppUtils.getColor(mActivity, R.color.c_06a66a), 0);

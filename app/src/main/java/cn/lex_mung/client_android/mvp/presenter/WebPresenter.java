@@ -58,7 +58,7 @@ public class WebPresenter extends BasePresenter<WebContract.Model, WebContract.V
         mModel.getUserInfoDetail()
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))
-                .doOnSubscribe(disposable -> mRootView.showLoading(""))
+                .doOnSubscribe(disposable -> {})
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())

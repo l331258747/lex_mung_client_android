@@ -8,6 +8,7 @@ import cn.lex_mung.client_android.mvp.model.entity.UnreadMessageCountEntity;
 
 import java.util.List;
 
+import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.NormalBean;
 import cn.lex_mung.client_android.mvp.model.entity.home.OnlineUrlEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.RequirementTypeV3Entity;
@@ -18,29 +19,28 @@ import okhttp3.RequestBody;
 
 public interface HomePagerContract {
     interface View extends IView {
-        void setBannerAdapter(List<BannerEntity> list);
+//        void setBannerAdapter(List<BannerEntity> list);
+//        void setSolutionType(List<SolutionTypeEntity> list);
+//        void setRequirementTypeAdapter(List<NormalBean> data);
+//        void setHotContract(List<NormalBean> datas);
+//        void setMoreContract(List<NormalBean> datas);
 
-        void setSolutionType(List<SolutionTypeEntity> list);
-
-        void setRequirementTypeAdapter(List<NormalBean> data);
+        void setHomeAdapter(List<HomeEntity> datas);
 
         void setUnreadMessageCount(String count);
 
         void hideUnreadMessageCount();
-
-        void setHotContract(List<NormalBean> datas);
-        void setMoreContract(List<NormalBean> datas);
     }
 
     interface Model extends IModel {
-        Observable<BaseResponse<BaseListEntity<BannerEntity>>> getBanner();
-
-        Observable<BaseResponse<List<SolutionTypeEntity>>> getSolutionType(RequestBody body);
-
-        Observable<BaseResponse<RequirementTypeV3Entity>> getHomepageRequirementType();
+//        Observable<BaseResponse<BaseListEntity<BannerEntity>>> getBanner();
+//        Observable<BaseResponse<List<SolutionTypeEntity>>> getSolutionType(RequestBody body);
+//        Observable<BaseResponse<RequirementTypeV3Entity>> getHomepageRequirementType();
+//        Observable<BaseResponse<OnlineUrlEntity>> clientOnlineUrl();
 
         Observable<BaseResponse<UnreadMessageCountEntity>> getUnreadCount();
 
-        Observable<BaseResponse<OnlineUrlEntity>> clientOnlineUrl();
+
+        Observable<BaseResponse<BaseListEntity<HomeEntity>>> clientHome();
     }
 }

@@ -5,6 +5,7 @@ import android.app.Application;
 import com.google.gson.Gson;
 
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
+import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.OnlineUrlEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.RequirementTypeV3Entity;
 import io.reactivex.Observable;
@@ -44,26 +45,26 @@ public class HomePagerModel extends BaseModel implements HomePagerContract.Model
         this.mApplication = null;
     }
 
-    @Override
-    public Observable<BaseResponse<BaseListEntity<BannerEntity>>> getBanner() {
-        return mRepositoryManager
-                .obtainRetrofitService(CommonService.class)
-                .getBanner();
-    }
+//    @Override
+//    public Observable<BaseResponse<BaseListEntity<BannerEntity>>> getBanner() {
+//        return mRepositoryManager
+//                .obtainRetrofitService(CommonService.class)
+//                .getBanner();
+//    }
 
-    @Override
-    public Observable<BaseResponse<List<SolutionTypeEntity>>> getSolutionType(RequestBody body) {
-        return mRepositoryManager
-                .obtainRetrofitService(CommonService.class)
-                .getSolutionType(body);
-    }
+//    @Override
+//    public Observable<BaseResponse<List<SolutionTypeEntity>>> getSolutionType(RequestBody body) {
+//        return mRepositoryManager
+//                .obtainRetrofitService(CommonService.class)
+//                .getSolutionType(body);
+//    }
 
-    @Override
-    public Observable<BaseResponse<RequirementTypeV3Entity>> getHomepageRequirementType() {
-        return mRepositoryManager
-                .obtainRetrofitService(CommonService.class)
-                .getHomepageRequirementType();
-    }
+//    @Override
+//    public Observable<BaseResponse<RequirementTypeV3Entity>> getHomepageRequirementType() {
+//        return mRepositoryManager
+//                .obtainRetrofitService(CommonService.class)
+//                .getHomepageRequirementType();
+//    }
 
     @Override
     public Observable<BaseResponse<UnreadMessageCountEntity>> getUnreadCount() {
@@ -73,9 +74,16 @@ public class HomePagerModel extends BaseModel implements HomePagerContract.Model
     }
 
     @Override
-    public Observable<BaseResponse<OnlineUrlEntity>> clientOnlineUrl() {
+    public Observable<BaseResponse<BaseListEntity<HomeEntity>>> clientHome() {
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
-                .clientOnlineUrl();
+                .clientHome();
     }
+
+//    @Override
+//    public Observable<BaseResponse<OnlineUrlEntity>> clientOnlineUrl() {
+//        return mRepositoryManager
+//                .obtainRetrofitService(CommonService.class)
+//                .clientOnlineUrl();
+//    }
 }

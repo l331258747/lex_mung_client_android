@@ -51,6 +51,7 @@ import cn.lex_mung.client_android.mvp.model.entity.free.FreeTextBizinfoEntity;
 import cn.lex_mung.client_android.mvp.model.entity.help.HelpStepEntity;
 import cn.lex_mung.client_android.mvp.model.entity.help.HelpStepLawyerEntity;
 import cn.lex_mung.client_android.mvp.model.entity.help.HirstoryDemandEntity;
+import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.OnlineUrlEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.RequirementTypeV3Entity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocGetEntity;
@@ -776,4 +777,10 @@ public interface CommonService {
     //用户热门商品实付价格
     @POST("client/optimal/require")
     Observable<BaseResponse<QuickPayEntity>> optimalRequire(@Body RequestBody body);
+
+    ///common/client/home
+    //GET
+    //获取首页模板
+    @GET("common/client/home")
+    Observable<BaseResponse<BaseListEntity<HomeEntity>>> clientHome();
 }

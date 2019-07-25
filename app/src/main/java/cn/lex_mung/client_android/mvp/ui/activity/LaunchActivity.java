@@ -74,7 +74,7 @@ public class LaunchActivity extends BaseActivity<LaunchPresenter> implements Lau
             DataHelper.setStringSF(mActivity, DataHelperTags.DEVICE, new Gson().toJson(device));
         } catch (Exception ignored) {
         } finally {
-            mPresenter.getPermission();
+            mPresenter.onCreate();
         }
 
         LogUtil.e("Channel：" + AnalyticsConfig.getChannel(mActivity));
