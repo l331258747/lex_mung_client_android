@@ -15,8 +15,8 @@
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="@dimen/qb_px_40"
         android:layout_marginRight="@dimen/qb_px_40"
-        android:inAnimation="@anim/bottom_in"
-        android:outAnimation="@anim/top_out" />
+        android:inAnimation="@anim/end_in"
+        android:outAnimation="@anim/start_out" />
 
 
     <cn.lex_mung.client_android.mvp.ui.widget.CompletedView

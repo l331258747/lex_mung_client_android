@@ -258,31 +258,19 @@ package cn.lex_mung.client_android.mvp.presenter;
 
 import android.app.Application;
 import android.os.Message;
-import android.text.TextUtils;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import org.simple.eventbus.Subscriber;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
 import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.mvp.contract.HomePagerContract;
-import cn.lex_mung.client_android.mvp.model.entity.BannerEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
-import cn.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UnreadMessageCountEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
-import cn.lex_mung.client_android.mvp.model.entity.home.OnlineUrlEntity;
-import cn.lex_mung.client_android.mvp.model.entity.home.RequirementTypeV3Entity;
-import cn.lex_mung.client_android.utils.GsonUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
@@ -294,7 +282,6 @@ import me.zl.mvp.integration.AppManager;
 import me.zl.mvp.mvp.BasePresenter;
 import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.RxLifecycleUtils;
-import okhttp3.RequestBody;
 
 import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGIN_INFO;
 import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGOUT;
@@ -396,6 +383,31 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
 
                     @Override
                     public void onError(Throwable t) {//不添加这个导致菊花一直转，查看菊花一直转就找401返回值
+                    }
+                });
+    }
+
+    public void random(){
+        mModel.random()
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> {
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<List<String>>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<List<String>> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            if(baseResponse.getData() == null || baseResponse.getData().size() == 0){
+                                mRootView.showFlipView(false);
+                            }else{
+                                mRootView.showFlipView(true);
+                                mRootView.addNotice(baseResponse.getData());
+                            }
+                        }
                     }
                 });
     }

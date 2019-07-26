@@ -566,6 +566,7 @@
 
 package cn.lex_mung.client_android.mvp.ui.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -579,6 +580,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import java.util.List;
 
@@ -624,6 +627,10 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     ImageView iv_message;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.view_flipper)
+    ViewFlipper viewFlipper;
+    @BindView(R.id.tv_search)
+    TextView tvSearch;
 
     private HomeAdapter homeAdapter;
 
@@ -652,8 +659,10 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
 
         initAdapter();
         initRecyclerView();
+        initTextBanner();
 
         mPresenter.getHomeData();
+        mPresenter.random();
     }
 
     private boolean isCreated = false;
@@ -667,8 +676,10 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         if (isVisibleToUser) {
             BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "first_page", getPair());
             mPresenter.onResume();
+            if (flipisShow) viewFlipper.startFlipping();
         } else {
             BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "first_page", getPair());
+            if (flipisShow) viewFlipper.stopFlipping();
         }
     }
 
@@ -813,7 +824,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
 
 
     @OnClick({
-            R.id.tv_search
+            R.id.view_search_text
             , R.id.iv_message
             , R.id.fab
             , R.id.fab_custom
@@ -829,7 +840,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                     launchActivity(new Intent(mActivity, X5WebCommonActivity.class), bundle);
                 }
                 break;
-            case R.id.tv_search:
+            case R.id.view_search_text:
                 ((MainActivity) mActivity).switchPage(2);
                 break;
             case R.id.fab:
@@ -867,6 +878,78 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     public void hideUnreadMessageCount() {
         iv_message.setImageDrawable(ContextCompat.getDrawable(mActivity, R.drawable.ic_message_un));
     }
+
+    //------------搜索栏轮播 start
+    public void stopFlipping() {
+        if (viewFlipper != null) {
+            viewFlipper.stopFlipping();
+        }
+    }
+
+    public void initTextBanner() {
+        viewFlipper.setAutoStart(false);
+        viewFlipper.setFlipInterval(3000); // ms
+    }
+
+    public void removeAllViews() {
+        viewFlipper.removeAllViews();
+    }
+
+    boolean flipisShow;
+
+    @Override
+    public void showFlipView(boolean isShow) {
+        this.flipisShow = isShow;
+        if (isShow) {
+            viewFlipper.setVisibility(View.VISIBLE);
+            tvSearch.setVisibility(View.GONE);
+        } else {
+            viewFlipper.setVisibility(View.GONE);
+            tvSearch.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void addFlippingView(View view) {
+        viewFlipper.addView(view);
+    }
+
+    public void startFlipping() {
+        viewFlipper.startFlipping();
+    }
+
+    @Override
+    public Activity getHomeActivity() {
+        return this.getActivity();
+    }
+
+    /**
+     * 轮播
+     */
+    public void addNotice(List<String> datas) {
+        int size = datas.size();
+        removeAllViews();
+        if (size == 0) {
+            stopFlipping();
+            return;
+        }
+
+        if (size == 1) {
+            View view = View.inflate(getHomeActivity(), R.layout.view_flipper_item_layout2, null);
+            ((TextView) view.findViewById(R.id.textview1)).setText(datas.get(0));
+            addFlippingView(view);
+            stopFlipping();
+            return;
+        }
+
+        startFlipping();
+        for (int i = 0; i < size; i++) {
+            View view = View.inflate(getHomeActivity(), R.layout.view_flipper_item_layout2, null);
+            ((TextView) view.findViewById(R.id.textview1)).setText(datas.get(i));
+            addFlippingView(view);
+        }
+    }
+
+    //------------搜索栏轮播 end
 
 
     @Override

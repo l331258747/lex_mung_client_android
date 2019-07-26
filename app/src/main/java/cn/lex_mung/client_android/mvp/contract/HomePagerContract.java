@@ -1,5 +1,7 @@
 package cn.lex_mung.client_android.mvp.contract;
 
+import android.app.Activity;
+
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BannerEntity;
@@ -30,6 +32,14 @@ public interface HomePagerContract {
         void setUnreadMessageCount(String count);
 
         void hideUnreadMessageCount();
+
+
+        void showFlipView(boolean isShow);
+
+        void addNotice(List<String> datas);
+
+        Activity getHomeActivity();
+
     }
 
     interface Model extends IModel {
@@ -40,7 +50,8 @@ public interface HomePagerContract {
 
         Observable<BaseResponse<UnreadMessageCountEntity>> getUnreadCount();
 
-
         Observable<BaseResponse<BaseListEntity<HomeEntity>>> clientHome();
+
+        Observable<BaseResponse<List<String>>> random();
     }
 }

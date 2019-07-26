@@ -35,24 +35,48 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/view_search" />
 
-        <TextView
-            android:id="@+id/tv_search"
+        <View
+            android:id="@+id/view_search_text"
             android:layout_width="0dp"
             android:layout_height="@dimen/qb_px_60"
             android:layout_marginStart="@dimen/qb_px_20"
             android:layout_marginEnd="@dimen/qb_px_10"
             android:background="@drawable/round_40_54e697_all"
             android:gravity="center_vertical"
-            android:maxLines="1"
-            android:paddingStart="@dimen/qb_px_65"
-            android:paddingEnd="@dimen/qb_px_20"
-            android:text="轮播通知轮播通知轮播通知轮播通知轮播通知轮播通知轮播通知轮播通知轮播通知"
-            android:textColor="@color/c_ff"
-            android:transitionName="tvSearch"
             app:layout_constraintBottom_toBottomOf="@id/view_search"
             app:layout_constraintEnd_toStartOf="@id/iv_message"
             app:layout_constraintStart_toEndOf="@id/iv_logo"
-            app:layout_constraintTop_toTopOf="@id/view_search" />
+            app:layout_constraintTop_toTopOf="@id/view_search"/>
+
+        <TextView
+            android:id="@+id/tv_search"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_60"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:paddingStart="@dimen/qb_px_65"
+            android:paddingEnd="@dimen/qb_px_20"
+            android:text="搜索律师"
+            android:textColor="@color/c_ff"
+            app:layout_constraintBottom_toBottomOf="@id/view_search_text"
+            app:layout_constraintStart_toStartOf="@id/view_search_text"
+            app:layout_constraintEnd_toEndOf="@id/view_search_text"
+            app:layout_constraintTop_toTopOf="@id/view_search_text" />
+
+        <ViewFlipper
+            android:id="@+id/view_flipper"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_60"
+            android:layout_gravity="center_vertical"
+            android:paddingStart="@dimen/qb_px_65"
+            android:paddingEnd="@dimen/qb_px_20"
+            android:visibility="gone"
+            android:inAnimation="@anim/bottom_in"
+            android:outAnimation="@anim/top_out"
+            app:layout_constraintBottom_toBottomOf="@id/view_search_text"
+            app:layout_constraintStart_toStartOf="@id/view_search_text"
+            app:layout_constraintEnd_toEndOf="@id/view_search_text"
+            app:layout_constraintTop_toTopOf="@id/view_search_text"/>
 
         <ImageView
             android:id="@+id/iv_search"
@@ -62,7 +86,7 @@
             android:src="@drawable/ic_search4"
             android:transitionName="ivSearch"
             app:layout_constraintBottom_toBottomOf="@id/view_search"
-            app:layout_constraintStart_toStartOf="@id/tv_search"
+            app:layout_constraintStart_toStartOf="@id/view_search_text"
             app:layout_constraintTop_toTopOf="@id/view_search" />
 
         <ImageView

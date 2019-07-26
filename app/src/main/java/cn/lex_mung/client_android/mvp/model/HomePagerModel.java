@@ -80,6 +80,13 @@ public class HomePagerModel extends BaseModel implements HomePagerContract.Model
                 .clientHome();
     }
 
+    @Override
+    public Observable<BaseResponse<List<String>>> random() {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .random();
+    }
+
 //    @Override
 //    public Observable<BaseResponse<OnlineUrlEntity>> clientOnlineUrl() {
 //        return mRepositoryManager
