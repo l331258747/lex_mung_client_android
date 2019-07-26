@@ -891,9 +891,6 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         viewFlipper.setFlipInterval(3000); // ms
     }
 
-    public void removeAllViews() {
-        viewFlipper.removeAllViews();
-    }
 
     boolean flipisShow;
 
@@ -909,14 +906,6 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         }
     }
 
-    public void addFlippingView(View view) {
-        viewFlipper.addView(view);
-    }
-
-    public void startFlipping() {
-        viewFlipper.startFlipping();
-    }
-
     @Override
     public Activity getHomeActivity() {
         return this.getActivity();
@@ -927,7 +916,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
      */
     public void addNotice(List<String> datas) {
         int size = datas.size();
-        removeAllViews();
+        viewFlipper.removeAllViews();
         if (size == 0) {
             stopFlipping();
             return;
@@ -936,16 +925,16 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         if (size == 1) {
             View view = View.inflate(getHomeActivity(), R.layout.view_flipper_item_layout2, null);
             ((TextView) view.findViewById(R.id.textview1)).setText(datas.get(0));
-            addFlippingView(view);
+            viewFlipper.addView(view);
             stopFlipping();
             return;
         }
 
-        startFlipping();
+        viewFlipper.startFlipping();
         for (int i = 0; i < size; i++) {
             View view = View.inflate(getHomeActivity(), R.layout.view_flipper_item_layout2, null);
             ((TextView) view.findViewById(R.id.textview1)).setText(datas.get(i));
-            addFlippingView(view);
+            viewFlipper.addView(view);
         }
     }
 
