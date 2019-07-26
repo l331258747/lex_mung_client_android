@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import cn.lex_mung.client_android.mvp.model.api.CommonService;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.VersionEntity;
+import cn.lex_mung.client_android.mvp.model.entity.home.OnlineUrlEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.integration.IRepositoryManager;
 import me.zl.mvp.mvp.BaseModel;
@@ -41,5 +42,12 @@ public class MainModel extends BaseModel implements MainContract.Model {
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .checkVersion();
+    }
+
+    @Override
+    public Observable<BaseResponse<OnlineUrlEntity>> clientOnlineUrl() {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .clientOnlineUrl();
     }
 }

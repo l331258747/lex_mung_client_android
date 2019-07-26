@@ -14,6 +14,7 @@ import cn.lex_mung.client_android.mvp.contract.MainContract;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.VersionEntity;
+import cn.lex_mung.client_android.mvp.model.entity.home.OnlineUrlEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.EditInfoActivity;
 import cn.lex_mung.client_android.utils.LogUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -50,7 +51,8 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
         mModel.checkVersion()
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))
-                .doOnSubscribe(disposable -> {})
+                .doOnSubscribe(disposable -> {
+                })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
@@ -65,6 +67,7 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
                             }
                             LogUtil.e("您当前是最新版本!");
                             setHelpDialog();
+                            getOnlineUrl();
                         }
                     }
 
@@ -72,11 +75,12 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
                     public void onError(Throwable t) {
                         super.onError(t);
                         setHelpDialog();
+                        getOnlineUrl();
                     }
                 });
     }
 
-    public void setHelpDialog(){
+    public void setHelpDialog() {
         if (!DataHelper.getBooleanSF(mRootView.getActivity(), DataHelperTags.IS_ONE_IN)) {
             DataHelper.setBooleanSF(mRootView.getActivity(), DataHelperTags.IS_ONE_IN, true);
             mRootView.showHelpDialog();
@@ -86,8 +90,8 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
     public void onResume() {
         if (DataHelper.getBooleanSF(mApplication, DataHelperTags.IS_LOGIN_SUCCESS)) {
             UserInfoDetailsEntity entity = new Gson().fromJson(DataHelper.getStringSF(mApplication, DataHelperTags.USER_INFO_DETAIL), UserInfoDetailsEntity.class);
-            if(entity == null){
-                DataHelper.setBooleanSF(mApplication, DataHelperTags.IS_LOGIN_SUCCESS,false);
+            if (entity == null) {
+                DataHelper.setBooleanSF(mApplication, DataHelperTags.IS_LOGIN_SUCCESS, false);
                 return;
             }
             String userId = "lex" + entity.getMemberId();
@@ -109,6 +113,26 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
             }
             DataHelper.setIntergerSF(mApplication, DataHelperTags.LOGIN_TYPE, -1);
         }
+    }
+
+    public void getOnlineUrl() {
+        mModel.clientOnlineUrl()
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> {
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<OnlineUrlEntity>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<OnlineUrlEntity> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            DataHelper.setStringSF(mApplication, DataHelperTags.ONLINE_URL, baseResponse.getData().getUrl());
+                        }
+                    }
+                });
     }
 
     @Override
