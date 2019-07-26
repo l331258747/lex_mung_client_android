@@ -2,13 +2,11 @@ package cn.lex_mung.client_android.mvp.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.WindowManager;
 
 import com.google.gson.Gson;
@@ -30,7 +28,6 @@ import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.DeviceUtils;
-import me.zl.mvp.utils.StatusBarUtil;
 
 public class LaunchActivity extends BaseActivity<LaunchPresenter> implements LaunchContract.View {
 
@@ -69,7 +66,7 @@ public class LaunchActivity extends BaseActivity<LaunchPresenter> implements Lau
                     , android.os.Build.BRAND + " " + android.os.Build.MODEL
                     , android.os.Build.VERSION.RELEASE
                     , uuid
-                    , DeviceUtils.getAndroidId(mActivity,uuid)
+                    , DeviceUtils.getAndroidId(mActivity, uuid)
             );
             DataHelper.setStringSF(mActivity, DataHelperTags.DEVICE, new Gson().toJson(device));
         } catch (Exception ignored) {

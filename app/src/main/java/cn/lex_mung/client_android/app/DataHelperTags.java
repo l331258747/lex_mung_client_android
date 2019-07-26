@@ -34,5 +34,6 @@ public class DataHelperTags {
     public static final String TIME_UUID_DAY = "time_uuid_day";
     public static final String QUICK_URL = "quick_url";
     public static final String ONLINE_URL = "online_url";
+    public static final String LAUNCH_LOCATION = "launch_location";
 
 }

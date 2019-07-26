@@ -62,6 +62,7 @@ import cn.lex_mung.client_android.mvp.model.entity.order.RequirementCreateEntity
 import cn.lex_mung.client_android.mvp.model.entity.order.RequirementDetailEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RushOrderLawyerEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RushOrderStatusEntity;
+import cn.lex_mung.client_android.mvp.model.entity.other.LaunchLocationEntity;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -783,4 +784,10 @@ public interface CommonService {
     //获取首页模板
     @GET("common/client/home")
     Observable<BaseResponse<BaseListEntity<HomeEntity>>> clientHome();
+
+    //http://pv.sohu.com/cityjson?ie=utf-8
+    //GET
+    //获取首页模板
+    @GET("https://restapi.amap.com/v3/ip?key=f55325bc244062399ce0579b6b9d56a5")
+    Observable<LaunchLocationEntity> cityjson();
 }

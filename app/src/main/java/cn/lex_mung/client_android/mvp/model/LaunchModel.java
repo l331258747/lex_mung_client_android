@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.google.gson.Gson;
 
+import cn.lex_mung.client_android.mvp.model.entity.other.LaunchLocationEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.integration.IRepositoryManager;
 import me.zl.mvp.mvp.BaseModel;
@@ -41,5 +42,12 @@ public class LaunchModel extends BaseModel implements LaunchContract.Model {
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .appStartUp();
+    }
+
+    @Override
+    public Observable<LaunchLocationEntity> cityjson() {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .cityjson();
     }
 }

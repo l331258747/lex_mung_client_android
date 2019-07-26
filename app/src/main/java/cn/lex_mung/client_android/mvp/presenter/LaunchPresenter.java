@@ -15,10 +15,11 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.mvp.contract.LaunchContract;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
-import cn.lex_mung.client_android.mvp.model.entity.LocationEntity;
 import cn.lex_mung.client_android.mvp.model.entity.RegionEntity;
+import cn.lex_mung.client_android.mvp.model.entity.other.LaunchLocationEntity;
 import cn.lex_mung.client_android.utils.LocationUtil;
 import cn.lex_mung.client_android.utils.LogUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -30,6 +31,7 @@ import me.zl.mvp.di.scope.ActivityScope;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.integration.AppManager;
 import me.zl.mvp.mvp.BasePresenter;
+import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.LogUtils;
 import me.zl.mvp.utils.PermissionUtil;
 import me.zl.mvp.utils.RxLifecycleUtils;
@@ -51,14 +53,54 @@ public class LaunchPresenter extends BasePresenter<LaunchContract.Model, LaunchC
     private List<RegionEntity> list;
     private List<String> allProv = new ArrayList<>();//所有的省
     private Map<String, List<String>> cityMap = new HashMap<>();//key:省p---value:市n  value是一个集合
-    private String province = "";
-    private String city = "";
-    private int provinceId;
-    private int cityId;
 
     @Inject
     public LaunchPresenter(LaunchContract.Model model, LaunchContract.View rootView) {
         super(model, rootView);
+    }
+
+    public void onCreate() {
+        new Thread(this::initJsonData).start();
+        getAllDepreg();
+        getPermission();
+    }
+
+    public void getLocationPermission() {
+        PermissionUtil.location(new PermissionUtil.RequestPermission() {
+            @Override
+            public void onRequestPermissionSuccess() {
+                getLocation(true);
+            }
+
+            @Override
+            public void onRequestPermissionFailure(List<String> permissions) {
+                getLocation(false);
+            }
+
+            @Override
+            public void onRequestPermissionFailureWithAskNeverAgain(List<String> permissions) {
+                getLocation(false);
+            }
+        }, mRxPermissions, mErrorHandler);
+    }
+
+    public void getPermission() {
+        PermissionUtil.readPhonestate(new PermissionUtil.RequestPermission() {
+            @Override
+            public void onRequestPermissionSuccess() {
+                getLocationPermission();
+            }
+
+            @Override
+            public void onRequestPermissionFailure(List<String> permissions) {
+                getLocationPermission();
+            }
+
+            @Override
+            public void onRequestPermissionFailureWithAskNeverAgain(List<String> permissions) {
+                getLocationPermission();
+            }
+        }, mRxPermissions, mErrorHandler);
     }
 
     private void initJsonData() {
@@ -87,96 +129,71 @@ public class LaunchPresenter extends BasePresenter<LaunchContract.Model, LaunchC
         }
     }
 
-    public void getLocation(boolean isPermission){
-
-        if(!isPermission){
-            //TODO 没有地址
-            LogUtil.e("定位： 无" );
-            mRootView.launch();
+    public void getLocation(boolean isPermission) {
+        if (!isPermission) {
+            cityjson(false);
             return;
         }
 
         LocationUtil locationUtil = new LocationUtil();
-        locationUtil.startLocation(mRootView.getActivity().getApplicationContext(),new LocationUtil.LocationListener() {
-            @Override
-            public void getAdress(int code, LocationEntity adress) {
-                LogUtil.e("code:" + code + " adress:" + adress);
-                if(code == 0 && getCityStrToData(adress.getCity())){
-                    //TODO 有地址
-                    LogUtil.e("定位province： " + province );
-                    LogUtil.e("定位city： " + city );
-                    LogUtil.e("定位provinceId： " + provinceId );
-                    LogUtil.e("定位cityId： " + cityId );
-                }else{
-                   //TODO 没有地址
-                    LogUtil.e("定位： 无" );
-                }
-                mRootView.launch();
+        locationUtil.startLocation(mRootView.getActivity().getApplicationContext(), (code, adress)->{
+            if (code == 0) {
+                cityjson(true, getCityStrToData(adress.getCity()));
+            } else {
+                cityjson(false);
             }
         });
     }
 
-    public boolean getCityStrToData(String str) {
+    public void cityjson(boolean isLocation, int cityId) {
+        LogUtil.e("手机定位cityId： " + cityId);
+        if (isLocation) {
+            DataHelper.setIntergerSF(mApplication, DataHelperTags.LAUNCH_LOCATION, cityId);
+            mRootView.launch();
+            return;
+        }
+
+        mModel.cityjson()
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> {
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<LaunchLocationEntity>(mErrorHandler) {
+                    @Override
+                    public void onNext(LaunchLocationEntity baseResponse) {
+                        LogUtil.e("ip定位cityId： " + baseResponse.getAdcodeInt());
+                        DataHelper.setIntergerSF(mApplication, DataHelperTags.LAUNCH_LOCATION, baseResponse.getAdcodeInt());
+                        mRootView.launch();
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {//如果不这样设置，会导致进入登录页面。在进入mainactivity
+                        LogUtil.e("ip定位失败cityId： " + 0);
+                        DataHelper.setIntergerSF(mApplication, DataHelperTags.LAUNCH_LOCATION, 0);
+                        mRootView.launch();
+                    }
+                });
+    }
+
+    public void cityjson(boolean isLocation) {
+        this.cityjson(isLocation, 0);
+    }
+
+    //str 为长沙   通过本地json数据判断str
+    public int getCityStrToData(String str) {
         for (int i = 0; i < list.size(); i++) {
             List<RegionEntity> list1 = list.get(i).getChild();
             for (int j = 0; j < list1.size(); j++) {
                 if (list1.get(j).getName().startsWith(str)) {
-                    province =  (list.get(i).getName());
-                    provinceId = list.get(i).getRegionId();
-                    city = (list1.get(j).getName());
-                    cityId = (list1.get(j).getRegionId());
-                    return true;
+                    return list1.get(j).getRegionId();
                 }
             }
         }
-        return false;
-    }
-
-    public void onCreate(){
-        new Thread(this::initJsonData).start();
-        getAllDepreg();
-        getPermission();
-    }
-
-    public void getLocationPermission(){
-        PermissionUtil.location(new PermissionUtil.RequestPermission() {
-            @Override
-            public void onRequestPermissionSuccess() {
-                getLocation(true);
-            }
-
-            @Override
-            public void onRequestPermissionFailure(List<String> permissions) {
-                getLocation(false);
-            }
-
-            @Override
-            public void onRequestPermissionFailureWithAskNeverAgain(List<String> permissions) {
-                getLocation(false);
-            }
-        }, mRxPermissions, mErrorHandler);
-    }
-
-    public void getPermission() {
-        PermissionUtil.readPhonestate(new PermissionUtil.RequestPermission() {
-            @Override
-            public void onRequestPermissionSuccess() {
-//                mRootView.launch();
-                getLocationPermission();
-            }
-
-            @Override
-            public void onRequestPermissionFailure(List<String> permissions) {
-//                mRootView.launch();
-                getLocationPermission();
-            }
-
-            @Override
-            public void onRequestPermissionFailureWithAskNeverAgain(List<String> permissions) {
-//                mRootView.launch();
-                getLocationPermission();
-            }
-        }, mRxPermissions, mErrorHandler);
+        return 0;
     }
 
     private void getAllDepreg() {
