@@ -270,6 +270,7 @@ import cn.lex_mung.client_android.mvp.contract.HomePagerContract;
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.UnreadMessageCountEntity;
+import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -350,9 +351,29 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                     public void onNext(BaseResponse<BaseListEntity<HomeEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             mRootView.setHomeAdapter(baseResponse.getData().getList());
+                            saveQuickUrl(baseResponse.getData().getList());
                         }
                     }
                 });
+    }
+
+    private void saveQuickUrl(List<HomeEntity> homeEntities) {
+        if (homeEntities == null) return;
+
+        for (int i = 0; i < homeEntities.size(); i++) {
+            HomeEntity homeEntity = homeEntities.get(i);
+            if (homeEntity.getType().equals("button")) {
+
+                if (homeEntities.get(i).getBtns() == null) return;
+
+                for (int j = 0; j < homeEntities.get(i).getBtns().size(); i++) {
+                    HomeChildEntity homeChildEntity = homeEntities.get(i).getBtns().get(j);
+                    if (homeChildEntity.getJumptype().equals("h5") && homeChildEntity.getJumpurl().endsWith("quick.html")) {
+                        DataHelper.setStringSF(mApplication, DataHelperTags.QUICK_URL, homeChildEntity.getJumpurl());
+                    }
+                }
+            }
+        }
     }
 
     private void getUnreadCount() {
@@ -387,7 +408,7 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                 });
     }
 
-    public void random(){
+    public void random() {
         mModel.random()
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))
@@ -401,9 +422,9 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                     @Override
                     public void onNext(BaseResponse<List<String>> baseResponse) {
                         if (baseResponse.isSuccess()) {
-                            if(baseResponse.getData() == null || baseResponse.getData().size() == 0){
+                            if (baseResponse.getData() == null || baseResponse.getData().size() == 0) {
                                 mRootView.showFlipView(false);
-                            }else{
+                            } else {
                                 mRootView.showFlipView(true);
                                 mRootView.addNotice(baseResponse.getData());
                             }
