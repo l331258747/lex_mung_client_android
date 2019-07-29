@@ -58,7 +58,6 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import org.simple.eventbus.Subscriber;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -165,7 +164,7 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
                     @Override
                     public void onNext(BaseResponse<BalanceEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
-                            balance = baseResponse.getData().getBalanceAmount();
+                            balance = baseResponse.getData().getAllBalanceAmount();
                             mRootView.setBalance(String.format(
                                     AppUtils.getString(mApplication, R.string.text_remaining_amount)
                                     , StringUtils.getStringNum(balance)));

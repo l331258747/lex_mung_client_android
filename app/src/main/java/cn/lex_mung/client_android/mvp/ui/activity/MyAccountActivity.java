@@ -128,6 +128,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.Group;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -147,11 +148,14 @@ import cn.lex_mung.client_android.mvp.contract.MyAccountContract;
 import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.presenter.MyAccountPresenter;
 import cn.lex_mung.client_android.mvp.ui.adapter.MyAccountPayAdapter;
+import cn.lex_mung.client_android.mvp.ui.adapter.MyAccountPayAdapter2;
 import cn.lex_mung.client_android.mvp.ui.dialog.DefaultDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.lex_mung.client_android.mvp.ui.dialog.OnlyTextDialog;
+import cn.lex_mung.client_android.mvp.ui.dialog.SingleTextDialog;
 import cn.lex_mung.client_android.utils.DecimalUtil;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
@@ -186,6 +190,10 @@ public class MyAccountActivity extends BaseActivity<MyAccountPresenter> implemen
     TextView tvTip;
     @BindView(R.id.tv_tip2)
     TextView tvTip2;
+    @BindView(R.id.tv_give_price)
+    TextView tvGivePrice;
+    @BindView(R.id.group_give_price)
+    Group groupGivePrice;
 
     private DefaultDialog defaultDialog;
     private ExpertPriceEntity entity;
@@ -259,7 +267,7 @@ public class MyAccountActivity extends BaseActivity<MyAccountPresenter> implemen
 
 
     @Override
-    public void initRecyclerView(MyAccountPayAdapter adapter) {
+    public void initRecyclerView(MyAccountPayAdapter2 adapter) {
         AppUtils.configRecyclerView(recyclerView, new GridLayoutManager(mActivity, 3));
         recyclerView.setAdapter(adapter);
     }
@@ -271,6 +279,17 @@ public class MyAccountActivity extends BaseActivity<MyAccountPresenter> implemen
 
     public void setTip2(String str){
         tvTip2.setText(str);
+    }
+
+    @Override
+    public void showPriceDialog(String str) {
+        new SingleTextDialog(mActivity).setContent(str).show();
+    }
+
+    @Override
+    public void setGivePrice(boolean isShow, double givePrice) {
+        groupGivePrice.setVisibility(isShow?View.VISIBLE:View.GONE);
+        tvGivePrice.setText(StringUtils.getStringNum(givePrice));
     }
 
     @Override
@@ -307,16 +326,20 @@ public class MyAccountActivity extends BaseActivity<MyAccountPresenter> implemen
         return this;
     }
 
-    @OnClick({R.id.bt_pay, R.id.bt_detail,R.id.bt_withdrawal,R.id.tv_wx,R.id.tv_zfb})
+    @OnClick({R.id.bt_pay, R.id.bt_detail,R.id.bt_withdrawal,R.id.tv_wx,R.id.tv_zfb,R.id.iv_what})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.iv_what://明细
+                //TODO 问号
+                new SingleTextDialog(mActivity).setContent("赠送："+mPresenter.getGiveBalance() + "\n实际：" + mPresenter.getRealBalance()).show();
+                break;
             case R.id.bt_detail://明细
                 launchActivity(new Intent(mActivity, MyTradingListActivity.class));
                 break;
             case R.id.bt_withdrawal:
-                if (mPresenter.getBalance() > 0) {
+                if (mPresenter.getAllBalance() > 0) {
                     bundle.clear();
-                    bundle.putDouble(BundleTags.BALANCE, mPresenter.getBalance());
+                    bundle.putDouble(BundleTags.BALANCE, mPresenter.getAllBalance());
                     launchActivity(new Intent(mActivity, AccountWithdrawalActivity.class), bundle);
                 } else {
                     showMessage(getString(R.string.text_no_withdrawal_amount));
@@ -333,7 +356,6 @@ public class MyAccountActivity extends BaseActivity<MyAccountPresenter> implemen
                 mPresenter.setPayType(2);
                 break;
             case R.id.bt_pay:
-                MobclickAgent.onEvent(mActivity, "w_y_chongzhi_list_tj");
                 mPresenter.pay(webView.getSettings().getUserAgentString());
                 break;
         }

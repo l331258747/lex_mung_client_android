@@ -13,10 +13,15 @@ public class BalanceEntity {
 
     private int memberId;
     private int totalConsumeAmount;
-    private float balanceAmount;
+    private double balanceAmount;
     private int frozenAmount;
     private int depositAmount;
     private String dateModified;
+    private double giveAmount;
+
+    public double getGiveAmount() {
+        return giveAmount;
+    }
 
     public int getMemberId() {
         return memberId;
@@ -34,7 +39,11 @@ public class BalanceEntity {
         this.totalConsumeAmount = totalConsumeAmount;
     }
 
-    public float getBalanceAmount() {
+    public double getAllBalanceAmount() {
+        return balanceAmount + giveAmount;
+    }
+
+    public double getBalanceAmount(){
         return balanceAmount;
     }
 

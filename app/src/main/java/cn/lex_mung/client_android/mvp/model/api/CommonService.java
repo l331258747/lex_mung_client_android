@@ -54,6 +54,8 @@ import cn.lex_mung.client_android.mvp.model.entity.help.HirstoryDemandEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.OnlineUrlEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.RequirementTypeV3Entity;
+import cn.lex_mung.client_android.mvp.model.entity.mine.RechargeCouponEntity;
+import cn.lex_mung.client_android.mvp.model.entity.mine.RechargeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocGetEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocUploadEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
@@ -796,4 +798,16 @@ public interface CommonService {
     //移动web消息
     @GET("random")
     Observable<BaseResponse<List<String>>> random();
+
+    ///client/recharge/list
+    //POST
+    //充值赠送列表
+    @POST("client/recharge/list")
+    Observable<BaseResponse<List<RechargeEntity>>> rechargeList(@Body RequestBody body);
+
+    ///client/voucher/{voucherPackId}
+    //GET
+    //券包关联优惠券列表
+    @GET("client/voucher/{voucherPackId}")
+    Observable<BaseResponse<List<RechargeCouponEntity>>> rechargeCouponList(@Path("voucherPackId") int voucherPackId);
 }

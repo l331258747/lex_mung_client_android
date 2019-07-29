@@ -20,6 +20,20 @@ public class DecimalUtil {
         return value;
     }
 
+    /**
+     * 金钱乘法
+     */
+    public static float multiply(double f1, double f2) {
+        String v1 = Double.toString(f1);
+        String v2 = Double.toString(f2);
+        BigDecimal b1 = new BigDecimal(v1);
+        BigDecimal b2 = new BigDecimal(v2);
+
+        float value = b1.multiply(b2).floatValue();
+
+        return value;
+    }
+
 
     /**
      * 金钱加法
@@ -27,6 +41,18 @@ public class DecimalUtil {
     public static float add(float f1, float f2) {
         String v1 = Float.toString(f1);
         String v2 = Float.toString(f2);
+        BigDecimal b1 = new BigDecimal(v1);
+        BigDecimal b2 = new BigDecimal(v2);
+        float value = b1.add(b2).floatValue();
+        return value;
+    }
+
+    /**
+     * 金钱加法
+     */
+    public static float add(double f1, double f2) {
+        String v1 = Double.toString(f1);
+        String v2 = Double.toString(f2);
         BigDecimal b1 = new BigDecimal(v1);
         BigDecimal b2 = new BigDecimal(v2);
         float value = b1.add(b2).floatValue();
@@ -54,6 +80,18 @@ public class DecimalUtil {
     public static float divide(float f1, float f2) {
         String v1 = Float.toString(f1);
         String v2 = Float.toString(f2);
+        BigDecimal b1 = new BigDecimal(v1);
+        BigDecimal b2 = new BigDecimal(v2);
+        float value = b1.divide(b2,2).floatValue();
+        return value;
+    }
+
+    /**
+     * 金钱除法
+     */
+    public static float divide(double f1, double f2) {
+        String v1 = Double.toString(f1);
+        String v2 = Double.toString(f2);
         BigDecimal b1 = new BigDecimal(v1);
         BigDecimal b2 = new BigDecimal(v2);
         float value = b1.divide(b2,2).floatValue();

@@ -60,6 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/qb_px_35"
                 android:text="可用余额(元)"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/guideline3"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -76,6 +77,16 @@
                 app:layout_constraintEnd_toEndOf="@+id/guideline3"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toBottomOf="@+id/tv_money_title" />
+
+            <ImageView
+                android:id="@+id/iv_what"
+                android:layout_width="@dimen/qb_px_80"
+                android:layout_height="@dimen/qb_px_80"
+                android:padding="@dimen/qb_px_20"
+                android:src="@drawable/ic_what"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_balance"
+                app:layout_constraintStart_toEndOf="@+id/tv_balance"
+                app:layout_constraintTop_toTopOf="@+id/tv_balance" />
 
             <View
                 android:id="@+id/view_btn"
@@ -197,6 +208,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/qb_px_35"
+                android:layout_marginEnd="@dimen/qb_px_30"
                 android:overScrollMode="never"
                 android:scrollbars="none"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -248,10 +260,10 @@
                 android:id="@+id/tv_wx"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/qb_px_130"
+                android:layout_marginTop="@dimen/qb_px_30"
                 android:background="@drawable/button_withe_down"
                 android:gravity="center_vertical"
                 android:includeFontPadding="false"
-                android:layout_marginTop="@dimen/qb_px_30"
                 android:paddingStart="@dimen/qb_px_160"
                 android:paddingEnd="0dp"
                 android:text="@string/text_wx_pay"
@@ -328,7 +340,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/qb_px_35"
                 android:layout_marginBottom="@dimen/qb_px_20"
-                android:text="温馨提示:\n1、余额可用于支付绿豆圈所有法律产品及法律服务。\n2、余额可提现。"
+                android:text="温馨提示:\n1、余额可用于支付绿豆圈所有法律产品及法律服务。\n2、余额可提现。\n3、您在充值过程中遇到的任何问题，都可以通过400-811-3060与我们取得联系。"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/guideline3"
@@ -367,12 +379,6 @@
             android:layout_height="@dimen/qb_px_100"
             android:background="@color/c_06a66a" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/qb_px_1"
-            android:background="@color/c_b5b5b5"
-            app:layout_constraintBottom_toTopOf="@id/view_bottom" />
-
         <TextView
             android:id="@+id/tv_price_title"
             android:layout_width="@dimen/qb_px_130"
@@ -380,8 +386,8 @@
             android:includeFontPadding="false"
             android:text="充值金额:"
             android:textColor="@color/c_ff"
-            android:textSize="13sp"
-            app:layout_constraintBottom_toBottomOf="@id/view_bottom"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@id/tv_give_price_title"
             app:layout_constraintStart_toStartOf="@id/guideline22"
             app:layout_constraintTop_toTopOf="@id/view_bottom" />
 
@@ -390,9 +396,8 @@
             android:layout_width="@dimen/qb_px_30"
             android:layout_height="@dimen/qb_px_30"
             android:src="@drawable/ic_price_unit"
-            app:layout_constraintBottom_toBottomOf="@id/view_bottom"
-            app:layout_constraintStart_toEndOf="@id/tv_price_title"
-            app:layout_constraintTop_toTopOf="@id/view_bottom" />
+            app:layout_constraintBottom_toBottomOf="@id/tv_price_title"
+            app:layout_constraintStart_toEndOf="@id/tv_price_title" />
 
         <TextView
             android:id="@+id/tv_order_money"
@@ -400,12 +405,52 @@
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
             android:textColor="@color/c_ff"
-            android:textSize="22sp"
+            android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/view_bottom"
+            app:layout_constraintBottom_toBottomOf="@id/tv_price_title"
             app:layout_constraintStart_toEndOf="@id/iv_price_unit"
-            app:layout_constraintTop_toTopOf="@id/view_bottom"
+            app:layout_constraintTop_toTopOf="@+id/tv_price_title"
             tools:text="500" />
+
+        <android.support.constraint.Group
+            android:id="@+id/group_give_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="tv_give_price_title,iv_give_price_unit,tv_give_price" />
+
+        <TextView
+            android:id="@+id/tv_give_price_title"
+            android:layout_width="@dimen/qb_px_130"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="赠送金额:"
+            android:textColor="@color/c_ff"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/view_bottom"
+            app:layout_constraintStart_toStartOf="@id/guideline22"
+            app:layout_constraintTop_toBottomOf="@id/tv_price_title" />
+
+        <ImageView
+            android:id="@+id/iv_give_price_unit"
+            android:layout_width="@dimen/qb_px_30"
+            android:layout_height="@dimen/qb_px_30"
+            android:src="@drawable/ic_price_unit"
+            app:layout_constraintBottom_toBottomOf="@id/tv_give_price_title"
+            app:layout_constraintStart_toEndOf="@id/tv_give_price_title" />
+
+        <TextView
+            android:id="@+id/tv_give_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:textColor="@color/c_ff"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/tv_give_price_title"
+            app:layout_constraintStart_toEndOf="@id/iv_give_price_unit"
+            app:layout_constraintTop_toTopOf="@+id/tv_give_price_title"
+            tools:text="200" />
 
         <TextView
             android:id="@+id/bt_pay"

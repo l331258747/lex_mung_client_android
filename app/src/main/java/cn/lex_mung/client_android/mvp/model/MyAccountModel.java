@@ -4,7 +4,11 @@ import android.app.Application;
 
 import com.google.gson.Gson;
 
+import java.util.List;
+
 import cn.lex_mung.client_android.mvp.model.entity.PayEntity;
+import cn.lex_mung.client_android.mvp.model.entity.mine.RechargeCouponEntity;
+import cn.lex_mung.client_android.mvp.model.entity.mine.RechargeEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.integration.IRepositoryManager;
 import me.zl.mvp.mvp.BaseModel;
@@ -50,5 +54,19 @@ public class MyAccountModel extends BaseModel implements MyAccountContract.Model
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .pay(body);
+    }
+
+    @Override
+    public Observable<BaseResponse<List<RechargeEntity>>> rechargeList(RequestBody body) {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .rechargeList(body);
+    }
+
+    @Override
+    public Observable<BaseResponse<List<RechargeCouponEntity>>> rechargeCouponList(int voucherPackId) {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .rechargeCouponList(voucherPackId);
     }
 }

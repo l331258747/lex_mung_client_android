@@ -13,8 +13,10 @@ import cn.lex_mung.client_android.app.PayStatusTags;
 import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayResultEntity;
+import cn.lex_mung.client_android.mvp.model.entity.mine.RechargeCouponEntity;
+import cn.lex_mung.client_android.mvp.model.entity.mine.RechargeEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.PayStatusActivity;
-import cn.lex_mung.client_android.mvp.ui.adapter.MyAccountPayAdapter;
+import cn.lex_mung.client_android.mvp.ui.adapter.MyAccountPayAdapter2;
 import cn.lex_mung.client_android.utils.DecimalUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -39,7 +41,6 @@ import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,25 +67,37 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
     @Inject
     RxPermissions mRxPermissions;
 
-    private float balance;
+    private double allBalance;//总余额
+    private double realBalance;//
+    private double giveBalance;
 
-    private MyAccountPayAdapter myAccountPayAdapter;
+    private MyAccountPayAdapter2 myAccountPayAdapter;
 
-    private float payMoney;
+    private double payMoney;
     private int payType = 1;
 
     private boolean flag = false;
     private ExpertPriceEntity entity;
-    private int myAccountPayAdapterPosition;
-    private List<String> priceList;
+    //    private int myAccountPayAdapterPosition;
+//    private List<RechargeEntity> priceList;
+    private int rechargeId;
 
     @Inject
     public MyAccountPresenter(MyAccountContract.Model model, MyAccountContract.View rootView) {
         super(model, rootView);
     }
 
-    public double getBalance() {
-        return balance;
+    public double getAllBalance() {
+        return allBalance;
+    }
+
+    //TODO 问号 获取
+    public double getRealBalance() {
+        return realBalance;
+    }
+
+    public double getGiveBalance() {
+        return giveBalance;
     }
 
     public void getUserBalance() {
@@ -101,40 +114,99 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
                     @Override
                     public void onNext(BaseResponse<BalanceEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
-                            balance = baseResponse.getData().getBalanceAmount();
+                            realBalance = baseResponse.getData().getBalanceAmount();
+                            giveBalance = baseResponse.getData().getGiveAmount();
+
+                            allBalance = baseResponse.getData().getAllBalanceAmount();
                             mRootView.setBalance(String.format(
                                     AppUtils.getString(mApplication, R.string.text_yuan_money)
-                                    , StringUtils.getStringNum(balance)));
+                                    , StringUtils.getStringNum(allBalance)));
                         }
                     }
                 });
     }
 
-    private void setPayMoney(float payMoney) {
+    public void getRechargeList() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", null);
+        mModel.rechargeList(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> {
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<List<RechargeEntity>>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<List<RechargeEntity>> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+//                            initAdapter(priceList = baseResponse.getData());
+                            initAdapter(baseResponse.getData());
+                        }
+                    }
+                });
+    }
+
+    public void getRechargeCouponList(RechargeEntity entity) {
+        mModel.rechargeCouponList(entity.getCouponPackId())
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> {
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<List<RechargeCouponEntity>>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<List<RechargeCouponEntity>> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            if (entity.getGive() == 1) {
+                                mRootView.showPriceDialog("充值金额：" + entity.getAmount() + "\n赠送金额：" + entity.getGiveAmount() + "\n赠送优惠券");
+                            } else {
+                                mRootView.showPriceDialog("充值金额：" + entity.getAmount() + "\n赠送优惠券");
+                            }
+
+                        }
+                    }
+                });
+    }
+
+    private void setRechargeId(int rechargeId) {
+        this.rechargeId = rechargeId;
+    }
+
+    private void setPayMoney(double payMoney) {
         this.payMoney = payMoney;
         mRootView.setOrderMoney(StringUtils.getStringNum(payMoney));
 
-        if(entity != null){
+        if (entity != null) {
             long time;
-            float SelectMoney;
+            double SelectMoney;
             String string2;
 
-            if(entity.getMinimumRecharge() > 0 && myAccountPayAdapterPosition == priceList.size() - 1){//如果最小充值金额大于0，和选择最后一个
-                SelectMoney = DecimalUtil.add(balance, payMoney);
-                string2 = "充值后即可与%1$s通话%2$s。";
-            }else{
-                SelectMoney = payMoney;
-                string2 = "充值后可增加与%1$s%2$s通话时长。";
-            }
+//            if(entity.getMinimumRecharge() > 0 && myAccountPayAdapterPosition == priceList.size() - 1){//如果最小充值金额大于0，和选择最后一个
+//                SelectMoney = DecimalUtil.add(allBalance, payMoney);
+//                string2 = "充值后即可与%1$s通话%2$s。";
+//            }else{
+//                SelectMoney = payMoney;
+//                string2 = "充值后可增加与%1$s%2$s通话时长。";
+//            }
 
-            if(!TextUtils.isEmpty(entity.getOrgnizationName())){
+            SelectMoney = payMoney;
+            string2 = "充值后可增加与%1$s%2$s通话时长。";
+
+
+            if (!TextUtils.isEmpty(entity.getOrgnizationName())) {
                 time = (long) DecimalUtil.divide(SelectMoney, entity.getFavorablePrice());
-            }else{
+            } else {
                 time = (long) DecimalUtil.divide(SelectMoney, entity.getLawyerPrice());
             }
 
             String timeStr = StringUtils.getStringNum(time) + entity.getPriceUnit();
-            if(entity.getPriceUnit().equals("分钟") && time / 60 > 0){
+            if (entity.getPriceUnit().equals("分钟") && time / 60 > 0) {
                 timeStr = (time / 60) + "小时" + (time % 60) + "分钟";
             }
             mRootView.setTip2(String.format(string2, entity.getLawyerName(), timeStr));
@@ -147,35 +219,47 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
 
     public void onCreate(ExpertPriceEntity entity) {
         this.entity = entity;
-        priceList = new ArrayList<>();
-        priceList.add("1000");
-        priceList.add("500");
-        priceList.add("300");
-        priceList.add("200");
-        priceList.add("100");
-        if(entity == null || entity.getMinimumRecharge() == 0){
-            priceList.add("50");
-        }else{
-            priceList.add(StringUtils.getStringNum(entity.getMinimumRecharge()));
-        }
-        initAdapter(priceList);
+        getRechargeList();
     }
 
-    private void initAdapter(List<String> priceList) {
-        myAccountPayAdapter = new MyAccountPayAdapter(priceList);
-        myAccountPayAdapter.setOnItemClickListener((adapter, view, position) -> {
-            String money = myAccountPayAdapter.getItem(position);
-            if (TextUtils.isEmpty(money)) return;
-            myAccountPayAdapterPosition = position;
+    private void initAdapter(List<RechargeEntity> priceList) {
+        if (priceList == null || priceList.size() == 0) return;
 
-            setPayMoney(Float.valueOf(money));
+        myAccountPayAdapter = new MyAccountPayAdapter2(priceList);
+        myAccountPayAdapter.setOnItemClickListener((adapter, view, position) -> {
+            RechargeEntity entity = myAccountPayAdapter.getItem(position);
+            if (entity == null) return;
+//            myAccountPayAdapterPosition = position;
+
+            setPayMoney(entity.getAmount());
+            setRechargeId(entity.getId());
+            setGiveLayout(entity.getGive(), entity.getGiveAmount());
+
             myAccountPayAdapter.setPos(position);
             myAccountPayAdapter.notifyDataSetChanged();
 
+            showPriceDetail(entity);
+
         });
         mRootView.initRecyclerView(myAccountPayAdapter);
-        myAccountPayAdapterPosition = 0;
-        setPayMoney(Float.valueOf(priceList.get(0)));
+//        myAccountPayAdapterPosition = 0;
+        setPayMoney(priceList.get(0).getAmount());
+        setRechargeId(priceList.get(0).getId());
+        setGiveLayout(priceList.get(0).getGive(), priceList.get(0).getGiveAmount());
+    }
+
+    private void setGiveLayout(int isGive, double givePrice) {
+        mRootView.setGivePrice(isGive == 1 ? true : false, isGive == 1 ? givePrice : 0);
+    }
+
+    private void showPriceDetail(RechargeEntity entity) {
+        if (entity.getActivity() != 1) //是否有优惠活动
+            return;
+        if (entity.getGiveCoupon() == 1) {//是否有优惠券包
+            getRechargeCouponList(entity);
+        }else if (entity.getGive() == 1) {//是否有赠送金额
+            mRootView.showPriceDialog("充值金额：" + entity.getAmount() + "\n赠送金额：" + entity.getGiveAmount());
+        }
     }
 
     private void getPermission(String ua) {
@@ -217,11 +301,11 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
                 }
                 break;
         }
-//        long money = new BigDecimal(payMoney).multiply(new BigDecimal(100)).intValue();
-        long money = (long) DecimalUtil.multiply(payMoney,100);
+        long money = (long) DecimalUtil.multiply(payMoney, 100);
         Map<String, Object> map = new HashMap<>();
         map.put("money", money);
         map.put("type", payType);
+        map.put("other", "{\"rechargeId\":" + rechargeId + "}");//新增，充值金额id
         map.put("source", 2);
         map.put("product", 4);
         map.put("ua", ua);
@@ -253,9 +337,9 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
                                 request.timeStamp = baseResponse.getData().getTimestamp();
                                 request.sign = baseResponse.getData().getSign();
                                 api.sendReq(request);
-                                if(entity != null){
+                                if (entity != null) {
                                     DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.PAY_1);
-                                }else{
+                                } else {
                                     DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.PAY);
                                 }
                             } else if (payType == 2) {//支付宝
@@ -271,9 +355,9 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
                                 Thread payThread = new Thread(payRunnable);
                                 payThread.start();
                             } else {//余额
-                                if(entity != null){
+                                if (entity != null) {
                                     DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.PAY_1);
-                                }else{
+                                } else {
                                     DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.PAY);
                                 }
                                 Bundle bundle = new Bundle();
@@ -296,9 +380,9 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1: {
-                    if(entity != null){
+                    if (entity != null) {
                         DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.PAY_1);
-                    }else{
+                    } else {
                         DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.PAY);
                     }
                     PayResultEntity payResult = new PayResultEntity((Map<String, String>) msg.obj);

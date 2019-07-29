@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="@dimen/qb_px_115"
-    android:gravity="center">
+    android:layout_height="wrap_content"
+    android:layout_marginRight="@dimen/qb_px_35"
+    android:layout_marginBottom="@dimen/qb_px_35">
 
     <LinearLayout
         android:id="@+id/ll_price"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/qb_px_80"
+        android:layout_height="@dimen/qb_px_85"
         android:gravity="center"
-        android:background="@drawable/round_10_ff_all_ecc994"
+        android:background="@drawable/round_10_fbf4ea_all_edca95"
         android:layout_toStartOf="@id/item_view"
         android:orientation="horizontal">
 
@@ -30,21 +31,26 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_marginLeft="@dimen/qb_px_5"
+            android:textStyle="bold"
             android:includeFontPadding="false"
+            android:textSize="12sp"
             android:text="元"
             android:textColor="@color/c_ecc994"/>
 
     </LinearLayout>
 
-
-    <View
-        android:id="@+id/item_view"
-        android:layout_width="@dimen/qb_px_35"
-        android:layout_height="match_parent"
-        android:layout_alignParentEnd="true" />
-
-    <View
+    <TextView
+        android:id="@+id/tv_tag"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/qb_px_35"
-        android:layout_alignParentBottom="true" />
+        android:layout_height="wrap_content"
+        android:text="返现500"
+        android:textSize="10sp"
+        android:background="@drawable/ic_account_tag"
+        android:textColor="@color/c_ff"
+        android:layout_alignParentEnd="true"
+        android:maxLines="1"
+        android:paddingLeft="@dimen/qb_px_10"
+        android:paddingRight="@dimen/qb_px_10"
+        android:includeFontPadding="false"/>
+
 </RelativeLayout>
