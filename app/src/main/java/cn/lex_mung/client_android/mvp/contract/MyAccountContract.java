@@ -29,7 +29,7 @@ public interface MyAccountContract {
 
         void setTip2(String str);
 
-        void showPriceDialog(String str);
+        void showPriceDialog(int type, String balance,String giveBalance,List<RechargeCouponEntity> rechargeCouponEntities);
 
         void setGivePrice(boolean isShow, double givePrice);
 

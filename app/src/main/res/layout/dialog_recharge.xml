@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="@dimen/qb_px_570"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/view_1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/qb_px_23"
+        android:background="@drawable/round_20_ffffff_all"
+        app:layout_constraintBottom_toBottomOf="@id/view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_title_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_help_step_title_bg"
+        app:layout_constraintTop_toTopOf="@+id/view_1" />
+
+    <ImageView
+        android:id="@+id/iv_title_name"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/qb_px_80"
+        android:src="@drawable/ic_recharge_balance"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_title_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="服务助手"
+        android:textColor="@color/c_ff"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_title_name" />
+
+
+    <RelativeLayout
+        android:id="@+id/rl_balance"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/qb_px_60"
+        android:layout_marginTop="@dimen/qb_px_60"
+        android:layout_marginRight="@dimen/qb_px_60"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_title_bg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="充值余额："
+            android:textStyle="bold"
+            android:textColor="@color/c_323232" />
+
+        <TextView
+            android:id="@+id/tv_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="23.00元"
+            android:textColor="@color/c_1EC88B"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_give_balance"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/qb_px_60"
+        android:layout_marginTop="@dimen/qb_px_40"
+        android:layout_marginRight="@dimen/qb_px_60"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rl_balance">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="赠送余额："
+            android:textColor="@color/c_323232" />
+
+        <TextView
+            android:id="@+id/tv_give_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="23.00元"
+            android:textColor="@color/c_1EC88B"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_coupon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/qb_px_60"
+        android:layout_marginTop="@dimen/qb_px_40"
+        android:layout_marginRight="@dimen/qb_px_60"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rl_give_balance">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="赠送优惠券："
+            android:textStyle="bold"
+            android:textColor="@color/c_323232" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:scrollbars="none" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_tip"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="赠送余额仅可以再平台中消费，不支持体现"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_coupon"
+        android:layout_marginLeft="@dimen/qb_px_60"
+        android:layout_marginTop="@dimen/qb_px_60"
+        android:layout_marginRight="@dimen/qb_px_60"
+        android:textColor="@color/c_737373" />
+
+
+
+    <LinearLayout
+        android:id="@+id/ll_btn"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_80"
+        android:layout_marginLeft="@dimen/qb_px_60"
+        android:layout_marginTop="@dimen/qb_px_60"
+        android:layout_marginRight="@dimen/qb_px_60"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_tip">
+
+
+        <TextView
+            android:id="@+id/tv_submit"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/round_40_2ed08d_all"
+            android:gravity="center"
+            android:text="我知道了!"
+            android:textColor="@color/c_ff" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_40"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_btn" />
+
+</android.support.constraint.ConstraintLayout>

@@ -153,8 +153,7 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
         mModel.rechargeCouponList(entity.getCouponPackId())
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))
-                .doOnSubscribe(disposable -> {
-                })
+                .doOnSubscribe(disposable -> mRootView.showLoading(""))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
@@ -164,9 +163,15 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
                     public void onNext(BaseResponse<List<RechargeCouponEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             if (entity.getGive() == 1) {
-                                mRootView.showPriceDialog("充值金额：" + entity.getAmount() + "\n赠送金额：" + entity.getGiveAmount() + "\n赠送优惠券");
+                                mRootView.showPriceDialog(1,
+                                        entity.getAmountStr2(),
+                                        entity.getGiveAmountStr(),
+                                        baseResponse.getData());
                             } else {
-                                mRootView.showPriceDialog("充值金额：" + entity.getAmount() + "\n赠送优惠券");
+                                mRootView.showPriceDialog(1,
+                                        entity.getAmountStr2(),
+                                        "",
+                                        baseResponse.getData());
                             }
 
                         }
@@ -258,7 +263,10 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
         if (entity.getGiveCoupon() == 1) {//是否有优惠券包
             getRechargeCouponList(entity);
         }else if (entity.getGive() == 1) {//是否有赠送金额
-            mRootView.showPriceDialog("充值金额：" + entity.getAmount() + "\n赠送金额：" + entity.getGiveAmount());
+            mRootView.showPriceDialog(1,
+                    entity.getAmountStr2(),
+                    entity.getGiveAmountStr(),
+                    null);
         }
     }
 

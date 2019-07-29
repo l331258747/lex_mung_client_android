@@ -57,6 +57,10 @@ public class RechargeEntity {
         return amount;
     }
 
+    public String getAmountStr2() {
+        return StringUtils.getStringNum(amount) + "元";
+    }
+
     public String getAmountStr(){
         return StringUtils.getStringNum(amount);
     }
@@ -94,7 +98,10 @@ public class RechargeEntity {
     }
 
     public String getGiveAmountStr(){
-        return StringUtils.getStringNum(giveAmount);
+        if(giveAmount <= 0){
+            return "";
+        }
+        return StringUtils.getStringNum(giveAmount) + "元";
     }
 
     public void setGiveAmount(double giveAmount) {

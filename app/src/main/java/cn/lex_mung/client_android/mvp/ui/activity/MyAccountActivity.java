@@ -140,12 +140,17 @@ import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
 
+import java.util.List;
+
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.component.DaggerMyAccountComponent;
 import cn.lex_mung.client_android.di.module.MyAccountModule;
 import cn.lex_mung.client_android.mvp.contract.MyAccountContract;
 import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
+import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
+import cn.lex_mung.client_android.mvp.model.entity.mine.RechargeCouponEntity;
+import cn.lex_mung.client_android.mvp.model.entity.mine.RechargeEntity;
 import cn.lex_mung.client_android.mvp.presenter.MyAccountPresenter;
 import cn.lex_mung.client_android.mvp.ui.adapter.MyAccountPayAdapter;
 import cn.lex_mung.client_android.mvp.ui.adapter.MyAccountPayAdapter2;
@@ -155,6 +160,7 @@ import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.lex_mung.client_android.mvp.ui.dialog.OnlyTextDialog;
+import cn.lex_mung.client_android.mvp.ui.dialog.RechargeDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.SingleTextDialog;
 import cn.lex_mung.client_android.utils.DecimalUtil;
 import me.zl.mvp.base.BaseActivity;
@@ -215,15 +221,15 @@ public class MyAccountActivity extends BaseActivity<MyAccountPresenter> implemen
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        if(bundleIntent != null){
-            if((entity = (ExpertPriceEntity) bundleIntent.getSerializable(BundleTags.ENTITY)) != null){
+        if (bundleIntent != null) {
+            if ((entity = (ExpertPriceEntity) bundleIntent.getSerializable(BundleTags.ENTITY)) != null) {
                 setTip(entity);
             }
         }
         mPresenter.onCreate(entity);
     }
 
-    public void setTip(ExpertPriceEntity entity){
+    public void setTip(ExpertPriceEntity entity) {
 //        String string1 = "【律师名称】律师的咨询费用为【通话单价】\n" +
 //                "当前余额可与【律师名称】通话【通话时长】，请确保余额大于通话【保底时长】分钟所需的【最低余额】元（通话不足【保底时长】分钟按【保底时长】分钟计算，超过【保底时长】分钟时按分钟计费。）";
 //        String string11 = "【律师名称】律师的咨询费用为【通话单价】，您拥有【权益组织】的专属权益，优惠后的价格为【优惠价格】。\n" +
@@ -251,7 +257,7 @@ public class MyAccountActivity extends BaseActivity<MyAccountPresenter> implemen
                     entity.getMinimumDuration(),
                     entity.getMinimumDuration(),
                     entity.getMinimumDuration()));
-        }else{
+        } else {
             tvTip.setText(String.format(string1,
                     entity.getLawyerName(),
                     entity.getPriceStr(),
@@ -277,18 +283,31 @@ public class MyAccountActivity extends BaseActivity<MyAccountPresenter> implemen
         tvOrderMoney.setText(format);
     }
 
-    public void setTip2(String str){
+    public void setTip2(String str) {
         tvTip2.setText(str);
     }
 
     @Override
-    public void showPriceDialog(String str) {
-        new SingleTextDialog(mActivity).setContent(str).show();
+    public void showPriceDialog(int type, String balance, String giveBalance, List<RechargeCouponEntity> rechargeCouponEntities) {
+
+        String titleName;
+        int titleImg;
+        String tip;
+        if (type == 0) {
+            titleName = "可用余额说明";
+            titleImg = R.drawable.ic_recharge_balance;
+            tip = "赠送余额仅可以在平台中消费，不支持提现";
+        } else {
+            titleName = "充值说明";
+            titleImg = R.drawable.ic_recharge_coupon;
+            tip = "";
+        }
+        new RechargeDialog(mActivity).setIvTitle(titleImg).setTvTitle(titleName).setBalance(balance).setTip(tip).setGiveBalance(giveBalance).setEntities(rechargeCouponEntities).show();
     }
 
     @Override
     public void setGivePrice(boolean isShow, double givePrice) {
-        groupGivePrice.setVisibility(isShow?View.VISIBLE:View.GONE);
+        groupGivePrice.setVisibility(isShow ? View.VISIBLE : View.GONE);
         tvGivePrice.setText(StringUtils.getStringNum(givePrice));
     }
 
@@ -326,12 +345,14 @@ public class MyAccountActivity extends BaseActivity<MyAccountPresenter> implemen
         return this;
     }
 
-    @OnClick({R.id.bt_pay, R.id.bt_detail,R.id.bt_withdrawal,R.id.tv_wx,R.id.tv_zfb,R.id.iv_what})
+    @OnClick({R.id.bt_pay, R.id.bt_detail, R.id.bt_withdrawal, R.id.tv_wx, R.id.tv_zfb, R.id.iv_what})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_what://明细
-                //TODO 问号
-                new SingleTextDialog(mActivity).setContent("赠送："+mPresenter.getGiveBalance() + "\n实际：" + mPresenter.getRealBalance()).show();
+                showPriceDialog(0,
+                        StringUtils.getStringNum(mPresenter.getRealBalance()) + "元",
+                        StringUtils.getStringNum(mPresenter.getGiveBalance()) + "元",
+                        null);
                 break;
             case R.id.bt_detail://明细
                 launchActivity(new Intent(mActivity, MyTradingListActivity.class));

@@ -366,7 +366,7 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
 
                 if (homeEntities.get(i).getBtns() == null) return;
 
-                for (int j = 0; j < homeEntities.get(i).getBtns().size(); i++) {
+                for (int j = 0; j < homeEntities.get(i).getBtns().size(); j++) {
                     HomeChildEntity homeChildEntity = homeEntities.get(i).getBtns().get(j);
                     if (homeChildEntity.getJumptype().equals("h5") && homeChildEntity.getJumpurl().endsWith("quick.html")) {
                         DataHelper.setStringSF(mApplication, DataHelperTags.QUICK_URL, homeChildEntity.getJumpurl());

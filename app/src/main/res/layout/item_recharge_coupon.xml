@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_marginTop="@dimen/qb_px_35"
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/view_bg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/round_40_e8fdee_all"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_title"
+        app:layout_constraintTop_toTopOf="@+id/tv_title" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/qb_px_15"
+        android:paddingTop="@dimen/qb_px_5"
+        android:paddingBottom="@dimen/qb_px_5"
+        android:text="满99元减49元"
+        android:textColor="@color/c_1EC88B"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/qb_px_5"
+        android:paddingRight="@dimen/qb_px_15"
+        android:paddingBottom="@dimen/qb_px_5"
+        android:text="2张"
+        android:textColor="@color/c_1EC88B"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/view_bg" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="（限快速咨询使用）"
+        android:includeFontPadding="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/qb_px_20"
+        app:layout_constraintTop_toBottomOf="@+id/view_bg" />
+
+
+</android.support.constraint.ConstraintLayout>

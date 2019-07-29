@@ -1,5 +1,7 @@
 package cn.lex_mung.client_android.mvp.model.entity.mine;
 
+import android.text.TextUtils;
+
 public class RechargeCouponEntity {
 
 
@@ -119,6 +121,10 @@ public class RechargeCouponEntity {
         return num;
     }
 
+    public String getNumStr(){
+        return num+"张";
+    }
+
     public void setNum(int num) {
         this.num = num;
     }
@@ -165,6 +171,12 @@ public class RechargeCouponEntity {
 
     public String getPreferentialContent() {
         return preferentialContent;
+    }
+
+    public String getPreferentialContentStr() {
+        if(TextUtils.isEmpty(preferentialContent))
+            return "";
+        return "（"+preferentialContent + "）";
     }
 
     public void setPreferentialContent(String preferentialContent) {
