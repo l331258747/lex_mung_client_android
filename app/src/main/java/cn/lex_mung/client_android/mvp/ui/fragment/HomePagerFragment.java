@@ -595,11 +595,14 @@ import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.di.component.DaggerHomePagerComponent;
 import cn.lex_mung.client_android.di.module.HomePagerModule;
 import cn.lex_mung.client_android.mvp.contract.HomePagerContract;
+import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
+import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
 import cn.lex_mung.client_android.mvp.presenter.HomePagerPresenter;
 import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultMainActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.HomeSolutionActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.HomeTableActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.LawyerHomePageActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerListActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MainActivity;
@@ -691,140 +694,157 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     private void initAdapter() {
         homeAdapter = new HomeAdapter(mImageLoader);
 
-        homeAdapter.setOnBannerClickListener(entity -> {
-            try {
-                if (isFastClick()) return;
-                if (entity == null) return;
+        homeAdapter.setOnBannerClickListener(new HomeAdapter.OnBannerClickListener() {
+            @Override
+            public void onBannerClick(HomeChildEntity entity) {
+                try {
+                    if (isFastClick()) return;
+                    if (entity == null) return;
 
-                LogUtil.e(entity.getJumpurl());
+                    LogUtil.e(entity.getJumpurl());
 
-                if (entity.getJumptype().equals("inner")) {
-                    Uri uri = Uri.parse(entity.getJumpurl());
-                    //lex://pages/free scheme=lex  host=pages  path=/free
-                    LogUtil.e("scheme = " + uri.getScheme() + " host = " + uri.getHost() + " path = " + uri.getPath() + " query = " + uri.getQuery());
+                    if (entity.getJumptype().equals("inner")) {
+                        Uri uri = Uri.parse(entity.getJumpurl());
+                        //lex://pages/free scheme=lex  host=pages  path=/free
+                        LogUtil.e("scheme = " + uri.getScheme() + " host = " + uri.getHost() + " path = " + uri.getPath() + " query = " + uri.getQuery());
 
-                    if (TextUtils.isEmpty(entity.getJumpurl()))
+                        if (TextUtils.isEmpty(entity.getJumpurl()))
+                            return;
+                        if (!entity.getJumpurl().startsWith("lex"))
+                            return;
+                        if (TextUtils.isEmpty(uri.getPath()))
+                            return;
+                        if (!uri.getPath().startsWith("/"))
+                            return;
+
+                        //1 专家咨询 expert
+                        //2 免费咨询 free
+                        //3 诉讼仲裁 lawyer
+                        //4 企业顾问 lawyer
+                        //5 线下见面 lawyer
+                        //6 按问题找律师 subject
+                        switch (uri.getPath().substring(1)) {
+                            case "expert":
+                                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "expert_consultation_click");
+                                bundle.clear();
+                                bundle.putInt(BundleTags.ID, 8);
+                                launchActivity(new Intent(mActivity, LawyerListActivity.class), bundle);
+                                break;
+                            case "free":
+                                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "free_text_click");
+                                launchActivity(new Intent(mActivity, FreeConsultMainActivity.class));
+                                break;
+                            case "lawyer":
+                                String requireTypeIdStr = uri.getQueryParameter("id");
+                                String requireTypeName = uri.getQueryParameter("name");
+                                int requireTypeId;
+                                if (TextUtils.isEmpty(requireTypeIdStr) || TextUtils.isEmpty(requireTypeName))
+                                    return;
+
+                                try {
+                                    requireTypeId = Integer.valueOf(requireTypeIdStr);
+                                } catch (Exception e) {
+                                    return;
+                                }
+
+                                if (requireTypeId == 2) {
+                                    BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "litigation_arbitration_click");
+                                } else if (requireTypeId == 9) {
+                                    BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "meeting_offline_click");
+                                } else if (requireTypeId == 6) {
+                                    BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "legal_counsel_click");
+                                }
+
+                                bundle.clear();
+                                bundle.putInt(BundleTags.ID, requireTypeId);
+                                bundle.putString(BundleTags.TITLE, requireTypeName);
+                                launchActivity(new Intent(mActivity, HomeTableActivity.class), bundle);
+                                break;
+                            case "subject":
+                                //TODO
+                                String requireTypeIdStr1 = uri.getQueryParameter("id");
+                                String requireTypeName1 = uri.getQueryParameter("name");
+                                showMessage("id:" + requireTypeIdStr1 + ",name:" + requireTypeName1);
+                                int requireTypeId2;
+                                if (TextUtils.isEmpty(requireTypeIdStr1) || TextUtils.isEmpty(requireTypeName1))
+                                    return;
+                                try {
+                                    requireTypeId2 = Integer.valueOf(requireTypeIdStr1);
+                                } catch (Exception e) {
+                                    return;
+                                }
+
+                                if(requireTypeId2 == 0){
+                                    launchActivity(new Intent(mActivity, HomeSolutionActivity.class));
+                                }
+
+                                break;
+                        }
+
+
                         return;
-                    if (!entity.getJumpurl().startsWith("lex"))
-                        return;
-                    if (TextUtils.isEmpty(uri.getPath()))
-                        return;
-                    if (!uri.getPath().startsWith("/"))
-                        return;
-
-                    //1 专家咨询 expert
-                    //2 免费咨询 free
-                    //3 诉讼仲裁 lawyer
-                    //4 企业顾问 lawyer
-                    //5 线下见面 lawyer
-                    //6 按问题找律师 subject
-                    switch (uri.getPath().substring(1)) {
-                        case "expert":
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "expert_consultation_click");
-                            bundle.clear();
-                            bundle.putInt(BundleTags.ID, 8);
-                            launchActivity(new Intent(mActivity, LawyerListActivity.class), bundle);
-                            break;
-                        case "free":
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "free_text_click");
-                            launchActivity(new Intent(mActivity, FreeConsultMainActivity.class));
-                            break;
-                        case "lawyer":
-                            String requireTypeIdStr = uri.getQueryParameter("id");
-                            String requireTypeName = uri.getQueryParameter("name");
-                            int requireTypeId;
-                            if (TextUtils.isEmpty(requireTypeIdStr) || TextUtils.isEmpty(requireTypeName))
-                                return;
-
-                            try {
-                                requireTypeId = Integer.valueOf(requireTypeIdStr);
-                            } catch (Exception e) {
-                                return;
-                            }
-
-                            if (requireTypeId == 2) {
-                                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "litigation_arbitration_click");
-                            } else if (requireTypeId == 9) {
-                                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "meeting_offline_click");
-                            } else if (requireTypeId == 6) {
-                                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "legal_counsel_click");
-                            }
-
-                            bundle.clear();
-                            bundle.putInt(BundleTags.ID, requireTypeId);
-                            bundle.putString(BundleTags.TITLE, requireTypeName);
-                            launchActivity(new Intent(mActivity, HomeTableActivity.class), bundle);
-                            break;
-                        case "subject":
-                            //TODO
-                            String requireTypeIdStr1 = uri.getQueryParameter("id");
-                            String requireTypeName1 = uri.getQueryParameter("name");
-                            showMessage("id:" + requireTypeIdStr1 + ",name:" + requireTypeName1);
-                            int requireTypeId2;
-                            if (TextUtils.isEmpty(requireTypeIdStr1) || TextUtils.isEmpty(requireTypeName1))
-                                return;
-                            try {
-                                requireTypeId2 = Integer.valueOf(requireTypeIdStr1);
-                            } catch (Exception e) {
-                                return;
-                            }
-
-                            if(requireTypeId2 == 0){
-                                launchActivity(new Intent(mActivity, HomeSolutionActivity.class));
-                            }
-
-                            break;
                     }
 
+                    //BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "legal_card_click"); //法务卡 member
+                    //BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","quick_consultation_click"); //快速咨询 quick.html
+                    //BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","hot_service_1_click"); //热门1
+                    //BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","hot_service_2_click"); //热门2
+                    //BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","hot_service_more_click"); //热门更多
+                    //BuryingPointHelp.getInstance().onEvent(mActivity, "solution_detail","solution_type_click"); //解决方案tablayout
 
-                    return;
-                }
+                    String linkValue = entity.getJumpurl();
+                    if (TextUtils.isEmpty(linkValue))
+                        return;
+                    if (!linkValue.startsWith("http"))
+                        return;
 
-                //BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "legal_card_click"); //法务卡 member
-                //BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","quick_consultation_click"); //快速咨询 quick.html
-                //BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","hot_service_1_click"); //热门1
-                //BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","hot_service_2_click"); //热门2
-                //BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","hot_service_more_click"); //热门更多
-                //BuryingPointHelp.getInstance().onEvent(mActivity, "solution_detail","solution_type_click"); //解决方案tablayout
+                    //TODO 埋点
+                    if (linkValue.indexOf("member") > -1) {
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "legal_card_click"); //法务卡 member
+                    } else if (linkValue.indexOf("quick.html") > -1) {
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "quick_consultation_click"); //快速咨询 quick.html
+                    }
 
-                String linkValue = entity.getJumpurl();
-                if (TextUtils.isEmpty(linkValue))
-                    return;
-                if (!linkValue.startsWith("http"))
-                    return;
-
-                //TODO 埋点
-                if (linkValue.indexOf("member") > -1) {
-                    BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "legal_card_click"); //法务卡 member
-                } else if (linkValue.indexOf("quick.html") > -1) {
-                    BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "quick_consultation_click"); //快速咨询 quick.html
-                }
-
-                if (linkValue.indexOf("orgId=") != -1) {
-                    //用来跳转
-                    String orgId = StringUtils.getValueByName(linkValue, "orgId");
+                    if (linkValue.indexOf("orgId=") != -1) {
+                        //用来跳转
+                        String orgId = StringUtils.getValueByName(linkValue, "orgId");
+                        bundle.clear();
+                        bundle.putInt(BundleTags.ID, Integer.valueOf(orgId));
+                        launchActivity(new Intent(mActivity, OrganizationLawyerActivity.class), bundle);
+                        return;
+                    }
+                    if (linkValue.indexOf("needLogin=1") != -1 && !DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
+                        bundle.clear();
+                        bundle.putInt(BundleTags.TYPE, 1);
+                        launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
+                        return;
+                    }
                     bundle.clear();
-                    bundle.putInt(BundleTags.ID, Integer.valueOf(orgId));
-                    launchActivity(new Intent(mActivity, OrganizationLawyerActivity.class), bundle);
-                    return;
+                    bundle.putString(BundleTags.URL, entity.getJumpurl());
+                    bundle.putString(BundleTags.TITLE, entity.getTitle());
+                    bundle.putBoolean(BundleTags.IS_SHARE, false);
+                    if (linkValue.indexOf("couponId=") != -1) {//领取优惠券页面，不需要跳转
+                        bundle.putBoolean(BundleTags.STATE, false);
+                    }
+                    launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+                } catch (Exception ignored) {
                 }
-                if (linkValue.indexOf("needLogin=1") != -1 && !DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
-                    bundle.clear();
-                    bundle.putInt(BundleTags.TYPE, 1);
-                    launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
-                    return;
-                }
-                bundle.clear();
-                bundle.putString(BundleTags.URL, entity.getJumpurl());
-                bundle.putString(BundleTags.TITLE, entity.getTitle());
-                bundle.putBoolean(BundleTags.IS_SHARE, false);
-                if (linkValue.indexOf("couponId=") != -1) {//领取优惠券页面，不需要跳转
-                    bundle.putBoolean(BundleTags.STATE, false);
-                }
-                launchActivity(new Intent(mActivity, WebActivity.class), bundle);
-            } catch (Exception ignored) {
             }
 
+            @Override
+            public void onLawyerClick(LawyerEntity2 entity2) {
+                if (isFastClick()) return;
+                if (entity2 == null) return;
+                bundle.clear();
+                bundle.putInt(BundleTags.ID, entity2.getMemberId());
+                launchActivity(new Intent(mActivity, LawyerHomePageActivity.class), bundle);
+            }
+
+            @Override
+            public void onLawyerTitleClick() {
+                if (isFastClick()) return;
+                launchActivity(new Intent(mActivity, LawyerListActivity.class));
+            }
         });
     }
 
@@ -930,6 +950,11 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     @Override
     public void setHomeAdapter(List<HomeEntity> datas) {
         homeAdapter.setNewData(datas);
+    }
+
+    @Override
+    public void addHomeLawyer(HomeEntity homeEntity) {
+        homeAdapter.addData(homeEntity);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package cn.lex_mung.client_android.mvp.model.entity;
 
+import android.text.TextUtils;
+
 import java.util.List;
 
 import cn.lex_mung.client_android.mvp.model.api.Api;
@@ -125,6 +127,16 @@ public class LawyerEntity2 {
         return region;
     }
 
+    public String getReginInstitutionName(){
+        if(TextUtils.isEmpty(region) && TextUtils.isEmpty(institutionName))
+            return "";
+        if(TextUtils.isEmpty(region))
+            return institutionName;
+        if(TextUtils.isEmpty(institutionName))
+            return region;
+        return region + " | " + institutionName;
+    }
+
     public void setRegion(String region) {
         this.region = region;
     }
@@ -139,6 +151,12 @@ public class LawyerEntity2 {
 
     public String getMemberPositionName() {
         return memberPositionName;
+    }
+
+    public String getMemberPositionNameStr() {
+        if(TextUtils.isEmpty(memberPositionName))
+            return "";
+        return "（"+memberPositionName + ")";
     }
 
     public void setMemberPositionName(String memberPositionName) {
@@ -162,6 +180,14 @@ public class LawyerEntity2 {
     }
 
     public String getDescription() {
+        return description;
+    }
+
+    public String getDescriptionStr() {
+        if(description.startsWith("擅长领域：")){
+            String string = "<font color=\"#323232\"><b>擅长领域</b></font>&#8195;" + description.substring(("擅长领域：").length());
+            return string;
+        }
         return description;
     }
 

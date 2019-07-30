@@ -2,6 +2,8 @@ package cn.lex_mung.client_android.mvp.model.entity.home;
 
 import java.util.List;
 
+import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
+
 public class HomeEntity {
 
     /**
@@ -15,6 +17,15 @@ public class HomeEntity {
     private String subheadline;
     private String type;
     private List<HomeChildEntity> btns;
+    private LawyerEntity2 lawyerEntity2;
+
+    public LawyerEntity2 getLawyerEntity2() {
+        return lawyerEntity2;
+    }
+
+    public void setLawyerEntity2(LawyerEntity2 lawyerEntity2) {
+        this.lawyerEntity2 = lawyerEntity2;
+    }
 
     public String getHeadline() {
         return headline;
@@ -53,6 +64,10 @@ public class HomeEntity {
                 return 6;
             case "single_image":
                 return 7;
+            case "home_lawyer":
+                return 20;
+            case "home_lawyer_title":
+                return 21;
         }
         return 1;
     }

@@ -359,6 +359,7 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                         if (baseResponse.isSuccess()) {
                             mRootView.setHomeAdapter(baseResponse.getData().getList());
                             saveQuickUrl(baseResponse.getData().getList());
+                            getLawyerList();
                         }
                     }
                 });
@@ -382,6 +383,18 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                     @Override
                     public void onNext(BaseResponse<BaseListEntity<LawyerEntity2>> baseResponse) {
                         if (baseResponse.isSuccess()) {
+                            if(baseResponse.getData().getList() == null) return;
+                            for (int i=0;i<baseResponse.getData().getList().size();i++){
+                                if(i == 0){
+                                    HomeEntity homeEntity = new HomeEntity();
+                                    homeEntity.setType("home_lawyer_title");
+                                    mRootView.addHomeLawyer(homeEntity);
+                                }
+                                HomeEntity homeEntity = new HomeEntity();
+                                homeEntity.setLawyerEntity2(baseResponse.getData().getList().get(i));
+                                homeEntity.setType("home_lawyer");
+                                mRootView.addHomeLawyer(homeEntity);
+                            }
 
                         }
                     }

@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:layout_marginLeft="@dimen/qb_px_40"
+    android:layout_marginRight="@dimen/qb_px_40"
     android:paddingTop="@dimen/qb_px_20"
     android:paddingBottom="@dimen/qb_px_20">
 

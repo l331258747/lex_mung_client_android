@@ -20,12 +20,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
 import cn.lex_mung.client_android.mvp.ui.widget.home.Home3ButtonView;
 import cn.lex_mung.client_android.mvp.ui.widget.home.Home4ButtonView;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.utils.AppUtils;
+import me.zl.mvp.utils.StringUtils;
 
 public class HomeAdapter extends BaseQuickAdapter<HomeEntity, BaseViewHolder> {
     ImageLoader mImageLoader;
@@ -48,7 +50,9 @@ public class HomeAdapter extends BaseQuickAdapter<HomeEntity, BaseViewHolder> {
                 .registerItemType(4, R.layout.layout_home_3card)
                 .registerItemType(5, R.layout.layout_home_4hot)
                 .registerItemType(6, R.layout.layout_home_4hot)
-                .registerItemType(7, R.layout.layout_home_only_img);
+                .registerItemType(7, R.layout.layout_home_only_img)
+                .registerItemType(20, R.layout.item_home20_lawyer)
+                .registerItemType(21, R.layout.layout_home20_lawyer_title);
 
     }
 
@@ -233,6 +237,16 @@ public class HomeAdapter extends BaseQuickAdapter<HomeEntity, BaseViewHolder> {
                 setOnclick(iv_img,item.getBtns().get(0));
 
                 break;
+            case 20:
+                setLawyerView(helper,item.getLawyerEntity2());
+                break;
+            case 21:
+                helper.getView(R.id.tv_content).setOnClickListener(v -> {
+                    if (onBannerClickListener != null) {
+                        onBannerClickListener.onLawyerTitleClick();
+                    }
+                });
+                break;
         }
 
     }
@@ -241,6 +255,32 @@ public class HomeAdapter extends BaseQuickAdapter<HomeEntity, BaseViewHolder> {
         view.setOnClickListener(v -> {
             if (onBannerClickListener != null) {
                 onBannerClickListener.onBannerClick(item);
+            }
+        });
+    }
+
+    //设置律师数据
+    public void setLawyerView(BaseViewHolder helper,LawyerEntity2 item){
+        if (!TextUtils.isEmpty(item.getIconImage())) {
+            mImageLoader.loadImage(mContext
+                    , ImageConfigImpl
+                            .builder()
+                            .url(item.getIconImage())
+                            .imageView(helper.getView(R.id.item_iv_avatar))
+                            .isCircle(true)
+                            .build());
+        } else {
+            helper.setImageResource(R.id.item_iv_avatar, R.drawable.ic_lawyer_avatar);
+        }
+        helper.setText(R.id.item_tv_name, item.getMemberName());
+        helper.setText(R.id.item_tv_job, item.getMemberPositionNameStr());
+        helper.setText(R.id.item_tv_area, item.getReginInstitutionName());
+        StringUtils.setHtml(helper.getView(R.id.item_tv_field),item.getDescriptionStr());
+        helper.setText(R.id.item_tv_practice_num, item.getPractice());
+
+        helper.getView(R.id.cl_parent).setOnClickListener(v -> {
+            if (onBannerClickListener != null) {
+                onBannerClickListener.onLawyerClick(item);
             }
         });
     }
@@ -338,6 +378,8 @@ public class HomeAdapter extends BaseQuickAdapter<HomeEntity, BaseViewHolder> {
 
     public interface OnBannerClickListener {
         void onBannerClick(HomeChildEntity entity);
+        void onLawyerClick(LawyerEntity2 entity2);
+        void onLawyerTitleClick();
     }
 
 }

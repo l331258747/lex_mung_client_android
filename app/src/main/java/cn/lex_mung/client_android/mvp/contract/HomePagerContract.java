@@ -31,6 +31,7 @@ public interface HomePagerContract {
 //        void setMoreContract(List<NormalBean> datas);
 
         void setHomeAdapter(List<HomeEntity> datas);
+        void addHomeLawyer(HomeEntity homeEntity);
 
         void setUnreadMessageCount(String count);
 
