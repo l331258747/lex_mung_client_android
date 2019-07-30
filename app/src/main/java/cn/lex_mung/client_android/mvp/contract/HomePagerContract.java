@@ -3,6 +3,7 @@ package cn.lex_mung.client_android.mvp.contract;
 import android.app.Activity;
 
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
+import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
 import cn.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BannerEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
@@ -18,6 +19,8 @@ import io.reactivex.Observable;
 import me.zl.mvp.mvp.IView;
 import me.zl.mvp.mvp.IModel;
 import okhttp3.RequestBody;
+import retrofit2.http.Body;
+import retrofit2.http.Path;
 
 public interface HomePagerContract {
     interface View extends IView {
@@ -53,5 +56,7 @@ public interface HomePagerContract {
         Observable<BaseResponse<BaseListEntity<HomeEntity>>> clientHome();
 
         Observable<BaseResponse<List<String>>> random();
+
+        Observable<BaseResponse<BaseListEntity<LawyerEntity2>>> getLawyerHomeList(RequestBody body);
     }
 }

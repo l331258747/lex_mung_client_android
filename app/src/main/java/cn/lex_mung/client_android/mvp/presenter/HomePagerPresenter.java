@@ -259,9 +259,13 @@ package cn.lex_mung.client_android.mvp.presenter;
 import android.app.Application;
 import android.os.Message;
 
+import com.google.gson.Gson;
+
 import org.simple.eventbus.Subscriber;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -269,6 +273,7 @@ import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.mvp.contract.HomePagerContract;
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
+import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
 import cn.lex_mung.client_android.mvp.model.entity.UnreadMessageCountEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
@@ -283,6 +288,7 @@ import me.zl.mvp.integration.AppManager;
 import me.zl.mvp.mvp.BasePresenter;
 import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.RxLifecycleUtils;
+import okhttp3.RequestBody;
 
 import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGIN_INFO;
 import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGOUT;
@@ -336,6 +342,7 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
         }
     }
 
+    //获取首页数据
     public void getHomeData() {
         mModel.clientHome()
                 .subscribeOn(Schedulers.io())
@@ -357,6 +364,31 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                 });
     }
 
+    //获取优选律师
+    public void getLawyerList() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("regionId", DataHelper.getIntergerSF(mApplication,DataHelperTags.LAUNCH_LOCATION));
+        map.put("businessTypeId", 0);
+        mModel.getLawyerHomeList(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> {
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<LawyerEntity2>>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<BaseListEntity<LawyerEntity2>> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+
+                        }
+                    }
+                });
+    }
+
+    //获取快速咨询url
     private void saveQuickUrl(List<HomeEntity> homeEntities) {
         if (homeEntities == null) return;
 
@@ -376,6 +408,7 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
         }
     }
 
+    //消息
     private void getUnreadCount() {
         mModel.getUnreadCount()
                 .subscribeOn(Schedulers.io())
@@ -408,6 +441,7 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                 });
     }
 
+    //搜索栏轮播
     public void random() {
         mModel.random()
                 .subscribeOn(Schedulers.io())
