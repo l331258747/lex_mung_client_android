@@ -98,7 +98,6 @@ public class HomeSolutionActivity extends BaseActivity<HomeSolutionPresenter> im
 
         });
 
-        launchActivity(new Intent(mActivity, HomeSolutionActivity.class));
 
     }
 

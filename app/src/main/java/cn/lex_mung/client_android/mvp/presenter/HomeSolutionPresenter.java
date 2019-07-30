@@ -3,6 +3,7 @@ package cn.lex_mung.client_android.mvp.presenter;
 import android.app.Application;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -54,7 +55,13 @@ public class HomeSolutionPresenter extends BasePresenter<HomeSolutionContract.Mo
                     @Override
                     public void onNext(BaseResponse<BaseListEntity<CommonSolutionEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
-                            mRootView.initAdapter(baseResponse.getData().getList());
+
+                            List<CommonSolutionEntity> entities = new ArrayList<>();
+                            for (int i=0;i<baseResponse.getData().getList().size();i++){
+                                if(baseResponse.getData().getList().get(i).getFreeSolution() == 1)
+                                    entities.add(baseResponse.getData().getList().get(i));
+                            }
+                            mRootView.initAdapter(entities);
                         }
                     }
                 });
