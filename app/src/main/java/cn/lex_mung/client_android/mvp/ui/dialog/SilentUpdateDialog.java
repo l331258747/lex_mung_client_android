@@ -5,12 +5,14 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.daimajia.numberprogressbar.NumberProgressBar;
+
 import cn.lex_mung.client_android.R;
 
 public class SilentUpdateDialog extends Dialog {
@@ -22,6 +24,7 @@ public class SilentUpdateDialog extends Dialog {
     private TextView tvPercent;
     private LinearLayout llLayout;
     private RelativeLayout rlLayout;
+    TextView tvClose;
 
     private OnClickListener onClickListener;
 
@@ -56,6 +59,7 @@ public class SilentUpdateDialog extends Dialog {
         TextView tvContent = findViewById(R.id.tv_content);
         TextView tvCancel = findViewById(R.id.tv_cancel);
         TextView tvConfirm = findViewById(R.id.tv_confirm);
+        tvClose = findViewById(R.id.tv_close);
         tvSize = findViewById(R.id.tv_size);
         tvStatus = findViewById(R.id.tv_status);
         tvPercent = findViewById(R.id.tv_percent);
@@ -77,6 +81,11 @@ public class SilentUpdateDialog extends Dialog {
             rlLayout.setVisibility(View.VISIBLE);
             onClickListener.onConfirm();
         });
+
+        tvClose.setVisibility(View.GONE);
+        tvClose.setOnClickListener(v -> {
+            dismiss();
+        });
     }
 
     public void setProgress(int max, int total, String percent) {
@@ -91,5 +100,10 @@ public class SilentUpdateDialog extends Dialog {
 
     public void setStatus(String str) {
         tvStatus.setText(str);
+        if(TextUtils.equals("失败",str)){
+            tvClose.setVisibility(View.VISIBLE);
+        }else{
+            tvClose.setVisibility(View.GONE);
+        }
     }
 }

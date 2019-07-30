@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/dialog_view"
     android:layout_width="@dimen/qb_px_550"
     android:layout_height="wrap_content"
@@ -48,6 +49,7 @@
             android:includeFontPadding="false"
             android:textColor="@color/c_323232"
             android:textSize="14sp"
+            tools:text="是否更新到2.0版本"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@id/view" />
 
@@ -61,6 +63,7 @@
             android:includeFontPadding="false"
             android:lineSpacingExtra="@dimen/qb_px_20"
             android:textColor="@color/c_323232"
+            tools:text="更新内容描述"
             android:textSize="12sp"
             app:layout_constraintTop_toBottomOf="@id/view" />
 
@@ -112,6 +115,7 @@
             android:layout_marginBottom="@dimen/qb_px_35"
             android:paddingStart="@dimen/qb_px_35"
             android:visibility="gone"
+            tools:visibility="visible"
             android:paddingEnd="@dimen/qb_px_35">
 
             <com.daimajia.numberprogressbar.NumberProgressBar
@@ -127,6 +131,7 @@
                 android:layout_marginTop="@dimen/qb_px_20"
                 android:layout_marginEnd="@dimen/qb_px_20"
                 android:gravity="center"
+                tools:text="下载状态"
                 android:includeFontPadding="false" />
 
             <TextView
@@ -137,6 +142,7 @@
                 android:layout_marginTop="@dimen/qb_px_20"
                 android:layout_marginEnd="@dimen/qb_px_20"
                 android:layout_toStartOf="@id/tv_size"
+                tools:text="69.23%"
                 android:gravity="center"
                 android:includeFontPadding="false" />
 
@@ -147,9 +153,28 @@
                 android:layout_below="@id/progress_bar"
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="end"
+                tools:text="11.46M/16.24M"
                 android:layout_marginTop="@dimen/qb_px_20"
                 android:gravity="center"
                 android:includeFontPadding="false" />
+
+            <TextView
+                android:id="@+id/tv_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/c_1EC88B"
+                android:paddingLeft="@dimen/qb_px_20"
+                android:paddingRight="@dimen/qb_px_20"
+                android:paddingTop="@dimen/qb_px_5"
+                android:visibility="gone"
+                android:paddingBottom="@dimen/qb_px_5"
+                android:background="@drawable/round_10_00_all_1ec88b"
+                android:layout_below="@+id/tv_status"
+                tools:visibility="visible"
+                android:layout_marginTop="@dimen/qb_px_20"
+                android:text="关闭"/>
+
         </RelativeLayout>
 
     </LinearLayout>
