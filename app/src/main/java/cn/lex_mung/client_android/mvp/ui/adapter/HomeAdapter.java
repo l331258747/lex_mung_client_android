@@ -41,6 +41,7 @@ public class HomeAdapter extends BaseQuickAdapter<HomeEntity, BaseViewHolder> {
             }
         });
         getMultiTypeDelegate()
+                .registerItemType(0, R.layout.layout_home_empty)
                 .registerItemType(1, R.layout.layout_home_3button)
                 .registerItemType(2, R.layout.layout_home_banner)
                 .registerItemType(3, R.layout.layout_home_4button)
@@ -54,6 +55,8 @@ public class HomeAdapter extends BaseQuickAdapter<HomeEntity, BaseViewHolder> {
     @Override
     protected void convert(BaseViewHolder helper, HomeEntity item) {
         switch (helper.getItemViewType()) {
+            case 0:
+                return;
             case 1:
 
                 if(item.getBtns() == null || item.getBtns().size() != 3)
@@ -195,6 +198,7 @@ public class HomeAdapter extends BaseQuickAdapter<HomeEntity, BaseViewHolder> {
                 TextView tvTitle5 = helper.getView(R.id.tv_title);
                 TextView tvTitleContent5 = helper.getView(R.id.tv_title_content);
                 RecyclerView recyclerView5 = helper.getView(R.id.recycler_view);
+                recyclerView5.setNestedScrollingEnabled(false);
 
                 tvTitle5.setText(item.getHeadline());
                 if (!TextUtils.isEmpty(item.getSubheadline()))

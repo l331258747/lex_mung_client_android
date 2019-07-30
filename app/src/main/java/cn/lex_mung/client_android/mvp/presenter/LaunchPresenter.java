@@ -173,7 +173,7 @@ public class LaunchPresenter extends BasePresenter<LaunchContract.Model, LaunchC
                     @Override
                     public void onError(Throwable t) {//如果不这样设置，会导致进入登录页面。在进入mainactivity
                         LogUtil.e("ip定位失败cityId： " + 0);
-                        DataHelper.setIntergerSF(mApplication, DataHelperTags.LAUNCH_LOCATION, 0);
+                        DataHelper.setIntergerSF(mApplication, DataHelperTags.LAUNCH_LOCATION, 430100);//默认定位长沙
                         mRootView.launch();
                     }
                 });
