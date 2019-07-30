@@ -9,12 +9,12 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import cn.lex_mung.client_android.R;
-import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity;
 import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
 
+import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
 import me.zl.mvp.http.imageloader.ImageLoader;
 
-public class LawyerListAdapter extends BaseQuickAdapter<LawyerEntity.LawyerBean.ListBean, BaseViewHolder> {
+public class LawyerListAdapter extends BaseQuickAdapter<LawyerEntity2, BaseViewHolder> {
     private ImageLoader mImageLoader;
 
     public LawyerListAdapter(ImageLoader imageLoader) {
@@ -24,7 +24,7 @@ public class LawyerListAdapter extends BaseQuickAdapter<LawyerEntity.LawyerBean.
 
     @Override
     @SuppressLint("SimpleDateFormat")
-    protected void convert(BaseViewHolder helper, LawyerEntity.LawyerBean.ListBean item) {
+    protected void convert(BaseViewHolder helper, LawyerEntity2 item) {
         if (!TextUtils.isEmpty(item.getIconImage())) {
             mImageLoader.loadImage(mContext
                     , ImageConfigImpl

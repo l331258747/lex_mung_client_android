@@ -16,7 +16,9 @@ import java.util.Map;
 
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.app.DataHelperTags;
-import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity;
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
+import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
+import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerHomePageActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.LawyerListAdapter;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -76,7 +78,7 @@ public class OrganizationLawyerPresenter extends BasePresenter<OrganizationLawye
         adapter = new LawyerListAdapter(mImageLoader);
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;
-            LawyerEntity.LawyerBean.ListBean bean = adapter.getItem(position);
+            LawyerEntity2 bean = adapter.getItem(position);
             if (bean == null) return;
             Bundle bundle = new Bundle();
             bundle.clear();
@@ -128,9 +130,9 @@ public class OrganizationLawyerPresenter extends BasePresenter<OrganizationLawye
                     .observeOn(AndroidSchedulers.mainThread())
                     .doFinally(() -> mRootView.hideLoading())
                     .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                    .subscribe(new ErrorHandleSubscriber<LawyerEntity>(mErrorHandler) {
+                    .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<LawyerEntity2>>>(mErrorHandler) {
                         @Override
-                        public void onNext(LawyerEntity baseResponse) {
+                        public void onNext(BaseResponse<BaseListEntity<LawyerEntity2>> baseResponse) {
                             if (baseResponse.isSuccess()) {
                                 totalNum = baseResponse.getData().getPages();
                                 pageNum = baseResponse.getData().getPageNum();
@@ -161,9 +163,9 @@ public class OrganizationLawyerPresenter extends BasePresenter<OrganizationLawye
                     .observeOn(AndroidSchedulers.mainThread())
                     .doFinally(() -> mRootView.hideLoading())
                     .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                    .subscribe(new ErrorHandleSubscriber<LawyerEntity>(mErrorHandler) {
+                    .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<LawyerEntity2>>>(mErrorHandler) {
                         @Override
-                        public void onNext(LawyerEntity baseResponse) {
+                        public void onNext(BaseResponse<BaseListEntity<LawyerEntity2>> baseResponse) {
                             if (baseResponse.isSuccess()) {
                                 totalNum = baseResponse.getData().getPages();
                                 pageNum = baseResponse.getData().getPageNum();

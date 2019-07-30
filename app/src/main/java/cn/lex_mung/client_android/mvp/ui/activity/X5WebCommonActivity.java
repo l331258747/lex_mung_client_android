@@ -12,39 +12,29 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 
-import com.google.gson.Gson;
 import com.tencent.smtt.sdk.ValueCallback;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
-import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
 
 import butterknife.BindView;
+import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
-import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.app.ShareUtils;
+import cn.lex_mung.client_android.di.component.DaggerX5WebCommonComponent;
 import cn.lex_mung.client_android.di.module.X5WebCommonModule;
-import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
+import cn.lex_mung.client_android.mvp.contract.X5WebCommonContract;
+import cn.lex_mung.client_android.mvp.presenter.X5WebCommonPresenter;
 import cn.lex_mung.client_android.mvp.ui.dialog.DefaultDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
-
 import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
 import cn.lex_mung.client_android.mvp.ui.widget.webview.LWebView2;
-import cn.lex_mung.client_android.mvp.ui.widget.webview.MyWebViewClient;
 import cn.lex_mung.client_android.mvp.ui.widget.webview.MyWebViewClient2;
-import cn.lex_mung.client_android.utils.BuryingPointHelp;
 import cn.lex_mung.client_android.utils.LogUtil;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
-
-import cn.lex_mung.client_android.di.component.DaggerX5WebCommonComponent;
-import cn.lex_mung.client_android.mvp.contract.X5WebCommonContract;
-import cn.lex_mung.client_android.mvp.presenter.X5WebCommonPresenter;
-
-import cn.lex_mung.client_android.R;
-import me.zl.mvp.utils.DataHelper;
 import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
 

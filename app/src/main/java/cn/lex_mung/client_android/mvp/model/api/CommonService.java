@@ -25,7 +25,7 @@ import cn.lex_mung.client_android.mvp.model.entity.GeneralEntity;
 import cn.lex_mung.client_android.mvp.model.entity.IndustryEntity;
 import cn.lex_mung.client_android.mvp.model.entity.InstitutionEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
-import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity;
+import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
 import cn.lex_mung.client_android.mvp.model.entity.LawyerListScreenEntity;
 import cn.lex_mung.client_android.mvp.model.entity.MessageEntity;
 import cn.lex_mung.client_android.mvp.model.entity.MyLikeEntity;
@@ -133,7 +133,7 @@ public interface CommonService {
      * @return BaseResponse
      */
     @POST("common/lawyer/search/{pageNum}")
-    Observable<LawyerEntity> getLawyerList(@Path("pageNum") int pageNum, @Body RequestBody body);
+    Observable<BaseResponse<BaseListEntity<LawyerEntity2>>> getLawyerList(@Path("pageNum") int pageNum, @Body RequestBody body);
 
     /**
      * 获取律师列表
@@ -141,7 +141,7 @@ public interface CommonService {
      * @return BaseResponse
      */
     @POST("lawyer/search/{pageNum}")
-    Observable<LawyerEntity> getLawyerList1(@Path("pageNum") int pageNum, @Body RequestBody body);
+    Observable<BaseResponse<BaseListEntity<LawyerEntity2>>> getLawyerList1(@Path("pageNum") int pageNum, @Body RequestBody body);
 
     /**
      * 获取专业领域
@@ -307,8 +307,8 @@ public interface CommonService {
      */
     @GET("lawyer/freeText/{consultationId}/{lawyerId}/reply/detail/{pageNum}")
     Observable<BaseResponse<BaseListEntity<FreeConsultReplyListEntity>>> getFreeConsultReplyList(@Path("consultationId") int consultationId,
-                                                                             @Path("lawyerId") int lawyerId,
-                                                                             @Path("pageNum") int pageNum);
+                                                                                                 @Path("lawyerId") int lawyerId,
+                                                                                                 @Path("pageNum") int pageNum);
 
     /**
      * 用户回复
@@ -360,6 +360,7 @@ public interface CommonService {
 
     /**
      * 权益用户订单列表
+     *
      * @return
      */
     @POST("client/member/order/org")
@@ -634,7 +635,7 @@ public interface CommonService {
     //GET
     //用户获取订单文档
     @GET("client/order/doc/get/{orderNo}/{pageNum}/{pageSize}")
-    Observable<BaseResponse<DocGetEntity>> docGet(@Path("orderNo") String orderNo,@Path("pageNum") int pageNum,@Path("pageSize") int pageSize);
+    Observable<BaseResponse<DocGetEntity>> docGet(@Path("orderNo") String orderNo, @Path("pageNum") int pageNum, @Path("pageSize") int pageSize);
 
     //发抢单类型商品需求
     @POST("client/requirement/create")
@@ -656,7 +657,7 @@ public interface CommonService {
     //GET
     //付费需求详细信息
     @GET("lawyer/order/requirement/detail/{requirementId}/{orderNo}")
-    Observable<BaseResponse<List<RequirementDetailEntity>>> requirementDetail(@Path("requirementId") int requirementId,@Path("orderNo") String orderNo);
+    Observable<BaseResponse<List<RequirementDetailEntity>>> requirementDetail(@Path("requirementId") int requirementId, @Path("orderNo") String orderNo);
 
     ///lawyer/order/requirement/detail/{requirementId}
     //GET
@@ -691,9 +692,9 @@ public interface CommonService {
     //文字咨询回复详情v2
     @GET("common/freeText/v2/{consultationId}/{lawyerId}/reply/detail/{pageNum}/{pageSize}")
     Observable<BaseResponse<BaseListEntity<FreeConsultReplyListEntity>>> replyDetail(@Path("consultationId") int consultationId,
-                                                                     @Path("lawyerId") int lawyerId,
-                                                                     @Path("pageNum") int pageNum,
-                                                                     @Path("pageSize") int pageSize);
+                                                                                     @Path("lawyerId") int lawyerId,
+                                                                                     @Path("pageNum") int pageNum,
+                                                                                     @Path("pageSize") int pageSize);
 
     ///client/require/coupon
     //POST
@@ -756,7 +757,7 @@ public interface CommonService {
     //POST
     //获取用户余额、会员卡、集团卡
     @POST("client/amount/balance/v2/{organizationLevId}")
-    Observable<BaseResponse<AmountBalanceEntity>> amountBalance2(@Path("organizationLevId") int organizationLevId,@Body RequestBody body);
+    Observable<BaseResponse<AmountBalanceEntity>> amountBalance2(@Path("organizationLevId") int organizationLevId, @Body RequestBody body);
 
     ///client/quick/coupon
     //POST
@@ -790,7 +791,7 @@ public interface CommonService {
 
     //http://pv.sohu.com/cityjson?ie=utf-8
     //GET
-    //获取首页模板
+    //ip定位
     @GET("https://restapi.amap.com/v3/ip?key=f55325bc244062399ce0579b6b9d56a5")
     Observable<LaunchLocationEntity> cityjson();
 
@@ -817,4 +818,12 @@ public interface CommonService {
     //获取解决方案全部类型
     @GET("common/solution/list")
     Observable<BaseResponse<BaseListEntity<CommonSolutionEntity>>> commonSolutionList();
+
+    ///common/lawyer/homepage/{pageNum}/{pageSize}
+    //POST
+    //首页律师列表（返回与/common/lawyer/search/一致）
+    @POST("common/lawyer/homepage/{pageNum}/{pageSize}")
+    Observable<BaseResponse<BaseListEntity<LawyerEntity2>>> getLawyerHomeList(@Path("pageNum") int pageNum,
+                                                                              @Path("pageSize") int pageSize,
+                                                                              @Body RequestBody body);
 }

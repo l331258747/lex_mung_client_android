@@ -6,7 +6,7 @@ import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.FreeConsultEntity;
 import cn.lex_mung.client_android.mvp.model.entity.FreeConsultReplyListEntity;
-import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity;
+import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
 import cn.lex_mung.client_android.mvp.ui.adapter.FreeConsultDetail1Adapter;
 import cn.lex_mung.client_android.mvp.ui.adapter.LawyerListAdapter;
 import io.reactivex.Observable;
@@ -33,6 +33,6 @@ public interface FreeConsultDetail1Contract {
 
         Observable<BaseResponse<BaseListEntity<FreeConsultReplyListEntity>>> lawyerFreeText(int consultationId, int pageNum, int pageSize);
 
-        Observable<LawyerEntity> getLawyerList(int pageNum, RequestBody body);
+        Observable<BaseResponse<BaseListEntity<LawyerEntity2>>> getLawyerList(int pageNum, RequestBody body);
     }
 }

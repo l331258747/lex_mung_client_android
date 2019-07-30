@@ -9,7 +9,7 @@ import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.FreeConsultEntity;
 import cn.lex_mung.client_android.mvp.model.entity.FreeConsultReplyListEntity;
-import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity;
+import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
 import io.reactivex.Observable;
 import me.zl.mvp.integration.IRepositoryManager;
 import me.zl.mvp.mvp.BaseModel;
@@ -61,7 +61,7 @@ public class FreeConsultDetail1Model extends BaseModel implements FreeConsultDet
     }
 
     @Override
-    public Observable<LawyerEntity> getLawyerList(int pageNum, RequestBody body) {
+    public Observable<BaseResponse<BaseListEntity<LawyerEntity2>>> getLawyerList(int pageNum, RequestBody body) {
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .getLawyerList(pageNum,body);

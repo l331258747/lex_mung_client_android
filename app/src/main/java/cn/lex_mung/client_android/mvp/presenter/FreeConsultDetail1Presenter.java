@@ -26,7 +26,7 @@ import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.FreeConsultEntity;
 import cn.lex_mung.client_android.mvp.model.entity.FreeConsultReplyListEntity;
-import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity;
+import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultDetail1ListActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerHomePageActivity;
@@ -155,7 +155,7 @@ public class FreeConsultDetail1Presenter extends BasePresenter<FreeConsultDetail
         lawyerListAdapter.setOnItemClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;
 
-            LawyerEntity.LawyerBean.ListBean entity = lawyerListAdapter.getItem(position);
+            LawyerEntity2 entity = lawyerListAdapter.getItem(position);
             if (entity == null) return;
 
             Bundle bundle = new Bundle();
@@ -244,12 +244,12 @@ public class FreeConsultDetail1Presenter extends BasePresenter<FreeConsultDetail
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<LawyerEntity>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<LawyerEntity2>>>(mErrorHandler) {
                     @Override
-                    public void onNext(LawyerEntity baseResponse) {
+                    public void onNext(BaseResponse<BaseListEntity<LawyerEntity2>> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             if (baseResponse.getData().getList().size() > 3) {
-                                List<LawyerEntity.LawyerBean.ListBean> datas = new ArrayList<>();
+                                List<LawyerEntity2> datas = new ArrayList<>();
                                 for (int i = 0; i < 3; i++) {
                                     datas.add(baseResponse.getData().getList().get(i));
                                     lawyerListAdapter.setNewData(datas);

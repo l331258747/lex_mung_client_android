@@ -1,6 +1,8 @@
 package cn.lex_mung.client_android.mvp.contract;
 
-import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity;
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
+import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
+import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
 import cn.lex_mung.client_android.mvp.ui.adapter.LawyerListAdapter;
 import io.reactivex.Observable;
 import me.zl.mvp.mvp.IView;
@@ -16,8 +18,8 @@ public interface OrganizationLawyerContract {
     }
 
     interface Model extends IModel {
-        Observable<LawyerEntity> getLawyerList(int pageNum, RequestBody body);
+        Observable<BaseResponse<BaseListEntity<LawyerEntity2>>> getLawyerList(int pageNum, RequestBody body);
 
-        Observable<LawyerEntity> getLawyerList1(int pageNum, RequestBody body);
+        Observable<BaseResponse<BaseListEntity<LawyerEntity2>>> getLawyerList1(int pageNum, RequestBody body);
     }
 }

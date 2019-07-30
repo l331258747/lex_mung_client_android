@@ -21,7 +21,7 @@ import cn.lex_mung.client_android.di.module.EquitiesModule;
 import cn.lex_mung.client_android.mvp.contract.EquitiesContract;
 import cn.lex_mung.client_android.mvp.model.entity.EquitiesDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.EquitiesListEntity;
-import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity;
+import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
 import cn.lex_mung.client_android.mvp.presenter.EquitiesPresenter;
 import cn.lex_mung.client_android.mvp.ui.activity.AddEquitiesOrgActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.JoinEquitiesOrgActivity;
@@ -208,7 +208,7 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
         lawyerListAdapter = new LawyerListAdapter(mImageLoader);
         lawyerListAdapter.setOnItemClickListener((adapter, view, position) -> {
             if (isFastClick()) return;
-            LawyerEntity.LawyerBean.ListBean bean = lawyerListAdapter.getItem(position);
+            LawyerEntity2 bean = lawyerListAdapter.getItem(position);
             if (bean == null) return;
             bundle.clear();
             bundle.putInt(BundleTags.ID, bean.getMemberId());
@@ -261,7 +261,7 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
     }
 
     @Override
-    public void setLawyerAdapter(List<LawyerEntity.LawyerBean.ListBean> list) {
+    public void setLawyerAdapter(List<LawyerEntity2> list) {
         lawyerListAdapter.setNewData(list);
     }
 

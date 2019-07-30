@@ -37,7 +37,7 @@ import cn.lex_mung.client_android.di.module.FindLawyerModule;
 import cn.lex_mung.client_android.mvp.contract.FindLawyerContract;
 import cn.lex_mung.client_android.mvp.model.entity.BusinessTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.ConsultTypeEntity;
-import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity;
+import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
 import cn.lex_mung.client_android.mvp.model.entity.RegionEntity;
 import cn.lex_mung.client_android.mvp.presenter.FindLawyerPresenter;
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerHomePageActivity;
@@ -157,7 +157,7 @@ public class FindLawyerFragment extends BaseFragment<FindLawyerPresenter> implem
         lawyerListAdapter = new LawyerListAdapter(mImageLoader);
         lawyerListAdapter.setOnItemClickListener((adapter, view, position) -> {
             if (isFastClick()) return;
-            LawyerEntity.LawyerBean.ListBean bean = lawyerListAdapter.getItem(position);
+            LawyerEntity2 bean = lawyerListAdapter.getItem(position);
             if (bean == null) return;
             bundle.clear();
             bundle.putInt(BundleTags.ID, bean.getMemberId());
@@ -230,7 +230,7 @@ public class FindLawyerFragment extends BaseFragment<FindLawyerPresenter> implem
     }
 
     @Override
-    public void setAdapter(List<LawyerEntity.LawyerBean.ListBean> list, boolean isAdd) {
+    public void setAdapter(List<LawyerEntity2> list, boolean isAdd) {
         if (isAdd) {
             lawyerListAdapter.addData(list);
             smartRefreshLayout.finishLoadMore();

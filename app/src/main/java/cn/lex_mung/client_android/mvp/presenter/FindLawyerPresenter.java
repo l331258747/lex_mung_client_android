@@ -5,6 +5,8 @@ import android.os.Message;
 import android.text.TextUtils;
 
 import cn.lex_mung.client_android.app.DataHelperTags;
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
+import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
 import cn.lex_mung.client_android.mvp.model.entity.RequireEntity;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -30,7 +32,6 @@ import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.mvp.contract.FindLawyerContract;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.BusinessTypeEntity;
-import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawyerListScreenEntity;
 import cn.lex_mung.client_android.mvp.model.entity.RegionEntity;
 
@@ -197,9 +198,9 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
                     .observeOn(AndroidSchedulers.mainThread())
                     .doFinally(() -> mRootView.hideLoading())
                     .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                    .subscribe(new ErrorHandleSubscriber<LawyerEntity>(mErrorHandler) {
+                    .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<LawyerEntity2>>>(mErrorHandler) {
                         @Override
-                        public void onNext(LawyerEntity baseResponse) {
+                        public void onNext(BaseResponse<BaseListEntity<LawyerEntity2>> baseResponse) {
                             if (baseResponse.isSuccess()) {
                                 totalNum = baseResponse.getData().getPages();
                                 pageNum = baseResponse.getData().getPageNum();
@@ -220,9 +221,9 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
                     .observeOn(AndroidSchedulers.mainThread())
                     .doFinally(() -> mRootView.hideLoading())
                     .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                    .subscribe(new ErrorHandleSubscriber<LawyerEntity>(mErrorHandler) {
+                    .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<LawyerEntity2>>>(mErrorHandler) {
                         @Override
-                        public void onNext(LawyerEntity baseResponse) {
+                        public void onNext(BaseResponse<BaseListEntity<LawyerEntity2>> baseResponse) {
                             if (baseResponse.isSuccess()) {
                                 totalNum = baseResponse.getData().getPages();
                                 pageNum = baseResponse.getData().getPageNum();

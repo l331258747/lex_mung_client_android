@@ -28,9 +28,10 @@ import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.mvp.contract.LawyerListContract;
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.BusinessTypeEntity;
-import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity;
+import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
 import cn.lex_mung.client_android.mvp.model.entity.LawyerListScreenEntity;
 import cn.lex_mung.client_android.mvp.model.entity.RegionEntity;
 import cn.lex_mung.client_android.mvp.model.entity.RequireEntity;
@@ -193,7 +194,7 @@ public class LawyerListPresenter extends BasePresenter<LawyerListContract.Model,
                     BuryingPointHelp.getInstance().onEvent(mRootView.getActivity(), "expert_consulation_detail","expert_consulation_lawyer_detail_click");
                     break;
             }
-            LawyerEntity.LawyerBean.ListBean bean = adapter.getItem(position);
+            LawyerEntity2 bean = adapter.getItem(position);
             if (bean == null) return;
             Bundle bundle = new Bundle();
             bundle.clear();
@@ -252,9 +253,9 @@ public class LawyerListPresenter extends BasePresenter<LawyerListContract.Model,
                     .observeOn(AndroidSchedulers.mainThread())
                     .doFinally(() -> mRootView.hideLoading())
                     .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                    .subscribe(new ErrorHandleSubscriber<LawyerEntity>(mErrorHandler) {
+                    .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<LawyerEntity2>>>(mErrorHandler) {
                         @Override
-                        public void onNext(LawyerEntity baseResponse) {
+                        public void onNext(BaseResponse<BaseListEntity<LawyerEntity2>> baseResponse) {
                             if (baseResponse.isSuccess()) {
                                 totalNum = baseResponse.getData().getPages();
                                 pageNum = baseResponse.getData().getPageNum();
@@ -285,9 +286,9 @@ public class LawyerListPresenter extends BasePresenter<LawyerListContract.Model,
                     .observeOn(AndroidSchedulers.mainThread())
                     .doFinally(() -> mRootView.hideLoading())
                     .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                    .subscribe(new ErrorHandleSubscriber<LawyerEntity>(mErrorHandler) {
+                    .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<LawyerEntity2>>>(mErrorHandler) {
                         @Override
-                        public void onNext(LawyerEntity baseResponse) {
+                        public void onNext(BaseResponse<BaseListEntity<LawyerEntity2>> baseResponse) {
                             if (baseResponse.isSuccess()) {
                                 totalNum = baseResponse.getData().getPages();
                                 pageNum = baseResponse.getData().getPageNum();

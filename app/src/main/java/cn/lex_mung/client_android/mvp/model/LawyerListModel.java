@@ -4,6 +4,8 @@ import android.app.Application;
 
 import com.google.gson.Gson;
 
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
+import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
 import io.reactivex.Observable;
 import me.zl.mvp.integration.IRepositoryManager;
 import me.zl.mvp.mvp.BaseModel;
@@ -17,7 +19,6 @@ import cn.lex_mung.client_android.mvp.contract.LawyerListContract;
 import cn.lex_mung.client_android.mvp.model.api.CommonService;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.BusinessTypeEntity;
-import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity;
 
 import java.util.List;
 
@@ -41,14 +42,14 @@ public class LawyerListModel extends BaseModel implements LawyerListContract.Mod
     }
 
     @Override
-    public Observable<LawyerEntity> getLawyerList(int pageNum, RequestBody body) {
+    public Observable<BaseResponse<BaseListEntity<LawyerEntity2>>> getLawyerList(int pageNum, RequestBody body) {
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .getLawyerList(pageNum, body);
     }
 
     @Override
-    public Observable<LawyerEntity> getLawyerList1(int pageNum, RequestBody body) {
+    public Observable<BaseResponse<BaseListEntity<LawyerEntity2>>> getLawyerList1(int pageNum, RequestBody body) {
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .getLawyerList1(pageNum, body);

@@ -3,6 +3,8 @@ package cn.lex_mung.client_android.mvp.presenter;
 import android.app.Application;
 import android.os.Message;
 
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
+import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -25,7 +27,6 @@ import cn.lex_mung.client_android.mvp.contract.EquitiesContract;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.EquitiesDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.EquitiesListEntity;
-import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity;
 
 import org.simple.eventbus.Subscriber;
 
@@ -267,9 +268,9 @@ public class EquitiesPresenter extends BasePresenter<EquitiesContract.Model, Equ
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<LawyerEntity>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<LawyerEntity2>>>(mErrorHandler) {
                     @Override
-                    public void onNext(LawyerEntity baseResponse) {
+                    public void onNext(BaseResponse<BaseListEntity<LawyerEntity2>> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             mRootView.setLawyerAdapter(baseResponse.getData().getList());
                         }
