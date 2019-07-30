@@ -236,7 +236,7 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
             entity.setTitle("账户余额");
             entity.setType(3);
             entity.setSelected(false);
-            entity.setBalance(balanceEntity.getAmount().getBalanceAmount());
+            entity.setBalance(balanceEntity.getAmount().getAllBalanceAmount());
             list.add(entity);
         }
         if (balanceEntity.getOrgAmounts() != null && balanceEntity.getOrgAmounts().size() > 0) {

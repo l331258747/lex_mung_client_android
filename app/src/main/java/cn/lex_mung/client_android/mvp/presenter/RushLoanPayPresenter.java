@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextUtils;
 
 import com.alipay.sdk.app.PayTask;
 import com.google.gson.Gson;
@@ -18,7 +17,6 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import org.simple.eventbus.Subscriber;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,14 +29,11 @@ import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.app.PayStatusTags;
 import cn.lex_mung.client_android.mvp.contract.RushLoanPayContract;
 import cn.lex_mung.client_android.mvp.model.entity.AmountBalanceEntity;
-import cn.lex_mung.client_android.mvp.model.entity.BalanceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.OrderStatusEntity;
-import cn.lex_mung.client_android.mvp.model.entity.OrgAmountEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayResultEntity;
-import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.QuickPayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RequirementCreateEntity;
@@ -46,7 +41,6 @@ import cn.lex_mung.client_android.mvp.ui.activity.PayStatusActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.RushOrdersActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import cn.lex_mung.client_android.utils.DecimalUtil;
-import cn.lex_mung.client_android.utils.LogUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
@@ -132,7 +126,7 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
                     public void onNext(BaseResponse<AmountBalanceEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             if(baseResponse.getData().getAmount() != null){
-                                balance = baseResponse.getData().getAmount().getBalanceAmount();
+                                balance = baseResponse.getData().getAmount().getAllBalanceAmount();
                             }
                             mRootView.setAllBalance(baseResponse.getData());
 

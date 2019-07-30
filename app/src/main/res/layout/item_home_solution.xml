@@ -20,8 +20,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/qb_px_20"
+        android:textSize="13sp"
+        android:textColor="@color/c_737373"
         android:gravity="center_horizontal"
-        android:textStyle="bold"
         tools:text="离婚协议书" />
 
 </LinearLayout>

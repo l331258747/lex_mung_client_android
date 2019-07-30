@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <cn.lex_mung.client_android.mvp.ui.widget.TitleView
@@ -19,6 +20,14 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/titleView"
         android:scrollbars="none" />
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_10"
+        android:layout_below="@+id/titleView"
+        tools:progress="30"/>
 
     <View
         android:id="@+id/view_dialog"

@@ -195,11 +195,6 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
         webView.loadUrl(url);
     }
 
-    public void goNext(String url){
-        webView.synCookies(url);
-        webView.loadUrl(url);
-    }
-
     @OnClick(R.id.tv_right)
     public void onViewClicked() {
         if (!TextUtils.isEmpty(url)

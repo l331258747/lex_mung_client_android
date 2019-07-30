@@ -51,6 +51,7 @@ import cn.lex_mung.client_android.mvp.model.entity.free.FreeTextBizinfoEntity;
 import cn.lex_mung.client_android.mvp.model.entity.help.HelpStepEntity;
 import cn.lex_mung.client_android.mvp.model.entity.help.HelpStepLawyerEntity;
 import cn.lex_mung.client_android.mvp.model.entity.help.HirstoryDemandEntity;
+import cn.lex_mung.client_android.mvp.model.entity.home.CommonSolutionEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.OnlineUrlEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.RequirementTypeV3Entity;
@@ -810,4 +811,10 @@ public interface CommonService {
     //券包关联优惠券列表
     @GET("client/voucher/{voucherPackId}")
     Observable<BaseResponse<List<RechargeCouponEntity>>> rechargeCouponList(@Path("voucherPackId") int voucherPackId);
+
+    ///common/solution/list
+    //GET
+    //获取解决方案全部类型
+    @GET("common/solution/list")
+    Observable<BaseResponse<BaseListEntity<CommonSolutionEntity>>> commonSolutionList();
 }

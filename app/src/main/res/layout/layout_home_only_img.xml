@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/qb_px_85"
     android:src="@drawable/ic_home_quick"
+
     android:layout_marginTop="@dimen/qb_px_20"
     android:scaleType="fitXY"/>
 

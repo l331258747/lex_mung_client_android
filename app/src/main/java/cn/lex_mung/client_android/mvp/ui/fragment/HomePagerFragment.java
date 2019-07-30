@@ -598,6 +598,7 @@ import cn.lex_mung.client_android.mvp.contract.HomePagerContract;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
 import cn.lex_mung.client_android.mvp.presenter.HomePagerPresenter;
 import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultMainActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.HomeSolutionActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.HomeTableActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerListActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
@@ -759,6 +760,19 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                             String requireTypeIdStr1 = uri.getQueryParameter("id");
                             String requireTypeName1 = uri.getQueryParameter("name");
                             showMessage("id:" + requireTypeIdStr1 + ",name:" + requireTypeName1);
+                            int requireTypeId2;
+                            if (TextUtils.isEmpty(requireTypeIdStr1) || TextUtils.isEmpty(requireTypeName1))
+                                return;
+                            try {
+                                requireTypeId2 = Integer.valueOf(requireTypeIdStr1);
+                            } catch (Exception e) {
+                                return;
+                            }
+
+                            if(requireTypeId2 == 0){
+                                launchActivity(new Intent(mActivity, HomeSolutionActivity.class));
+                            }
+
                             break;
                     }
 

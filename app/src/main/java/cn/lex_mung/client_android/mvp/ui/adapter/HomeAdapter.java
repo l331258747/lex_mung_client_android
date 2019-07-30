@@ -221,6 +221,7 @@ public class HomeAdapter extends BaseQuickAdapter<HomeEntity, BaseViewHolder> {
                     mImageLoader.loadImage(mContext
                             , ImageConfigImpl
                                     .builder()
+                                    .isCenterCrop(false)
                                     .url(item.getBtns().get(0).getIcon())
                                     .imageView(iv_img)
                                     .build());

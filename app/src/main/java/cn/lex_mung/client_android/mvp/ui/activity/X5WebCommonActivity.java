@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
 import com.tencent.smtt.sdk.ValueCallback;
@@ -56,6 +57,8 @@ public class X5WebCommonActivity extends BaseActivity<X5WebCommonPresenter> impl
     LWebView2 webView;
     @BindView(R.id.view_dialog)
     View viewDialog;
+    @BindView(R.id.progressbar)
+    ProgressBar progressBar;
 
     private boolean isShare;
     private String url;
@@ -146,7 +149,7 @@ public class X5WebCommonActivity extends BaseActivity<X5WebCommonPresenter> impl
             titleView.getRightTv().setVisibility(View.GONE);
         }
         titleView.getTitleTv().setText(title);
-        showLoading("");
+//        showLoading("");
         initWebView();
 
         titleView.getRightTv().setOnClickListener(v -> {
@@ -172,8 +175,10 @@ public class X5WebCommonActivity extends BaseActivity<X5WebCommonPresenter> impl
 
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
+                progressBar.setProgress(newProgress);
                 if (newProgress == 100) {
-                    hideLoading();
+//                    hideLoading();
+                    progressBar.setVisibility(View.GONE);
                 }
                 super.onProgressChanged(view, newProgress);
             }

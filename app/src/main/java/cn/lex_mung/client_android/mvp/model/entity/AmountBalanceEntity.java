@@ -60,6 +60,11 @@ public class AmountBalanceEntity {
         private double advanceCollectionAmount;
         private String dateModified;
         private int version;
+        private double giveAmount;
+
+        public double getGiveAmount() {
+            return giveAmount;
+        }
 
         public int getMemberId() {
             return memberId;
@@ -75,6 +80,10 @@ public class AmountBalanceEntity {
 
         public void setTotalConsumeAmount(int totalConsumeAmount) {
             this.totalConsumeAmount = totalConsumeAmount;
+        }
+
+        public double getAllBalanceAmount() {
+            return balanceAmount + giveAmount;
         }
 
         public double getBalanceAmount() {

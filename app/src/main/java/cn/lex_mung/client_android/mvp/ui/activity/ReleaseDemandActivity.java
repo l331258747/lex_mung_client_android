@@ -33,7 +33,6 @@ import cn.lex_mung.client_android.di.component.DaggerReleaseDemandComponent;
 import cn.lex_mung.client_android.di.module.ReleaseDemandModule;
 import cn.lex_mung.client_android.mvp.contract.ReleaseDemandContract;
 import cn.lex_mung.client_android.mvp.model.entity.AmountBalanceEntity;
-import cn.lex_mung.client_android.mvp.model.entity.OrgAmountEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.PayTypeEntity;
 import cn.lex_mung.client_android.mvp.presenter.ReleaseDemandPresenter;
 import cn.lex_mung.client_android.mvp.ui.adapter.ReleaseDemandServiceTypeAdapter;
@@ -274,7 +273,7 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
             entity.setTitle("账户余额");
             entity.setType(3);
             entity.setSelected(false);
-            entity.setBalance(balanceEntity.getAmount().getBalanceAmount());
+            entity.setBalance(balanceEntity.getAmount().getAllBalanceAmount());
             list.add(entity);
         }
 
