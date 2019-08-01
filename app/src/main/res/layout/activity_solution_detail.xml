@@ -100,8 +100,8 @@
                     android:id="@+id/sfl_table"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:hor_divider_width="@dimen/qb_px_35"
-                    app:hor_row_height="@dimen/qb_px_40"
+                    app:hor_divider_width="@dimen/qb_px_20"
+                    app:hor_row_height="@dimen/qb_px_30"
                     app:layout_constraintEnd_toEndOf="@+id/view_table"
                     app:layout_constraintStart_toStartOf="@+id/view_table"
                     app:layout_constraintTop_toBottomOf="@id/tv_table_title" />
