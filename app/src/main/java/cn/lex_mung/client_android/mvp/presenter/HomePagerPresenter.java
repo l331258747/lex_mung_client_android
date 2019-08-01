@@ -160,7 +160,6 @@
 ////                    @Override
 ////                    public void onNext(BaseResponse<List<SolutionTypeEntity>> baseResponse) {
 ////                        if (baseResponse.isSuccess()) {
-////                            mRootView.setSolutionType(baseResponse.getData());
 ////                            DataHelper.setStringSF(mApplication, DataHelperTags.HOME_PAGE_SOLUTION_TYPE, new Gson().toJson(baseResponse.getData()));
 ////                        }
 ////                    }
@@ -274,6 +273,7 @@ import cn.lex_mung.client_android.mvp.contract.HomePagerContract;
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
+import cn.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UnreadMessageCountEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
@@ -368,7 +368,7 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
     //获取优选律师
     public void getLawyerList() {
         Map<String, Object> map = new HashMap<>();
-        map.put("regionId", DataHelper.getIntergerSF(mApplication,DataHelperTags.LAUNCH_LOCATION));
+        map.put("regionId", DataHelper.getIntergerSF(mApplication, DataHelperTags.LAUNCH_LOCATION));
         map.put("businessTypeId", 0);
         mModel.getLawyerHomeList(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                 .subscribeOn(Schedulers.io())
@@ -383,9 +383,9 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                     @Override
                     public void onNext(BaseResponse<BaseListEntity<LawyerEntity2>> baseResponse) {
                         if (baseResponse.isSuccess()) {
-                            if(baseResponse.getData().getList() == null) return;
-                            for (int i=0;i<baseResponse.getData().getList().size();i++){
-                                if(i == 0){
+                            if (baseResponse.getData().getList() == null) return;
+                            for (int i = 0; i < baseResponse.getData().getList().size(); i++) {
+                                if (i == 0) {
                                     HomeEntity homeEntity = new HomeEntity();
                                     homeEntity.setType("home_lawyer_title");
                                     mRootView.addHomeLawyer(homeEntity);
@@ -475,6 +475,28 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                                 mRootView.showFlipView(true);
                                 mRootView.addNotice(baseResponse.getData());
                             }
+                        }
+                    }
+                });
+
+    }
+
+    public void getSolutionType() {
+        Map<String, Object> map = new HashMap<>();
+        mModel.getSolutionType(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> {
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<List<SolutionTypeEntity>>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<List<SolutionTypeEntity>> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            DataHelper.setStringSF(mApplication, DataHelperTags.HOME_PAGE_SOLUTION_TYPE, new Gson().toJson(baseResponse.getData()));
                         }
                     }
                 });

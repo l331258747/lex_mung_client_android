@@ -14,21 +14,33 @@ import me.zl.mvp.utils.AppUtils;
 
 public class SolutionAdapter extends BaseQuickAdapter<SolutionListEntity, BaseViewHolder> {
     private ImageLoader mImageLoader;
+    private int type;
+
+    public SolutionAdapter(ImageLoader imageLoader,int type) {
+        super(R.layout.item_solution);
+        this.mImageLoader = imageLoader;
+        this.type = type;
+    }
 
     public SolutionAdapter(ImageLoader imageLoader) {
-        super(R.layout.item_solution);
-        mImageLoader = imageLoader;
+        this(imageLoader,0);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, SolutionListEntity item) {
         helper.setText(R.id.item_tv_title, item.getTitle());
-        String string = mContext.getString(R.string.text_has_helped)
-                + "<font color=\"#1EC88C\">"
-                + item.getHelpNumber()
-                + "</font>"
-                + mContext.getString(R.string.text_people);
-        helper.setText(R.id.item_tv_count, Html.fromHtml(string));
+        if(type == 0){
+            String string = mContext.getString(R.string.text_has_helped)
+                    + "<font color=\"#1EC88C\">"
+                    + item.getHelpNumber()
+                    + "</font>"
+                    + mContext.getString(R.string.text_people);
+            helper.setText(R.id.item_tv_count, Html.fromHtml(string));
+        }else{
+            String string = item.getHelpNumber() + "  阅读";
+            helper.setText(R.id.item_tv_count, string);
+        }
+
         if (!TextUtils.isEmpty(item.getImage())) {
             mImageLoader.loadImage(mContext
                     , ImageConfigImpl

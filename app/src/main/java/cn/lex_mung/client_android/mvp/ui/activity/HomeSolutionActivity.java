@@ -16,6 +16,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.module.HomeSolutionModule;
 import cn.lex_mung.client_android.mvp.model.entity.home.CommonSolutionEntity;
 import cn.lex_mung.client_android.mvp.ui.adapter.HomeSolutionAdapter;
@@ -94,11 +95,11 @@ public class HomeSolutionActivity extends BaseActivity<HomeSolutionPresenter> im
             CommonSolutionEntity entity = (CommonSolutionEntity) adapter1.getItem(position);
             if (entity == null) return;
 
-            showMessage("id:" + entity.getId() + ",name:" + entity.getAlias());
-
+            bundle.clear();
+            bundle.putInt(BundleTags.SOLUTION_TYPE_ID,entity.getId());
+            bundle.putString(BundleTags.SOLUTION_TYPE_NAME,entity.getAlias());
+            launchActivity(new Intent(mActivity, SolutionDetailActivity.class),bundle);
         });
-
-
     }
 
     @Override

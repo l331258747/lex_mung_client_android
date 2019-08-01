@@ -608,6 +608,7 @@ import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MainActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MessageActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.OrganizationLawyerActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.SolutionDetailActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.HomeAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
@@ -664,6 +665,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
 
         mPresenter.getHomeData();
         mPresenter.random();
+        mPresenter.getSolutionType();//有的地方用到了缓存
     }
 
     private boolean isCreated = false;
@@ -761,21 +763,24 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                                 launchActivity(new Intent(mActivity, HomeTableActivity.class), bundle);
                                 break;
                             case "subject":
-                                //TODO
                                 String requireTypeIdStr1 = uri.getQueryParameter("id");
                                 String requireTypeName1 = uri.getQueryParameter("name");
-                                showMessage("id:" + requireTypeIdStr1 + ",name:" + requireTypeName1);
-                                int requireTypeId2;
+                                int requireTypeId1;
                                 if (TextUtils.isEmpty(requireTypeIdStr1) || TextUtils.isEmpty(requireTypeName1))
                                     return;
                                 try {
-                                    requireTypeId2 = Integer.valueOf(requireTypeIdStr1);
+                                    requireTypeId1 = Integer.valueOf(requireTypeIdStr1);
                                 } catch (Exception e) {
                                     return;
                                 }
 
-                                if(requireTypeId2 == 0){
+                                if(requireTypeId1 == 0){
                                     launchActivity(new Intent(mActivity, HomeSolutionActivity.class));
+                                }else{
+                                    bundle.clear();
+                                    bundle.putInt(BundleTags.SOLUTION_TYPE_ID,requireTypeId1);
+                                    bundle.putString(BundleTags.SOLUTION_TYPE_NAME,requireTypeName1);
+                                    launchActivity(new Intent(mActivity, SolutionDetailActivity.class),bundle);
                                 }
 
                                 break;

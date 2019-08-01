@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <cn.lex_mung.client_android.mvp.ui.widget.TitleView
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:TitleView_bg="@color/c_1EC88B"
+        app:TitleView_left_img="@drawable/ic_withe_back" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/smart_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:overScrollMode="never"
+            android:scrollbars="none">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/guideline_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="@dimen/qb_px_40" />
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/guideline_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="@dimen/qb_px_40" />
+
+                <!--banner -->
+                <View
+                    android:id="@+id/view_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/qb_px_200"
+                    android:background="@drawable/round_40_1ec88b_bottom" />
+
+                <ImageView
+                    android:id="@+id/iv_banner"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/qb_px_260"
+                    android:layout_marginTop="@dimen/qb_px_40"
+                    android:src="@drawable/ic_chat_map_icon"
+                    app:layout_constraintEnd_toEndOf="@+id/guideline_right"
+                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                    app:layout_constraintTop_toTopOf="@+id/view_banner" />
+
+                <View
+                    android:id="@+id/view_banner_bottom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/qb_px_40"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_banner" />
+
+                <!-- 标签-->
+                <android.support.constraint.Group
+                    android:id="@+id/group_table"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="tv_table_title,sfl_table,view_table_bottom" />
+
+                <View
+                    android:id="@+id/view_table"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/view_table_bottom"
+                    app:layout_constraintEnd_toEndOf="@+id/guideline_right"
+                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                    app:layout_constraintTop_toBottomOf="@+id/view_banner_bottom" />
+
+                <TextView
+                    android:id="@+id/tv_table_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/qb_px_40"
+                    android:paddingBottom="@dimen/qb_px_40"
+                    android:text="热门标签"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/view_table"
+                    app:layout_constraintTop_toTopOf="@+id/view_table" />
+
+                <cn.lex_mung.client_android.mvp.ui.widget.SimpleFlowLayout
+                    android:id="@+id/sfl_table"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:hor_divider_width="@dimen/qb_px_35"
+                    app:hor_row_height="@dimen/qb_px_40"
+                    app:layout_constraintEnd_toEndOf="@+id/view_table"
+                    app:layout_constraintStart_toStartOf="@+id/view_table"
+                    app:layout_constraintTop_toBottomOf="@id/tv_table_title" />
+
+                <View
+                    android:id="@+id/view_table_bottom"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/qb_px_40"
+                    app:layout_constraintTop_toBottomOf="@+id/sfl_table" />
+
+                <!--优选律师-->
+                <android.support.constraint.Group
+                    android:id="@+id/group_lawyer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="tv_lawyer_title,tv_lawyer_title_content,
+                recycler_view_lawyer,view_lawyer_bottom,view_line_1" />
+
+                <View
+                    android:id="@+id/view_lawyer"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/view_lawyer_bottom"
+                    app:layout_constraintEnd_toEndOf="@+id/guideline_right"
+                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                    app:layout_constraintTop_toBottomOf="@+id/view_table" />
+
+                <TextView
+                    android:id="@+id/tv_lawyer_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/qb_px_40"
+                    android:paddingBottom="@dimen/qb_px_40"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/view_lawyer"
+                    app:layout_constraintTop_toTopOf="@+id/view_lawyer"
+                    tools:text="婚姻家事优选律师" />
+
+                <TextView
+                    android:id="@+id/tv_lawyer_title_content"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/qb_px_15"
+                    android:maxLines="1"
+                    android:text="选择律师后建议先电话咨询进行沟通"
+                    android:textColor="@color/c_737373"
+                    android:textSize="10sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_lawyer_title"
+                    app:layout_constraintEnd_toEndOf="@id/view_lawyer"
+                    app:layout_constraintStart_toEndOf="@+id/tv_lawyer_title"
+                    app:layout_constraintTop_toTopOf="@+id/tv_lawyer_title" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view_lawyer"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_lawyer_title" />
+
+                <TextView
+                    android:id="@+id/tv_lawyer_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_40_e4effb_all"
+                    android:paddingLeft="@dimen/qb_px_30"
+                    android:paddingTop="@dimen/qb_px_5"
+                    android:paddingRight="@dimen/qb_px_30"
+                    android:paddingBottom="@dimen/qb_px_5"
+                    android:text="查看全部 > "
+                    android:textColor="@color/c_4A90E2"
+                    android:textSize="10sp"
+                    app:layout_constraintEnd_toEndOf="@id/view_lawyer"
+                    app:layout_constraintStart_toStartOf="@+id/view_lawyer"
+                    app:layout_constraintTop_toBottomOf="@+id/recycler_view_lawyer" />
+
+
+                <View
+                    android:id="@+id/view_lawyer_bottom"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/qb_px_60"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_lawyer_all" />
+
+                <!-- 分割线-->
+                <View
+                    android:id="@+id/view_line_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/qb_px_10"
+                    android:background="@color/c_f0f0f0"
+                    app:layout_constraintTop_toBottomOf="@+id/view_lawyer" />
+
+                <!-- 合同-->
+
+                <View
+                    android:id="@+id/view_contract"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/view_contract_bottom"
+                    app:layout_constraintEnd_toEndOf="@+id/guideline_right"
+                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                    app:layout_constraintTop_toBottomOf="@+id/view_line_1" />
+
+                <TextView
+                    android:id="@+id/tv_contract_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/qb_px_40"
+                    android:paddingBottom="@dimen/qb_px_20"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/view_contract"
+                    app:layout_constraintTop_toTopOf="@+id/view_contract"
+                    tools:text="婚姻家事起草审查合同" />
+
+                <LinearLayout
+                    android:id="@+id/ll_contract_tip"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="@+id/view_contract"
+                    app:layout_constraintStart_toStartOf="@+id/view_contract"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_contract_title">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/qb_px_35"
+                            android:layout_height="@dimen/qb_px_35"
+                            android:src="@drawable/ic_solution_contract_1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/qb_px_10"
+                            android:text="统一价格"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/qb_px_35"
+                            android:layout_height="@dimen/qb_px_35"
+                            android:src="@drawable/ic_solution_contract_2" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/qb_px_10"
+                            android:text="服务监管"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/qb_px_35"
+                            android:layout_height="@dimen/qb_px_35"
+                            android:src="@drawable/ic_solution_contract_3" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/qb_px_10"
+                            android:text="专属律师"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/qb_px_35"
+                            android:layout_height="@dimen/qb_px_35"
+                            android:src="@drawable/ic_solution_contract_4" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/qb_px_10"
+                            android:text="5分钟响应"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/view_contract_write"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/qb_px_120"
+                    android:layout_marginTop="@dimen/qb_px_40"
+                    android:background="@drawable/ic_solution_contract_11"
+                    app:layout_constraintEnd_toEndOf="@+id/view_contract"
+                    app:layout_constraintStart_toStartOf="@+id/view_contract"
+                    app:layout_constraintTop_toBottomOf="@+id/ll_contract_tip" />
+
+                <TextView
+                    android:id="@+id/tv_contract_write"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/qb_px_40"
+                    android:maxLines="2"
+                    android:textColor="@color/c_ff"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/view_contract_write"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_contract_write_price"
+                    app:layout_constraintStart_toStartOf="@+id/view_contract_write"
+                    app:layout_constraintTop_toTopOf="@+id/view_contract_write"
+                    tools:text="起草婚姻家事合同" />
+
+                <TextView
+                    android:id="@+id/tv_contract_write_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/qb_px_40"
+                    android:textColor="@color/c_ff"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/view_contract_write"
+                    app:layout_constraintEnd_toEndOf="@+id/view_contract_write"
+                    app:layout_constraintTop_toTopOf="@+id/view_contract_write"
+                    tools:text="1000元/份" />
+
+                <View
+                    android:id="@+id/view_contract_check"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/qb_px_120"
+                    android:layout_marginTop="@dimen/qb_px_20"
+                    android:background="@drawable/ic_solution_contract_12"
+                    app:layout_constraintEnd_toEndOf="@+id/view_contract"
+                    app:layout_constraintStart_toStartOf="@+id/view_contract"
+                    app:layout_constraintTop_toBottomOf="@+id/view_contract_write" />
+
+                <TextView
+                    android:id="@+id/tv_contract_check"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/qb_px_40"
+                    android:maxLines="2"
+                    android:textColor="@color/c_ff"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/view_contract_check"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_contract_check_price"
+                    app:layout_constraintStart_toStartOf="@+id/view_contract_check"
+                    app:layout_constraintTop_toTopOf="@+id/view_contract_check"
+                    tools:text="审查婚姻家事合同" />
+
+                <TextView
+                    android:id="@+id/tv_contract_check_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/qb_px_40"
+                    android:textColor="@color/c_ff"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/view_contract_check"
+                    app:layout_constraintEnd_toEndOf="@+id/view_contract_check"
+                    app:layout_constraintTop_toTopOf="@+id/view_contract_check"
+                    tools:text="1000元/份" />
+
+                <View
+                    android:id="@+id/view_contract_call"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/qb_px_120"
+                    android:layout_marginTop="@dimen/qb_px_80"
+                    android:background="@drawable/ic_solution_contract_13"
+                    app:layout_constraintEnd_toEndOf="@+id/view_contract"
+                    app:layout_constraintStart_toStartOf="@+id/view_contract"
+                    app:layout_constraintTop_toBottomOf="@+id/view_contract_check" />
+
+                <TextView
+                    android:id="@+id/tv_contract_call"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/qb_px_40"
+                    android:text="快速电话咨询"
+                    android:textColor="@color/c_886642"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_contract_call2"
+                    app:layout_constraintStart_toStartOf="@+id/view_contract_call"
+                    app:layout_constraintTop_toTopOf="@+id/view_contract_call" />
+
+                <TextView
+                    android:id="@+id/tv_contract_call2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/qb_px_40"
+                    android:text="5分钟响应、律师专业领域对口"
+                    android:textColor="@color/c_886642"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/view_contract_call"
+                    app:layout_constraintStart_toStartOf="@+id/view_contract_call"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_contract_call" />
+
+                <TextView
+                    android:id="@+id/tv_contract_call_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/qb_px_40"
+                    android:textColor="@color/c_886642"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/view_contract_call"
+                    app:layout_constraintEnd_toEndOf="@+id/view_contract_call"
+                    app:layout_constraintTop_toTopOf="@+id/view_contract_call"
+                    tools:text="1000元/30分钟" />
+
+                <View
+                    android:id="@+id/view_contract_bottom"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toBottomOf="@+id/view_contract_call" />
+
+                <View
+                    android:id="@+id/view_line_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/qb_px_40"
+                    android:background="@drawable/ic_top_bg"
+                    app:layout_constraintTop_toBottomOf="@+id/view_contract" />
+
+                <!-- 免费咨询-->
+
+                <android.support.constraint.Group
+                    android:id="@+id/group_free"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="tv_free_title,
+                recycler_view_free,view_free_bottom" />
+
+                <View
+                    android:id="@+id/view_free"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/view_free_bottom"
+                    app:layout_constraintEnd_toEndOf="@+id/guideline_right"
+                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                    app:layout_constraintTop_toBottomOf="@+id/view_line_2" />
+
+                <TextView
+                    android:id="@+id/tv_free_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/qb_px_40"
+                    android:paddingBottom="@dimen/qb_px_20"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/view_free"
+                    app:layout_constraintTop_toTopOf="@+id/view_free"
+                    tools:text="婚姻家事热门咨询" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view_free"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_free_title" />
+
+                <View
+                    android:id="@+id/view_free_bottom"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toBottomOf="@+id/recycler_view_free" />
+
+                <!--解决方案-->
+
+                <android.support.constraint.Group
+                    android:id="@+id/group_solution"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="tv_solution_title,
+                recycler_view_solution,view_solution_bottom" />
+
+                <View
+                    android:id="@+id/view_solution"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/view_solution_bottom"
+                    app:layout_constraintEnd_toEndOf="@+id/guideline_right"
+                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                    app:layout_constraintTop_toBottomOf="@+id/view_free" />
+
+                <TextView
+                    android:id="@+id/tv_solution_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/qb_px_40"
+                    android:paddingBottom="@dimen/qb_px_10"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/view_solution"
+                    app:layout_constraintTop_toTopOf="@+id/view_solution"
+                    tools:text="婚姻家事解决方案" />
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view_solution"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_solution_title" />
+
+                <View
+                    android:id="@+id/view_solution_bottom"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toBottomOf="@+id/recycler_view_solution" />
+
+            </android.support.constraint.ConstraintLayout>
+
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+</LinearLayout>

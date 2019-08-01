@@ -51,6 +51,8 @@ import cn.lex_mung.client_android.mvp.model.entity.free.FreeTextBizinfoEntity;
 import cn.lex_mung.client_android.mvp.model.entity.help.HelpStepEntity;
 import cn.lex_mung.client_android.mvp.model.entity.help.HelpStepLawyerEntity;
 import cn.lex_mung.client_android.mvp.model.entity.help.HirstoryDemandEntity;
+import cn.lex_mung.client_android.mvp.model.entity.home.CommonMarkEntity;
+import cn.lex_mung.client_android.mvp.model.entity.home.CommonPageContractsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.CommonSolutionEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.OnlineUrlEntity;
@@ -826,4 +828,17 @@ public interface CommonService {
     Observable<BaseResponse<BaseListEntity<LawyerEntity2>>> getLawyerHomeList(@Path("pageNum") int pageNum,
                                                                               @Path("pageSize") int pageSize,
                                                                               @Body RequestBody body);
+
+    ///common/marks/{solutionId}
+    //GET
+    //根据解决方案id获取标签（最多返回8个）
+    @GET("common/marks/{solutionId}")
+    Observable<BaseResponse<List<CommonMarkEntity>>> commonMarks(@Path("solutionId") int solutionId);
+
+    ///common/page/contracts
+    //GET
+    //起草审查合同文案
+    @GET("common/page/contracts")
+    Observable<BaseResponse<List<CommonPageContractsEntity>>> commonPageContracts();
+
 }

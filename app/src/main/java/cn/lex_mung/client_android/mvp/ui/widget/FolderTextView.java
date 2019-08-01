@@ -191,4 +191,9 @@ public class FolderTextView extends TextView {
     }
 
     ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(getResources().getColor(R.color.c_3DD790));
+
+    public void setEndColor(int colorId){
+        //c_4A90E2
+        foregroundColorSpan = new ForegroundColorSpan(getResources().getColor(colorId));
+    }
 }

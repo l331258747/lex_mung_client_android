@@ -48,7 +48,7 @@ public interface HomePagerContract {
 
     interface Model extends IModel {
 //        Observable<BaseResponse<BaseListEntity<BannerEntity>>> getBanner();
-//        Observable<BaseResponse<List<SolutionTypeEntity>>> getSolutionType(RequestBody body);
+        Observable<BaseResponse<List<SolutionTypeEntity>>> getSolutionType(RequestBody body);
 //        Observable<BaseResponse<RequirementTypeV3Entity>> getHomepageRequirementType();
 //        Observable<BaseResponse<OnlineUrlEntity>> clientOnlineUrl();
 

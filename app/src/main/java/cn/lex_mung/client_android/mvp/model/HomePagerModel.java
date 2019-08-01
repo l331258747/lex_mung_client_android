@@ -53,12 +53,12 @@ public class HomePagerModel extends BaseModel implements HomePagerContract.Model
 //                .getBanner();
 //    }
 
-//    @Override
-//    public Observable<BaseResponse<List<SolutionTypeEntity>>> getSolutionType(RequestBody body) {
-//        return mRepositoryManager
-//                .obtainRetrofitService(CommonService.class)
-//                .getSolutionType(body);
-//    }
+    @Override
+    public Observable<BaseResponse<List<SolutionTypeEntity>>> getSolutionType(RequestBody body) {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .getSolutionType(body);
+    }
 
 //    @Override
 //    public Observable<BaseResponse<RequirementTypeV3Entity>> getHomepageRequirementType() {
