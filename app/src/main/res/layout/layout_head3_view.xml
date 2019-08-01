@@ -9,7 +9,6 @@
         android:id="@+id/fl_head1"
         android:layout_width="@dimen/qb_px_35"
         android:layout_height="@dimen/qb_px_35"
-        android:layout_marginRight="-4dp"
         android:background="@drawable/round_100_ffffff_all">
 
         <ImageView
@@ -26,7 +25,6 @@
         android:id="@+id/fl_head2"
         android:layout_width="@dimen/qb_px_35"
         android:layout_height="@dimen/qb_px_35"
-        android:layout_marginRight="-4dp"
         android:background="@drawable/round_100_ffffff_all">
 
         <ImageView

@@ -45,24 +45,18 @@ public class CommonFreeTextEntity {
     private List<HeadEntity> lawyerMemberImages;
 
     public List<HeadEntity> getLawyerMemberImages() {
-        lawyerMemberImages = new ArrayList<>();
-        //TODO 假数据
-        HeadEntity entity = new HeadEntity();
-        entity.setIconImage("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1564582996567&di=5b6b42b5aa8d7ff1462d0c66ae0f9073&imgtype=0&src=http%3A%2F%2Fimg3.duitang.com%2Fuploads%2Fitem%2F201505%2F04%2F20150504183302_RarBi.jpeg");
-        lawyerMemberImages.add(entity);
-        lawyerMemberImages.add(entity);
-        lawyerMemberImages.add(entity);
-
         return lawyerMemberImages;
     }
 
     public List<String> getLawyerMemberImagesStr(){
-        //TODO 假数据
         List<String> lists = new ArrayList<>();
-        String str = "http://b-ssl.duitang.com/uploads/item/201805/13/20180513224039_tgfwu.png";
-        lists.add(str);
-        lists.add(str);
-        lists.add(str);
+        if(lawyerMemberImages == null || lawyerMemberImages.size() == 0){
+            return lists;
+        }
+        for (int i=0;i<lawyerMemberImages.size();i++){
+            String str = lawyerMemberImages.get(i).getIconImage();
+            lists.add(str);
+        }
         return lists;
     }
 
@@ -225,13 +219,20 @@ public class CommonFreeTextEntity {
 
     public static class HeadEntity{
         String iconImage;
+        int memberId;
+        String memberName;
+
+        public int getMemberId() {
+            return memberId;
+        }
+
+        public String getMemberName() {
+            return memberName;
+        }
 
         public String getIconImage() {
             return iconImage;
         }
 
-        public void setIconImage(String iconImage) {
-            this.iconImage = iconImage;
-        }
     }
 }

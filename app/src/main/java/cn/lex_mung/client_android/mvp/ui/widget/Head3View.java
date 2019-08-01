@@ -19,6 +19,7 @@ import java.util.List;
 
 import cn.lex_mung.client_android.R;
 import me.zl.mvp.http.imageloader.ImageLoader;
+import me.zl.mvp.utils.AppUtils;
 
 public class Head3View extends LinearLayout {
 
@@ -65,6 +66,7 @@ public class Head3View extends LinearLayout {
             fl_head2.setVisibility(VISIBLE);
             setImg(mImageLoader,lists.get(0),iv_head1);
             setImg(mImageLoader,lists.get(1),iv_head2);
+            setMargin(fl_head1);
         } else {
             fl_head1.setVisibility(VISIBLE);
             fl_head2.setVisibility(VISIBLE);
@@ -72,7 +74,15 @@ public class Head3View extends LinearLayout {
             setImg(mImageLoader,lists.get(0),iv_head1);
             setImg(mImageLoader,lists.get(1),iv_head2);
             setImg(mImageLoader,lists.get(2),iv_head3);
+            setMargin(fl_head1);
+            setMargin(fl_head2);
         }
+    }
+
+    public void setMargin(RelativeLayout fl_head){
+        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) fl_head.getLayoutParams();
+        lp.rightMargin = AppUtils.dip2px(context,-4);
+        fl_head.setLayoutParams(lp);
     }
 
     public void setImg(ImageLoader mImageLoader, String url, ImageView iv) {
