@@ -594,7 +594,7 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
                             }
                         }
                     });
-        }else{//TODO 热门需求
+        }else{// 热门需求
             mModel.optimalRequireList(orderAmount,productId)
                     .subscribeOn(Schedulers.io())
                     .retryWhen(new RetryWithDelay(0, 0))

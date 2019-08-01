@@ -91,7 +91,6 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
         return allBalance;
     }
 
-    //TODO 问号 获取
     public double getRealBalance() {
         return realBalance;
     }
