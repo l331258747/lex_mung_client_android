@@ -70,7 +70,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
     private boolean isJump;
 
     private int buryingPointId;//快速电话咨询，用来判断从哪里进入的(正常，解决方案)
-    UserInfoDetailsEntity userInfoDetailsEntity;
+    AndroidToJs androidToJs;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -109,6 +109,11 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
         }
         mPresenter.onResume();
         webView.onWebResume();
+
+        if(androidToJs.isGoLogin && webView!=null && !TextUtils.isEmpty(url)){
+            webView.loadUrl(url);
+        }
+        androidToJs.isGoLogin = false;
     }
 
     @Override
@@ -151,7 +156,6 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             isJump = bundleIntent.getBoolean(BundleTags.STATE,true);
             buryingPointId = bundleIntent.getInt(BundleTags.BURYING_POINT, -1);
         }
-        userInfoDetailsEntity = new Gson().fromJson(DataHelper.getStringSF(mActivity, DataHelperTags.USER_INFO_DETAIL), UserInfoDetailsEntity.class);
 
         LogUtil.e("url:" + url);
 
@@ -190,7 +194,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             startActivity(dialIntent2);
         }));
 
-        webView.addJavascriptInterface(new AndroidToJs(), "JsBridgeApp");//h5 js调用 app.pay();
+        webView.addJavascriptInterface(androidToJs = new AndroidToJs(), "JsBridgeApp");//h5 js调用 app.pay();
         webView.synCookies(url);
         webView.loadUrl(url);
     }
@@ -351,6 +355,8 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 
         @JavascriptInterface
         public String getInfo() {
+            UserInfoDetailsEntity userInfoDetailsEntity = new Gson().fromJson(DataHelper.getStringSF(mActivity, DataHelperTags.USER_INFO_DETAIL), UserInfoDetailsEntity.class);
+
             String token = DataHelper.getStringSF(mActivity, DataHelperTags.TOKEN);
             String uuid;
             if (DataHelper.contains(mActivity, DataHelperTags.UUID)) {//存在
@@ -403,6 +409,23 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             bundle.putInt(BundleTags.TYPE, 4);
             bundle.putString(BundleTags.ORDER_NO,entity.getOrderNo());
             launchActivity(new Intent(mActivity, OrderDetailsActivity.class), bundle);
+        }
+
+        @JavascriptInterface
+        public void goHome(){
+            runOnUiThread(() -> {
+                killMyself();
+                AppManager.getAppManager().killAllNotClass(MainActivity.class);
+            });
+        }
+
+        public boolean isGoLogin;
+        @JavascriptInterface
+        public void goLogin(){
+            isGoLogin = true;//登录后需要再调用getinfo
+            bundle.clear();
+            bundle.putInt(BundleTags.TYPE, 1);
+            launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
         }
     }
 }
