@@ -45,6 +45,7 @@ public class BundleTags {
     public static final String NUM  = "num";
     public static final String IS_SHOW  = "is_show";
     public static final String SOLUTION_TYPE_ID = "solution_type_id";
+    public static final String SOLUTION_TYPE_CHILD_ID = "solution_type_child_id";
     public static final String SOLUTION_TYPE_NAME = "solution_type_name";
     public static final String AMOUNT_ID = "amount_id";
     public static final String CONTENT = "content";

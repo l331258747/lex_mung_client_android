@@ -21,7 +21,7 @@ import okhttp3.RequestBody;
 public interface SolutionDetailContract {
     interface View extends IView {
         Activity getActivity();
-        void addTableLayout(android.view.View itemView, int i);
+        void initTableLayout(List<CommonMarkEntity> marks);
         void hideTableLayout();
         void hideLawyerLayout();
         void hideLawyerAllView();

@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputFilter;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -154,11 +155,24 @@ public class LawyerListActivity extends BaseActivity<LawyerListPresenter> implem
             mPresenter.setOrgLevId(bundleIntent.getInt(BundleTags.LEVEL));
         }
 
+        //筛选律师服务
         if (bundleIntent != null
                 && bundleIntent.containsKey(BundleTags.ID)) {
             requireTypeId = bundleIntent.getInt(BundleTags.ID, -1);
         }
         mPresenter.setRequireTypeId(requireTypeId);
+
+        //筛选擅长领域
+        if(bundleIntent.getInt(BundleTags.SOLUTION_TYPE_ID, -1) > 0){
+            mPresenter.setFieldId(bundleIntent.getInt(BundleTags.SOLUTION_TYPE_ID, -1));
+            setScreenColor(AppUtils.getColor(mActivity, R.color.c_06a66a));
+        }
+        if(!TextUtils.isEmpty(bundleIntent.getString(BundleTags.SOLUTION_TYPE_NAME))){
+            tvField.setText(bundleIntent.getString(BundleTags.SOLUTION_TYPE_NAME));
+        }
+        if(bundleIntent.getInt(BundleTags.SOLUTION_TYPE_CHILD_ID, -1) > 0){
+            mPresenter.setSolutionMarkId(bundleIntent.getInt(BundleTags.SOLUTION_TYPE_CHILD_ID, -1));
+        }
 
         mPresenter.onCreate(smartRefreshLayout);
         etSearch.setFilters(new InputFilter[]{CharacterHandler.emojiFilter});
@@ -194,6 +208,7 @@ public class LawyerListActivity extends BaseActivity<LawyerListPresenter> implem
             position2 = 0;
             position22 = -1;
             mPresenter.setFieldId(0);
+            mPresenter.setSolutionMarkId(0);
             tvField.setText(R.string.text_all_field);
             return;
         }
@@ -201,6 +216,7 @@ public class LawyerListActivity extends BaseActivity<LawyerListPresenter> implem
         position2 = 0;
         position22 = -1;
         mPresenter.setFieldId(id);
+        mPresenter.setSolutionMarkId(0);
         tvField.setText(name);
     }
 
@@ -356,6 +372,7 @@ public class LawyerListActivity extends BaseActivity<LawyerListPresenter> implem
                 position22 = -1;
 
                 mPresenter.setFieldId(0);
+                mPresenter.setSolutionMarkId(0);
                 tvField.setText(R.string.text_all_field);
 
                 mPresenter.setPageNum(1);
@@ -387,6 +404,7 @@ public class LawyerListActivity extends BaseActivity<LawyerListPresenter> implem
 
             mPresenter.setFieldId(entity.getBusinessTypeId());
             tvField.setText(entity.getBusinessTypeName());
+            mPresenter.setSolutionMarkId(0);
 
             setScreenColor(AppUtils.getColor(mActivity, R.color.c_06a66a));
 

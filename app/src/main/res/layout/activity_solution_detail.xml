@@ -51,12 +51,13 @@
                     android:layout_height="@dimen/qb_px_200"
                     android:background="@drawable/round_40_1ec88b_bottom" />
 
-                <ImageView
+                <cn.lex_mung.client_android.mvp.ui.widget.RoundImageView
                     android:id="@+id/iv_banner"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/qb_px_260"
-                    android:layout_marginTop="@dimen/qb_px_40"
-                    android:src="@drawable/ic_chat_map_icon"
+                    android:layout_height="@dimen/qb_px_320"
+                    android:layout_marginTop="@dimen/qb_px_20"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_solution_detail_banner"
                     app:layout_constraintEnd_toEndOf="@+id/guideline_right"
                     app:layout_constraintStart_toStartOf="@+id/guideline_left"
                     app:layout_constraintTop_toTopOf="@+id/view_banner" />

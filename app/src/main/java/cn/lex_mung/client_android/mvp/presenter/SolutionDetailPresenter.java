@@ -99,19 +99,7 @@ public class SolutionDetailPresenter extends BasePresenter<SolutionDetailContrac
                             }
 
                             if (marks != null && marks.size() > 0) {
-                                for (int i = 0; i < marks.size(); i++) {
-                                    int pos = i;
-                                    View itemView = LayoutInflater.from(mRootView.getActivity()).inflate(R.layout.item_solution_detail_table, null, false);
-                                    TextView tvTitle = itemView.findViewById(R.id.item_tv_title);
-                                    tvTitle.setText(marks.get(i).getName());
-                                    itemView.setOnClickListener(v -> {
-                                        if (isFastClick()) return;
-                                        CommonMarkEntity bean = marks.get(pos);
-                                        //TODO 进入律师搜索页面按3级标签进行搜索。
-                                        mRootView.showMessage(bean.getName());
-                                    });
-                                    mRootView.addTableLayout(itemView, i);
-                                }
+                                mRootView.initTableLayout(marks);
                             } else {
                                 mRootView.hideTableLayout();
                             }

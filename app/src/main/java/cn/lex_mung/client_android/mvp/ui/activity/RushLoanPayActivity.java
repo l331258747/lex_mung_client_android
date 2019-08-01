@@ -55,8 +55,6 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
 
     @BindView(R.id.tv_order_money)
     TextView tvOrderMoney;
-    @BindView(R.id.tv_pay_price)
-    TextView tvPayPrice;
     @BindView(R.id.tv_commodity)
     TextView tvCommodity;
     @BindView(R.id.web_view)
@@ -128,7 +126,6 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
         couponPrice = 0;
         couponId = 0;
 
-        tvPayPrice.setText("¥ " + StringUtils.getStringNum(orderPrice));//小计
         setPriceLayout(couponPrice, orderPrice);//实付价格，优惠价格
         tvDiscountWay.setText("");//优惠券为空
         tvDiscountMoney.setVisibility(View.GONE);//以优惠**元 隐藏

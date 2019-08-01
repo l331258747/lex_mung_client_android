@@ -10,6 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
@@ -27,6 +28,7 @@ import cn.lex_mung.client_android.di.module.SolutionDetailModule;
 import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
 import cn.lex_mung.client_android.mvp.model.entity.SolutionListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.free.CommonFreeTextEntity;
+import cn.lex_mung.client_android.mvp.model.entity.home.CommonMarkEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.CommonPageContractsEntity;
 import cn.lex_mung.client_android.mvp.ui.adapter.HomeFreeAdapter;
 import cn.lex_mung.client_android.mvp.ui.adapter.HomeLawyerAdapter;
@@ -286,8 +288,24 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
         return this;
     }
 
-    public void addTableLayout(View itemView, int i) {
-        sflTable.addView(itemView, i);
+    @Override
+    public void initTableLayout(List<CommonMarkEntity> marks) {
+        for (int i = 0; i < marks.size(); i++) {
+            int pos = i;
+            View itemView = LayoutInflater.from(mActivity).inflate(R.layout.item_solution_detail_table, null, false);
+            TextView tvTitle = itemView.findViewById(R.id.item_tv_title);
+            tvTitle.setText(marks.get(i).getName());
+            itemView.setOnClickListener(v -> {
+                if (isFastClick()) return;
+                CommonMarkEntity bean = marks.get(pos);
+                bundle.clear();
+                bundle.putInt(BundleTags.SOLUTION_TYPE_ID,solutionId);
+                bundle.putInt(BundleTags.SOLUTION_TYPE_CHILD_ID,bean.getId());
+                bundle.putString(BundleTags.SOLUTION_TYPE_NAME,solutionName);
+                launchActivity(new Intent(mActivity, LawyerListActivity.class),bundle);
+            });
+            sflTable.addView(itemView, i);
+        }
     }
 
     public void hideTableLayout() {
@@ -324,9 +342,11 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_lawyer_all:
-                //TODO 传id到律师页
                 if (isFastClick()) return;
-                launchActivity(new Intent(mActivity, LawyerListActivity.class));
+                bundle.clear();
+                bundle.putInt(BundleTags.SOLUTION_TYPE_ID,solutionId);
+                bundle.putString(BundleTags.SOLUTION_TYPE_NAME,solutionName);
+                launchActivity(new Intent(mActivity, LawyerListActivity.class),bundle);
                 break;
         }
     }

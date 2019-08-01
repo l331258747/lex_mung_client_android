@@ -76,6 +76,7 @@ public class LawyerListPresenter extends BasePresenter<LawyerListContract.Model,
 
     private int sort;
     private int fieldId;
+    private int solutionMarkId;//fieldId 三级标签id
     private int regionId1;
     private int regionId2;
     private String lawyerName;
@@ -91,7 +92,6 @@ public class LawyerListPresenter extends BasePresenter<LawyerListContract.Model,
     private SmartRefreshLayout smartRefreshLayout;
 
     int requireTypeId;
-    String requireTypeName;
 
 
     @Inject
@@ -126,6 +126,10 @@ public class LawyerListPresenter extends BasePresenter<LawyerListContract.Model,
 
     public int getTotalNum() {
         return totalNum;
+    }
+
+    public void setSolutionMarkId(int solutionMarkId) {
+        this.solutionMarkId = solutionMarkId;
     }
 
     public void setPageNum(int pageNum) {
@@ -227,6 +231,9 @@ public class LawyerListPresenter extends BasePresenter<LawyerListContract.Model,
         map.put("sort", sort);
         map.put("regionId", regionId2);
         map.put("businessTypeId", fieldId);
+        if(solutionMarkId > 0){
+            map.put("solutionMarkId", solutionMarkId);
+        }
         if (!TextUtils.isEmpty(lawyerName)) {
             map.put("lawyerName", lawyerName);
         }
