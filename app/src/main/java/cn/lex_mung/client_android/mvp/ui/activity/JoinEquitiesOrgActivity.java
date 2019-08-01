@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -90,12 +91,15 @@ public class JoinEquitiesOrgActivity extends BaseActivity<JoinEquitiesOrgPresent
 
     @Override
     public void setEquitiesBg(String image) {
-        mImageLoader.loadImage(mActivity
-                , ImageConfigImpl
-                        .builder()
-                        .url(image)
-                        .imageView(ivEquitiesBg)
-                        .build());
+        if(!TextUtils.isEmpty(image)){
+            mImageLoader.loadImage(mActivity
+                    , ImageConfigImpl
+                            .builder()
+                            .url(image)
+                            .isCenterCrop(false)
+                            .imageView(ivEquitiesBg)
+                            .build());
+        }
     }
 
     @Override

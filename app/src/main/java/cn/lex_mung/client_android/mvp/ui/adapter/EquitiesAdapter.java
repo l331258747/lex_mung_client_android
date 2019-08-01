@@ -23,11 +23,11 @@ public class EquitiesAdapter extends BaseQuickAdapter<EquitiesListEntity, BaseVi
 
     @Override
     protected void convert(BaseViewHolder helper, EquitiesListEntity item) {
-        if (!TextUtils.isEmpty(item.getSmallImage())) {
+        if (!TextUtils.isEmpty(item.getImage())) {
             mImageLoader.loadImage(mContext
                     , ImageConfigImpl
                             .builder()
-                            .url(item.getSmallImage())
+                            .url(item.getImage())
                             .imageView(helper.getView(R.id.item_iv_icon))
                             .isCenterCrop(false)
                             .build());

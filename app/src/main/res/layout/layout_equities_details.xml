@@ -88,6 +88,7 @@
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/qb_px_35"
             android:src="@color/c_717171"
+            android:scaleType="matrix"
             app:layout_constraintDimensionRatio="h,2:1"
             app:layout_constraintEnd_toEndOf="@id/guideline3"
             app:layout_constraintStart_toStartOf="@id/guideline2"
