@@ -125,4 +125,11 @@ public class RushLoanPayModel extends BaseModel implements RushLoanPayContract.M
                 .obtainRetrofitService(CommonService.class)
                 .amountBalance(body);
     }
+
+    @Override
+    public Observable<BaseResponse<Integer>> couponCount(RequestBody body) {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .couponCount(body);
+    }
 }

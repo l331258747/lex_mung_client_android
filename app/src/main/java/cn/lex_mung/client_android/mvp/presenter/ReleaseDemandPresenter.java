@@ -215,6 +215,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
             organizationLevId = 0;
             couponId = 0;
             getReleaseDemandOrgMoney(1);
+            getCouponCount(entity.getMinAmount(),requireTypeId,lawsHomePagerBaseEntityId);
         });
         mRootView.initRecyclerView(adapter);
     }
@@ -618,6 +619,32 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                     public void onNext(BaseResponse<AmountBalanceEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             mRootView.setAllBalance(baseResponse.getData());
+                        }
+                    }
+                });
+    }
+
+    public void getCouponCount(double orderAmount,int productId,int lmemberId){
+        Map<String, Object> map = new HashMap<>();
+        map.put("productId", productId);
+        map.put("orderAmount", orderAmount);
+        map.put("lmemberId", lmemberId);
+        mModel.couponCount(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> {
+
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<Integer>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<Integer> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            if(baseResponse.getData() > 0)
+                                mRootView.setCouponCountLayout(baseResponse.getData());
                         }
                     }
                 });

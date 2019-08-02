@@ -11,6 +11,7 @@ import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.OrderStatusEntity;
 import cn.lex_mung.client_android.mvp.model.entity.OrgAmountEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayEntity;
+import cn.lex_mung.client_android.mvp.model.entity.mine.RechargeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.QuickPayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RequirementCreateEntity;
@@ -18,6 +19,7 @@ import io.reactivex.Observable;
 import me.zl.mvp.mvp.IView;
 import me.zl.mvp.mvp.IModel;
 import okhttp3.RequestBody;
+import retrofit2.http.Body;
 
 
 public interface RushLoanPayContract {
@@ -37,6 +39,8 @@ public interface RushLoanPayContract {
 
         double getTypeBalance(int payType,int payTypeGroup);
 
+        void setCouponCountLayout(int couponCount);
+
     }
 
     interface Model extends IModel {
@@ -53,5 +57,7 @@ public interface RushLoanPayContract {
 
 
         Observable<BaseResponse<AmountBalanceEntity>> amountBalance(RequestBody body);
+
+        Observable<BaseResponse<Integer>> couponCount(RequestBody body);
     }
 }

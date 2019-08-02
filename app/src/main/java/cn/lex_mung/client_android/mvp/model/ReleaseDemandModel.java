@@ -101,6 +101,13 @@ public class ReleaseDemandModel extends BaseModel implements ReleaseDemandContra
         }
     }
 
+    @Override
+    public Observable<BaseResponse<Integer>> couponCount(RequestBody body) {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .couponCount(body);
+    }
+
 //    @Override
 //    public Observable<BaseResponse<List<OrgAmountEntity>>> clientOrgAmount() {
 //        return mRepositoryManager

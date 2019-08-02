@@ -86,6 +86,8 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
     WebView webView;
     @BindView(R.id.bt_pay)
     Button btPay;
+    @BindView(R.id.tv_coupon_count)
+    TextView tvCouponCount;
 
     private EasyDialog easyDialog;
     private DefaultDialog defaultDialog;
@@ -202,6 +204,12 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
                         , etProblemDescription.getText().toString());
                 break;
         }
+    }
+
+    @Override
+    public void setCouponCountLayout(int couponCount) {
+        tvCouponCount.setVisibility(View.VISIBLE);
+        tvCouponCount.setText(couponCount + "张优惠券可用");
     }
 
     @Override

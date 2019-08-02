@@ -395,6 +395,21 @@
                 app:layout_constraintTop_toTopOf="@id/tv_discount_way" />
 
             <!-- 优惠方式 end-->
+
+            <TextView
+                android:id="@+id/tv_coupon_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_coupon_type"
+                android:layout_alignParentRight="true"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/qb_px_20"
+                android:textColor="@color/c_F02457"
+                tools:visibility="visible"
+                app:layout_constraintTop_toBottomOf="@id/view_discount_way"
+                app:layout_constraintEnd_toEndOf="@id/guideline3"
+                tools:text="3张优惠券可用"/>
+
             <TextView
                 android:id="@+id/tv_fast_consult_tip_1"
                 android:layout_width="0dp"
@@ -406,7 +421,7 @@
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="@id/guideline3"
                 app:layout_constraintStart_toStartOf="@id/guideline2"
-                app:layout_constraintTop_toBottomOf="@id/view_discount_way" />
+                app:layout_constraintTop_toBottomOf="@id/tv_coupon_count" />
 
             <TextView
                 android:id="@+id/tv_fast_consult_tip"

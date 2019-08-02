@@ -65,6 +65,8 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
     TextView tvDiscountWay;
     @BindView(R.id.rl_coupon_type)
     RelativeLayout rlCouponType;
+    @BindView(R.id.tv_coupon_count)
+    TextView tvCouponCount;
 
     @BindView(R.id.bt_pay)
     Button btPay;
@@ -119,6 +121,7 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
         mPresenter.getAllBalance();
 
         mPresenter.getCoupon(orderPrice,id);
+        mPresenter.getCouponCount(orderPrice,id);
     }
 
     //默认布局和数据
@@ -253,6 +256,12 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
 
     public double getTypeBalance(int payType, int payTypeGroup) {
         return payTypeView.getTypeBalance(payType, payTypeGroup);
+    }
+
+    @Override
+    public void setCouponCountLayout(int couponCount) {
+        tvCouponCount.setVisibility(View.VISIBLE);
+        tvCouponCount.setText(couponCount + "张优惠券可用");
     }
 
     @Override

@@ -55,6 +55,8 @@ public interface ReleaseDemandContract {
 
         double getTypeBalance(int payType,int payTypeGroup);
 
+        void setCouponCountLayout(int couponCount);
+
     }
 
     interface Model extends IModel {
@@ -69,5 +71,7 @@ public interface ReleaseDemandContract {
         Observable<BaseResponse<AgreementEntity>> tariffExplanationUrl();
 
         Observable<BaseResponse<AmountBalanceEntity>> amountBalance(int organizationLevId, RequestBody body);
+
+        Observable<BaseResponse<Integer>> couponCount(RequestBody body);
     }
 }

@@ -672,4 +672,33 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
 
     //快速咨询-end
 
+    public void getCouponCount(double orderAmount,int productId){
+        Map<String, Object> map = new HashMap<>();
+        if(type == 1){
+            map.put("productId", 9999);
+        }else{
+            map.put("productId", productId);
+        }
+        map.put("orderAmount", orderAmount);
+        mModel.couponCount(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> {
+
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<Integer>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<Integer> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            if(baseResponse.getData() > 0)
+                                mRootView.setCouponCountLayout(baseResponse.getData());
+                        }
+                    }
+                });
+    }
+
 }

@@ -841,4 +841,10 @@ public interface CommonService {
     @GET("common/page/contracts")
     Observable<BaseResponse<List<CommonPageContractsEntity>>> commonPageContracts();
 
+    ///client/coupon/count
+    //POST
+    //用户可用优惠个数
+    @POST("client/coupon/count")
+    Observable<BaseResponse<Integer>> couponCount(@Body RequestBody body);
+
 }
