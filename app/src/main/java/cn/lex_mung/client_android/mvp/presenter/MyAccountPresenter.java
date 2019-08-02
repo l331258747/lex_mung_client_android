@@ -231,6 +231,7 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
 
         myAccountPayAdapter = new MyAccountPayAdapter2(priceList);
         myAccountPayAdapter.setOnItemClickListener((adapter, view, position) -> {
+            if (isFastClick()) return;
             RechargeEntity entity = myAccountPayAdapter.getItem(position);
             if (entity == null) return;
 //            myAccountPayAdapterPosition = position;

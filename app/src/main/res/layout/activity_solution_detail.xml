@@ -54,18 +54,20 @@
                 <cn.lex_mung.client_android.mvp.ui.widget.RoundImageView
                     android:id="@+id/iv_banner"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/qb_px_320"
+                    android:layout_height="@dimen/qb_px_280"
                     android:layout_marginTop="@dimen/qb_px_20"
+                    android:layout_marginLeft="@dimen/qb_px_20"
+                    android:layout_marginRight="@dimen/qb_px_20"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_solution_detail_banner"
-                    app:layout_constraintEnd_toEndOf="@+id/guideline_right"
-                    app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/view_banner" />
 
                 <View
                     android:id="@+id/view_banner_bottom"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/qb_px_40"
+                    android:layout_height="@dimen/qb_px_20"
                     app:layout_constraintTop_toBottomOf="@+id/iv_banner" />
 
                 <!-- 标签-->
