@@ -52,6 +52,7 @@ public class X5WebCommonActivity extends BaseActivity<X5WebCommonPresenter> impl
 
     private boolean isShare;
     private String url;
+    private String shareUrl;
     private String title;
     private String des;
     private String image;
@@ -122,6 +123,7 @@ public class X5WebCommonActivity extends BaseActivity<X5WebCommonPresenter> impl
         if (bundleIntent != null
                 && bundleIntent.containsKey(BundleTags.URL)) {
             url = bundleIntent.getString(BundleTags.URL);
+            shareUrl = bundleIntent.getString(BundleTags.SHARE_URL);
             title = bundleIntent.getString(BundleTags.TITLE);
             des = bundleIntent.getString(BundleTags.DES);
             image = bundleIntent.getString(BundleTags.IMAGE);
@@ -147,7 +149,7 @@ public class X5WebCommonActivity extends BaseActivity<X5WebCommonPresenter> impl
                     && !TextUtils.isEmpty(title)) {
                 ShareUtils.shareUrl(mActivity
                         , viewDialog
-                        , url
+                        , shareUrl
                         , title
                         , des
                         , image);

@@ -68,6 +68,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
     private String des;
     private String image;
     private boolean isJump;
+    private String shareUrl;
 
     private int buryingPointId;//快速电话咨询，用来判断从哪里进入的(正常，解决方案)
     AndroidToJs androidToJs;
@@ -152,6 +153,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             title = bundleIntent.getString(BundleTags.TITLE);
             des = bundleIntent.getString(BundleTags.DES);
             image = bundleIntent.getString(BundleTags.IMAGE);
+            shareUrl = bundleIntent.getString(BundleTags.SHARE_URL);
             isShare = bundleIntent.getBoolean(BundleTags.IS_SHARE, true);
             isJump = bundleIntent.getBoolean(BundleTags.STATE,true);
             buryingPointId = bundleIntent.getInt(BundleTags.BURYING_POINT, -1);
@@ -208,7 +210,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
                 && !TextUtils.isEmpty(title)) {
             ShareUtils.shareUrl(mActivity
                     , viewDialog
-                    , url
+                    , shareUrl
                     , title
                     , des
                     , image);

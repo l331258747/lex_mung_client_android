@@ -831,10 +831,10 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                     bundle.putString(BundleTags.TITLE, entity.getTitle());
                     if(entity.getShowShare() == 1){
                         bundle.putBoolean(BundleTags.IS_SHARE, true);
-                        bundle.putString(BundleTags.URL, entity.getShareUrl());
+                        bundle.putString(BundleTags.SHARE_URL, entity.getShareUrl());
                         bundle.putString(BundleTags.TITLE, entity.getShareTitle());
                         bundle.putString(BundleTags.DES, entity.getShareDesc());
-                        bundle.putString(BundleTags.IMAGE, entity.getShareUrl());
+                        bundle.putString(BundleTags.IMAGE, entity.getShareImg());
                     }else{
                         bundle.putBoolean(BundleTags.IS_SHARE, false);
                     }
