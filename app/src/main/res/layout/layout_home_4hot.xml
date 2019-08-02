@@ -26,7 +26,7 @@
         android:layout_marginLeft="@dimen/qb_px_10"
         tools:text="5分钟响应、价格透明、服务监督、专属律师"
         android:textColor="@color/c_bebebe"
-        android:textSize="11sp"
+        android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_title"
         app:layout_constraintStart_toEndOf="@+id/tv_title"
         app:layout_constraintTop_toTopOf="@+id/tv_title" />

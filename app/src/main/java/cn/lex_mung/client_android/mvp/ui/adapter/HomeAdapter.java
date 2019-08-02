@@ -304,6 +304,7 @@ public class HomeAdapter extends BaseQuickAdapter<HomeEntity, BaseViewHolder> {
                     , ImageConfigImpl
                             .builder()
                             .url(item.getIcon())
+                            .isCenterCrop(false)
                             .imageView(tvCardTag)
                             .build());
         }
@@ -342,6 +343,7 @@ public class HomeAdapter extends BaseQuickAdapter<HomeEntity, BaseViewHolder> {
                     , ImageConfigImpl
                             .builder()
                             .url(item.getIcon())
+                            .isCenterCrop(false)
                             .imageView(view.getIv_img())
                             .build());
         }

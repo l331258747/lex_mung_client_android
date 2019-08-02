@@ -157,6 +157,9 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             buryingPointId = bundleIntent.getInt(BundleTags.BURYING_POINT, -1);
         }
 
+        if(TextUtils.isEmpty(title))
+            title = "绿豆圈";
+
         LogUtil.e("url:" + url);
 
         if (isShare) {

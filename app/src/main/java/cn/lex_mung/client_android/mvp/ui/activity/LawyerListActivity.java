@@ -163,14 +163,14 @@ public class LawyerListActivity extends BaseActivity<LawyerListPresenter> implem
         mPresenter.setRequireTypeId(requireTypeId);
 
         //筛选擅长领域
-        if(bundleIntent.getInt(BundleTags.SOLUTION_TYPE_ID, -1) > 0){
+        if(bundleIntent != null && bundleIntent.getInt(BundleTags.SOLUTION_TYPE_ID, -1) > 0){
             mPresenter.setFieldId(bundleIntent.getInt(BundleTags.SOLUTION_TYPE_ID, -1));
             setScreenColor(AppUtils.getColor(mActivity, R.color.c_06a66a));
         }
-        if(!TextUtils.isEmpty(bundleIntent.getString(BundleTags.SOLUTION_TYPE_NAME))){
+        if(bundleIntent != null && !TextUtils.isEmpty(bundleIntent.getString(BundleTags.SOLUTION_TYPE_NAME))){
             tvField.setText(bundleIntent.getString(BundleTags.SOLUTION_TYPE_NAME));
         }
-        if(bundleIntent.getInt(BundleTags.SOLUTION_TYPE_CHILD_ID, -1) > 0){
+        if(bundleIntent != null && bundleIntent.getInt(BundleTags.SOLUTION_TYPE_CHILD_ID, -1) > 0){
             mPresenter.setSolutionMarkId(bundleIntent.getInt(BundleTags.SOLUTION_TYPE_CHILD_ID, -1));
         }
 

@@ -7,7 +7,7 @@
     android:layout_marginLeft="@dimen/qb_px_40"
     android:layout_marginRight="@dimen/qb_px_40"
     android:paddingTop="@dimen/qb_px_20"
-    android:paddingBottom="@dimen/qb_px_20">
+    android:paddingBottom="@dimen/qb_px_40">
 
     <TextView
         android:id="@+id/tv_title"
@@ -103,7 +103,7 @@
         android:id="@+id/tv_card2_tag"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/qb_px_30"
-        android:scaleType="fitXY"
+        android:scaleType="fitCenter"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/view_card2"
         app:layout_constraintTop_toTopOf="@+id/view_card2"
@@ -121,7 +121,7 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/view_card2"
         app:layout_constraintTop_toBottomOf="@+id/tv_card2_tag"
-        app:layout_goneMarginTop="@dimen/qb_px_30"
+        app:layout_goneMarginTop="@dimen/qb_px_25"
         tools:text="LEX法务卡" />
 
     <TextView
@@ -164,7 +164,7 @@
         android:id="@+id/tv_card3_tag"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/qb_px_30"
-        android:scaleType="fitXY"
+        android:scaleType="fitCenter"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/view_card3"
         app:layout_constraintTop_toTopOf="@+id/view_card3"
@@ -182,7 +182,7 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/view_card3"
         app:layout_constraintTop_toBottomOf="@+id/tv_card3_tag"
-        app:layout_goneMarginTop="@dimen/qb_px_30"
+        app:layout_goneMarginTop="@dimen/qb_px_25"
         tools:text="LEX法务卡" />
 
     <TextView

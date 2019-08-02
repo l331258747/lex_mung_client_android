@@ -11,6 +11,7 @@
         android:id="@+id/iv_img"
         android:layout_width="@dimen/qb_px_45"
         android:layout_height="@dimen/qb_px_45"
+        android:scaleType="fitXY"
         tools:src="@drawable/ic_home_quick" />
 
     <LinearLayout
