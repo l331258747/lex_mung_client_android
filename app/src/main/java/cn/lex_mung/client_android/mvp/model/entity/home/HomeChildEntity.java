@@ -35,7 +35,31 @@ public class HomeChildEntity {
     private int status;
     private String createTime;
     private String updateTime;
+    private int showShare;
+    private String shareUrl;
+    private String shareTitle;
+    private String shareDesc;
+    private String shareImg;
 
+    public int getShowShare() {
+        return showShare;
+    }
+
+    public String getShareUrl() {
+        return shareUrl;
+    }
+
+    public String getShareTitle() {
+        return shareTitle;
+    }
+
+    public String getShareDesc() {
+        return shareDesc;
+    }
+
+    public String getShareImg() {
+        return shareImg;
+    }
 
     public String getIcon() {
         return icon;

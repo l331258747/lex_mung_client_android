@@ -794,7 +794,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                     //BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","quick_consultation_click"); //快速咨询 quick.html
                     //BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","hot_service_1_click"); //热门1
                     //BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","hot_service_2_click"); //热门2
-                    //BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","hot_service_more_click"); //热门更多
+                    //BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","hot_service_more_click"); //热门更多 contractList.html
                     //BuryingPointHelp.getInstance().onEvent(mActivity, "solution_detail","solution_type_click"); //解决方案tablayout
 
                     String linkValue = entity.getJumpurl();
@@ -808,6 +808,8 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                         BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "legal_card_click"); //法务卡 member
                     } else if (linkValue.indexOf("quick.html") > -1) {
                         BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "quick_consultation_click"); //快速咨询 quick.html
+                    } else if (linkValue.indexOf("contractList.html") > -1) {
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","hot_service_more_click"); //热门更多 contractList.html
                     }
 
                     if (linkValue.indexOf("orgId=") != -1) {
@@ -827,7 +829,15 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                     bundle.clear();
                     bundle.putString(BundleTags.URL, entity.getJumpurl());
                     bundle.putString(BundleTags.TITLE, entity.getTitle());
-                    bundle.putBoolean(BundleTags.IS_SHARE, false);
+                    if(entity.getShowShare() == 1){
+                        bundle.putBoolean(BundleTags.IS_SHARE, true);
+                        bundle.putString(BundleTags.URL, entity.getShareUrl());
+                        bundle.putString(BundleTags.TITLE, entity.getShareTitle());
+                        bundle.putString(BundleTags.DES, entity.getShareDesc());
+                        bundle.putString(BundleTags.IMAGE, entity.getShareUrl());
+                    }else{
+                        bundle.putBoolean(BundleTags.IS_SHARE, false);
+                    }
                     if (linkValue.indexOf("couponId=") != -1) {//领取优惠券页面，不需要跳转
                         bundle.putBoolean(BundleTags.STATE, false);
                     }
