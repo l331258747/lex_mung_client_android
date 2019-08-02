@@ -15,10 +15,12 @@ public class OrderCouponAdapter extends BaseQuickAdapter<OrderCouponEntity, Base
 
     Context context;
     private int couponId = -1;
+    private int type;//1我的优惠券，0快速咨询，2热门需求
 
-    public OrderCouponAdapter(Context context) {
+    public OrderCouponAdapter(Context context, int type) {
         super(R.layout.item_order_coupon);
         this.context = context;
+        this.type = type;
     }
 
     public void setCouponId(int couponId) {
@@ -30,7 +32,9 @@ public class OrderCouponAdapter extends BaseQuickAdapter<OrderCouponEntity, Base
         helper.setText(R.id.tv_user_rule, item.getCouponName());//名字
         helper.setText(R.id.tv_type, item.getPreferentialContent());//内容
         helper.setText(R.id.tv_end_time, item.getTimeStr());//截止时间
-        helper.setText(R.id.tv_coupon_usable, item.getCouponStatusStr());//状态
+        if(type != 1){//我的优惠券不显示立即使用
+            helper.setText(R.id.tv_coupon_usable, item.getCouponStatusStr());//状态
+        }
 
         //券状态（1可使用2不可使用）
 

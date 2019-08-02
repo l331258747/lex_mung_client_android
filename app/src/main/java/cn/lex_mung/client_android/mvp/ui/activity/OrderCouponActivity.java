@@ -53,7 +53,7 @@ public class OrderCouponActivity extends BaseActivity<OrderCouponPresenter> impl
     TitleView titleView;
 
     int couponId;
-    int type;
+    int type;//1我的优惠券，0快速咨询，2热门需求
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {

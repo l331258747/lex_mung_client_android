@@ -81,7 +81,7 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
     }
 
     private void initAdapter() {
-        adapter = new OrderCouponAdapter(mRootView.getActivity());
+        adapter = new OrderCouponAdapter(mRootView.getActivity(),type);
         adapter.setCouponId(couponId);
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             if(mRootView.getType() == 1) return;
