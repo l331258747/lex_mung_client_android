@@ -82,7 +82,7 @@ public class PayStatusPresenter extends BasePresenter<PayStatusContract.Model, P
                                             break;
                                         case PayStatusTags.PAY_COUPON:
                                             mRootView.showSuccessLayout(mApplication.getString(R.string.text_pay_success),"查看账户余额");
-                                            mRootView.setContentLayout("充值赠送的优惠券已经放入您的卡包，您可以在我的-卡包中找到",onClickListener);
+                                            mRootView.setContentLayout("充值赠送的优惠券已经放入您的卡包，您可以在我的-优惠券中找到",onClickListener);
                                             break;
                                         case PayStatusTags.PAY_EXPERT:
                                             mRootView.showSuccessLayout(mApplication.getString(R.string.text_pay_success),"专家咨询");
