@@ -81,6 +81,7 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
     //    private int myAccountPayAdapterPosition;
 //    private List<RechargeEntity> priceList;
     private int rechargeId;
+    private boolean isCoupon;//是否有券，用来在支付成功页面显示提示
 
     @Inject
     public MyAccountPresenter(MyAccountContract.Model model, MyAccountContract.View rootView) {
@@ -201,6 +202,10 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
         this.rechargeId = rechargeId;
     }
 
+    public void setCoupon(boolean isCoupon) {
+        this.isCoupon = isCoupon;
+    }
+
     private void setPayMoney(double payMoney) {
         this.payMoney = payMoney;
         mRootView.setOrderMoney(StringUtils.getStringNum(payMoney));
@@ -258,6 +263,7 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
             setPayMoney(entity.getAmount());
             setRechargeId(entity.getId());
             setGiveLayout(entity.getGive(), entity.getGiveAmount());
+            setCoupon((entity.getActivity() == 1 && entity.getGiveCoupon() == 1));
 
             myAccountPayAdapter.setPos(position);
             myAccountPayAdapter.notifyDataSetChanged();
@@ -269,6 +275,7 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
 //        myAccountPayAdapterPosition = 0;
         setPayMoney(priceList.get(0).getAmount());
         setRechargeId(priceList.get(0).getId());
+        setCoupon((priceList.get(0).getActivity() == 1 && priceList.get(0).getGiveCoupon() == 1));
         setGiveLayout(priceList.get(0).getGive(), priceList.get(0).getGiveAmount());
     }
 
@@ -365,9 +372,9 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
                                 request.sign = baseResponse.getData().getSign();
                                 api.sendReq(request);
                                 if (entity != null) {
-                                    DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.PAY_1);
+                                    DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.PAY_EXPERT);
                                 } else {
-                                    DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.PAY);
+                                    DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, isCoupon?PayStatusTags.PAY_COUPON:PayStatusTags.PAY);
                                 }
                             } else if (payType == 2) {//支付宝
                                 Runnable payRunnable = () -> {
@@ -383,9 +390,9 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
                                 payThread.start();
                             } else {//余额
                                 if (entity != null) {
-                                    DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.PAY_1);
+                                    DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.PAY_EXPERT);
                                 } else {
-                                    DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.PAY);
+                                    DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, isCoupon?PayStatusTags.PAY_COUPON:PayStatusTags.PAY);
                                 }
                                 Bundle bundle = new Bundle();
                                 bundle.putString(BundleTags.ORDER_NO, DataHelper.getStringSF(mApplication, DataHelperTags.ORDER_NO));
@@ -408,9 +415,9 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
             switch (msg.what) {
                 case 1: {
                     if (entity != null) {
-                        DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.PAY_1);
+                        DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.PAY_EXPERT);
                     } else {
-                        DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.PAY);
+                        DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, isCoupon?PayStatusTags.PAY_COUPON:PayStatusTags.PAY);
                     }
                     PayResultEntity payResult = new PayResultEntity((Map<String, String>) msg.obj);
                     Bundle bundle = new Bundle();

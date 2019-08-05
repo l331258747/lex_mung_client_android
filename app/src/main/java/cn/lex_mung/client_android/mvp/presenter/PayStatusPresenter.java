@@ -79,9 +79,12 @@ public class PayStatusPresenter extends BasePresenter<PayStatusContract.Model, P
                                     switch (DataHelper.getIntergerSF(mApplication, DataHelperTags.PAY_TYPE)) {
                                         case PayStatusTags.PAY:
                                             mRootView.showSuccessLayout(mApplication.getString(R.string.text_pay_success),"查看账户余额");
+                                            break;
+                                        case PayStatusTags.PAY_COUPON:
+                                            mRootView.showSuccessLayout(mApplication.getString(R.string.text_pay_success),"查看账户余额");
                                             mRootView.setContentLayout("充值赠送的优惠券已经放入您的卡包，您可以在我的-卡包中找到",onClickListener);
                                             break;
-                                        case PayStatusTags.PAY_1:
+                                        case PayStatusTags.PAY_EXPERT:
                                             mRootView.showSuccessLayout(mApplication.getString(R.string.text_pay_success),"专家咨询");
                                             break;
                                         case PayStatusTags.RELEASE_DEMAND:
@@ -105,7 +108,8 @@ public class PayStatusPresenter extends BasePresenter<PayStatusContract.Model, P
                                 default:
                                     switch (DataHelper.getIntergerSF(mApplication, DataHelperTags.PAY_TYPE)) {
                                         case PayStatusTags.PAY:
-                                        case PayStatusTags.PAY_1:
+                                        case PayStatusTags.PAY_EXPERT:
+                                        case PayStatusTags.PAY_COUPON:
                                             mRootView.showFailLayout(mApplication.getString(R.string.text_pay_fail),"重新充值");
                                             break;
                                         case PayStatusTags.RELEASE_DEMAND:
