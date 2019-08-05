@@ -54,6 +54,11 @@ public class AccountWithdrawalPresenter extends BasePresenter<AccountWithdrawalC
     }
 
     public void withdrawal(String name, String account, String ua) {
+        if(balanceReal <=0){
+            mRootView.showMessage("你的账户没有余额，无法提现！");
+            return;
+        }
+
         if (TextUtils.isEmpty(name)) {
             mRootView.showMessage("请输入收款人姓名");
             return;

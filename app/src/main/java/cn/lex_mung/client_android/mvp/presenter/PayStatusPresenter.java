@@ -1,6 +1,7 @@
 package cn.lex_mung.client_android.mvp.presenter;
 
 import android.app.Application;
+import android.view.View;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -41,9 +42,15 @@ public class PayStatusPresenter extends BasePresenter<PayStatusContract.Model, P
     @Inject
     AppManager mAppManager;
 
+    View.OnClickListener onClickListener;
+
     @Inject
     public PayStatusPresenter(PayStatusContract.Model model, PayStatusContract.View rootView) {
         super(model, rootView);
+    }
+
+    public void setGoCouponListener(View.OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
     }
 
     public void checkOrderStatus(String orderNo) {
@@ -71,7 +78,8 @@ public class PayStatusPresenter extends BasePresenter<PayStatusContract.Model, P
                                 case 1:
                                     switch (DataHelper.getIntergerSF(mApplication, DataHelperTags.PAY_TYPE)) {
                                         case PayStatusTags.PAY:
-                                            mRootView.showSuccessLayout(mApplication.getString(R.string.text_pay_success));
+                                            mRootView.showSuccessLayout(mApplication.getString(R.string.text_pay_success),"查看账户余额");
+                                            mRootView.setContentLayout("充值赠送的优惠券已经放入您的卡包，您可以在我的-卡包中找到",onClickListener);
                                             break;
                                         case PayStatusTags.PAY_1:
                                             mRootView.showSuccessLayout(mApplication.getString(R.string.text_pay_success),"专家咨询");
@@ -97,7 +105,8 @@ public class PayStatusPresenter extends BasePresenter<PayStatusContract.Model, P
                                 default:
                                     switch (DataHelper.getIntergerSF(mApplication, DataHelperTags.PAY_TYPE)) {
                                         case PayStatusTags.PAY:
-                                            mRootView.showFailLayout(mApplication.getString(R.string.text_pay_fail));
+                                        case PayStatusTags.PAY_1:
+                                            mRootView.showFailLayout(mApplication.getString(R.string.text_pay_fail),"重新充值");
                                             break;
                                         case PayStatusTags.RELEASE_DEMAND:
                                             mRootView.showFailLayout(mApplication.getString(R.string.text_pay_fail_1));

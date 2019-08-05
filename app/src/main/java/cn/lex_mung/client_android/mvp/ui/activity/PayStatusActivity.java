@@ -26,6 +26,7 @@ import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.integration.AppManager;
 import me.zl.mvp.utils.AppUtils;
+import me.zl.mvp.utils.StringUtils;
 
 import static cn.lex_mung.client_android.app.EventBusTags.PAY_INFO.PAY_CONFIRM;
 import static cn.lex_mung.client_android.app.EventBusTags.PAY_INFO.PAY_INFO;
@@ -81,6 +82,11 @@ public class PayStatusActivity extends BaseActivity<PayStatusPresenter> implemen
                 return;
             }
         }
+        mPresenter.setGoCouponListener(v -> {
+            bundle.clear();
+            bundle.putInt(BundleTags.TYPE, 1);
+            launchActivity(new Intent(mActivity, OrderCouponActivity.class), bundle);
+        });
         mPresenter.checkOrderStatus(bundleIntent.getString(BundleTags.ORDER_NO));
     }
 
@@ -107,6 +113,19 @@ public class PayStatusActivity extends BaseActivity<PayStatusPresenter> implemen
     }
 
     @Override
+    public void showFailLayout(String s,String btnStr) {
+        showFailLayout(s);
+        btBack.setText(btnStr);
+    }
+
+    @Override
+    public void setContentLayout(String s, View.OnClickListener onClickListener) {
+        String string = s + "<font color=\"#4A90E2\">  去看看</font>";
+        StringUtils.setHtml(tvContent,string);
+        tvContent.setOnClickListener(onClickListener);
+    }
+
+    @Override
     public void showReleaseDemandLayout(String tip, String orderNo, String payTime, String orderType, String money) {
         groupReleaseDemand.setVisibility(View.VISIBLE);
         tvContent.setText(tip);
@@ -125,9 +144,9 @@ public class PayStatusActivity extends BaseActivity<PayStatusPresenter> implemen
             AppManager.getAppManager().killActivity(ReleaseDemandActivity.class);
             AppUtils.post(PAY_INFO,PAY_CONFIRM);//这个是用来通知抢单页面的。
         }
-        if(isSuccess){//成功后把充值页面干掉，失败返回充值页面
-            AppManager.getAppManager().killActivity(MyAccountActivity.class);
-        }
+//        if(isSuccess){//成功后把充值页面干掉，失败返回充值页面
+//            AppManager.getAppManager().killActivity(MyAccountActivity.class);
+//        }
         killMyself();
     }
 

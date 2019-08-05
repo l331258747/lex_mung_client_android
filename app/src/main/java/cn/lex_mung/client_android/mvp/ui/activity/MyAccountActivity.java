@@ -134,35 +134,25 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.umeng.analytics.MobclickAgent;
-
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.OnClick;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.component.DaggerMyAccountComponent;
 import cn.lex_mung.client_android.di.module.MyAccountModule;
 import cn.lex_mung.client_android.mvp.contract.MyAccountContract;
 import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
-import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.mine.RechargeCouponEntity;
-import cn.lex_mung.client_android.mvp.model.entity.mine.RechargeEntity;
 import cn.lex_mung.client_android.mvp.presenter.MyAccountPresenter;
-import cn.lex_mung.client_android.mvp.ui.adapter.MyAccountPayAdapter;
 import cn.lex_mung.client_android.mvp.ui.adapter.MyAccountPayAdapter2;
 import cn.lex_mung.client_android.mvp.ui.dialog.DefaultDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
-
-import butterknife.BindView;
-import butterknife.OnClick;
-import cn.lex_mung.client_android.mvp.ui.dialog.OnlyTextDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.RechargeDialog;
-import cn.lex_mung.client_android.mvp.ui.dialog.SingleTextDialog;
-import cn.lex_mung.client_android.utils.DecimalUtil;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
@@ -364,7 +354,7 @@ public class MyAccountActivity extends BaseActivity<MyAccountPresenter> implemen
                     bundle.putDouble(BundleTags.BALANCE_GIVE, mPresenter.getGiveBalance());
                     launchActivity(new Intent(mActivity, AccountWithdrawalActivity.class), bundle);
                 } else {
-                    showMessage(getString(R.string.text_no_withdrawal_amount));
+                    showMessage("你的账户没有余额，无法提现！");
                 }
                 break;
             case R.id.tv_wx:

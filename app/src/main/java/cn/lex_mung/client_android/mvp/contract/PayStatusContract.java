@@ -1,5 +1,7 @@
 package cn.lex_mung.client_android.mvp.contract;
 
+import android.view.View;
+
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.OrderStatusEntity;
 
@@ -15,6 +17,10 @@ public interface PayStatusContract {
         void showSuccessLayout(String string,String btnStr);
 
         void showFailLayout(String s);
+
+        void showFailLayout(String s,String btnStr);
+
+        void setContentLayout(String s, android.view.View.OnClickListener onClickListener);
 
         void showReleaseDemandLayout(String tip, String orderNo, String payTime, String stringSF, String sf);
     }
