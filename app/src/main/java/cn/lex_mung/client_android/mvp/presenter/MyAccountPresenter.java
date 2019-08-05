@@ -99,6 +99,25 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
         return giveBalance;
     }
 
+    public void withdrawVerify(){
+        mModel.withdrawVerify()
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> mRootView.showLoading(""))
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<Boolean>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<Boolean> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            mRootView.withdrawVerifyLayout(baseResponse.getData());
+                        }
+                    }
+                });
+    }
+
     public void getUserBalance() {
         UserInfoDetailsEntity userInfoDetailsEntity = new Gson().fromJson(DataHelper.getStringSF(mApplication, DataHelperTags.USER_INFO_DETAIL), UserInfoDetailsEntity.class);
         mModel.getUserBalance(userInfoDetailsEntity.getMemberId())

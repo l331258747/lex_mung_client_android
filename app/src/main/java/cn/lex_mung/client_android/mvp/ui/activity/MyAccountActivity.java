@@ -153,6 +153,7 @@ import cn.lex_mung.client_android.mvp.ui.adapter.MyAccountPayAdapter2;
 import cn.lex_mung.client_android.mvp.ui.dialog.DefaultDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.RechargeDialog;
+import cn.lex_mung.client_android.mvp.ui.dialog.SingleTextDialog;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
@@ -302,6 +303,23 @@ public class MyAccountActivity extends BaseActivity<MyAccountPresenter> implemen
     }
 
     @Override
+    public void withdrawVerifyLayout(boolean isShow) {
+
+        if(!isShow){
+            new SingleTextDialog(mActivity).setContent("您有一笔正在进行中的提现申请，请在上一笔提现成功后再发起新的申请！").setSubmitStr("我知道了！").show();
+        }else{
+            if (mPresenter.getAllBalance() > 0) {
+                bundle.clear();
+                bundle.putDouble(BundleTags.BALANCE_REAL, mPresenter.getRealBalance());
+                bundle.putDouble(BundleTags.BALANCE_GIVE, mPresenter.getGiveBalance());
+                launchActivity(new Intent(mActivity, AccountWithdrawalActivity.class), bundle);
+            }else{
+                showMessage("你的账户没有余额，无法提现！");
+            }
+        }
+    }
+
+    @Override
     public void showToAppInfoDialog() {
         if (defaultDialog == null) {
             defaultDialog = new DefaultDialog(mActivity, dialog -> {
@@ -339,23 +357,19 @@ public class MyAccountActivity extends BaseActivity<MyAccountPresenter> implemen
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_what://明细
+                if (isFastClick()) return;
                 showPriceDialog(0,
                         StringUtils.getStringNum(mPresenter.getRealBalance()) + "元",
                         StringUtils.getStringNum(mPresenter.getGiveBalance()) + "元",
                         null);
                 break;
             case R.id.bt_detail://明细
+                if (isFastClick()) return;
                 launchActivity(new Intent(mActivity, MyTradingListActivity.class));
                 break;
             case R.id.bt_withdrawal:
-                if (mPresenter.getAllBalance() > 0) {
-                    bundle.clear();
-                    bundle.putDouble(BundleTags.BALANCE_REAL, mPresenter.getRealBalance());
-                    bundle.putDouble(BundleTags.BALANCE_GIVE, mPresenter.getGiveBalance());
-                    launchActivity(new Intent(mActivity, AccountWithdrawalActivity.class), bundle);
-                } else {
-                    showMessage("你的账户没有余额，无法提现！");
-                }
+                if (isFastClick()) return;
+                mPresenter.withdrawVerify();
                 break;
             case R.id.tv_wx:
                 ivSelectWx.setImageResource(R.drawable.ic_radio_yes);
@@ -368,6 +382,7 @@ public class MyAccountActivity extends BaseActivity<MyAccountPresenter> implemen
                 mPresenter.setPayType(2);
                 break;
             case R.id.bt_pay:
+                if (isFastClick()) return;
                 mPresenter.pay(webView.getSettings().getUserAgentString());
                 break;
         }

@@ -261,7 +261,7 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
     @Override
     public void setCouponCountLayout(int couponCount) {
         tvCouponCount.setVisibility(View.VISIBLE);
-        tvCouponCount.setText(couponCount + "张优惠券可用");
+        tvCouponCount.setText("您有"+couponCount+"个可用的优惠方式");
     }
 
     @Override

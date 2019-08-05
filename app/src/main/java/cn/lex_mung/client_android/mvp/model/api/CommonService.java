@@ -847,4 +847,10 @@ public interface CommonService {
     @POST("client/coupon/count")
     Observable<BaseResponse<Integer>> couponCount(@Body RequestBody body);
 
+    ///client/withdraw/verify
+    //POST
+    //查看用户是否有正在审核中的提现申请
+    @GET("client/withdraw/verify")
+    Observable<BaseResponse<Boolean>> withdrawVerify();
+
 }

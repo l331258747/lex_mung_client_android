@@ -33,6 +33,8 @@ public interface MyAccountContract {
 
         void setGivePrice(boolean isShow, double givePrice);
 
+        void withdrawVerifyLayout(boolean isShow);
+
     }
 
     interface Model extends IModel {
@@ -43,5 +45,7 @@ public interface MyAccountContract {
         Observable<BaseResponse<List<RechargeEntity>>> rechargeList(RequestBody body);
 
         Observable<BaseResponse<List<RechargeCouponEntity>>> rechargeCouponList(int voucherPackId);
+
+        Observable<BaseResponse<Boolean>> withdrawVerify();
     }
 }

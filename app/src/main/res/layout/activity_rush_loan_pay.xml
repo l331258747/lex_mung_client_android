@@ -135,7 +135,7 @@
                 android:layout_marginTop="@dimen/qb_px_20"
                 android:textColor="@color/c_F02457"
                 tools:visibility="visible"
-                tools:text="3张优惠券可用"/>
+                tools:text="您有x个可用的优惠方式"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

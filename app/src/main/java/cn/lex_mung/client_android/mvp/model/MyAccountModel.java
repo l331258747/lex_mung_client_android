@@ -69,4 +69,11 @@ public class MyAccountModel extends BaseModel implements MyAccountContract.Model
                 .obtainRetrofitService(CommonService.class)
                 .rechargeCouponList(voucherPackId);
     }
+
+    @Override
+    public Observable<BaseResponse<Boolean>> withdrawVerify() {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .withdrawVerify();
+    }
 }
