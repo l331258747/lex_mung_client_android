@@ -802,8 +802,6 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                     String linkValue = entity.getJumpurl();
                     if (TextUtils.isEmpty(linkValue))
                         return;
-                    if (!linkValue.startsWith("http"))
-                        return;
 
                     //TODO 埋点
                     if (linkValue.indexOf("member") > -1) {
