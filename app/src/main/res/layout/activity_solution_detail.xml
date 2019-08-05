@@ -471,7 +471,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:constraint_referenced_ids="tv_free_title,
-                recycler_view_free,view_free_bottom" />
+                    recycler_view_free,view_free_bottom" />
 
                 <View
                     android:id="@+id/view_free"
