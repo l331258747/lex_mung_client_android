@@ -765,6 +765,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                             case "subject":
                                 String requireTypeIdStr1 = uri.getQueryParameter("id");
                                 String requireTypeName1 = uri.getQueryParameter("name");
+                                String hasContract = uri.getQueryParameter("hasContract");
                                 int requireTypeId1;
                                 if (TextUtils.isEmpty(requireTypeIdStr1) || TextUtils.isEmpty(requireTypeName1))
                                     return;
@@ -780,6 +781,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                                     bundle.clear();
                                     bundle.putInt(BundleTags.SOLUTION_TYPE_ID,requireTypeId1);
                                     bundle.putString(BundleTags.SOLUTION_TYPE_NAME,requireTypeName1);
+                                    bundle.putBoolean(BundleTags.IS_CRIMINAL,TextUtils.equals("1",hasContract));
                                     launchActivity(new Intent(mActivity, SolutionDetailActivity.class),bundle);
                                 }
 
@@ -833,7 +835,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                         bundle.putBoolean(BundleTags.IS_SHARE, true);
                         bundle.putString(BundleTags.SHARE_URL, entity.getShareUrl());
                         bundle.putString(BundleTags.TITLE, entity.getShareTitle());
-                        bundle.putString(BundleTags.DES, entity.getShareDesc());
+                        bundle.putString(BundleTags.DES, entity.getShareDescription());
                         bundle.putString(BundleTags.IMAGE, entity.getShareImg());
                     }else{
                         bundle.putBoolean(BundleTags.IS_SHARE, false);

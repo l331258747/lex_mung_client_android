@@ -90,6 +90,7 @@ public class SolutionLIstFragment extends BaseFragment<SolutionLIstPresenter> im
             bean.setHelpNumber(bean.getHelpNumber() + 1);
             solutionAdapter.setData(position, bean);
             bundle.clear();
+            bundle.putString(BundleTags.URL,bean.getSolutionUrl());
             bundle.putString(BundleTags.SHARE_URL, bean.getSolutionUrl());
             bundle.putString(BundleTags.TITLE, bean.getTitle());
             bundle.putString(BundleTags.DES, "");

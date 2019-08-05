@@ -55,5 +55,6 @@ public class BundleTags {
     public static final String BUSINESS_NAME = "business_name";
     public static final String COUPON_ID = "coupon_id";
     public static final String COUPON_TYPE = "coupon_type";
+    public static final String IS_CRIMINAL = "is_criminal";
 
 }

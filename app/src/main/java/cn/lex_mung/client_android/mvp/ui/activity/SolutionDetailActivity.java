@@ -75,6 +75,8 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
 
     @BindView(R.id.tv_contract_title)
     TextView tvContractTitle;
+    @BindView(R.id.group_contract)
+    Group groupContract;
     @BindView(R.id.view_contract_write)
     View viewContractWrite;
     @BindView(R.id.tv_contract_write)
@@ -115,6 +117,7 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
 
     int solutionId;
     String solutionName;
+    boolean isCriminal;//是否为刑事类
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -135,6 +138,7 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
     public void initData(@Nullable Bundle savedInstanceState) {
         solutionId = bundleIntent.getInt(BundleTags.SOLUTION_TYPE_ID, -1);
         solutionName = bundleIntent.getString(BundleTags.SOLUTION_TYPE_NAME);
+        isCriminal = bundleIntent.getBoolean(BundleTags.IS_CRIMINAL,false);
 
         titleView.getTitleTv().setTextColor(ContextCompat.getColor(mActivity, R.color.c_ff));
         titleView.setTitle(solutionName);
@@ -162,6 +166,7 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
             bean.setHelpNumber(bean.getHelpNumber() + 1);
             solutionAdapter.setData(position, bean);
             bundle.clear();
+            bundle.putString(BundleTags.URL,bean.getSolutionUrl());
             bundle.putString(BundleTags.SHARE_URL, bean.getSolutionUrl());
             bundle.putString(BundleTags.TITLE, bean.getTitle());
             bundle.putString(BundleTags.DES, "");
@@ -281,6 +286,14 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
                 continue;
             }
         }
+
+        if(isCriminal){
+            hideContractLayout();
+        }
+    }
+
+    public void hideContractLayout(){
+        groupContract.setVisibility(View.GONE);
     }
 
     @Override

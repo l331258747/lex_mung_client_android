@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -98,6 +99,7 @@ public class HomeSolutionActivity extends BaseActivity<HomeSolutionPresenter> im
             bundle.clear();
             bundle.putInt(BundleTags.SOLUTION_TYPE_ID,entity.getId());
             bundle.putString(BundleTags.SOLUTION_TYPE_NAME,entity.getAlias());
+            bundle.putBoolean(BundleTags.IS_CRIMINAL,TextUtils.equals("刑事类",entity.getParentType()));
             launchActivity(new Intent(mActivity, SolutionDetailActivity.class),bundle);
         });
     }

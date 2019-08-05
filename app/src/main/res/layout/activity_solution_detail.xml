@@ -200,6 +200,14 @@
 
                 <!-- 合同-->
 
+                <android.support.constraint.Group
+                    android:id="@+id/group_contract"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="view_contract_write,
+                    tv_contract_write,tv_contract_write_price,view_contract_check,
+                    tv_contract_check,tv_contract_check_price,tv_contract_title,ll_contract_tip" />
+
                 <View
                     android:id="@+id/view_contract"
                     android:layout_width="0dp"
@@ -320,6 +328,8 @@
 
                 </LinearLayout>
 
+                <!-- 起草合同 -->
+
                 <View
                     android:id="@+id/view_contract_write"
                     android:layout_width="0dp"
@@ -356,11 +366,13 @@
                     app:layout_constraintTop_toTopOf="@+id/view_contract_write"
                     tools:text="1000元/份" />
 
+                <!-- 审查合同 -->
                 <View
                     android:id="@+id/view_contract_check"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/qb_px_120"
                     android:layout_marginTop="@dimen/qb_px_20"
+                    app:layout_goneMarginTop="@dimen/qb_px_40"
                     android:background="@drawable/ic_solution_contract_12"
                     app:layout_constraintEnd_toEndOf="@+id/view_contract"
                     app:layout_constraintStart_toStartOf="@+id/view_contract"
@@ -397,6 +409,7 @@
                     android:layout_width="0dp"
                     android:layout_height="@dimen/qb_px_120"
                     android:layout_marginTop="@dimen/qb_px_80"
+                    app:layout_goneMarginTop="@dimen/qb_px_40"
                     android:background="@drawable/ic_solution_contract_13"
                     app:layout_constraintEnd_toEndOf="@+id/view_contract"
                     app:layout_constraintStart_toStartOf="@+id/view_contract"

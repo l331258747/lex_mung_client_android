@@ -38,7 +38,7 @@ public class HomeChildEntity {
     private int showShare;
     private String shareUrl;
     private String shareTitle;
-    private String shareDesc;
+    private String shareDescription;
     private String shareImg;
 
     public int getShowShare() {
@@ -53,8 +53,8 @@ public class HomeChildEntity {
         return shareTitle;
     }
 
-    public String getShareDesc() {
-        return shareDesc;
+    public String getShareDescription() {
+        return shareDescription;
     }
 
     public String getShareImg() {
