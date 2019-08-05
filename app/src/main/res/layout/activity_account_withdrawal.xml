@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <include
@@ -19,21 +19,23 @@
         android:includeFontPadding="false"
         android:text="@string/text_withdrawal_amount"
         android:textColor="@color/c_b5b5b5"
-        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <TextView
         android:id="@+id/tv_remaining_amount"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/qb_px_20"
         android:includeFontPadding="false"
-        android:text="@string/text_remaining_amount"
+        tools:text="asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf"
         android:textColor="@color/c_b5b5b5"
         android:textSize="12sp"
+        app:layout_constraintTop_toTopOf="@id/tv_withdrawal_amount_text"
         app:layout_constraintBottom_toBottomOf="@id/tv_withdrawal_amount_text"
-        app:layout_constraintStart_toEndOf="@id/tv_withdrawal_amount_text" />
+        app:layout_constraintStart_toEndOf="@id/tv_withdrawal_amount_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/qb_px_80"/>
 
 
     <TextView
@@ -41,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/qb_px_80"
-        android:layout_marginTop="@dimen/qb_px_150"
+        android:layout_marginTop="@dimen/qb_px_30"
         android:layout_marginEnd="@dimen/qb_px_35"
         android:background="@android:color/white"
         android:includeFontPadding="false"
@@ -49,7 +51,7 @@
         android:textColor="@color/c_323232"
         android:textSize="34sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@id/tv_remaining_amount" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -73,11 +75,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_withdrawal_amount" />
 
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_horizontal_line_1"
+        android:layout_marginStart="@dimen/qb_px_80"
+        android:layout_marginEnd="@dimen/qb_px_80"
+        android:textColor="@color/c_b5b5b5"
+        android:layout_marginTop="@dimen/qb_px_20"
+        android:textSize="12sp"
+        android:text="您的可提现金额 = 充值总额 - 消费总额，赠送余额不可提现，提现成功后，您的账户余额将被清零。"/>
+
     <View
         android:id="@+id/view_horizontal_line_2"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qb_px_35"
-        android:layout_marginTop="@dimen/qb_px_80"
+        android:layout_marginTop="@dimen/qb_px_120"
         android:background="@color/c_f4f4f4"
         app:layout_constraintTop_toBottomOf="@id/view_horizontal_line_1" />
 

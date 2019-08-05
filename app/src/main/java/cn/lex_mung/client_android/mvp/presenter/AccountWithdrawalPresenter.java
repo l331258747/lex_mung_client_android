@@ -38,16 +38,19 @@ public class AccountWithdrawalPresenter extends BasePresenter<AccountWithdrawalC
     @Inject
     AppManager mAppManager;
 
-    private double balance;
+    private double balanceReal;
+    private double balanceGive;
 
     @Inject
     public AccountWithdrawalPresenter(AccountWithdrawalContract.Model model, AccountWithdrawalContract.View rootView) {
         super(model, rootView);
     }
 
-    public void setBalance(double balance) {
-        this.balance = balance;
-        mRootView.setBalance(StringUtils.getStringNum(balance));
+    public void setBalance(double balanceReal,double balanceGive) {
+        this.balanceReal = balanceReal;
+        this.balanceGive = balanceGive;
+
+        mRootView.setBalance(StringUtils.getStringNum(balanceReal),StringUtils.getStringNum(balanceGive));
     }
 
     public void withdrawal(String name, String account, String ua) {
@@ -60,11 +63,11 @@ public class AccountWithdrawalPresenter extends BasePresenter<AccountWithdrawalC
             return;
         }
         Map<String, Object> map = new HashMap<>();
-        map.put("money", balance);
+        map.put("money", balanceReal);
         map.put("account", account);
         map.put("name", name);
         map.put("ua", ua);
-        String sign = "money=" + balance + "&account=" + account + "&ua=" + ua;
+        String sign = "money=" + balanceReal + "&account=" + account + "&ua=" + ua;
         map.put("sign", AppUtils.encodeToMD5(sign));
         mModel.withdraw(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                 .subscribeOn(Schedulers.io())

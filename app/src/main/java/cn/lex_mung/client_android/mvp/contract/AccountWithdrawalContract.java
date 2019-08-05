@@ -9,7 +9,7 @@ import okhttp3.RequestBody;
 
 public interface AccountWithdrawalContract {
     interface View extends IView {
-        void setBalance(String balance);
+        void setBalance(String balanceReal,String balanceGive);
 
         void showSuccessDialog(String string);
     }

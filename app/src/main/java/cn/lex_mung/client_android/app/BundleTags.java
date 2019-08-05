@@ -8,7 +8,10 @@ public class BundleTags {
     public static final String DES = "des";
     public static final String IMAGE = "image";
     public static final String SHARE_URL = "share_url";
-    public static final String BALANCE = "balance";
+
+    public static final String BALANCE_REAL = "balance_real";
+    public static final String BALANCE_GIVE = "balance_give";
+
     public static final String OPERATION = "operation";
     public static final String ID = "id";
     public static final String MEMBER_ID = "member_id";

@@ -57,15 +57,18 @@ public class AccountWithdrawalActivity extends BaseActivity<AccountWithdrawalPre
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        mPresenter.setBalance(bundleIntent.getDouble(BundleTags.BALANCE));
+        mPresenter.setBalance(bundleIntent.getDouble(BundleTags.BALANCE_REAL),bundleIntent.getDouble(BundleTags.BALANCE_GIVE));
+
         etAccount.setFilters(new InputFilter[]{CharacterHandler.emojiFilter});
         etName.setFilters(new InputFilter[]{CharacterHandler.emojiFilter});
     }
 
+
     @Override
-    public void setBalance(String balance) {
-        tvRemainingAmount.setText(String.format(AppUtils.getString(mActivity, R.string.text_remaining_amount), balance));
-        tvWithdrawalAmount.setText(String.format(AppUtils.getString(mActivity, R.string.text_yuan_money), balance));
+    public void setBalance(String balanceReal, String balanceGive) {
+        String str = "(可用余额 %1$s 元，赠送余额 %2$s 元)";
+        tvRemainingAmount.setText(String.format(str, balanceReal, balanceGive));
+        tvWithdrawalAmount.setText(String.format(AppUtils.getString(mActivity, R.string.text_yuan_money), balanceReal));
     }
 
     @Override

@@ -360,7 +360,8 @@ public class MyAccountActivity extends BaseActivity<MyAccountPresenter> implemen
             case R.id.bt_withdrawal:
                 if (mPresenter.getAllBalance() > 0) {
                     bundle.clear();
-                    bundle.putDouble(BundleTags.BALANCE, mPresenter.getAllBalance());
+                    bundle.putDouble(BundleTags.BALANCE_REAL, mPresenter.getRealBalance());
+                    bundle.putDouble(BundleTags.BALANCE_GIVE, mPresenter.getGiveBalance());
                     launchActivity(new Intent(mActivity, AccountWithdrawalActivity.class), bundle);
                 } else {
                     showMessage(getString(R.string.text_no_withdrawal_amount));
