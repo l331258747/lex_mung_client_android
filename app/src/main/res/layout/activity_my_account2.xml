@@ -382,76 +382,94 @@
 
         <TextView
             android:id="@+id/tv_price_title"
-            android:layout_width="@dimen/qb_px_130"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
             android:text="充值金额:"
             android:textColor="@color/c_ff"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@id/tv_give_price_title"
-            app:layout_constraintStart_toStartOf="@id/guideline22"
-            app:layout_constraintTop_toTopOf="@id/view_bottom" />
+            android:maxLines="2"
+            android:ellipsize="end"
+            app:layout_constraintBottom_toBottomOf="@+id/view_bottom"
+            app:layout_constraintStart_toStartOf="@+id/guideline22"
+            android:layout_marginEnd="@dimen/qb_px_20"
+            app:layout_constraintEnd_toStartOf="@+id/bt_pay"
+            app:layout_constraintTop_toTopOf="@+id/view_bottom" />
 
-        <ImageView
-            android:id="@+id/iv_price_unit"
-            android:layout_width="@dimen/qb_px_30"
-            android:layout_height="@dimen/qb_px_30"
-            android:src="@drawable/ic_price_unit"
-            app:layout_constraintBottom_toBottomOf="@id/tv_price_title"
-            app:layout_constraintStart_toEndOf="@id/tv_price_title" />
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_price_unit"-->
+            <!--android:layout_width="@dimen/qb_px_30"-->
+            <!--android:layout_height="@dimen/qb_px_30"-->
+            <!--android:src="@drawable/ic_price_unit"-->
+            <!--app:layout_constraintBottom_toBottomOf="@id/tv_price_title"-->
+            <!--app:layout_constraintStart_toEndOf="@id/tv_price_title" />-->
 
-        <TextView
-            android:id="@+id/tv_order_money"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:includeFontPadding="false"
-            android:textColor="@color/c_ff"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/tv_price_title"
-            app:layout_constraintStart_toEndOf="@id/iv_price_unit"
-            app:layout_constraintTop_toTopOf="@+id/tv_price_title"
-            tools:text="500" />
+        <!--<TextView-->
+            <!--android:id="@+id/tv_order_money"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:includeFontPadding="false"-->
+            <!--android:textColor="@color/c_ff"-->
+            <!--android:textSize="18sp"-->
+            <!--android:textStyle="bold"-->
+            <!--app:layout_constraintBottom_toBottomOf="@id/tv_price_title"-->
+            <!--app:layout_constraintStart_toEndOf="@id/iv_price_unit"-->
+            <!--app:layout_constraintTop_toTopOf="@+id/tv_price_title"-->
+            <!--tools:text="500" />-->
 
-        <android.support.constraint.Group
-            android:id="@+id/group_give_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:constraint_referenced_ids="tv_give_price_title,iv_give_price_unit,tv_give_price" />
+        <!--<android.support.constraint.Group-->
+            <!--android:id="@+id/group_give_price"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:visibility="gone"-->
+            <!--tools:visibility="visible"-->
+            <!--app:constraint_referenced_ids="tv_give_price_title,iv_give_price_unit,tv_give_price" />-->
 
-        <TextView
-            android:id="@+id/tv_give_price_title"
-            android:layout_width="@dimen/qb_px_130"
-            android:layout_height="wrap_content"
-            android:includeFontPadding="false"
-            android:text="赠送金额:"
-            android:textColor="@color/c_ff"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@id/view_bottom"
-            app:layout_constraintStart_toStartOf="@id/guideline22"
-            app:layout_constraintTop_toBottomOf="@id/tv_price_title" />
+        <!--<TextView-->
+            <!--android:id="@+id/tv_give_price_title"-->
+            <!--android:layout_width="@dimen/qb_px_130"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:includeFontPadding="false"-->
+            <!--android:text="赠送金额:"-->
+            <!--android:textColor="@color/c_ff"-->
+            <!--android:textSize="12sp"-->
+            <!--app:layout_constraintBottom_toBottomOf="@id/view_bottom"-->
+            <!--app:layout_constraintStart_toStartOf="@id/guideline22"-->
+            <!--app:layout_constraintTop_toBottomOf="@id/tv_price_title" />-->
 
-        <ImageView
-            android:id="@+id/iv_give_price_unit"
-            android:layout_width="@dimen/qb_px_30"
-            android:layout_height="@dimen/qb_px_30"
-            android:src="@drawable/ic_price_unit"
-            app:layout_constraintBottom_toBottomOf="@id/tv_give_price_title"
-            app:layout_constraintStart_toEndOf="@id/tv_give_price_title" />
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_give_price_unit"-->
+            <!--android:layout_width="@dimen/qb_px_30"-->
+            <!--android:layout_height="@dimen/qb_px_30"-->
+            <!--android:src="@drawable/ic_price_unit"-->
+            <!--app:layout_constraintBottom_toBottomOf="@id/tv_give_price_title"-->
+            <!--app:layout_constraintStart_toEndOf="@id/tv_give_price_title" />-->
 
-        <TextView
-            android:id="@+id/tv_give_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:includeFontPadding="false"
-            android:textColor="@color/c_ff"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/tv_give_price_title"
-            app:layout_constraintStart_toEndOf="@id/iv_give_price_unit"
-            app:layout_constraintTop_toTopOf="@+id/tv_give_price_title"
-            tools:text="200" />
+        <!--<TextView-->
+            <!--android:id="@+id/tv_give_price"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:includeFontPadding="false"-->
+            <!--android:textColor="@color/c_ff"-->
+            <!--android:textSize="18sp"-->
+            <!--android:textStyle="bold"-->
+            <!--app:layout_constraintBottom_toBottomOf="@id/tv_give_price_title"-->
+            <!--app:layout_constraintStart_toEndOf="@id/iv_give_price_unit"-->
+            <!--app:layout_constraintTop_toTopOf="@+id/tv_give_price_title"-->
+            <!--tools:text="200" />-->
+
+
+        <!--<TextView-->
+            <!--android:id="@+id/tv_coupon_name"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:layout_constraintBottom_toBottomOf="@id/view_bottom"-->
+            <!--app:layout_constraintTop_toBottomOf="@id/tv_price_title"-->
+            <!--app:layout_constraintStart_toEndOf="@+id/tv_give_price"-->
+            <!--android:layout_marginLeft="@dimen/qb_px_20"-->
+            <!--android:textSize="12sp"-->
+            <!--app:layout_goneMarginStart="0dp"-->
+            <!--android:textColor="@color/c_ff"-->
+            <!--tools:text="冲100送券"/>-->
 
         <TextView
             android:id="@+id/bt_pay"

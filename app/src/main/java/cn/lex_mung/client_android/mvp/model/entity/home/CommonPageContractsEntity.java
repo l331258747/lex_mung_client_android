@@ -55,11 +55,18 @@ public class CommonPageContractsEntity {
         return unit;
     }
 
+    public String getUnitStr(){
+        String str = unit.replace("/","");
+        return str;
+    }
+
     public void setUnit(String unit) {
         this.unit = unit;
     }
 
+
+
     public String getPriceStr() {
-        return StringUtils.getStringNum(amount) + "元/" + unit;
+        return StringUtils.getStringNum(amount) + "元/" + getUnitStr();
     }
 }

@@ -208,7 +208,7 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
 
     private void setPayMoney(double payMoney) {
         this.payMoney = payMoney;
-        mRootView.setOrderMoney(StringUtils.getStringNum(payMoney));
+//        mRootView.setOrderMoney(StringUtils.getStringNum(payMoney));
 
         if (entity != null) {
             long time;
@@ -262,7 +262,7 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
 
             setPayMoney(entity.getAmount());
             setRechargeId(entity.getId());
-            setGiveLayout(entity.getGive(), entity.getGiveAmount());
+            setGiveLayout(entity.getAmount(),entity.getActivity(),entity.getGive(), entity.getGiveAmount(),entity.getGiveCoupon(),entity.getActivityDescription());
             setCoupon((entity.getActivity() == 1 && entity.getGiveCoupon() == 1));
 
             myAccountPayAdapter.setPos(position);
@@ -276,11 +276,28 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
         setPayMoney(priceList.get(0).getAmount());
         setRechargeId(priceList.get(0).getId());
         setCoupon((priceList.get(0).getActivity() == 1 && priceList.get(0).getGiveCoupon() == 1));
-        setGiveLayout(priceList.get(0).getGive(), priceList.get(0).getGiveAmount());
+        setGiveLayout(priceList.get(0).getAmount(),
+                priceList.get(0).getActivity(),
+                priceList.get(0).getGive(),
+                priceList.get(0).getGiveAmount(),
+                priceList.get(0).getGiveCoupon(),
+                priceList.get(0).getActivityDescription());
     }
 
-    private void setGiveLayout(int isGive, double givePrice) {
-        mRootView.setGivePrice(isGive == 1 ? true : false, isGive == 1 ? givePrice : 0);
+    private void setGiveLayout(double amount,int isActivity, int isGive, double givePrice,int isCoupon,String couponName) {
+        if(isActivity != 1){
+            mRootView.setBottomStr("充值金额: ¥ " + StringUtils.getStringNum(amount));
+        }else{
+            if(isGive == 1 && isCoupon == 1){
+                mRootView.setBottomStr("充值金额: ¥ " + StringUtils.getStringNum(amount) + "，赠送金额: ¥ " + StringUtils.getStringNum(givePrice) + "，" + couponName);
+            }else if(isGive == 1 && isCoupon != 1){
+                mRootView.setBottomStr("充值金额: ¥ " + StringUtils.getStringNum(amount) + "\n赠送金额: ¥ " + StringUtils.getStringNum(givePrice));
+            }else if(isGive != 1 && isCoupon == 1){
+                mRootView.setBottomStr("充值金额: ¥ " + StringUtils.getStringNum(amount) + "\n" + couponName);
+            }else{
+                mRootView.setBottomStr("充值金额: ¥ " + StringUtils.getStringNum(amount));
+            }
+        }
     }
 
     private void showPriceDetail(RechargeEntity entity) {

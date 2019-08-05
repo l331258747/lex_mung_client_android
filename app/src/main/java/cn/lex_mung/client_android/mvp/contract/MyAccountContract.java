@@ -23,7 +23,7 @@ public interface MyAccountContract {
 
         void showToAppInfoDialog();
 
-        void setOrderMoney(String format);
+//        void setOrderMoney(String format);
 
         void initRecyclerView(MyAccountPayAdapter2 myAccountPayAdapter);
 
@@ -31,7 +31,7 @@ public interface MyAccountContract {
 
         void showPriceDialog(int type, String balance,String giveBalance,List<RechargeCouponEntity> rechargeCouponEntities);
 
-        void setGivePrice(boolean isShow, double givePrice);
+        void setBottomStr(String str);
 
         void withdrawVerifyLayout(boolean isShow);
 

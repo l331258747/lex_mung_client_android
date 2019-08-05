@@ -167,8 +167,8 @@ public class MyAccountActivity extends BaseActivity<MyAccountPresenter> implemen
     RecyclerView recyclerView;
     @BindView(R.id.web_view)
     WebView webView;
-    @BindView(R.id.tv_order_money)
-    TextView tvOrderMoney;
+//    @BindView(R.id.tv_order_money)
+//    TextView tvOrderMoney;
     @BindView(R.id.bt_pay)
     TextView bt_pay;
     @BindView(R.id.iv_select_zfb)
@@ -187,10 +187,12 @@ public class MyAccountActivity extends BaseActivity<MyAccountPresenter> implemen
     TextView tvTip;
     @BindView(R.id.tv_tip2)
     TextView tvTip2;
-    @BindView(R.id.tv_give_price)
-    TextView tvGivePrice;
-    @BindView(R.id.group_give_price)
-    Group groupGivePrice;
+//    @BindView(R.id.tv_give_price)
+//    TextView tvGivePrice;
+    @BindView(R.id.tv_price_title)
+    TextView tvPriceTitle;
+//    @BindView(R.id.group_give_price)
+//    Group groupGivePrice;
 
     private DefaultDialog defaultDialog;
     private ExpertPriceEntity entity;
@@ -269,10 +271,10 @@ public class MyAccountActivity extends BaseActivity<MyAccountPresenter> implemen
         recyclerView.setAdapter(adapter);
     }
 
-    @Override
-    public void setOrderMoney(String format) {
-        tvOrderMoney.setText(format);
-    }
+//    @Override
+//    public void setOrderMoney(String format) {
+//        tvOrderMoney.setText(format);
+//    }
 
     public void setTip2(String str) {
         tvTip2.setText(str);
@@ -297,10 +299,15 @@ public class MyAccountActivity extends BaseActivity<MyAccountPresenter> implemen
     }
 
     @Override
-    public void setGivePrice(boolean isShow, double givePrice) {
-        groupGivePrice.setVisibility(isShow ? View.VISIBLE : View.GONE);
-        tvGivePrice.setText(StringUtils.getStringNum(givePrice));
+    public void setBottomStr(String str) {
+        tvPriceTitle.setText(str);
     }
+
+//    @Override
+//    public void setGivePrice(boolean isShow, double givePrice) {
+//        groupGivePrice.setVisibility(isShow ? View.VISIBLE : View.GONE);
+//        tvGivePrice.setText(StringUtils.getStringNum(givePrice));
+//    }
 
     @Override
     public void withdrawVerifyLayout(boolean isShow) {
