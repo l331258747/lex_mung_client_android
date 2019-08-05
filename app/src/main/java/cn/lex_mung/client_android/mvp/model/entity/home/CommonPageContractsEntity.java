@@ -1,5 +1,7 @@
 package cn.lex_mung.client_android.mvp.model.entity.home;
 
+import android.text.TextUtils;
+
 import me.zl.mvp.utils.StringUtils;
 
 public class CommonPageContractsEntity {
@@ -56,6 +58,8 @@ public class CommonPageContractsEntity {
     }
 
     public String getUnitStr(){
+        if(TextUtils.isEmpty(unit))
+            return "";
         String str = unit.replace("/","");
         return str;
     }
