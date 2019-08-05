@@ -781,7 +781,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                                     bundle.clear();
                                     bundle.putInt(BundleTags.SOLUTION_TYPE_ID,requireTypeId1);
                                     bundle.putString(BundleTags.SOLUTION_TYPE_NAME,requireTypeName1);
-                                    bundle.putBoolean(BundleTags.IS_CRIMINAL,TextUtils.equals("1",hasContract));
+                                    bundle.putBoolean(BundleTags.IS_CRIMINAL,TextUtils.equals("0",hasContract));
                                     launchActivity(new Intent(mActivity, SolutionDetailActivity.class),bundle);
                                 }
 
