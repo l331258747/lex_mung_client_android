@@ -3,10 +3,11 @@ package cn.lex_mung.client_android.app;
 public class BundleTags {
     public static final String TYPE = "type";
     public static final String URL = "url";
-    public static final String IS_SHARE = "is_share";
     public static final String TITLE = "title";
-    public static final String DES = "des";
-    public static final String IMAGE = "image";
+    public static final String IS_SHARE = "is_share";
+    public static final String SHARE_TITLE = "share_title";
+    public static final String SHARE_DES = "share_des";
+    public static final String SHARE_IMAGE = "share_image";
     public static final String SHARE_URL = "share_url";
 
     public static final String BALANCE_REAL = "balance_real";

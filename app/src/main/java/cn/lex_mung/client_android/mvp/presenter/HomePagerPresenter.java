@@ -420,14 +420,14 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                 if (homeEntities.get(i).getBtns() == null) return;
                 for (int j = 0; j < homeEntities.get(i).getBtns().size(); j++) {
                     HomeChildEntity homeChildEntity = homeEntities.get(i).getBtns().get(j);
-                    if (homeChildEntity.getJumptype().equals("h5") && homeChildEntity.getJumpurl().endsWith("member")) {//法务卡
-                        DataHelper.setStringSF(mApplication, DataHelperTags.FWK_URL, homeChildEntity.getJumpurl());
+                    if (homeChildEntity.getJumptype().equals("h5") && homeChildEntity.getJumpurl().indexOf("member") > -1) {//法务卡
+                        DataHelper.setStringSF(mApplication, DataHelperTags.FWK_URL, GsonUtil.convertVO2String(homeChildEntity));
                     }
-                    if (homeChildEntity.getJumptype().equals("h5") && homeChildEntity.getJumpurl().endsWith("feature.html")) {//诉讼垫资
-                        DataHelper.setStringSF(mApplication, DataHelperTags.SSDZ_URL, homeChildEntity.getJumpurl());
+                    if (homeChildEntity.getJumptype().equals("h5") && homeChildEntity.getJumpurl().indexOf("feature.html") > -1) {//诉讼垫资
+                        DataHelper.setStringSF(mApplication, DataHelperTags.SSDZ_URL, GsonUtil.convertVO2String(homeChildEntity));
                     }
-                    if (homeChildEntity.getJumptype().equals("h5") && homeChildEntity.getJumpurl().endsWith("retrial.html")) {//再审申诉
-                        DataHelper.setStringSF(mApplication, DataHelperTags.ZSSS_URL, homeChildEntity.getJumpurl());
+                    if (homeChildEntity.getJumptype().equals("h5") && homeChildEntity.getJumpurl().indexOf("retrial.html") > -1) {//再审申诉
+                        DataHelper.setStringSF(mApplication, DataHelperTags.ZSSS_URL, GsonUtil.convertVO2String(homeChildEntity));
                     }
                 }
             }

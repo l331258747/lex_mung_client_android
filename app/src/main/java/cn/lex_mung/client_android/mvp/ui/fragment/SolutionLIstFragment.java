@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.mvp.model.entity.SolutionListEntity;
-import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.WebSolutionActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.SolutionAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
@@ -91,10 +90,11 @@ public class SolutionLIstFragment extends BaseFragment<SolutionLIstPresenter> im
             solutionAdapter.setData(position, bean);
             bundle.clear();
             bundle.putString(BundleTags.URL,bean.getSolutionUrl());
-            bundle.putString(BundleTags.SHARE_URL, bean.getSolutionUrl());
             bundle.putString(BundleTags.TITLE, bean.getTitle());
-            bundle.putString(BundleTags.DES, "");
-            bundle.putString(BundleTags.IMAGE, "");
+            bundle.putString(BundleTags.SHARE_URL, bean.getSolutionUrl());
+            bundle.putString(BundleTags.SHARE_TITLE, bean.getTitle());
+            bundle.putString(BundleTags.SHARE_DES, "");
+            bundle.putString(BundleTags.SHARE_IMAGE, "");
             bundle.putBoolean(BundleTags.IS_SHARE, true);
             launchActivity(new Intent(mActivity, WebSolutionActivity.class), bundle);
         });

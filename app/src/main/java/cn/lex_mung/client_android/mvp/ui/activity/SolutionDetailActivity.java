@@ -167,10 +167,11 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
             solutionAdapter.setData(position, bean);
             bundle.clear();
             bundle.putString(BundleTags.URL,bean.getSolutionUrl());
+            bundle.putString(BundleTags.TITLE,bean.getTitle());
             bundle.putString(BundleTags.SHARE_URL, bean.getSolutionUrl());
-            bundle.putString(BundleTags.TITLE, bean.getTitle());
-            bundle.putString(BundleTags.DES, "");
-            bundle.putString(BundleTags.IMAGE, "");
+            bundle.putString(BundleTags.SHARE_TITLE, bean.getTitle());
+            bundle.putString(BundleTags.SHARE_DES, "");
+            bundle.putString(BundleTags.SHARE_IMAGE, "");
             bundle.putBoolean(BundleTags.IS_SHARE, true);
             launchActivity(new Intent(mActivity, WebSolutionActivity.class), bundle);
         });

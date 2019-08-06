@@ -295,8 +295,8 @@
 ////                bundle.clear();
 ////                bundle.putString(BundleTags.URL, bean.getLinkValue());
 ////                bundle.putString(BundleTags.TITLE, bean.getTitle());
-////                bundle.putString(BundleTags.DES, "");
-////                bundle.putString(BundleTags.IMAGE, bean.getImage());
+////                bundle.putString(BundleTags.SHARE_DES, "");
+////                bundle.putString(BundleTags.SHARE_IMAGE, bean.getImage());
 ////                bundle.putBoolean(BundleTags.IS_SHARE, false);
 ////                if (linkValue.indexOf("couponId=") != -1) {
 ////                    bundle.putBoolean(BundleTags.STATE, false);
@@ -832,9 +832,9 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                     if(entity.getShowShare() == 1){
                         bundle.putBoolean(BundleTags.IS_SHARE, true);
                         bundle.putString(BundleTags.SHARE_URL, entity.getShareUrl());
-                        bundle.putString(BundleTags.TITLE, entity.getShareTitle());
-                        bundle.putString(BundleTags.DES, entity.getShareDescription());
-                        bundle.putString(BundleTags.IMAGE, entity.getShareImg());
+                        bundle.putString(BundleTags.SHARE_TITLE, entity.getShareTitle());
+                        bundle.putString(BundleTags.SHARE_DES, entity.getShareDescription());
+                        bundle.putString(BundleTags.SHARE_IMAGE, entity.getShareImg());
                     }else{
                         bundle.putBoolean(BundleTags.IS_SHARE, false);
                     }

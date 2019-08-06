@@ -16,7 +16,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.UUID;
 
@@ -62,13 +61,17 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
     @BindView(R.id.progressbar)
     ProgressBar progressBar;
 
-    private boolean isShare;
+
     private String url;
     private String title;
-    private String des;
-    private String image;
     private boolean isJump;//页面内跳转
+
+    private boolean isShare;
     private String shareUrl;
+    private String ShareTitle;
+    private String shareImage;
+    private String shareDes;
+
 
     private int buryingPointId;//快速电话咨询，用来判断从哪里进入的(正常，解决方案)
     AndroidToJs androidToJs;
@@ -150,9 +153,10 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
         if (bundleIntent != null) {
             url = bundleIntent.getString(BundleTags.URL);
             title = bundleIntent.getString(BundleTags.TITLE);
-            des = bundleIntent.getString(BundleTags.DES);
-            image = bundleIntent.getString(BundleTags.IMAGE);
+            shareDes = bundleIntent.getString(BundleTags.SHARE_DES);
+            shareImage = bundleIntent.getString(BundleTags.SHARE_IMAGE);
             shareUrl = bundleIntent.getString(BundleTags.SHARE_URL);
+            ShareTitle = bundleIntent.getString(BundleTags.SHARE_TITLE);
             isShare = bundleIntent.getBoolean(BundleTags.IS_SHARE, false);
             isJump = bundleIntent.getBoolean(BundleTags.STATE, true);
             buryingPointId = bundleIntent.getInt(BundleTags.BURYING_POINT, -1);
@@ -160,6 +164,8 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 
         if (TextUtils.isEmpty(title))
             title = "绿豆圈";
+        if(TextUtils.isEmpty(ShareTitle))
+            ShareTitle = "绿豆圈";
 
         LogUtil.e("url:" + url);
 
@@ -205,14 +211,13 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 
     @OnClick(R.id.tv_right)
     public void onViewClicked() {
-        if (!TextUtils.isEmpty(url)
-                && !TextUtils.isEmpty(title)) {
+        if (!TextUtils.isEmpty(shareUrl)) {
             ShareUtils.shareUrl(mActivity
                     , viewDialog
                     , shareUrl
-                    , title
-                    , des
-                    , image);
+                    , ShareTitle
+                    , shareDes
+                    , shareImage);
         }
     }
 

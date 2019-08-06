@@ -82,6 +82,8 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         mCache = AppUtils.obtainAppComponentFromContext(mActivity).extras();
         bundle = new Bundle();
         bundleIntent = getIntent().getExtras();
+        if(bundleIntent == null)
+            bundleIntent = new Bundle();
         try {
             int layoutResID = initView(savedInstanceState);
             if (layoutResID != 0) {

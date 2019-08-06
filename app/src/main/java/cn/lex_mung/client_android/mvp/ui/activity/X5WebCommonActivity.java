@@ -50,13 +50,15 @@ public class X5WebCommonActivity extends BaseActivity<X5WebCommonPresenter> impl
     @BindView(R.id.progressbar)
     ProgressBar progressBar;
 
-    private boolean isShare;
     private String url;
-    private String shareUrl;
     private String title;
-    private String des;
-    private String image;
     private boolean isJump;
+
+    private boolean isShare;
+    private String shareUrl;
+    private String ShareTitle;
+    private String shareImage;
+    private String shareDes;
 
     DefaultDialog defaultDialog;
 
@@ -123,15 +125,22 @@ public class X5WebCommonActivity extends BaseActivity<X5WebCommonPresenter> impl
         if (bundleIntent != null
                 && bundleIntent.containsKey(BundleTags.URL)) {
             url = bundleIntent.getString(BundleTags.URL);
-            shareUrl = bundleIntent.getString(BundleTags.SHARE_URL);
             title = bundleIntent.getString(BundleTags.TITLE);
-            des = bundleIntent.getString(BundleTags.DES);
-            image = bundleIntent.getString(BundleTags.IMAGE);
+
+            shareUrl = bundleIntent.getString(BundleTags.SHARE_URL);
+            shareDes = bundleIntent.getString(BundleTags.SHARE_DES);
+            shareImage = bundleIntent.getString(BundleTags.SHARE_IMAGE);
+            ShareTitle = bundleIntent.getString(BundleTags.SHARE_TITLE);
             isShare = bundleIntent.getBoolean(BundleTags.IS_SHARE, true);
             isJump = bundleIntent.getBoolean(BundleTags.STATE, true);
         }
 
         LogUtil.e("url:" + url);
+
+        if (TextUtils.isEmpty(title))
+            title = "绿豆圈";
+        if(TextUtils.isEmpty(ShareTitle))
+            ShareTitle = "绿豆圈";
 
         if (isShare) {
             titleView.getRightTv().setVisibility(View.VISIBLE);
@@ -145,14 +154,13 @@ public class X5WebCommonActivity extends BaseActivity<X5WebCommonPresenter> impl
         initWebView();
 
         titleView.getRightTv().setOnClickListener(v -> {
-            if (!TextUtils.isEmpty(url)
-                    && !TextUtils.isEmpty(title)) {
+            if (!TextUtils.isEmpty(url)) {
                 ShareUtils.shareUrl(mActivity
                         , viewDialog
                         , shareUrl
-                        , title
-                        , des
-                        , image);
+                        , ShareTitle
+                        , shareDes
+                        , shareImage);
             }
         });
 
