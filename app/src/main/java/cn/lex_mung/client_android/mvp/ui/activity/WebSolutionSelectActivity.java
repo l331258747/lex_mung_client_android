@@ -15,9 +15,11 @@ import butterknife.OnClick;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.di.module.WebSolutionSelectModule;
+import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
 import cn.lex_mung.client_android.mvp.ui.dialog.HelpStepDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
+import cn.lex_mung.client_android.utils.GsonUtil;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
@@ -71,14 +73,21 @@ public class WebSolutionSelectActivity extends BaseActivity<WebSolutionSelectPre
                 }
                 break;
             case R.id.ll_call:
-
-                if(!TextUtils.isEmpty(DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL))){
+                String str = DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL);
+                HomeChildEntity entity = GsonUtil.convertString2Object(str,HomeChildEntity.class);
+                if(!TextUtils.isEmpty(str) && entity != null){
                     bundle.clear();
-                    bundle.putString(BundleTags.URL, DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL));
-                    bundle.putString(BundleTags.TITLE, "快速电话咨询");
+                    bundle.putString(BundleTags.URL, entity.getJumpurl());
+                    bundle.putString(BundleTags.TITLE, entity.getTitle());
+                    if(entity.getShowShare() == 1){
+                        bundle.putBoolean(BundleTags.IS_SHARE, true);
+                        bundle.putString(BundleTags.SHARE_URL, entity.getShareUrl());
+                        bundle.putString(BundleTags.SHARE_TITLE, entity.getShareTitle());
+                        bundle.putString(BundleTags.SHARE_DES, entity.getShareDescription());
+                        bundle.putString(BundleTags.SHARE_IMAGE, entity.getShareImg());
+                    }
                     launchActivity(new Intent(mActivity, WebActivity.class), bundle);
                 }
-
                 break;
             case R.id.ll_lawyer:
                 MobclickAgent.onEvent(mActivity, "w_y_shouye_index_zjzx");
