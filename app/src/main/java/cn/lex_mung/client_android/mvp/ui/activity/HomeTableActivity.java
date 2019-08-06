@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.Group;
+import android.text.TextUtils;
 import android.view.View;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.di.module.HomeTableModule;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
@@ -23,11 +26,18 @@ import cn.lex_mung.client_android.mvp.contract.HomeTableContract;
 import cn.lex_mung.client_android.mvp.presenter.HomeTablePresenter;
 
 import cn.lex_mung.client_android.R;
+import me.zl.mvp.utils.DataHelper;
 
 public class HomeTableActivity extends BaseActivity<HomeTablePresenter> implements HomeTableContract.View {
 
     @BindView(R.id.titleView)
     TitleView titleView;
+    @BindView(R.id.group_ssdz)
+    Group groupSsdz;
+    @BindView(R.id.group_zsss)
+    Group groupZsss;
+    @BindView(R.id.group_qyfwk)
+    Group groupQyfwk;
 
     String title;
     int id;
@@ -52,6 +62,16 @@ public class HomeTableActivity extends BaseActivity<HomeTablePresenter> implemen
         title = bundleIntent.getString(BundleTags.TITLE);
         id = bundleIntent.getInt(BundleTags.ID);
         titleView.setTitle(title);
+
+        if(id == 2){
+            if(!TextUtils.isEmpty(DataHelper.getStringSF(mActivity,DataHelperTags.SSDZ_URL)))
+                groupSsdz.setVisibility(View.VISIBLE);
+            if(!TextUtils.isEmpty(DataHelper.getStringSF(mActivity,DataHelperTags.ZSSS_URL)))
+                groupZsss.setVisibility(View.VISIBLE);
+        }else if(id == 6){
+            if(!TextUtils.isEmpty(DataHelper.getStringSF(mActivity,DataHelperTags.FWK_URL)))
+                groupQyfwk.setVisibility(View.VISIBLE);
+        }
     }
 
     public void goHelp(){
@@ -61,11 +81,11 @@ public class HomeTableActivity extends BaseActivity<HomeTablePresenter> implemen
         launchActivity(new Intent(mActivity, HelpStepChildActivity.class), bundle);
     }
 
-    @OnClick({R.id.ll_help, R.id.ll_lawyer})
+    @OnClick({R.id.view_help, R.id.view_lawyer,R.id.view_ssdz,R.id.view_zsss,R.id.view_qyfwk})
     public void onViewClicked(View view) {
         if (isFastClick()) return;
         switch (view.getId()) {
-            case R.id.ll_help:
+            case R.id.view_help:
                 switch (id) {
                     case 2:
                         BuryingPointHelp.getInstance().onEvent(mActivity, "litigation_arbitration_detail", "litigation_arbitration_assistant_click");
@@ -79,7 +99,7 @@ public class HomeTableActivity extends BaseActivity<HomeTablePresenter> implemen
                 }
                 goHelp();
                 break;
-            case R.id.ll_lawyer:
+            case R.id.view_lawyer:
                 switch (id) {
                     case 2:
                         BuryingPointHelp.getInstance().onEvent(mActivity, "litigation_arbitration_detail", "litigation_arbitration_search_lawyer_click");
@@ -94,6 +114,27 @@ public class HomeTableActivity extends BaseActivity<HomeTablePresenter> implemen
                 bundle.clear();
                 bundle.putInt(BundleTags.ID, id);
                 launchActivity(new Intent(mActivity, LawyerListActivity.class), bundle);
+                break;
+            case R.id.view_ssdz:
+                bundle.clear();
+                bundle.putString(BundleTags.URL, DataHelper.getStringSF(mActivity,DataHelperTags.SSDZ_URL));
+                bundle.putString(BundleTags.TITLE, "诉讼垫资");
+                bundle.putBoolean(BundleTags.IS_SHARE, false);
+                launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+                break;
+            case R.id.view_zsss:
+                bundle.clear();
+                bundle.putString(BundleTags.URL, DataHelper.getStringSF(mActivity,DataHelperTags.ZSSS_URL));
+                bundle.putString(BundleTags.TITLE, "再审申诉");
+                bundle.putBoolean(BundleTags.IS_SHARE, false);
+                launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+                break;
+            case R.id.view_qyfwk:
+                bundle.clear();
+                bundle.putString(BundleTags.URL, DataHelper.getStringSF(mActivity,DataHelperTags.FWK_URL));
+                bundle.putString(BundleTags.TITLE, "LEX法务卡");
+                bundle.putBoolean(BundleTags.IS_SHARE, false);
+                launchActivity(new Intent(mActivity, WebActivity.class), bundle);
                 break;
         }
     }

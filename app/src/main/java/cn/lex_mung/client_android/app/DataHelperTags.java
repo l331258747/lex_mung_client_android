@@ -32,8 +32,13 @@ public class DataHelperTags {
     public static final String REQUIREMENT_ID = "requirement_id";
     public static final String TIME_UUID = "time_uuid";
     public static final String TIME_UUID_DAY = "time_uuid_day";
-    public static final String QUICK_URL = "quick_url";
-    public static final String ONLINE_URL = "online_url";
+
+    public static final String QUICK_URL = "quick_url";//快速咨询url
+    public static final String FWK_URL = "fwk_url";//法务卡url
+    public static final String ZSSS_URL = "quick_url";//再审申诉url
+    public static final String SSDZ_URL = "quick_url";//诉讼垫资url
+    public static final String ONLINE_URL = "online_url";//人工客服url
+
     public static final String LAUNCH_LOCATION = "launch_location";
 
 }

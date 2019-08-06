@@ -67,7 +67,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
     private String title;
     private String des;
     private String image;
-    private boolean isJump;
+    private boolean isJump;//页面内跳转
     private String shareUrl;
 
     private int buryingPointId;//快速电话咨询，用来判断从哪里进入的(正常，解决方案)
@@ -86,32 +86,32 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
         //webview中有一个输入框是在webview的底部，当我点击输入框的时候会弹出安卓的软键盘，这个时候我发现软键盘遮挡住了输入框
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE| WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         return R.layout.activity_web;
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(!TextUtils.isEmpty(url)){
-            if(url.indexOf("contractList.html") > -1){
-                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "more_contract",getPair());
-            }else if(url.indexOf("solution.html") > -1){
-                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "solution_detail",getPair());
-            }else if(url.indexOf("member") > -1){
-                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "enterprise_legal_card",getPair());
-            }else if(url.indexOf("quick.html") > -1){
-                if(buryingPointId == 1){
-                    BuryingPointHelp.getInstance().onActivityResumed(mActivity, "quick_consulation_from_solution",getPair());
-                }else{
-                    BuryingPointHelp.getInstance().onActivityResumed(mActivity, "quick_consultation",getPair());
+        if (!TextUtils.isEmpty(url)) {
+            if (url.indexOf("contractList.html") > -1) {
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "more_contract", getPair());
+            } else if (url.indexOf("solution.html") > -1) {
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "solution_detail", getPair());
+            } else if (url.indexOf("member") > -1) {
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "enterprise_legal_card", getPair());
+            } else if (url.indexOf("quick.html") > -1) {
+                if (buryingPointId == 1) {
+                    BuryingPointHelp.getInstance().onActivityResumed(mActivity, "quick_consulation_from_solution", getPair());
+                } else {
+                    BuryingPointHelp.getInstance().onActivityResumed(mActivity, "quick_consultation", getPair());
                 }
             }
         }
         mPresenter.onResume();
         webView.onWebResume();
 
-        if(androidToJs.isGoLogin && webView!=null && !TextUtils.isEmpty(url)){
+        if (androidToJs.isGoLogin && webView != null && !TextUtils.isEmpty(url)) {
             webView.loadUrl(url);
         }
         androidToJs.isGoLogin = false;
@@ -120,18 +120,18 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
     @Override
     protected void onPause() {
         super.onPause();
-        if(!TextUtils.isEmpty(url)){
-            if(url.indexOf("contractList.html") > -1){
-                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "more_contract",getPair());
-            }else if(url.indexOf("solution.html") > -1){
-                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "solution_detail",getPair());
-            }else if(url.indexOf("member") > -1){
-                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "enterprise_legal_card",getPair());
-            }else if(url.indexOf("quick.html") > -1){
-                if(buryingPointId == 1){
-                    BuryingPointHelp.getInstance().onActivityPaused(mActivity, "quick_consulation_from_solution",getPair());
-                }else{
-                    BuryingPointHelp.getInstance().onActivityPaused(mActivity, "quick_consultation",getPair());
+        if (!TextUtils.isEmpty(url)) {
+            if (url.indexOf("contractList.html") > -1) {
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "more_contract", getPair());
+            } else if (url.indexOf("solution.html") > -1) {
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "solution_detail", getPair());
+            } else if (url.indexOf("member") > -1) {
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "enterprise_legal_card", getPair());
+            } else if (url.indexOf("quick.html") > -1) {
+                if (buryingPointId == 1) {
+                    BuryingPointHelp.getInstance().onActivityPaused(mActivity, "quick_consulation_from_solution", getPair());
+                } else {
+                    BuryingPointHelp.getInstance().onActivityPaused(mActivity, "quick_consultation", getPair());
                 }
             }
         }
@@ -147,19 +147,18 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        if (bundleIntent != null
-                && bundleIntent.containsKey(BundleTags.URL)) {
+        if (bundleIntent != null) {
             url = bundleIntent.getString(BundleTags.URL);
             title = bundleIntent.getString(BundleTags.TITLE);
             des = bundleIntent.getString(BundleTags.DES);
             image = bundleIntent.getString(BundleTags.IMAGE);
             shareUrl = bundleIntent.getString(BundleTags.SHARE_URL);
-            isShare = bundleIntent.getBoolean(BundleTags.IS_SHARE, true);
-            isJump = bundleIntent.getBoolean(BundleTags.STATE,true);
+            isShare = bundleIntent.getBoolean(BundleTags.IS_SHARE, false);
+            isJump = bundleIntent.getBoolean(BundleTags.STATE, true);
             buryingPointId = bundleIntent.getInt(BundleTags.BURYING_POINT, -1);
         }
 
-        if(TextUtils.isEmpty(title))
+        if (TextUtils.isEmpty(title))
             title = "绿豆圈";
 
         LogUtil.e("url:" + url);
@@ -194,7 +193,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             }
         });
 
-        webView.setWebViewClient(new MyWebViewClient(webView,isJump,string -> {
+        webView.setWebViewClient(new MyWebViewClient(webView, isJump, string -> {
             Intent dialIntent2 = new Intent(Intent.ACTION_DIAL, Uri.parse(string));
             startActivity(dialIntent2);
         }));
@@ -296,9 +295,9 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
         boolean isSetToken;
 
         @JavascriptInterface
-        public void setToken(String token1){
-            LogUtil.e("token:"+token1);
-            if(token1.equals("undefined")) return;
+        public void setToken(String token1) {
+            LogUtil.e("token:" + token1);
+            if (token1.equals("undefined")) return;
 
             DataHelper.setBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS, true);
             DataHelper.setStringSF(mActivity, DataHelperTags.TOKEN, token1);
@@ -311,17 +310,17 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             if (TextUtils.isEmpty(string))
                 return;
 
-            if(isSetToken){
-                mPresenter.getUserInfoDetail(()->{
+            if (isSetToken) {
+                mPresenter.getUserInfoDetail(() -> {
                     goRushLoanPayActivity(string);
                 });
                 isSetToken = false;
-            }else{
+            } else {
                 goRushLoanPayActivity(string);
             }
         }
 
-        public void goRushLoanPayActivity(String string){
+        public void goRushLoanPayActivity(String string) {
             WebGoPayEntity businessEntity = GsonUtil.convertString2Object(string, WebGoPayEntity.class);
 
             if (isFastClick()) return;
@@ -330,8 +329,8 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             bundle.putString(BundleTags.REQUIRE_TYPE_NAME, businessEntity.getRequireTypeName());
             bundle.putString(BundleTags.TITLE, "快速电话咨询");
             bundle.putFloat(BundleTags.MONEY, businessEntity.getMoney());
-            bundle.putString(BundleTags.MOBILE,businessEntity.getMobile());
-            bundle.putInt(BundleTags.TYPE,1);
+            bundle.putString(BundleTags.MOBILE, businessEntity.getMobile());
+            bundle.putInt(BundleTags.TYPE, 1);
             launchActivity(new Intent(mActivity, RushLoanPayActivity.class), bundle);
         }
 
@@ -344,11 +343,21 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 
         //找律师
         @JavascriptInterface
-        public void goLawyerList(int requireTypeId) {
+        public void goLawyerList(String requireTypeId) {
+
+            if (TextUtils.isEmpty(requireTypeId))
+                return;
+            int reid;
+            try {
+                reid = Integer.valueOf(requireTypeId);
+            } catch (Exception e) {
+                return;
+            }
+
             runOnUiThread(() -> {
                 AppManager.getAppManager().killAllNotClass(MainActivity.class);
                 ((MainActivity) AppManager.getAppManager().findActivity(MainActivity.class)).switchPage(2);
-                AppUtils.post(LAWYER_LIST_SCREEN_INFO, LAWYER_LIST_SCREEN_INFO_LIST_ID, requireTypeId);
+                AppUtils.post(LAWYER_LIST_SCREEN_INFO, LAWYER_LIST_SCREEN_INFO_LIST_ID, reid);
             });
         }
 
@@ -377,18 +386,18 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
                     , android.os.Build.BRAND + " " + android.os.Build.MODEL
                     , android.os.Build.VERSION.RELEASE
                     , uuid
-                    , DeviceUtils.getAndroidId(mActivity,uuid)
+                    , DeviceUtils.getAndroidId(mActivity, uuid)
                     , token
-                    , mPresenter.isLogin()?userInfoDetailsEntity.getMobile():""
+                    , mPresenter.isLogin() ? userInfoDetailsEntity.getMobile() : ""
             );
             return GsonUtil.convertVO2String(device);
         }
 
         @JavascriptInterface
-        public void toldApp(){
-            if(!TextUtils.isEmpty(DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL))){
+        public void toldApp() {
+            if (!TextUtils.isEmpty(DataHelper.getStringSF(mActivity, DataHelperTags.QUICK_URL))) {
                 bundle.clear();
-                bundle.putString(BundleTags.URL, DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL));
+                bundle.putString(BundleTags.URL, DataHelper.getStringSF(mActivity, DataHelperTags.QUICK_URL));
                 bundle.putString(BundleTags.TITLE, "快速电话咨询");
                 bundle.putBoolean(BundleTags.IS_SHARE, false);
                 launchActivity(new Intent(mActivity, WebActivity.class), bundle);
@@ -397,12 +406,12 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 
         //goOrderDetail()  goOrderList()
         @JavascriptInterface
-        public void goOrderList(){
+        public void goOrderList() {
             launchActivity(new Intent(mActivity, MyOrderActivity.class));
         }
 
         @JavascriptInterface
-        public void goOrderDetail(String string){
+        public void goOrderDetail(String string) {
             if (TextUtils.isEmpty(string))
                 return;
 
@@ -410,14 +419,14 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 
             bundle.clear();
             bundle.putInt(BundleTags.ID, entity.getOrderId());
-            bundle.putString(BundleTags.TITLE,"快速电话咨询");
+            bundle.putString(BundleTags.TITLE, "快速电话咨询");
             bundle.putInt(BundleTags.TYPE, 4);
-            bundle.putString(BundleTags.ORDER_NO,entity.getOrderNo());
+            bundle.putString(BundleTags.ORDER_NO, entity.getOrderNo());
             launchActivity(new Intent(mActivity, OrderDetailsActivity.class), bundle);
         }
 
         @JavascriptInterface
-        public void goHome(){
+        public void goHome() {
             runOnUiThread(() -> {
                 killMyself();
                 AppManager.getAppManager().killAllNotClass(MainActivity.class);
@@ -425,8 +434,9 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
         }
 
         public boolean isGoLogin;
+
         @JavascriptInterface
-        public void goLogin(){
+        public void goLogin() {
             isGoLogin = true;//登录后需要再调用getinfo
             bundle.clear();
             bundle.putInt(BundleTags.TYPE, 1);

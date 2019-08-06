@@ -277,6 +277,7 @@ import cn.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UnreadMessageCountEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
+import cn.lex_mung.client_android.utils.GsonUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
@@ -358,7 +359,7 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                     public void onNext(BaseResponse<BaseListEntity<HomeEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             mRootView.setHomeAdapter(baseResponse.getData().getList());
-                            saveQuickUrl(baseResponse.getData().getList());
+                            saveShapeUrl(baseResponse.getData().getList());
                             getLawyerList();
                         }
                     }
@@ -401,20 +402,32 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                 });
     }
 
-    //获取快速咨询url
-    private void saveQuickUrl(List<HomeEntity> homeEntities) {
+    //获取快速咨询url 还有要存储的url
+    private void saveShapeUrl(List<HomeEntity> homeEntities) {
         if (homeEntities == null) return;
 
         for (int i = 0; i < homeEntities.size(); i++) {
             HomeEntity homeEntity = homeEntities.get(i);
             if (homeEntity.getType().equals("button")) {
-
                 if (homeEntities.get(i).getBtns() == null) return;
-
                 for (int j = 0; j < homeEntities.get(i).getBtns().size(); j++) {
                     HomeChildEntity homeChildEntity = homeEntities.get(i).getBtns().get(j);
-                    if (homeChildEntity.getJumptype().equals("h5") && homeChildEntity.getJumpurl().endsWith("quick.html")) {
-                        DataHelper.setStringSF(mApplication, DataHelperTags.QUICK_URL, homeChildEntity.getJumpurl());
+                    if (homeChildEntity.getJumptype().equals("h5") && homeChildEntity.getJumpurl().indexOf("quick.html") > -1) {
+                        DataHelper.setStringSF(mApplication, DataHelperTags.QUICK_URL, GsonUtil.convertVO2String(homeChildEntity));
+                    }
+                }
+            }else if(homeEntity.getType().equals("three_card")){
+                if (homeEntities.get(i).getBtns() == null) return;
+                for (int j = 0; j < homeEntities.get(i).getBtns().size(); j++) {
+                    HomeChildEntity homeChildEntity = homeEntities.get(i).getBtns().get(j);
+                    if (homeChildEntity.getJumptype().equals("h5") && homeChildEntity.getJumpurl().endsWith("member")) {//法务卡
+                        DataHelper.setStringSF(mApplication, DataHelperTags.FWK_URL, homeChildEntity.getJumpurl());
+                    }
+                    if (homeChildEntity.getJumptype().equals("h5") && homeChildEntity.getJumpurl().endsWith("feature.html")) {//诉讼垫资
+                        DataHelper.setStringSF(mApplication, DataHelperTags.SSDZ_URL, homeChildEntity.getJumpurl());
+                    }
+                    if (homeChildEntity.getJumptype().equals("h5") && homeChildEntity.getJumpurl().endsWith("retrial.html")) {//再审申诉
+                        DataHelper.setStringSF(mApplication, DataHelperTags.ZSSS_URL, homeChildEntity.getJumpurl());
                     }
                 }
             }

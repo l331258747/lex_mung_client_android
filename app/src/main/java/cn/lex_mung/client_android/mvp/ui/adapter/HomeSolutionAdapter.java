@@ -20,7 +20,7 @@ public class HomeSolutionAdapter extends BaseQuickAdapter<CommonSolutionEntity, 
 
     @Override
     protected void convert(BaseViewHolder helper, CommonSolutionEntity item) {
-        helper.setText(R.id.tv_name,item.getAlias());
+        helper.setText(R.id.tv_name,item.getTypeName());
         if (!TextUtils.isEmpty(item.getAppIcon())) {
             mImageLoader.loadImage(mContext
                     , ImageConfigImpl
