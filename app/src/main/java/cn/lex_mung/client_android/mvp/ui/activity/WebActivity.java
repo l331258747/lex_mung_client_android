@@ -30,6 +30,7 @@ import cn.lex_mung.client_android.di.module.WebModule;
 import cn.lex_mung.client_android.mvp.contract.WebContract;
 import cn.lex_mung.client_android.mvp.model.entity.DeviceEntity2;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
+import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.WebGoOrderDetailEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.WebGoPayEntity;
 import cn.lex_mung.client_android.mvp.presenter.WebPresenter;
@@ -400,10 +401,19 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 
         @JavascriptInterface
         public void toldApp() {
-            if (!TextUtils.isEmpty(DataHelper.getStringSF(mActivity, DataHelperTags.QUICK_URL))) {
+            String str = DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL);
+            HomeChildEntity entity = GsonUtil.convertString2Object(str,HomeChildEntity.class);
+            if(!TextUtils.isEmpty(str) && entity != null){
                 bundle.clear();
-                bundle.putString(BundleTags.URL, DataHelper.getStringSF(mActivity, DataHelperTags.QUICK_URL));
-                bundle.putString(BundleTags.TITLE, "快速电话咨询");
+                bundle.putString(BundleTags.URL, entity.getJumpurl());
+                bundle.putString(BundleTags.TITLE, entity.getTitle());
+                if(entity.getShowShare() == 1){
+                    bundle.putBoolean(BundleTags.IS_SHARE, true);
+                    bundle.putString(BundleTags.SHARE_URL, entity.getShareUrl());
+                    bundle.putString(BundleTags.SHARE_TITLE, entity.getShareTitle());
+                    bundle.putString(BundleTags.SHARE_DES, entity.getShareDescription());
+                    bundle.putString(BundleTags.SHARE_IMAGE, entity.getShareImg());
+                }
                 launchActivity(new Intent(mActivity, WebActivity.class), bundle);
             }
         }

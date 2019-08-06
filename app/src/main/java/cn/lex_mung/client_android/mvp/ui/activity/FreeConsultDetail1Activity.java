@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.umeng.analytics.MobclickAgent;
 import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
@@ -29,12 +30,14 @@ import cn.lex_mung.client_android.di.component.DaggerFreeConsultDetail1Component
 import cn.lex_mung.client_android.di.module.FreeConsultDetail1Module;
 import cn.lex_mung.client_android.mvp.contract.FreeConsultDetail1Contract;
 import cn.lex_mung.client_android.mvp.model.entity.FreeConsultEntity;
+import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
 import cn.lex_mung.client_android.mvp.presenter.FreeConsultDetail1Presenter;
 import cn.lex_mung.client_android.mvp.ui.adapter.FreeConsultDetail1Adapter;
 import cn.lex_mung.client_android.mvp.ui.adapter.LawyerListAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.EmptyView2;
 import cn.lex_mung.client_android.utils.BuryingPointHelp;
+import cn.lex_mung.client_android.utils.GsonUtil;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
@@ -97,10 +100,19 @@ public class FreeConsultDetail1Activity extends BaseActivity<FreeConsultDetail1P
 
 
         emptyView2.getBtn().setOnClickListener(v -> {
-            if(!TextUtils.isEmpty(DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL))){
+            String str = DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL);
+            HomeChildEntity entity = GsonUtil.convertString2Object(str,HomeChildEntity.class);
+            if(!TextUtils.isEmpty(str) && entity != null){
                 bundle.clear();
-                bundle.putString(BundleTags.URL, DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL));
-                bundle.putString(BundleTags.TITLE, "快速电话咨询");
+                bundle.putString(BundleTags.URL, entity.getJumpurl());
+                bundle.putString(BundleTags.TITLE, entity.getTitle());
+                if(entity.getShowShare() == 1){
+                    bundle.putBoolean(BundleTags.IS_SHARE, true);
+                    bundle.putString(BundleTags.SHARE_URL, entity.getShareUrl());
+                    bundle.putString(BundleTags.SHARE_TITLE, entity.getShareTitle());
+                    bundle.putString(BundleTags.SHARE_DES, entity.getShareDescription());
+                    bundle.putString(BundleTags.SHARE_IMAGE, entity.getShareImg());
+                }
                 launchActivity(new Intent(mActivity, WebActivity.class), bundle);
             }
         });

@@ -38,6 +38,7 @@ import cn.lex_mung.client_android.mvp.model.entity.help.HelpStepLawyerEntity;
 import cn.lex_mung.client_android.mvp.model.entity.help.RecommendLawyerBean;
 import cn.lex_mung.client_android.mvp.model.entity.help.RequireInfoBean;
 import cn.lex_mung.client_android.mvp.model.entity.help.RequireInfoChildBean;
+import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
 import cn.lex_mung.client_android.mvp.presenter.HelpStepLawyerPresenter;
 import cn.lex_mung.client_android.mvp.ui.adapter.HelpStepLawyerAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog5;
@@ -49,6 +50,7 @@ import cn.lex_mung.client_android.mvp.ui.dialog.OnlyTextDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.SimpleFlowLayout;
 import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
 import cn.lex_mung.client_android.utils.BuryingPointHelp;
+import cn.lex_mung.client_android.utils.GsonUtil;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
@@ -220,10 +222,19 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
                     BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_quick_consultation_click");
                 }
 
-                if(!TextUtils.isEmpty(DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL))){
+                String str = DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL);
+                HomeChildEntity entity = GsonUtil.convertString2Object(str,HomeChildEntity.class);
+                if(!TextUtils.isEmpty(str) && entity != null){
                     bundle.clear();
-                    bundle.putString(BundleTags.URL, DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL));
-                    bundle.putString(BundleTags.TITLE, "快速电话咨询");
+                    bundle.putString(BundleTags.URL, entity.getJumpurl());
+                    bundle.putString(BundleTags.TITLE, entity.getTitle());
+                    if(entity.getShowShare() == 1){
+                        bundle.putBoolean(BundleTags.IS_SHARE, true);
+                        bundle.putString(BundleTags.SHARE_URL, entity.getShareUrl());
+                        bundle.putString(BundleTags.SHARE_TITLE, entity.getShareTitle());
+                        bundle.putString(BundleTags.SHARE_DES, entity.getShareDescription());
+                        bundle.putString(BundleTags.SHARE_IMAGE, entity.getShareImg());
+                    }
                     launchActivity(new Intent(mActivity, WebActivity.class), bundle);
                 }
 

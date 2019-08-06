@@ -13,10 +13,12 @@ import butterknife.OnClick;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.di.module.HomeTableModule;
+import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
 import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
 import cn.lex_mung.client_android.utils.BuryingPointHelp;
+import cn.lex_mung.client_android.utils.GsonUtil;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
@@ -63,13 +65,21 @@ public class HomeTableActivity extends BaseActivity<HomeTablePresenter> implemen
         id = bundleIntent.getInt(BundleTags.ID);
         titleView.setTitle(title);
 
+        String str;
+        HomeChildEntity entity;
         if(id == 2){
-            if(!TextUtils.isEmpty(DataHelper.getStringSF(mActivity,DataHelperTags.SSDZ_URL)))
+            str = DataHelper.getStringSF(mActivity,DataHelperTags.SSDZ_URL);
+            entity = GsonUtil.convertString2Object(str,HomeChildEntity.class);
+            if(!TextUtils.isEmpty(str) && entity != null)
                 groupSsdz.setVisibility(View.VISIBLE);
-            if(!TextUtils.isEmpty(DataHelper.getStringSF(mActivity,DataHelperTags.ZSSS_URL)))
+            str = DataHelper.getStringSF(mActivity,DataHelperTags.ZSSS_URL);
+            entity = GsonUtil.convertString2Object(str,HomeChildEntity.class);
+            if(!TextUtils.isEmpty(str) && entity != null)
                 groupZsss.setVisibility(View.VISIBLE);
         }else if(id == 6){
-            if(!TextUtils.isEmpty(DataHelper.getStringSF(mActivity,DataHelperTags.FWK_URL)))
+            str = DataHelper.getStringSF(mActivity,DataHelperTags.FWK_URL);
+            entity = GsonUtil.convertString2Object(str,HomeChildEntity.class);
+            if(!TextUtils.isEmpty(str) && entity != null)
                 groupQyfwk.setVisibility(View.VISIBLE);
         }
     }
@@ -84,6 +94,8 @@ public class HomeTableActivity extends BaseActivity<HomeTablePresenter> implemen
     @OnClick({R.id.view_help, R.id.view_lawyer,R.id.view_ssdz,R.id.view_zsss,R.id.view_qyfwk})
     public void onViewClicked(View view) {
         if (isFastClick()) return;
+        String str;
+        HomeChildEntity entity;
         switch (view.getId()) {
             case R.id.view_help:
                 switch (id) {
@@ -116,23 +128,55 @@ public class HomeTableActivity extends BaseActivity<HomeTablePresenter> implemen
                 launchActivity(new Intent(mActivity, LawyerListActivity.class), bundle);
                 break;
             case R.id.view_ssdz:
-                bundle.clear();
-                bundle.putString(BundleTags.URL, DataHelper.getStringSF(mActivity,DataHelperTags.SSDZ_URL));
-                bundle.putString(BundleTags.TITLE, "诉讼垫资");
-                launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+                str = DataHelper.getStringSF(mActivity,DataHelperTags.SSDZ_URL);
+                entity = GsonUtil.convertString2Object(str,HomeChildEntity.class);
+                if(!TextUtils.isEmpty(str) && entity != null){
+                    bundle.clear();
+                    bundle.putString(BundleTags.URL, entity.getJumpurl());
+                    bundle.putString(BundleTags.TITLE, entity.getTitle());
+                    if(entity.getShowShare() == 1){
+                        bundle.putBoolean(BundleTags.IS_SHARE, true);
+                        bundle.putString(BundleTags.SHARE_URL, entity.getShareUrl());
+                        bundle.putString(BundleTags.SHARE_TITLE, entity.getShareTitle());
+                        bundle.putString(BundleTags.SHARE_DES, entity.getShareDescription());
+                        bundle.putString(BundleTags.SHARE_IMAGE, entity.getShareImg());
+                    }
+                    launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+                }
                 break;
             case R.id.view_zsss:
-                bundle.clear();
-                bundle.putString(BundleTags.URL, DataHelper.getStringSF(mActivity,DataHelperTags.ZSSS_URL));
-                bundle.putString(BundleTags.TITLE, "再审申诉");
-                bundle.putBoolean(BundleTags.IS_SHARE, false);
-                launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+                str = DataHelper.getStringSF(mActivity,DataHelperTags.ZSSS_URL);
+                entity = GsonUtil.convertString2Object(str,HomeChildEntity.class);
+                if(!TextUtils.isEmpty(str) && entity != null){
+                    bundle.clear();
+                    bundle.putString(BundleTags.URL, entity.getJumpurl());
+                    bundle.putString(BundleTags.TITLE, entity.getTitle());
+                    if(entity.getShowShare() == 1){
+                        bundle.putBoolean(BundleTags.IS_SHARE, true);
+                        bundle.putString(BundleTags.SHARE_URL, entity.getShareUrl());
+                        bundle.putString(BundleTags.SHARE_TITLE, entity.getShareTitle());
+                        bundle.putString(BundleTags.SHARE_DES, entity.getShareDescription());
+                        bundle.putString(BundleTags.SHARE_IMAGE, entity.getShareImg());
+                    }
+                    launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+                }
                 break;
             case R.id.view_qyfwk:
-                bundle.clear();
-                bundle.putString(BundleTags.URL, DataHelper.getStringSF(mActivity,DataHelperTags.FWK_URL));
-                bundle.putString(BundleTags.TITLE, "LEX法务卡");
-                launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+                str = DataHelper.getStringSF(mActivity,DataHelperTags.FWK_URL);
+                entity = GsonUtil.convertString2Object(str,HomeChildEntity.class);
+                if(!TextUtils.isEmpty(str) && entity != null){
+                    bundle.clear();
+                    bundle.putString(BundleTags.URL, entity.getJumpurl());
+                    bundle.putString(BundleTags.TITLE, entity.getTitle());
+                    if(entity.getShowShare() == 1){
+                        bundle.putBoolean(BundleTags.IS_SHARE, true);
+                        bundle.putString(BundleTags.SHARE_URL, entity.getShareUrl());
+                        bundle.putString(BundleTags.SHARE_TITLE, entity.getShareTitle());
+                        bundle.putString(BundleTags.SHARE_DES, entity.getShareDescription());
+                        bundle.putString(BundleTags.SHARE_IMAGE, entity.getShareImg());
+                    }
+                    launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+                }
                 break;
         }
     }
