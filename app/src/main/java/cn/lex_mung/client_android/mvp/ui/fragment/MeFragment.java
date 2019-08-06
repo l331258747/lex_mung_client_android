@@ -179,7 +179,6 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
                 bundle.clear();
                 bundle.putString(BundleTags.URL, mPresenter.getAboutEntity().getGuideUrl());
                 bundle.putString(BundleTags.TITLE, getString(R.string.text_newbie_guide));
-                bundle.putBoolean(BundleTags.IS_SHARE, false);
                 bundle.putBoolean(BundleTags.STATE,true);
                 launchActivity(new Intent(mActivity, WebActivity.class), bundle);
                 break;

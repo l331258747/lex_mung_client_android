@@ -63,7 +63,7 @@ public class AboutActivity extends BaseActivity<AboutPresenter> implements About
             case R.id.tv_about_me:
                 bundle.clear();
                 bundle.putString(BundleTags.URL, mPresenter.getEntity().getAboutUsUrl());
-                bundle.putBoolean(BundleTags.IS_SHARE, false);
+                bundle.putString(BundleTags.TITLE,"关于我们");
                 launchActivity(new Intent(mActivity, WebActivity.class), bundle);
                 break;
             case R.id.tv_feedback:
@@ -72,7 +72,7 @@ public class AboutActivity extends BaseActivity<AboutPresenter> implements About
             case R.id.tv_business_cooperation:
                 bundle.clear();
                 bundle.putString(BundleTags.URL, mPresenter.getEntity().getCooperationUrl());
-                bundle.putBoolean(BundleTags.IS_SHARE, false);
+                bundle.putString(BundleTags.TITLE,"商务合作");
                 launchActivity(new Intent(mActivity, WebActivity.class), bundle);
                 break;
             case R.id.tv_share:

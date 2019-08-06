@@ -38,7 +38,7 @@ import me.zl.mvp.utils.AppUtils;
 import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
 
-//在线咨询
+//在线咨询 x5 webview
 public class X5WebCommonActivity extends BaseActivity<X5WebCommonPresenter> implements X5WebCommonContract.View {
 
     @BindView(R.id.titleView)
@@ -131,7 +131,7 @@ public class X5WebCommonActivity extends BaseActivity<X5WebCommonPresenter> impl
             shareDes = bundleIntent.getString(BundleTags.SHARE_DES);
             shareImage = bundleIntent.getString(BundleTags.SHARE_IMAGE);
             ShareTitle = bundleIntent.getString(BundleTags.SHARE_TITLE);
-            isShare = bundleIntent.getBoolean(BundleTags.IS_SHARE, true);
+            isShare = bundleIntent.getBoolean(BundleTags.IS_SHARE, false);
             isJump = bundleIntent.getBoolean(BundleTags.STATE, true);
         }
 

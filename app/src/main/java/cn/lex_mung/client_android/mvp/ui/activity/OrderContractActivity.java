@@ -122,7 +122,6 @@ public class OrderContractActivity extends BaseActivity<OrderContractPresenter> 
                 bundle.clear();
                 bundle.putString(BundleTags.URL, mPresenter.getHelpLink());
                 bundle.putString(BundleTags.TITLE, "帮助文档");
-                bundle.putBoolean(BundleTags.IS_SHARE, false);
                 launchActivity(new Intent(mActivity, WebActivity.class), bundle);
                 break;
             case R.id.tv_custom_call:

@@ -595,7 +595,6 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                             bundle.clear();
                             bundle.putString(BundleTags.URL, baseResponse.getData().getTariffExplanationUrl());
                             bundle.putString(BundleTags.TITLE, "绿豆圈交易流程及服务规范");
-                            bundle.putBoolean(BundleTags.IS_SHARE, false);
                             mRootView.launchActivity(new Intent(mApplication, WebActivity.class), bundle);
 
                         }

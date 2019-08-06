@@ -228,7 +228,6 @@ public class LoginPresenter extends BasePresenter<LoginContract.Model, LoginCont
                             bundle.clear();
                             bundle.putString(BundleTags.URL, baseResponse.getData().getUserRegisterAgreenmentUrl());
                             bundle.putString(BundleTags.TITLE, "用户服务协议");
-                            bundle.putBoolean(BundleTags.IS_SHARE, false);
                             mRootView.launchActivity(new Intent(mApplication, WebActivity.class), bundle);
                         }
                     }

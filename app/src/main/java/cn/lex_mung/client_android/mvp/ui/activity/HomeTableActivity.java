@@ -119,7 +119,6 @@ public class HomeTableActivity extends BaseActivity<HomeTablePresenter> implemen
                 bundle.clear();
                 bundle.putString(BundleTags.URL, DataHelper.getStringSF(mActivity,DataHelperTags.SSDZ_URL));
                 bundle.putString(BundleTags.TITLE, "诉讼垫资");
-                bundle.putBoolean(BundleTags.IS_SHARE, false);
                 launchActivity(new Intent(mActivity, WebActivity.class), bundle);
                 break;
             case R.id.view_zsss:
@@ -133,7 +132,6 @@ public class HomeTableActivity extends BaseActivity<HomeTablePresenter> implemen
                 bundle.clear();
                 bundle.putString(BundleTags.URL, DataHelper.getStringSF(mActivity,DataHelperTags.FWK_URL));
                 bundle.putString(BundleTags.TITLE, "LEX法务卡");
-                bundle.putBoolean(BundleTags.IS_SHARE, false);
                 launchActivity(new Intent(mActivity, WebActivity.class), bundle);
                 break;
         }

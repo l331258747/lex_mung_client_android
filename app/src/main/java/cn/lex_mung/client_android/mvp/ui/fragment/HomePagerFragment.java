@@ -835,8 +835,6 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                         bundle.putString(BundleTags.SHARE_TITLE, entity.getShareTitle());
                         bundle.putString(BundleTags.SHARE_DES, entity.getShareDescription());
                         bundle.putString(BundleTags.SHARE_IMAGE, entity.getShareImg());
-                    }else{
-                        bundle.putBoolean(BundleTags.IS_SHARE, false);
                     }
                     if (linkValue.indexOf("couponId=") != -1) {//领取优惠券页面，不需要跳转
                         bundle.putBoolean(BundleTags.STATE, false);

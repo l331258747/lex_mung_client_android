@@ -224,7 +224,6 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
                     bundle.clear();
                     bundle.putString(BundleTags.URL, DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL));
                     bundle.putString(BundleTags.TITLE, "快速电话咨询");
-                    bundle.putBoolean(BundleTags.IS_SHARE, false);
                     launchActivity(new Intent(mActivity, WebActivity.class), bundle);
                 }
 

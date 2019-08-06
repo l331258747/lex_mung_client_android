@@ -124,7 +124,6 @@ public class CurrencyDialog2 extends Dialog {
                 Bundle bundle = new Bundle();
                 bundle.putString(BundleTags.URL, entity.getAgreementUrl());
                 bundle.putString(BundleTags.TITLE, "绿豆圈专家咨询细则");
-                bundle.putBoolean(BundleTags.IS_SHARE, false);
                 intent.putExtras(bundle);
                 AppUtils.startActivity(intent);
             }

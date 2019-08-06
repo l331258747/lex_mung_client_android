@@ -209,7 +209,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                         bundle.clear();
                         bundle.putString(BundleTags.URL, DataHelper.getStringSF(mActivity, DataHelperTags.ONLINE_URL));
                         bundle.putString(BundleTags.TITLE, "在线咨询");
-                        bundle.putBoolean(BundleTags.IS_SHARE, false);
                         launchActivity(new Intent(mActivity, X5WebCommonActivity.class), bundle);
                     }
                 }

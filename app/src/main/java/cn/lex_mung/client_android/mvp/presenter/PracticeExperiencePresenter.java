@@ -174,7 +174,6 @@ public class PracticeExperiencePresenter extends BasePresenter<PracticeExperienc
             bundle.clear();
             bundle.putString(BundleTags.URL, bean.getUrl());
             bundle.putString(BundleTags.TITLE, bean.getTitle());
-            bundle.putBoolean(BundleTags.IS_SHARE, false);
             mRootView.launchActivity(new Intent(mApplication, WebActivity.class), bundle);
         });
         caseAdapter.setOnLoadMoreListener(() -> {

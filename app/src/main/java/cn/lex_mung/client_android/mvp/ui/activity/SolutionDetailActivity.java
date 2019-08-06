@@ -255,7 +255,6 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
                     bundle.clear();
                     bundle.putString(BundleTags.URL, entity.getUrl());
                     bundle.putString(BundleTags.TITLE, "快速电话咨询");
-                    bundle.putBoolean(BundleTags.IS_SHARE, false);
                     launchActivity(new Intent(mActivity, WebActivity.class), bundle);
                 });
                 continue;
@@ -281,7 +280,6 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
                     bundle.clear();
                     bundle.putString(BundleTags.URL, entity.getUrl());
                     bundle.putString(BundleTags.TITLE, entity.getContent());
-                    bundle.putBoolean(BundleTags.IS_SHARE, false);
                     launchActivity(new Intent(mActivity, WebActivity.class), bundle);
                 });
                 continue;

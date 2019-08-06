@@ -27,6 +27,7 @@ import cn.lex_mung.client_android.mvp.presenter.X5Web2Presenter;
 
 import cn.lex_mung.client_android.R;
 
+// 查看文件的x5 webview
 public class X5Web2Activity extends BaseActivity<X5Web2Presenter> implements X5Web2Contract.View,TbsReaderView.ReaderCallback {
 
     LinearLayout ll_parent;
