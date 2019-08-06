@@ -797,10 +797,16 @@ public interface CommonService {
     @GET("https://restapi.amap.com/v3/ip?key=f55325bc244062399ce0579b6b9d56a5")
     Observable<LaunchLocationEntity> cityjson();
 
-    ///random
+//    ///random
+//    //GET
+//    //移动web消息
+//    @GET("random")
+//    Observable<BaseResponse<List<String>>> random();
+
+    ///common/random/v2
     //GET
-    //移动web消息
-    @GET("random")
+    //app首页顶端消息
+    @GET("common/random/v2")
     Observable<BaseResponse<List<String>>> random();
 
     ///client/recharge/list
