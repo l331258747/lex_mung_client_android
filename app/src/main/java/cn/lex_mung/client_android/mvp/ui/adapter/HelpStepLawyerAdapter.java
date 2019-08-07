@@ -25,7 +25,7 @@ public class HelpStepLawyerAdapter extends BaseQuickAdapter<RequireInfoChildBean
         if (item.getRequirementType() == 1) {
             helper.setText(R.id.item_tv_release, "发布需求");
         } else {
-            helper.setText(R.id.item_tv_release, "拨打电话");
+            helper.setText(R.id.item_tv_release, "发起预约");
         }
 
         if (item.getRstatus() == 1) {

@@ -27,7 +27,7 @@
         android:layout_height="@dimen/qb_px_50"
         android:background="@drawable/round_40_1ec78a_all"
         android:gravity="center"
-        android:text="拨打电话"
+        android:text="发起预约"
         android:textColor="@color/c_ff"
         app:layout_constraintEnd_toEndOf="parent" />
 

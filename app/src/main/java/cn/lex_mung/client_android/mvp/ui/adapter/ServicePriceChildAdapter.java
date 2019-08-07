@@ -33,8 +33,6 @@ public class ServicePriceChildAdapter extends BaseQuickAdapter<BusinessEntity, B
             }else{
                 helper.setText(R.id.item_tv_price, item.getMinAmountStr() + "元/" + item.getUnit());
             }
-
-            helper.setTextColor(R.id.item_tv_price, AppUtils.getColor(mContext, R.color.c_323232));
         }
     }
 }
