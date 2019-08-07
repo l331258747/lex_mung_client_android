@@ -9,9 +9,10 @@
     <ImageView
         android:id="@+id/iv_icon"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/qb_px_250"
         android:layout_marginTop="@dimen/qb_px_180"
         android:src="@drawable/ic_pay_success"
+        android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

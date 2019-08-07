@@ -22,6 +22,8 @@ public interface PayStatusContract {
 
         void setContentLayout(String s, android.view.View.OnClickListener onClickListener);
 
+        void setImg(int imageId);
+
         void showReleaseDemandLayout(String tip, String orderNo, String payTime, String stringSF, String sf);
     }
 

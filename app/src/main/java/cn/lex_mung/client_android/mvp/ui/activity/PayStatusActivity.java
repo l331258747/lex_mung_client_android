@@ -120,9 +120,13 @@ public class PayStatusActivity extends BaseActivity<PayStatusPresenter> implemen
 
     @Override
     public void setContentLayout(String s, View.OnClickListener onClickListener) {
-        String string = s + "<font color=\"#4A90E2\">  去看看</font>";
-        StringUtils.setHtml(tvContent,string);
+        tvContent.setText(s);
         tvContent.setOnClickListener(onClickListener);
+    }
+
+    @Override
+    public void setImg(int imageId) {
+        ivIcon.setImageResource(imageId);
     }
 
     @Override
