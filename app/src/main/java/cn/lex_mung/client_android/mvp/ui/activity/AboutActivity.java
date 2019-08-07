@@ -53,7 +53,7 @@ public class AboutActivity extends BaseActivity<AboutPresenter> implements About
         if (bundleIntent != null) {
             mPresenter.setEntity((AboutEntity) bundleIntent.getSerializable(BundleTags.ENTITY));
         }
-        tvVersion.setText(String.format(getString(R.string.text_client_side), DeviceUtils.getVersionName(mActivity)));
+        tvVersion.setText(String.format("用户端 %s", DeviceUtils.getVersionName(mActivity)));
     }
 
     @OnClick({R.id.tv_about_me, R.id.tv_feedback, R.id.tv_business_cooperation, R.id.tv_share})

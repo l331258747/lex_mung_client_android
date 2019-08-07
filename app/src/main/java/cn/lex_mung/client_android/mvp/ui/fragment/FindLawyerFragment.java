@@ -300,9 +300,9 @@ public class FindLawyerFragment extends BaseFragment<FindLawyerPresenter> implem
             startAnimator(ivSort);
         });
         List<ConsultTypeEntity> list = new ArrayList<>();
-        list.add(new ConsultTypeEntity(0, getString(R.string.text_synthesis_sort)));
-        list.add(new ConsultTypeEntity(1, getString(R.string.text_newest_enter)));
-        list.add(new ConsultTypeEntity(2, getString(R.string.text_newest_active)));
+        list.add(new ConsultTypeEntity(0, "综合排序"));
+        list.add(new ConsultTypeEntity(1, "最新入驻"));
+        list.add(new ConsultTypeEntity(2, "最近活跃"));
         LawyerListSortScreenAdapter lawyerListSortScreenAdapter = new LawyerListSortScreenAdapter(list, pos);
         AppUtils.configRecyclerView(recyclerView, new LinearLayoutManager(mActivity));
         recyclerView.setAdapter(lawyerListSortScreenAdapter);
@@ -355,7 +355,7 @@ public class FindLawyerFragment extends BaseFragment<FindLawyerPresenter> implem
                 position22 = -1;
 
                 mPresenter.setFieldId(0);
-                tvField.setText(R.string.text_all_field);
+                tvField.setText("全部领域");
 
                 mPresenter.setPageNum(1);
                 mPresenter.getConsultList(false, true);
@@ -402,7 +402,7 @@ public class FindLawyerFragment extends BaseFragment<FindLawyerPresenter> implem
             position2 = 0;
             position22 = -1;
             mPresenter.setFieldId(0);
-            tvField.setText(R.string.text_all_field);
+            tvField.setText("全部领域");
             return;
         }
 
@@ -446,7 +446,7 @@ public class FindLawyerFragment extends BaseFragment<FindLawyerPresenter> implem
                 position33 = -1;
 
                 mPresenter.setRegionId(0, 0);
-                tvRegion.setText(R.string.text_all_region);
+                tvRegion.setText("全部地区");
 
                 mPresenter.setPageNum(1);
                 mPresenter.getConsultList(false, true);

@@ -26,9 +26,9 @@ public class ServicePriceAdapter extends BaseQuickAdapter<BusinessEntity, BaseVi
     protected void convert(BaseViewHolder helper, BusinessEntity item) {
         helper.setText(R.id.item_tv_title, item.getRequireTypeName());
         if (item.getRequirementType() == 1) {
-            helper.setText(R.id.item_tv_release, mContext.getString(R.string.text_release_demand_1));
+            helper.setText(R.id.item_tv_release, "发布需求");
         } else {
-            helper.setText(R.id.item_tv_release, mContext.getString(R.string.text_telephone_counseling));
+            helper.setText(R.id.item_tv_release, "发起预约");
         }
         ServicePriceChildAdapter adapter = new ServicePriceChildAdapter(item.getRequires(),minimumDuration);
         RecyclerView recyclerView = helper.getView(R.id.recycler_view);

@@ -170,9 +170,9 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
         setPriceLayout(0,0,0);
         setCouponLayout(null,false);
 
-        String string = getString(R.string.text_fast_consult_tip_1)
+        String string = "4.详细流程请查看"
                 + "<font color=\"#1EC88C\">"
-                + getString(R.string.text_lex_transaction_process)
+                + "《绿豆圈交易流程及服务规范》"
                 + "</font>";
         tvFastConsultTip.setText(Html.fromHtml(string));
 //        groupCount.setVisibility(View.GONE);
@@ -274,8 +274,8 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
             MobclickAgent.onEvent(mActivity, "w_y_shouye_kszx_detail_chongzhi");
             launchActivity(new Intent(mActivity, MyAccountActivity.class));
         }
-                , getString(R.string.text_lack_of_balance)
-                , getString(R.string.text_leave_for_top_up)
+                , "您账户余额不足，是否前往充值？"
+                , "去充值"
                 , getString(R.string.text_cancel))
                 .show();
     }
@@ -336,15 +336,15 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
                 mPresenter.pay(etUserName.getText().toString(), webView.getSettings().getUserAgentString());
                 break;
             case R.id.tv_change_phone_number:
-                if (getString(R.string.text_change_phone_number).contentEquals(tvChangePhoneNumber.getText())) {
+                if ("更换手机号".contentEquals(tvChangePhoneNumber.getText())) {
                     etContactPhone.setText("");
                     etContactPhone.requestFocus();
                     DeviceUtils.openSoftKeyboard(etContactPhone);
-                    tvChangePhoneNumber.setText(R.string.text_registered_phone_number);
+                    tvChangePhoneNumber.setText("使用注册手机号");
                 } else {
                     etContactPhone.setText(mPresenter.getMobile());
                     DeviceUtils.hideSoftKeyboard(etContactPhone);
-                    tvChangePhoneNumber.setText(R.string.text_change_phone_number);
+                    tvChangePhoneNumber.setText("更换手机号");
                 }
                 break;
             case R.id.view_discount_way:

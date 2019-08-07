@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/qb_px_35"
         android:includeFontPadding="false"
-        android:text="@string/text_no_price"
+        android:text="价格未配置"
         android:textColor="@color/c_b5b5b5"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"

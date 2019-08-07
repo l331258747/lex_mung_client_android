@@ -64,7 +64,7 @@ public class SettingActivity extends BaseActivity<SettingPresenter> implements S
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        tvVersionName.setText(String.format(getString(R.string.text_version), DeviceUtils.getVersionName(mActivity)));
+        tvVersionName.setText(String.format("%s版本", DeviceUtils.getVersionName(mActivity)));
 
         if(!DataHelper.getBooleanSF(mActivity,DataHelperTags.IS_LOGIN_SUCCESS)){
             tvLogout.setVisibility(View.GONE);

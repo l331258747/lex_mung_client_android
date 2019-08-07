@@ -37,7 +37,7 @@
         android:layout_below="@id/avi"
         android:layout_centerHorizontal="true"
         android:includeFontPadding="false"
-        android:text="@string/text_loading"
+        android:text="加载中"
         android:textColor="@android:color/white"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"

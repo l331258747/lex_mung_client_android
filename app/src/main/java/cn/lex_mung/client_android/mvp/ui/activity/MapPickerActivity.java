@@ -93,7 +93,7 @@ public class MapPickerActivity extends BaseActivity<MapPickerPresenter> implemen
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         tvRight.setVisibility(View.VISIBLE);
-        tvRight.setText(getString(R.string.text_send));
+        tvRight.setText("发送");
         mapView.onCreate(savedInstanceState);
         AppUtils.configRecyclerView(recyclerViewMap, new LinearLayoutManager(mActivity));
         initLocation();

@@ -53,23 +53,23 @@ public class DemandMessageAdapter extends BaseQuickAdapter<DemandMessageEntity.R
                 helper.setText(R.id.item_tv_time, TimeFormat.getTime(lastMsg.getCreateTime()));
                 switch (lastMsg.getContentType()) {
                     case voice:
-                        helper.setText(R.id.item_tv_content, R.string.text_message_voice);
+                        helper.setText(R.id.item_tv_content, "[语音]");
                         break;
                     case text:
                         helper.setText(R.id.item_tv_content, ((TextContent) lastMsg.getContent()).getText());
                         break;
                     case location:
-                        helper.setText(R.id.item_tv_content, R.string.text_message_location);
+                        helper.setText(R.id.item_tv_content, "[位置信息]");
                         break;
                     case custom:
-                        helper.setText(R.id.item_tv_content, R.string.text_message_system);
+                        helper.setText(R.id.item_tv_content, "[系统消息]");
                         break;
                     case image:
-                        helper.setText(R.id.item_tv_content, R.string.text_message_image);
+                        helper.setText(R.id.item_tv_content, "[图片]");
                         break;
                 }
             } else {
-                helper.setText(R.id.item_tv_content, R.string.text_message_tip);
+                helper.setText(R.id.item_tv_content, "您好，请问有什么可以帮您？");
             }
         }
         switch (item.getIsReceipt()) {
@@ -81,10 +81,10 @@ public class DemandMessageAdapter extends BaseQuickAdapter<DemandMessageEntity.R
                     helper.getView(R.id.item_tv_num).setVisibility(View.GONE);
                 }
 
-                helper.setText(R.id.item_tv_time, R.string.text_wait_order);
+                helper.setText(R.id.item_tv_time, "待接单");
                 helper.setTextColor(R.id.item_tv_time, AppUtils.getColor(mContext, R.color.c_ea5514));
                 helper.getView(R.id.item_iv_icon).setVisibility(View.VISIBLE);
-                helper.setText(R.id.item_tv_content, R.string.text_message_tip_1);
+                helper.setText(R.id.item_tv_content, "您的需求已经送达，等待律师接单");
                 break;
             case 1:
                 helper.getView(R.id.item_iv_icon).setVisibility(View.GONE);
@@ -95,10 +95,10 @@ public class DemandMessageAdapter extends BaseQuickAdapter<DemandMessageEntity.R
                     if (lastMsg != null) {
                         helper.setText(R.id.item_tv_time, TimeFormat.getTime(lastMsg.getCreateTime()));
                     } else {
-                        helper.setText(R.id.item_tv_time, R.string.text_already_order);
+                        helper.setText(R.id.item_tv_time, "已接单");
                     }
                 } else {
-                    helper.setText(R.id.item_tv_time, R.string.text_already_order);
+                    helper.setText(R.id.item_tv_time, "已接单");
                 }
                 if (conversation != null
                         && conversation.getUnReadMsgCnt() > 0) {
@@ -110,13 +110,13 @@ public class DemandMessageAdapter extends BaseQuickAdapter<DemandMessageEntity.R
                 break;
             case 2:
                 helper.getView(R.id.item_tv_num).setVisibility(View.GONE);
-                helper.setText(R.id.item_tv_time, R.string.text_already_refuse);
+                helper.setText(R.id.item_tv_time, "已拒绝");
                 helper.setTextColor(R.id.item_tv_time, AppUtils.getColor(mContext, R.color.c_b5b5b5));
                 helper.getView(R.id.item_iv_icon).setVisibility(View.GONE);
                 break;
             case 3:
                 helper.getView(R.id.item_tv_num).setVisibility(View.GONE);
-                helper.setText(R.id.item_tv_time, R.string.text_already_close);
+                helper.setText(R.id.item_tv_time, "已关闭");
                 helper.setTextColor(R.id.item_tv_time, AppUtils.getColor(mContext, R.color.c_b5b5b5));
                 helper.getView(R.id.item_iv_icon).setVisibility(View.GONE);
                 break;

@@ -61,7 +61,7 @@ public class LawyerListScreenAdapter extends BaseQuickAdapter<LawyerListScreenEn
             helper.setImageResource(R.id.iv_point,colors[helper.getLayoutPosition() % 4]);
             switch (helper.getItemViewType()) {
                 case 0:
-                    ((TextView) helper.getView(R.id.item_tv_content)).setHint(String.format(mContext.getString(R.string.text_please_select_1), item.getText()));
+                    ((TextView) helper.getView(R.id.item_tv_content)).setHint(String.format("请选择%s", item.getText()));
                     helper.setText(R.id.item_tv_content, item.getContent());
                     helper.getView(R.id.item_1).setVisibility(View.VISIBLE);
                     break;

@@ -178,7 +178,7 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
                 }
                 bundle.clear();
                 bundle.putString(BundleTags.URL, mPresenter.getAboutEntity().getGuideUrl());
-                bundle.putString(BundleTags.TITLE, getString(R.string.text_newbie_guide));
+                bundle.putString(BundleTags.TITLE, "新手引导");
                 bundle.putBoolean(BundleTags.STATE,true);
                 launchActivity(new Intent(mActivity, WebActivity.class), bundle);
                 break;
@@ -197,7 +197,7 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
                     return;
                 }
                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                Uri data = Uri.parse(String.format(getString(R.string.text_tel), mPresenter.getAboutEntity().getKefuPhone()));
+                Uri data = Uri.parse(String.format("tel:%s", mPresenter.getAboutEntity().getKefuPhone()));
                 intent.setData(data);
                 launchActivity(intent);
                 break;

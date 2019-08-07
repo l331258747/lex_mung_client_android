@@ -91,9 +91,9 @@ public class MessageActivity extends BaseActivity<MessagePresenter> implements M
         fragments.add(OrderMessageFragment.newInstance());
         fragments.add(SystemMessageFragment.newInstance());
         viewPager.setOffscreenPageLimit(2);
-        titles.add(getString(R.string.text_demand_message));
-        titles.add(getString(R.string.text_order_message));
-        titles.add(getString(R.string.text_system_message));
+        titles.add("需求消息");
+        titles.add("订单消息");
+        titles.add("系统消息");
         viewPager.setAdapter(new AdapterViewPager(getSupportFragmentManager(), fragments, titles));
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

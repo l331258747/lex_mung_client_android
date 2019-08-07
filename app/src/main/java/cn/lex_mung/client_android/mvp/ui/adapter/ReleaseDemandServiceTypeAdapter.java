@@ -33,11 +33,11 @@ public class ReleaseDemandServiceTypeAdapter extends BaseQuickAdapter<BusinessEn
         helper.setText(R.id.item_tv_content, item.getRequireTypeDescription());
         helper.setText(R.id.item_tv_money, item.getMinAmountStr());
         if (type == 1) {//固定价格
-            helper.setText(R.id.item_tv_unit, String.format(mContext.getString(R.string.text_yuan_unit), item.getUnit()));
+            helper.setText(R.id.item_tv_unit, String.format("元/%s", item.getUnit()));
             helper.getView(R.id.item_iv_select).setVisibility(View.VISIBLE);
         } else {
             helper.getView(R.id.item_iv_select).setVisibility(View.GONE);
-            helper.setText(R.id.item_tv_unit, mContext.getString(R.string.text_yuan_start));
+            helper.setText(R.id.item_tv_unit, "元起");
         }
         if (getItemCount() == 1) {
         } else {

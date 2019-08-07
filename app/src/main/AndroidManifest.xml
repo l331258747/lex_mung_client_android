@@ -273,7 +273,7 @@
         <activity
             android:name=".mvp.ui.activity.MyCardActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/text_coupons"
+            android:label="@string/MyCardActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />

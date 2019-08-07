@@ -36,7 +36,7 @@
                 android:layout_toStartOf="@id/tv_search"
                 android:layout_toEndOf="@id/iv_back"
                 android:background="@drawable/round_10_f7f7f7_all"
-                android:hint="@string/text_search_lawyer"
+                android:hint="搜索律师"
                 android:imeOptions="actionSearch"
                 android:maxLength="10"
                 android:paddingStart="@dimen/qb_px_65"
@@ -62,7 +62,7 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
                 android:gravity="center"
-                android:text="@string/text_search"
+                android:text="搜索"
                 android:textColor="@color/c_373737"
                 android:textSize="14sp" />
         </RelativeLayout>
@@ -104,7 +104,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:includeFontPadding="false"
-            android:text="@string/text_synthesis_sort"
+            android:text="综合排序"
             android:textColor="@color/c_b5b5b5"
             android:textSize="12sp" />
 
@@ -133,7 +133,7 @@
             android:gravity="center"
             android:includeFontPadding="false"
             android:singleLine="true"
-            android:text="@string/text_all_field"
+            android:text="全部领域"
             android:textColor="@color/c_b5b5b5"
             android:textSize="12sp" />
 
@@ -163,7 +163,7 @@
             android:gravity="center"
             android:includeFontPadding="false"
             android:singleLine="true"
-            android:text="@string/text_all_region"
+            android:text="全部地区"
             android:textColor="@color/c_b5b5b5"
             android:textSize="12sp" />
 
@@ -191,7 +191,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:includeFontPadding="false"
-            android:text="@string/text_screen"
+            android:text="筛选"
             android:textColor="@color/c_b5b5b5"
             android:textSize="12sp" />
 

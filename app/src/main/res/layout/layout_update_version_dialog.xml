@@ -87,7 +87,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:text="@string/text_next_besides"
+                android:text="下次再说"
                 android:textColor="@color/c_b5b5b5"
                 android:textSize="14sp" />
 
@@ -103,7 +103,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:text="@string/text_upgrade_now"
+                android:text="立即升级"
                 android:textColor="@color/c_06a66a"
                 android:textSize="14sp" />
         </LinearLayout>

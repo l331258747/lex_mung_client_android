@@ -25,7 +25,7 @@ public class ServicePriceChildAdapter extends BaseQuickAdapter<BusinessEntity, B
     protected void convert(BaseViewHolder helper, BusinessEntity item) {
         helper.setText(R.id.item_tv_title, item.getRequireTypeName());
         if (item.getRstatus() == 1) {
-            helper.setText(R.id.item_tv_price, AppUtils.getString(mContext, R.string.text_no_price));
+            helper.setText(R.id.item_tv_price, "价格未配置");
             helper.setTextColor(R.id.item_tv_price, AppUtils.getColor(mContext, R.color.c_b5b5b5));
         } else {
             if(item.getRequirementType() == 2 && !TextUtils.isEmpty(minimumDuration)){

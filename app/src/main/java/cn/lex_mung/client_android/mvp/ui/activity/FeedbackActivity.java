@@ -83,9 +83,9 @@ public class FeedbackActivity extends BaseActivity<FeedbackPresenter> implements
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        tvRight.setText(getString(R.string.text_submit));
+        tvRight.setText("提交");
         tvRight.setVisibility(View.VISIBLE);
-        tvNum1.setText(String.format(getString(R.string.text_0_300), 0));
+        tvNum1.setText(String.format("%d/300", 0));
         mPresenter.getFeedbackType();
         etInput.setFilters(new InputFilter[]{CharacterHandler.emojiFilter, new InputFilter.LengthFilter(300)});
     }
@@ -98,7 +98,7 @@ public class FeedbackActivity extends BaseActivity<FeedbackPresenter> implements
     @SuppressLint("SetTextI18n")
     @OnTextChanged(value = R.id.et_input, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     void afterTextChanged(Editable s) {
-        tvNum1.setText(String.format(getString(R.string.text_0_300), s.length()));
+        tvNum1.setText(String.format("%d/300", s.length()));
         if (s.length() >= 300) {
             tvNum1.setTextColor(AppUtils.getColor(mActivity, R.color.c_ea5514));
         } else {

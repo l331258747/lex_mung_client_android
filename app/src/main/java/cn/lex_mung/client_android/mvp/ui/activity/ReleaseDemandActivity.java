@@ -225,23 +225,23 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
 
     @Override
     public void showProblemDescriptionLayout() {
-        btPay.setText(R.string.text_release_demand);
+        btPay.setText("发布需求");
         groupMoney.setVisibility(View.VISIBLE);
         groupProblemDescription.setVisibility(View.VISIBLE);
         groupPay.setVisibility(View.GONE);
         tvOrderMoney.setVisibility(View.INVISIBLE);
-        tvOrderMoneyText.setText(getString(R.string.text_price_negotiation));
+        tvOrderMoneyText.setText("具体费用由律师接单后协商确定");
         tvOrderMoneyText.setTextColor(AppUtils.getColor(mActivity, R.color.c_ea5514));
     }
 
     @Override
     public void showPayLayout() {
-        btPay.setText(R.string.text_pay_order);
+        btPay.setText("支付订单");
         groupMoney.setVisibility(View.GONE);
         groupProblemDescription.setVisibility(View.GONE);
         groupPay.setVisibility(View.VISIBLE);
         tvOrderMoney.setVisibility(View.VISIBLE);
-        tvOrderMoneyText.setText(getString(R.string.text_order_money));
+        tvOrderMoneyText.setText("订单金额");
         tvOrderMoneyText.setTextColor(AppUtils.getColor(mActivity, R.color.c_323232));
     }
 
@@ -372,8 +372,8 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
     @Override
     public void showLackOfBalanceDialog() {
         new DefaultDialog(mActivity, dialog -> launchActivity(new Intent(mActivity, MyAccountActivity.class))
-                , getString(R.string.text_lack_of_balance)
-                , getString(R.string.text_leave_for_top_up)
+                , "您账户余额不足，是否前往充值？"
+                , "去充值"
                 , getString(R.string.text_cancel))
                 .show();
     }

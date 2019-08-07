@@ -67,7 +67,7 @@ public class SearchResortInstitutionPresenter extends BasePresenter<SearchResort
 
     public void getCourt(boolean isAdd) {
         if (TextUtils.isEmpty(keywords)) {
-            mRootView.showMessage(AppUtils.getString(mApplication, R.string.text_please_enter_the_keyword));
+            mRootView.showMessage("请输入关键字");
             return;
         }
         Map<String, Object> map = new HashMap<>();
@@ -97,7 +97,7 @@ public class SearchResortInstitutionPresenter extends BasePresenter<SearchResort
 
     public void getP(boolean isAdd) {
         if (TextUtils.isEmpty(keywords)) {
-            mRootView.showMessage(AppUtils.getString(mApplication, R.string.text_please_enter_the_keyword));
+            mRootView.showMessage("请输入关键字");
             return;
         }
         Map<String, Object> map = new HashMap<>();

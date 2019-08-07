@@ -101,7 +101,7 @@ public class FreeConsultDetailsListActivity extends BaseActivity<FreeConsultDeta
     public void showDeleteDialog(int consultationReplyId, int position) {
         new DeleteDialog(mActivity
                 , dialog -> mPresenter.deleteReply(consultationReplyId, position, dialog)
-                , getString(R.string.text_sure_to_delete))
+                , "确定删除？")
                 .show();
     }
 

@@ -73,7 +73,7 @@
             android:background="@drawable/round_40_f7f7f7_all"
             android:gravity="center"
             android:scaleType="fitCenter"
-            android:text="拨打电话"
+            android:text="预约咨询"
             android:textColor="@color/c_ff" />
 
         <TextView

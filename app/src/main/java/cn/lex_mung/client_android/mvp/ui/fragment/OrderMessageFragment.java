@@ -68,7 +68,7 @@ public class OrderMessageFragment extends BaseFragment<OrderMessagePresenter> im
     @OnClick(R.id.tv_all_read)
     public void onViewClicked() {
         new DefaultDialog(mActivity, dialog -> mPresenter.allSetRead(dialog)
-                , getString(R.string.text_all_set_to_read_1)
+                , "全部标记为已读?"
                 , getString(R.string.text_confirm)
                 , getString(R.string.text_cancel))
                 .show();

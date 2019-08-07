@@ -73,9 +73,9 @@ public class SearchResortInstitutionActivity extends BaseActivity<SearchResortIn
             id = bundleIntent.getInt(BundleTags.ID, -1);
         }
         if ("court".equals(type)) {
-            tvTitle.setText(R.string.text_resort_court);
+            tvTitle.setText("常去法院");
         } else {
-            tvTitle.setText(R.string.text_resort_p);
+            tvTitle.setText("常去检察院");
         }
         initAdapter();
         initRecyclerView();

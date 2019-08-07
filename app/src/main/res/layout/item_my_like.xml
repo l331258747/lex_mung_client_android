@@ -155,7 +155,7 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/qb_px_60"
         android:gravity="center"
-        android:text="@string/text_certification_label"
+        android:text="认证标签"
         android:textColor="@color/c_b5b5b5"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@id/item_iv_avatar"

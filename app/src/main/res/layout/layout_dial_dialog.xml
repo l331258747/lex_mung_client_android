@@ -13,7 +13,7 @@
         android:background="@drawable/round_10_06a66a_top"
         android:gravity="center"
         android:includeFontPadding="false"
-        android:text="@string/text_warm_prompt"
+        android:text="温馨提示"
         android:textColor="@color/c_ff"
         android:textSize="14sp" />
 
@@ -63,7 +63,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:includeFontPadding="false"
-            android:text="@string/text_telephone_counseling"
+            android:text="电话咨询"
             android:textColor="@color/c_06a66a"
             android:textSize="14sp" />
     </LinearLayout>

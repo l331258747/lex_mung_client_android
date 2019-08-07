@@ -17,7 +17,7 @@
         android:includeFontPadding="false"
         android:paddingStart="@dimen/qb_px_10"
         android:paddingEnd="@dimen/qb_px_10"
-        android:text="@string/text_all_set_to_read"
+        android:text="全部设为已读"
         android:textColor="@color/c_717171"
         android:textSize="12sp" />
 

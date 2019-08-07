@@ -59,7 +59,7 @@
         android:layout_marginEnd="@dimen/qb_px_10"
         android:layout_marginBottom="@dimen/qb_px_5"
         android:includeFontPadding="false"
-        android:text="@string/text_yuan_unit"
+        android:text="元/%s"
         android:textColor="@color/c_323232"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="@id/item_tv_money"

@@ -16,7 +16,7 @@
         android:layout_marginTop="@dimen/qb_px_170"
         android:gravity="center"
         android:includeFontPadding="false"
-        android:text="@string/text_account_balance"
+        android:text="账户余额"
         android:textColor="@color/c_b5b5b5"
         android:textSize="14sp" />
 
@@ -41,7 +41,7 @@
         android:layout_marginTop="@dimen/qb_px_480"
         android:background="@drawable/round_100_06a66a_all"
         android:includeFontPadding="false"
-        android:text="@string/text_pay"
+        android:text="充值"
         android:textColor="@color/c_ff"
         android:textSize="18sp" />
 
@@ -54,7 +54,7 @@
         android:layout_marginTop="@dimen/qb_px_50"
         android:background="@drawable/round_100_dbdcdc_all"
         android:includeFontPadding="false"
-        android:text="@string/text_withdrawal"
+        android:text="提现"
         android:textColor="@color/c_717171"
         android:textSize="18sp" />
 </RelativeLayout>

@@ -79,11 +79,11 @@ public class AddEquitiesOrgActivity extends BaseActivity<AddEquitiesOrgPresenter
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        String string = getString(R.string.text_add_equities_org_tip_9)
+        String string = "2.如果您特别急，也可以直接拨打客服电话"
                 + "<font color=\"#1EC88C\">"
                 + DataHelper.getStringSF(mActivity, DataHelperTags.MOBILE)
                 + "</font>"
-                + getString(R.string.text_add_equities_org_tip_10);
+                + "，我们会有专人接待您的申请。";
         tvTip9.setText(Html.fromHtml(string));
     }
 
@@ -132,7 +132,7 @@ public class AddEquitiesOrgActivity extends BaseActivity<AddEquitiesOrgPresenter
             case R.id.tv_tip_8:
             case R.id.tv_tip_9:
                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                Uri data = Uri.parse(String.format(getString(R.string.text_tel), DataHelper.getStringSF(mActivity, DataHelperTags.MOBILE)));
+                Uri data = Uri.parse(String.format("tel:%s", DataHelper.getStringSF(mActivity, DataHelperTags.MOBILE)));
                 intent.setData(data);
                 launchActivity(intent);
                 break;

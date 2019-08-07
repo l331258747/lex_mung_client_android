@@ -87,19 +87,19 @@ public class SelectListItemActivity extends BaseActivity<SelectListItemPresenter
         adapter = new SelectListItemAdapter(type, lists);
         switch (type) {
             case 0:
-                tvTitle.setText(R.string.text_lawyer_position);
+                tvTitle.setText("律师职务");
                 break;
             case 1:
-                tvTitle.setText(R.string.text_social_position);
+                tvTitle.setText("社会职务");
                 break;
             case 2:
-                tvTitle.setText(R.string.text_honor_the_name);
+                tvTitle.setText("荣誉名称");
                 break;
             case 3:
-                tvTitle.setText(R.string.text_qualification_certificate);
+                tvTitle.setText("资格证书");
                 break;
             case 4:
-                tvTitle.setText(R.string.text_select_the_type_of_problem);
+                tvTitle.setText("选择问题类型");
                 break;
             case 5:
                 adapter = new SelectListItemAdapter(type, id, lists);

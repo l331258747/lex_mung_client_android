@@ -295,8 +295,8 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
     @Override
     public void showLackOfBalanceDialog() {
         new DefaultDialog(mActivity, dialog -> launchActivity(new Intent(mActivity, MyAccountActivity.class))
-                , getString(R.string.text_lack_of_balance)
-                , getString(R.string.text_leave_for_top_up)
+                , "您账户余额不足，是否前往充值？"
+                , "去充值"
                 , getString(R.string.text_cancel))
                 .show();
     }

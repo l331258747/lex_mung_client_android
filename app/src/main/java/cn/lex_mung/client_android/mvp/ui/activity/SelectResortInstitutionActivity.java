@@ -111,10 +111,10 @@ public class SelectResortInstitutionActivity extends BaseActivity<SelectResortIn
         }
         initRecyclerView();
         if ("court".equals(type)) {
-            tvTitle.setText(R.string.text_resort_court);
+            tvTitle.setText("常去法院");
             mPresenter.getCourt("", regionId, level, false);
         } else {
-            tvTitle.setText(R.string.text_resort_p);
+            tvTitle.setText("常去检察院");
             mPresenter.getProcuratorate("", regionId, level, false);
         }
     }
@@ -130,8 +130,8 @@ public class SelectResortInstitutionActivity extends BaseActivity<SelectResortIn
                 recyclerView1.setAdapter(institutionAdapter);
                 recyclerView2.setAdapter(resultAdapter);
 
-                tvTitle1.setText("court".equals(type) ? R.string.text_supreme_people_court : R.string.text_supreme_people_p);
-                tvTitle2.setText(R.string.text_select_by_province);
+                tvTitle1.setText("court".equals(type) ? "最高人民法院" : "最高人民检察院");
+                tvTitle2.setText("按省份选择");
                 break;
             case 1:
                 rlSearch.setVisibility(View.GONE);
@@ -139,9 +139,9 @@ public class SelectResortInstitutionActivity extends BaseActivity<SelectResortIn
                 recyclerView1.setAdapter(institutionAdapter);
                 recyclerView2.setAdapter(resultAdapter);
 
-                tvTitle1.setText("court".equals(type) ? R.string.text_higher_people_court : R.string.text_higher_people_p);
-                tvTitle2.setText("court".equals(type) ? getString(R.string.text_intermediate_people_court) + "&" + getString(R.string.text_grass_roots_court)
-                        : getString(R.string.text_intermediate_people_p) + "&" + getString(R.string.text_grass_roots_p));
+                tvTitle1.setText("court".equals(type) ? "高级人民法院" : "高级人民检察院");
+                tvTitle2.setText("court".equals(type) ? "中级人民法院" + "&" + "基层法院"
+                        : "中级人民检察院" + "&" + "基层检察院");
                 break;
             case 2:
                 rlSearch.setVisibility(View.GONE);
@@ -149,8 +149,8 @@ public class SelectResortInstitutionActivity extends BaseActivity<SelectResortIn
                 recyclerView1.setAdapter(institutionAdapter);
                 recyclerView2.setAdapter(institutionAdapter1);
 
-                tvTitle1.setText("court".equals(type) ? R.string.text_intermediate_people_court : R.string.text_intermediate_people_p);
-                tvTitle2.setText("court".equals(type) ? R.string.text_grass_roots_court : R.string.text_grass_roots_p);
+                tvTitle1.setText("court".equals(type) ? "中级人民法院" : "中级人民检察院");
+                tvTitle2.setText("court".equals(type) ? "基层法院" : "基层检察院");
                 break;
         }
         institutionAdapter.setOnItemClickListener((adapter, view, position) -> {
@@ -187,10 +187,10 @@ public class SelectResortInstitutionActivity extends BaseActivity<SelectResortIn
             if (mPresenter.getPageNum() < mPresenter.getTotalNum()) {
                 mPresenter.setPageNum(mPresenter.getPageNum() + 1);
                 if ("court".equals(type)) {
-                    tvTitle.setText(R.string.text_resort_court);
+                    tvTitle.setText("常去法院");
                     mPresenter.getCourt("", regionId, level, true);
                 } else {
-                    tvTitle.setText(R.string.text_resort_p);
+                    tvTitle.setText("常去检察院");
                     mPresenter.getProcuratorate("", regionId, level, true);
                 }
             } else {

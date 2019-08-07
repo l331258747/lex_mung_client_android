@@ -122,7 +122,7 @@ public class RecordVoiceButton extends AppCompatButton {
         float MIN_CANCEL_DISTANCE = 300f;
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-                this.setText(AppUtils.getString(mContext, R.string.text_send_voice_hint)); //文字 松开结束
+                this.setText("松开 结束"); //文字 松开结束
                 mIsPressed = true;
                 time1 = System.currentTimeMillis();
                 mTouchY1 = event.getY();
@@ -142,13 +142,13 @@ public class RecordVoiceButton extends AppCompatButton {
                 } else {
                     AppUtils.makeText(mContext, "暂无外部存储");
                     setPressed(false);
-                    setText(AppUtils.getString(mContext, R.string.text_record_voice_hint));//文字 按住说话
+                    setText("按住 说话");//文字 按住说话
                     mIsPressed = false;
                     return false;
                 }
                 break;
             case MotionEvent.ACTION_UP:
-                setText(AppUtils.getString(mContext, R.string.text_record_voice_hint));//文字 按住说话
+                setText("按住 说话");//文字 按住说话
                 mIsPressed = false;
                 this.setPressed(false);
                 mTouchY2 = event.getY();
@@ -168,14 +168,14 @@ public class RecordVoiceButton extends AppCompatButton {
             case MotionEvent.ACTION_MOVE:
                 mTouchY = event.getY();
                 if (mTouchY1 - mTouchY > MIN_CANCEL_DISTANCE) {//手指上滑到超出限定后，显示松开取消发送提示
-                    setText(AppUtils.getString(mContext, R.string.text_cancel_record_voice_hint));//文字  松开手指取消发送
+                    setText("松开手指，取消发送");//文字  松开手指取消发送
                     mVolumeHandler.sendEmptyMessage(CANCEL_RECORD);
                     if (mThread != null) {
                         mThread.exit();
                     }
                     mThread = null;
                 } else {
-                    setText(AppUtils.getString(mContext, R.string.text_send_voice_hint)); //文字 松开结束
+                    setText("松开 结束"); //文字 松开结束
                     if (mThread == null) {
                         mThread = new ObtainDecibelThread();
                         mThread.start();
@@ -183,7 +183,7 @@ public class RecordVoiceButton extends AppCompatButton {
                 }
                 break;
             case MotionEvent.ACTION_CANCEL:// 当手指移动到view外面，会cancel
-                setText(AppUtils.getString(mContext, R.string.text_record_voice_hint));//文字 按住说话
+                setText("按住 说话");//文字 按住说话
                 cancelRecord();
                 break;
         }
@@ -228,7 +228,7 @@ public class RecordVoiceButton extends AppCompatButton {
         if (myRecAudioFile == null) {
             cancelTimer();
             stopRecording();
-            AppUtils.makeText(mContext, AppUtils.getString(mContext, R.string.text_create_file_failed));
+            AppUtils.makeText(mContext, "创建文件失败");
         }
         recordIndicator = new Dialog(getContext(), R.style.alert_dialog);
         recordIndicator.setContentView(R.layout.layout_record_voice_dialog);
@@ -237,7 +237,7 @@ public class RecordVoiceButton extends AppCompatButton {
         mVoiceTime = recordIndicator.findViewById(R.id.c_voice_time);
         mTimeDown = recordIndicator.findViewById(R.id.tv_time_down);
         mMicShow = recordIndicator.findViewById(R.id.ll_mic_show);
-        mRecordHintTv.setText(AppUtils.getString(mContext, R.string.text_move_to_cancel_hint));
+        mRecordHintTv.setText("手指上滑，取消发送");
         startRecording();
         recordIndicator.show();
     }
@@ -460,7 +460,7 @@ public class RecordVoiceButton extends AppCompatButton {
         if (recordIndicator != null) {
             recordIndicator.dismiss();
         }
-        setText(AppUtils.getString(mContext, R.string.text_record_voice_hint));
+        setText("按住 说话");
     }
 
     /**
@@ -498,15 +498,15 @@ public class RecordVoiceButton extends AppCompatButton {
                 } else {// restTime = -1, 一般情况
                     if (!controller.mTimeUp) { // 没有进入倒计时状态
                         if (msg.what < CANCEL_RECORD) {
-                            controller.mRecordHintTv.setText(R.string.text_move_to_cancel_hint);
+                            controller.mRecordHintTv.setText("手指上滑，取消发送");
                             controller.mRecordHintTv.setBackgroundColor(controller.mContext.getResources().getColor(R.color.c_00));
                         } else {
-                            controller.mRecordHintTv.setText(R.string.text_cancel_record_voice_hint);
+                            controller.mRecordHintTv.setText("松开手指，取消发送");
                             controller.mRecordHintTv.setBackgroundColor(controller.mContext.getResources().getColor(R.color.c_00));
                         }
                     } else {// 进入倒计时
                         if (msg.what == CANCEL_RECORD) {
-                            controller.mRecordHintTv.setText(R.string.text_cancel_record_voice_hint);
+                            controller.mRecordHintTv.setText("松开手指，取消发送");
                             controller.mRecordHintTv.setBackgroundColor(controller.mContext.getResources().getColor(R.color.c_00));
                             if (!mIsPressed) {
                                 controller.cancelRecord();

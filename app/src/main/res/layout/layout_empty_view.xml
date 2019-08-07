@@ -22,7 +22,7 @@
         android:layout_marginTop="@dimen/qb_px_35"
         android:gravity="center"
         android:includeFontPadding="false"
-        android:text="@string/text_no_data"
+        android:text="暂无结果"
         android:textColor="@color/c_323232"
         android:textSize="14sp" />
 

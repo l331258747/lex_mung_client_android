@@ -30,11 +30,11 @@ public class SolutionAdapter extends BaseQuickAdapter<SolutionListEntity, BaseVi
     protected void convert(BaseViewHolder helper, SolutionListEntity item) {
         helper.setText(R.id.item_tv_title, item.getTitle());
         if(type == 0){
-            String string = mContext.getString(R.string.text_has_helped)
+            String string = "已帮助"
                     + "<font color=\"#1EC88C\">"
                     + item.getHelpNumber()
                     + "</font>"
-                    + mContext.getString(R.string.text_people);
+                    + "人";
             helper.setText(R.id.item_tv_count, Html.fromHtml(string));
         }else{
             String string = item.getHelpNumber() + "  阅读";

@@ -230,7 +230,7 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
 
     @Override
     public void showEquitiesDetails() {
-        tvTitle.setText(getString(R.string.text_exclusive_equities));
+        tvTitle.setText("专属权益");
         nsvEquitiesDetails.setVisibility(View.VISIBLE);
         nsvAllEquities.setVisibility(View.GONE);
         llLoading.setVisibility(View.GONE);
@@ -240,14 +240,14 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
     public void hideCurrentEquitiesLayout() {
         tvCurrentEquities.setVisibility(View.GONE);
         recyclerViewCurrentEquities.setVisibility(View.GONE);
-        tvMoreEquities.setText(getString(R.string.text_all_equities));
+        tvMoreEquities.setText("全部权益");
     }
 
     @Override
     public void showCurrentEquitiesLayout() {
         tvCurrentEquities.setVisibility(View.VISIBLE);
         recyclerViewCurrentEquities.setVisibility(View.VISIBLE);
-        tvMoreEquities.setText(getString(R.string.text_more_equities));
+        tvMoreEquities.setText("更多权益");
     }
 
     @Override

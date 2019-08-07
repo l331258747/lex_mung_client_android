@@ -172,7 +172,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 
         if (isShare) {
             tvRight.setVisibility(View.VISIBLE);
-            tvRight.setText(R.string.text_share);
+            tvRight.setText("分享");
         }
         if (TextUtils.isEmpty(title)) {
             tvRight.setVisibility(View.GONE);

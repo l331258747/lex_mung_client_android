@@ -115,7 +115,7 @@ public class MessageChatActivity extends BaseActivity<MessageChatPresenter> impl
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        tvRight.setText(R.string.text_demand_list);
+        tvRight.setText("需求列表");
         if (bundleIntent != null) {
             mPresenter.setId(bundleIntent.getInt(BundleTags.ID));
         }

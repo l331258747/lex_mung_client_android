@@ -66,10 +66,10 @@ public class ForcedUpdateDialog extends Dialog {
         llLayout = findViewById(R.id.ll_layout);
         rlLayout = findViewById(R.id.rl_layout);
 
-        tvTitle.setText(String.format(getContext().getString(R.string.text_update_version), versionName));
+        tvTitle.setText(String.format("是否更新到绿豆圈%s版本？", versionName));
         tvContent.setText(tip);
-        tvCancel.setText(getContext().getString(R.string.text_exit));
-        tvConfirm.setText(getContext().getString(R.string.text_upgrade_now));
+        tvCancel.setText("退出");
+        tvConfirm.setText("立即升级");
 
         tvCancel.setOnClickListener(v -> {
             dismiss();

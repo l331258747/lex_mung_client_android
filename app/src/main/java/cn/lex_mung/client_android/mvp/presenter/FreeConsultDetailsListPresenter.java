@@ -152,11 +152,11 @@ public class FreeConsultDetailsListPresenter extends BasePresenter<FreeConsultDe
 
     public void lawyerReply(String content) {
         if (TextUtils.isEmpty(content)) {
-            mRootView.showMessage(mApplication.getString(R.string.text_please_input_content));
+            mRootView.showMessage("请输入内容");
             return;
         }
         if (content.length() < 5) {
-            mRootView.showMessage(mApplication.getString(R.string.text_no_less_5));
+            mRootView.showMessage("不能少于5个字符");
             return;
         }
         Map<String, Object> map = new HashMap<>();
@@ -182,7 +182,7 @@ public class FreeConsultDetailsListPresenter extends BasePresenter<FreeConsultDe
                             total = total + 1;
                             AppUtils.postInt(EDIT_REPLY_COUNT, EDIT_CONSULT_DETAILS_REPLY_COUNT, total);
                             mRootView.clearInput();
-                            mRootView.setTitle(String.format(mApplication.getString(R.string.text_reply_count_1), total));
+                            mRootView.setTitle(String.format("%d条回复", total));
                             adapter.addData(baseResponse.getData());
                         }
                     }
@@ -210,7 +210,7 @@ public class FreeConsultDetailsListPresenter extends BasePresenter<FreeConsultDe
                             }
                             total = total - 1;
                             AppUtils.postInt(EDIT_REPLY_COUNT, EDIT_CONSULT_DETAILS_REPLY_COUNT, total);
-                            mRootView.setTitle(String.format(mApplication.getString(R.string.text_reply_count_1), total));
+                            mRootView.setTitle(String.format("%d条回复", total));
                             adapter.remove(position);
                         }
                     }

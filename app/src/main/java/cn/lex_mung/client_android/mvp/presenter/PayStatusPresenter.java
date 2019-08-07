@@ -78,30 +78,30 @@ public class PayStatusPresenter extends BasePresenter<PayStatusContract.Model, P
                                 case 1:
                                     switch (DataHelper.getIntergerSF(mApplication, DataHelperTags.PAY_TYPE)) {
                                         case PayStatusTags.PAY:
-                                            mRootView.showSuccessLayout(mApplication.getString(R.string.text_pay_success),"查看账户余额");
+                                            mRootView.showSuccessLayout("充值成功","查看账户余额");
                                             break;
                                         case PayStatusTags.PAY_COUPON:
-                                            mRootView.showSuccessLayout(mApplication.getString(R.string.text_pay_success),"查看账户余额");
+                                            mRootView.showSuccessLayout("充值成功","查看账户余额");
                                             mRootView.setContentLayout("充值赠送的优惠券已经放入您的卡包，您可以在我的-优惠券中找到",onClickListener);
                                             break;
                                         case PayStatusTags.PAY_EXPERT:
-                                            mRootView.showSuccessLayout(mApplication.getString(R.string.text_pay_success),"专家咨询");
+                                            mRootView.showSuccessLayout("充值成功","专家咨询");
                                             break;
                                         case PayStatusTags.RELEASE_DEMAND:
-                                            mRootView.showReleaseDemandLayout(mApplication.getString(R.string.text_pay_status_tip)
+                                            mRootView.showReleaseDemandLayout("律师会尽快与您联系，请留意站内消息"
                                                     , orderNo
                                                     , baseResponse.getData().getPayTime()
                                                     , DataHelper.getStringSF(mApplication, DataHelperTags.ORDER_TYPE)
                                                     , DataHelper.getStringSF(mApplication, DataHelperTags.ORDER_MONEY));
-                                            mRootView.showSuccessLayout(mApplication.getString(R.string.text_pay_success_1));
+                                            mRootView.showSuccessLayout("支付成功");
                                             break;
                                         case PayStatusTags.FAST_CONSULT:
-                                            mRootView.showReleaseDemandLayout(mApplication.getString(R.string.text_pay_status_tip)
+                                            mRootView.showReleaseDemandLayout("律师会尽快与您联系，请留意站内消息"
                                                     , orderNo
                                                     , baseResponse.getData().getPayTime()
                                                     , DataHelper.getStringSF(mApplication, DataHelperTags.ORDER_TYPE)
                                                     , DataHelper.getStringSF(mApplication, DataHelperTags.ORDER_MONEY));
-                                            mRootView.showSuccessLayout(mApplication.getString(R.string.text_pay_success_1));
+                                            mRootView.showSuccessLayout("支付成功");
                                             break;
                                     }
                                     break;
@@ -110,13 +110,13 @@ public class PayStatusPresenter extends BasePresenter<PayStatusContract.Model, P
                                         case PayStatusTags.PAY:
                                         case PayStatusTags.PAY_EXPERT:
                                         case PayStatusTags.PAY_COUPON:
-                                            mRootView.showFailLayout(mApplication.getString(R.string.text_pay_fail),"重新充值");
+                                            mRootView.showFailLayout("充值失败","重新充值");
                                             break;
                                         case PayStatusTags.RELEASE_DEMAND:
-                                            mRootView.showFailLayout(mApplication.getString(R.string.text_pay_fail_1));
+                                            mRootView.showFailLayout("支付失败");
                                             break;
                                         case PayStatusTags.FAST_CONSULT:
-                                            mRootView.showFailLayout(mApplication.getString(R.string.text_pay_fail_1));
+                                            mRootView.showFailLayout("支付失败");
                                             break;
                                     }
                                     break;

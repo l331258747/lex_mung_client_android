@@ -20,7 +20,7 @@
             android:layout_centerInParent="true"
             android:background="@drawable/round_10_f7f7f7_all"
             android:gravity="center_vertical"
-            android:hint="@string/text_please_enter_the_keyword"
+            android:hint="请输入关键字"
             android:includeFontPadding="false"
             android:paddingStart="@dimen/qb_px_80"
             android:paddingEnd="@dimen/qb_px_25"
@@ -45,7 +45,7 @@
         android:gravity="center_vertical"
         android:paddingStart="@dimen/qb_px_35"
         android:paddingEnd="@dimen/qb_px_35"
-        android:text="@string/text_supreme_people_court"
+        android:text="最高人民法院"
         android:textColor="@color/c_06a66a"
         android:textSize="14sp"
         android:textStyle="bold" />
@@ -76,7 +76,7 @@
         android:gravity="center_vertical"
         android:paddingStart="@dimen/qb_px_35"
         android:paddingEnd="@dimen/qb_px_35"
-        android:text="@string/text_select_by_province"
+        android:text="按省份选择"
         android:textColor="@color/c_06a66a"
         android:textSize="14sp"
         android:textStyle="bold" />

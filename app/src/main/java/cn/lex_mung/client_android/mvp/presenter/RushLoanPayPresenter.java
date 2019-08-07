@@ -138,7 +138,7 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
 
     public void releaseRequirement(String ua) {
         if (requireTypeId == -1) {
-            mRootView.showMessage(mApplication.getString(R.string.text_please_select_service_type));
+            mRootView.showMessage("请选择服务类型");
             return;
         }
 
@@ -170,7 +170,7 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
         }
 
         if (payMoney == 0) {
-            mRootView.showMessage(mApplication.getString(R.string.text_amount_of_error));
+            mRootView.showMessage("金额错误");
             return;
         }
         Map<String, Object> map = new HashMap<>();

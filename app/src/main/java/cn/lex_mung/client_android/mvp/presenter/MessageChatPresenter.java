@@ -525,9 +525,9 @@ public class MessageChatPresenter extends BasePresenter<MessageChatContract.Mode
         public void onTick(long l) {
             String s = sdf.format(new Date(l));
             if (status == 0) {
-                mRootView.setTime(String.format(mApplication.getString(R.string.text_accept_order_time), s));
+                mRootView.setTime(String.format("接单倒计时%s", s));
             } else if (status == 1) {
-                mRootView.setTime(String.format(mApplication.getString(R.string.text_remaining_service_time), s));
+                mRootView.setTime(String.format("剩余服务时间%s", s));
             }
         }
 

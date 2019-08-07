@@ -72,13 +72,13 @@ public class PayStatusActivity extends BaseActivity<PayStatusPresenter> implemen
     public void initData(@Nullable Bundle savedInstanceState) {
         if (bundleIntent.containsKey(BundleTags.WX)) {
             if (bundleIntent.getInt(BundleTags.WX) == BaseResp.ErrCode.ERR_USER_CANCEL) {//用户取消
-                showFailLayout(AppUtils.getString(mActivity, R.string.text_pay_cancel));
+                showFailLayout("用户取消");
                 return;
             }
         }
         if (bundleIntent.containsKey(BundleTags.ZFB)) {
             if ("6001".equals(bundleIntent.getString(BundleTags.ZFB))) {//用户取消
-                showFailLayout(AppUtils.getString(mActivity, R.string.text_pay_cancel));
+                showFailLayout("用户取消");
                 return;
             }
         }

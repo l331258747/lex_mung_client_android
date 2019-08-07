@@ -29,7 +29,7 @@ public class HelpStepLawyerAdapter extends BaseQuickAdapter<RequireInfoChildBean
         }
 
         if (item.getRstatus() == 1) {
-            helper.setText(R.id.tv_money, AppUtils.getString(mContext, R.string.text_no_price));
+            helper.setText(R.id.tv_money, "价格未配置");
             helper.setTextColor(R.id.tv_money, AppUtils.getColor(mContext, R.color.c_b5b5b5));
         } else {
             helper.setText(R.id.tv_money, item.getMinAmountStr());

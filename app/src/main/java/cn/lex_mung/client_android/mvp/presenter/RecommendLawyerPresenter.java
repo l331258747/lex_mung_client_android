@@ -130,15 +130,15 @@ public class RecommendLawyerPresenter extends BasePresenter<RecommendLawyerContr
         map.put("requirementTypeName", requireTypeName);
 
         if (TextUtils.isEmpty(money)) {
-            mRootView.showMessage(mApplication.getString(R.string.text_please_enter_max_money));
+            mRootView.showMessage("请输入您愿意支付的律师费用");
             return;
         }
         if (TextUtils.isEmpty(content)) {
-            mRootView.showMessage(mApplication.getString(R.string.text_please_enter_your_problem));
+            mRootView.showMessage("请输入您遇到的问题");
             return;
         }
         if (content.length() < 10) {
-            mRootView.showMessage(mApplication.getString(R.string.text_please_describe_your_problem));
+            mRootView.showMessage("请简单描述您遇到的问题(限10-300个字)");
             return;
         }
         map.put("maxCost", Integer.valueOf(money));

@@ -144,7 +144,7 @@ public class X5WebCommonActivity extends BaseActivity<X5WebCommonPresenter> impl
 
         if (isShare) {
             titleView.getRightTv().setVisibility(View.VISIBLE);
-            titleView.getRightTv().setText(R.string.text_share);
+            titleView.getRightTv().setText("分享");
         }
         if (TextUtils.isEmpty(title)) {
             titleView.getRightTv().setVisibility(View.GONE);

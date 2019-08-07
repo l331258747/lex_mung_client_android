@@ -144,7 +144,7 @@ public class RegionPickerDialog {
             cityAdapter.setNewData(list.get(posProvince).getChild());
 
             tvProvince.setText(list.get(posProvince).getName());
-            tvCity.setText(AppUtils.getString(mContext, R.string.text_please_select));
+            tvCity.setText("请选择");
 
             tvProvince.setTextColor(AppUtils.getColor(mContext, R.color.c_323232));
             tvCity.setTextColor(AppUtils.getColor(mContext, R.color.c_ea5514));
@@ -167,7 +167,7 @@ public class RegionPickerDialog {
             areaAdapter.setNewData(list.get(posProvince).getChild().get(posCity).getChild());
 
             tvCity.setText(list.get(posProvince).getChild().get(posCity).getName());
-            tvArea.setText(AppUtils.getString(mContext, R.string.text_please_select));
+            tvArea.setText("请选择");
 
             tvProvince.setTextColor(AppUtils.getColor(mContext, R.color.c_323232));
             tvCity.setTextColor(AppUtils.getColor(mContext, R.color.c_323232));

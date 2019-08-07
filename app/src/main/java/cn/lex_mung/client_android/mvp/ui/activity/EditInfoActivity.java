@@ -96,7 +96,7 @@ public class EditInfoActivity extends BaseActivity<EditInfoPresenter> implements
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        tvRight.setText(R.string.text_save);
+        tvRight.setText("保存");
         tvRight.setVisibility(View.VISIBLE);
         mPresenter.onCreate();
     }

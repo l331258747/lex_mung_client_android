@@ -25,7 +25,7 @@
         android:background="@drawable/round_100_cea769_all"
         android:gravity="center"
         android:includeFontPadding="false"
-        android:text="@string/text_certified"
+        android:text="已认证"
         android:textColor="@color/c_ff"
         android:textSize="12sp"
         android:visibility="gone"

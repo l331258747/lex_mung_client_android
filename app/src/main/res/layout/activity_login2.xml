@@ -90,7 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/qb_px_70"
         android:gravity="center"
-        android:text="@string/text_get_code"
+        android:text="获取验证码"
         android:textColor="@color/c_b4b4b4"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@id/et_code"
@@ -110,7 +110,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/qb_px_50"
         android:background="@drawable/ic_rush_order_name_bg"
-        android:text="@string/text_login"
+        android:text="登录"
         android:textColor="@android:color/white"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -131,7 +131,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/c_404040"
             android:includeFontPadding="false"
-            android:text="@string/text_user_registered_agreement"
+            android:text="成功登录APP即表示您同意"
             android:textSize="12sp" />
 
         <TextView
@@ -140,7 +140,7 @@
             android:layout_height="@dimen/qb_px_60"
             android:gravity="center"
             android:includeFontPadding="false"
-            android:text="@string/text_user_agreement"
+            android:text="《用户服务协议》"
             android:textColor="@color/c_06a66a"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"

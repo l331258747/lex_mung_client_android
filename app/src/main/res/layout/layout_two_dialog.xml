@@ -17,7 +17,7 @@
         android:layout_height="@dimen/qb_px_90"
         android:background="@drawable/round_10_ffffff_all_717171"
         android:gravity="center"
-        android:text="@string/text_photograph"
+        android:text="拍照上传"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 
@@ -28,7 +28,7 @@
         android:layout_marginTop="@dimen/qb_px_15"
         android:background="@drawable/round_10_ffffff_all_717171"
         android:gravity="center"
-        android:text="@string/text_photo_album"
+        android:text="从相册选择"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 

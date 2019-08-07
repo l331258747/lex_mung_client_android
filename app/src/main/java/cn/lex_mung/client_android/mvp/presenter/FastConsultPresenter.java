@@ -166,7 +166,7 @@ public class FastConsultPresenter extends BasePresenter<FastConsultContract.Mode
                         if (baseResponse.isSuccess()) {
                             balance = baseResponse.getData().getAllBalanceAmount();
                             mRootView.setBalance(String.format(
-                                    AppUtils.getString(mApplication, R.string.text_remaining_amount)
+                                    "(可用余额 %s 元)"
                                     , StringUtils.getStringNum(balance)));
                         }
                     }

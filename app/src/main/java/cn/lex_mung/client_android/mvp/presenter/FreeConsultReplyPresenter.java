@@ -60,11 +60,11 @@ public class FreeConsultReplyPresenter extends BasePresenter<FreeConsultReplyCon
 
     public void reply(String content){
         if (TextUtils.isEmpty(content)) {
-            mRootView.showMessage(mApplication.getString(R.string.text_please_input_content));
+            mRootView.showMessage("请输入内容");
             return;
         }
         if (content.length() < 5) {
-            mRootView.showMessage(mApplication.getString(R.string.text_no_less_5));
+            mRootView.showMessage("不能少于5个字符");
             return;
         }
         Map<String, Object> map = new HashMap<>();

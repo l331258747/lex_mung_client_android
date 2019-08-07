@@ -95,7 +95,7 @@ public class FreeConsultActivity extends BaseActivity<FreeConsultPresenter> impl
         if (bundleIntent != null) {
             buryingPointId = bundleIntent.getInt(BundleTags.BURYING_POINT, -1);
         }
-        tvRight.setText(R.string.text_submit);
+        tvRight.setText("提交");
         tvRight.setVisibility(View.VISIBLE);
         mPresenter.onCreate();
     }

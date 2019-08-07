@@ -165,7 +165,7 @@ public class LawyerHomePagePresenter extends BasePresenter<LawyerHomePageContrac
             //律所和执业年限
             if (!TextUtils.isEmpty(entity.getInstitutionName())
                     && !TextUtils.isEmpty(entity.getPractice())) {
-                mRootView.setInstitutionNameAndPractice(String.format(AppUtils.getString(mApplication, R.string.text_post_num)
+                mRootView.setInstitutionNameAndPractice(String.format("%1$s  丨  %2$s"
                         , entity.getInstitutionName()
                         , entity.getPractice()));
             } else if (!TextUtils.isEmpty(entity.getInstitutionName())) {
@@ -186,11 +186,11 @@ public class LawyerHomePagePresenter extends BasePresenter<LawyerHomePageContrac
             if (entity.getIsCollect() == 1) {//已关注
                 mRootView.setLikeLayout(R.drawable.round_100_ffffff_all_717171
                         , AppUtils.getColor(mApplication, R.color.c_717171)
-                        , AppUtils.getString(mApplication, R.string.text_like));
+                        , "已关注");
             } else if (entity.getIsCollect() == 0) {//未关注
                 mRootView.setLikeLayout(R.drawable.round_100_ffffff_all_06a66a
                         , AppUtils.getColor(mApplication, R.color.c_06a66a)
-                        , AppUtils.getString(mApplication, R.string.text_no_like));
+                        , "关注TA");
             } else {//不显示
                 mRootView.hideLikeLayout();
             }
@@ -254,7 +254,7 @@ public class LawyerHomePagePresenter extends BasePresenter<LawyerHomePageContrac
                         if (baseResponse.isSuccess()) {
                             mRootView.setLikeLayout(R.drawable.round_100_ffffff_all_717171
                                     , AppUtils.getColor(mApplication, R.color.c_717171)
-                                    , AppUtils.getString(mApplication, R.string.text_like));
+                                    , "已关注");
                         }
                     }
                 });
@@ -275,7 +275,7 @@ public class LawyerHomePagePresenter extends BasePresenter<LawyerHomePageContrac
                         if (baseResponse.isSuccess()) {
                             mRootView.setLikeLayout(R.drawable.round_100_ffffff_all_06a66a
                                     , AppUtils.getColor(mApplication, R.color.c_06a66a)
-                                    , AppUtils.getString(mApplication, R.string.text_no_like));
+                                    , "关注TA");
                         }
                     }
                 });

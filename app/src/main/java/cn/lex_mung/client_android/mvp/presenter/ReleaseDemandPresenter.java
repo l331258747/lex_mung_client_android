@@ -189,9 +189,9 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
         }
         mRootView.setRegion(lawsHomePagerBaseEntityRegion);
 
-        String string = mApplication.getString(R.string.text_release_demand_tip_2)
+        String string = "3.详细流程请查看"
                 + "<font color=\"#1EC88C\">"
-                + mApplication.getString(R.string.text_lex_transaction_process)
+                + "《绿豆圈交易流程及服务规范》"
                 + "</font>";
         mRootView.setTip(string);
         mRootView.setOrderMoney(String.format(mApplication.getString(R.string.text_yuan_money), StringUtils.getStringNum(0)));
@@ -344,7 +344,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
 
     public void releaseRequirement(String ua, String maxMoney, String content) {
         if (type == 1 && requireTypeId == -1) {
-            mRootView.showMessage(mApplication.getString(R.string.text_please_select_service_type));
+            mRootView.showMessage("请选择服务类型");
             return;
         }
 
@@ -382,7 +382,7 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
                     break;
             }
             if (payMoney == 0) {
-                mRootView.showMessage(mApplication.getString(R.string.text_amount_of_error));
+                mRootView.showMessage("金额错误");
                 return;
             }
         }
@@ -399,15 +399,15 @@ public class ReleaseDemandPresenter extends BasePresenter<ReleaseDemandContract.
             map.put("requirementContent", "");
         } else {//可协商价格
             if (TextUtils.isEmpty(maxMoney)) {
-                mRootView.showMessage(mApplication.getString(R.string.text_please_enter_max_money));
+                mRootView.showMessage("请输入您愿意支付的律师费用");
                 return;
             }
             if (TextUtils.isEmpty(content)) {
-                mRootView.showMessage(mApplication.getString(R.string.text_please_enter_your_problem));
+                mRootView.showMessage("请输入您遇到的问题");
                 return;
             }
             if (content.length() < 10) {
-                mRootView.showMessage(mApplication.getString(R.string.text_please_describe_your_problem));
+                mRootView.showMessage("请简单描述您遇到的问题(限10-300个字)");
                 return;
             }
             map.put("maxCost", Integer.valueOf(maxMoney));

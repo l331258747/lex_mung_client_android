@@ -117,7 +117,7 @@
                 android:layout_toStartOf="@+id/ll_send"
                 android:layout_toEndOf="@+id/iv_voice_or_text"
                 android:background="@drawable/select_voice_bg"
-                android:text="@string/text_speak"
+                android:text="按住录音"
                 android:textColor="@color/c_323232"
                 android:visibility="gone" />
 
@@ -163,7 +163,7 @@
                     android:layout_width="@dimen/qb_px_110"
                     android:layout_height="@dimen/qb_px_70"
                     android:background="@drawable/round_10_06a66a_all"
-                    android:text="@string/text_send"
+                    android:text="发送"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"
                     android:visibility="gone" />
@@ -198,7 +198,7 @@
                 android:layout_marginEnd="@dimen/qb_px_80"
                 android:background="@drawable/round_100_f1f1f1_all"
                 android:gravity="center"
-                android:text="@string/text_wait_order"
+                android:text="待接单"
                 android:textColor="@color/c_b5b5b5"
                 android:textSize="16sp" />
 
@@ -210,7 +210,7 @@
                 android:layout_marginEnd="@dimen/qb_px_80"
                 android:background="@drawable/round_100_f1f1f1_all"
                 android:gravity="center"
-                android:text="@string/text_order_close"
+                android:text="订单已关闭"
                 android:textColor="@color/c_b5b5b5"
                 android:textSize="16sp"
                 android:visibility="gone" />
@@ -244,7 +244,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/qb_px_10"
-                android:text="@string/text_photo_album_1"
+                android:text="相册"
                 android:textColor="@color/c_717171"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -266,7 +266,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/qb_px_10"
-                android:text="@string/text_camera"
+                android:text="拍摄"
                 android:textColor="@color/c_717171"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -288,7 +288,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/qb_px_10"
-                android:text="@string/text_location"
+                android:text="位置"
                 android:textColor="@color/c_717171"
                 android:textSize="12sp" />
         </LinearLayout>
