@@ -195,13 +195,6 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
 
             @Override
             public void onPageSelected(int i) {
-                if (!mPresenter.getLogin()) {
-                    bundle.clear();
-                    bundle.putInt(BundleTags.TYPE, 1);
-                    launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
-                    viewPager.setCurrentItem(0);
-                    return;
-                }
                 switch (i) {
                     case 0:
                         switchPager(16, 14, 14, Typeface.BOLD, Typeface.NORMAL, Typeface.NORMAL, View.VISIBLE, View.GONE, View.GONE);
@@ -261,23 +254,11 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
                 break;
             case R.id.tv_practice_experience:
                 if (viewPager.getCurrentItem() == 1) return;
-                if (!mPresenter.getLogin()) {
-                    bundle.clear();
-                    bundle.putInt(BundleTags.TYPE, 1);
-                    launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
-                    return;
-                }
                 switchPager(14, 16, 14, Typeface.NORMAL, Typeface.BOLD, Typeface.NORMAL, View.GONE, View.VISIBLE, View.GONE);
                 viewPager.setCurrentItem(1);
                 break;
             case R.id.tv_service_price:
                 if (viewPager.getCurrentItem() == 2) return;
-                if (!mPresenter.getLogin()) {
-                    bundle.clear();
-                    bundle.putInt(BundleTags.TYPE, 1);
-                    launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
-                    return;
-                }
                 switchPager(14, 14, 16, Typeface.NORMAL, Typeface.NORMAL, Typeface.BOLD, View.GONE, View.GONE, View.VISIBLE);
                 viewPager.setCurrentItem(2);
                 break;
@@ -319,14 +300,8 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
                 break;
             case R.id.iv_release:
                 if (isFastClick()) return;
-                if (mPresenter.getLogin()) {
-                    viewPager.setCurrentItem(2);
-                    mAppBarLayout.setExpanded(false);
-                } else {
-                    bundle.clear();
-                    bundle.putInt(BundleTags.TYPE, 1);
-                    launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
-                }
+                viewPager.setCurrentItem(2);
+                mAppBarLayout.setExpanded(false);
                 break;
         }
     }

@@ -18,17 +18,6 @@
         android:src="@drawable/ic_no_data_1" />
 
     <TextView
-        android:id="@+id/tv_btn"
-        android:layout_width="@dimen/qb_px_258"
-        android:layout_height="@dimen/qb_px_61"
-        android:gravity="center"
-        android:background="@drawable/round_40_06a66a_all"
-        android:textColor="@color/c_ff"
-        android:visibility="gone"
-        tools:visibility="visible"
-        android:text="快速咨询"/>
-
-    <TextView
         android:id="@+id/tv_content2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,4 +31,18 @@
         tools:visibility="visible"
         android:textColor="@color/c_b4b4b4"
         android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_btn"
+        android:layout_width="@dimen/qb_px_258"
+        android:layout_height="@dimen/qb_px_61"
+        android:gravity="center"
+        android:background="@drawable/round_40_06a66a_all"
+        android:layout_marginTop="@dimen/qb_px_35"
+        android:textColor="@color/c_ff"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:text="快速咨询"/>
+
+
 </LinearLayout>

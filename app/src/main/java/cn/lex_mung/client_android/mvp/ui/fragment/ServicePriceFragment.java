@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.di.component.DaggerServicePriceComponent;
 import cn.lex_mung.client_android.di.module.ServicePriceModule;
 import cn.lex_mung.client_android.mvp.contract.ServicePriceContract;
@@ -22,6 +23,7 @@ import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
 import cn.lex_mung.client_android.mvp.presenter.ServicePricePresenter;
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerHomePageActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MyAccountActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.ServicePriceAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog5;
@@ -29,13 +31,17 @@ import cn.lex_mung.client_android.mvp.ui.dialog.CurrencyDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.CurrencyDialog2;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.OnlyTextDialog;
+import cn.lex_mung.client_android.mvp.ui.widget.EmptyView2;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
+import me.zl.mvp.utils.DataHelper;
 
 public class ServicePriceFragment extends BaseFragment<ServicePricePresenter> implements ServicePriceContract.View {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    @BindView(R.id.emptyView)
+    EmptyView2 emptyView;
 
     LawsHomePagerBaseEntity lawsHomePagerBaseEntity;
 
@@ -69,6 +75,12 @@ public class ServicePriceFragment extends BaseFragment<ServicePricePresenter> im
             if (lawsHomePagerBaseEntity == null) return;
             mPresenter.setEntity(lawsHomePagerBaseEntity);
         }
+
+        emptyView.getBtn().setOnClickListener(v -> {
+            bundle.clear();
+            bundle.putInt(BundleTags.TYPE, 1);
+            launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
+        });
     }
 
     @Override
@@ -84,6 +96,14 @@ public class ServicePriceFragment extends BaseFragment<ServicePricePresenter> im
         if(isGoCall){
             showTestDialog2();
             isGoCall = false;
+        }
+
+        if(!DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)){
+            emptyView.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        }else{
+            emptyView.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
         }
     }
 

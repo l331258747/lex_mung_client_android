@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,10 +16,13 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
+import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.PersonalHomePageCaseAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
+import cn.lex_mung.client_android.mvp.ui.widget.EmptyView2;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
@@ -29,6 +33,7 @@ import cn.lex_mung.client_android.mvp.contract.PracticeExperienceContract;
 import cn.lex_mung.client_android.mvp.presenter.PracticeExperiencePresenter;
 
 import cn.lex_mung.client_android.R;
+import me.zl.mvp.utils.DataHelper;
 
 public class PracticeExperienceFragment extends BaseFragment<PracticeExperiencePresenter> implements PracticeExperienceContract.View {
 
@@ -86,6 +91,10 @@ public class PracticeExperienceFragment extends BaseFragment<PracticeExperienceP
     RecyclerView recyclerViewLawsCase;
     @BindView(R.id.no_layout)
     LinearLayout noLayout;
+    @BindView(R.id.emptyView)
+    EmptyView2 emptyView;
+    @BindView(R.id.cl_parent)
+    ConstraintLayout clParent;
 
 
     public static PracticeExperienceFragment newInstance(LawsHomePagerBaseEntity entity) {
@@ -115,6 +124,24 @@ public class PracticeExperienceFragment extends BaseFragment<PracticeExperienceP
     public void initData(@Nullable Bundle savedInstanceState) {
         if (getArguments() != null) {
             mPresenter.setEntity((LawsHomePagerBaseEntity) getArguments().getSerializable(BundleTags.ENTITY), recyclerViewLawsCase);
+        }
+
+        emptyView.getBtn().setOnClickListener(v -> {
+            bundle.clear();
+            bundle.putInt(BundleTags.TYPE, 1);
+            launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(!DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)){
+            emptyView.setVisibility(View.VISIBLE);
+            clParent.setVisibility(View.GONE);
+        }else{
+            emptyView.setVisibility(View.GONE);
+            clParent.setVisibility(View.VISIBLE);
         }
     }
 
