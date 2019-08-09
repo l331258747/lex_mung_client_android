@@ -3,7 +3,6 @@ package cn.lex_mung.client_android.mvp.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -35,15 +34,12 @@ import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.component.DaggerLawyerHomePageComponent;
 import cn.lex_mung.client_android.di.module.LawyerHomePageModule;
 import cn.lex_mung.client_android.mvp.contract.LawyerHomePageContract;
-import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
+import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
 import cn.lex_mung.client_android.mvp.presenter.LawyerHomePagePresenter;
-import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog5;
-import cn.lex_mung.client_android.mvp.ui.dialog.CurrencyDialog;
-import cn.lex_mung.client_android.mvp.ui.dialog.CurrencyDialog2;
 import cn.lex_mung.client_android.mvp.ui.dialog.FieldDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
-import cn.lex_mung.client_android.mvp.ui.dialog.OnlyTextDialog;
+import cn.lex_mung.client_android.mvp.ui.dialog.SingleTextDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.NoScrollViewPager;
 import cn.lex_mung.client_android.mvp.ui.widget.SimpleFlowLayout;
 import cn.lex_mung.client_android.utils.BuryingPointHelp;
@@ -113,8 +109,9 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
     @BindView(R.id.tv_head_title)
     TextView tvHeadTitle;
 
-    boolean isCall;
+    boolean isCall;//是否显示拨打电话按钮
     private int requireTypeId;//用来埋点用的
+//    boolean isGoCall = false;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -142,10 +139,10 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
         MobclickAgent.onPageStart("app_l_wode_zhuye_detail");
         mPresenter.onResume();
 
-        if(isGoCall){
-            showTestDialog2();
-            isGoCall = false;
-        }
+//        if (isGoCall) {
+//            showTestDialog2();
+//            isGoCall = false;
+//        }
     }
 
     @Override
@@ -263,7 +260,7 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
                 viewPager.setCurrentItem(2);
                 break;
             case R.id.tv_social_position:
-                if(tvMoreSocialPosition.getVisibility() != View.VISIBLE) return;
+                if (tvMoreSocialPosition.getVisibility() != View.VISIBLE) return;
 
                 bundle.clear();
                 bundle.putSerializable(BundleTags.LIST, (Serializable) mPresenter.getEntity().getSocialFunction());
@@ -273,30 +270,30 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
                 MobclickAgent.onEvent(mActivity, "app_l_wode_zhuye_detail_fenxiang");
                 break;
             case R.id.iv_call:
-                if(!isCall) return;
+                if (!isCall) return;
 
                 switch (requireTypeId) {
                     case 2://诉讼
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "litigation_arbitration_lawyer_detail","litigation_arbitration_lawyer_detail_phone_click");
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "litigation_arbitration_lawyer_detail", "litigation_arbitration_lawyer_detail_phone_click");
                         break;
                     case 6://企业顾问
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "enterprise_offline_lawyer_detail","enterprise_offline_lawyer_detail_phone_click");
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "enterprise_offline_lawyer_detail", "enterprise_offline_lawyer_detail_phone_click");
                         break;
                     case 9://线下见面
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "meeting_offline_lawyer_detail","meeting_offline_lawyer_detail_phone_click");
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "meeting_offline_lawyer_detail", "meeting_offline_lawyer_detail_phone_click");
                         break;
                     case 8://专家咨询 电话咨询
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "expert_consulation_lawyer_detail","expert_consulation_lawyer_detail_phone_click");
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "expert_consulation_lawyer_detail", "expert_consulation_lawyer_detail_phone_click");
                         break;
                     case 100://免费咨询
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "free_consulation_lawyer_detail","free_consulation_lawyer_detail_phone_click");
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "free_consulation_lawyer_detail", "free_consulation_lawyer_detail_phone_click");
                         break;
                     default:
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "search_lawyer_detail","search_lawyer_detail_phone_click");
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "search_lawyer_detail", "search_lawyer_detail_phone_click");
                         break;
                 }
 
-                mPresenter.setEntity();
+                sendCall();
                 break;
             case R.id.iv_release:
                 if (isFastClick()) return;
@@ -304,6 +301,10 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
                 mAppBarLayout.setExpanded(false);
                 break;
         }
+    }
+
+    public void sendCall(){
+        mPresenter.setEntity();
     }
 
 
@@ -494,84 +495,95 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
     @Override
     public void showCall(boolean isShow) {
         isCall = isShow;
-        if(isShow){
-            ivCall.setBackground(ContextCompat.getDrawable(mActivity,R.drawable.round_40_06a66a_all));
-        }else{
-            ivCall.setBackground(ContextCompat.getDrawable(mActivity,R.drawable.round_40_b5b5b5_all));
+        if (isShow) {
+            ivCall.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_06a66a_all));
+        } else {
+            ivCall.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_b5b5b5_all));
         }
     }
 
-    //查询余额不足
-    public void showBalanceNoDialog(ExpertPriceEntity entity){
-        showOnlyDialog(entity);
-        new Thread(() -> {
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            runOnUiThread(() -> {
-                onlyTextDialog.dismiss();
-                bundle.clear();
-//                bundle.putSerializable(BundleTags.ENTITY,entity);
-                bundle.putBoolean(BundleTags.IS_EXPERT,true);
-                launchActivity(new Intent(mActivity, MyAccountActivity.class),bundle);
-            });
-        }).start();
-    }
-
-    OnlyTextDialog onlyTextDialog;
-    public void showOnlyDialog(ExpertPriceEntity entity){
-        String string = "当前余额剩余通话时长不足%1$s分钟，请充值余额。";
-        onlyTextDialog = new OnlyTextDialog(mActivity).setContent(String.format(string,entity.getMinimumDuration()));
-        onlyTextDialog.show();
-    }
-
-    //查看余额充足
-    public void showBalanceYesDialog(ExpertPriceEntity entity){
-        new CurrencyDialog2(mActivity,entity)
-                .setClickYes(dialog -> {
-                    mPresenter.sendCall(entity.getCallCenterNo());
-                })
-                .setClickNo(dialog -> {
-                    bundle.clear();
-//                bundle.putSerializable(BundleTags.ENTITY,entity);
-                    bundle.putBoolean(BundleTags.IS_EXPERT,true);
-                    launchActivity(new Intent(mActivity, MyAccountActivity.class),bundle);
-                }).show();
-    }
-
-
-    boolean isGoCall = false;
     @Override
-    public void GoCall(String str) {
-        Intent dialIntent =  new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + str));
-        startActivity(dialIntent);
-        isGoCall = true;
+    public void showExpertPrice(ExpertPriceEntity entity) {
+        if (entity.getOrderStatus() == 0) {//是否有预约订单，0.没有预约订单，1.已预约但为接单 2，已预约已接单，为完成
+            bundle.clear();
+            bundle.putSerializable(BundleTags.ENTITY, entity);
+            launchActivity(new Intent(mActivity, PhoneSubActivity.class), bundle);
+        } else if (entity.getOrderStatus() == 1) {
+            new SingleTextDialog(mActivity)
+                    .setContentHtmlStr("律师将于「通话时间」给您来电，请耐心等候律师将于「通话时间」给您来电，请耐心等候。您可进入<font color=\"#1EC88B\">我的-我的订单</font>页管理订单。")
+                    .setSubmitStr("我知道了！").show();
+
+        } else if (entity.getOrderStatus() == 2) {
+            new SingleTextDialog(mActivity)
+                    .setContentHtmlStr("您已成功发起咨询邀约，请等待律师确认咨询您已成功发起咨询邀约，请等待律师确认咨询时间，您可以进入<font color=\"#1EC88B\">我的-我的订单</font>页查看预约状态。")
+                    .setSubmitStr("我知道了！").show();
+        }
     }
 
-    public void showTestDialog2(){
-        new CurrencyDialog(mActivity)
-                .showTitleBg(false)
-                .setContent("如问题仍然未解决，您可再次拨打。")
-                .setContentLineSpacing(R.dimen.qb_px_20)
-                .setContentSize(14)
-                .setSubmitStr("已解决")
-                .setCannelStr("再次致电")
-                .setClickNo(dialog -> {
-                    if(!isCall) return;
-                    mPresenter.setEntity();
-                }).show();
-    }
-
-    @Override
-    public void showToErrorDialog(String s) {
-        new CallFieldDialog5(mActivity, dialog -> {
-            Intent dialIntent =  new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "400-811-3060"));
-            startActivity(dialIntent);
-            dialog.dismiss();
-
-        }, s, "联系客服").show();
-    }
+//    @Override
+//    public void showToErrorDialog(String s) {
+//        new CallFieldDialog5(mActivity, dialog -> {
+//            Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "400-811-3060"));
+//            startActivity(dialIntent);
+//            dialog.dismiss();
+//
+//        }, s, "联系客服").show();
+//    }
+//    OnlyTextDialog onlyTextDialog;
+//    //查看余额充足
+//    public void showBalanceYesDialog(ExpertPriceEntity entity) {
+//        new CurrencyDialog2(mActivity, entity)
+//                .setClickYes(dialog -> {
+//                    mPresenter.sendCall(entity.getCallCenterNo());
+//                })
+//                .setClickNo(dialog -> {
+//                    bundle.clear();
+////                bundle.putSerializable(BundleTags.ENTITY,entity);
+//                    bundle.putBoolean(BundleTags.IS_EXPERT, true);
+//                    launchActivity(new Intent(mActivity, MyAccountActivity.class), bundle);
+//                }).show();
+//    }
+//查询余额不足
+//public void showBalanceNoDialog(ExpertPriceEntity entity) {
+//    showOnlyDialog(entity);
+//    new Thread(() -> {
+//        try {
+//            Thread.sleep(2000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//        runOnUiThread(() -> {
+//            onlyTextDialog.dismiss();
+//            bundle.clear();
+////                bundle.putSerializable(BundleTags.ENTITY,entity);
+//            bundle.putBoolean(BundleTags.IS_EXPERT, true);
+//            launchActivity(new Intent(mActivity, MyAccountActivity.class), bundle);
+//        });
+//    }).start();
+//}
+//public void showTestDialog2() {
+//    new CurrencyDialog(mActivity)
+//            .showTitleBg(false)
+//            .setContent("如问题仍然未解决，您可再次拨打。")
+//            .setContentLineSpacing(R.dimen.qb_px_20)
+//            .setContentSize(14)
+//            .setSubmitStr("已解决")
+//            .setCannelStr("再次致电")
+//            .setClickNo(dialog -> {
+//                if (!isCall) return;
+//                mPresenter.setEntity();
+//            }).show();
+//}
+//@Override
+//public void GoCall(String str) {
+//    Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + str));
+//    startActivity(dialIntent);
+//    isGoCall = true;
+//}
+//public void showOnlyDialog(ExpertPriceEntity entity) {
+//    String string = "当前余额剩余通话时长不足%1$s分钟，请充值余额。";
+//    onlyTextDialog = new OnlyTextDialog(mActivity).setContent(String.format(string, entity.getMinimumDuration()));
+//    onlyTextDialog.show();
+//}
 }

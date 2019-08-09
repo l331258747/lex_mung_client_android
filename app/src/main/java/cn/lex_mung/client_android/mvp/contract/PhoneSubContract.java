@@ -1,7 +1,11 @@
 package cn.lex_mung.client_android.mvp.contract;
 
-import me.zl.mvp.mvp.IView;
+import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
+import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertReserveEntity;
+import io.reactivex.Observable;
 import me.zl.mvp.mvp.IModel;
+import me.zl.mvp.mvp.IView;
+import okhttp3.RequestBody;
 
 
 public interface PhoneSubContract {
@@ -10,6 +14,6 @@ public interface PhoneSubContract {
     }
 
     interface Model extends IModel {
-
+        Observable<BaseResponse<ExpertReserveEntity>> expertReserve(RequestBody body);
     }
 }

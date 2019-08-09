@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.constraint.Group;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -17,10 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aigestudio.wheelpicker.WheelPicker;
+import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -29,16 +26,16 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
-import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.di.component.DaggerPhoneSubComponent;
 import cn.lex_mung.client_android.di.module.PhoneSubModule;
 import cn.lex_mung.client_android.mvp.contract.PhoneSubContract;
-import cn.lex_mung.client_android.mvp.model.entity.free.CommonFreeTextEntity;
-import cn.lex_mung.client_android.mvp.model.entity.home.CommonMarkEntity;
+import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertPriceEntity;
+import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertPriceSolutionEntity;
+import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertPriceTimeEntity;
 import cn.lex_mung.client_android.mvp.presenter.PhoneSubPresenter;
-import cn.lex_mung.client_android.mvp.ui.adapter.HomeFreeAdapter;
 import cn.lex_mung.client_android.mvp.ui.adapter.PhoneSubAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.EasyDialog;
+import cn.lex_mung.client_android.mvp.ui.dialog.FieldDialog2;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.SimpleFlowLayout;
 import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
@@ -46,7 +43,6 @@ import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.utils.AppUtils;
-import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.StatusBarUtil;
 import me.zl.mvp.utils.StringUtils;
 
@@ -83,6 +79,12 @@ public class PhoneSubActivity extends BaseActivity<PhoneSubPresenter> implements
     @BindView(R.id.view_bottom)
     View viewBottom;
 
+    int timePosition = 0;
+    PhoneSubAdapter adapter;
+
+    ExpertPriceEntity entity;
+    int time2sSubtimPosition = 0;//底部弹窗position
+
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerPhoneSubComponent
@@ -103,41 +105,62 @@ public class PhoneSubActivity extends BaseActivity<PhoneSubPresenter> implements
         StatusBarUtil.setColor(mActivity, AppUtils.getColor(mActivity, R.color.c_1EC88B), 0);
         titleView.getTitleTv().setTextColor(ContextCompat.getColor(mActivity, R.color.c_ff));
 
-        tvTitleName.setText("律师姓名");
-        tvTitleLocation.setText("长沙-岳麓区");
-        ivTitleImg.setImageDrawable(ContextCompat.getDrawable(mActivity,R.drawable.ic_lawyer_avatar));
+        entity = (ExpertPriceEntity) bundleIntent.getSerializable(BundleTags.ENTITY);
+        if(entity == null) return;
 
-        List<String> tables = new ArrayList<>();
-        tables.add("法律速度快放假");
-        tables.add("阿法狗");
-        tables.add("阿斯蒂芬发");
-        tables.add("按规定");
-        initTableLayout(tables);
-
-        String str2 = "%1$s，不足%2$s分钟按%3$s分钟计算，超过%4$s时按实际通话分钟数计算。";
-        tvCostContent.setText(String.format(str2,"1.8元/分钟","30","30","30"));
-
-        List<String> times = new ArrayList<>();
-        times.add("未来24小时均可");
-        times.add("今天09:00-13:00");
-        times.add("今天13:00-17:00");
-        times.add("今天17:00-21:00");
-        initTimeAdapter(times);
-
-
-        String str = "预计咨询时长：20分钟。如预计通话更长，" + "<font color=\"#D89B4B\">请点我修改</font>";
-        StringUtils.setHtml(tvTimeBtn,str);
-
-        String str3 = "1、预约咨询服务需提前预存咨询费用。\n2、您发起预约后将默认冻结%s分钟的咨询费用，通话过程中，实际咨询费用如超过冻结费用时，系统将自行中断通话，如您预计通话时间会更长，请在上方点击修改冻结费用。\n3、更多细则请查阅《绿豆圈专家咨询细则》";
-        tvTipContent.setText(String.format(str3,"30"));
-
+        initViewData();
     }
 
-    public void initTimeAdapter(List<String> datas) {
+    public void initViewData(){
+        entity.setTalkTimes();
+
+        tvTitleName.setText(entity.getLawyerName());
+        tvTitleLocation.setText(entity.getCity());
+
+        if (!TextUtils.isEmpty(entity.getIcon())) {
+            mImageLoader.loadImage(mActivity
+                    , ImageConfigImpl
+                            .builder()
+                            .url(entity.getIcon())
+                            .isCircle(true)
+                            .imageView(ivTitleImg)
+                            .build());
+
+        } else {
+            ivTitleImg.setImageDrawable(ContextCompat.getDrawable(mActivity, R.drawable.ic_lawyer_avatar));
+        }
+
+
+        //擅长领域
+        if (entity.getSolution() != null && entity.getSolution().size() > 0) {
+            initTableLayout(entity.getSolution());
+        } else {
+            hideTableLayout();
+        }
+
+        tvCostContent.setText(entity.getPriceStr2());
+
+        initTimeAdapter(entity.getTimeSection());
+
+        setTvTimeBtn(entity.getMinimumDuration());
+
+        String str3 = "1、预约咨询服务需提前预存咨询费用。\n2、您发起预约后将默认冻结%s分钟的咨询费用，通话过程中，实际咨询费用如超过冻结费用时，系统将自行中断通话，如您预计通话时间会更长，请在上方点击修改冻结费用。\n3、更多细则请查阅《绿豆圈专家咨询细则》";
+        tvTipContent.setText(String.format(str3,entity.getMinimumDurationStr()));
+    }
+
+    public void setTvTimeBtn(int time){
+        String str = "预计咨询时长："+ time +"分钟。如预计通话更长，" + "<font color=\"#D89B4B\">请点我修改</font>";
+        StringUtils.setHtml(tvTimeBtn,str);
+    }
+
+    public void initTimeAdapter(List<ExpertPriceTimeEntity> datas) {
         PhoneSubAdapter adapter = new PhoneSubAdapter();
+        adapter.setPosition(timePosition);
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;
-
+            ExpertPriceTimeEntity entity = datas.get(position);
+            if(entity == null) return;
+            adapter.setPosition(timePosition = position);
         });
 
         AppUtils.configRecyclerView(recyclerView, new GridLayoutManager(mActivity,2));
@@ -146,12 +169,22 @@ public class PhoneSubActivity extends BaseActivity<PhoneSubPresenter> implements
         adapter.setNewData(datas);
     }
 
-    public void initTableLayout(List<String> marks) {
+    public void initTableLayout(List<ExpertPriceSolutionEntity> marks) {
+        if (sflTable.getChildCount() > 0) {
+            sflTable.removeViews(0, sflTable.getChildCount());
+        }
+
         for (int i = 0; i < marks.size(); i++) {
             int pos = i;
             View itemView = LayoutInflater.from(mActivity).inflate(R.layout.item_table_phone_sub, null, false);
             TextView tvTitle = itemView.findViewById(R.id.item_tv_title);
-            tvTitle.setText(marks.get(i));
+            tvTitle.setText(marks.get(i).getSolutionTypeName());
+            itemView.setOnClickListener(v -> {
+                if (isFastClick()) return;
+                ExpertPriceSolutionEntity bean = marks.get(pos);
+                if(bean == null) return;
+                new FieldDialog2(mActivity, bean, mImageLoader).show();
+            });
             sflTable.addView(itemView, i);
         }
     }
@@ -160,23 +193,30 @@ public class PhoneSubActivity extends BaseActivity<PhoneSubPresenter> implements
         groupTable.setVisibility(View.GONE);
     }
 
-    @OnClick({R.id.tv_recharge, R.id.tv_call,R.id.tv_time_btn})
+
+    @OnClick({R.id.tv_recharge, R.id.tv_call,R.id.tv_time_btn,R.id.tv_tip_content})
     public void onViewClicked(View view) {
         if (isFastClick()) return;
         switch (view.getId()) {
             case R.id.tv_recharge:
-                showMessage("余额充值");
+                bundle.clear();
+                bundle.putBoolean(BundleTags.IS_EXPERT, true);
+                launchActivity(new Intent(mActivity, MyAccountActivity.class), bundle);
                 break;
             case R.id.tv_call:
-                showMessage("发起预约");
+                mPresenter.expertReserve(entity.getLawyerId(),
+                        entity.getTimeSection().get(timePosition).getStart(),
+                        entity.getTimeSection().get(timePosition).getEnd(),
+                        entity.getTalkTimes().get(time2sSubtimPosition).getTime());
                 break;
             case R.id.tv_time_btn:
-                List<String> times2 = new ArrayList<>();
-                times2.add("冻结20分钟咨询费用（60分钟）");
-                times2.add("冻结30分钟咨询费用（90分钟）");
-                times2.add("冻结40分钟咨询费用（120分钟）");
-                times2.add("冻结50分钟咨询费用（150分钟）");
-                showSelectTypeDialog(times2);
+                showSelectTypeDialog(entity.getTalkTimeStrs());
+                break;
+            case R.id.tv_tip_content:
+                bundle.clear();
+                bundle.putString(BundleTags.URL, entity.getAgreementUrl());
+                bundle.putString(BundleTags.TITLE, "绿豆圈专家咨询细则");
+                launchActivity(new Intent(mActivity, WebActivity.class), bundle);
                 break;
         }
     }
@@ -184,8 +224,7 @@ public class PhoneSubActivity extends BaseActivity<PhoneSubPresenter> implements
 
     //---------start 修改
     private EasyDialog easyDialog;
-    private int time2Position;
-    private String time2Name;
+    private int time2SelectPosition = 0;//因为在选择的时候也会记录position ， 所以确定的时候还要一个变量来存选择的position
     @SuppressLint("InflateParams")
     private void showSelectTypeDialog(List<String> times2) {
         View layout = getLayoutInflater().inflate(R.layout.layout_select_industry_dialog, null);
@@ -194,16 +233,13 @@ public class PhoneSubActivity extends BaseActivity<PhoneSubPresenter> implements
         wpConsultType.setCurved(false);
         wpConsultType.setVisibleItemCount(6);
         wpConsultType.setOnItemSelectedListener((picker, data, position) -> {
-            time2Position = position;
-            time2Name = times2.get(position);
-            showMessage("position:" + position + ",times2:" + times2.get(position));
+            time2SelectPosition = position;
         });
         wpConsultType.setData(times2);
         wpConsultType.setSelectedItemPosition(0);
-
         layout.findViewById(R.id.tv_cancel).setOnClickListener(v -> dismiss());
         layout.findViewById(R.id.tv_confirm).setOnClickListener(v -> {
-            showMessage("position:" + time2Position + ",times2:" + time2Name);
+            setTvTimeBtn(entity.getTalkTimes().get(time2sSubtimPosition = time2SelectPosition).getTime());
             dismiss();
         });
     }

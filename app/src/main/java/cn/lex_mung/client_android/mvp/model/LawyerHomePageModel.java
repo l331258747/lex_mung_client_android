@@ -4,9 +4,8 @@ import android.app.Application;
 
 import com.google.gson.Gson;
 
-import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
 import cn.lex_mung.client_android.mvp.model.entity.ExpertCallEntity;
-import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
+import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertPriceEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.integration.IRepositoryManager;
 import me.zl.mvp.mvp.BaseModel;

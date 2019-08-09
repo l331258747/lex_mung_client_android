@@ -17,7 +17,7 @@ import cn.lex_mung.client_android.mvp.model.entity.DemandMessageEntity;
 import cn.lex_mung.client_android.mvp.model.entity.EquitiesDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.EquitiesListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.ExpertCallEntity;
-import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
+import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.FeedbackTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.FreeConsultEntity;
 import cn.lex_mung.client_android.mvp.model.entity.FreeConsultReplyListEntity;
@@ -46,6 +46,7 @@ import cn.lex_mung.client_android.mvp.model.entity.UnreadMessageCountEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UploadImageEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.VersionEntity;
+import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertReserveEntity;
 import cn.lex_mung.client_android.mvp.model.entity.free.CommonFreeTextEntity;
 import cn.lex_mung.client_android.mvp.model.entity.free.FreeTextBizinfoEntity;
 import cn.lex_mung.client_android.mvp.model.entity.help.HelpStepEntity;
@@ -477,7 +478,7 @@ public interface CommonService {
      *
      * @return BaseResponse
      */
-    @GET("expert/price/{id}/v2")
+    @GET("/client/expert/price/{id}/v3")
     Observable<BaseResponse<ExpertPriceEntity>> expertPrice(@Path("id") int id);
 
     /**
@@ -858,5 +859,11 @@ public interface CommonService {
     //查看用户是否有正在审核中的提现申请
     @GET("client/withdraw/verify")
     Observable<BaseResponse<Boolean>> withdrawVerify();
+
+    ///client/expert/reserve
+    //POST
+    //预约专家咨询
+    @POST("client/expert/reserve")
+    Observable<BaseResponse<ExpertReserveEntity>> expertReserve(@Body RequestBody body);
 
 }

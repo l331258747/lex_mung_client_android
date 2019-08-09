@@ -1,11 +1,8 @@
 package cn.lex_mung.client_android.mvp.contract;
 
-import java.util.List;
-
-import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.ExpertCallEntity;
-import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
+import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.help.HelpStepLawyerEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.mvp.IModel;
@@ -16,12 +13,11 @@ public interface HelpStepLawyerContract {
     interface View extends IView {
         void setData(HelpStepLawyerEntity entity);
 
-        void showToErrorDialog(String s);
-
-        void showBalanceNoDialog(ExpertPriceEntity entity);
-        void showBalanceYesDialog(ExpertPriceEntity entity);
-
-        void GoCall(String str);
+//        void showToErrorDialog(String s);
+//        void showBalanceNoDialog(ExpertPriceEntity entity);
+//        void showBalanceYesDialog(ExpertPriceEntity entity);
+//        void GoCall(String str);
+        void showExpertPrice(ExpertPriceEntity entity);
     }
 
     interface Model extends IModel {

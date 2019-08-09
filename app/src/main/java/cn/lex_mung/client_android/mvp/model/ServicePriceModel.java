@@ -4,7 +4,6 @@ import android.app.Application;
 
 import com.google.gson.Gson;
 
-import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
 import cn.lex_mung.client_android.mvp.model.entity.ExpertCallEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.integration.IRepositoryManager;
@@ -17,7 +16,7 @@ import javax.inject.Inject;
 import cn.lex_mung.client_android.mvp.contract.ServicePriceContract;
 import cn.lex_mung.client_android.mvp.model.api.CommonService;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
-import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
+import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertPriceEntity;
 
 @FragmentScope
 public class ServicePriceModel extends BaseModel implements ServicePriceContract.Model {

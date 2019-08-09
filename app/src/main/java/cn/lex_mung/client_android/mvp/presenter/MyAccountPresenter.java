@@ -6,11 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextUtils;
 
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.app.PayStatusTags;
-import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayResultEntity;
 import cn.lex_mung.client_android.mvp.model.entity.mine.RechargeCouponEntity;

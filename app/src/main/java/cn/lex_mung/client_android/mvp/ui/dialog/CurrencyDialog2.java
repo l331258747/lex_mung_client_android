@@ -5,18 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
-import android.util.TypedValue;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
-import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
+import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.StringUtils;

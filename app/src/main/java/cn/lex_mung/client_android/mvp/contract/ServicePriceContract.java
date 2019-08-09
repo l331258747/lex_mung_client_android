@@ -1,12 +1,8 @@
 package cn.lex_mung.client_android.mvp.contract;
 
-import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
-import cn.lex_mung.client_android.mvp.model.entity.BusinessEntity;
 import cn.lex_mung.client_android.mvp.model.entity.ExpertCallEntity;
-import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
-
-import java.util.List;
+import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertPriceEntity;
 
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerHomePageActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.ServicePriceAdapter;
@@ -18,12 +14,10 @@ public interface ServicePriceContract {
     interface View extends IView {
         void initRecyclerView(ServicePriceAdapter adapter);
 
-        void showToErrorDialog(String s);
-
-        void showBalanceNoDialog(ExpertPriceEntity entity);
-        void showBalanceYesDialog(ExpertPriceEntity entity);
-
-        void GoCall(String str);
+//        void showToErrorDialog(String s);
+//        void showBalanceNoDialog(ExpertPriceEntity entity);
+//        void showBalanceYesDialog(ExpertPriceEntity entity);
+//        void GoCall(String str);
 
         LawyerHomePageActivity getLawyerHomePageActivity();
 

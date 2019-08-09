@@ -22,9 +22,28 @@ public class TimeFormat {
         return "";
     }
 
+    @SuppressLint("SimpleDateFormat")
+    public static String getTime(String timeStamp, String formatType) {
+        if (TextUtils.isEmpty(timeStamp)) return "";
+        try {
+            return getTime(new SimpleDateFormat(formatType).parse(timeStamp).getTime());
+        } catch (ParseException ignored) {
+        }
+        return "";
+    }
+
     public static String longToStr(long dateLong) {
         String res;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        long lt = new Long(dateLong);
+        Date date = new Date(lt);
+        res = simpleDateFormat.format(date);
+        return res;
+    }
+
+    public static String longToStr(long dateLong, String formatType) {
+        String res;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formatType);
         long lt = new Long(dateLong);
         Date date = new Date(lt);
         res = simpleDateFormat.format(date);
@@ -233,5 +252,15 @@ public class TimeFormat {
     public static String format(Date date, String pattern) {
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
         return sdf.format(date);
+    }
+
+    public static String getCurrentTime() {
+        //时间转字符串
+        //截取当前系统时间
+        Date currentTime = new Date();
+        //改变输出格式（自己想要的格式）
+        SimpleDateFormat formatter = new SimpleDateFormat(s1);
+        //得到字符串时间
+        return formatter.format(currentTime);
     }
 }

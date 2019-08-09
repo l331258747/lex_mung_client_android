@@ -5,14 +5,12 @@ import android.app.Application;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import cn.lex_mung.client_android.mvp.model.api.CommonService;
-import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.ExpertCallEntity;
-import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
+import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.help.HelpStepLawyerEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.integration.IRepositoryManager;

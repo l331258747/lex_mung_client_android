@@ -3,12 +3,10 @@ package cn.lex_mung.client_android.mvp.contract;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 
-import cn.lex_mung.client_android.mvp.model.entity.AgreementEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.ExpertCallEntity;
-import cn.lex_mung.client_android.mvp.model.entity.ExpertPriceEntity;
+import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
-import cn.lex_mung.client_android.mvp.model.entity.LawyerTagsEntity;
 
 import java.util.List;
 
@@ -59,16 +57,15 @@ public interface LawyerHomePageContract {
         void addSimpleFlowLayout(android.view.View itemView, int i);
 
         void removeViews();
-
-        //------电话
-        void showToErrorDialog(String s);
-
         void showCall(boolean isHide);
 
-        void showBalanceNoDialog(ExpertPriceEntity entity);
-        void showBalanceYesDialog(ExpertPriceEntity entity);
+        //------电话
+//        void showToErrorDialog(String s);
+//        void showBalanceNoDialog(ExpertPriceEntity entity);
+//        void showBalanceYesDialog(ExpertPriceEntity entity);
+//        void GoCall(String str);
 
-        void GoCall(String str);
+        void showExpertPrice(ExpertPriceEntity entity);
     }
 
     interface Model extends IModel {

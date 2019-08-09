@@ -9,6 +9,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.widget.TextView;
 
 import cn.lex_mung.client_android.R;
+import me.zl.mvp.utils.StringUtils;
 
 
 public class SingleTextDialog extends Dialog {
@@ -33,6 +34,12 @@ public class SingleTextDialog extends Dialog {
 
     public SingleTextDialog setContent(String contentStr) {
         this.contentStr = contentStr;
+        return this;
+    }
+
+    String contentHtmlStr;
+    public SingleTextDialog setContentHtmlStr(String contentHtmlStr){
+        this.contentHtmlStr = contentHtmlStr;
         return this;
     }
 
@@ -65,12 +72,20 @@ public class SingleTextDialog extends Dialog {
             tv_content.setText(contentStr);
         }
 
+        if (!TextUtils.isEmpty(contentHtmlStr)) {
+            StringUtils.setHtml(tv_content,contentHtmlStr);
+        }
+
         tv_submit.setOnClickListener(v -> {
             dismiss();
             if(onClickListener != null){
                 onClickListener.onClick();
             }
         });
+    }
+
+    public TextView getTv_content() {
+        return tv_content;
     }
 
     public interface OnClickListener {
