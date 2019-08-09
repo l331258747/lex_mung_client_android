@@ -608,6 +608,7 @@ import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MainActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MessageActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.OrganizationLawyerActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.PhoneSubActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.SolutionDetailActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.HomeAdapter;
@@ -874,7 +875,9 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.view_search_text:
-                ((MainActivity) mActivity).switchPage(2);
+//                ((MainActivity) mActivity).switchPage(2);
+
+                launchActivity(new Intent(mActivity, PhoneSubActivity.class));
                 break;
             case R.id.iv_message:
                 if (mPresenter.isLogin()) {

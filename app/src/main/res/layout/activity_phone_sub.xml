@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <cn.lex_mung.client_android.mvp.ui.widget.TitleView
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:TitleView_bg="@color/c_1EC88B"
+        app:TitleView_left_img="@drawable/ic_withe_back"
+        app:TitleView_title="预约咨询" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_40"
+        android:layout_below="@+id/titleView"
+        android:background="@color/c_1EC88B" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/titleView"
+        android:background="@drawable/round_40_ffffff_top">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/qb_px_40"
+            android:paddingBottom="@dimen/qb_px_100">
+
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/qb_px_40" />
+
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/qb_px_40" />
+
+            <View
+                android:id="@+id/view_title"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/qb_px_20"
+                app:layout_constraintBottom_toBottomOf="@+id/view_title_line"
+                app:layout_constraintEnd_toEndOf="@+id/guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_title_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="名字"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/view_title"
+                app:layout_constraintTop_toTopOf="@+id/view_title" />
+
+            <ImageView
+                android:id="@+id/iv_title_location"
+                android:layout_width="@dimen/qb_px_25"
+                android:layout_height="@dimen/qb_px_25"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_location2"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_title_location"
+                app:layout_constraintStart_toStartOf="@+id/view_title"
+                app:layout_constraintTop_toTopOf="@+id/tv_title_location" />
+
+            <TextView
+                android:id="@+id/tv_title_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_10"
+                android:layout_marginTop="@dimen/qb_px_35"
+                android:text="区域"
+                android:textColor="@color/c_737373"
+                app:layout_constraintStart_toEndOf="@+id/iv_title_location"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title_name" />
+
+            <ImageView
+                android:id="@+id/iv_title_img"
+                android:layout_width="@dimen/qb_px_214"
+                android:layout_height="@dimen/qb_px_214"
+                android:src="@drawable/ic_lawyer_avatar"
+                app:layout_constraintEnd_toEndOf="@+id/view_title"
+                app:layout_constraintTop_toTopOf="@+id/view_title" />
+
+            <View
+                android:id="@+id/view_title_line"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/qb_px_1"
+                android:layout_marginTop="@dimen/qb_px_40"
+                android:background="@color/c_f0f0f0"
+                app:layout_constraintEnd_toEndOf="@+id/view_title"
+                app:layout_constraintStart_toStartOf="@+id/view_title"
+                app:layout_constraintTop_toBottomOf="@+id/iv_title_img" />
+
+            <!--擅长领域-->
+            <View
+                android:id="@+id/view_table"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@+id/view_table_line"
+                app:layout_constraintEnd_toEndOf="@+id/guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@+id/view_title" />
+
+            <android.support.constraint.Group
+                android:id="@+id/group_table"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="tv_table_title,sfl_table,view_table_line" />
+
+            <TextView
+                android:id="@+id/tv_table_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_25"
+                android:text="擅长领域"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/view_table"
+                app:layout_constraintTop_toTopOf="@+id/view_table" />
+
+            <cn.lex_mung.client_android.mvp.ui.widget.SimpleFlowLayout
+                android:id="@+id/sfl_table"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_40"
+                app:hor_divider_width="@dimen/qb_px_20"
+                app:hor_row_height="@dimen/qb_px_20"
+                app:layout_constraintEnd_toEndOf="@+id/view_table"
+                app:layout_constraintStart_toStartOf="@+id/view_table"
+                app:layout_constraintTop_toBottomOf="@id/tv_table_title" />
+
+            <View
+                android:id="@+id/view_table_line"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/qb_px_1"
+                android:layout_marginTop="@dimen/qb_px_40"
+                android:background="@color/c_f0f0f0"
+                app:layout_constraintEnd_toEndOf="@+id/view_table"
+                app:layout_constraintStart_toStartOf="@+id/view_table"
+                app:layout_constraintTop_toBottomOf="@+id/sfl_table" />
+
+            <!--咨询费用-->
+            <View
+                android:id="@+id/view_cost"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@+id/view_cost_line"
+                app:layout_constraintEnd_toEndOf="@+id/guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@+id/view_table" />
+
+            <TextView
+                android:id="@+id/tv_cost_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_40"
+                android:text="咨询费用"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/view_cost"
+                app:layout_constraintTop_toTopOf="@+id/view_cost" />
+
+            <TextView
+                android:id="@+id/tv_cost_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_25"
+                android:text="通话单价，不足保底时长分钟按保底时长分钟计算，超过保底时长时按实际通话分钟数计算"
+                app:layout_constraintEnd_toEndOf="@+id/view_cost"
+                app:layout_constraintStart_toStartOf="@+id/view_cost"
+                app:layout_constraintTop_toBottomOf="@+id/tv_cost_title" />
+
+            <View
+                android:id="@+id/view_cost_line"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/qb_px_20"
+                android:layout_marginTop="@dimen/qb_px_40"
+                android:background="@color/c_f7f7f7"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_cost_content" />
+
+
+            <!--时间选择-->
+
+            <View
+                android:id="@+id/view_time"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@+id/view_time_line"
+                app:layout_constraintEnd_toEndOf="@+id/guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@+id/view_cost" />
+
+
+            <TextView
+                android:id="@+id/tv_time_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_40"
+                android:text="请您选择可接受的通话时间段（可多选）\n律师将在你所选择的时间段内选择通话开始时间。"
+                android:textColor="@color/c_737373"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@+id/view_time"
+                app:layout_constraintStart_toStartOf="@+id/view_time"
+                app:layout_constraintTop_toTopOf="@+id/view_time" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                android:layout_marginTop="@dimen/qb_px_30"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="@dimen/qb_px_25"
+                android:layout_marginEnd="@dimen/qb_px_25"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_time_content"/>
+
+            <TextView
+                android:id="@+id/tv_time_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_30"
+                android:gravity="center"
+                android:text="预计咨询时长：20分钟。如预计通话更长，请点我修改"
+                android:textColor="@color/c_737373"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@+id/view_time"
+                app:layout_constraintStart_toStartOf="@+id/view_time"
+                app:layout_constraintTop_toBottomOf="@+id/recycler_view" />
+
+            <View
+                android:id="@+id/view_time_line"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/qb_px_1"
+                android:layout_marginTop="@dimen/qb_px_40"
+                android:background="@color/c_f0f0f0"
+                app:layout_constraintEnd_toEndOf="@+id/view_title"
+                app:layout_constraintStart_toStartOf="@+id/view_title"
+                app:layout_constraintTop_toBottomOf="@+id/tv_time_btn" />
+
+            <View
+                android:id="@+id/view_tip"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_tip_content"
+                app:layout_constraintEnd_toEndOf="@+id/guideline_right"
+                app:layout_constraintStart_toStartOf="@+id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@+id/view_time" />
+
+            <TextView
+                android:id="@+id/tv_tip_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_40"
+                android:text="重要提示"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/view_tip"
+                app:layout_constraintTop_toTopOf="@+id/view_tip" />
+
+            <TextView
+                android:id="@+id/tv_tip_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_25"
+                android:lineSpacingExtra="@dimen/qb_px_5"
+                android:text="1、预约咨询服务需提前预存咨询费用。\n2、您发起预约后将默认冻结【保底时长】分钟的咨询费用，通话过程中，实际咨询费用如超过冻结费用时，系统将自行中断通话，如您预计通话时间会更长，请在上方点击修改冻结费用。\n3、更多细则请查阅《绿豆圈专家咨询细则》"
+                android:textColor="@color/c_737373"
+                app:layout_constraintEnd_toEndOf="@+id/view_tip"
+                app:layout_constraintStart_toStartOf="@+id/view_tip"
+                app:layout_constraintTop_toBottomOf="@+id/tv_tip_title" />
+
+
+        </android.support.constraint.ConstraintLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_100"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/ic_bottom_bg"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/qb_px_50"
+        android:paddingTop="@dimen/qb_px_10"
+        android:paddingRight="@dimen/qb_px_50"
+        android:paddingBottom="@dimen/qb_px_10">
+
+        <TextView
+            android:id="@+id/tv_recharge"
+            android:layout_width="@dimen/qb_px_325"
+            android:layout_height="@dimen/qb_px_80"
+            android:layout_weight="1"
+            android:background="@drawable/round_40_06a66a_all"
+            android:gravity="center"
+            android:scaleType="fitCenter"
+            android:text="余额充值"
+            android:textColor="@color/c_ff"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/tv_call"
+            android:layout_width="@dimen/qb_px_325"
+            android:layout_height="@dimen/qb_px_80"
+            android:layout_marginLeft="@dimen/qb_px_50"
+            android:layout_weight="1"
+            android:background="@drawable/round_40_06a66a_all"
+            android:gravity="center"
+            android:scaleType="fitCenter"
+            android:text="发起预约"
+            android:textColor="@color/c_ff"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_1"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

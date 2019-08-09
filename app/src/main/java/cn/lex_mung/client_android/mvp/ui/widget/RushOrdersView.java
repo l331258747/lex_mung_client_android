@@ -104,7 +104,7 @@ public class RushOrdersView extends LinearLayout {
                 iv_select_4.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_rush_order_select_un));
 
 
-                iv_line_1.setBackgroundColor(ContextCompat.getColor(context,R.color.c_78FAA0));
+                iv_line_1.setBackgroundColor(ContextCompat.getColor(context,R.color.c_78faa0));
                 iv_line_2.setBackgroundColor(ContextCompat.getColor(context,R.color.c_ff));
                 iv_line_3.setBackgroundColor(ContextCompat.getColor(context,R.color.c_ff));
 
@@ -125,8 +125,8 @@ public class RushOrdersView extends LinearLayout {
                 iv_select_4.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_rush_order_select_un));
 
 
-                iv_line_1.setBackgroundColor(ContextCompat.getColor(context,R.color.c_78FAA0));
-                iv_line_2.setBackgroundColor(ContextCompat.getColor(context,R.color.c_78FAA0));
+                iv_line_1.setBackgroundColor(ContextCompat.getColor(context,R.color.c_78faa0));
+                iv_line_2.setBackgroundColor(ContextCompat.getColor(context,R.color.c_78faa0));
                 iv_line_3.setBackgroundColor(ContextCompat.getColor(context,R.color.c_ff));
 
                 iv_mate.setVisibility(INVISIBLE);
@@ -145,9 +145,9 @@ public class RushOrdersView extends LinearLayout {
                 iv_select_4.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_rush_order_select));
 
 
-                iv_line_1.setBackgroundColor(ContextCompat.getColor(context,R.color.c_78FAA0));
-                iv_line_2.setBackgroundColor(ContextCompat.getColor(context,R.color.c_78FAA0));
-                iv_line_3.setBackgroundColor(ContextCompat.getColor(context,R.color.c_78FAA0));
+                iv_line_1.setBackgroundColor(ContextCompat.getColor(context,R.color.c_78faa0));
+                iv_line_2.setBackgroundColor(ContextCompat.getColor(context,R.color.c_78faa0));
+                iv_line_3.setBackgroundColor(ContextCompat.getColor(context,R.color.c_78faa0));
 
                 iv_mate.setVisibility(INVISIBLE);
                 tv_mate.setVisibility(VISIBLE);
