@@ -176,19 +176,19 @@
             </LinearLayout>
 
 
-            <TextView
-                android:id="@+id/tv_tip"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/qb_px_80"
-                android:text="【律师名称】律师的咨询费用为【通话单价】当前余额可与【律师名称】通话【通话时长】，请确保余额大于通话【保底时长】分钟所需的【最低余额】元（通话不足【保底时长】分钟按【保底时长】分钟计算，超过【保底时长】分钟时按分钟计费。）"
-                android:textColor="@color/c_d8d8d8"
-                android:textSize="12sp"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="@+id/guideline3"
-                app:layout_constraintStart_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toBottomOf="@+id/ll_btn"
-                tools:visibility="visible" />
+            <!--<TextView-->
+                <!--android:id="@+id/tv_tip"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="@dimen/qb_px_80"-->
+                <!--android:text="【律师名称】律师的咨询费用为【通话单价】当前余额可与【律师名称】通话【通话时长】，请确保余额大于通话【保底时长】分钟所需的【最低余额】元（通话不足【保底时长】分钟按【保底时长】分钟计算，超过【保底时长】分钟时按分钟计费。）"-->
+                <!--android:textColor="@color/c_d8d8d8"-->
+                <!--android:textSize="12sp"-->
+                <!--android:visibility="gone"-->
+                <!--app:layout_constraintEnd_toEndOf="@+id/guideline3"-->
+                <!--app:layout_constraintStart_toStartOf="@+id/guideline2"-->
+                <!--app:layout_constraintTop_toBottomOf="@+id/ll_btn"-->
+                <!--tools:visibility="visible" />-->
 
             <TextView
                 android:id="@+id/tv_select_pay_money"
@@ -201,7 +201,7 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/guideline2"
-                app:layout_constraintTop_toBottomOf="@+id/tv_tip" />
+                app:layout_constraintTop_toBottomOf="@+id/ll_btn" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view"
@@ -217,25 +217,25 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_select_pay_money" />
 
 
-            <TextView
-                android:id="@+id/tv_tip2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/qb_px_30"
-                android:text="充值后可增加与【律师名称】【增加时长】通话时长"
-                android:textColor="@color/c_b4b4b4"
-                android:textSize="12sp"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="@+id/guideline3"
-                app:layout_constraintStart_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toBottomOf="@+id/recycler_view"
-                tools:visibility="visible" />
+            <!--<TextView-->
+                <!--android:id="@+id/tv_tip2"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="@dimen/qb_px_30"-->
+                <!--android:text="充值后可增加与【律师名称】【增加时长】通话时长"-->
+                <!--android:textColor="@color/c_b4b4b4"-->
+                <!--android:textSize="12sp"-->
+                <!--android:visibility="gone"-->
+                <!--app:layout_constraintEnd_toEndOf="@+id/guideline3"-->
+                <!--app:layout_constraintStart_toStartOf="@+id/guideline2"-->
+                <!--app:layout_constraintTop_toBottomOf="@+id/recycler_view"-->
+                <!--tools:visibility="visible" />-->
 
             <View
                 android:id="@+id/view_2"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/qb_px_1"
-                app:layout_constraintTop_toBottomOf="@id/tv_tip2" />
+                app:layout_constraintTop_toBottomOf="@id/recycler_view" />
 
             <View
                 android:layout_width="match_parent"

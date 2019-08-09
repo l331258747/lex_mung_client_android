@@ -514,7 +514,8 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
             runOnUiThread(() -> {
                 onlyTextDialog.dismiss();
                 bundle.clear();
-                bundle.putSerializable(BundleTags.ENTITY,entity);
+//                bundle.putSerializable(BundleTags.ENTITY,entity);
+                bundle.putBoolean(BundleTags.IS_EXPERT,true);
                 launchActivity(new Intent(mActivity, MyAccountActivity.class),bundle);
             });
         }).start();
@@ -535,7 +536,8 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
                 })
                 .setClickNo(dialog -> {
                     bundle.clear();
-                    bundle.putSerializable(BundleTags.ENTITY,entity);
+//                bundle.putSerializable(BundleTags.ENTITY,entity);
+                    bundle.putBoolean(BundleTags.IS_EXPERT,true);
                     launchActivity(new Intent(mActivity, MyAccountActivity.class),bundle);
                 }).show();
     }

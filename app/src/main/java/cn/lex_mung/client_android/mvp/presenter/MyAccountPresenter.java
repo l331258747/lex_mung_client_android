@@ -77,11 +77,12 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
     private int payType = 1;
 
     private boolean flag = false;
-    private ExpertPriceEntity entity;
+//    private ExpertPriceEntity entity;
     //    private int myAccountPayAdapterPosition;
 //    private List<RechargeEntity> priceList;
     private int rechargeId;
     private boolean isCoupon;//是否有券，用来在支付成功页面显示提示
+    private boolean isExpert;
 
     @Inject
     public MyAccountPresenter(MyAccountContract.Model model, MyAccountContract.View rootView) {
@@ -90,6 +91,10 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
 
     public double getAllBalance() {
         return allBalance;
+    }
+
+    public void setExpert(boolean isExpert) {
+        this.isExpert = isExpert;
     }
 
     public double getRealBalance() {
@@ -210,43 +215,46 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
         this.payMoney = payMoney;
 //        mRootView.setOrderMoney(StringUtils.getStringNum(payMoney));
 
-        if (entity != null) {
-            long time;
-            double SelectMoney;
-            String string2;
-
-//            if(entity.getMinimumRecharge() > 0 && myAccountPayAdapterPosition == priceList.size() - 1){//如果最小充值金额大于0，和选择最后一个
-//                SelectMoney = DecimalUtil.add(allBalance, payMoney);
-//                string2 = "充值后即可与%1$s通话%2$s。";
-//            }else{
-//                SelectMoney = payMoney;
-//                string2 = "充值后可增加与%1$s%2$s通话时长。";
+//        if (entity != null) {
+//            long time;
+//            double SelectMoney;
+//            String string2;
+//
+////            if(entity.getMinimumRecharge() > 0 && myAccountPayAdapterPosition == priceList.size() - 1){//如果最小充值金额大于0，和选择最后一个
+////                SelectMoney = DecimalUtil.add(allBalance, payMoney);
+////                string2 = "充值后即可与%1$s通话%2$s。";
+////            }else{
+////                SelectMoney = payMoney;
+////                string2 = "充值后可增加与%1$s%2$s通话时长。";
+////            }
+//
+//            SelectMoney = payMoney;
+//            string2 = "充值后可增加与%1$s%2$s通话时长。";
+//
+//
+//            if (!TextUtils.isEmpty(entity.getOrgnizationName())) {
+//                time = (long) DecimalUtil.divide(SelectMoney, entity.getFavorablePrice());
+//            } else {
+//                time = (long) DecimalUtil.divide(SelectMoney, entity.getLawyerPrice());
 //            }
-
-            SelectMoney = payMoney;
-            string2 = "充值后可增加与%1$s%2$s通话时长。";
-
-
-            if (!TextUtils.isEmpty(entity.getOrgnizationName())) {
-                time = (long) DecimalUtil.divide(SelectMoney, entity.getFavorablePrice());
-            } else {
-                time = (long) DecimalUtil.divide(SelectMoney, entity.getLawyerPrice());
-            }
-
-            String timeStr = StringUtils.getStringNum(time) + entity.getPriceUnit();
-            if (entity.getPriceUnit().equals("分钟") && time / 60 > 0) {
-                timeStr = (time / 60) + "小时" + (time % 60) + "分钟";
-            }
-            mRootView.setTip2(String.format(string2, entity.getLawyerName(), timeStr));
-        }
+//
+//            String timeStr = StringUtils.getStringNum(time) + entity.getPriceUnit();
+//            if (entity.getPriceUnit().equals("分钟") && time / 60 > 0) {
+//                timeStr = (time / 60) + "小时" + (time % 60) + "分钟";
+//            }
+//            mRootView.setTip2(String.format(string2, entity.getLawyerName(), timeStr));
+//        }
     }
 
     public void setPayType(int payType) {
         this.payType = payType;
     }
 
-    public void onCreate(ExpertPriceEntity entity) {
-        this.entity = entity;
+//    public void onCreate(ExpertPriceEntity entity) {
+//        this.entity = entity;
+//        getRechargeList();
+//    }
+    public void onCreate() {
         getRechargeList();
     }
 
@@ -388,7 +396,7 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
                                 request.timeStamp = baseResponse.getData().getTimestamp();
                                 request.sign = baseResponse.getData().getSign();
                                 api.sendReq(request);
-                                if (entity != null) {
+                                if (isExpert) {
                                     DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.PAY_EXPERT);
                                 } else {
                                     DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, isCoupon?PayStatusTags.PAY_COUPON:PayStatusTags.PAY);
@@ -406,7 +414,7 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
                                 Thread payThread = new Thread(payRunnable);
                                 payThread.start();
                             } else {//余额
-                                if (entity != null) {
+                                if (isExpert) {
                                     DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.PAY_EXPERT);
                                 } else {
                                     DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, isCoupon?PayStatusTags.PAY_COUPON:PayStatusTags.PAY);
@@ -431,7 +439,7 @@ public class MyAccountPresenter extends BasePresenter<MyAccountContract.Model, M
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1: {
-                    if (entity != null) {
+                    if (isExpert) {
                         DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.PAY_EXPERT);
                     } else {
                         DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, isCoupon?PayStatusTags.PAY_COUPON:PayStatusTags.PAY);

@@ -27,7 +27,7 @@ public interface MyAccountContract {
 
         void initRecyclerView(MyAccountPayAdapter2 myAccountPayAdapter);
 
-        void setTip2(String str);
+//        void setTip2(String str);
 
         void showPriceDialog(int type, String balance,String giveBalance,List<RechargeCouponEntity> rechargeCouponEntities);
 

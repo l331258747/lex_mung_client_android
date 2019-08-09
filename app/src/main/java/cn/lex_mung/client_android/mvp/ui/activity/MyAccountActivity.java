@@ -183,10 +183,10 @@ public class MyAccountActivity extends BaseActivity<MyAccountPresenter> implemen
     TextView btDetail;
     @BindView(R.id.bt_withdrawal)
     TextView btWithdrawal;
-    @BindView(R.id.tv_tip)
-    TextView tvTip;
-    @BindView(R.id.tv_tip2)
-    TextView tvTip2;
+//    @BindView(R.id.tv_tip)
+//    TextView tvTip;
+//    @BindView(R.id.tv_tip2)
+//    TextView tvTip2;
 //    @BindView(R.id.tv_give_price)
 //    TextView tvGivePrice;
     @BindView(R.id.tv_price_title)
@@ -195,7 +195,7 @@ public class MyAccountActivity extends BaseActivity<MyAccountPresenter> implemen
 //    Group groupGivePrice;
 
     private DefaultDialog defaultDialog;
-    private ExpertPriceEntity entity;
+//    private ExpertPriceEntity entity;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -215,54 +215,57 @@ public class MyAccountActivity extends BaseActivity<MyAccountPresenter> implemen
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         if (bundleIntent != null) {
-            if ((entity = (ExpertPriceEntity) bundleIntent.getSerializable(BundleTags.ENTITY)) != null) {
-                setTip(entity);
-            }
+//            if ((entity = (ExpertPriceEntity) bundleIntent.getSerializable(BundleTags.ENTITY)) != null) {
+//                setTip(entity);
+//            }
+
+            mPresenter.setExpert(bundleIntent.getBoolean(BundleTags.IS_EXPERT,false));
         }
-        mPresenter.onCreate(entity);
+//        mPresenter.onCreate(entity);
+        mPresenter.onCreate();
     }
 
-    public void setTip(ExpertPriceEntity entity) {
-//        String string1 = "【律师名称】律师的咨询费用为【通话单价】\n" +
-//                "当前余额可与【律师名称】通话【通话时长】，请确保余额大于通话【保底时长】分钟所需的【最低余额】元（通话不足【保底时长】分钟按【保底时长】分钟计算，超过【保底时长】分钟时按分钟计费。）";
-//        String string11 = "【律师名称】律师的咨询费用为【通话单价】，您拥有【权益组织】的专属权益，优惠后的价格为【优惠价格】。\n" +
-//                "当前余额可与【律师名称】通话【通话时长】，请确保余额大于通话【保底时长】分钟所需的【最低余额】元（通话不足【保底时长】分钟按【保底时长】分钟计算，超过【保底时长】分钟时按分钟计费。）";
-//        String string2 = "充值后可增加与【律师名称】【增加时长】通话时长";
-
-        String string1 = "%1$s律师的咨询费用为%2$s\n" +
-                "当前余额可与%3$s通话%4$s，请确保余额大于通话%5$s分钟所需的%6$s元（通话不足%7$s分钟按%8$s分钟计算，超过%9$s分钟时按实际通话分钟数计费。）";
-        String string11 = "%1$s律师的咨询费用为%2$s，您拥有%3$s的专属权益，优惠后的价格为%4$s。\n" +
-                "当前余额可与%5$s通话%6$s，请确保余额大于通话%7$s分钟所需的%8$s元（通话不足%9$s分钟按%10$s分钟计算，超过%11$s分钟时按实际通话分钟数计费。）";
-
-        tvTip.setVisibility(View.VISIBLE);
-        tvTip2.setVisibility(View.VISIBLE);
-
-        if (!TextUtils.isEmpty(entity.getOrgnizationName())) {//有权益
-            tvTip.setText(String.format(string11,
-                    entity.getLawyerName(),
-                    entity.getPriceStr(),
-                    entity.getOrgnizationName(),
-                    entity.getOrgnizationPriceStr(),
-                    entity.getLawyerName(),
-                    entity.getFavorableTimeLen(),
-                    entity.getMinimumDuration(),
-                    entity.getMinimumBalance(),
-                    entity.getMinimumDuration(),
-                    entity.getMinimumDuration(),
-                    entity.getMinimumDuration()));
-        } else {
-            tvTip.setText(String.format(string1,
-                    entity.getLawyerName(),
-                    entity.getPriceStr(),
-                    entity.getLawyerName(),
-                    entity.getOriginTimeLen(),
-                    entity.getMinimumDuration(),
-                    entity.getMinimumBalance(),
-                    entity.getMinimumDuration(),
-                    entity.getMinimumDuration(),
-                    entity.getMinimumDuration()));
-        }
-    }
+//    public void setTip(ExpertPriceEntity entity) {
+////        String string1 = "【律师名称】律师的咨询费用为【通话单价】\n" +
+////                "当前余额可与【律师名称】通话【通话时长】，请确保余额大于通话【保底时长】分钟所需的【最低余额】元（通话不足【保底时长】分钟按【保底时长】分钟计算，超过【保底时长】分钟时按分钟计费。）";
+////        String string11 = "【律师名称】律师的咨询费用为【通话单价】，您拥有【权益组织】的专属权益，优惠后的价格为【优惠价格】。\n" +
+////                "当前余额可与【律师名称】通话【通话时长】，请确保余额大于通话【保底时长】分钟所需的【最低余额】元（通话不足【保底时长】分钟按【保底时长】分钟计算，超过【保底时长】分钟时按分钟计费。）";
+////        String string2 = "充值后可增加与【律师名称】【增加时长】通话时长";
+//
+//        String string1 = "%1$s律师的咨询费用为%2$s\n" +
+//                "当前余额可与%3$s通话%4$s，请确保余额大于通话%5$s分钟所需的%6$s元（通话不足%7$s分钟按%8$s分钟计算，超过%9$s分钟时按实际通话分钟数计费。）";
+//        String string11 = "%1$s律师的咨询费用为%2$s，您拥有%3$s的专属权益，优惠后的价格为%4$s。\n" +
+//                "当前余额可与%5$s通话%6$s，请确保余额大于通话%7$s分钟所需的%8$s元（通话不足%9$s分钟按%10$s分钟计算，超过%11$s分钟时按实际通话分钟数计费。）";
+//
+//        tvTip.setVisibility(View.VISIBLE);
+//        tvTip2.setVisibility(View.VISIBLE);
+//
+//        if (!TextUtils.isEmpty(entity.getOrgnizationName())) {//有权益
+//            tvTip.setText(String.format(string11,
+//                    entity.getLawyerName(),
+//                    entity.getPriceStr(),
+//                    entity.getOrgnizationName(),
+//                    entity.getOrgnizationPriceStr(),
+//                    entity.getLawyerName(),
+//                    entity.getFavorableTimeLen(),
+//                    entity.getMinimumDuration(),
+//                    entity.getMinimumBalance(),
+//                    entity.getMinimumDuration(),
+//                    entity.getMinimumDuration(),
+//                    entity.getMinimumDuration()));
+//        } else {
+//            tvTip.setText(String.format(string1,
+//                    entity.getLawyerName(),
+//                    entity.getPriceStr(),
+//                    entity.getLawyerName(),
+//                    entity.getOriginTimeLen(),
+//                    entity.getMinimumDuration(),
+//                    entity.getMinimumBalance(),
+//                    entity.getMinimumDuration(),
+//                    entity.getMinimumDuration(),
+//                    entity.getMinimumDuration()));
+//        }
+//    }
 
 
     @Override
@@ -276,9 +279,9 @@ public class MyAccountActivity extends BaseActivity<MyAccountPresenter> implemen
 //        tvOrderMoney.setText(format);
 //    }
 
-    public void setTip2(String str) {
-        tvTip2.setText(str);
-    }
+//    public void setTip2(String str) {
+//        tvTip2.setText(str);
+//    }
 
     @Override
     public void showPriceDialog(int type, String balance, String giveBalance, List<RechargeCouponEntity> rechargeCouponEntities) {

@@ -586,7 +586,8 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
             runOnUiThread(() -> {
                 onlyTextDialog.dismiss();
                 bundle.clear();
-                bundle.putSerializable(BundleTags.ENTITY,entity);
+//                bundle.putSerializable(BundleTags.ENTITY,entity);
+                bundle.putBoolean(BundleTags.IS_EXPERT,true);
                 launchActivity(new Intent(mActivity, MyAccountActivity.class),bundle);
             });
         }).start();
@@ -607,7 +608,8 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
                 })
                 .setClickNo(dialog -> {
                     bundle.clear();
-                    bundle.putSerializable(BundleTags.ENTITY,entity);
+//                    bundle.putSerializable(BundleTags.ENTITY,entity);
+                    bundle.putBoolean(BundleTags.IS_EXPERT,true);
                     launchActivity(new Intent(mActivity, MyAccountActivity.class),bundle);
                 }).show();
     }
