@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/qb_px_570"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/view_1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/round_20_ffffff_all"
+        app:layout_constraintBottom_toBottomOf="@id/view_content_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/qb_px_60"
+        android:layout_marginTop="@dimen/qb_px_50"
+        android:layout_marginRight="@dimen/qb_px_60"
+        android:maxLines="10"
+        android:scrollbars="vertical"
+        android:textColor="@color/c_323232"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view_1"
+        tools:text="平台已为您优选128名擅长资本市场、熟悉互联网行业、服务价格在20000元以内并且提供诉讼仲裁服务的律师,平台根据执业经验、社会资源、专业知识进行综合排序，您可以在筛选中对您的选择进行修改" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_btn"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_80"
+        android:layout_marginLeft="@dimen/qb_px_60"
+        android:layout_marginTop="@dimen/qb_px_30"
+        android:layout_marginRight="@dimen/qb_px_60"
+        android:layout_marginBottom="@dimen/qb_px_50"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_content">
+
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/qb_px_10"
+            android:layout_weight="1"
+            android:background="@drawable/round_40_2ed08d_all"
+            android:gravity="center"
+            android:text="返回"
+            android:textColor="@color/c_ff" />
+
+        <TextView
+            android:id="@+id/tv_submit"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/qb_px_10"
+            android:layout_weight="1"
+            android:background="@drawable/round_40_2ed08d_all"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="@color/c_ff" />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

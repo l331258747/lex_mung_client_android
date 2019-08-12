@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_16"
+        android:background="@color/c_17AA83"
+        app:layout_constraintBottom_toBottomOf="@+id/view_1"
+        app:layout_constraintEnd_toStartOf="@+id/view_3"
+        app:layout_constraintStart_toEndOf="@+id/view_1"
+        app:layout_constraintTop_toTopOf="@+id/view_1" />
+
+    <ImageView
+        android:id="@+id/iv_1"
+        android:layout_width="@dimen/qb_px_50"
+        android:layout_height="@dimen/qb_px_50"
+        android:src="@drawable/ic_order_detail_1" />
+
+    <ImageView
+        android:id="@+id/iv_2"
+        android:layout_width="@dimen/qb_px_50"
+        android:layout_height="@dimen/qb_px_50"
+        android:src="@drawable/ic_order_detail_2"
+        app:layout_constraintEnd_toStartOf="@+id/iv_3"
+        app:layout_constraintStart_toEndOf="@+id/iv_1" />
+
+    <ImageView
+        android:id="@+id/iv_3"
+        android:layout_width="@dimen/qb_px_50"
+        android:layout_height="@dimen/qb_px_50"
+        android:src="@drawable/ic_order_detail_3"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <View
+        android:id="@+id/view_1"
+        android:layout_width="@dimen/qb_px_30"
+        android:layout_height="@dimen/qb_px_30"
+        android:background="@drawable/round_100_78faa0_all"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_1"
+        app:layout_constraintEnd_toEndOf="@+id/iv_1"
+        app:layout_constraintStart_toStartOf="@+id/iv_1"
+        app:layout_constraintTop_toTopOf="@+id/iv_1" />
+
+    <View
+        android:id="@+id/view_2"
+        android:layout_width="@dimen/qb_px_30"
+        android:layout_height="@dimen/qb_px_30"
+        android:background="@drawable/round_100_78faa0_all"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_2"
+        app:layout_constraintEnd_toEndOf="@+id/iv_2"
+        app:layout_constraintStart_toStartOf="@+id/iv_2"
+        app:layout_constraintTop_toTopOf="@+id/iv_2" />
+
+    <View
+        android:id="@+id/view_3"
+        android:layout_width="@dimen/qb_px_30"
+        android:layout_height="@dimen/qb_px_30"
+        android:background="@drawable/round_100_78faa0_all"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_3"
+        app:layout_constraintEnd_toEndOf="@+id/iv_3"
+        app:layout_constraintStart_toStartOf="@+id/iv_3"
+        app:layout_constraintTop_toTopOf="@+id/iv_3" />
+
+
+    <View
+        android:id="@+id/view_line_1"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_4"
+        android:background="@color/c_78faa0"
+        app:layout_constraintBottom_toBottomOf="@+id/view_1"
+        app:layout_constraintEnd_toStartOf="@+id/view_2"
+        app:layout_constraintStart_toEndOf="@+id/view_1"
+        app:layout_constraintTop_toTopOf="@+id/view_1" />
+
+    <View
+        android:id="@+id/view_line_2"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_4"
+        android:background="@color/c_78faa0"
+        app:layout_constraintBottom_toBottomOf="@+id/view_1"
+        app:layout_constraintEnd_toStartOf="@+id/view_3"
+        app:layout_constraintStart_toEndOf="@+id/view_2"
+        app:layout_constraintTop_toTopOf="@+id/view_1" />
+
+
+    <TextView
+        android:id="@+id/tv_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_35"
+        android:text="预约中"
+        android:textColor="@color/c_78faa0"
+        app:layout_constraintStart_toStartOf="@+id/iv_1"
+        app:layout_constraintTop_toBottomOf="@+id/iv_1" />
+
+    <TextView
+        android:id="@+id/tv_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_35"
+        android:text="进行中"
+        android:textColor="@color/c_78faa0"
+        app:layout_constraintEnd_toEndOf="@+id/iv_2"
+        app:layout_constraintStart_toStartOf="@+id/iv_2"
+        app:layout_constraintTop_toBottomOf="@+id/iv_2" />
+
+    <TextView
+        android:id="@+id/tv_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_35"
+        android:text="已结束"
+        android:textColor="@color/c_78faa0"
+        app:layout_constraintEnd_toEndOf="@+id/iv_3"
+        app:layout_constraintTop_toBottomOf="@+id/iv_3" />
+
+
+</android.support.constraint.ConstraintLayout>

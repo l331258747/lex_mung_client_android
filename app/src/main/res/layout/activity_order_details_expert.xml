@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_440"
+        android:background="@drawable/ic_order_detail_titile_bg" />
+
+    <cn.lex_mung.client_android.mvp.ui.widget.TitleView
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:TitleView_bg="@color/c_00"
+        app:TitleView_left_img="@drawable/ic_withe_back"
+        app:TitleView_title="订单详情" />
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/cl_btn"
+        android:paddingBottom="@dimen/qb_px_20"
+        android:layout_below="@+id/titleView">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <cn.lex_mung.client_android.mvp.ui.widget.OrderDetailExpertView
+                android:id="@+id/orderDetailExpertView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/qb_px_30"
+                android:layout_marginTop="@dimen/qb_px_50"
+                android:layout_marginRight="@dimen/qb_px_30"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/view_content"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/qb_px_220"
+                android:background="@drawable/round_40_ffffff_top"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <FrameLayout
+                android:id="@+id/fl_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/qb_px_100"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/view_content">
+
+                <include layout="@layout/activity_order_details_expert_info" />
+
+            </FrameLayout>
+
+
+            <!--温馨提示-->
+            <View
+                android:id="@+id/view_tip"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginLeft="@dimen/qb_px_60"
+                android:layout_marginRight="@dimen/qb_px_60"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_tip_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fl_info" />
+
+            <TextView
+                android:id="@+id/tv_tip_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_60"
+                android:text="温馨提示"
+                android:textColor="@color/c_737373"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/view_tip"
+                app:layout_constraintTop_toTopOf="@+id/view_tip" />
+
+            <TextView
+                android:id="@+id/tv_tip_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/qb_px_30"
+                android:text="1、因工作性质等原因，律师不一定能及时确认咨询时间，请耐心等候。如长时间未回复，你可选择取消订单。\n2、订单自预约时间起24小时内只计算一次保底费用，24小时内可多次致电，咨询费用依据累计通话时长计算。"
+                android:textColor="@color/c_737373"
+                app:layout_constraintEnd_toEndOf="@+id/view_tip"
+                app:layout_constraintStart_toStartOf="@+id/view_tip"
+                app:layout_constraintTop_toBottomOf="@+id/tv_tip_title" />
+
+        </android.support.constraint.ConstraintLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/ic_card">
+
+        <View
+            android:id="@+id/view_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/qb_px_50"
+            android:layout_marginTop="@dimen/qb_px_40"
+            android:layout_marginEnd="@dimen/qb_px_50"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_btn_tip"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="您已发起咨询邀约，预计咨询时间为【咨询时间】，预计时长为【用户选择时长】分钟，请等待律师确认。"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/view_btn"
+            app:layout_constraintStart_toStartOf="@+id/view_btn"
+            app:layout_constraintBottom_toTopOf="@+id/tv_btn"
+            app:layout_goneMarginBottom="@dimen/qb_px_50"
+            app:layout_constraintTop_toTopOf="@+id/view_btn" />
+
+        <TextView
+            android:id="@+id/tv_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_20"
+            android:layout_marginBottom="@dimen/qb_px_50"
+            android:background="@drawable/round_40_00_all_1ec88b"
+            android:paddingLeft="@dimen/qb_px_50"
+            android:paddingTop="@dimen/qb_px_10"
+            android:paddingRight="@dimen/qb_px_50"
+            android:paddingBottom="@dimen/qb_px_10"
+            android:text="取消订单"
+            android:visibility="gone"
+            android:textColor="@color/c_1EC88B"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/view_btn"
+            app:layout_constraintStart_toStartOf="@+id/view_btn"
+            app:layout_constraintTop_toBottomOf="@+id/tv_btn_tip" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+</RelativeLayout>

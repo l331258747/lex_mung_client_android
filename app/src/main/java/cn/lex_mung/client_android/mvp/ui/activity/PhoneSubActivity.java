@@ -298,6 +298,10 @@ public class PhoneSubActivity extends BaseActivity<PhoneSubPresenter> implements
     public void showBalanceYesDialog() {
         new SingleTextDialog(mActivity)
                 .setContentHtmlStr("预约成功，律师一般会在15分钟内确认订单，您可以进入<font color=\"#1EC88B\">我的-我的订单</font>页查看订单状态。")
+                .setTextOnClickListener(()->{
+                    //TODO 订单详情
+
+                })
                 .setSubmitStr("我知道了！").show();
     }
 

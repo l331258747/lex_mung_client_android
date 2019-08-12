@@ -12,46 +12,53 @@ import cn.lex_mung.client_android.R;
 import me.zl.mvp.utils.StringUtils;
 
 
-public class SingleTextDialog extends Dialog {
+public class SingleTextTwoBtnDialog extends Dialog {
     Context context;
 
-    TextView tv_content, tv_submit;
+    TextView tv_content, tv_submit,tv_cancel;
 
 
-    public SingleTextDialog(@NonNull Context context) {
+    public SingleTextTwoBtnDialog(@NonNull Context context) {
         super(context, R.style.alert_dialog);
         this.context = context;
     }
 
     String submitStr;
 
-    public SingleTextDialog setSubmitStr(String submitStr) {
+    public SingleTextTwoBtnDialog setSubmitStr(String submitStr) {
         this.submitStr = submitStr;
+        return this;
+    }
+
+    String cancelStr;
+
+    public SingleTextTwoBtnDialog setCancelStr(String cancelStr) {
+        this.cancelStr = cancelStr;
         return this;
     }
 
     String contentStr;
 
-    public SingleTextDialog setContent(String contentStr) {
+    public SingleTextTwoBtnDialog setContent(String contentStr) {
         this.contentStr = contentStr;
         return this;
     }
 
     String contentHtmlStr;
-    public SingleTextDialog setContentHtmlStr(String contentHtmlStr){
+    public SingleTextTwoBtnDialog setContentHtmlStr(String contentHtmlStr){
         this.contentHtmlStr = contentHtmlStr;
         return this;
     }
 
-    OnClickListener onClickListener;
-    public SingleTextDialog setOnClickListener(OnClickListener onClickListener){
-        this.onClickListener = onClickListener;
+    OnClickListener onSubmitClickListener;
+    public SingleTextTwoBtnDialog setSubmitOnClickListener(OnClickListener onSubmitClickListener){
+        this.onSubmitClickListener = onSubmitClickListener;
         return this;
     }
 
-    TextOnClickListener textOnClickListener;
-    public SingleTextDialog setTextOnClickListener(TextOnClickListener textOnClickListener){
-        this.textOnClickListener = textOnClickListener;
+    OnClickListener onCancelClickListener;
+    public SingleTextTwoBtnDialog setCancelOnClickListener(OnClickListener onCancelClickListener){
+        this.onCancelClickListener = onCancelClickListener;
         return this;
     }
 
@@ -60,7 +67,7 @@ public class SingleTextDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.dialog_single_text);
+        setContentView(R.layout.dialog_single_text_two_btn);
         initView();
         setCancelable(false);
     }
@@ -68,11 +75,16 @@ public class SingleTextDialog extends Dialog {
     private void initView() {
         tv_content = findViewById(R.id.tv_content);
         tv_submit = findViewById(R.id.tv_submit);
+        tv_cancel = findViewById(R.id.tv_cancel);
         tv_content.setMovementMethod(ScrollingMovementMethod.getInstance());
 
 
         if (!TextUtils.isEmpty(submitStr)) {
             tv_submit.setText(submitStr);
+        }
+
+        if (!TextUtils.isEmpty(cancelStr)) {
+            tv_cancel.setText(cancelStr);
         }
 
         if (!TextUtils.isEmpty(contentStr)) {
@@ -85,25 +97,21 @@ public class SingleTextDialog extends Dialog {
 
         tv_submit.setOnClickListener(v -> {
             dismiss();
-            if(onClickListener != null){
-                onClickListener.onClick();
+            if(onSubmitClickListener != null){
+                onSubmitClickListener.onClick();
             }
         });
 
-        tv_content.setOnClickListener(v -> {
-            if(textOnClickListener != null){
-                dismiss();
-                textOnClickListener.textOnclick();
+        tv_cancel.setOnClickListener(v -> {
+            dismiss();
+            if(onCancelClickListener != null){
+                onCancelClickListener.onClick();
             }
         });
     }
 
     public interface OnClickListener {
         void onClick();
-    }
-
-    public interface TextOnClickListener{
-        void textOnclick();
     }
 
 }
