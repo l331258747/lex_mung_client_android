@@ -84,11 +84,8 @@ public class SingleTextDialog extends Dialog {
         });
     }
 
-    public TextView getTv_content() {
-        return tv_content;
-    }
-
     public interface OnClickListener {
         void onClick();
     }
+
 }

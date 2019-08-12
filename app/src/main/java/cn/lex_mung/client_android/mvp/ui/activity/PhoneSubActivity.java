@@ -2,6 +2,7 @@ package cn.lex_mung.client_android.mvp.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -34,9 +35,11 @@ import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertPriceSolutionEnt
 import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertPriceTimeEntity;
 import cn.lex_mung.client_android.mvp.presenter.PhoneSubPresenter;
 import cn.lex_mung.client_android.mvp.ui.adapter.PhoneSubAdapter;
+import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog5;
 import cn.lex_mung.client_android.mvp.ui.dialog.EasyDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.FieldDialog2;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import cn.lex_mung.client_android.mvp.ui.dialog.SingleTextDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.SimpleFlowLayout;
 import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
 import me.zl.mvp.base.BaseActivity;
@@ -106,12 +109,12 @@ public class PhoneSubActivity extends BaseActivity<PhoneSubPresenter> implements
         titleView.getTitleTv().setTextColor(ContextCompat.getColor(mActivity, R.color.c_ff));
 
         entity = (ExpertPriceEntity) bundleIntent.getSerializable(BundleTags.ENTITY);
-        if(entity == null) return;
+        if (entity == null) return;
 
         initViewData();
     }
 
-    public void initViewData(){
+    public void initViewData() {
         entity.setTalkTimes();
 
         tvTitleName.setText(entity.getLawyerName());
@@ -145,12 +148,12 @@ public class PhoneSubActivity extends BaseActivity<PhoneSubPresenter> implements
         setTvTimeBtn(entity.getMinimumDuration());
 
         String str3 = "1、预约咨询服务需提前预存咨询费用。\n2、您发起预约后将默认冻结%s分钟的咨询费用，通话过程中，实际咨询费用如超过冻结费用时，系统将自行中断通话，如您预计通话时间会更长，请在上方点击修改冻结费用。\n3、更多细则请查阅《绿豆圈专家咨询细则》";
-        tvTipContent.setText(String.format(str3,entity.getMinimumDurationStr()));
+        tvTipContent.setText(String.format(str3, entity.getMinimumDurationStr()));
     }
 
-    public void setTvTimeBtn(int time){
-        String str = "预计咨询时长："+ time +"分钟。如预计通话更长，" + "<font color=\"#D89B4B\">请点我修改</font>";
-        StringUtils.setHtml(tvTimeBtn,str);
+    public void setTvTimeBtn(int time) {
+        String str = "预计咨询时长：" + time + "分钟。如预计通话更长，" + "<font color=\"#D89B4B\">请点我修改</font>";
+        StringUtils.setHtml(tvTimeBtn, str);
     }
 
     public void initTimeAdapter(List<ExpertPriceTimeEntity> datas) {
@@ -159,11 +162,11 @@ public class PhoneSubActivity extends BaseActivity<PhoneSubPresenter> implements
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;
             ExpertPriceTimeEntity entity = datas.get(position);
-            if(entity == null) return;
+            if (entity == null) return;
             adapter.setPosition(timePosition = position);
         });
 
-        AppUtils.configRecyclerView(recyclerView, new GridLayoutManager(mActivity,2));
+        AppUtils.configRecyclerView(recyclerView, new GridLayoutManager(mActivity, 2));
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setAdapter(adapter);
         adapter.setNewData(datas);
@@ -182,7 +185,7 @@ public class PhoneSubActivity extends BaseActivity<PhoneSubPresenter> implements
             itemView.setOnClickListener(v -> {
                 if (isFastClick()) return;
                 ExpertPriceSolutionEntity bean = marks.get(pos);
-                if(bean == null) return;
+                if (bean == null) return;
                 new FieldDialog2(mActivity, bean, mImageLoader).show();
             });
             sflTable.addView(itemView, i);
@@ -194,7 +197,7 @@ public class PhoneSubActivity extends BaseActivity<PhoneSubPresenter> implements
     }
 
 
-    @OnClick({R.id.tv_recharge, R.id.tv_call,R.id.tv_time_btn,R.id.tv_tip_content})
+    @OnClick({R.id.tv_recharge, R.id.tv_call, R.id.tv_time_btn, R.id.tv_tip_content})
     public void onViewClicked(View view) {
         if (isFastClick()) return;
         switch (view.getId()) {
@@ -225,6 +228,7 @@ public class PhoneSubActivity extends BaseActivity<PhoneSubPresenter> implements
     //---------start 修改
     private EasyDialog easyDialog;
     private int time2SelectPosition = 0;//因为在选择的时候也会记录position ， 所以确定的时候还要一个变量来存选择的position
+
     @SuppressLint("InflateParams")
     private void showSelectTypeDialog(List<String> times2) {
         View layout = getLayoutInflater().inflate(R.layout.layout_select_industry_dialog, null);
@@ -264,6 +268,37 @@ public class PhoneSubActivity extends BaseActivity<PhoneSubPresenter> implements
         if (easyDialog != null) {
             easyDialog.dismiss();
         }
+    }
+
+    @Override
+    public void showToErrorDialog(String s) {
+        new CallFieldDialog5(mActivity, dialog -> {
+            Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "400-811-3060"));
+            startActivity(dialIntent);
+            dialog.dismiss();
+
+        }, s, "联系客服").show();
+    }
+
+    //查询余额不足
+    @Override
+    public void showBalanceNoDialog() {
+        new SingleTextDialog(mActivity)
+                .setContent("咨询余额不足，请至少预存" + entity.getMinimumDuration() + "分钟中的咨询费用。")
+                .setOnClickListener(() -> {
+                    bundle.clear();
+                    bundle.putBoolean(BundleTags.IS_EXPERT, true);
+                    launchActivity(new Intent(mActivity, MyAccountActivity.class), bundle);
+                })
+                .setSubmitStr("去充值").show();
+    }
+
+    //查看余额充足
+    @Override
+    public void showBalanceYesDialog() {
+        new SingleTextDialog(mActivity)
+                .setContentHtmlStr("预约成功，律师一般会在15分钟内确认订单，您可以进入<font color=\"#1EC88B\">我的-我的订单</font>页查看订单状态。")
+                .setSubmitStr("我知道了！").show();
     }
 
     @Override

@@ -10,7 +10,9 @@ import okhttp3.RequestBody;
 
 public interface PhoneSubContract {
     interface View extends IView {
-
+        void showToErrorDialog(String s);
+        void showBalanceNoDialog();
+        void showBalanceYesDialog();
     }
 
     interface Model extends IModel {

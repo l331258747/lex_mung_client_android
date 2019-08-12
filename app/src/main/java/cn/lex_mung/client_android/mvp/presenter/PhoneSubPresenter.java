@@ -50,7 +50,6 @@ public class PhoneSubPresenter extends BasePresenter<PhoneSubContract.Model, Pho
         map.put("start", start);
         map.put("end", end);
         map.put("len", len);
-        String json = new Gson().toJson(map);
         mModel.expertReserve(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))
@@ -63,7 +62,24 @@ public class PhoneSubPresenter extends BasePresenter<PhoneSubContract.Model, Pho
                     @Override
                     public void onNext(BaseResponse<ExpertReserveEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
-
+                            mRootView.showBalanceYesDialog();
+                        }else{
+                             /*
+                            70001：余额不足
+                            70002：您好，当前律师可能正在繁忙，建议您改天再联系或者联系平台其他律师进行咨询。
+                            70003：您好，该律师暂时无法接听您的电话，建议您联系平台其他律师或拨打客服热线400-811-3060及时处理。
+                             */
+                            switch (baseResponse.getCode()) {
+                                case 70001:
+                                    // 充值
+                                    mRootView.showBalanceNoDialog();
+                                    break;
+                                case 70002:
+                                case 70003:
+                                    mRootView.showToErrorDialog(baseResponse.getMessage());
+                                    mRootView.showToErrorDialog(baseResponse.getMessage());
+                                    break;
+                            }
                         }
                     }
                 });

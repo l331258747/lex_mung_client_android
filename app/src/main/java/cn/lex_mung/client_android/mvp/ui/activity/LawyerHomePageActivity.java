@@ -504,18 +504,19 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
 
     @Override
     public void showExpertPrice(ExpertPriceEntity entity) {
-        if (entity.getOrderStatus() == 0) {//是否有预约订单，0.没有预约订单，1.已预约但为接单 2，已预约已接单，为完成
+        if (entity.getOrderStatus() == 0) {//是否有预约订单，0.没有预约订单，1.已预约但未接单 2，已预约已接单，未完成
             bundle.clear();
             bundle.putSerializable(BundleTags.ENTITY, entity);
             launchActivity(new Intent(mActivity, PhoneSubActivity.class), bundle);
         } else if (entity.getOrderStatus() == 1) {
             new SingleTextDialog(mActivity)
-                    .setContentHtmlStr("律师将于「通话时间」给您来电，请耐心等候律师将于「通话时间」给您来电，请耐心等候。您可进入<font color=\"#1EC88B\">我的-我的订单</font>页管理订单。")
+                    .setContentHtmlStr("您已成功发起咨询邀约，请等待律师确认咨询您已成功发起咨询邀约，请等待律师确认咨询时间，您可以进入<font color=\"#1EC88B\">我的-我的订单</font>页查看预约状态。")
                     .setSubmitStr("我知道了！").show();
 
         } else if (entity.getOrderStatus() == 2) {
             new SingleTextDialog(mActivity)
-                    .setContentHtmlStr("您已成功发起咨询邀约，请等待律师确认咨询您已成功发起咨询邀约，请等待律师确认咨询时间，您可以进入<font color=\"#1EC88B\">我的-我的订单</font>页查看预约状态。")
+                    //TODO 通话时间
+                    .setContentHtmlStr("律师将于「通话时间」给您来电，请耐心等候律师将于「通话时间」给您来电，请耐心等候。您可进入<font color=\"#1EC88B\">我的-我的订单</font>页管理订单。")
                     .setSubmitStr("我知道了！").show();
         }
     }
