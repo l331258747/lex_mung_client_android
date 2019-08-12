@@ -24,7 +24,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/cl_btn"
-        android:paddingBottom="@dimen/qb_px_20"
         android:layout_below="@+id/titleView">
 
         <android.support.constraint.ConstraintLayout
@@ -92,6 +91,8 @@
                 android:layout_marginTop="@dimen/qb_px_30"
                 android:text="1、因工作性质等原因，律师不一定能及时确认咨询时间，请耐心等候。如长时间未回复，你可选择取消订单。\n2、订单自预约时间起24小时内只计算一次保底费用，24小时内可多次致电，咨询费用依据累计通话时长计算。"
                 android:textColor="@color/c_737373"
+                android:layout_marginBottom="@dimen/qb_px_20"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/view_tip"
                 app:layout_constraintStart_toStartOf="@+id/view_tip"
                 app:layout_constraintTop_toBottomOf="@+id/tv_tip_title" />
@@ -127,6 +128,7 @@
             android:text="您已发起咨询邀约，预计咨询时间为【咨询时间】，预计时长为【用户选择时长】分钟，请等待律师确认。"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/view_btn"
+            android:gravity="center"
             app:layout_constraintStart_toStartOf="@+id/view_btn"
             app:layout_constraintBottom_toTopOf="@+id/tv_btn"
             app:layout_goneMarginBottom="@dimen/qb_px_50"
@@ -144,7 +146,6 @@
             android:paddingRight="@dimen/qb_px_50"
             android:paddingBottom="@dimen/qb_px_10"
             android:text="取消订单"
-            android:visibility="gone"
             android:textColor="@color/c_1EC88B"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/view_btn"

@@ -49,8 +49,8 @@ public class SingleTextDialog extends Dialog {
         return this;
     }
 
-    TextOnClickListener textOnClickListener;
-    public SingleTextDialog setTextOnClickListener(TextOnClickListener textOnClickListener){
+    OnClickListener textOnClickListener;
+    public SingleTextDialog setTextOnClickListener(OnClickListener textOnClickListener){
         this.textOnClickListener = textOnClickListener;
         return this;
     }
@@ -93,17 +93,13 @@ public class SingleTextDialog extends Dialog {
         tv_content.setOnClickListener(v -> {
             if(textOnClickListener != null){
                 dismiss();
-                textOnClickListener.textOnclick();
+                textOnClickListener.onClick();
             }
         });
     }
 
     public interface OnClickListener {
         void onClick();
-    }
-
-    public interface TextOnClickListener{
-        void textOnclick();
     }
 
 }
