@@ -27,11 +27,10 @@ public interface OrderDetailsExpertContract {
         void showCancelDialog();
         void showFinishDialog();
 
-
-
     }
 
     interface Model extends IModel {
         Observable<BaseResponse<BaseListEntity<OrderDetailsEntity>>> getOrderDetail(RequestBody body);
+        Observable<BaseResponse> expertCancel(RequestBody body);
     }
 }

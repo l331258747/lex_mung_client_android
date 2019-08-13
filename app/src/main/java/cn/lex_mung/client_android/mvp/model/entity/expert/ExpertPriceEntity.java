@@ -37,6 +37,16 @@ public class ExpertPriceEntity implements Serializable {
     private String city;
     private String icon;
     private int lawyerId;
+    private int orderId;
+    private String orderNo;
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
 
     private List<ExpertPriceSolutionEntity> solution;
     private List<ExpertPriceTimeEntity> timeSection;

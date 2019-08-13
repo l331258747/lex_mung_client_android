@@ -105,6 +105,12 @@ public class TradingListActivity extends BaseActivity<TradingListPresenter> impl
                     launchActivity(new Intent(mActivity, OrderDetailsActivity.class), bundle);
                     break;
                 case 3:
+                    bundle.clear();
+                    bundle.putInt(BundleTags.ID, entity.getId());
+                    bundle.putString(BundleTags.TITLE,entity.getTypeName());
+                    bundle.putString(BundleTags.ORDER_NO,entity.getOrderNo());
+                    launchActivity(new Intent(mActivity, OrderDetailsExpertActivity.class), bundle);
+                    break;
                 case 4:
                     bundle.clear();
                     bundle.putInt(BundleTags.ID, entity.getId());

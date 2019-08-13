@@ -62,7 +62,7 @@ public class PhoneSubPresenter extends BasePresenter<PhoneSubContract.Model, Pho
                     @Override
                     public void onNext(BaseResponse<ExpertReserveEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
-                            mRootView.showBalanceYesDialog();
+                            mRootView.showBalanceYesDialog(baseResponse.getData());
                         }else{
                              /*
                             70001：余额不足

@@ -12,7 +12,7 @@ public interface PhoneSubContract {
     interface View extends IView {
         void showToErrorDialog(String s);
         void showBalanceNoDialog();
-        void showBalanceYesDialog();
+        void showBalanceYesDialog(ExpertReserveEntity entity);
     }
 
     interface Model extends IModel {

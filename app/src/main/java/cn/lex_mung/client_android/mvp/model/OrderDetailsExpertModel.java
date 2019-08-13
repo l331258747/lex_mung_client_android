@@ -45,4 +45,11 @@ public class OrderDetailsExpertModel extends BaseModel implements OrderDetailsEx
                 .obtainRetrofitService(CommonService.class)
                 .getOrderDetail(body);
     }
+
+    @Override
+    public Observable<BaseResponse> expertCancel(RequestBody body) {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .expertCancel(body);
+    }
 }

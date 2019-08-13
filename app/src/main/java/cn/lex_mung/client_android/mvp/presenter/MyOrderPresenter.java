@@ -24,6 +24,7 @@ import cn.lex_mung.client_android.mvp.model.entity.OrderEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultDetail1Activity;
 import cn.lex_mung.client_android.mvp.ui.activity.OrderDetailsActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.OrderDetailsExpertActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.MyOrderAdapter2;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -104,7 +105,12 @@ public class MyOrderPresenter extends BasePresenter<MyOrderContract.Model, MyOrd
                     break;
                 case 3:
                     //TODO 专家咨询
-
+                    bundle.clear();
+                    bundle.putInt(BundleTags.ID, entity.getId());
+                    bundle.putString(BundleTags.TITLE,entity.getTypeName());
+                    bundle.putString(BundleTags.ORDER_NO,entity.getOrderNo());
+                    mRootView.launchActivity(new Intent(mApplication, OrderDetailsExpertActivity.class), bundle);
+                    break;
                 case 4:
                     bundle.clear();
                     bundle.putInt(BundleTags.ID, entity.getId());

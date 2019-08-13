@@ -866,4 +866,10 @@ public interface CommonService {
     @POST("client/expert/reserve")
     Observable<BaseResponse<ExpertReserveEntity>> expertReserve(@Body RequestBody body);
 
+    ///client/expert/cancel
+    //POST
+    //用户取消专家咨询订单
+    @POST("client/expert/cancel")
+    Observable<BaseResponse> expertCancel(@Body RequestBody body);
+
 }

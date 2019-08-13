@@ -1,7 +1,10 @@
 package cn.lex_mung.client_android.mvp.model.entity;
 
+import android.text.TextUtils;
+
 import java.util.List;
 
+import cn.lex_mung.client_android.app.TimeFormat;
 import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.StringUtils;
 
@@ -80,7 +83,6 @@ public class OrderDetailsEntity {
     private String endTime;
     private String createDate;
     private double buyerPayAmount;
-    private int remainingTime;
     private String grabTime;
     private int regionId;
     private String rname;
@@ -97,7 +99,19 @@ public class OrderDetailsEntity {
     private int callback;
     private String institutionName;
     private String lmobile;
-    private String calllength;
+
+
+    private int appointmentLength;//咨询时长
+    private int remainingTime;//订单剩余时长
+    private CallOrderTimeBean callOrderTime;
+
+    public CallOrderTimeBean getCallOrderTime() {
+        return callOrderTime;
+    }
+
+    public int getAppointmentLength() {
+        return appointmentLength;
+    }
 
     public String getLmobile() {
         return lmobile;
@@ -365,6 +379,11 @@ public class OrderDetailsEntity {
         return remainingTime;
     }
 
+    public String getRemainingTimeStr(){
+       return TimeFormat.countDownToStr(Long.valueOf(remainingTime) * 1000, 0);
+    }
+
+
     public void setRemainingTime(int remainingTime) {
         this.remainingTime = remainingTime;
     }
@@ -533,6 +552,83 @@ public class OrderDetailsEntity {
 
         public void setEndTime(String endTime) {
             this.endTime = endTime;
+        }
+    }
+
+    public static class CallOrderTimeBean{
+        String callOrderNo;
+        int type;//类型
+        String clientTimeStart;//用户预约起始时间
+        String clientTimeEnd;//用户预约结束时间
+        String lawyerTimeStart;//律师履约起始时间
+        String acceptTime;//律师接单时间
+        String createTime;
+        String updateTime;
+
+        public String getCallOrderNo() {
+            return callOrderNo;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public String getClientTimeStart() {
+            return clientTimeStart;
+        }
+
+        public String getClientTimeEnd() {
+            return clientTimeEnd;
+        }
+
+        public String getLawyerTimeStart() {
+            return lawyerTimeStart;
+        }
+
+        public String getAcceptTime() {
+            return acceptTime;
+        }
+
+        public String getCreateTime() {
+            return createTime;
+        }
+
+        public String getUpdateTime() {
+            return updateTime;
+        }
+
+        public String getClientTimeStr(){
+            long lcurrent = TimeFormat.strToLong(TimeFormat.getCurrentTime(),TimeFormat.s1);
+
+            long lstart = TimeFormat.strToLong(clientTimeStart,TimeFormat.s1);
+            long lend = TimeFormat.strToLong(clientTimeEnd,TimeFormat.s1);
+
+            if(lstart == 0 || lend == 0)
+                return "----";
+
+            if(TimeFormat.longToStr(lcurrent,"yyyy-MM-dd").equals(TimeFormat.longToStr(lstart,"yyyy-MM-dd"))){
+                if(TimeFormat.longToStr(lcurrent,"yyyy-MM-dd").equals(TimeFormat.longToStr(lend,"yyyy-MM-dd"))){
+                    return "今天" + TimeFormat.longToStr(lstart, "HH:mm") + " - " + TimeFormat.longToStr(lend, "HH:mm");
+                }else{
+                    return "今天" + TimeFormat.longToStr(lstart, "HH:mm") + " - 明天" + TimeFormat.longToStr(lend, "HH:mm");
+                }
+            }else{
+                return "明天" + TimeFormat.longToStr(lstart, "HH:mm") + " - " + TimeFormat.longToStr(lend, "HH:mm");
+            }
+        }
+
+        public String getLawyerTimeStr(){
+            long lcurrent = TimeFormat.strToLong(TimeFormat.getCurrentTime(),TimeFormat.s1);
+            long lstart = TimeFormat.strToLong(lawyerTimeStart,TimeFormat.s1);
+
+            if(lstart == 0 )
+                return "----";
+
+            if(TimeFormat.longToStr(lcurrent,"yyyy-MM-dd").equals(TimeFormat.longToStr(lstart,"yyyy-MM-dd"))){
+                return "今天" + TimeFormat.longToStr(lstart, "HH:mm");
+            }else{
+                return "明天" + TimeFormat.longToStr(lstart, "HH:mm");
+            }
         }
     }
 }

@@ -33,6 +33,7 @@ import cn.lex_mung.client_android.mvp.contract.PhoneSubContract;
 import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertPriceSolutionEntity;
 import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertPriceTimeEntity;
+import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertReserveEntity;
 import cn.lex_mung.client_android.mvp.presenter.PhoneSubPresenter;
 import cn.lex_mung.client_android.mvp.ui.adapter.PhoneSubAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.CallFieldDialog5;
@@ -295,12 +296,19 @@ public class PhoneSubActivity extends BaseActivity<PhoneSubPresenter> implements
 
     //查看余额充足
     @Override
-    public void showBalanceYesDialog() {
+    public void showBalanceYesDialog(ExpertReserveEntity entity) {
         new SingleTextDialog(mActivity)
                 .setContentHtmlStr("预约成功，律师一般会在15分钟内确认订单，您可以进入<font color=\"#1EC88B\">我的-我的订单</font>页查看订单状态。")
-                .setTextOnClickListener(()->{
-                    //TODO 订单详情
-
+                .setTextOnClickListener(() -> {
+                    killMyself();
+                    bundle.clear();
+                    bundle.putInt(BundleTags.ID, entity.getOrderId());
+                    bundle.putString(BundleTags.TITLE,"专家咨询详情");
+                    bundle.putString(BundleTags.ORDER_NO,entity.getOrderNo());
+                    launchActivity(new Intent(mActivity,OrderDetailsExpertActivity.class),bundle);
+                })
+                .setOnClickListener(() -> {
+                    killMyself();
                 })
                 .setSubmitStr("我知道了！").show();
     }

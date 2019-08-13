@@ -118,6 +118,12 @@ public class OrderDetailsExpertActivity extends BaseActivity<OrderDetailsExpertP
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         titleView.getTitleTv().setTextColor(ContextCompat.getColor(mActivity, R.color.c_ff));
+        StatusBarUtil.setTransparentForImageView(mActivity, null);
+
+        int statusBarHeight = DeviceUtils.getStatusBarHeight(mActivity);
+        RelativeLayout.LayoutParams lp1 = (RelativeLayout.LayoutParams) titleView.getLayoutParams();
+        lp1.topMargin = statusBarHeight;
+        titleView.setLayoutParams(lp1);
 
         if (bundleIntent != null) {
             if (!TextUtils.isEmpty(bundleIntent.getString(BundleTags.TITLE)))
@@ -168,7 +174,7 @@ public class OrderDetailsExpertActivity extends BaseActivity<OrderDetailsExpertP
                 .setCancelStr("返回")
                 .setContent("取消订单后律师将不能再联系您，是否继续？")
                 .setSubmitOnClickListener(() -> {
-                    //TODO
+                    mPresenter.expertCancel(orderNo);
                 }).show();
     }
 
@@ -179,7 +185,8 @@ public class OrderDetailsExpertActivity extends BaseActivity<OrderDetailsExpertP
                 .setCancelStr("返回")
                 .setContent("结束订单后律师将不能再联系您，是否继续？")
                 .setSubmitOnClickListener(() -> {
-                    //TODO
+                    //TODO 结束订单
+
                 }).show();
     }
 
