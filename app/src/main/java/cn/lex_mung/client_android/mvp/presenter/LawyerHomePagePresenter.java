@@ -290,7 +290,6 @@ public class LawyerHomePagePresenter extends BasePresenter<LawyerHomePageContrac
 
     //---------电话
     public void setEntity() {
-        if (isFastClick()) return;
         Bundle bundle = new Bundle();
         if (isLogin) {
             expertPrice();

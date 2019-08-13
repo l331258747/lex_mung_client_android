@@ -232,6 +232,7 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
             , R.id.iv_release
     })
     public void onViewClicked(View view) {
+        if (isFastClick()) return;
         switch (view.getId()) {
             case R.id.iv_back:
             case R.id.iv_head_back:
@@ -296,7 +297,6 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
                 sendCall();
                 break;
             case R.id.iv_release:
-                if (isFastClick()) return;
                 viewPager.setCurrentItem(2);
                 mAppBarLayout.setExpanded(false);
                 break;
