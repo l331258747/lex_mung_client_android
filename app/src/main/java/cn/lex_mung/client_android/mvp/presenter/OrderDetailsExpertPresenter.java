@@ -58,6 +58,31 @@ public class OrderDetailsExpertPresenter extends BasePresenter<OrderDetailsExper
         super(model, rootView);
     }
 
+    public void expertFinish(String orderNo){
+        Map<String, Object> map = new HashMap<>();
+        map.put("orderNo", orderNo);
+        mModel.expertFinish(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> {
+
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            getOrderDetail(orderNo);
+                        }else{
+                            mRootView.showMessage(baseResponse.getMessage());
+                        }
+                    }
+                });
+    }
+
     public void expertCancel(String orderNo){
         Map<String, Object> map = new HashMap<>();
         map.put("orderNo", orderNo);
@@ -109,16 +134,14 @@ public class OrderDetailsExpertPresenter extends BasePresenter<OrderDetailsExper
                             if (!TextUtils.isEmpty(bean.getCreateDate())) {//下单时间
                                 mRootView.setTime(bean.getCreateDate());
                             }
-                            if (bean.getBuyerPayAmount() > 0) {
-                                mRootView.setPrice(bean.getBuyerPayAmountStr());//订单价格
+                            if (bean.getMinAmount() > 0) {
+                                mRootView.setPrice(bean.getMinAmountStr());//咨询单价
                             } else {
-                                mRootView.setPrice(null);//订单价格
+                                mRootView.setPrice(null);
                             }
-                            if (bean.getPayAmount() > 0) {
-                                mRootView.setOrderPrice(bean.getPayAmountStr());//支付价格
-                            } else {
-                                mRootView.setOrderPrice(null);//支付价格
-                            }
+
+                            mRootView.setOrderPrice(bean.getExperAmoutStr());//订单金额
+
                             if (!TextUtils.isEmpty(bean.getCouponNameStr())) {//优惠方式
                                 mRootView.setCouponType(bean.getCouponNameStr());
                             } else {
@@ -138,12 +161,10 @@ public class OrderDetailsExpertPresenter extends BasePresenter<OrderDetailsExper
                                 for (int i = 0; i < bean.getQuickTime().size(); i++) {
                                     stringBuffer.append(bean.getQuickTime().get(i).getBeginTime() + "(" + bean.getQuickTime().get(i).getCalllength() + ")");
                                 }
-                                //TODO　通话总时长
-                                mRootView.setTalkTime("通话总时长");
+                                mRootView.setTalkTime(bean.getCallTimeStr());
                                 mRootView.setTalkRecord(stringBuffer.toString());
                             }
 
-                            //TODO 状态
                             switch (bean.getOrderStatus()) {
                                 case 4://未接单
                                     bean.getCallOrderTime();

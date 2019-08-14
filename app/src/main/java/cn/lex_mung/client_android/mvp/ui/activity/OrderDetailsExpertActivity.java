@@ -185,8 +185,7 @@ public class OrderDetailsExpertActivity extends BaseActivity<OrderDetailsExpertP
                 .setCancelStr("返回")
                 .setContent("结束订单后律师将不能再联系您，是否继续？")
                 .setSubmitOnClickListener(() -> {
-                    //TODO 结束订单
-
+                    mPresenter.expertFinish(orderNo);
                 }).show();
     }
 

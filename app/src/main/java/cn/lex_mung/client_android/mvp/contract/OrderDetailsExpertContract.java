@@ -32,5 +32,7 @@ public interface OrderDetailsExpertContract {
     interface Model extends IModel {
         Observable<BaseResponse<BaseListEntity<OrderDetailsEntity>>> getOrderDetail(RequestBody body);
         Observable<BaseResponse> expertCancel(RequestBody body);
+        Observable<BaseResponse> expertFinish(RequestBody body);
+
     }
 }

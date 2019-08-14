@@ -1,5 +1,7 @@
 package cn.lex_mung.client_android.mvp.model.entity.expert;
 
+import android.text.TextUtils;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +44,15 @@ public class ExpertPriceEntity implements Serializable {
 
     public int getOrderId() {
         return orderId;
+    }
+
+    //律师预定时间
+    public String getLawyerOrderTime(){
+        if(timeSection != null && timeSection.size() > 0 && !TextUtils.isEmpty(timeSection.get(0).getStart())){
+            return timeSection.get(0).getStart();
+        }else{
+            return "预订时间";
+        }
     }
 
     public String getOrderNo() {

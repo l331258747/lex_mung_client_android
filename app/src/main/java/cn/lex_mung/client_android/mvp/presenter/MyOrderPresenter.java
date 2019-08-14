@@ -104,7 +104,6 @@ public class MyOrderPresenter extends BasePresenter<MyOrderContract.Model, MyOrd
 
                     break;
                 case 3:
-                    //TODO 专家咨询
                     bundle.clear();
                     bundle.putInt(BundleTags.ID, entity.getId());
                     bundle.putString(BundleTags.TITLE,entity.getTypeName());

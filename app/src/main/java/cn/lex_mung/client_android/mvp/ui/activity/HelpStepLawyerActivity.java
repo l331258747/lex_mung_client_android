@@ -219,13 +219,13 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
                     BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_success_quick_consultation_click");
                 }
 
-                String str = DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL);
-                HomeChildEntity entity = GsonUtil.convertString2Object(str,HomeChildEntity.class);
-                if(!TextUtils.isEmpty(str) && entity != null){
+                String str = DataHelper.getStringSF(mActivity, DataHelperTags.QUICK_URL);
+                HomeChildEntity entity = GsonUtil.convertString2Object(str, HomeChildEntity.class);
+                if (!TextUtils.isEmpty(str) && entity != null) {
                     bundle.clear();
                     bundle.putString(BundleTags.URL, entity.getJumpurl());
                     bundle.putString(BundleTags.TITLE, entity.getTitle());
-                    if(entity.getShowShare() == 1){
+                    if (entity.getShowShare() == 1) {
                         bundle.putBoolean(BundleTags.IS_SHARE, true);
                         bundle.putString(BundleTags.SHARE_URL, entity.getShareUrl());
                         bundle.putString(BundleTags.SHARE_TITLE, entity.getShareTitle());
@@ -511,17 +511,17 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
         if (buryingPointId == 1) {
             switch (requireTypeId) {
                 case 2:
-                    BuryingPointHelp.getInstance().onActivityResumed(mActivity, "litigation_arbitration_assistant_success",getPair());
+                    BuryingPointHelp.getInstance().onActivityResumed(mActivity, "litigation_arbitration_assistant_success", getPair());
                     break;
                 case 9:
-                    BuryingPointHelp.getInstance().onActivityResumed(mActivity, "meeting_assistant_success",getPair());
+                    BuryingPointHelp.getInstance().onActivityResumed(mActivity, "meeting_assistant_success", getPair());
                     break;
                 case 6:
-                    BuryingPointHelp.getInstance().onActivityResumed(mActivity, "enterprise_assistant_success",getPair());
+                    BuryingPointHelp.getInstance().onActivityResumed(mActivity, "enterprise_assistant_success", getPair());
                     break;
             }
         } else {
-            BuryingPointHelp.getInstance().onActivityResumed(mActivity, "assistant_success",getPair());
+            BuryingPointHelp.getInstance().onActivityResumed(mActivity, "assistant_success", getPair());
         }
 //        if(isGoCall){
 //            showTestDialog2();
@@ -535,17 +535,17 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
         if (buryingPointId == 1) {
             switch (requireTypeId) {
                 case 2:
-                    BuryingPointHelp.getInstance().onActivityPaused(mActivity, "litigation_arbitration_assistant_success",getPair());
+                    BuryingPointHelp.getInstance().onActivityPaused(mActivity, "litigation_arbitration_assistant_success", getPair());
                     break;
                 case 9:
-                    BuryingPointHelp.getInstance().onActivityPaused(mActivity, "meeting_assistant_success",getPair());
+                    BuryingPointHelp.getInstance().onActivityPaused(mActivity, "meeting_assistant_success", getPair());
                     break;
                 case 6:
-                    BuryingPointHelp.getInstance().onActivityPaused(mActivity, "enterprise_assistant_success",getPair());
+                    BuryingPointHelp.getInstance().onActivityPaused(mActivity, "enterprise_assistant_success", getPair());
                     break;
             }
         } else {
-            BuryingPointHelp.getInstance().onActivityPaused(mActivity, "assistant_success",getPair());
+            BuryingPointHelp.getInstance().onActivityPaused(mActivity, "assistant_success", getPair());
         }
 
     }
@@ -558,19 +558,25 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
             launchActivity(new Intent(mActivity, PhoneSubActivity.class), bundle);
         } else if (entity.getOrderStatus() == 1) {
             new SingleTextDialog(mActivity)
-                    .setContentHtmlStr("律师将于「通话时间」给您来电，请耐心等候律师将于「通话时间」给您来电，请耐心等候。您可进入<font color=\"#1EC88B\">我的-我的订单</font>页管理订单。")
-                    .setTextOnClickListener(()->{
-                        //TODO 订单详情
-
+                    .setContentHtmlStr("律师将于 " + entity.getLawyerOrderTime() + " 给您来电，请耐心等候。您可进入<font color=\"#1EC88B\">我的-我的订单</font>页管理订单。")
+                    .setTextOnClickListener(() -> {
+                        bundle.clear();
+                        bundle.putInt(BundleTags.ID, entity.getOrderId());
+                        bundle.putString(BundleTags.TITLE, "专家咨询详情");
+                        bundle.putString(BundleTags.ORDER_NO, entity.getOrderNo());
+                        launchActivity(new Intent(mActivity, OrderDetailsExpertActivity.class), bundle);
                     })
                     .setSubmitStr("我知道了！").show();
 
         } else if (entity.getOrderStatus() == 2) {
             new SingleTextDialog(mActivity)
                     .setContentHtmlStr("您已成功发起咨询邀约，请等待律师确认咨询您已成功发起咨询邀约，请等待律师确认咨询时间，您可以进入<font color=\"#1EC88B\">我的-我的订单</font>页查看预约状态。")
-                    .setTextOnClickListener(()->{
-                        //TODO 订单详情
-
+                    .setTextOnClickListener(() -> {
+                        bundle.clear();
+                        bundle.putInt(BundleTags.ID, entity.getOrderId());
+                        bundle.putString(BundleTags.TITLE, "专家咨询详情");
+                        bundle.putString(BundleTags.ORDER_NO, entity.getOrderNo());
+                        launchActivity(new Intent(mActivity, OrderDetailsExpertActivity.class), bundle);
                     })
                     .setSubmitStr("我知道了！").show();
         }

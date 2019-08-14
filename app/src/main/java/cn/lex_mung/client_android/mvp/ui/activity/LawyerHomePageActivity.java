@@ -522,15 +522,13 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
 
         } else if (entity.getOrderStatus() == 2) {
             new SingleTextDialog(mActivity)
-                    //TODO 通话时间
-                    .setContentHtmlStr("律师将于「通话时间」给您来电，请耐心等候律师将于「通话时间」给您来电，请耐心等候。您可进入<font color=\"#1EC88B\">我的-我的订单</font>页管理订单。")
+                    .setContentHtmlStr("律师将于 " + entity.getLawyerOrderTime() + " 给您来电，请耐心等候。您可进入<font color=\"#1EC88B\">我的-我的订单</font>页管理订单。")
                     .setTextOnClickListener(()->{
                         bundle.clear();
                         bundle.putInt(BundleTags.ID, entity.getOrderId());
                         bundle.putString(BundleTags.TITLE,"专家咨询详情");
                         bundle.putString(BundleTags.ORDER_NO,entity.getOrderNo());
                         launchActivity(new Intent(mActivity,OrderDetailsExpertActivity.class),bundle);
-
                     })
                     .setSubmitStr("我知道了！").show();
         }

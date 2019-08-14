@@ -872,4 +872,10 @@ public interface CommonService {
     @POST("client/expert/cancel")
     Observable<BaseResponse> expertCancel(@Body RequestBody body);
 
+    ///client/expert/finish
+    //POST
+    //用户结束专家咨询订单
+    @POST("client/expert/finish")
+    Observable<BaseResponse> expertFinish(@Body RequestBody body);
+
 }

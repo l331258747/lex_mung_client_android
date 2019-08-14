@@ -105,6 +105,31 @@ public class OrderDetailsEntity {
     private int remainingTime;//订单剩余时长
     private CallOrderTimeBean callOrderTime;
 
+    private double minAmount;//单价（20元/分钟）
+    private int minimumDurationForExpert;//专家电话保底时长
+    private double clientExpertAmount;//客户保底费用，保底时长*律师单价
+
+    public double getMinAmount() {
+        return minAmount;
+    }
+
+    public String getMinAmountStr(){
+        return StringUtils.getStringNum(minAmount)+"元/分钟";
+    }
+
+    public String getExperAmoutStr(){
+        //0-2       已冻结120.00元，暂未扣费（120：实付金额）
+        //2-保底时长 保底时长价格
+        //保底时长以上 实付金额
+        if(callTime < 120){
+            return "已冻结"+StringUtils.getStringNum(payAmount)+"元，暂未扣费";
+        }else if(120 < callTime && callTime < minimumDurationForExpert * 60){
+            return StringUtils.getStringNum(clientExpertAmount) + "元";
+        }else{
+            return StringUtils.getStringNum(payAmount) + "元";
+        }
+    }
+
     public CallOrderTimeBean getCallOrderTime() {
         return callOrderTime;
     }
@@ -186,7 +211,18 @@ public class OrderDetailsEntity {
     }
 
     public String getCallTimeStr() {
-        return callTime + "";
+        if(callTime == 0) return "";
+        long hours = callTime / 3600;//转换小时数
+        callTime = callTime % 3600;//剩余秒数
+        long minutes = callTime / 60;//转换分钟
+        callTime = callTime % 60;//剩余秒数
+        if(hours > 0){
+            return hours + "小时" + minutes + "分" + callTime + "秒";
+        }
+        if(minutes > 0){
+            return minutes + "分" + callTime + "秒";
+        }
+        return callTime + "秒";
     }
 
     public void setCallTime(int callTime) {
