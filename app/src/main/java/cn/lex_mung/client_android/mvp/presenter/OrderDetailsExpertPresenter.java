@@ -159,9 +159,13 @@ public class OrderDetailsExpertPresenter extends BasePresenter<OrderDetailsExper
                             } else {
                                 StringBuffer stringBuffer = new StringBuffer();
                                 for (int i = 0; i < bean.getQuickTime().size(); i++) {
-                                    stringBuffer.append(bean.getQuickTime().get(i).getBeginTime() + "(" + bean.getQuickTime().get(i).getCalllength() + ")");
+                                    if(i == bean.getQuickTime().size() - 1){
+                                        stringBuffer.append(bean.getQuickTime().get(i).getBeginTime() + "(" + bean.getQuickTime().get(i).getCalllength() + ")");
+                                    }else{
+                                        stringBuffer.append(bean.getQuickTime().get(i).getBeginTime() + "(" + bean.getQuickTime().get(i).getCalllength() + ")\n");
+                                    }
                                 }
-                                mRootView.setTalkTime(bean.getCallTimeStr());
+                                mRootView.setTalkTime("总计" + bean.getCallTimeStr());
                                 mRootView.setTalkRecord(stringBuffer.toString());
                             }
 
