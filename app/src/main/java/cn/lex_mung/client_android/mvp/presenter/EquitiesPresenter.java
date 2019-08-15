@@ -37,6 +37,7 @@ import java.util.Map;
 
 import static cn.lex_mung.client_android.app.EventBusTags.EQUITIES_REFRESH.EQUITIES_REFRESH;
 import static cn.lex_mung.client_android.app.EventBusTags.EQUITIES_REFRESH.EQUITIES_REFRESH_1;
+import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGIN;
 import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGIN_INFO;
 import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGOUT;
 
@@ -74,6 +75,7 @@ public class EquitiesPresenter extends BasePresenter<EquitiesContract.Model, Equ
     private void loginInfo(Message message) {
         switch (message.what) {
             case LOGOUT:
+            case LOGIN:
                 onResume();
                 break;
         }

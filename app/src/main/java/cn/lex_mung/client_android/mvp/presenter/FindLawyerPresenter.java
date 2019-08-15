@@ -89,8 +89,6 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
 
     /**
      * 更新登录信息
-     *
-     * @param message message
      */
     @Subscriber(tag = LOGIN_INFO)
     private void loginInfo(Message message) {
@@ -98,7 +96,7 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
             case LOGOUT:
             case LOGIN:
                 pageNum = 1;
-                getConsultList(false, true);
+                getConsultList(false, false);
                 break;
         }
     }

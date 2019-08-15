@@ -15,6 +15,7 @@ import me.zl.mvp.di.scope.ActivityScope;
 import me.zl.mvp.mvp.BasePresenter;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.RxLifecycleUtils;
 
@@ -24,6 +25,9 @@ import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.mvp.contract.SettingContract;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.VersionEntity;
+
+import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGIN_INFO;
+import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGOUT;
 
 @ActivityScope
 public class SettingPresenter extends BasePresenter<SettingContract.Model, SettingContract.View> {
@@ -77,6 +81,8 @@ public class SettingPresenter extends BasePresenter<SettingContract.Model, Setti
                     @Override
                     public void onNext(BaseResponse baseResponse) {
                         if (baseResponse.isSuccess()) {
+                            AppUtils.post(LOGIN_INFO, LOGOUT);
+
                             JMessageClient.logout();
 
                             DataHelper.removeSF(mApplication, DataHelperTags.TOKEN);
