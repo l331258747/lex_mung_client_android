@@ -149,7 +149,7 @@ public class FreeConsultMainPresenter extends BasePresenter<FreeConsultMainContr
                         mRootView.launchActivity(new Intent(mRootView.getActivity(), LoginActivity.class));
                         dialog.dismiss();
                     }
-            ,"继续查看需要登录","去登陆","取消").show();
+            ,"继续查看需要登录","去登录","取消").show();
             smartRefreshLayout.finishLoadMore();
             return;
         }

@@ -570,7 +570,7 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
 
         } else if (entity.getOrderStatus() == 2) {
             new SingleTextDialog(mActivity)
-                    .setContentHtmlStr("您已成功发起咨询邀约，请等待律师确认咨询您已成功发起咨询邀约，请等待律师确认咨询时间，您可以进入<font color=\"#1EC88B\">我的-我的订单</font>页查看预约状态。")
+                    .setContentHtmlStr("您已成功发起咨询邀约，请等待律师确认咨询时间，您可以进入<font color=\"#1EC88B\">我的-我的订单</font>页查看预约状态。")
                     .setTextOnClickListener(() -> {
                         bundle.clear();
                         bundle.putInt(BundleTags.ID, entity.getOrderId());

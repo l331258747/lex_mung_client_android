@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
@@ -31,6 +32,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.di.component.DaggerLawyerHomePageComponent;
 import cn.lex_mung.client_android.di.module.LawyerHomePageModule;
 import cn.lex_mung.client_android.mvp.contract.LawyerHomePageContract;
@@ -48,6 +50,7 @@ import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.utils.AppUtils;
+import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.DeviceUtils;
 import me.zl.mvp.utils.StatusBarUtil;
 
@@ -108,6 +111,8 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
     AppBarLayout mAppBarLayout;
     @BindView(R.id.tv_head_title)
     TextView tvHeadTitle;
+    @BindView(R.id.ll_bottom)
+    LinearLayout llBottom;
 
     boolean isCall;//是否显示拨打电话按钮
     private int requireTypeId;//用来埋点用的
@@ -136,19 +141,23 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
     @Override
     protected void onResume() {
         super.onResume();
-        MobclickAgent.onPageStart("app_l_wode_zhuye_detail");
         mPresenter.onResume();
 
 //        if (isGoCall) {
 //            showTestDialog2();
 //            isGoCall = false;
 //        }
+
+        if(!DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)){
+            llBottom.setVisibility(View.GONE);
+        }else{
+            llBottom.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        MobclickAgent.onPageEnd("app_l_wode_zhuye_detail");
     }
 
     @Override
@@ -510,7 +519,7 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
             launchActivity(new Intent(mActivity, PhoneSubActivity.class), bundle);
         } else if (entity.getOrderStatus() == 1) {
             new SingleTextDialog(mActivity)
-                    .setContentHtmlStr("您已成功发起咨询邀约，请等待律师确认咨询您已成功发起咨询邀约，请等待律师确认咨询时间，您可以进入<font color=\"#1EC88B\">我的-我的订单</font>页查看预约状态。")
+                    .setContentHtmlStr("您已成功发起咨询邀约，请等待律师确认咨询时间，您可以进入<font color=\"#1EC88B\">我的-我的订单</font>页查看预约状态。")
                     .setTextOnClickListener(()->{
                         bundle.clear();
                         bundle.putInt(BundleTags.ID, entity.getOrderId());
