@@ -124,7 +124,8 @@ public class OrderDetailsEntity {
         if(callTime < 120){
             return "已冻结"+StringUtils.getStringNum(payAmount)+"元，暂未扣费";
         }else if(120 < callTime && callTime < minimumDurationForExpert * 60){
-            return StringUtils.getStringNum(clientExpertAmount) + "元";
+//            return StringUtils.getStringNum(clientExpertAmount) + "元";
+            return StringUtils.getStringNum(payAmount) + "元";
         }else{
             return StringUtils.getStringNum(payAmount) + "元";
         }

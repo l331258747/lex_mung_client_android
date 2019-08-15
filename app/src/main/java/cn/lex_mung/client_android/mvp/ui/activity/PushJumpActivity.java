@@ -105,6 +105,20 @@ public class PushJumpActivity extends BaseActivity<PushJumpPresenter> implements
                         intent.setClass(mActivity, LoginActivity.class);
                     }
                     break;
+                case 261:
+                    if (DataHelper.getBooleanSF(mActivity, IS_LOGIN_SUCCESS)) {
+                        intent.setClass(mActivity, MyOrderActivity.class);
+                    } else {
+                        intent.setClass(mActivity, LoginActivity.class);
+                    }
+                    break;
+                case 262:
+                    if (DataHelper.getBooleanSF(mActivity, IS_LOGIN_SUCCESS)) {
+                        intent.setClass(mActivity, MyOrderActivity.class);
+                    } else {
+                        intent.setClass(mActivity, LoginActivity.class);
+                    }
+                    break;
             }
             launchActivity(intent);
         } catch (Exception ignored) {
