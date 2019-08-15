@@ -94,11 +94,12 @@ public class OrderMessagePresenter extends BasePresenter<OrderMessageContract.Mo
                         intent.setClass(mApplication, FreeConsultDetail1Activity.class);
                         break;
                     case 241:
+                    case 252:
+                    case 261://261--律师接受专家咨询订单，发到用户端
+                    case 262://262--律师取消了专家咨询订单，发到用户端
                         intent.setClass(mApplication, MyOrderActivity.class);
                         break;
                     case 244:
-                        intent.setClass(mApplication, MyAccountActivity.class);
-                        break;
                     case 245:
                         intent.setClass(mApplication, MyAccountActivity.class);
                         break;

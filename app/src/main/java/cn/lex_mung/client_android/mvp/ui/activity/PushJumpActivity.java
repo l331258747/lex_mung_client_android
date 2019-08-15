@@ -60,6 +60,10 @@ public class PushJumpActivity extends BaseActivity<PushJumpPresenter> implements
                     intent.setClass(mActivity, WebActivity.class);
                     break;
                 case 109:
+                case 241:
+                case 252:
+                case 261://261--律师接受专家咨询订单，发到用户端
+                case 262://262--律师取消了专家咨询订单，发到用户端
                     if (DataHelper.getBooleanSF(mActivity, IS_LOGIN_SUCCESS)) {
                         intent.setClass(mActivity, MyOrderActivity.class);
                     } else {
@@ -77,44 +81,10 @@ public class PushJumpActivity extends BaseActivity<PushJumpPresenter> implements
                         intent.setClass(mActivity, LoginActivity.class);
                     }
                     break;
-                case 241:
-                    if (DataHelper.getBooleanSF(mActivity, IS_LOGIN_SUCCESS)) {
-                        intent.setClass(mActivity, MyOrderActivity.class);
-                    } else {
-                        intent.setClass(mActivity, LoginActivity.class);
-                    }
-                    break;
                 case 244:
-                    if (DataHelper.getBooleanSF(mActivity, IS_LOGIN_SUCCESS)) {
-                        intent.setClass(mActivity, MyAccountActivity.class);
-                    } else {
-                        intent.setClass(mActivity, LoginActivity.class);
-                    }
-                    break;
                 case 245:
                     if (DataHelper.getBooleanSF(mActivity, IS_LOGIN_SUCCESS)) {
                         intent.setClass(mActivity, MyAccountActivity.class);
-                    } else {
-                        intent.setClass(mActivity, LoginActivity.class);
-                    }
-                    break;
-                case 252:
-                    if (DataHelper.getBooleanSF(mActivity, IS_LOGIN_SUCCESS)) {
-                        intent.setClass(mActivity, MyOrderActivity.class);
-                    } else {
-                        intent.setClass(mActivity, LoginActivity.class);
-                    }
-                    break;
-                case 261:
-                    if (DataHelper.getBooleanSF(mActivity, IS_LOGIN_SUCCESS)) {
-                        intent.setClass(mActivity, MyOrderActivity.class);
-                    } else {
-                        intent.setClass(mActivity, LoginActivity.class);
-                    }
-                    break;
-                case 262:
-                    if (DataHelper.getBooleanSF(mActivity, IS_LOGIN_SUCCESS)) {
-                        intent.setClass(mActivity, MyOrderActivity.class);
                     } else {
                         intent.setClass(mActivity, LoginActivity.class);
                     }
