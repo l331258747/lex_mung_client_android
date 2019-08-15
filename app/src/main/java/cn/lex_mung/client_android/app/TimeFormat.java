@@ -95,6 +95,21 @@ public class TimeFormat {
         return dayFormat + "天 " + hourFormat + "时" + minuteFormat + "分" + secondFormat + "秒";
     }
 
+    public static String getHMSStr(int timelong) {
+        if (timelong == 0) return "";
+        long hours = timelong / 3600;//转换小时数
+        timelong = timelong % 3600;//剩余秒数
+        long minutes = timelong / 60;//转换分钟
+        timelong = timelong % 60;//剩余秒数
+        if (hours > 0) {
+            return hours + "小时" + minutes + "分" + timelong + "秒";
+        }
+        if (minutes > 0) {
+            return minutes + "分" + timelong + "秒";
+        }
+        return timelong + "秒";
+    }
+
     // string类型转换为long类型
     // strTime要转换的String类型的时间
     // formatType时间格式

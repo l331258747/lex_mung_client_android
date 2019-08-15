@@ -416,7 +416,7 @@ public class OrderDetailsEntity {
     }
 
     public String getRemainingTimeStr(){
-       return TimeFormat.countDownToStr(Long.valueOf(remainingTime) * 1000, 0);
+        return TimeFormat.getHMSStr(remainingTime);
     }
 
 
