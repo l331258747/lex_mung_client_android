@@ -2,6 +2,8 @@ package cn.lex_mung.client_android.mvp.contract;
 
 import android.app.Activity;
 
+import java.util.List;
+
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.OrderDetailsEntity;
@@ -23,9 +25,10 @@ public interface OrderDetailsExpertContract {
         void setCouponType(String s);
         void setOrderNo(String s);
         void setTalkTime(String s);
-        void setTalkRecord(String s);
         void showCancelDialog();
         void showFinishDialog();
+
+        void setTalkRecordList(List<OrderDetailsEntity.QuickTimeBean> lists);
 
     }
 

@@ -10,6 +10,8 @@ import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Group;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,16 +19,18 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.module.OrderDetailsExpertModule;
 import cn.lex_mung.client_android.mvp.model.entity.OrderDetailsEntity;
+import cn.lex_mung.client_android.mvp.ui.adapter.OrderDetailsExpertInfoAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
 import cn.lex_mung.client_android.mvp.ui.dialog.SingleTextTwoBtnDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.OrderDetailExpertView;
-import cn.lex_mung.client_android.mvp.ui.widget.OrderDetailView;
 import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
@@ -82,10 +86,8 @@ public class OrderDetailsExpertActivity extends BaseActivity<OrderDetailsExpertP
     @BindView(R.id.tv_info_talk_time)
     TextView tv_info_talk_time;
 
-    @BindView(R.id.ll_info_talk_record)
-    LinearLayout ll_info_talk_record;
-    @BindView(R.id.tv_info_talk_record)
-    TextView tv_info_talk_record;
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
 
     @BindView(R.id.tv_tip_content)
     TextView tv_tip_content;
@@ -190,6 +192,20 @@ public class OrderDetailsExpertActivity extends BaseActivity<OrderDetailsExpertP
     }
 
     @Override
+    public void setTalkRecordList(List<OrderDetailsEntity.QuickTimeBean> lists) {
+        if(lists == null || lists.size() == 0)
+            recyclerView.setVisibility(View.GONE);
+        else{
+            recyclerView.setVisibility(View.VISIBLE);
+            OrderDetailsExpertInfoAdapter adapter = new OrderDetailsExpertInfoAdapter();
+            AppUtils.configRecyclerView(recyclerView, new LinearLayoutManager(mActivity));
+            recyclerView.setAdapter(adapter);
+            recyclerView.setNestedScrollingEnabled(false);
+            adapter.setNewData(lists);
+        }
+    }
+
+    @Override
     public void setLawyer(String s) {
         if (TextUtils.isEmpty(s)) {
             ll_info_lawyer.setVisibility(View.GONE);
@@ -256,16 +272,6 @@ public class OrderDetailsExpertActivity extends BaseActivity<OrderDetailsExpertP
         } else {
             ll_info_talk_time.setVisibility(View.VISIBLE);
             tv_info_talk_time.setText(s);
-        }
-    }
-
-    @Override
-    public void setTalkRecord(String s) {
-        if (TextUtils.isEmpty(s)) {
-            ll_info_talk_record.setVisibility(View.GONE);
-        } else {
-            ll_info_talk_record.setVisibility(View.VISIBLE);
-            tv_info_talk_record.setText(s);
         }
     }
 

@@ -155,18 +155,10 @@ public class OrderDetailsExpertPresenter extends BasePresenter<OrderDetailsExper
                             }
                             if (bean.getQuickTime() == null || bean.getQuickTime().size() == 0) {
                                 mRootView.setTalkTime("无");
-                                mRootView.setTalkRecord(null);
+                                mRootView.setTalkRecordList(null);
                             } else {
-                                StringBuffer stringBuffer = new StringBuffer();
-                                for (int i = 0; i < bean.getQuickTime().size(); i++) {
-                                    if(i == bean.getQuickTime().size() - 1){
-                                        stringBuffer.append(bean.getQuickTime().get(i).getBeginTime() + "(" + bean.getQuickTime().get(i).getCalllength() + ")");
-                                    }else{
-                                        stringBuffer.append(bean.getQuickTime().get(i).getBeginTime() + "(" + bean.getQuickTime().get(i).getCalllength() + ")\n");
-                                    }
-                                }
                                 mRootView.setTalkTime("总计" + bean.getCallTimeStr());
-                                mRootView.setTalkRecord(stringBuffer.toString());
+                                mRootView.setTalkRecordList(bean.getQuickTime());
                             }
 
                             switch (bean.getOrderStatus()) {
