@@ -111,7 +111,7 @@ public class HomeSolutionActivity extends BaseActivity<HomeSolutionPresenter> im
                     BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "first_page_major_criminal_case_click");
                     break;
                 case 6://6 房屋及其他财物的买卖租赁
-                    BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "first_page_laborer_is_rights_protection_click");
+                    BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "first_page_laborer_is_sale_and_lease_click");
                     break;
                 case 7://7 合同纠纷
                     BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "first_page_contractual_dispute_click");
