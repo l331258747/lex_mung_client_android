@@ -61,7 +61,6 @@ public class WebSolutionSelectActivity extends BaseActivity<WebSolutionSelectPre
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_txt:
-                MobclickAgent.onEvent(mActivity, "w_y_shouye_index_mfzx");
                 if (DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
                     bundle.clear();
                     bundle.putInt(BundleTags.BURYING_POINT,1);
@@ -90,7 +89,6 @@ public class WebSolutionSelectActivity extends BaseActivity<WebSolutionSelectPre
                 }
                 break;
             case R.id.ll_lawyer:
-                MobclickAgent.onEvent(mActivity, "w_y_shouye_index_zjzx");
                 if (DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
                     bundle.clear();
                     bundle.putInt(BundleTags.ID, 8);

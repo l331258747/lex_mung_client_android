@@ -74,9 +74,9 @@ public class FreeConsultActivity extends BaseActivity<FreeConsultPresenter> impl
     public void onResume() {
         super.onResume();
         if(buryingPointId == 1){
-            BuryingPointHelp.getInstance().onActivityResumed(mActivity, "free_consulation_from_solution",getPair());
+            BuryingPointHelp.getInstance().onActivityResumed(mActivity, "solution_detail_free_text_from_solution_page",getPair());
         }else{
-            BuryingPointHelp.getInstance().onActivityResumed(mActivity, "free_consulation_post",getPair());
+            BuryingPointHelp.getInstance().onActivityResumed(mActivity, "free_test_post_page",getPair());
         }
     }
 
@@ -84,9 +84,9 @@ public class FreeConsultActivity extends BaseActivity<FreeConsultPresenter> impl
     public void onPause() {
         super.onPause();
         if(buryingPointId == 1){
-            BuryingPointHelp.getInstance().onActivityPaused(mActivity, "free_consulation_from_solution",getPair());
+            BuryingPointHelp.getInstance().onActivityPaused(mActivity, "solution_detail_free_text_from_solution_page",getPair());
         }else{
-            BuryingPointHelp.getInstance().onActivityPaused(mActivity, "free_consulation_post",getPair());
+            BuryingPointHelp.getInstance().onActivityPaused(mActivity, "free_test_post_page",getPair());
         }
     }
 
@@ -104,7 +104,7 @@ public class FreeConsultActivity extends BaseActivity<FreeConsultPresenter> impl
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_right:
-                BuryingPointHelp.getInstance().onEvent(mActivity, "free_consulation_detail","free_consulation_post_click");
+                BuryingPointHelp.getInstance().onEvent(mActivity, "free_test_post_page","free_test_post_page_post_click");
                 mPresenter.releaseFreeConsult(etInput.getText().toString());
                 break;
             case R.id.view_consult_type:

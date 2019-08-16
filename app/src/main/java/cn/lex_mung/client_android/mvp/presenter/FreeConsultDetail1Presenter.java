@@ -122,7 +122,7 @@ public class FreeConsultDetail1Presenter extends BasePresenter<FreeConsultDetail
             if (entity == null) return;
             switch (view.getId()) {
                 case R.id.view_title:
-                    BuryingPointHelp.getInstance().onEvent(mRootView.getActivity(), "free_consulation_detail","free_consulation_lawyer_detail_click");
+                    BuryingPointHelp.getInstance().onEvent(mRootView.getActivity(), "free_test_detail_page","free_text_detail_page_lawyer_detail_click");
                     Bundle bundle = new Bundle();
                     bundle.putInt(BundleTags.ID, entity.getLawyerId());
                     bundle.putInt(BundleTags.REQUIRE_TYPE_ID,100);

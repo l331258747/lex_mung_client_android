@@ -65,13 +65,11 @@ public class AccountPayActivity extends BaseActivity<AccountPayPresenter> implem
     @Override
     protected void onResume() {
         super.onResume();
-        MobclickAgent.onPageStart("w_y_shouye_zjzx_chongzhi_list");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        MobclickAgent.onPageEnd("w_y_shouye_zjzx_chongzhi_list");
     }
 
     @Override
@@ -122,7 +120,6 @@ public class AccountPayActivity extends BaseActivity<AccountPayPresenter> implem
                 mPresenter.setPayType(2);
                 break;
             case R.id.bt_pay:
-                MobclickAgent.onEvent(mActivity, "w_y_chongzhi_list_tj");
                 mPresenter.pay(webView.getSettings().getUserAgentString());
                 break;
         }

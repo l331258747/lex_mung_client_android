@@ -100,13 +100,13 @@ public class HomeTableActivity extends BaseActivity<HomeTablePresenter> implemen
             case R.id.view_help:
                 switch (id) {
                     case 2:
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "litigation_arbitration_detail", "litigation_arbitration_assistant_click");
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "litigation_arbitration_detail_page", "litigation_arbitration_detail_page_assistant_click");
                         break;
                     case 9:
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "meeting_detail", "meeting_assistant_click");
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "meeting_detail_page", "meeting_detail_pageassistant_click");
                         break;
                     case 6:
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "enterprise_detail", "enterprise_detail_assistant_click");
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "enterprise_detail_page", "enterprise_detail_page_assistant_click");
                         break;
                 }
                 goHelp();
@@ -114,13 +114,13 @@ public class HomeTableActivity extends BaseActivity<HomeTablePresenter> implemen
             case R.id.view_lawyer:
                 switch (id) {
                     case 2:
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "litigation_arbitration_detail", "litigation_arbitration_search_lawyer_click");
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "litigation_arbitration_detail_page", "litigation_arbitration_detail_page_search_lawyer_click");
                         break;
                     case 9:
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "meeting_detail", "meeting_assistant_search_lawyer_click");
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "meeting_detail_page", "meeting_detail_page_search_lawyer_click");
                         break;
                     case 6:
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "enterprise_detail", "enterprise_detail_assistant_search_lawyer_click");
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "enterprise_detail_page", "enterprise_detail_page_search_lawyer_click");
                         break;
                 }
                 bundle.clear();
@@ -222,13 +222,13 @@ public class HomeTableActivity extends BaseActivity<HomeTablePresenter> implemen
         super.onResume();
         switch (id){
             case 2:
-                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "litigation_arbitration_detail",getPair());
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "litigation_arbitration_detail_page",getPair());
                 break;
             case 9:
-                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "meeting_detail",getPair());
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "meeting_detail_page",getPair());
                 break;
             case 6:
-                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "enterprise_detail",getPair());
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "enterprise_detail_page",getPair());
                 break;
         }
 //        BuryingPointHelp.getInstance().onActivityResumed(mActivity, "litigation_arbitration_detial");
@@ -241,13 +241,13 @@ public class HomeTableActivity extends BaseActivity<HomeTablePresenter> implemen
 
         switch (id){
             case 2:
-                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "litigation_arbitration_detail",getPair());
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "litigation_arbitration_detail_page",getPair());
                 break;
             case 9:
-                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "meeting_detail",getPair());
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "meeting_detail_page",getPair());
                 break;
             case 6:
-                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "enterprise_detail",getPair());
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "enterprise_detail_page",getPair());
                 break;
         }
     }

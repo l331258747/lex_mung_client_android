@@ -23,7 +23,7 @@ public class WebSolutionActivity extends WebActivity {
        ll_bottom.setVisibility(View.VISIBLE);
         tv_btn.setOnClickListener(v -> {
             launchActivity(new Intent(mActivity,WebSolutionSelectActivity.class));
-            BuryingPointHelp.getInstance().onEvent(mActivity, "solution_detail","solution_detail_post_free_text_click");
+            BuryingPointHelp.getInstance().onEvent(mActivity, "solution_detail_page","solution_detail_page_post_free_text_click");
         });
 
     }

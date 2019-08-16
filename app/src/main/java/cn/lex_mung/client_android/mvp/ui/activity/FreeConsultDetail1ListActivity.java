@@ -80,7 +80,6 @@ public class FreeConsultDetail1ListActivity extends BaseActivity<FreeConsultDeta
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_btn:
-                BuryingPointHelp.getInstance().onEvent(mActivity, "free_consulation_detail","free_consulation_detail_post_click");
                 if (DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
                     if(isShow){
                         bundle.clear();
@@ -160,4 +159,5 @@ public class FreeConsultDetail1ListActivity extends BaseActivity<FreeConsultDeta
     public void killMyself() {
         finish();
     }
+
 }

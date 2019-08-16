@@ -143,21 +143,61 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
         super.onResume();
         mPresenter.onResume();
 
-//        if (isGoCall) {
-//            showTestDialog2();
-//            isGoCall = false;
-//        }
-
         if(!DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)){
             llBottom.setVisibility(View.GONE);
         }else{
             llBottom.setVisibility(View.VISIBLE);
         }
+
+        switch (requireTypeId) {
+            case 2://诉讼
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "litigation_arbitration_lawyer_detail_page", getPair());
+                break;
+            case 6://企业顾问
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "enterprise_offline_lawyer_detail_page", getPair());
+                break;
+            case 9://线下见面
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "meeting_offline_lawyer_detail_page", getPair());
+                break;
+            case 8://专家咨询 电话咨询
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "expert_consulation_lawyer_detail_page", getPair());
+                break;
+            case 100://免费咨询
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "free_text_lawyer_detail_page", getPair());
+                break;
+            default:
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "search_lawyer_lawyer_detail_page", getPair());
+                break;
+        }
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+
+        switch (requireTypeId) {
+            case 2://诉讼
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "litigation_arbitration_lawyer_detail_page", getPair());
+                break;
+            case 6://企业顾问
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "enterprise_offline_lawyer_detail_page", getPair());
+                break;
+            case 9://线下见面
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "meeting_offline_lawyer_detail_page", getPair());
+                break;
+            case 8://专家咨询 电话咨询
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "expert_consulation_lawyer_detail_page", getPair());
+                break;
+            case 100://免费咨询
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "free_text_lawyer_detail_page", getPair());
+                break;
+            default:
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "search_lawyer_lawyer_detail_page", getPair());
+                break;
+        }
+
+
     }
 
     @Override
@@ -277,29 +317,28 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
                 launchActivity(new Intent(mActivity, MoreSocialPositionActivity.class), bundle);
                 break;
             case R.id.iv_head_share:
-                MobclickAgent.onEvent(mActivity, "app_l_wode_zhuye_detail_fenxiang");
                 break;
             case R.id.iv_call:
                 if (!isCall) return;
 
                 switch (requireTypeId) {
                     case 2://诉讼
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "litigation_arbitration_lawyer_detail", "litigation_arbitration_lawyer_detail_phone_click");
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "litigation_arbitration_lawyer_detail_page", "litigation_arbitration_lawyer_detail_page_phone_click");
                         break;
                     case 6://企业顾问
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "enterprise_offline_lawyer_detail", "enterprise_offline_lawyer_detail_phone_click");
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "enterprise_offline_lawyer_detail_page", "enterprise_offline_lawyer_detail_page_phone_click");
                         break;
                     case 9://线下见面
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "meeting_offline_lawyer_detail", "meeting_offline_lawyer_detail_phone_click");
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "meeting_offline_lawyer_detail_page", "meeting_offline_lawyer_detail_page_phone_click");
                         break;
                     case 8://专家咨询 电话咨询
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "expert_consulation_lawyer_detail", "expert_consulation_lawyer_detail_phone_click");
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "expert_consulation_lawyer_detail_page", "expert_consulation_lawyer_detail_page_phone_click");
                         break;
                     case 100://免费咨询
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "free_consulation_lawyer_detail", "free_consulation_lawyer_detail_phone_click");
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "free_text_lawyer_detail_page", "free_text_lawyer_detail_page_phone_click");
                         break;
                     default:
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "search_lawyer_detail", "search_lawyer_detail_phone_click");
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "search_lawyer_lawyer_detail_page", "search_lawyer_lawyer_detail_page_phone_click");
                         break;
                 }
 

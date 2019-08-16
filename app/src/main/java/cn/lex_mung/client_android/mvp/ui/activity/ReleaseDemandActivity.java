@@ -145,6 +145,53 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
     @Override
     protected void onResume() {
         super.onResume();
+
+        switch (requireTypeId) {
+            case 9://线下见面
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "meeting_offline_page", getPair());
+                break;
+            case 2://诉讼
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "litigation_arbitration_page", getPair());
+                break;
+            case 6://法律顾问
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "legal_counsel_page", getPair());
+                break;
+            case 3://起草合同
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "draw_contract_page", getPair());
+                break;
+            case 4://律师函
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "lawyers_letter_page", getPair());
+                break;
+            case 30://审查合同
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "review_of_contracts_page", getPair());
+                break;
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        switch (requireTypeId) {
+            case 9://线下见面
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "meeting_offline_page", getPair());
+                break;
+            case 2://诉讼
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "litigation_arbitration_page", getPair());
+                break;
+            case 6://法律顾问
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "legal_counsel_page", getPair());
+                break;
+            case 3://起草合同
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "draw_contract_page", getPair());
+                break;
+            case 4://律师函
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "lawyers_letter_page", getPair());
+                break;
+            case 30://审查合同
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "review_of_contracts_page", getPair());
+                break;
+        }
     }
 
     @Override
@@ -179,22 +226,22 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
             case R.id.bt_pay:
 
                 switch (requireTypeId){
-                    case 9:
+                    case 9://线下见面
                         BuryingPointHelp.getInstance().onEvent(mActivity, "meeting_offline_page","meeting_offline_page_pay_click");
                         break;
-                    case 2:
+                    case 2://诉讼
                         BuryingPointHelp.getInstance().onEvent(mActivity, "litigation_arbitration_page","litigation_arbitration_page_pay_click");
                         break;
-                    case 6:
+                    case 6://法律顾问
                         BuryingPointHelp.getInstance().onEvent(mActivity, "legal_counsel_page","legal_counsel_page_pay_click");
                         break;
-                    case 3:
+                    case 3://起草合同
                         BuryingPointHelp.getInstance().onEvent(mActivity, "draw_contract_page","draw_contract_page_pay_click");
                         break;
-                    case 4:
+                    case 4://律师函
                         BuryingPointHelp.getInstance().onEvent(mActivity, "lawyers_letter_page","lawyers_letter_page_pay_click");
                         break;
-                    case 30:
+                    case 30://审查合同
                         BuryingPointHelp.getInstance().onEvent(mActivity, "review_of_contracts_page","review_of_contracts_page_pay_click");
                         break;
                 }

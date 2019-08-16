@@ -271,7 +271,6 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
     @Override
     public void showLackOfBalanceDialog() {
         new DefaultDialog(mActivity, dialog -> {
-            MobclickAgent.onEvent(mActivity, "w_y_shouye_kszx_detail_chongzhi");
             launchActivity(new Intent(mActivity, MyAccountActivity.class));
         }
                 , "您账户余额不足，是否前往充值？"
@@ -300,7 +299,6 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
                 mPresenter.tariffExplanationUrl();
                 break;
             case R.id.view_consult_type:
-                MobclickAgent.onEvent(mActivity, "w_y_shouye_kszx_detail_fenleixuanze");
                 showSelectTypeDialog();
                 break;
             case R.id.tv_mr:

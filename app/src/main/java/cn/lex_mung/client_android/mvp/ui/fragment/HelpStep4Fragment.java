@@ -96,7 +96,7 @@ public class HelpStep4Fragment extends BaseFragment<HelpStep4Presenter> implemen
         if (isFastClick()) return;
         switch (view.getId()) {
             case R.id.tv_btn:
-                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","assistant_service_item_next_click");
+                BuryingPointHelp.getInstance().onEvent(mActivity, "first_assistant_service_page","first_assistant_service_page_next_click");
                 if(typeId == -1){
                     showMessage("请选择法律类型");
                     return;
@@ -155,12 +155,12 @@ public class HelpStep4Fragment extends BaseFragment<HelpStep4Presenter> implemen
     @Override
     public void onResume() {
         super.onResume();
-        BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "assistant_service_item",getPair());
+        BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "first_assistant_service_page",getPair());
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "assistant_service_item",getPair());
+        BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "first_assistant_service_page",getPair());
     }
 }

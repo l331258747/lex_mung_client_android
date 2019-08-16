@@ -58,7 +58,6 @@ public class FreeConsultListActivity extends BaseActivity<FreeConsultListPresent
     public void initData(@Nullable Bundle savedInstanceState) {
         mPresenter.onCreate(smartRefreshLayout);
         emptyView.getBtn().setOnClickListener(v -> {
-            MobclickAgent.onEvent(mActivity, "w_y_shouye_index_mfzx");
             if (DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
                 launchActivity(new Intent(mActivity, FreeConsultActivity.class));
             } else {

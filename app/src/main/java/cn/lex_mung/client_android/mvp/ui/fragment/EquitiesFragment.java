@@ -132,14 +132,14 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
             return;
         }
         if (isVisibleToUser) {
-            BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "vip", getPair());
+            BuryingPointHelp.getInstance().onFragmentResumed(mActivity, "vip_page", getPair());
             if(!isLoadOver){
                 mPresenter.onResume();//bug1 出现后加的
                 isLoadOver = true;
             }
 
         } else {
-            BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "vip", getPair());
+            BuryingPointHelp.getInstance().onFragmentPaused(mActivity, "vip_page", getPair());
         }
     }
 
@@ -173,7 +173,6 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
                 mPresenter.showAllEquitiesLayout();
                 break;
             case R.id.view_all_lawyer:
-                MobclickAgent.onEvent(mActivity, "w_y_qyxq_detail_zls");
                 bundle.clear();
                 bundle.putInt(BundleTags.ORG_ID, DataHelper.getIntergerSF(mActivity, DataHelperTags.EQUITIES_ORG_ID));
                 bundle.putInt(BundleTags.LEVEL, DataHelper.getIntergerSF(mActivity, DataHelperTags.EQUITIES_ORG_LEVEL_ID));
@@ -193,7 +192,6 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
     private void initAdapter() {
         equitiesAdapter1 = new EquitiesAdapter(mImageLoader, true);
         equitiesAdapter1.setOnItemClickListener((adapter, view, position) -> {
-            MobclickAgent.onEvent(mActivity, "w_y_qylb_detail_dj");
             if (isFastClick()) return;
             EquitiesListEntity entity = equitiesAdapter1.getItem(position);
             if (entity == null) return;

@@ -99,16 +99,16 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
         super.onResume();
         if (!TextUtils.isEmpty(url)) {
             if (url.indexOf("contractList.html") > -1) {
-                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "more_contract", getPair());
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "more_contract_page", getPair());
             } else if (url.indexOf("solution.html") > -1) {
-                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "solution_detail", getPair());
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "solution_detail_page", getPair());
             } else if (url.indexOf("member") > -1) {
-                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "enterprise_legal_card", getPair());
+                BuryingPointHelp.getInstance().onActivityResumed(mActivity, "enterprise_legal_card_detail_page", getPair());
             } else if (url.indexOf("quick.html") > -1) {
                 if (buryingPointId == 1) {
-                    BuryingPointHelp.getInstance().onActivityResumed(mActivity, "quick_consulation_from_solution", getPair());
+                    BuryingPointHelp.getInstance().onActivityResumed(mActivity, "solution_detail_quick_consulation_from_solution_page", getPair());
                 } else {
-                    BuryingPointHelp.getInstance().onActivityResumed(mActivity, "quick_consultation", getPair());
+                    BuryingPointHelp.getInstance().onActivityResumed(mActivity, "quick_consultation_page", getPair());
                 }
             }
         }
@@ -126,16 +126,16 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
         super.onPause();
         if (!TextUtils.isEmpty(url)) {
             if (url.indexOf("contractList.html") > -1) {
-                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "more_contract", getPair());
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "more_contract_page", getPair());
             } else if (url.indexOf("solution.html") > -1) {
-                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "solution_detail", getPair());
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "solution_detail_page", getPair());
             } else if (url.indexOf("member") > -1) {
-                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "enterprise_legal_card", getPair());
+                BuryingPointHelp.getInstance().onActivityPaused(mActivity, "enterprise_legal_card_detail_page", getPair());
             } else if (url.indexOf("quick.html") > -1) {
                 if (buryingPointId == 1) {
-                    BuryingPointHelp.getInstance().onActivityPaused(mActivity, "quick_consulation_from_solution", getPair());
+                    BuryingPointHelp.getInstance().onActivityPaused(mActivity, "solution_detail_quick_consulation_from_solution_page", getPair());
                 } else {
-                    BuryingPointHelp.getInstance().onActivityPaused(mActivity, "quick_consultation", getPair());
+                    BuryingPointHelp.getInstance().onActivityPaused(mActivity, "quick_consultation_page", getPair());
                 }
             }
         }

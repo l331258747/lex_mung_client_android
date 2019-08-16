@@ -198,7 +198,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 @Override
                 public void onHelpClick() {
                     fab.setVisibility(View.VISIBLE);
-                    BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "assistant_click");
+                    BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "first_page_assistant_click");
                     showHelpDialog();
                 }
 

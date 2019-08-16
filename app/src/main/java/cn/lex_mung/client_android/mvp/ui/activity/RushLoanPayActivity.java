@@ -34,6 +34,7 @@ import cn.lex_mung.client_android.mvp.ui.dialog.DefaultDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.PayTypeView2;
 import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
+import cn.lex_mung.client_android.utils.BuryingPointHelp;
 import cn.lex_mung.client_android.utils.LogUtil;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
@@ -139,6 +140,7 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
         switch (view.getId()) {
             case R.id.bt_pay:
                 if (type == 1) {//快速咨询
+                    BuryingPointHelp.getInstance().onEvent(mActivity, "quick_consultation_pay_page", "quick_consultation_pay_page_pay_click");
                     mPresenter.pay("name", webView.getSettings().getUserAgentString());
                 } else {//热门需求
                     mPresenter.releaseRequirement(webView.getSettings().getUserAgentString());
@@ -336,5 +338,25 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
     @Override
     public void killMyself() {
         finish();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(type == 1){//快速咨询
+            BuryingPointHelp.getInstance().onActivityResumed(mActivity, "quick_consultation_pay_page", getPair());
+        }else{//需求抢单
+
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(type == 1){//快速咨询
+            BuryingPointHelp.getInstance().onActivityPaused(mActivity, "quick_consultation_pay_page", getPair());
+        }else{//需求抢单
+
+        }
     }
 }
