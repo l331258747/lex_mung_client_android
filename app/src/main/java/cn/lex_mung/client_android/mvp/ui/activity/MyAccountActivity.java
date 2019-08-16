@@ -176,6 +176,8 @@ public class MyAccountActivity extends BaseActivity<MyAccountPresenter> implemen
     TextView tvWx;
     @BindView(R.id.tv_zfb)
     TextView tvZfb;
+    @BindView(R.id.tv_tip)
+    TextView tvTip;
     @BindView(R.id.bt_detail)
     TextView btDetail;
     @BindView(R.id.bt_withdrawal)
@@ -219,6 +221,10 @@ public class MyAccountActivity extends BaseActivity<MyAccountPresenter> implemen
             mPresenter.setExpert(bundleIntent.getBoolean(BundleTags.IS_EXPERT,false));
         }
 //        mPresenter.onCreate(entity);
+
+        String str = "温馨提示:<br>1、余额可用于支付绿豆圈所有线上法律服务及产品<br>2、赠送余额不支持提现<br>3、您在充值过程中遇到任何问题都可以通过客服热线<font color=\"#4A90E2\">400-811-3060</font>与我们取得联系";
+        StringUtils.setHtml(tvTip,str);
+
         mPresenter.onCreate();
     }
 
@@ -360,22 +366,20 @@ public class MyAccountActivity extends BaseActivity<MyAccountPresenter> implemen
         return this;
     }
 
-    @OnClick({R.id.bt_pay, R.id.bt_detail, R.id.bt_withdrawal, R.id.tv_wx, R.id.tv_zfb, R.id.iv_what})
+    @OnClick({R.id.bt_pay, R.id.bt_detail, R.id.bt_withdrawal, R.id.tv_wx, R.id.tv_zfb, R.id.iv_what,R.id.tv_tip})
     public void onViewClicked(View view) {
+        if (isFastClick()) return;
         switch (view.getId()) {
             case R.id.iv_what://明细
-                if (isFastClick()) return;
                 showPriceDialog(0,
                         StringUtils.getStringNum(mPresenter.getRealBalance()) + "元",
                         StringUtils.getStringNum(mPresenter.getGiveBalance()) + "元",
                         null);
                 break;
             case R.id.bt_detail://明细
-                if (isFastClick()) return;
                 launchActivity(new Intent(mActivity, MyTradingListActivity.class));
                 break;
             case R.id.bt_withdrawal:
-                if (isFastClick()) return;
                 mPresenter.withdrawVerify();
                 break;
             case R.id.tv_wx:
@@ -389,8 +393,11 @@ public class MyAccountActivity extends BaseActivity<MyAccountPresenter> implemen
                 mPresenter.setPayType(2);
                 break;
             case R.id.bt_pay:
-                if (isFastClick()) return;
                 mPresenter.pay(webView.getSettings().getUserAgentString());
+                break;
+            case R.id.tv_tip:
+                Intent dialIntent2 = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "400-811-3060"));
+                startActivity(dialIntent2);
                 break;
         }
     }
