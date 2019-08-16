@@ -141,7 +141,7 @@ public class TimeFormat {
         df = new SimpleDateFormat(format);
         try {
             return df.parse(dateStr);
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
