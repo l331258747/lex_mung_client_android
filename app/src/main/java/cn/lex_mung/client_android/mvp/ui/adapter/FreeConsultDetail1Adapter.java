@@ -1,7 +1,6 @@
 package cn.lex_mung.client_android.mvp.ui.adapter;
 
 import android.text.TextUtils;
-import android.view.TextureView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -9,6 +8,7 @@ import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
 
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.mvp.model.entity.FreeConsultReplyListEntity;
+import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import me.zl.mvp.http.imageloader.ImageLoader;
 
 
@@ -16,10 +16,12 @@ import me.zl.mvp.http.imageloader.ImageLoader;
 
 public class FreeConsultDetail1Adapter extends BaseQuickAdapter<FreeConsultReplyListEntity, BaseViewHolder> {
     private ImageLoader mImageLoader;
+    private UserInfoDetailsEntity userInfoDetailsEntity;
 
-    public FreeConsultDetail1Adapter(ImageLoader imageLoader) {
+    public FreeConsultDetail1Adapter(ImageLoader imageLoader,UserInfoDetailsEntity userInfoDetailsEntity) {
         super(R.layout.item_free_detail);
         this.mImageLoader = imageLoader;
+        this.userInfoDetailsEntity = userInfoDetailsEntity;
     }
 
     @Override
@@ -51,9 +53,15 @@ public class FreeConsultDetail1Adapter extends BaseQuickAdapter<FreeConsultReply
         helper.setGone(R.id.iv_verify,true);
         helper.setText(R.id.tv_content,item.getContent());
 
-        helper.setText(R.id.tv_comment,item.getReplyCountStr());
+        if(userInfoDetailsEntity !=null && item.getMemberId() == userInfoDetailsEntity.getMemberId() && item.getReplyCount() == 0){
+            helper.setText(R.id.tv_comment,"追问");
+        }else{
+            helper.setText(R.id.tv_comment,item.getReplyCountStr());
+        }
+
         helper.setText(R.id.tv_time,item.getDateAddedStr());
 
         helper.addOnClickListener(R.id.view_title);
+
     }
 }

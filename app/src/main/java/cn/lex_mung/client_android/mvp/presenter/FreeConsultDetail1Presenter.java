@@ -29,6 +29,7 @@ import cn.lex_mung.client_android.mvp.model.entity.FreeConsultReplyListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultDetail1ListActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultReplyActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerHomePageActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.FreeConsultDetail1Adapter;
 import cn.lex_mung.client_android.mvp.ui.adapter.LawyerListAdapter;
@@ -101,7 +102,7 @@ public class FreeConsultDetail1Presenter extends BasePresenter<FreeConsultDetail
     }
 
     private void initAdapter() {
-        adapter = new FreeConsultDetail1Adapter(mImageLoader);
+        adapter = new FreeConsultDetail1Adapter(mImageLoader,userInfoDetailsEntity);
         adapter.addHeaderView(layout);
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;
@@ -123,7 +124,6 @@ public class FreeConsultDetail1Presenter extends BasePresenter<FreeConsultDetail
                 case R.id.view_title:
                     BuryingPointHelp.getInstance().onEvent(mRootView.getActivity(), "free_consulation_detail","free_consulation_lawyer_detail_click");
                     Bundle bundle = new Bundle();
-                    bundle.clear();
                     bundle.putInt(BundleTags.ID, entity.getLawyerId());
                     bundle.putInt(BundleTags.REQUIRE_TYPE_ID,100);
                     mRootView.launchActivity(new Intent(mRootView.getActivity(), LawyerHomePageActivity.class), bundle);

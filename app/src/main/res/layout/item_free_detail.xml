@@ -47,15 +47,17 @@
 
     <TextView
         android:id="@+id/tv_area"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/qb_px_20"
         android:layout_marginBottom="@dimen/qb_px_3"
-        android:text="湖南省-长沙市"
+        tools:text="湖南省-长沙市湖南省-长沙市湖南省-长沙市湖南省-长沙市"
+        android:maxLines="2"
         android:textColor="@color/c_b4b4b4"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="@+id/view_title"
         app:layout_constraintStart_toEndOf="@+id/iv_head"
+        app:layout_constraintEnd_toStartOf="@+id/ll_call"
         app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
     <TextView
