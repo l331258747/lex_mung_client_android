@@ -342,7 +342,7 @@ public interface CommonService {
      *
      * @return BaseResponse
      */
-    @POST("client/member/order/detail")
+    @POST("client/member/order/detail/v2")
     Observable<BaseResponse<BaseListEntity<OrderDetailsEntity>>> getOrderDetail(@Body RequestBody body);
 
     /**
