@@ -100,13 +100,15 @@ public class PublicLawyerActivity extends BaseActivity<PublicLawyerPresenter> im
             if (entity2 == null) return;
             bundle.clear();
             bundle.putInt(BundleTags.ID, entity2.getMemberId());
+            bundle.putBoolean(BundleTags.IS_PUBLIC,true);
+            bundle.putString(BundleTags.MOBILE,entity2.getMobile());
             launchActivity(new Intent(mActivity, LawyerHomePageActivity.class), bundle);
         });
         homeLawyerAdapter.setOnItemChildClickListener((adapter1, view, position)->{
             if (isFastClick()) return;
             LawyerEntity2 entity2 = homeLawyerAdapter.getItem(position);
             if (entity2 == null) return;
-            showDialog(entity2.getMobile());
+            showPublicDialog(entity2.getMobile());
         });
 
 
@@ -132,7 +134,7 @@ public class PublicLawyerActivity extends BaseActivity<PublicLawyerPresenter> im
         recyclerView.setAdapter(homeLawyerAdapter);
     }
 
-    public void showDialog(String phone){
+    public void showPublicDialog(String phone){
         if(TextUtils.isEmpty(phone)) return;
         new HelpStepDialog(mActivity,
                 dialog -> {

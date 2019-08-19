@@ -3,6 +3,7 @@ package cn.lex_mung.client_android.mvp.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -40,6 +42,7 @@ import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
 import cn.lex_mung.client_android.mvp.presenter.LawyerHomePagePresenter;
 import cn.lex_mung.client_android.mvp.ui.dialog.FieldDialog;
+import cn.lex_mung.client_android.mvp.ui.dialog.HelpStepDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.SingleTextDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.NoScrollViewPager;
@@ -113,10 +116,13 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
     TextView tvHeadTitle;
     @BindView(R.id.ll_bottom)
     LinearLayout llBottom;
+    @BindView(R.id.ll_bottom_2)
+    LinearLayout llBottom2;
 
     boolean isCall;//是否显示拨打电话按钮
     private int requireTypeId;//用来埋点用的
-//    boolean isGoCall = false;
+    public boolean isPublic;//是否为公益律师
+    public String lawyerMobile;//公益律师电话
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -143,10 +149,17 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
         super.onResume();
         mPresenter.onResume();
 
-        if(!DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)){
-            llBottom.setVisibility(View.GONE);
+        if(!isPublic){
+            llBottom2.setVisibility(View.GONE);//公益律师按钮
+            if(!DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)){
+                llBottom.setVisibility(View.GONE);//正常按钮
+            }else{
+                llBottom.setVisibility(View.VISIBLE);
+            }
         }else{
-            llBottom.setVisibility(View.VISIBLE);
+            llBottom2.setVisibility(View.VISIBLE);
+            llBottom.setVisibility(View.GONE);
+            setServicePriceLayoutGone();
         }
 
         switch (requireTypeId) {
@@ -169,7 +182,12 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
                 BuryingPointHelp.getInstance().onActivityResumed(mActivity, "search_lawyer_lawyer_detail_page", getPair());
                 break;
         }
+    }
 
+    //公益律师隐藏服务价格
+    public void setServicePriceLayoutGone(){
+        tvServicePrice.setVisibility(View.GONE);
+        ivServicePrice.setVisibility(View.GONE);
     }
 
     @Override
@@ -203,9 +221,12 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         if (bundleIntent != null) {
+            isPublic = bundleIntent.getBoolean(BundleTags.IS_PUBLIC);
+            lawyerMobile = bundleIntent.getString(BundleTags.MOBILE);
             requireTypeId = bundleIntent.getInt(BundleTags.REQUIRE_TYPE_ID);
             mPresenter.setId(bundleIntent.getInt(BundleTags.ID));
-            mPresenter.getLawsHomePagerBase();
+            mPresenter.getLawsHomePagerBase(isPublic);
+
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);//设置状态栏文字颜色为白色
@@ -278,6 +299,7 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
             , R.id.tv_social_position
             , R.id.iv_head_share
             , R.id.iv_call
+            , R.id.iv_call_2
             , R.id.iv_release
     })
     public void onViewClicked(View view) {
@@ -318,6 +340,9 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
                 break;
             case R.id.iv_head_share:
                 break;
+            case R.id.iv_call_2:
+                showPublicDialog(lawyerMobile);
+                break;
             case R.id.iv_call:
                 if (!isCall) return;
 
@@ -355,6 +380,19 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
         mPresenter.setEntity();
     }
 
+    public void showPublicDialog(String phone){
+        if(TextUtils.isEmpty(phone)) return;
+        new HelpStepDialog(mActivity,
+                dialog -> {
+                    Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
+                    startActivity(dialIntent);
+                }).setContent("公益律师为社会公共资源，意在帮助更多有需要的人可以享受免费的法律服务，如果您有更多法律诉求请通过找律师板块进行咨询。")
+                .setTvTitle("公益律师服务说明")
+                .setIvTitle(R.drawable.ic_public_lawyer)
+                .setCannelStr("取消")
+                .setSubmitStr("联系公益律师").show();
+
+    }
 
     /**
      * 切换页面

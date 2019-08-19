@@ -55,5 +55,6 @@ public class BundleTags {
     public static final String COUPON_TYPE = "coupon_type";//优惠券类型
     public static final String IS_CRIMINAL = "is_criminal";//是否为刑事类
     public static final String IS_EXPERT = "is_expert";//是否为专家咨询
+    public static final String IS_PUBLIC = "is_public";//是否为公益律师
 
 }

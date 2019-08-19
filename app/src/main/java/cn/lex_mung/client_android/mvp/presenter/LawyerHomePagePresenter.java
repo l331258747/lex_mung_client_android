@@ -77,7 +77,7 @@ public class LawyerHomePagePresenter extends BasePresenter<LawyerHomePageContrac
         return entity;
     }
 
-    public void getLawsHomePagerBase() {
+    public void getLawsHomePagerBase(boolean isPublic) {
 //        String json;
 //        if (!TextUtils.isEmpty(json = DataHelper.getString(mApplication, DataHelperTags.LAWS_HOME_PAGER_BASE + "_" + id, "_" + id))) {
 //            entity = new Gson().fromJson(json, LawsHomePagerBaseEntity.class);
@@ -101,7 +101,7 @@ public class LawyerHomePagePresenter extends BasePresenter<LawyerHomePageContrac
                         public void onNext(BaseResponse<LawsHomePagerBaseEntity> baseResponse) {
                             entity = baseResponse.getData();
                             DataHelper.setString(mApplication, DataHelperTags.LAWS_HOME_PAGER_BASE + "_" + id, "_" + id, new Gson().toJson(entity));
-                            setData();
+                            setData(isPublic);
                         }
                     });
         } else {
@@ -117,19 +117,24 @@ public class LawyerHomePagePresenter extends BasePresenter<LawyerHomePageContrac
                         @Override
                         public void onNext(BaseResponse<LawsHomePagerBaseEntity> baseResponse) {
                             entity = baseResponse.getData();
-                            setData();
+                            setData(isPublic);
                         }
                     });
         }
     }
 
     @SuppressLint("InflateParams")
-    private void setData() {
+    private void setData(boolean isPublic) {
         try {
             if (isLoading) {
-                fragments.add(LawsBusinessCardFragment.newInstance(entity));
-                fragments.add(PracticeExperienceFragment.newInstance(entity));
-                fragments.add(ServicePriceFragment.newInstance(entity));
+                if(isPublic){//如果是公益律师 服务价格不显示
+                    fragments.add(LawsBusinessCardFragment.newInstance(entity));
+                    fragments.add(PracticeExperienceFragment.newInstance(entity));
+                }else{
+                    fragments.add(LawsBusinessCardFragment.newInstance(entity));
+                    fragments.add(PracticeExperienceFragment.newInstance(entity));
+                    fragments.add(ServicePriceFragment.newInstance(entity));
+                }
                 mRootView.initViewPager(fragments);
                 isLoading = false;
             }
