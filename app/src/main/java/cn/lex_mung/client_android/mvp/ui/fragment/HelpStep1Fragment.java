@@ -355,7 +355,7 @@ public class HelpStep1Fragment extends BaseFragment<HelpStep1Presenter> implemen
     }
 
     private DefaultDialog defaultDialog;
-    private boolean isGoPermisstions;
+    private boolean isGoPermisstions;//如果拒绝了，不需要再提示
 
     @Override
     public void showToAppInfoDialog() {

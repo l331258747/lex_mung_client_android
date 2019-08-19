@@ -46,7 +46,6 @@ public class HelpStep1Presenter extends BasePresenter<HelpStep1Contract.Model, H
     private Map<String, List<String>> cityMap = new HashMap<>();//key:省p---value:市n  value是一个集合
     private String province = "";
     private String city = "";
-    private String region = "";
     private int regionId;
 
 
@@ -97,9 +96,9 @@ public class HelpStep1Presenter extends BasePresenter<HelpStep1Contract.Model, H
 
     public String getRegion() {
         if ("钓鱼岛".equals(province)) {
-            return region = province;
+            return province;
         } else {
-            return region = province + "-" + city;
+            return province + "-" + city;
         }
     }
 

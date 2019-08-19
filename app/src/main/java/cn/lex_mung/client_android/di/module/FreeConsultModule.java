@@ -1,5 +1,7 @@
 package cn.lex_mung.client_android.di.module;
 
+import com.tbruyelle.rxpermissions2.RxPermissions;
+
 import dagger.Module;
 import dagger.Provides;
 import me.zl.mvp.di.scope.ActivityScope;
@@ -27,5 +29,11 @@ public class FreeConsultModule {
     @Provides
     FreeConsultContract.Model provideMeModel(FreeConsultModel model) {
         return model;
+    }
+
+    @ActivityScope
+    @Provides
+    RxPermissions provideRxPermissions() {
+        return new RxPermissions(view.getActivity());
     }
 }
