@@ -27,6 +27,11 @@ public class EquitiesListEntity {
     private String image;
     private String smallImage;
     private int joinStatus;
+    private int isPublic;
+
+    public int getIsPublic() {
+        return isPublic;
+    }
 
     public String getSmallImage() {
         return smallImage;

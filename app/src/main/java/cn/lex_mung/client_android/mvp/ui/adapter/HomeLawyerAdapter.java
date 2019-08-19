@@ -40,5 +40,7 @@ public class HomeLawyerAdapter extends BaseQuickAdapter<LawyerEntity2, BaseViewH
         helper.setText(R.id.item_tv_area, item.getReginInstitutionName());
         StringUtils.setHtml(helper.getView(R.id.item_tv_field),item.getDescriptionStr());
         helper.setText(R.id.item_tv_practice_num, item.getPractice());
+
+        helper.addOnClickListener(R.id.item_btn);
     }
 }

@@ -25,10 +25,12 @@
             android:textStyle="bold" />
     </android.support.v7.widget.Toolbar>
 
+    <!--列表-->
     <include
         layout="@layout/layout_all_equities"
         android:visibility="gone" />
 
+    <!--详情-->
     <include
         layout="@layout/layout_equities_details"
         android:visibility="gone" />

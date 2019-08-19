@@ -42,6 +42,11 @@ public class LawyerEntity2 {
     private List<OrgTagsEntity> orgTags;
     private String lawyerWeight;
     private String practice;
+    private String mobile;
+
+    public String getMobile() {
+        return mobile;
+    }
 
     public String getPractice() {
         return practice;

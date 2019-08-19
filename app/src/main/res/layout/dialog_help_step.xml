@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="@dimen/qb_px_570"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
@@ -29,12 +30,14 @@
     <ImageView
         android:id="@+id/iv_title_name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/qb_px_80"
+        android:scaleType="fitCenter"
         android:src="@drawable/ic_help_step_title_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
+        android:id="@+id/tv_title_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="服务助手"
@@ -67,6 +70,7 @@
         android:layout_marginRight="@dimen/qb_px_60"
         android:lineSpacingExtra="@dimen/qb_px_25"
         android:visibility="gone"
+        tools:visibility="visible"
         android:text="adsfasdfadsfasdfasdadsfasdfasdf"
         android:textColor="@color/c_323232"
         app:layout_constraintEnd_toEndOf="parent"

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import cn.lex_mung.client_android.R;
@@ -16,8 +17,8 @@ import cn.lex_mung.client_android.R;
 public class HelpStepDialog extends Dialog {
     Context context;
     OnClickListener onClickListener;
-
-    TextView tv_content, tv_cancel, tv_submit,tv_content2;
+    ImageView iv_title_name;
+    TextView tv_content, tv_cancel, tv_submit,tv_content2,tv_title_name;
 
     public HelpStepDialog(@NonNull Context context, OnClickListener onClickListener) {
         super(context, R.style.alert_dialog);
@@ -48,6 +49,18 @@ public class HelpStepDialog extends Dialog {
         return this;
     }
 
+    int ivTitleResId = -1;
+    public HelpStepDialog setIvTitle(int ivTitleResId) {
+        this.ivTitleResId = ivTitleResId;
+        return this;
+    }
+
+    String tvTitle;
+    public HelpStepDialog setTvTitle(String tvTitle) {
+        this.tvTitle = tvTitle;
+        return this;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +76,16 @@ public class HelpStepDialog extends Dialog {
         tv_content2 = findViewById(R.id.tv_content2);
         tv_cancel = findViewById(R.id.tv_cancel);
         tv_submit = findViewById(R.id.tv_submit);
+        tv_title_name = findViewById(R.id.tv_title_name);
+        iv_title_name = findViewById(R.id.iv_title_name);
+
+        if(ivTitleResId != -1){
+            iv_title_name.setImageResource(ivTitleResId);
+        }
+
+        if(!TextUtils.isEmpty(tvTitle)){
+            tv_title_name.setText(tvTitle);
+        }
 
         if(!TextUtils.isEmpty(cancelStr)){
             tv_cancel.setText(cancelStr);

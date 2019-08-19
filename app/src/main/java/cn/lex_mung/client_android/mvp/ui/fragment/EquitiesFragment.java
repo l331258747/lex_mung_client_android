@@ -29,6 +29,7 @@ import cn.lex_mung.client_android.mvp.ui.activity.AddEquitiesOrgActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.JoinEquitiesOrgActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerHomePageActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerListActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.PublicLawyerActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.TradingListActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.EquitiesAdapter;
 import cn.lex_mung.client_android.mvp.ui.adapter.LawyerListAdapter;
@@ -208,7 +209,12 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
             bundle.clear();
             bundle.putInt(BundleTags.ID, entity.getOrganizationId());
             bundle.putInt(BundleTags.LEVEL, entity.getOrganizationLevelNameId());
-            launchActivity(new Intent(mActivity, JoinEquitiesOrgActivity.class), bundle);
+
+            if(entity.getIsPublic() == 1){
+                launchActivity(new Intent(mActivity, PublicLawyerActivity.class), bundle);
+            }else{
+                launchActivity(new Intent(mActivity, JoinEquitiesOrgActivity.class), bundle);
+            }
         });
 
         lawyerListAdapter = new LawyerListAdapter(mImageLoader);
