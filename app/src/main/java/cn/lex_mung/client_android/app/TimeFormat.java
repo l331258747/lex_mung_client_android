@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import cn.jiguang.api.JCoreInterface;
@@ -277,5 +278,13 @@ public class TimeFormat {
         SimpleDateFormat formatter = new SimpleDateFormat(s1);
         //得到字符串时间
         return formatter.format(currentTime);
+    }
+
+    //获取明天
+    public static String getTomorrowTime(String formatType) {
+        Calendar mCalendar=Calendar.getInstance();
+        mCalendar.roll(java.util.Calendar.DAY_OF_YEAR,1);
+        SimpleDateFormat formatter = new SimpleDateFormat(formatType);
+        return formatter.format(mCalendar.getTime());
     }
 }

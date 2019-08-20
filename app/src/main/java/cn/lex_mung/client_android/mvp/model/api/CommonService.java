@@ -431,7 +431,7 @@ public interface CommonService {
      * @return BaseResponse
      */
     @GET("common/rights/orglist")
-    Observable<BaseResponse<List<EquitiesListEntity>>> getEquitiesList();
+    Observable<BaseResponse<List<EquitiesListEntity>>> getEquitiesList(@Path("regionId") int regionId);
 
     /**
      * 登录获取全部权益列表
@@ -439,7 +439,7 @@ public interface CommonService {
      * @return BaseResponse
      */
     @GET("client/rights/orglist")
-    Observable<BaseResponse<List<EquitiesListEntity>>> getEquitiesList_1();
+    Observable<BaseResponse<List<EquitiesListEntity>>> getEquitiesList_1(@Path("regionId") int regionId);
 
     /**
      * 添加权益组织
@@ -798,17 +798,17 @@ public interface CommonService {
     @GET("https://restapi.amap.com/v3/ip?key=f55325bc244062399ce0579b6b9d56a5")
     Observable<LaunchLocationEntity> cityjson();
 
-//    ///random
-//    //GET
-//    //移动web消息
-//    @GET("random")
-//    Observable<BaseResponse<List<String>>> random();
-
-    ///common/random/v2
+    ///random
     //GET
-    //app首页顶端消息
-    @GET("common/random/v2")
+    //移动web消息
+    @GET("random")
     Observable<BaseResponse<List<String>>> random();
+
+//    ///common/random/v2
+//    //GET
+//    //app首页顶端消息
+//    @GET("common/random/v2")
+//    Observable<BaseResponse<List<String>>> random();
 
     ///client/recharge/list
     //POST

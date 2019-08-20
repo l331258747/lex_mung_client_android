@@ -634,37 +634,49 @@ public class OrderDetailsEntity {
             return updateTime;
         }
 
-        public String getClientTimeStr(){
-            long lcurrent = TimeFormat.strToLong(TimeFormat.getCurrentTime(),TimeFormat.s1);
+        public String getClientTimeStr() {
+            long lcurrent = TimeFormat.strToLong(TimeFormat.getCurrentTime(), TimeFormat.s1);
+            long ltomorrow = TimeFormat.strToLong(TimeFormat.getTomorrowTime(TimeFormat.s1), TimeFormat.s1);
 
-            long lstart = TimeFormat.strToLong(clientTimeStart,TimeFormat.s1);
-            long lend = TimeFormat.strToLong(clientTimeEnd,TimeFormat.s1);
+            long lstart = TimeFormat.strToLong(clientTimeStart, TimeFormat.s1);
+            long lend = TimeFormat.strToLong(clientTimeEnd, TimeFormat.s1);
 
-            if(lstart == 0 || lend == 0)
+            if (lstart == 0 || lend == 0)
                 return "----";
 
-            if(TimeFormat.longToStr(lcurrent,"yyyy-MM-dd").equals(TimeFormat.longToStr(lstart,"yyyy-MM-dd"))){
-                if(TimeFormat.longToStr(lcurrent,"yyyy-MM-dd").equals(TimeFormat.longToStr(lend,"yyyy-MM-dd"))){
+            if (TimeFormat.longToStr(lcurrent, "yyyy-MM-dd").equals(TimeFormat.longToStr(lstart, "yyyy-MM-dd"))) {
+                if (TimeFormat.longToStr(lcurrent, "yyyy-MM-dd").equals(TimeFormat.longToStr(lend, "yyyy-MM-dd"))) {//今天到今天
                     return "今天" + TimeFormat.longToStr(lstart, "HH:mm") + " - " + TimeFormat.longToStr(lend, "HH:mm");
-                }else{
+                } else {//今天到明天
                     return "今天" + TimeFormat.longToStr(lstart, "HH:mm") + " - 明天" + TimeFormat.longToStr(lend, "HH:mm");
                 }
-            }else{
-                return "明天" + TimeFormat.longToStr(lstart, "HH:mm") + " - " + TimeFormat.longToStr(lend, "HH:mm");
+            } else {//明天到明天
+                if (TimeFormat.longToStr(ltomorrow, "yyyy-MM-dd").equals(TimeFormat.longToStr(lstart, "yyyy-MM-dd"))) {
+                    return "明天" + TimeFormat.longToStr(lstart, "HH:mm") + " - " + TimeFormat.longToStr(lend, "HH:mm");
+                }else{
+                    return TimeFormat.longToStr(lstart, "yyyy-MM-dd") + " " + TimeFormat.longToStr(lstart, "HH:mm") + " - " + TimeFormat.longToStr(lend, "HH:mm");
+                }
             }
         }
 
-        public String getLawyerTimeStr(){
-            long lcurrent = TimeFormat.strToLong(TimeFormat.getCurrentTime(),TimeFormat.s1);
-            long lstart = TimeFormat.strToLong(lawyerTimeStart,TimeFormat.s1);
+        public String getLawyerTimeStr() {
+            long lcurrent = TimeFormat.strToLong(TimeFormat.getCurrentTime(), TimeFormat.s1);
+            long ltomorrow = TimeFormat.strToLong(TimeFormat.getTomorrowTime(TimeFormat.s1), TimeFormat.s1);
 
-            if(lstart == 0 )
+            long lstart = TimeFormat.strToLong(lawyerTimeStart, TimeFormat.s1);
+
+            if (lstart == 0)
                 return "----";
 
-            if(TimeFormat.longToStr(lcurrent,"yyyy-MM-dd").equals(TimeFormat.longToStr(lstart,"yyyy-MM-dd"))){
+            if (TimeFormat.longToStr(lcurrent, "yyyy-MM-dd").equals(TimeFormat.longToStr(lstart, "yyyy-MM-dd"))) {
                 return "今天" + TimeFormat.longToStr(lstart, "HH:mm");
-            }else{
-                return "明天" + TimeFormat.longToStr(lstart, "HH:mm");
+            } else {//明天到明天
+                if (TimeFormat.longToStr(ltomorrow, "yyyy-MM-dd").equals(TimeFormat.longToStr(lstart, "yyyy-MM-dd"))) {
+                    return "明天" + TimeFormat.longToStr(lstart, "HH:mm");
+                }else{
+                    return TimeFormat.longToStr(lstart, "yyyy-MM-dd") + " " + TimeFormat.longToStr(lstart, "HH:mm");
+                }
+
             }
         }
     }

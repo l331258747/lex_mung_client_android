@@ -9,6 +9,8 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -21,6 +23,7 @@ import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.jpush.im.android.api.JMessageClient;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.app.DataHelperTags;
@@ -33,6 +36,7 @@ import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.WebGoOrderDetailEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.WebGoPayEntity;
+import cn.lex_mung.client_android.mvp.model.entity.other.WebShareEntity;
 import cn.lex_mung.client_android.mvp.presenter.WebPresenter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.webview.LWebView;
@@ -49,6 +53,8 @@ import me.zl.mvp.utils.DeviceUtils;
 
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO;
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_LIST_ID;
+import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGIN_INFO;
+import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGOUT;
 
 public class WebActivity extends BaseActivity<WebPresenter> implements WebContract.View {
     @BindView(R.id.tv_right)
@@ -165,7 +171,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 
         if (TextUtils.isEmpty(title))
             title = "绿豆圈";
-        if(TextUtils.isEmpty(ShareTitle))
+        if (TextUtils.isEmpty(ShareTitle))
             ShareTitle = "绿豆圈";
 
         LogUtil.e("url:" + url);
@@ -275,7 +281,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 
     public class AndroidToJs extends Object {
 
-        //支付
+        //支付（抢单）
         @JavascriptInterface
         public void goPay(String string) {
             if (TextUtils.isEmpty(string))
@@ -300,6 +306,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 
         boolean isSetToken;
 
+        //设置token
         @JavascriptInterface
         public void setToken(String token1) {
             LogUtil.e("token:" + token1);
@@ -311,6 +318,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             isSetToken = true;
         }
 
+        //快速电话咨询支付页面
         @JavascriptInterface
         public void goQuickPay(String string) {
             if (TextUtils.isEmpty(string))
@@ -367,12 +375,14 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             });
         }
 
+        //获取token
         @JavascriptInterface
         public String getToken() {
             String token = DataHelper.getStringSF(mActivity, DataHelperTags.TOKEN);
             return token;
         }
 
+        //获取用户信息
         @JavascriptInterface
         public String getInfo() {
             UserInfoDetailsEntity userInfoDetailsEntity = new Gson().fromJson(DataHelper.getStringSF(mActivity, DataHelperTags.USER_INFO_DETAIL), UserInfoDetailsEntity.class);
@@ -399,15 +409,16 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             return GsonUtil.convertVO2String(device);
         }
 
+        //快速咨询
         @JavascriptInterface
         public void toldApp() {
-            String str = DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL);
-            HomeChildEntity entity = GsonUtil.convertString2Object(str,HomeChildEntity.class);
-            if(!TextUtils.isEmpty(str) && entity != null){
+            String str = DataHelper.getStringSF(mActivity, DataHelperTags.QUICK_URL);
+            HomeChildEntity entity = GsonUtil.convertString2Object(str, HomeChildEntity.class);
+            if (!TextUtils.isEmpty(str) && entity != null) {
                 bundle.clear();
                 bundle.putString(BundleTags.URL, entity.getJumpurl());
                 bundle.putString(BundleTags.TITLE, entity.getTitle());
-                if(entity.getShowShare() == 1){
+                if (entity.getShowShare() == 1) {
                     bundle.putBoolean(BundleTags.IS_SHARE, true);
                     bundle.putString(BundleTags.SHARE_URL, entity.getShareUrl());
                     bundle.putString(BundleTags.SHARE_TITLE, entity.getShareTitle());
@@ -418,12 +429,13 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             }
         }
 
-        //goOrderDetail()  goOrderList()
+        //订单列表
         @JavascriptInterface
         public void goOrderList() {
             launchActivity(new Intent(mActivity, MyOrderActivity.class));
         }
 
+        //订单详情
         @JavascriptInterface
         public void goOrderDetail(String string) {
             if (TextUtils.isEmpty(string))
@@ -439,6 +451,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             launchActivity(new Intent(mActivity, OrderDetailsActivity.class), bundle);
         }
 
+        //回到首页
         @JavascriptInterface
         public void goHome() {
             runOnUiThread(() -> {
@@ -449,6 +462,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 
         public boolean isGoLogin;
 
+        //登录
         @JavascriptInterface
         public void goLogin() {
             isGoLogin = true;//登录后需要再调用getinfo
@@ -456,5 +470,70 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             bundle.putInt(BundleTags.TYPE, 1);
             launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
         }
+
+        //登出
+        @JavascriptInterface
+        public void loginOut() {
+            AppUtils.post(LOGIN_INFO, LOGOUT);
+            JMessageClient.logout();
+            DataHelper.removeSF(mActivity, DataHelperTags.TOKEN);
+            DataHelper.removeSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS);
+            DataHelper.removeSF(mActivity, DataHelperTags.USER_INFO_DETAIL);
+            CookieSyncManager.createInstance(mActivity);
+            CookieManager cookieManager = CookieManager.getInstance();
+            cookieManager.removeAllCookie();
+            CookieSyncManager.getInstance().sync();
+        }
+
+        //律师主页 string id
+        @JavascriptInterface
+        public void goLawyerDetail(String id) {
+            if (TextUtils.isEmpty(id))
+                return;
+            int idInt;
+            try {
+                idInt = Integer.valueOf(id);
+            } catch (Exception e) {
+                return;
+            }
+            bundle.clear();
+            bundle.putInt(BundleTags.ID, idInt);
+            launchActivity(new Intent(mActivity, LawyerHomePageActivity.class), bundle);
+        }
+
+        //充值页面
+        @JavascriptInterface
+        public void goAccount() {
+            launchActivity(new Intent(mActivity, MyAccountActivity.class));
+        }
+
+        //显示隐藏分享按钮 boolean isShow
+        @JavascriptInterface
+        public void showShareBtn(boolean isShow) {
+            tvRight.setVisibility(isShow ? View.VISIBLE : View.GONE);
+        }
+
+        //分享 json 对象
+        @JavascriptInterface
+        public void shareUrl(String string) {
+            WebShareEntity entity = GsonUtil.convertString2Object(string, WebShareEntity.class);
+            String shareUrl = entity.getShareUrl();
+            String ShareTitle = entity.getShareTitle();
+            String shareImage = entity.getShareImage();
+            String shareDes = entity.getShareDes();
+            if (!TextUtils.isEmpty(shareUrl)) {
+                runOnUiThread(() -> {
+                    ShareUtils.shareUrl(mActivity
+                            , viewDialog
+                            , shareUrl
+                            , ShareTitle
+                            , shareDes
+                            , shareImage);
+                });
+            }
+        }
+
+
+
     }
 }
