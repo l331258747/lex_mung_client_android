@@ -90,7 +90,7 @@ public class FreeConsultActivity extends BaseActivity<FreeConsultPresenter> impl
         if (buryingPointId == 1) {
             BuryingPointHelp.getInstance().onActivityResumed(mActivity, "solution_detail_free_text_from_solution_page", getPair());
         } else {
-            BuryingPointHelp.getInstance().onActivityResumed(mActivity, "free_test_post_page", getPair());
+            BuryingPointHelp.getInstance().onActivityResumed(mActivity, "free_text_post_page", getPair());
         }
 
         if (isGoPermisstions) {
@@ -105,7 +105,7 @@ public class FreeConsultActivity extends BaseActivity<FreeConsultPresenter> impl
         if (buryingPointId == 1) {
             BuryingPointHelp.getInstance().onActivityPaused(mActivity, "solution_detail_free_text_from_solution_page", getPair());
         } else {
-            BuryingPointHelp.getInstance().onActivityPaused(mActivity, "free_test_post_page", getPair());
+            BuryingPointHelp.getInstance().onActivityPaused(mActivity, "free_text_post_page", getPair());
         }
     }
 
@@ -143,7 +143,7 @@ public class FreeConsultActivity extends BaseActivity<FreeConsultPresenter> impl
                     showMessage("至少输入10个字");
                     return;
                 }
-                BuryingPointHelp.getInstance().onEvent(mActivity, "free_test_post_page", "free_test_post_page_post_click");
+                BuryingPointHelp.getInstance().onEvent(mActivity, "free_text_post_page", "free_text_post_page_post_click");
                 mPresenter.releaseFreeConsult(mPresenter.getConsultTypeId(), mPresenter.getRegionId(), etInput.getText().toString());
                 break;
             case R.id.view_consult_type:

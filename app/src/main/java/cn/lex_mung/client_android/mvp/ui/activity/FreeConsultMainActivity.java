@@ -62,7 +62,7 @@ public class FreeConsultMainActivity extends BaseActivity<FreeConsultMainPresent
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_btn:
-                BuryingPointHelp.getInstance().onEvent(mActivity, "free_test_list_page","free_text_list_page_free_text_post_click");
+                BuryingPointHelp.getInstance().onEvent(mActivity, "free_text_list_page","free_text_list_page_free_text_post_click");
                 if (DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
                     launchActivity(new Intent(mActivity, FreeConsultActivity.class));
                 } else {
@@ -89,7 +89,7 @@ public class FreeConsultMainActivity extends BaseActivity<FreeConsultMainPresent
         mPresenter.onCreate(smartRefreshLayout);
 
         titleView.getRightTv().setOnClickListener(v -> {
-            BuryingPointHelp.getInstance().onEvent(mActivity, "free_test_list_page","free_text_list_page_my_consultation_click");
+            BuryingPointHelp.getInstance().onEvent(mActivity, "free_text_list_page","free_text_list_page_my_consultation_click");
             if (DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
                 launchActivity(new Intent(mActivity,FreeConsultListActivity.class));
             } else {
@@ -151,12 +151,12 @@ public class FreeConsultMainActivity extends BaseActivity<FreeConsultMainPresent
     @Override
     public void onResume() {
         super.onResume();
-        BuryingPointHelp.getInstance().onActivityResumed(mActivity, "free_test_list_page",getPair());
+        BuryingPointHelp.getInstance().onActivityResumed(mActivity, "free_text_list_page",getPair());
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        BuryingPointHelp.getInstance().onActivityPaused(mActivity, "free_test_list_page",getPair());
+        BuryingPointHelp.getInstance().onActivityPaused(mActivity, "free_text_list_page",getPair());
     }
 }
