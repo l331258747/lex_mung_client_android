@@ -431,7 +431,7 @@ public interface CommonService {
      * @return BaseResponse
      */
     @GET("common/rights/orglist")
-    Observable<BaseResponse<List<EquitiesListEntity>>> getEquitiesList(@Path("regionId") int regionId);
+    Observable<BaseResponse<List<EquitiesListEntity>>> getEquitiesList(@Query("regionId") int regionId);
 
     /**
      * 登录获取全部权益列表
@@ -439,7 +439,7 @@ public interface CommonService {
      * @return BaseResponse
      */
     @GET("client/rights/orglist")
-    Observable<BaseResponse<List<EquitiesListEntity>>> getEquitiesList_1(@Path("regionId") int regionId);
+    Observable<BaseResponse<List<EquitiesListEntity>>> getEquitiesList_1(@Query("regionId") int regionId);
 
     /**
      * 添加权益组织
