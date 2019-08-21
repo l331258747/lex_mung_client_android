@@ -1,5 +1,7 @@
 package cn.lex_mung.client_android.mvp.model.entity;
 
+import android.text.TextUtils;
+
 import java.io.Serializable;
 
 import cn.lex_mung.client_android.app.TimeFormat;
@@ -206,6 +208,7 @@ public class FreeConsultEntity implements Serializable {
     }
 
     public String getMemberIconImage() {
+        if(TextUtils.isEmpty(memberIconImage)) return "";
         if(!memberIconImage.startsWith("http")) return "";
         return memberIconImage;
     }

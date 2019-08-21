@@ -1,5 +1,7 @@
 package cn.lex_mung.client_android.mvp.model.entity;
 
+import android.text.TextUtils;
+
 import cn.lex_mung.client_android.app.TimeFormat;
 import me.zl.mvp.utils.StringUtils;
 
@@ -129,6 +131,7 @@ public class FreeConsultReplyListEntity {
     }
 
     public String getLawyerIconImage() {
+        if(TextUtils.isEmpty(lawyerIconImage)) return "";
         if(!lawyerIconImage.startsWith("http")) return "";
         return lawyerIconImage;
     }
@@ -186,6 +189,7 @@ public class FreeConsultReplyListEntity {
     }
 
     public String getMemberIconImage() {
+        if(TextUtils.isEmpty(memberIconImage)) return "";
         if(!memberIconImage.startsWith("http")) return "";
         return memberIconImage;
     }

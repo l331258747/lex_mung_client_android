@@ -189,6 +189,7 @@ public class LawyerEntity2 {
     }
 
     public String getDescriptionStr() {
+        if(TextUtils.isEmpty(description)) return "";
         if(description.startsWith("擅长领域：")){
             String string = "<font color=\"#323232\"><b>擅长领域</b></font>&#8195;" + description.substring(("擅长领域：").length());
             return string;
