@@ -174,7 +174,7 @@ public class HomeSolutionActivity extends BaseActivity<HomeSolutionPresenter> im
                     BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "first_page_sale_and_sales_contract_dispute_click");
                     break;
                 case 34://34 环境保护
-                    BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "first_page_major_criminal_case_click");
+                    BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "first_page_environmental_protection_click");
                     break;
             }
 

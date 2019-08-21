@@ -3,11 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
+    <cn.lex_mung.client_android.mvp.ui.widget.TitleView
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:TitleView_title="绿豆圈"
+        app:TitleView_left_img="@drawable/ic_back2"
+        app:TitleView_bg="@color/c_ff"/>
 
     <!--<WebView-->
     <!--android:id="@+id/web_view"-->
@@ -19,7 +24,7 @@
         android:id="@+id/web_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/titleView"
         android:layout_above="@+id/ll_bottom"
         android:scrollbars="none" />
 
@@ -28,7 +33,7 @@
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_10"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/titleView"
         tools:progress="30"/>
 
 

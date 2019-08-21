@@ -16,6 +16,7 @@ import me.zl.mvp.di.scope.ActivityScope;
 import javax.inject.Inject;
 
 import cn.lex_mung.client_android.mvp.contract.WebContract;
+import okhttp3.RequestBody;
 
 
 @ActivityScope
@@ -42,5 +43,19 @@ public class WebModel extends BaseModel implements WebContract.Model {
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .getUserInfoDetail();
+    }
+
+    @Override
+    public Observable<BaseResponse> clientReceive(int voucherPackId) {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .clientReceive(voucherPackId);
+    }
+
+    @Override
+    public Observable<BaseResponse> clientCouponGain(RequestBody body) {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .clientCouponGain(body);
     }
 }

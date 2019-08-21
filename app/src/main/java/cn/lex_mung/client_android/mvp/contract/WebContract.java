@@ -7,6 +7,7 @@ import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.mvp.IView;
 import me.zl.mvp.mvp.IModel;
+import okhttp3.RequestBody;
 
 
 public interface WebContract {
@@ -16,5 +17,9 @@ public interface WebContract {
 
     interface Model extends IModel {
         Observable<BaseResponse<UserInfoDetailsEntity>> getUserInfoDetail();
+
+        Observable<BaseResponse> clientReceive(int voucherPackId);
+
+        Observable<BaseResponse> clientCouponGain(RequestBody body);
     }
 }

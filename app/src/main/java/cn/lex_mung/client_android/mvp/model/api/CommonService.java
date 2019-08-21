@@ -878,4 +878,15 @@ public interface CommonService {
     @POST("client/expert/finish")
     Observable<BaseResponse> expertFinish(@Body RequestBody body);
 
+    ///client/receive/{voucherPackId}
+    //GET
+    //用户领取券包
+    @GET("client/receive/{voucherPackId}")
+    Observable<BaseResponse> clientReceive(@Path("voucherPackId") int voucherPackId);
+
+    ///client/coupon/gain
+    //POST
+    //用户领取优惠券
+    @POST("client/coupon/gain")
+    Observable<BaseResponse> clientCouponGain(@Body RequestBody body);
 }

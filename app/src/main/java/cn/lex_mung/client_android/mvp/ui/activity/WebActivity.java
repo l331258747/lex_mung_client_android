@@ -39,6 +39,7 @@ import cn.lex_mung.client_android.mvp.model.entity.other.WebGoPayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.WebShareEntity;
 import cn.lex_mung.client_android.mvp.presenter.WebPresenter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
 import cn.lex_mung.client_android.mvp.ui.widget.webview.LWebView;
 import cn.lex_mung.client_android.mvp.ui.widget.webview.MyWebViewClient;
 import cn.lex_mung.client_android.utils.BuryingPointHelp;
@@ -57,16 +58,14 @@ import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGIN_INFO;
 import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGOUT;
 
 public class WebActivity extends BaseActivity<WebPresenter> implements WebContract.View {
-    @BindView(R.id.tv_right)
-    TextView tvRight;
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
     @BindView(R.id.web_view)
     LWebView webView;
     @BindView(R.id.view_dialog)
     View viewDialog;
     @BindView(R.id.progressbar)
     ProgressBar progressBar;
+    @BindView(R.id.titleView)
+    TitleView titleView;
 
 
     private String url;
@@ -176,15 +175,24 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 
         LogUtil.e("url:" + url);
 
+        titleView.setTitle(title);
+
+        titleView.getRightTv().setVisibility(View.GONE);
+        titleView.setRightTv("分享");
+        titleView.getRightTv().setOnClickListener(v -> {
+            if (!TextUtils.isEmpty(shareUrl)) {
+                ShareUtils.shareUrl(mActivity
+                        , viewDialog
+                        , shareUrl
+                        , ShareTitle
+                        , shareDes
+                        , shareImage);
+            }
+        });
         if (isShare) {
-            tvRight.setVisibility(View.VISIBLE);
-            tvRight.setText("分享");
+            titleView.getRightTv().setVisibility(View.VISIBLE);
         }
-        if (TextUtils.isEmpty(title)) {
-            tvRight.setVisibility(View.GONE);
-        }
-        tvTitle.setText(title);
-//        showLoading("");
+
         initWebView();
     }
 
@@ -199,7 +207,6 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             public void onProgressChanged(WebView view, int newProgress) {
                 progressBar.setProgress(newProgress);
                 if (newProgress == 100) {
-//                    hideLoading();
                     progressBar.setVisibility(View.GONE);
                 }
                 super.onProgressChanged(view, newProgress);
@@ -214,18 +221,6 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
         webView.addJavascriptInterface(androidToJs = new AndroidToJs(), "JsBridgeApp");//h5 js调用 app.pay();
         webView.synCookies(url);
         webView.loadUrl(url);
-    }
-
-    @OnClick(R.id.tv_right)
-    public void onViewClicked() {
-        if (!TextUtils.isEmpty(shareUrl)) {
-            ShareUtils.shareUrl(mActivity
-                    , viewDialog
-                    , shareUrl
-                    , ShareTitle
-                    , shareDes
-                    , shareImage);
-        }
     }
 
     @Override
@@ -510,7 +505,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
         //显示隐藏分享按钮 boolean isShow
         @JavascriptInterface
         public void showShareBtn(boolean isShow) {
-            tvRight.setVisibility(isShow ? View.VISIBLE : View.GONE);
+            titleView.getRightTv().setVisibility(isShow ? View.VISIBLE : View.GONE);
         }
 
         //分享 json 对象
@@ -521,19 +516,46 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             String ShareTitle = entity.getShareTitle();
             String shareImage = entity.getShareImage();
             String shareDes = entity.getShareDes();
-            if (!TextUtils.isEmpty(shareUrl)) {
-                runOnUiThread(() -> {
+
+            titleView.getRightTv().setOnClickListener(v -> {
+                if (!TextUtils.isEmpty(shareUrl)) {
                     ShareUtils.shareUrl(mActivity
                             , viewDialog
                             , shareUrl
                             , ShareTitle
                             , shareDes
                             , shareImage);
-                });
-            }
+                }
+            });
         }
 
+        //领取单张优惠券 String 优惠券id
+        @JavascriptInterface
+        public void getCoupon(String id) {
+            if (TextUtils.isEmpty(id))
+                return;
+            int idInt;
+            try {
+                idInt = Integer.valueOf(id);
+            } catch (Exception e) {
+                return;
+            }
+            mPresenter.clientCouponGain(idInt);
+        }
 
+        //领取券包 String 券包id
+        @JavascriptInterface
+        public void getCoupons(String id) {
+            if (TextUtils.isEmpty(id))
+                return;
+            int idInt;
+            try {
+                idInt = Integer.valueOf(id);
+            } catch (Exception e) {
+                return;
+            }
+            mPresenter.clientReceive(idInt);
+        }
 
     }
 }

@@ -4,6 +4,9 @@ import android.app.Application;
 
 import com.google.gson.Gson;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
@@ -23,6 +26,7 @@ import cn.lex_mung.client_android.mvp.contract.WebContract;
 import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.RxLifecycleUtils;
+import okhttp3.RequestBody;
 
 import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGIN;
 import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGIN_INFO;
@@ -58,7 +62,8 @@ public class WebPresenter extends BasePresenter<WebContract.Model, WebContract.V
         mModel.getUserInfoDetail()
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))
-                .doOnSubscribe(disposable -> {})
+                .doOnSubscribe(disposable -> {
+                })
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
@@ -77,7 +82,58 @@ public class WebPresenter extends BasePresenter<WebContract.Model, WebContract.V
                 });
     }
 
-    public interface onClickListener{
+    //券包
+    public void clientReceive(int voucherPackId) {
+        mModel.clientReceive(voucherPackId)
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> {
+                    mRootView.showLoading("");
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            mRootView.showMessage("领取成功");
+                        }else{
+                            mRootView.showMessage(baseResponse.getMessage());
+                        }
+                    }
+                });
+    }
+
+    //优惠券
+    public void clientCouponGain(int couponId) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("couponId", couponId);
+        map.put("deviceId", 2);
+        mModel.clientCouponGain(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> {
+                    mRootView.showLoading("");
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            mRootView.showMessage("领取成功");
+                        }else{
+                            mRootView.showMessage(baseResponse.getMessage());
+                        }
+                    }
+                });
+    }
+
+    public interface onClickListener {
         void onClick();
     }
 
