@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/c_f4f4f4"
     android:orientation="vertical">
 
@@ -47,7 +47,6 @@
         android:gravity="center"
         android:includeFontPadding="false"
         android:text="收入金额"
-        android:textColor="@color/c_323232"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guideline1" />
 
@@ -77,8 +76,6 @@
         android:layout_marginTop="@dimen/qb_px_35"
         android:includeFontPadding="false"
         android:text="订单编号:"
-        android:textColor="@color/c_323232"
-        android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@id/guideline2"
         app:layout_constraintTop_toBottomOf="@id/tv_pay_type" />
 
@@ -88,8 +85,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/qb_px_20"
         android:includeFontPadding="false"
-        android:textColor="@color/c_323232"
-        android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@id/tv_order_number_text"
         app:layout_constraintTop_toTopOf="@id/tv_order_number_text" />
 
@@ -100,8 +95,6 @@
         android:layout_marginTop="@dimen/qb_px_20"
         android:includeFontPadding="false"
         android:text="订单时间:"
-        android:textColor="@color/c_323232"
-        android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@id/guideline2"
         app:layout_constraintTop_toBottomOf="@id/tv_order_number_text" />
 
@@ -111,8 +104,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/qb_px_20"
         android:includeFontPadding="false"
-        android:textColor="@color/c_323232"
-        android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@id/tv_order_date_text"
         app:layout_constraintTop_toTopOf="@id/tv_order_date_text" />
 
@@ -123,8 +114,6 @@
         android:layout_marginTop="@dimen/qb_px_20"
         android:includeFontPadding="false"
         android:text="商品名称:"
-        android:textColor="@color/c_323232"
-        android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@id/guideline2"
         app:layout_constraintTop_toBottomOf="@id/tv_order_date_text" />
 
@@ -134,8 +123,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/qb_px_20"
         android:includeFontPadding="false"
-        android:textColor="@color/c_323232"
-        android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@id/tv_order_name_text"
         app:layout_constraintTop_toTopOf="@id/tv_order_name_text" />
 
@@ -146,8 +133,6 @@
         android:layout_marginTop="@dimen/qb_px_20"
         android:includeFontPadding="false"
         android:text="订单金额:"
-        android:textColor="@color/c_323232"
-        android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@id/guideline2"
         app:layout_constraintTop_toBottomOf="@id/tv_order_name_text" />
 
@@ -158,7 +143,6 @@
         android:layout_marginStart="@dimen/qb_px_20"
         android:includeFontPadding="false"
         android:textColor="@color/c_f8b22d"
-        android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@id/tv_order_price_text"
         app:layout_constraintTop_toTopOf="@id/tv_order_price_text" />
 
@@ -169,8 +153,6 @@
         android:layout_marginTop="@dimen/qb_px_20"
         android:includeFontPadding="false"
         android:text="订单状态:"
-        android:textColor="@color/c_323232"
-        android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@id/guideline2"
         app:layout_constraintTop_toBottomOf="@id/tv_order_price_text" />
 
@@ -180,18 +162,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/qb_px_20"
         android:includeFontPadding="false"
-        android:textColor="@color/c_323232"
-        android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@id/tv_order_status_text"
         app:layout_constraintTop_toTopOf="@id/tv_order_status_text" />
-
-    <android.support.constraint.Group
-        android:id="@+id/group_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        tools:visibility="visible"
-        app:constraint_referenced_ids="tv_order_customer_text,tv_order_customer,tv_order_time_text,tv_order_time_start,tv_order_time_end,tv_order_total_text,tv_order_total" />
 
     <TextView
         android:id="@+id/tv_order_customer_text"
@@ -200,10 +172,10 @@
         android:layout_marginTop="@dimen/qb_px_20"
         android:includeFontPadding="false"
         android:text="咨询客户:"
-        android:textColor="@color/c_323232"
-        android:textSize="14sp"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@id/guideline2"
-        app:layout_constraintTop_toBottomOf="@id/tv_order_status_text" />
+        app:layout_constraintTop_toBottomOf="@id/tv_order_status_text"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/tv_order_customer"
@@ -211,45 +183,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/qb_px_20"
         android:includeFontPadding="false"
-        android:textColor="@color/c_323232"
-        android:textSize="14sp"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@id/tv_order_customer_text"
-        app:layout_constraintTop_toTopOf="@id/tv_order_customer_text" />
-
-    <TextView
-        android:id="@+id/tv_order_time_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/qb_px_20"
-        android:includeFontPadding="false"
-        android:text="通话时间:"
-        android:textColor="@color/c_323232"
-        android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@id/guideline2"
-        app:layout_constraintTop_toBottomOf="@id/tv_order_customer_text" />
-
-    <TextView
-        android:id="@+id/tv_order_time_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/qb_px_20"
-        android:includeFontPadding="false"
-        android:textColor="@color/c_323232"
-        android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@id/tv_order_time_text"
-        app:layout_constraintTop_toTopOf="@id/tv_order_time_text" />
-
-    <TextView
-        android:id="@+id/tv_order_time_end"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/qb_px_20"
-        android:layout_marginTop="@dimen/qb_px_20"
-        android:includeFontPadding="false"
-        android:textColor="@color/c_323232"
-        android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@id/tv_order_time_text"
-        app:layout_constraintTop_toBottomOf="@id/tv_order_time_text" />
+        app:layout_constraintTop_toTopOf="@id/tv_order_customer_text"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/tv_order_total_text"
@@ -257,11 +194,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/qb_px_20"
         android:includeFontPadding="false"
-        android:text="总计时长:"
-        android:textColor="@color/c_323232"
-        android:textSize="14sp"
+        android:text="通话时长:"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@id/guideline2"
-        app:layout_constraintTop_toBottomOf="@id/tv_order_time_end" />
+        app:layout_constraintTop_toBottomOf="@id/tv_order_customer"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/tv_order_total"
@@ -269,14 +206,26 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/qb_px_20"
         android:includeFontPadding="false"
-        android:textColor="@color/c_323232"
-        android:textSize="14sp"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@id/tv_order_total_text"
-        app:layout_constraintTop_toTopOf="@id/tv_order_total_text" />
+        app:layout_constraintTop_toTopOf="@id/tv_order_total_text"
+        tools:visibility="visible" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/guideline3"
+        app:layout_constraintStart_toStartOf="@id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/tv_order_total"
+        tools:visibility="visible" />
 
     <View
         android:id="@+id/view_2"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qb_px_35"
-        app:layout_constraintTop_toBottomOf="@id/tv_order_total_text" />
+        app:layout_constraintTop_toBottomOf="@id/recycler_view" />
 </android.support.constraint.ConstraintLayout>

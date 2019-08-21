@@ -34,11 +34,7 @@ public class TradingListDetailsPresenter extends BasePresenter<TradingListDetail
     }
 
     public void setBean(TradingListEntity bean) {
-//        if ("快速咨询".equals(bean.getOrderType())
-//                || "专家咨询".equals(bean.getOrderType())) {
-        if ("专家咨询".equals(bean.getOrderType())) {
-            mRootView.showLayout();
-        }
+
         mRootView.setOrderNo(bean.getOrderNo());
         if (!TextUtils.isEmpty(bean.getOrderNo())) {
             mRootView.setOrderNo(bean.getOrderNo());
@@ -69,16 +65,15 @@ public class TradingListDetailsPresenter extends BasePresenter<TradingListDetail
         } else {
             mRootView.setOrderStatusColor(AppUtils.getColor(mApplication, R.color.c_ea5514));
         }
-        if (!TextUtils.isEmpty(bean.getMemberName())) {
+
+        if ("快速咨询".equals(bean.getOrderType())
+                || "专家咨询".equals(bean.getOrderType())) {
             mRootView.setOrderCustomer(bean.getMemberName());
+            mRootView.setOrderTotal(bean.getCallTimeStr());
+            mRootView.setTalkRecordList(bean.getQuickTime());
+
         }
-        if (!TextUtils.isEmpty(bean.getBeginTime())) {
-            mRootView.setOrderStartTime(bean.getBeginTime() + "  开始");
-        }
-        if (!TextUtils.isEmpty(bean.getEndTime())) {
-            mRootView.setOrderEndTime(bean.getEndTime() + "  结束");
-        }
-        mRootView.setOrderTotal(bean.getTalkTime());
+
     }
 
     @Override

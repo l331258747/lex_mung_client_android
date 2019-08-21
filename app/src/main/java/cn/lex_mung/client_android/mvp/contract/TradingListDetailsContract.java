@@ -1,5 +1,8 @@
 package cn.lex_mung.client_android.mvp.contract;
 
+import java.util.List;
+
+import cn.lex_mung.client_android.mvp.model.entity.TradingListEntity;
 import me.zl.mvp.mvp.IView;
 import me.zl.mvp.mvp.IModel;
 
@@ -17,15 +20,11 @@ public interface TradingListDetailsContract {
 
         void setOrderCustomer(String memberName);
 
-        void setOrderStartTime(String conversationStart);
-
-        void setOrderEndTime(String conversationEnd);
-
         void setOrderTotal(String duration);
 
-        void showLayout();
-
         void setOrderStatusColor(int color);
+
+        void setTalkRecordList(List<TradingListEntity.QuickTimeBean> lists);
     }
 
     interface Model extends IModel {

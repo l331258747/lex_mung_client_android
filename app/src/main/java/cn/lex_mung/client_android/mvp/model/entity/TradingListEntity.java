@@ -55,6 +55,22 @@ public class TradingListEntity implements Serializable {
     private int pageNum;
     private int pageSize;
 
+    private String callTimeStr;
+    private int callTime;
+    private List<QuickTimeBean> quickTime;
+
+    public String getCallTimeStr() {
+        return callTimeStr;
+    }
+
+    public int getCallTime() {
+        return callTime;
+    }
+
+    public List<QuickTimeBean> getQuickTime() {
+        return quickTime;
+    }
+
     public int getMemberId() {
         return memberId;
     }
@@ -237,5 +253,56 @@ public class TradingListEntity implements Serializable {
 
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
+    }
+
+    public static class QuickTimeBean implements Serializable{
+        /**
+         * id : 480
+         * beginTime : 2019-03-15 15:03:29
+         * endTime : 2019-03-15 15:06:38
+         */
+
+        private int id;
+        private String beginTime;
+        private String endTime;
+        private int callLength;
+
+        public String getCalllength() {
+            long hours = callLength / 3600;//转换小时数
+            callLength = callLength % 3600;//剩余秒数
+            long minutes = callLength / 60;//转换分钟
+            callLength = callLength % 60;//剩余秒数
+            if(hours > 0){
+                return hours + "小时" + minutes + "分" + callLength + "秒";
+            }
+            if(minutes > 0){
+                return minutes + "分" + callLength + "秒";
+            }
+            return callLength + "秒";
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getBeginTime() {
+            return beginTime;
+        }
+
+        public void setBeginTime(String beginTime) {
+            this.beginTime = beginTime;
+        }
+
+        public String getEndTime() {
+            return endTime;
+        }
+
+        public void setEndTime(String endTime) {
+            this.endTime = endTime;
+        }
     }
 }

@@ -5,13 +5,19 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.Group;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
+
+import java.util.List;
 
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.module.TradingListDetailsModule;
 import cn.lex_mung.client_android.mvp.contract.TradingListDetailsContract;
 import cn.lex_mung.client_android.mvp.model.entity.TradingListEntity;
+import cn.lex_mung.client_android.mvp.ui.adapter.TradingListDetailsAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
 import butterknife.BindView;
@@ -40,16 +46,19 @@ public class TradingListDetailsActivity extends BaseActivity<TradingListDetailsP
     TextView tvOrderPrice;
     @BindView(R.id.tv_order_status)
     TextView tvOrderStatus;
-    @BindView(R.id.group_time)
-    Group groupTime;
-    @BindView(R.id.tv_order_customer)
+
+    @BindView(R.id.tv_order_customer_text)
     TextView tvOrderCustomer;
-    @BindView(R.id.tv_order_time_start)
-    TextView tvOrderTimeStart;
-    @BindView(R.id.tv_order_time_end)
-    TextView tvOrderTimeEnd;
+    @BindView(R.id.tv_order_customer)
+    TextView tvOrderCustomerText;
+
     @BindView(R.id.tv_order_total)
     TextView tvOrderTotal;
+    @BindView(R.id.tv_order_total_text)
+    TextView tvOrderTotalText;
+
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -102,32 +111,45 @@ public class TradingListDetailsActivity extends BaseActivity<TradingListDetailsP
 
     @Override
     public void setOrderCustomer(String memberName) {
-        tvOrderCustomer.setText(memberName);
-    }
-
-    @Override
-    public void setOrderStartTime(String conversationStart) {
-        tvOrderTimeStart.setText(conversationStart);
-    }
-
-    @Override
-    public void setOrderEndTime(String conversationEnd) {
-        tvOrderTimeEnd.setText(conversationEnd);
+        if(TextUtils.isEmpty(memberName)){
+            tvOrderCustomerText.setVisibility(View.GONE);
+            tvOrderCustomer.setVisibility(View.GONE);
+        }else {
+            tvOrderCustomerText.setVisibility(View.VISIBLE);
+            tvOrderCustomer.setVisibility(View.VISIBLE);
+            tvOrderCustomer.setText(memberName);
+        }
     }
 
     @Override
     public void setOrderTotal(String duration) {
-        tvOrderTotal.setText(duration);
-    }
-
-    @Override
-    public void showLayout() {
-        groupTime.setVisibility(View.VISIBLE);
+        if(TextUtils.isEmpty(duration)){
+            tvOrderCustomerText.setVisibility(View.GONE);
+            tvOrderCustomer.setVisibility(View.GONE);
+        }else{
+            tvOrderTotalText.setVisibility(View.VISIBLE);
+            tvOrderTotal.setVisibility(View.VISIBLE);
+            tvOrderTotal.setText(duration);
+        }
     }
 
     @Override
     public void setOrderStatusColor(int color) {
         tvOrderStatus.setTextColor(color);
+    }
+
+    @Override
+    public void setTalkRecordList(List<TradingListEntity.QuickTimeBean> lists) {
+        if(lists == null || lists.size() == 0)
+            recyclerView.setVisibility(View.GONE);
+        else{
+            recyclerView.setVisibility(View.VISIBLE);
+            TradingListDetailsAdapter adapter = new TradingListDetailsAdapter();
+            AppUtils.configRecyclerView(recyclerView, new LinearLayoutManager(mActivity));
+            recyclerView.setAdapter(adapter);
+            recyclerView.setNestedScrollingEnabled(false);
+            adapter.setNewData(lists);
+        }
     }
 
 
