@@ -1028,6 +1028,9 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
                             case 146://劳动合同管理
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "corporate_governance_page", "corporate_governance_page_labor_contract_management_click");
                                 break;
+                            case 147://财税专项
+                                BuryingPointHelp.getInstance().onEvent(mActivity, "corporate_governance_page", "corporate_governance_page_finance_and_taxation_click");
+                                break;
                             case 148://员工股权激励
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "corporate_governance_page", "corporate_governance_page_equity_employee_incentive_click");
                                 break;
