@@ -63,8 +63,8 @@ public class DownloadUtils {
                 .addExtension(ApkOpenExtension.class));
     }
 
-    private void initDisposable() {
-        disposable = RxDownload.INSTANCE.create(new Mission(url, "绿豆圈.apk"), false)
+    private void initDisposable(String name) {
+        disposable = RxDownload.INSTANCE.create(new Mission(url, name), false)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(status -> {
                     currentStatus = status;
@@ -158,7 +158,7 @@ public class DownloadUtils {
         url = entity.getDownloadUrl();
 
         initDownloadConfig(false);
-        initDisposable();
+        initDisposable("绿豆圈" + entity.getVersionName() + ".apk");
 
         forcedUpdateDialog = new ForcedUpdateDialog(context, entity.getVersionName(), entity.getUpdateTips());
         forcedUpdateDialog.setOnClickListener(this::dispatchClick);
@@ -176,7 +176,7 @@ public class DownloadUtils {
         url = entity.getDownloadUrl();
 
         initDownloadConfig(true);
-        initDisposable();
+        initDisposable("绿豆圈" + entity.getVersionName() + ".apk");
 
         silentUpdateDialog = new SilentUpdateDialog(context, entity.getVersionName(), entity.getUpdateTips());
         silentUpdateDialog.setOnClickListener(new SilentUpdateDialog.OnClickListener() {

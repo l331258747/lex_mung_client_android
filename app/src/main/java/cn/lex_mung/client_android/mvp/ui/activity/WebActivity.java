@@ -177,7 +177,6 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 
         titleView.setTitle(title);
 
-        titleView.getRightTv().setVisibility(View.GONE);
         titleView.setRightTv("分享");
         titleView.getRightTv().setOnClickListener(v -> {
             if (!TextUtils.isEmpty(shareUrl)) {
@@ -191,6 +190,8 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
         });
         if (isShare) {
             titleView.getRightTv().setVisibility(View.VISIBLE);
+        }else{
+            titleView.getRightTv().setVisibility(View.GONE);
         }
 
         initWebView();
