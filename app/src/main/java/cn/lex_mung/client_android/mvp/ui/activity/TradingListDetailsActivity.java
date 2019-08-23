@@ -48,14 +48,15 @@ public class TradingListDetailsActivity extends BaseActivity<TradingListDetailsP
     TextView tvOrderStatus;
 
     @BindView(R.id.tv_order_customer_text)
-    TextView tvOrderCustomer;
-    @BindView(R.id.tv_order_customer)
     TextView tvOrderCustomerText;
+    @BindView(R.id.tv_order_customer)
+    TextView tvOrderCustomer;
 
-    @BindView(R.id.tv_order_total)
-    TextView tvOrderTotal;
     @BindView(R.id.tv_order_total_text)
     TextView tvOrderTotalText;
+    @BindView(R.id.tv_order_total)
+    TextView tvOrderTotal;
+
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -124,8 +125,8 @@ public class TradingListDetailsActivity extends BaseActivity<TradingListDetailsP
     @Override
     public void setOrderTotal(String duration) {
         if(TextUtils.isEmpty(duration)){
-            tvOrderCustomerText.setVisibility(View.GONE);
-            tvOrderCustomer.setVisibility(View.GONE);
+            tvOrderTotalText.setVisibility(View.GONE);
+            tvOrderTotal.setVisibility(View.GONE);
         }else{
             tvOrderTotalText.setVisibility(View.VISIBLE);
             tvOrderTotal.setVisibility(View.VISIBLE);
