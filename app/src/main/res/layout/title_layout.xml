@@ -19,7 +19,7 @@
 
     <TextView
         android:id="@+id/title_tv"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
@@ -33,7 +33,7 @@
         android:textStyle="bold"
         android:textSize="18sp"
         android:visibility="visible"
-        tools:text="TitTitleTT" />
+        tools:text="TitTitleTTTitTitleTT" />
 
     <TextView
         android:id="@+id/right_tv"
