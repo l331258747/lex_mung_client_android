@@ -12,8 +12,8 @@ public interface Api {
 //    String APP_DOMAIN = "https://api.lex-mung.com/";
 
     String J_PUSH_TEST = "57ec233e4815f11235b32395";
-//    String APP_DOMAIN_TEST = "https://api-test.lex-mung.com/";//测试
-    String APP_DOMAIN_TEST = "https://api.lex-mung.com/";//线上
+    String APP_DOMAIN_TEST = "https://api-test.lex-mung.com/";//测试
+//    String APP_DOMAIN_TEST = "https://api.lex-mung.com/";//线上
 //    String APP_DOMAIN_TEST = "https://cpu.lex-mung.com/";//本地
 
     String J_PUSH_PROD = "0c63ef9cdb0385d0ab13f6dd";
