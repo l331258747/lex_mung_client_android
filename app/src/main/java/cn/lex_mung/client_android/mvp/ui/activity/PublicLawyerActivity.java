@@ -39,6 +39,9 @@ import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.utils.AppUtils;
+import me.zl.mvp.utils.DataHelper;
+
+import static cn.lex_mung.client_android.app.DataHelperTags.IS_LOGIN_SUCCESS;
 
 public class PublicLawyerActivity extends BaseActivity<PublicLawyerPresenter> implements PublicLawyerContract.View {
 
@@ -108,7 +111,11 @@ public class PublicLawyerActivity extends BaseActivity<PublicLawyerPresenter> im
             if (isFastClick()) return;
             LawyerEntity2 entity2 = homeLawyerAdapter.getItem(position);
             if (entity2 == null) return;
-            showPublicDialog(entity2.getMobile());
+            if (DataHelper.getBooleanSF(mActivity, IS_LOGIN_SUCCESS)) {
+                showPublicDialog(entity2.getMobile());
+            } else {
+                launchActivity(new Intent(mActivity,LoginActivity.class));
+            }
         });
 
 

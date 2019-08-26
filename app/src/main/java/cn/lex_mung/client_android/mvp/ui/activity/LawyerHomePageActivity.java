@@ -57,6 +57,8 @@ import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.DeviceUtils;
 import me.zl.mvp.utils.StatusBarUtil;
 
+import static cn.lex_mung.client_android.app.DataHelperTags.IS_LOGIN_SUCCESS;
+
 public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter> implements LawyerHomePageContract.View {
     @Inject
     ImageLoader mImageLoader;
@@ -341,7 +343,11 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
             case R.id.iv_head_share:
                 break;
             case R.id.iv_call_2:
-                showPublicDialog(lawyerMobile);
+                if (DataHelper.getBooleanSF(mActivity, IS_LOGIN_SUCCESS)) {
+                    showPublicDialog(lawyerMobile);
+                } else {
+                    launchActivity(new Intent(mActivity,LoginActivity.class));
+                }
                 break;
             case R.id.iv_call:
                 if (!isCall) return;
