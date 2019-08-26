@@ -182,7 +182,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/qb_px_40"
                 android:includeFontPadding="false"
-                android:text="诉讼垫资"
+                android:text="再审申诉"
                 app:layout_constraintBottom_toTopOf="@+id/tv_zsss_content"
                 app:layout_constraintStart_toEndOf="@+id/iv_zsss"
                 app:layout_constraintTop_toTopOf="@+id/iv_zsss" />
