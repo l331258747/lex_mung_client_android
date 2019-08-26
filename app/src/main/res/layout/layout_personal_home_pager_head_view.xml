@@ -144,13 +144,12 @@
             android:layout_marginTop="@dimen/qb_px_20"
             android:layout_marginEnd="@dimen/qb_px_20"
             android:includeFontPadding="false"
-            android:singleLine="true"
             android:textColor="@color/c_b5b5b5"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@id/guideline3"
             app:layout_constraintStart_toStartOf="@id/tv_name"
             app:layout_constraintTop_toBottomOf="@id/tv_name"
-            tools:text="湖南湘君律师事务所 | 执业7年" />
+            tools:text="湖南湘君律师事务所\n执业7年" />
 
         <ImageView
             android:id="@+id/iv_credit_certification"

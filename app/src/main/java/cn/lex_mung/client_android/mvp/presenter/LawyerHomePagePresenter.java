@@ -167,7 +167,7 @@ public class LawyerHomePagePresenter extends BasePresenter<LawyerHomePageContrac
             //律所和执业年限
             if (!TextUtils.isEmpty(entity.getInstitutionName())
                     && !TextUtils.isEmpty(entity.getPractice())) {
-                mRootView.setInstitutionNameAndPractice(String.format("%1$s  丨  %2$s"
+                mRootView.setInstitutionNameAndPractice(String.format("%1$s\n%2$s"
                         , entity.getInstitutionName()
                         , entity.getPractice()));
             } else if (!TextUtils.isEmpty(entity.getInstitutionName())) {
