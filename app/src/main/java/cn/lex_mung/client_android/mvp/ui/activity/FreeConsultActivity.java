@@ -183,7 +183,10 @@ public class FreeConsultActivity extends BaseActivity<FreeConsultPresenter> impl
         });
         wpConsultType.setData(mPresenter.getSolutionTypeStringList());
         wpConsultType.setSelectedItemPosition(0);
+
+        mPresenter.setConsultType(mPresenter.getSolutionTypeEntityList().get(0).getTypeName());
         mPresenter.setConsultTypeId(mPresenter.getSolutionTypeEntityList().get(0).getId());
+
         layout.findViewById(R.id.tv_cancel).setOnClickListener(v -> dismiss());
         layout.findViewById(R.id.tv_confirm).setOnClickListener(v -> {
             tvConsultType.setText(mPresenter.getConsultType());

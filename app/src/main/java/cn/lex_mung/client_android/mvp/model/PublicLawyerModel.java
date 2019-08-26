@@ -60,4 +60,11 @@ public class PublicLawyerModel extends BaseModel implements PublicLawyerContract
                 .obtainRetrofitService(CommonService.class)
                 .getLawyerList(pageNum,body);
     }
+
+    @Override
+    public Observable<BaseResponse> callOrderInsert(RequestBody body) {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .callOrderInsert(body);
+    }
 }

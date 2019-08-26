@@ -889,4 +889,10 @@ public interface CommonService {
     //用户领取优惠券
     @POST("client/coupon/gain")
     Observable<BaseResponse> clientCouponGain(@Body RequestBody body);
+
+    ///client/call/order/insert
+    //POST
+    //公益电话订单新增
+    @POST("client/call/order/insert")
+    Observable<BaseResponse> callOrderInsert(@Body RequestBody body);
 }

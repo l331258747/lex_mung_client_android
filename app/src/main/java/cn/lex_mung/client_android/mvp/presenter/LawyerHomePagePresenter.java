@@ -13,7 +13,9 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -22,8 +24,9 @@ import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.mvp.contract.LawyerHomePageContract;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
-import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
+import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
+import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
 import cn.lex_mung.client_android.mvp.ui.fragment.LawsBusinessCardFragment;
 import cn.lex_mung.client_android.mvp.ui.fragment.PracticeExperienceFragment;
@@ -41,6 +44,7 @@ import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.LogUtils;
 import me.zl.mvp.utils.RxLifecycleUtils;
+import okhttp3.RequestBody;
 
 @ActivityScope
 public class LawyerHomePagePresenter extends BasePresenter<LawyerHomePageContract.Model, LawyerHomePageContract.View> {
@@ -75,6 +79,38 @@ public class LawyerHomePagePresenter extends BasePresenter<LawyerHomePageContrac
 
     public LawsHomePagerBaseEntity getEntity() {
         return entity;
+    }
+
+    //公益律师拨打电话
+    public void callOrderInsert(String lawyerMobile, int lawyerMemberId) {
+
+        UserInfoDetailsEntity userInfoDetailsEntity = new Gson().fromJson(DataHelper.getStringSF(mApplication, DataHelperTags.USER_INFO_DETAIL), UserInfoDetailsEntity.class);
+        if (userInfoDetailsEntity == null) return;
+
+        String mobile = userInfoDetailsEntity.getMobile();
+        Map<String, Object> map = new HashMap<>();
+        map.put("mobile", mobile);
+        map.put("lawyerMobile", lawyerMobile);
+        map.put("source", 2);
+        map.put("lawyerMemberId", lawyerMemberId);
+        mModel.callOrderInsert(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> mRootView.showLoading(""))
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            mRootView.callPublickPhone(lawyerMobile);
+                        } else {
+                            mRootView.showMessage(baseResponse.getMessage());
+                        }
+                    }
+                });
     }
 
     public void getLawsHomePagerBase(boolean isPublic) {

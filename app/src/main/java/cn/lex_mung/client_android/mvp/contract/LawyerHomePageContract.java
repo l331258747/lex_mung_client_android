@@ -13,6 +13,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import me.zl.mvp.mvp.IView;
 import me.zl.mvp.mvp.IModel;
+import okhttp3.RequestBody;
 
 public interface LawyerHomePageContract {
     interface View extends IView {
@@ -59,6 +60,8 @@ public interface LawyerHomePageContract {
         void removeViews();
         void showCall(boolean isHide);
 
+        void callPublickPhone(String phone);
+
         //------电话
 //        void showToErrorDialog(String s);
 //        void showBalanceNoDialog(ExpertPriceEntity entity);
@@ -81,5 +84,7 @@ public interface LawyerHomePageContract {
         Observable<BaseResponse<ExpertPriceEntity>> expertPrice(int id);
 
         Observable<BaseResponse<ExpertCallEntity>> sendCall(int id);
+
+        Observable<BaseResponse> callOrderInsert(RequestBody body);
     }
 }

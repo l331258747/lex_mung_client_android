@@ -18,6 +18,7 @@ import cn.lex_mung.client_android.mvp.contract.LawyerHomePageContract;
 import cn.lex_mung.client_android.mvp.model.api.CommonService;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
+import okhttp3.RequestBody;
 
 
 @ActivityScope
@@ -79,5 +80,12 @@ public class LawyerHomePageModel extends BaseModel implements LawyerHomePageCont
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .sendCall(id);
+    }
+
+    @Override
+    public Observable<BaseResponse> callOrderInsert(RequestBody body) {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .callOrderInsert(body);
     }
 }

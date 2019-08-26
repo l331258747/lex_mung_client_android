@@ -18,6 +18,7 @@ public interface PublicLawyerContract {
         void setLawyerAdapter(List<LawyerEntity2> lists,boolean isAdd);
         void hideLawyerLayout();
         void setLawyerTitle(String str);
+        void callPublickPhone(String phone);
     }
 
     interface Model extends IModel {
@@ -27,5 +28,7 @@ public interface PublicLawyerContract {
         Observable<BaseResponse<EquitiesDetailsEntity>> getEquitiesDetails1(int orgId, int levelId);
 
         Observable<BaseResponse<BaseListEntity<LawyerEntity2>>> getLawyerList(int pageNum, RequestBody body);
+
+        Observable<BaseResponse> callOrderInsert(RequestBody body);
     }
 }

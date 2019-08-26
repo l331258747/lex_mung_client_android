@@ -111,11 +111,13 @@ public class PublicLawyerActivity extends BaseActivity<PublicLawyerPresenter> im
             if (isFastClick()) return;
             LawyerEntity2 entity2 = homeLawyerAdapter.getItem(position);
             if (entity2 == null) return;
-            if (DataHelper.getBooleanSF(mActivity, IS_LOGIN_SUCCESS)) {
-                showPublicDialog(entity2.getMobile());
-            } else {
-                launchActivity(new Intent(mActivity,LoginActivity.class));
+
+            if (!DataHelper.getBooleanSF(mActivity, IS_LOGIN_SUCCESS)) {
+                launchActivity(new Intent(mActivity, LoginActivity.class));
+                return;
             }
+
+            showPublicDialog(entity2.getMobile(),entity2.getMemberId());
         });
 
 
@@ -141,18 +143,22 @@ public class PublicLawyerActivity extends BaseActivity<PublicLawyerPresenter> im
         recyclerView.setAdapter(homeLawyerAdapter);
     }
 
-    public void showPublicDialog(String phone){
-        if(TextUtils.isEmpty(phone)) return;
+    public void showPublicDialog(String lawyerMobile,int lawyerId){
+        if(TextUtils.isEmpty(lawyerMobile)) return;
         new HelpStepDialog(mActivity,
                 dialog -> {
-                    Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
-                    startActivity(dialIntent);
+                    mPresenter.callOrderInsert(lawyerMobile, lawyerId);
                 }).setContent("公益律师为社会公共资源，意在帮助更多有需要的人可以享受免费的法律服务，如果您有更多法律诉求请通过找律师板块进行咨询。")
                 .setTvTitle("公益律师服务说明")
                 .setIvTitle(R.drawable.ic_public_lawyer)
                 .setCannelStr("取消")
                 .setSubmitStr("联系公益律师").show();
+    }
 
+    @Override
+    public void callPublickPhone(String phone){
+        Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
+        startActivity(dialIntent);
     }
 
 
