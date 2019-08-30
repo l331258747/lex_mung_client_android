@@ -167,7 +167,7 @@
             android:layout_marginStart="@dimen/qb_px_10"
             android:includeFontPadding="false"
             android:singleLine="true"
-            android:textColor="@color/c_b5b5b5"
+            android:textColor="@color/c_323232"
             android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="@id/iv_credit_certification"
             app:layout_constraintStart_toEndOf="@id/iv_credit_certification"
