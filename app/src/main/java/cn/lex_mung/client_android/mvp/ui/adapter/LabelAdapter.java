@@ -24,6 +24,7 @@ public class LabelAdapter extends BaseQuickAdapter<OrgTagsEntity, BaseViewHolder
             mImageLoader.loadImage(mContext
                     , ImageConfigImpl
                             .builder()
+                            .isCircle(true)
                             .url(item.getImage())
                             .imageView(helper.getView(R.id.item_iv_icon))
                             .build());
