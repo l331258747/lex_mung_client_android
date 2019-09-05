@@ -45,7 +45,7 @@
         android:layout_marginBottom="@dimen/qb_px_50"
         android:background="@drawable/round_40_1ec78a_all"
         android:gravity="center"
-        android:text="优选律师"
+        android:text="下一步"
         android:textColor="@color/c_ff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/gl_right"

@@ -31,6 +31,7 @@ import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
 
+//法律服务
 public class HelpStep4Fragment extends BaseFragment<HelpStep4Presenter> implements HelpStep4Contract.View {
 
     @BindView(R.id.recycler_view)
@@ -101,7 +102,8 @@ public class HelpStep4Fragment extends BaseFragment<HelpStep4Presenter> implemen
                     showMessage("请选择法律类型");
                     return;
                 }
-                ((HelpStepActivity)getActivity()).goPreferredLawyer();
+//                ((HelpStepActivity)getActivity()).goPreferredLawyer();
+                ((HelpStepActivity) this.getActivity()).setIndex(3);
                 break;
         }
     }

@@ -16,12 +16,16 @@ import butterknife.BindView;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.module.HelpStepChildModule;
 import cn.lex_mung.client_android.mvp.model.entity.help.HelpStepEntity;
+import cn.lex_mung.client_android.mvp.model.entity.help.IndustryEntity;
+import cn.lex_mung.client_android.mvp.model.entity.help.PayMoneyEntity;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
 import cn.lex_mung.client_android.mvp.ui.fragment.HelpStep1Fragment;
 import cn.lex_mung.client_android.mvp.ui.fragment.HelpStep2Fragment;
 import cn.lex_mung.client_android.mvp.ui.fragment.HelpStep3Fragment;
 import cn.lex_mung.client_android.mvp.ui.fragment.HelpStep4Fragment;
+import cn.lex_mung.client_android.mvp.ui.fragment.HelpStep5Fragment;
+import cn.lex_mung.client_android.mvp.ui.fragment.HelpStep6Fragment;
 import cn.lex_mung.client_android.mvp.ui.widget.HelpStepChildView;
 import cn.lex_mung.client_android.mvp.ui.widget.HelpStepView;
 import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
@@ -48,6 +52,8 @@ public class HelpStepChildActivity extends BaseActivity<HelpStepChildPresenter> 
     HelpStep1Fragment helpStep1Fragment;
     HelpStep2Fragment helpStep2Fragment;
     HelpStep3Fragment helpStep3Fragment;
+    HelpStep5Fragment helpStep5Fragment;
+    HelpStep6Fragment helpStep6Fragment;
 
     int requireTypeId;
 
@@ -72,11 +78,20 @@ public class HelpStepChildActivity extends BaseActivity<HelpStepChildPresenter> 
 
     public void goPreferredLawyer() {
         bundle.clear();
-        bundle.putInt(BundleTags.REGION_ID, helpStep1Fragment.getRegionId());
-        bundle.putInt(BundleTags.SOLUTION_TYPE_ID, helpStep2Fragment.getTypeId());
-        bundle.putInt(BundleTags.AMOUNT_ID, helpStep3Fragment.getAmountId());
-        bundle.putInt(BundleTags.REQUIRE_TYPE_ID, requireTypeId);
-        bundle.putInt(BundleTags.BURYING_POINT,1);
+
+        if(requireTypeId == 6){//法律顾问
+            bundle.putInt(BundleTags.REGION_ID, helpStep1Fragment.getRegionId());
+            bundle.putInt(BundleTags.INDUSTRY_ID, helpStep5Fragment.getIndustryId());//熟悉行业
+            bundle.putInt(BundleTags.PAY_LAWYER_MONEY_ID, helpStep6Fragment.getPayMoneyIdId());//愿意支付的律师费
+            bundle.putInt(BundleTags.REQUIRE_TYPE_ID, requireTypeId);
+            bundle.putInt(BundleTags.BURYING_POINT,1);
+        }else{
+            bundle.putInt(BundleTags.REGION_ID, helpStep1Fragment.getRegionId());
+            bundle.putInt(BundleTags.SOLUTION_TYPE_ID, helpStep2Fragment.getTypeId());
+            bundle.putInt(BundleTags.AMOUNT_ID, helpStep3Fragment.getAmountId());
+            bundle.putInt(BundleTags.REQUIRE_TYPE_ID, requireTypeId);
+            bundle.putInt(BundleTags.BURYING_POINT,1);
+        }
 
         launchActivity(new Intent(mActivity, HelpStepLawyerActivity.class), bundle);
 
@@ -105,14 +120,47 @@ public class HelpStepChildActivity extends BaseActivity<HelpStepChildPresenter> 
             titleView.setTitle(bundleIntent.getString(BundleTags.TITLE));
         }
 
+        if(requireTypeId == 6){//法律顾问
+            String[] strs = {"服务地域", "行业分类", "愿意支付费用"};
+            helpStepView.initView(strs);
+        }else{
+            String[] strs = {"服务地域", "事项分类", "标的额"};
+            helpStepView.initView(strs);
+        }
+
         mPresenter.getData();
     }
 
     @Override
-    public void setFragment(HelpStepEntity entity) {
-        fragments.add(helpStep1Fragment = HelpStep1Fragment.newInstance(true));
-        fragments.add(helpStep2Fragment = HelpStep2Fragment.newInstance(true, entity.getSolutionType()));
-        fragments.add(helpStep3Fragment = HelpStep3Fragment.newInstance(true, entity.getRequirementInvolveAmount()));
+    public void setFragment(HelpStepEntity entity) { //TODO
+        List<IndustryEntity> industryEntities = new ArrayList<>();
+        for (int i=0;i<10;i++){
+            IndustryEntity item = new IndustryEntity();
+            item.setId(i);
+            item.setText("熟悉行业 " + i);
+            industryEntities.add(item);
+        }
+        entity.setIndustryEntities(industryEntities);
+
+        List<PayMoneyEntity> payMoneyEntities = new ArrayList<>();
+        for (int i=0;i<10;i++){
+            PayMoneyEntity item = new PayMoneyEntity();
+            item.setId(i);
+            item.setText("愿意支付的律师费 " + i);
+            payMoneyEntities.add(item);
+        }
+        entity.setPayMoneyEntities(payMoneyEntities);
+
+
+        if(requireTypeId == 6){//法律顾问
+            fragments.add(helpStep1Fragment = HelpStep1Fragment.newInstance(true));
+            fragments.add(helpStep5Fragment = HelpStep5Fragment.newInstance(entity.getIndustryEntities()));
+            fragments.add(helpStep6Fragment = HelpStep6Fragment.newInstance(entity.getPayMoneyEntities()));
+        }else{
+            fragments.add(helpStep1Fragment = HelpStep1Fragment.newInstance(true));
+            fragments.add(helpStep2Fragment = HelpStep2Fragment.newInstance(true, entity.getSolutionType()));
+            fragments.add(helpStep3Fragment = HelpStep3Fragment.newInstance(true, entity.getRequirementInvolveAmount()));
+        }
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         for (Fragment fragment : fragments) {

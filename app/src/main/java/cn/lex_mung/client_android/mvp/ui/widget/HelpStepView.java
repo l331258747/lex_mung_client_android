@@ -51,6 +51,14 @@ public class HelpStepView extends LinearLayout {
 
     }
 
+    //3位的数组
+    public void initView(String[] strs) {
+        tv_1.setText(strs[0]);
+        tv_2.setText(strs[1]);
+        tv_3.setText(strs[2]);
+        tv_4.setText(strs[3]);
+    }
+
 
     public void setProgress(int progress){
         switch (progress){

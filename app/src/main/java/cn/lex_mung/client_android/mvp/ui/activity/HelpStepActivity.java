@@ -85,6 +85,9 @@ public class HelpStepActivity extends BaseActivity<HelpStepPresenter> implements
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        String[] strs = {"服务地域", "事项分类", "法律服务","标的额"};
+        helpStepView.initView(strs);
+
         mPresenter.getData();
     }
 
@@ -92,8 +95,8 @@ public class HelpStepActivity extends BaseActivity<HelpStepPresenter> implements
     public void setFragment(HelpStepEntity entity){
         fragments.add(helpStep1Fragment = HelpStep1Fragment.newInstance());
         fragments.add(helpStep2Fragment = HelpStep2Fragment.newInstance(entity.getSolutionType()));
-        fragments.add(helpStep3Fragment = HelpStep3Fragment.newInstance(entity.getRequirementInvolveAmount()));
         fragments.add(helpStep4Fragment = HelpStep4Fragment.newInstance(entity.getRequireType()));
+        fragments.add(helpStep3Fragment = HelpStep3Fragment.newInstance(entity.getRequirementInvolveAmount()));
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         for (Fragment fragment : fragments) {

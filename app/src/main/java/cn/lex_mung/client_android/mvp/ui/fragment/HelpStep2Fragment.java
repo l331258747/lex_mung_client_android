@@ -36,6 +36,7 @@ import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
 
+//服务事项 擅长领域
 public class HelpStep2Fragment extends BaseFragment<HelpStep2Presenter> implements HelpStep2Contract.View,WheelPicker.OnItemSelectedListener  {
 
     @BindView(R.id.tv_content)

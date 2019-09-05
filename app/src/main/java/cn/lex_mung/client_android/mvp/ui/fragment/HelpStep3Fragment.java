@@ -33,6 +33,7 @@ import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
 
+//涉及金额 标的额
 public class HelpStep3Fragment extends BaseFragment<HelpStep3Presenter> implements HelpStep3Contract.View {
 
     @BindView(R.id.tv_content)
@@ -83,9 +84,12 @@ public class HelpStep3Fragment extends BaseFragment<HelpStep3Presenter> implemen
     public void initData(@Nullable Bundle savedInstanceState) {
         if (getArguments() != null) {
             isShow = getArguments().getBoolean(BundleTags.IS_SHOW);
-            if(isShow){
-                tvBtn.setText("优选律师");
-            }
+//            if(isShow){
+//                tvBtn.setText("优选律师");
+//            }
+
+            tvBtn.setText("优选律师");
+
             mPresenter.onCreate((List<RequirementInvolveAmountBean>) getArguments().getSerializable(BundleTags.LIST));
         }
     }
@@ -150,8 +154,10 @@ public class HelpStep3Fragment extends BaseFragment<HelpStep3Presenter> implemen
                 if(isShow){
                     ((HelpStepChildActivity) this.getActivity()).goPreferredLawyer();
                 }else{
-                    ((HelpStepActivity) this.getActivity()).setIndex(3);
+//                    ((HelpStepActivity) this.getActivity()).setIndex(3);
+                    ((HelpStepActivity)this.getActivity()).goPreferredLawyer();
                 }
+
                 break;
         }
     }
