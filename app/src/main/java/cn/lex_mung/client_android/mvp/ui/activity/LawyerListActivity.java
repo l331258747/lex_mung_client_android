@@ -31,6 +31,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.di.component.DaggerLawyerListComponent;
 import cn.lex_mung.client_android.di.module.LawyerListModule;
 import cn.lex_mung.client_android.mvp.contract.LawyerListContract;
@@ -50,6 +51,7 @@ import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.CharacterHandler;
+import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.DeviceUtils;
 
 public class LawyerListActivity extends BaseActivity<LawyerListPresenter> implements LawyerListContract.View {
@@ -174,6 +176,7 @@ public class LawyerListActivity extends BaseActivity<LawyerListPresenter> implem
             mPresenter.setSolutionMarkId(bundleIntent.getInt(BundleTags.SOLUTION_TYPE_CHILD_ID, -1));
         }
 
+        setDefaultLocation();
         mPresenter.onCreate(smartRefreshLayout);
         etSearch.setFilters(new InputFilter[]{CharacterHandler.emojiFilter});
         etSearch.setOnEditorActionListener((v, actionId, event) -> {
@@ -489,6 +492,12 @@ public class LawyerListActivity extends BaseActivity<LawyerListPresenter> implem
 
             dismiss();
         });
+    }
+
+    private void setDefaultLocation(){
+        mPresenter.setRegionId(0,DataHelper.getIntergerSF(mActivity,DataHelperTags.LAUNCH_LOCATION));
+        if(!TextUtils.isEmpty(DataHelper.getStringSF(mActivity,DataHelperTags.LAUNCH_LOCATION_NAME)))
+            tvRegion.setText(DataHelper.getStringSF(mActivity,DataHelperTags.LAUNCH_LOCATION_NAME));
     }
 
     @Override

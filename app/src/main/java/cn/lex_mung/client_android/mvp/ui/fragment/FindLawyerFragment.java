@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputFilter;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.di.component.DaggerFindLawyerComponent;
 import cn.lex_mung.client_android.di.module.FindLawyerModule;
 import cn.lex_mung.client_android.mvp.contract.FindLawyerContract;
@@ -54,6 +56,7 @@ import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.CharacterHandler;
+import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.DeviceUtils;
 
 public class FindLawyerFragment extends BaseFragment<FindLawyerPresenter> implements FindLawyerContract.View {
@@ -140,6 +143,7 @@ public class FindLawyerFragment extends BaseFragment<FindLawyerPresenter> implem
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         isCreated = true;
+        setDefaultLocation();
         initAdapter();
         initRecyclerView();
         lawyerListAdapter.setEmptyView(R.layout.layout_loading_view, (ViewGroup) recyclerView.getParent());
@@ -487,6 +491,13 @@ public class FindLawyerFragment extends BaseFragment<FindLawyerPresenter> implem
             dismiss();
         });
     }
+
+    private void setDefaultLocation(){
+        mPresenter.setRegionId(0,DataHelper.getIntergerSF(mActivity,DataHelperTags.LAUNCH_LOCATION));
+        if(!TextUtils.isEmpty(DataHelper.getStringSF(mActivity,DataHelperTags.LAUNCH_LOCATION_NAME)))
+            tvRegion.setText(DataHelper.getStringSF(mActivity,DataHelperTags.LAUNCH_LOCATION_NAME));
+    }
+
 
     @Override
     public void setData(@Nullable Object data) {
