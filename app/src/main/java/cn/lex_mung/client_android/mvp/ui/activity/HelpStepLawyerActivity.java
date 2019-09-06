@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
@@ -91,12 +92,28 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
 
     @BindView(R.id.tv_content_city)
     TextView tvContentCity;
+    @BindView(R.id.tv_content_help)
+    TextView tvContentHelp;
+
     @BindView(R.id.tv_content_type)
     TextView tvContentType;
     @BindView(R.id.tv_content_money)
     TextView tvContentMoney;
-    @BindView(R.id.tv_content_help)
-    TextView tvContentHelp;
+
+    @BindView(R.id.ll_content_type)
+    LinearLayout llContentType;
+    @BindView(R.id.ll_content_money)
+    LinearLayout llContentMoney;
+
+    @BindView(R.id.tv_content_industry)
+    TextView tvContentIndustry;
+    @BindView(R.id.tv_content_pay_lawyer_money)
+    TextView tvContentPayLawyerMoney;
+
+    @BindView(R.id.ll_content_industry)
+    LinearLayout llContentIndustry;
+    @BindView(R.id.ll_content_pay_lawyer_money)
+    LinearLayout llContentPayLawyerMoney;
 
     HelpStepLawyerAdapter adapter;
     RecommendLawyerBean bean;
@@ -123,10 +140,12 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
     public void initData(@Nullable Bundle savedInstanceState) {
         buryingPointId = bundleIntent.getInt(BundleTags.BURYING_POINT, -1);
         mPresenter.getData(bundleIntent.getInt(BundleTags.REGION_ID),
-                bundleIntent.getInt(BundleTags.SOLUTION_TYPE_ID),
-                bundleIntent.getInt(BundleTags.AMOUNT_ID),
+                bundleIntent.getInt(BundleTags.SOLUTION_TYPE_ID,-1),
+                bundleIntent.getInt(BundleTags.AMOUNT_ID,-1),
                 requireTypeId = bundleIntent.getInt(BundleTags.REQUIRE_TYPE_ID),
-                0);
+                0,
+                bundleIntent.getInt(BundleTags.INDUSTRY_ID,-1),
+                bundleIntent.getInt(BundleTags.PAY_LAWYER_MONEY_ID,-1));
     }
 
     @Override
@@ -334,9 +353,38 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
 
     public void setContentLayout(FilterBean bean) {
         tvContentCity.setText(bean.getRegion());
-        tvContentMoney.setText(bean.getAmount());
-        tvContentType.setText(bean.getSolutionType());
         tvContentHelp.setText(bean.getRequireType());
+
+
+        if(requireTypeId == 6){
+            llContentMoney.setVisibility(View.GONE);
+        }else{
+            llContentMoney.setVisibility(View.VISIBLE);
+            tvContentMoney.setText(bean.getAmount());
+        }
+
+
+        if(TextUtils.isEmpty(bean.getSolutionType())){
+            llContentType.setVisibility(View.GONE);
+        }else{
+            llContentType.setVisibility(View.VISIBLE);
+            tvContentType.setText(bean.getSolutionType());
+        }
+
+        if(TextUtils.isEmpty(bean.getIndustry())){
+            llContentIndustry.setVisibility(View.GONE);
+        }else{
+            llContentIndustry.setVisibility(View.VISIBLE);
+            tvContentIndustry.setText(bean.getIndustry());
+        }
+
+        if(TextUtils.isEmpty(bean.getAfford())){
+            llContentPayLawyerMoney.setVisibility(View.GONE);
+        }else{
+            llContentPayLawyerMoney.setVisibility(View.VISIBLE);
+            tvContentPayLawyerMoney.setText(bean.getAfford());
+        }
+
     }
 
     public void setTitleLayout(List<RecommendLawyerBean> beans) {

@@ -8,23 +8,23 @@ public class HelpStepEntity {
     private List<RequireTypeBean> requireType;
     private List<RequirementInvolveAmountBean> requirementInvolveAmount;
     private List<SolutionTypeBean> solutionType;
-    private List<IndustryEntity> industryEntities;
-    private List<PayMoneyEntity> payMoneyEntities;
+    private List<IndustryEntity> industry;
+    private List<PayMoneyEntity> afford;
 
     public List<IndustryEntity> getIndustryEntities() {
-        return industryEntities;
+        return industry;
     }
 
-    public void setIndustryEntities(List<IndustryEntity> industryEntities) {
-        this.industryEntities = industryEntities;
+    public void setIndustryEntities(List<IndustryEntity> industry) {
+        this.industry = industry;
     }
 
     public List<PayMoneyEntity> getPayMoneyEntities() {
-        return payMoneyEntities;
+        return afford;
     }
 
-    public void setPayMoneyEntities(List<PayMoneyEntity> payMoneyEntities) {
-        this.payMoneyEntities = payMoneyEntities;
+    public void setPayMoneyEntities(List<PayMoneyEntity> afford) {
+        this.afford = afford;
     }
 
     public List<RequireTypeBean> getRequireType() {

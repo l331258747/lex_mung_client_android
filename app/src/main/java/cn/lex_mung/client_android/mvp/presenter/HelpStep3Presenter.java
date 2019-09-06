@@ -8,6 +8,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import cn.lex_mung.client_android.mvp.contract.HelpStep3Contract;
+import cn.lex_mung.client_android.mvp.model.entity.help.PayMoneyEntity;
 import cn.lex_mung.client_android.mvp.model.entity.help.RequirementInvolveAmountBean;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.zl.mvp.di.scope.FragmentScope;
@@ -56,10 +57,7 @@ public class HelpStep3Presenter extends BasePresenter<HelpStep3Contract.Model, H
         return moneyStrList;
     }
 
-    @Inject
-    public HelpStep3Presenter(HelpStep3Contract.Model model, HelpStep3Contract.View rootView) {
-        super(model, rootView);
-    }
+
 
     public void onCreate(List<RequirementInvolveAmountBean> datas){
         for (RequirementInvolveAmountBean item : datas){
@@ -68,6 +66,47 @@ public class HelpStep3Presenter extends BasePresenter<HelpStep3Contract.Model, H
         moneyList = datas;
     }
 
+    private List<PayMoneyEntity> payLawyerMoneyList = new ArrayList<>();
+    private List<String> payLawyerMoneyStrList = new ArrayList<>();
+    private String payLawyerMoney;
+    private int payLawyerMoneyId;
+
+    public int getPayLawyerMoneyId() {
+        return payLawyerMoneyId;
+    }
+
+    public void setPayLawyerMoneyId(int payLawyerMoneyId) {
+        this.payLawyerMoneyId = payLawyerMoneyId;
+    }
+
+    public String getPayLawyerMoney() {
+        return payLawyerMoney;
+    }
+
+    public void setPayLawyerMoney(String payLawyerMoney) {
+        this.payLawyerMoney = payLawyerMoney;
+    }
+
+    public List<PayMoneyEntity> getPayLawyerMoneyList() {
+        return payLawyerMoneyList;
+    }
+
+    public List<String> getPayLawyerMoneyStrList() {
+        return payLawyerMoneyStrList;
+    }
+
+
+    public void onCreate2(List<PayMoneyEntity> datas){
+        for (PayMoneyEntity item : datas){
+            payLawyerMoneyStrList.add(item.getText());
+        }
+        payLawyerMoneyList = datas;
+    }
+
+    @Inject
+    public HelpStep3Presenter(HelpStep3Contract.Model model, HelpStep3Contract.View rootView) {
+        super(model, rootView);
+    }
 
     @Override
     public void onDestroy() {

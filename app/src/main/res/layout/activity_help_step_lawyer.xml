@@ -377,11 +377,85 @@
                     tools:text="暂不了解" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/ll_content_industry"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/qb_px_30"
+                android:layout_marginTop="@dimen/qb_px_30"
+                android:layout_marginRight="@dimen/qb_px_30"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@+id/view_content"
+                app:layout_constraintStart_toStartOf="@+id/view_content"
+                app:layout_constraintTop_toBottomOf="@+id/ll_content_help">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="熟悉行业"
+                    android:textColor="@color/c_737373" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/qb_px_2"
+                    android:layout_marginLeft="@dimen/qb_px_20"
+                    android:layout_marginRight="@dimen/qb_px_20"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_dash_line"
+                    android:layerType="software" />
+
+                <TextView
+                    android:id="@+id/tv_content_industry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="@dimen/qb_px_400"
+                    android:textColor="@color/c_737373"
+                    tools:text="阿斯蒂芬地方搞活动道风黄阁静豆腐干货款地方规划" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_content_pay_lawyer_money"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/qb_px_30"
+                android:layout_marginTop="@dimen/qb_px_30"
+                android:layout_marginRight="@dimen/qb_px_30"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@+id/view_content"
+                app:layout_constraintStart_toStartOf="@+id/view_content"
+                app:layout_constraintTop_toBottomOf="@+id/ll_content_industry">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="愿意支付的律师费"
+                    android:textColor="@color/c_737373" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/qb_px_2"
+                    android:layout_marginLeft="@dimen/qb_px_20"
+                    android:layout_marginRight="@dimen/qb_px_20"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_dash_line"
+                    android:layerType="software" />
+
+                <TextView
+                    android:id="@+id/tv_content_pay_lawyer_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/c_737373"
+                    tools:text="暂不了解" />
+            </LinearLayout>
+
+
             <View
                 android:id="@+id/view_content_bottom"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/qb_px_30"
-                app:layout_constraintTop_toBottomOf="@id/ll_content_help" />
+                app:layout_constraintTop_toBottomOf="@id/ll_content_pay_lawyer_money" />
 
             <View
                 android:id="@+id/view_line"

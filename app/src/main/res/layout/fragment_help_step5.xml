@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -23,17 +24,19 @@
     <View
         android:id="@+id/view_select"
         android:layout_width="0dp"
-        android:layout_height="@dimen/qb_px_80"
-        android:layout_marginTop="@dimen/qb_px_110"
+        android:layout_height="0dp"
         android:layout_marginLeft="@dimen/qb_px_40"
+        android:layout_marginTop="@dimen/qb_px_110"
         android:layout_marginRight="@dimen/qb_px_40"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="@id/gl_right"
         app:layout_constraintStart_toStartOf="@id/gl_left"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/view_line_bottom"/>
 
 
     <View
+        android:id="@+id/view_line_top"
         android:layout_width="0dp"
         android:layout_height="@dimen/qb_px_1"
         android:background="@color/c_d7d7d7"
@@ -47,41 +50,44 @@
         android:layout_height="wrap_content"
         android:text="律师熟悉行业"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/view_select"
+        app:layout_constraintBottom_toBottomOf="@+id/view_line_bottom"
         app:layout_constraintStart_toStartOf="@+id/view_select"
-        app:layout_constraintTop_toTopOf="@+id/view_select" />
+        app:layout_constraintTop_toTopOf="@+id/view_line_top" />
 
     <ImageView
         android:id="@+id/iv_next"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/qb_px_35"
         android:src="@drawable/ic_green_next2"
-        app:layout_constraintBottom_toBottomOf="@+id/view_select"
+        app:layout_constraintBottom_toBottomOf="@+id/view_line_bottom"
         app:layout_constraintEnd_toEndOf="@+id/view_select"
-        app:layout_constraintTop_toTopOf="@+id/view_select" />
+        app:layout_constraintTop_toTopOf="@+id/view_line_top" />
 
     <TextView
         android:id="@+id/tv_content"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/qb_px_20"
-        android:hint="请选择"
         android:layout_marginLeft="@dimen/qb_px_20"
-        android:gravity="right"
-        app:layout_constraintStart_toEndOf="@+id/tv_title"
-        android:textColorHint="@color/c_1EC78A"
+        android:layout_marginRight="@dimen/qb_px_20"
+        android:gravity="right|center_vertical"
+        android:hint="请选择"
         android:textColor="@color/c_1EC78A"
-        app:layout_constraintBottom_toBottomOf="@+id/view_select"
+        android:minHeight="@dimen/qb_px_80"
+        android:textColorHint="@color/c_1EC78A"
+        app:layout_constraintBottom_toBottomOf="@+id/view_line_bottom"
         app:layout_constraintEnd_toStartOf="@+id/iv_next"
-        app:layout_constraintTop_toTopOf="@+id/view_select" />
+        app:layout_constraintStart_toEndOf="@+id/tv_title"
+        app:layout_constraintTop_toTopOf="@+id/view_line_top"
+        tools:text="阿萨德刚卡" />
 
     <View
+        android:id="@+id/view_line_bottom"
         android:layout_width="0dp"
         android:layout_height="@dimen/qb_px_1"
         android:background="@color/c_d7d7d7"
-        app:layout_constraintBottom_toBottomOf="@+id/view_select"
         app:layout_constraintEnd_toEndOf="@+id/view_select"
-        app:layout_constraintStart_toStartOf="@+id/view_select" />
+        app:layout_constraintStart_toStartOf="@+id/view_select"
+        app:layout_constraintTop_toBottomOf="@+id/tv_content" />
 
 
     <TextView
@@ -89,22 +95,22 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/qb_px_30"
         android:text="根据您的不同行业，我们将通过大数据匹配擅长该分类的律师进行优选推荐。"
-        app:layout_constraintEnd_toEndOf="@+id/view_select"
         android:textColor="@color/c_d7d7d7"
+        app:layout_constraintEnd_toEndOf="@+id/view_select"
         app:layout_constraintStart_toStartOf="@+id/view_select"
         app:layout_constraintTop_toBottomOf="@+id/view_select" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/qb_px_150"
-        app:layout_constraintBottom_toTopOf="parent"
-        android:background="@drawable/ic_bottom_bg"/>
+        android:background="@drawable/ic_bottom_bg"
+        app:layout_constraintBottom_toTopOf="parent" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/qb_px_200"
-        app:layout_constraintBottom_toTopOf="parent"
-        android:background="@drawable/ic_bottom_bg"/>
+        android:background="@drawable/ic_bottom_bg"
+        app:layout_constraintBottom_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_btn"
@@ -123,7 +129,7 @@
         android:id="@+id/view_bottom"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qb_px_1"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>

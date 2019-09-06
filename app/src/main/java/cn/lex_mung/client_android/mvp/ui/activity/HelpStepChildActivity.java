@@ -7,37 +7,28 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
-import android.widget.FrameLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.di.component.DaggerHelpStepChildComponent;
 import cn.lex_mung.client_android.di.module.HelpStepChildModule;
+import cn.lex_mung.client_android.mvp.contract.HelpStepChildContract;
 import cn.lex_mung.client_android.mvp.model.entity.help.HelpStepEntity;
-import cn.lex_mung.client_android.mvp.model.entity.help.IndustryEntity;
-import cn.lex_mung.client_android.mvp.model.entity.help.PayMoneyEntity;
+import cn.lex_mung.client_android.mvp.presenter.HelpStepChildPresenter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
-
 import cn.lex_mung.client_android.mvp.ui.fragment.HelpStep1Fragment;
 import cn.lex_mung.client_android.mvp.ui.fragment.HelpStep2Fragment;
 import cn.lex_mung.client_android.mvp.ui.fragment.HelpStep3Fragment;
-import cn.lex_mung.client_android.mvp.ui.fragment.HelpStep4Fragment;
 import cn.lex_mung.client_android.mvp.ui.fragment.HelpStep5Fragment;
-import cn.lex_mung.client_android.mvp.ui.fragment.HelpStep6Fragment;
 import cn.lex_mung.client_android.mvp.ui.widget.HelpStepChildView;
-import cn.lex_mung.client_android.mvp.ui.widget.HelpStepView;
 import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
-
-import cn.lex_mung.client_android.di.component.DaggerHelpStepChildComponent;
-import cn.lex_mung.client_android.mvp.contract.HelpStepChildContract;
-import cn.lex_mung.client_android.mvp.presenter.HelpStepChildPresenter;
-
-import cn.lex_mung.client_android.R;
 
 public class HelpStepChildActivity extends BaseActivity<HelpStepChildPresenter> implements HelpStepChildContract.View {
 
@@ -53,7 +44,6 @@ public class HelpStepChildActivity extends BaseActivity<HelpStepChildPresenter> 
     HelpStep2Fragment helpStep2Fragment;
     HelpStep3Fragment helpStep3Fragment;
     HelpStep5Fragment helpStep5Fragment;
-    HelpStep6Fragment helpStep6Fragment;
 
     int requireTypeId;
 
@@ -80,16 +70,20 @@ public class HelpStepChildActivity extends BaseActivity<HelpStepChildPresenter> 
         bundle.clear();
 
         if(requireTypeId == 6){//法律顾问
-            bundle.putInt(BundleTags.REGION_ID, helpStep1Fragment.getRegionId());
-            bundle.putInt(BundleTags.INDUSTRY_ID, helpStep5Fragment.getIndustryId());//熟悉行业
-            bundle.putInt(BundleTags.PAY_LAWYER_MONEY_ID, helpStep6Fragment.getPayMoneyIdId());//愿意支付的律师费
-            bundle.putInt(BundleTags.REQUIRE_TYPE_ID, requireTypeId);
+            bundle.putInt(BundleTags.REGION_ID,helpStep1Fragment.getRegionId());
+            bundle.putInt(BundleTags.SOLUTION_TYPE_ID,-1);
+            bundle.putInt(BundleTags.PAY_LAWYER_MONEY_ID,helpStep3Fragment.getPayLawyerMoneyId());
+            bundle.putInt(BundleTags.AMOUNT_ID,-1);
+            bundle.putInt(BundleTags.INDUSTRY_ID,helpStep5Fragment.getIndustryId());
+            bundle.putInt(BundleTags.REQUIRE_TYPE_ID,requireTypeId);
             bundle.putInt(BundleTags.BURYING_POINT,1);
         }else{
-            bundle.putInt(BundleTags.REGION_ID, helpStep1Fragment.getRegionId());
-            bundle.putInt(BundleTags.SOLUTION_TYPE_ID, helpStep2Fragment.getTypeId());
-            bundle.putInt(BundleTags.AMOUNT_ID, helpStep3Fragment.getAmountId());
-            bundle.putInt(BundleTags.REQUIRE_TYPE_ID, requireTypeId);
+            bundle.putInt(BundleTags.REGION_ID,helpStep1Fragment.getRegionId());
+            bundle.putInt(BundleTags.SOLUTION_TYPE_ID,helpStep2Fragment.getTypeId());
+            bundle.putInt(BundleTags.PAY_LAWYER_MONEY_ID,-1);
+            bundle.putInt(BundleTags.AMOUNT_ID,helpStep3Fragment.getAmountId());
+            bundle.putInt(BundleTags.INDUSTRY_ID,-1);
+            bundle.putInt(BundleTags.REQUIRE_TYPE_ID,requireTypeId);
             bundle.putInt(BundleTags.BURYING_POINT,1);
         }
 
@@ -132,34 +126,18 @@ public class HelpStepChildActivity extends BaseActivity<HelpStepChildPresenter> 
     }
 
     @Override
-    public void setFragment(HelpStepEntity entity) { //TODO
-        List<IndustryEntity> industryEntities = new ArrayList<>();
-        for (int i=0;i<10;i++){
-            IndustryEntity item = new IndustryEntity();
-            item.setId(i);
-            item.setText("熟悉行业 " + i);
-            industryEntities.add(item);
-        }
-        entity.setIndustryEntities(industryEntities);
-
-        List<PayMoneyEntity> payMoneyEntities = new ArrayList<>();
-        for (int i=0;i<10;i++){
-            PayMoneyEntity item = new PayMoneyEntity();
-            item.setId(i);
-            item.setText("愿意支付的律师费 " + i);
-            payMoneyEntities.add(item);
-        }
-        entity.setPayMoneyEntities(payMoneyEntities);
-
+    public void setFragment(HelpStepEntity entity) {
 
         if(requireTypeId == 6){//法律顾问
             fragments.add(helpStep1Fragment = HelpStep1Fragment.newInstance(true));
             fragments.add(helpStep5Fragment = HelpStep5Fragment.newInstance(entity.getIndustryEntities()));
-            fragments.add(helpStep6Fragment = HelpStep6Fragment.newInstance(entity.getPayMoneyEntities()));
+            fragments.add(helpStep3Fragment = HelpStep3Fragment.newInstance(true, entity.getRequirementInvolveAmount(),entity.getPayMoneyEntities()));
+            helpStep3Fragment.setType(6);
         }else{
             fragments.add(helpStep1Fragment = HelpStep1Fragment.newInstance(true));
             fragments.add(helpStep2Fragment = HelpStep2Fragment.newInstance(true, entity.getSolutionType()));
-            fragments.add(helpStep3Fragment = HelpStep3Fragment.newInstance(true, entity.getRequirementInvolveAmount()));
+            fragments.add(helpStep3Fragment = HelpStep3Fragment.newInstance(true, entity.getRequirementInvolveAmount(),entity.getPayMoneyEntities()));
+            helpStep3Fragment.setType(0);
         }
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

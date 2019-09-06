@@ -22,6 +22,7 @@ import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.component.DaggerHelpStep3Component;
 import cn.lex_mung.client_android.di.module.HelpStep3Module;
 import cn.lex_mung.client_android.mvp.contract.HelpStep3Contract;
+import cn.lex_mung.client_android.mvp.model.entity.help.PayMoneyEntity;
 import cn.lex_mung.client_android.mvp.model.entity.help.RequirementInvolveAmountBean;
 import cn.lex_mung.client_android.mvp.presenter.HelpStep3Presenter;
 import cn.lex_mung.client_android.mvp.ui.activity.HelpStepActivity;
@@ -42,24 +43,35 @@ public class HelpStep3Fragment extends BaseFragment<HelpStep3Presenter> implemen
     View viewBottom;
     @BindView(R.id.tv_btn)
     TextView tvBtn;
+    @BindView(R.id.tv_title)
+    TextView tv_title;
+    @BindView(R.id.tv_tip)
+    TextView tv_tip;
 
     EasyDialog easyDialog;
 
     int amountId = -1;
     boolean isShow;
 
+    int payLawyerMoneyId = -1;
+
     public int getAmountId() {
         return amountId;
     }
 
-    public static HelpStep3Fragment newInstance(List<RequirementInvolveAmountBean> entitys) {
-        return newInstance(false,entitys);
+    public int getPayLawyerMoneyId(){
+        return payLawyerMoneyId;
     }
 
-    public static HelpStep3Fragment newInstance(boolean isShow, List<RequirementInvolveAmountBean> entitys) {
+    public static HelpStep3Fragment newInstance(List<RequirementInvolveAmountBean> entitys, List<PayMoneyEntity> payMoneyEntities) {
+        return newInstance(false,entitys,payMoneyEntities);
+    }
+
+    public static HelpStep3Fragment newInstance(boolean isShow, List<RequirementInvolveAmountBean> entitys, List<PayMoneyEntity> payMoneyEntities) {
         HelpStep3Fragment fragment = new HelpStep3Fragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(BundleTags.LIST, (Serializable) entitys);
+        bundle.putSerializable(BundleTags.LIST_2, (Serializable) payMoneyEntities);
         bundle.putBoolean(BundleTags.IS_SHOW, isShow);
         fragment.setArguments(bundle);
         return fragment;
@@ -80,18 +92,50 @@ public class HelpStep3Fragment extends BaseFragment<HelpStep3Presenter> implemen
         return inflater.inflate(R.layout.fragment_help_step3, container, false);
     }
 
+    boolean isCreate;
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         if (getArguments() != null) {
             isShow = getArguments().getBoolean(BundleTags.IS_SHOW);
-//            if(isShow){
-//                tvBtn.setText("优选律师");
-//            }
-
             tvBtn.setText("优选律师");
 
             mPresenter.onCreate((List<RequirementInvolveAmountBean>) getArguments().getSerializable(BundleTags.LIST));
+            mPresenter.onCreate2((List<PayMoneyEntity>) getArguments().getSerializable(BundleTags.LIST_2));
+
+            isCreate = true;
+
+            if(requireType == 6){
+                tv_title.setText("愿意支付的费用");
+                tv_tip.setText("法律顾问的律师费为按年收费，愿意支付费用的多少会直接影响推荐律师的执业年限、行业经验等。");
+            }else{
+                tv_title.setText("涉案金额");
+                tv_tip.setText("涉及金额是法律服务中一项重要的判断依据，会直接影响到推荐给您的法律服务。");
+            }
         }
+    }
+
+    int requireType;
+    public void setType(int requireType){
+        this.requireType = requireType;
+
+        if(!isCreate) return;
+
+        mPresenter.setMoney("");
+        mPresenter.setPayLawyerMoney("");
+        mPresenter.setAmountId(-1);
+        mPresenter.setPayLawyerMoneyId(-1);
+
+        tvContent.setText(mPresenter.getMoney());
+
+        amountId = mPresenter.getAmountId();
+        payLawyerMoneyId = mPresenter.getPayLawyerMoneyId();
+
+        if(requireType == 6){
+            tv_title.setText("愿意支付的费用");
+        }else{
+            tv_title.setText("涉案金额");
+        }
+
     }
 
     /**
@@ -122,12 +166,45 @@ public class HelpStep3Fragment extends BaseFragment<HelpStep3Presenter> implemen
         });
     }
 
+    /**
+     * 选择问题类型
+     */
+    @SuppressLint("InflateParams")
+    private void showSelectTypeDialog2() {
+        View layout = getLayoutInflater().inflate(R.layout.layout_select_industry_dialog, null);
+        initDialog(layout);
+        WheelPicker wpConsultType = layout.findViewById(R.id.wheel_1);
+        wpConsultType.setCurved(false);
+        wpConsultType.setVisibleItemCount(6);
+        wpConsultType.setOnItemSelectedListener((picker, data, position) -> {
+            mPresenter.setPayLawyerMoney(data.toString());
+            mPresenter.setPayLawyerMoneyId(mPresenter.getPayLawyerMoneyList().get(position).getId());
+        });
+        wpConsultType.setData(mPresenter.getPayLawyerMoneyStrList());
+        wpConsultType.setSelectedItemPosition(0);
+
+        mPresenter.setPayLawyerMoney(mPresenter.getPayLawyerMoneyList().get(0).getText());
+        mPresenter.setPayLawyerMoneyId(mPresenter.getPayLawyerMoneyList().get(0).getId());
+
+        layout.findViewById(R.id.tv_cancel).setOnClickListener(v -> dismiss());
+        layout.findViewById(R.id.tv_confirm).setOnClickListener(v -> {
+            tvContent.setText(mPresenter.getPayLawyerMoney());
+            payLawyerMoneyId = mPresenter.getPayLawyerMoneyId();
+            dismiss();
+        });
+    }
+
+
     @OnClick({R.id.view_select, R.id.tv_btn})
     public void onViewClicked(View view) {
         if (isFastClick()) return;
         switch (view.getId()) {
             case R.id.view_select:
-                showSelectTypeDialog();
+                if(requireType == 6){
+                    showSelectTypeDialog2();
+                }else{
+                    showSelectTypeDialog();
+                }
                 break;
             case R.id.tv_btn:
 
@@ -147,10 +224,16 @@ public class HelpStep3Fragment extends BaseFragment<HelpStep3Presenter> implemen
                     BuryingPointHelp.getInstance().onEvent(mActivity, "first_assistant_target_amount_page","first_assistant_target_amount_page_next_click");
                 }
 
-                if(amountId == -1){
+                if(requireType == 6 && payLawyerMoneyId == -1){
+                    showMessage("请选择愿意支付的律师费用");
+                    return;
+                }
+
+                if(requireType != 6 && amountId == -1){
                     showMessage("请选择涉及金额");
                     return;
                 }
+
                 if(isShow){
                     ((HelpStepChildActivity) this.getActivity()).goPreferredLawyer();
                 }else{

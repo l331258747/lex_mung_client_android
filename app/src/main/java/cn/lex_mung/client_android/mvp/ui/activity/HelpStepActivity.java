@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.widget.FrameLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +70,9 @@ public class HelpStepActivity extends BaseActivity<HelpStepPresenter> implements
         bundle.clear();
         bundle.putInt(BundleTags.REGION_ID,helpStep1Fragment.getRegionId());
         bundle.putInt(BundleTags.SOLUTION_TYPE_ID,helpStep2Fragment.getTypeId());
+        bundle.putInt(BundleTags.PAY_LAWYER_MONEY_ID,helpStep3Fragment.getAmountId());
         bundle.putInt(BundleTags.AMOUNT_ID,helpStep3Fragment.getAmountId());
+        bundle.putInt(BundleTags.INDUSTRY_ID,-1);
         bundle.putInt(BundleTags.REQUIRE_TYPE_ID,helpStep4Fragment.getTypeId());
         launchActivity(new Intent(mActivity,HelpStepLawyerActivity.class),bundle);
 
@@ -91,12 +92,26 @@ public class HelpStepActivity extends BaseActivity<HelpStepPresenter> implements
         mPresenter.getData();
     }
 
+    int requireType;
+    public void setType(int requireType){
+        this.requireType = requireType;
+        if(requireType == 6){
+            String[] strs = {"服务地域", "事项分类", "法律服务","愿意支付费用"};
+            helpStepView.initView(strs);
+        }else{
+            String[] strs = {"服务地域", "事项分类", "法律服务","标的额"};
+            helpStepView.initView(strs);
+        }
+
+        helpStep3Fragment.setType(requireType);
+    }
+
     @Override
     public void setFragment(HelpStepEntity entity){
         fragments.add(helpStep1Fragment = HelpStep1Fragment.newInstance());
         fragments.add(helpStep2Fragment = HelpStep2Fragment.newInstance(entity.getSolutionType()));
         fragments.add(helpStep4Fragment = HelpStep4Fragment.newInstance(entity.getRequireType()));
-        fragments.add(helpStep3Fragment = HelpStep3Fragment.newInstance(entity.getRequirementInvolveAmount()));
+        fragments.add(helpStep3Fragment = HelpStep3Fragment.newInstance(entity.getRequirementInvolveAmount(),entity.getPayMoneyEntities()));
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         for (Fragment fragment : fragments) {

@@ -42,8 +42,10 @@ public class HelpStepLawyerPresenter extends BasePresenter<HelpStepLawyerContrac
                         int solutionTypeId,
                         int amountId,
                         int requireTypeId,
-                        int memberId) {
-        mModel.assistantRecommendLawyers(regionId, solutionTypeId, amountId, requireTypeId,memberId)
+                        int memberId,
+                        int industryId,
+                        int affordFeeId) {
+        mModel.assistantRecommendLawyers(regionId, solutionTypeId, amountId, requireTypeId, memberId, industryId, affordFeeId)
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))

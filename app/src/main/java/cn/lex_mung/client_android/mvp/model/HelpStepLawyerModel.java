@@ -48,13 +48,23 @@ public class HelpStepLawyerModel extends BaseModel implements HelpStepLawyerCont
                                                                                     int solutionTypeId,
                                                                                     int amountId,
                                                                                     int requireTypeId,
-                                                                                    int memberId) {
+                                                                                    int memberId,
+                                                                                    int industryId,
+                                                                                    int affordFeeId) {
         Map<String, Object> map = new HashMap<>();
         map.put("regionId",regionId);
-        map.put("solutionTypeId",solutionTypeId);
         map.put("requireTypeId",requireTypeId);
-        map.put("amountId",amountId);
         map.put("memberId",memberId);
+
+        if(solutionTypeId != -1)
+            map.put("solutionTypeId",solutionTypeId);
+        if(amountId != -1)
+            map.put("amountId",amountId);
+        if(industryId != -1)
+            map.put("industryId",industryId);
+        if(affordFeeId != -1)
+            map.put("affordFeeId",affordFeeId);
+
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map));
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)

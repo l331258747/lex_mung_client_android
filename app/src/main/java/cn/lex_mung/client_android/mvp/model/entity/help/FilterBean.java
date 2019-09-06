@@ -12,6 +12,18 @@ public class FilterBean {
     private String solutionType;
     private String requireType;
     private String amount;
+    private String afford;
+    private String industry;
+
+    public String getAfford() {
+        if(afford.equals("不限")) return "";
+        return afford;
+    }
+
+    public String getIndustry() {
+        if(industry.equals("不限")) return "";
+        return industry;
+    }
 
     public String getRegion() {
         return region;
@@ -22,6 +34,7 @@ public class FilterBean {
     }
 
     public String getSolutionType() {
+        if(solutionType.equals("不限")) return "";
         return solutionType;
     }
 

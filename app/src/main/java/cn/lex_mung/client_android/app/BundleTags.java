@@ -17,6 +17,7 @@ public class BundleTags {
     public static final String MEMBER_ID = "member_id";
     public static final String L_MEMBER_ID = "l_member_id";
     public static final String LIST = "list";
+    public static final String LIST_2 = "list_2";
     public static final String LEVEL = "level";
     public static final String REGION_ID = "regionId";
     public static final String CONSULTATION_ID = "consultation_id";

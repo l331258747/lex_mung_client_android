@@ -84,6 +84,8 @@ public class HelpStep4Fragment extends BaseFragment<HelpStep4Presenter> implemen
             if (isFastClick()) return;
             typeId = adapter.getItem(position).getRequireTypeId();
             adapter.setSelection(typeId);
+
+            ((HelpStepActivity) this.getActivity()).setType(typeId);
         });
     }
 
