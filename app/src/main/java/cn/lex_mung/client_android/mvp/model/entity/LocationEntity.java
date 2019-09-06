@@ -3,16 +3,14 @@ package cn.lex_mung.client_android.mvp.model.entity;
 public class LocationEntity {
 
     String city;
+    String cityId;
     String cityParent;
     String error;
-    double longitude;
-    double latitude;
 
-    public LocationEntity(String city, String cityParent, double longitude, double latitude) {
+    public LocationEntity(String city, String cityParent, String cityId) {
         this.city = city;
         this.cityParent = cityParent;
-        this.longitude = longitude;
-        this.latitude = latitude;
+        this.cityId = cityId;
     }
 
     public LocationEntity(String error) {
@@ -24,6 +22,20 @@ public class LocationEntity {
     }
 
 
+    public String getCityId() {
+        return cityId;
+    }
+
+    public int getCityIdInt(){
+        int cityIdInt = 0;
+        try {
+            cityIdInt = Integer.valueOf(cityId);
+        }catch (Exception e){
+            return cityIdInt;
+        }
+        return cityIdInt;
+    }
+
     public String getCityParent() {
         return cityParent;
     }
@@ -32,11 +44,4 @@ public class LocationEntity {
         return error;
     }
 
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public double getLatitude() {
-        return latitude;
-    }
 }

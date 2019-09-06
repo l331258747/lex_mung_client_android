@@ -136,19 +136,20 @@ public class LaunchPresenter extends BasePresenter<LaunchContract.Model, LaunchC
         }
 
         LocationUtil locationUtil = new LocationUtil();
-        locationUtil.startLocation(mRootView.getActivity().getApplicationContext(), (code, adress)->{
+        locationUtil.startLocation(mApplication, (code, adress)->{
             if (code == 0) {
-                cityjson(true, getCityStrToData(adress.getCity()));
+                cityjson(true, adress.getCityIdInt(),adress.getCity());
             } else {
                 cityjson(false);
             }
         });
     }
 
-    public void cityjson(boolean isLocation, int cityId) {
+    public void cityjson(boolean isLocation, int cityId,String city) {
         LogUtil.e("手机定位cityId： " + cityId);
         if (isLocation) {
             DataHelper.setIntergerSF(mApplication, DataHelperTags.LAUNCH_LOCATION, cityId);
+            DataHelper.setStringSF(mApplication, DataHelperTags.LAUNCH_LOCATION_NAME, city);
             mRootView.launch();
             return;
         }
@@ -167,6 +168,7 @@ public class LaunchPresenter extends BasePresenter<LaunchContract.Model, LaunchC
                     public void onNext(LaunchLocationEntity baseResponse) {
                         LogUtil.e("ip定位cityId： " + baseResponse.getAdcodeInt());
                         DataHelper.setIntergerSF(mApplication, DataHelperTags.LAUNCH_LOCATION, baseResponse.getAdcodeInt());
+                        DataHelper.setStringSF(mApplication,DataHelperTags.LAUNCH_LOCATION_NAME, baseResponse.getCity());
                         mRootView.launch();
                     }
 
@@ -175,27 +177,29 @@ public class LaunchPresenter extends BasePresenter<LaunchContract.Model, LaunchC
                         LogUtil.e("ip定位失败cityId： " + 0);
 //                        DataHelper.setIntergerSF(mApplication, DataHelperTags.LAUNCH_LOCATION, 430100);//默认定位长沙
                         DataHelper.setIntergerSF(mApplication, DataHelperTags.LAUNCH_LOCATION, 0);//默认定位长沙
+                        DataHelper.setStringSF(mApplication,DataHelperTags.LAUNCH_LOCATION_NAME, "");
                         mRootView.launch();
                     }
                 });
     }
 
     public void cityjson(boolean isLocation) {
-        this.cityjson(isLocation, 0);
+        this.cityjson(isLocation, 0,"");
     }
 
-    //str 为长沙   通过本地json数据判断str
-    public int getCityStrToData(String str) {
-        for (int i = 0; i < list.size(); i++) {
-            List<RegionEntity> list1 = list.get(i).getChild();
-            for (int j = 0; j < list1.size(); j++) {
-                if (list1.get(j).getName().startsWith(str)) {
-                    return list1.get(j).getRegionId();
-                }
-            }
-        }
-        return 0;
-    }
+
+    //    //str 为长沙   通过本地json数据判断str
+//    public int getCityStrToData(String str) {
+//        for (int i = 0; i < list.size(); i++) {
+//            List<RegionEntity> list1 = list.get(i).getChild();
+//            for (int j = 0; j < list1.size(); j++) {
+//                if (list1.get(j).getName().startsWith(str)) {
+//                    return list1.get(j).getRegionId();
+//                }
+//            }
+//        }
+//        return 0;
+//    }
 
     private void getAllDepreg() {
         mModel.appStartUp()
