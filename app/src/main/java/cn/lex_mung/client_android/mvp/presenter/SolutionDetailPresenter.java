@@ -260,6 +260,13 @@ public class SolutionDetailPresenter extends BasePresenter<SolutionDetailContrac
 
     //用来获取弹窗集合，以及存储缓存
     public List<ActivityEntity> getNeedActivityDialogEntities(List<ActivityEntity> entities) {
+        /*
+        targetUsers	目标用户（1所有用户，2首次打开，3用户组，4律师组）
+        name	弹窗名字
+        id	弹窗id
+        url	关联跳转
+        iconImage	关联图片
+         */
 
         List<ActivityEntity> needEntities = new ArrayList<>();//需要弹窗的集合
 
@@ -283,6 +290,9 @@ public class SolutionDetailPresenter extends BasePresenter<SolutionDetailContrac
         for (ActivityEntity item : entities) {
             if (TextUtils.isEmpty(item.getIconImage()))//不是图片地址的剔除
                 continue;
+            if(item.getTargetUsers() == 4)
+                continue;
+
             if (item.getTargetUsers() == 2) {//如果为2 首次进入弹窗
                 if (!hasCache) {//如果缓存中没有数据，把数据全部加进缓存集合、弹窗集合。
                     ActivityDialogEntity activityDialogEntity = new ActivityDialogEntity();
