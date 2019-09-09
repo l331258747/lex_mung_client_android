@@ -68,6 +68,7 @@ public class ActivityDialog extends Dialog {
                             .builder()
                             .isCenterCrop(false)
                             .url(imgUrl)
+                            .errorPic(R.drawable.activity_img)
                             .imageView(iv_img)
                             .build());
         }
