@@ -5,16 +5,21 @@ import android.content.Intent;
 
 import com.google.gson.Gson;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.api.BasicCallback;
 import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.mvp.contract.MainContract;
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.VersionEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.OnlineUrlEntity;
+import cn.lex_mung.client_android.mvp.model.entity.other.ActivityEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.EditInfoActivity;
 import cn.lex_mung.client_android.utils.LogUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -30,6 +35,7 @@ import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.LogUtils;
 import me.zl.mvp.utils.RxLifecycleUtils;
+import okhttp3.RequestBody;
 
 @ActivityScope
 public class MainPresenter extends BasePresenter<MainContract.Model, MainContract.View> {
@@ -45,6 +51,29 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
     @Inject
     public MainPresenter(MainContract.Model model, MainContract.View rootView) {
         super(model, rootView);
+    }
+
+    public void popupList(){
+        Map<String, Object> map = new HashMap<>();
+        map.put("solutionTypeId", 11111);
+        map.put("device", 2);
+        mModel.popupList(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> {
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<ActivityEntity>>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<BaseListEntity<ActivityEntity>> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            mRootView.showActivityDialog(baseResponse.getData().getList());
+                        }
+                    }
+                });
     }
 
     public void checkVersion() {
@@ -68,6 +97,7 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
                             LogUtil.e("您当前是最新版本!");
                             setHelpDialog();
                             getOnlineUrl();
+                            popupList();
                         }
                     }
 
@@ -76,13 +106,14 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
                         super.onError(t);
                         setHelpDialog();
                         getOnlineUrl();
+                        popupList();
                     }
                 });
     }
 
     public void setHelpDialog() {
         if (!DataHelper.getBooleanSF(mRootView.getActivity(), DataHelperTags.IS_ONE_IN)) {
-            DataHelper.setBooleanSF(mRootView.getActivity(), DataHelperTags.IS_ONE_IN, true);
+//            DataHelper.setBooleanSF(mRootView.getActivity(), DataHelperTags.IS_ONE_IN, true);
             mRootView.showHelpDialog();
         }
     }
@@ -137,6 +168,7 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
 
     @Override
     public void onDestroy() {
+        DataHelper.setBooleanSF(mRootView.getActivity(), DataHelperTags.IS_ONE_IN, true);
         super.onDestroy();
         this.mErrorHandler = null;
         this.mAppManager = null;

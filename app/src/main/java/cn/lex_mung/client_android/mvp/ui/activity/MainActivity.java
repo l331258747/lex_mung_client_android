@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.jpush.im.android.api.JMessageClient;
@@ -32,7 +34,9 @@ import cn.lex_mung.client_android.di.module.MainModule;
 import cn.lex_mung.client_android.mvp.contract.MainContract;
 import cn.lex_mung.client_android.mvp.model.api.Api;
 import cn.lex_mung.client_android.mvp.model.entity.VersionEntity;
+import cn.lex_mung.client_android.mvp.model.entity.other.ActivityEntity;
 import cn.lex_mung.client_android.mvp.presenter.MainPresenter;
+import cn.lex_mung.client_android.mvp.ui.dialog.ActivityDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.FabDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.HelpStepDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
@@ -46,11 +50,15 @@ import cn.lex_mung.client_android.utils.BuryingPointHelp;
 import me.zl.mvp.base.AdapterViewPager;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
+import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.StatusBarUtil;
 
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View {
+    @Inject
+    ImageLoader mImageLoader;
+
     @BindView(R.id.view_pager)
     CustomScrollViewPager viewPager;
     @BindView(R.id.bottom_navigation_view_ex)
@@ -111,6 +119,51 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 .setContent2("· 不知道当前是否需要法律服务\n· 不知道选择什么样的律师\n· 不知道适合自己的律师费用")
                 .setCannelStr("不需要")
                 .setSubmitStr("试试看").show();
+    }
+
+    @Override
+    public void showActivityDialog(List<ActivityEntity> entities) {
+        if (entities == null || entities.size() == 0) return;//TODO
+        /*
+        targetUsers	目标用户（1所有用户，2首次打开，3用户组，4律师组）
+        name	弹窗名字
+        id	弹窗id
+        url	关联跳转
+        buttonName	按钮名称
+        sortOrder	序号
+        targetUsersGroup	目标用户关联组
+        purpose	用途
+        iconImage	关联图片
+         */
+        for (ActivityEntity item : entities) {
+            if(TextUtils.isEmpty(item.getIconImage()))
+                continue;
+
+            if(item.getTargetUsers() == 1){
+
+            }else if(item.getTargetUsers() == 2){
+                if(DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_ONE_IN))
+                    continue;
+            }else if(item.getTargetUsers() == 3){
+                //TODO 通过targetUsersGroup判断用户是否在用户组
+            }else if(item.getTargetUsers() == 4){
+                continue;
+            }
+
+            new ActivityDialog(mActivity,
+                    mImageLoader)
+                    .setImgUrl(item.getIconImage())
+                    .setOnClickListener(() -> {
+//                        if(item.getTypeId() == 2) //消息通知
+                        if(item.getTypeId() == 1){//h5
+                            bundle.clear();
+                            bundle.putString(BundleTags.URL, item.getUrl());
+                            bundle.putString(BundleTags.TITLE, item.getName());
+                            launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+                        }
+                    })
+                    .show();
+        }
     }
 
     @Override

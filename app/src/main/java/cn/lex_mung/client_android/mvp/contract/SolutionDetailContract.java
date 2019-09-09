@@ -12,6 +12,7 @@ import cn.lex_mung.client_android.mvp.model.entity.SolutionListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.free.CommonFreeTextEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.CommonMarkEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.CommonPageContractsEntity;
+import cn.lex_mung.client_android.mvp.model.entity.other.ActivityEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.mvp.IModel;
 import me.zl.mvp.mvp.IView;
@@ -33,6 +34,8 @@ public interface SolutionDetailContract {
         void initSolutionAdapter();
         void setSolutionData(List<SolutionListEntity> list, boolean isAdd);
         void hideSolutionLayout();
+
+        void showActivityDialog(List<ActivityEntity> entities);
     }
 
     interface Model extends IModel {
@@ -46,6 +49,8 @@ public interface SolutionDetailContract {
         Observable<BaseResponse<BaseListEntity<SolutionListEntity>>> getSolutionList(RequestBody body);
 
         Observable<BaseResponse<List<CommonPageContractsEntity>>> commonPageContracts();
+
+        Observable<BaseResponse<BaseListEntity<ActivityEntity>>> popupList(RequestBody body);
 
     }
 }

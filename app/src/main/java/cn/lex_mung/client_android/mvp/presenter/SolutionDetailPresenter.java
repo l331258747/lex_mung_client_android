@@ -29,6 +29,7 @@ import cn.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.free.CommonFreeTextEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.CommonMarkEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.CommonPageContractsEntity;
+import cn.lex_mung.client_android.mvp.model.entity.other.ActivityEntity;
 import cn.lex_mung.client_android.mvp.ui.adapter.HomeLawyerAdapter;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -71,6 +72,31 @@ public class SolutionDetailPresenter extends BasePresenter<SolutionDetailContrac
         getFrees();
         mRootView.initSolutionAdapter();
         getSolutions(false);
+
+        popupList();
+    }
+
+    public void popupList(){
+        Map<String, Object> map = new HashMap<>();
+        map.put("solutionTypeId", solutionId);
+        map.put("device", 2);
+        mModel.popupList(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> {
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<ActivityEntity>>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<BaseListEntity<ActivityEntity>> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            mRootView.showActivityDialog(baseResponse.getData().getList());
+                        }
+                    }
+                });
     }
 
 

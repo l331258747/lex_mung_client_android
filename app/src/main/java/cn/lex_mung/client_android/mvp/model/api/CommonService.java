@@ -68,6 +68,7 @@ import cn.lex_mung.client_android.mvp.model.entity.order.RequirementCreateEntity
 import cn.lex_mung.client_android.mvp.model.entity.order.RequirementDetailEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RushOrderLawyerEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RushOrderStatusEntity;
+import cn.lex_mung.client_android.mvp.model.entity.other.ActivityEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.LaunchLocationEntity;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
@@ -895,4 +896,10 @@ public interface CommonService {
     //公益电话订单新增
     @POST("client/call/order/insert")
     Observable<BaseResponse> callOrderInsert(@Body RequestBody body);
+
+    ///common/popup/list
+    //POST
+    //客户端弹窗
+    @POST("common/popup/list")
+    Observable<BaseResponse<BaseListEntity<ActivityEntity>>> popupList(@Body RequestBody body);
 }

@@ -15,6 +15,7 @@ import cn.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.free.CommonFreeTextEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.CommonMarkEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.CommonPageContractsEntity;
+import cn.lex_mung.client_android.mvp.model.entity.other.ActivityEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.integration.IRepositoryManager;
 import me.zl.mvp.mvp.BaseModel;
@@ -84,5 +85,12 @@ public class SolutionDetailModel extends BaseModel implements SolutionDetailCont
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .commonPageContracts();
+    }
+
+    @Override
+    public Observable<BaseResponse<BaseListEntity<ActivityEntity>>> popupList(RequestBody body) {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .popupList(body);
     }
 }

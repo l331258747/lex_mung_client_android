@@ -10,6 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -30,9 +31,11 @@ import cn.lex_mung.client_android.mvp.model.entity.SolutionListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.free.CommonFreeTextEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.CommonMarkEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.CommonPageContractsEntity;
+import cn.lex_mung.client_android.mvp.model.entity.other.ActivityEntity;
 import cn.lex_mung.client_android.mvp.ui.adapter.HomeFreeAdapter;
 import cn.lex_mung.client_android.mvp.ui.adapter.HomeLawyerAdapter;
 import cn.lex_mung.client_android.mvp.ui.adapter.SolutionAdapter;
+import cn.lex_mung.client_android.mvp.ui.dialog.ActivityDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
 import cn.lex_mung.client_android.mvp.ui.widget.SimpleFlowLayout;
@@ -301,7 +304,6 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
     public void hideSolutionLayout() {
         groupSolution.setVisibility(View.GONE);
     }
-
 
     public void initFreeAdapter(List<CommonFreeTextEntity> datas) {
         HomeFreeAdapter homeFreeAdapter = new HomeFreeAdapter(mImageLoader);
@@ -1583,6 +1585,51 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
             case 34://34 环境保护
                 BuryingPointHelp.getInstance().onActivityPaused(mActivity, "environmental_protection_page", getPair());
                 break;
+        }
+    }
+
+    @Override
+    public void showActivityDialog(List<ActivityEntity> entities) {
+        if (entities == null || entities.size() == 0) return;//TODO
+        /*
+        targetUsers	目标用户（1所有用户，2首次打开，3用户组，4律师组）
+        name	弹窗名字
+        id	弹窗id
+        url	关联跳转
+        buttonName	按钮名称
+        sortOrder	序号
+        targetUsersGroup	目标用户关联组
+        purpose	用途
+        iconImage	关联图片
+         */
+        for (ActivityEntity item : entities) {
+            if(TextUtils.isEmpty(item.getIconImage()))
+                continue;
+
+            if(item.getTargetUsers() == 1){
+
+            }else if(item.getTargetUsers() == 2){
+                if(DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_ONE_IN))
+                    continue;
+            }else if(item.getTargetUsers() == 3){
+                //TODO 通过targetUsersGroup判断用户是否在用户组
+            }else if(item.getTargetUsers() == 4){
+                continue;
+            }
+
+            new ActivityDialog(mActivity,
+                    mImageLoader)
+                    .setImgUrl(item.getIconImage())
+                    .setOnClickListener(() -> {
+//                        if(item.getTypeId() == 2) //消息通知
+                        if(item.getTypeId() == 1){//h5
+                            bundle.clear();
+                            bundle.putString(BundleTags.URL, item.getUrl());
+                            bundle.putString(BundleTags.TITLE, item.getName());
+                            launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+                        }
+                    })
+                    .show();
         }
     }
 }
