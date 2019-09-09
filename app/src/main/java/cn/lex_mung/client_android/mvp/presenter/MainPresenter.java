@@ -2,10 +2,14 @@ package cn.lex_mung.client_android.mvp.presenter;
 
 import android.app.Application;
 import android.content.Intent;
+import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -19,8 +23,10 @@ import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.VersionEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.OnlineUrlEntity;
+import cn.lex_mung.client_android.mvp.model.entity.other.ActivityDialogEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.ActivityEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.EditInfoActivity;
+import cn.lex_mung.client_android.utils.GsonUtil;
 import cn.lex_mung.client_android.utils.LogUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -113,7 +119,7 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
 
     public void setHelpDialog() {
         if (!DataHelper.getBooleanSF(mRootView.getActivity(), DataHelperTags.IS_ONE_IN)) {
-//            DataHelper.setBooleanSF(mRootView.getActivity(), DataHelperTags.IS_ONE_IN, true);
+            DataHelper.setBooleanSF(mRootView.getActivity(), DataHelperTags.IS_ONE_IN, true);
             mRootView.showHelpDialog();
         }
     }
@@ -166,9 +172,66 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
                 });
     }
 
+    //用来获取弹窗集合，以及存储缓存
+    public List<ActivityEntity> getNeedActivityDialogEntities(List<ActivityEntity> entities) {
+        List<ActivityEntity> needEntities = new ArrayList<>();//需要弹窗的集合
+
+        if (entities == null || entities.size() == 0) return needEntities;
+
+        //缓存里面的以弹出活动的id集合
+        List<ActivityDialogEntity> cacheIds = GsonUtil.convertString2Collection(
+                DataHelper.getStringSF(mApplication, DataHelperTags.ACTIVITY_DIALOG),
+                new TypeToken<List<ActivityDialogEntity>>() {
+                });
+
+        if (cacheIds == null) {
+            cacheIds = new ArrayList<>();
+        }
+
+        boolean hasCache = false;
+        if (cacheIds.size() != 0) {
+            hasCache = true;
+        }
+
+        for (ActivityEntity item : entities) {
+            if (TextUtils.isEmpty(item.getIconImage()))//不是图片地址的剔除
+                continue;
+            if (item.getTargetUsers() == 2) {//如果为2 首次进入弹窗
+                if (!hasCache) {//如果缓存中没有数据，把数据全部加进缓存集合、弹窗集合。
+                    ActivityDialogEntity activityDialogEntity = new ActivityDialogEntity();
+                    activityDialogEntity.setId(item.getId());
+                    cacheIds.add(activityDialogEntity);
+                    needEntities.add(item);
+                } else {//如果缓存中有数据，并且id不在缓存中，加进缓存集合、弹窗集合
+
+                    boolean isHas = false;
+                    for (int i = 0; i < cacheIds.size(); i++) {
+                        if (cacheIds.get(i).getId() == item.getId()) {
+                            isHas = true;
+                            break;
+                        }
+                    }
+
+                    if (!isHas) {
+                        ActivityDialogEntity activityDialogEntity = new ActivityDialogEntity();
+                        activityDialogEntity.setId(item.getId());
+                        cacheIds.add(activityDialogEntity);
+                        needEntities.add(item);
+                    }
+                }
+            } else {
+                needEntities.add(item);//加进弹窗集合
+            }
+        }
+
+        String str = GsonUtil.convertVO2String(cacheIds);
+        DataHelper.setStringSF(mApplication, DataHelperTags.ACTIVITY_DIALOG, str);
+
+        return needEntities;
+    }
+
     @Override
     public void onDestroy() {
-        DataHelper.setBooleanSF(mRootView.getActivity(), DataHelperTags.IS_ONE_IN, true);
         super.onDestroy();
         this.mErrorHandler = null;
         this.mAppManager = null;

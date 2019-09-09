@@ -42,4 +42,6 @@ public class DataHelperTags {
     public static final String LAUNCH_LOCATION = "launch_location";//登录获取regionID
     public static final String LAUNCH_LOCATION_NAME = "launch_location_name";//登录获取region name
 
+    public static final String ACTIVITY_DIALOG = "activity_dialog";//记录活动id
+
 }

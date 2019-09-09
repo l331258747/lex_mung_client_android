@@ -2,35 +2,29 @@ package cn.lex_mung.client_android.mvp.presenter;
 
 import android.app.Application;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.TextView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
-import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.mvp.contract.SolutionDetailContract;
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
-import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
 import cn.lex_mung.client_android.mvp.model.entity.SolutionListEntity;
-import cn.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.free.CommonFreeTextEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.CommonMarkEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.CommonPageContractsEntity;
+import cn.lex_mung.client_android.mvp.model.entity.other.ActivityDialogEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.ActivityEntity;
-import cn.lex_mung.client_android.mvp.ui.adapter.HomeLawyerAdapter;
+import cn.lex_mung.client_android.utils.GsonUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
@@ -261,6 +255,66 @@ public class SolutionDetailPresenter extends BasePresenter<SolutionDetailContrac
                         }
                     }
                 });
+    }
+
+
+    //用来获取弹窗集合，以及存储缓存
+    public List<ActivityEntity> getNeedActivityDialogEntities(List<ActivityEntity> entities) {
+
+        List<ActivityEntity> needEntities = new ArrayList<>();//需要弹窗的集合
+
+        if (entities == null || entities.size() == 0) return needEntities;
+
+        //缓存里面的以弹出活动的id集合
+        List<ActivityDialogEntity> cacheIds = GsonUtil.convertString2Collection(
+                DataHelper.getStringSF(mApplication, DataHelperTags.ACTIVITY_DIALOG),
+                new TypeToken<List<ActivityDialogEntity>>() {
+                });
+
+        if (cacheIds == null) {
+            cacheIds = new ArrayList<>();
+        }
+
+        boolean hasCache = false;
+        if (cacheIds.size() != 0) {
+            hasCache = true;
+        }
+
+        for (ActivityEntity item : entities) {
+            if (TextUtils.isEmpty(item.getIconImage()))//不是图片地址的剔除
+                continue;
+            if (item.getTargetUsers() == 2) {//如果为2 首次进入弹窗
+                if (!hasCache) {//如果缓存中没有数据，把数据全部加进缓存集合、弹窗集合。
+                    ActivityDialogEntity activityDialogEntity = new ActivityDialogEntity();
+                    activityDialogEntity.setId(item.getId());
+                    cacheIds.add(activityDialogEntity);
+                    needEntities.add(item);
+                } else {//如果缓存中有数据，并且id不在缓存中，加进缓存集合、弹窗集合
+
+                    boolean isHas = false;
+                    for (int i = 0; i < cacheIds.size(); i++) {
+                        if (cacheIds.get(i).getId() == item.getId()) {
+                            isHas = true;
+                            break;
+                        }
+                    }
+
+                    if (!isHas) {
+                        ActivityDialogEntity activityDialogEntity = new ActivityDialogEntity();
+                        activityDialogEntity.setId(item.getId());
+                        cacheIds.add(activityDialogEntity);
+                        needEntities.add(item);
+                    }
+                }
+            } else {
+                needEntities.add(item);//加进弹窗集合
+            }
+        }
+
+        String str = GsonUtil.convertVO2String(cacheIds);
+        DataHelper.setStringSF(mApplication, DataHelperTags.ACTIVITY_DIALOG, str);
+
+        return needEntities;
     }
 
     @Override

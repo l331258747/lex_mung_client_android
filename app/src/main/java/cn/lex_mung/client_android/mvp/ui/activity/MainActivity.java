@@ -123,39 +123,22 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public void showActivityDialog(List<ActivityEntity> entities) {
-        if (entities == null || entities.size() == 0) return;//TODO
         /*
         targetUsers	目标用户（1所有用户，2首次打开，3用户组，4律师组）
         name	弹窗名字
         id	弹窗id
         url	关联跳转
-        buttonName	按钮名称
-        sortOrder	序号
-        targetUsersGroup	目标用户关联组
-        purpose	用途
         iconImage	关联图片
          */
-        for (ActivityEntity item : entities) {
-            if(TextUtils.isEmpty(item.getIconImage()))
-                continue;
+        if (entities == null || entities.size() == 0) return;
 
-            if(item.getTargetUsers() == 1){
-
-            }else if(item.getTargetUsers() == 2){
-                if(DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_ONE_IN))
-                    continue;
-            }else if(item.getTargetUsers() == 3){
-                //TODO 通过targetUsersGroup判断用户是否在用户组
-            }else if(item.getTargetUsers() == 4){
-                continue;
-            }
-
+        for (ActivityEntity item : mPresenter.getNeedActivityDialogEntities(entities)) {
             new ActivityDialog(mActivity,
                     mImageLoader)
                     .setImgUrl(item.getIconImage())
                     .setOnClickListener(() -> {
 //                        if(item.getTypeId() == 2) //消息通知
-                        if(item.getTypeId() == 1){//h5
+                        if (item.getTypeId() == 1) {//h5
                             bundle.clear();
                             bundle.putString(BundleTags.URL, item.getUrl());
                             bundle.putString(BundleTags.TITLE, item.getName());
