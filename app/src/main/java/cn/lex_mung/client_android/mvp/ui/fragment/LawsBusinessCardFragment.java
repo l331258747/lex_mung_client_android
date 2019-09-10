@@ -22,6 +22,7 @@ import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
 import cn.lex_mung.client_android.mvp.model.entity.OrgTagsEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.OrganizationLawyerActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.PersonalHomePageEducationAdapter;
 import cn.lex_mung.client_android.mvp.ui.adapter.PersonalHomePageWorkAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
@@ -187,9 +188,14 @@ public class LawsBusinessCardFragment extends BaseFragment<LawsBusinessCardPrese
             tv.setTextSize(TypedValue.COMPLEX_UNIT_SP,13);
             tv.setPadding(0,AppUtils.dip2px(mActivity,15),0,0);
             tv.setOnClickListener(v -> {
+//                bundle.clear();
+//                bundle.putInt(BundleTags.ID, Integer.valueOf(StringUtils.getValueByName(entity.getLink(),"id")));
+//                launchActivity(new Intent(mActivity,OrganizationLawyerActivity.class),bundle);
+
                 bundle.clear();
-                bundle.putInt(BundleTags.ID, Integer.valueOf(StringUtils.getValueByName(entity.getLink(),"id")));
-                launchActivity(new Intent(mActivity,OrganizationLawyerActivity.class),bundle);
+                bundle.putString(BundleTags.URL, entity.getLink());
+                bundle.putString(BundleTags.TITLE,"组织详情");
+                launchActivity(new Intent(mActivity,WebActivity.class),bundle);
             });
             llJoinLawyerTeam.addView(tv);
         }

@@ -277,6 +277,25 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 
     public class AndroidToJs extends Object {
 
+        //组织律师列表
+        @JavascriptInterface
+        public void getList(String organizationId) {
+            if (TextUtils.isEmpty(organizationId))
+                return;
+            int orid;
+            try {
+                orid = Integer.valueOf(organizationId);
+            } catch (Exception e) {
+                return;
+            }
+
+            bundle.clear();
+            bundle.putInt(BundleTags.ID, orid);
+            launchActivity(new Intent(mActivity, OrganizationLawyerActivity.class), bundle);
+
+        }
+
+
         //支付（抢单）
         @JavascriptInterface
         public void goPay(String string) {
