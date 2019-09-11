@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +17,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
+
 import java.util.List;
+
+import javax.inject.Inject;
 
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
@@ -30,6 +35,7 @@ import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import butterknife.BindView;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
+import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.utils.AppUtils;
 
 import cn.lex_mung.client_android.di.component.DaggerLawsBusinessCardComponent;
@@ -41,6 +47,9 @@ import cn.lex_mung.client_android.R;
 import me.zl.mvp.utils.StringUtils;
 
 public class LawsBusinessCardFragment extends BaseFragment<LawsBusinessCardPresenter> implements LawsBusinessCardContract.View {
+    @Inject
+    ImageLoader mImageLoader;
+
     @BindView(R.id.iv_personal_resume)
     ImageView ivPersonalResume;
     @BindView(R.id.tv_personal_resume_text)
@@ -180,26 +189,34 @@ public class LawsBusinessCardFragment extends BaseFragment<LawsBusinessCardPrese
 
     @Override
     public void setJoinLawyerTeam(List<OrgTagsEntity> orgTagsEntities) {
-        for (int i=0;i<orgTagsEntities.size();i++){
-            TextView tv = new TextView(mActivity);
+        for (int i = 0; i < orgTagsEntities.size(); i++) {
             OrgTagsEntity entity = orgTagsEntities.get(i);
-            tv.setText(entity.getTagName());
-            tv.setTextColor(ContextCompat.getColor(mActivity,R.color.c_717171));
-            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP,13);
-            tv.setPadding(0,AppUtils.dip2px(mActivity,15),0,0);
-            tv.setOnClickListener(v -> {
-//                bundle.clear();
-//                bundle.putInt(BundleTags.ID, Integer.valueOf(StringUtils.getValueByName(entity.getLink(),"id")));
-//                launchActivity(new Intent(mActivity,OrganizationLawyerActivity.class),bundle);
 
+            View view = LayoutInflater.from(mActivity).inflate(R.layout.item_orgtag, null);
+            TextView tv = view.findViewById(R.id.tv_name);
+            ImageView iv = view.findViewById(R.id.iv_img);
+            ConstraintLayout clParent = view.findViewById(R.id.cl_parent);
+            tv.setText(entity.getTagName());
+            if(!TextUtils.isEmpty(entity.getImage())){
+                iv.setVisibility(View.VISIBLE);
+                mImageLoader.loadImage(getContext()
+                        , ImageConfigImpl
+                                .builder()
+                                .isCircle(true)
+                                .url(entity.getImage())
+                                .imageView(iv)
+                                .build());
+            }else{
+                iv.setVisibility(View.INVISIBLE);
+            }
+            clParent.setOnClickListener(v -> {
                 bundle.clear();
                 bundle.putString(BundleTags.URL, entity.getLink());
-                bundle.putString(BundleTags.TITLE,"组织详情");
-                launchActivity(new Intent(mActivity,WebActivity.class),bundle);
+                bundle.putString(BundleTags.TITLE, "组织详情");
+                launchActivity(new Intent(mActivity, WebActivity.class), bundle);
             });
-            llJoinLawyerTeam.addView(tv);
+            llJoinLawyerTeam.addView(view);
         }
-
     }
 
     @Override
