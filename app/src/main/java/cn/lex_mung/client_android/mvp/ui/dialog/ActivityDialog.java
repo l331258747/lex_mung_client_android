@@ -44,7 +44,7 @@ public class ActivityDialog extends Dialog {
 
         setContentView(R.layout.dialog_activity);
         initView();
-        setCancelable(true);
+        setCancelable(false);
     }
 
     private void initView() {
