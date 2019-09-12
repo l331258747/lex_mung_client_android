@@ -55,8 +55,8 @@
                     android:id="@+id/iv_banner"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/qb_px_280"
-                    android:layout_marginTop="@dimen/qb_px_20"
                     android:layout_marginLeft="@dimen/qb_px_20"
+                    android:layout_marginTop="@dimen/qb_px_20"
                     android:layout_marginRight="@dimen/qb_px_20"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_solution_detail_banner"
@@ -204,9 +204,7 @@
                     android:id="@+id/group_contract"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:constraint_referenced_ids="view_contract_write,
-                    tv_contract_write,tv_contract_write_price,view_contract_check,
-                    tv_contract_check,tv_contract_check_price,tv_contract_title,ll_contract_tip" />
+                    app:constraint_referenced_ids="tv_contract_title,ll_contract_tip,recycler_view_contract" />
 
                 <View
                     android:id="@+id/view_contract"
@@ -328,92 +326,126 @@
 
                 </LinearLayout>
 
-                <!-- 起草合同 -->
-
-                <View
-                    android:id="@+id/view_contract_write"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view_contract"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/qb_px_120"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/qb_px_40"
-                    android:background="@drawable/ic_solution_contract_11"
-                    app:layout_constraintEnd_toEndOf="@+id/view_contract"
-                    app:layout_constraintStart_toStartOf="@+id/view_contract"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ll_contract_tip" />
 
                 <TextView
-                    android:id="@+id/tv_contract_write"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/qb_px_40"
-                    android:maxLines="2"
-                    android:textColor="@color/c_ff"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/view_contract_write"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_contract_write_price"
-                    app:layout_constraintStart_toStartOf="@+id/view_contract_write"
-                    app:layout_constraintTop_toTopOf="@+id/view_contract_write"
-                    tools:text="起草婚姻家事合同" />
-
-                <TextView
-                    android:id="@+id/tv_contract_write_price"
+                    android:id="@+id/tv_contract_all"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/qb_px_40"
-                    android:textColor="@color/c_ff"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/view_contract_write"
-                    app:layout_constraintEnd_toEndOf="@+id/view_contract_write"
-                    app:layout_constraintTop_toTopOf="@+id/view_contract_write"
-                    tools:text="1000元/份" />
+                    android:background="@drawable/round_40_e4effb_all"
+                    android:paddingLeft="@dimen/qb_px_30"
+                    android:paddingTop="@dimen/qb_px_5"
+                    android:paddingRight="@dimen/qb_px_30"
+                    android:paddingBottom="@dimen/qb_px_5"
+                    android:text="展开全部 > "
+                    android:textColor="@color/c_4A90E2"
+                    android:textSize="10sp"
+                    app:layout_constraintEnd_toEndOf="@id/view_lawyer"
+                    app:layout_constraintStart_toStartOf="@+id/view_lawyer"
+                    app:layout_constraintTop_toBottomOf="@+id/recycler_view_contract" />
 
-                <!-- 审查合同 -->
-                <View
-                    android:id="@+id/view_contract_check"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/qb_px_120"
-                    android:layout_marginTop="@dimen/qb_px_20"
-                    app:layout_goneMarginTop="@dimen/qb_px_40"
-                    android:background="@drawable/ic_solution_contract_12"
-                    app:layout_constraintEnd_toEndOf="@+id/view_contract"
-                    app:layout_constraintStart_toStartOf="@+id/view_contract"
-                    app:layout_constraintTop_toBottomOf="@+id/view_contract_write" />
+                <!-- 起草合同 -->
 
-                <TextView
-                    android:id="@+id/tv_contract_check"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/qb_px_40"
-                    android:maxLines="2"
-                    android:textColor="@color/c_ff"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/view_contract_check"
-                    app:layout_constraintEnd_toStartOf="@+id/tv_contract_check_price"
-                    app:layout_constraintStart_toStartOf="@+id/view_contract_check"
-                    app:layout_constraintTop_toTopOf="@+id/view_contract_check"
-                    tools:text="审查婚姻家事合同" />
+                <!--<View-->
+                <!--android:id="@+id/view_contract_write"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="@dimen/qb_px_120"-->
+                <!--android:layout_marginTop="@dimen/qb_px_40"-->
+                <!--android:background="@drawable/ic_solution_contract_11"-->
+                <!--app:layout_constraintEnd_toEndOf="@+id/view_contract"-->
+                <!--app:layout_constraintStart_toStartOf="@+id/view_contract"-->
+                <!--app:layout_constraintTop_toBottomOf="@+id/ll_contract_tip" />-->
 
-                <TextView
-                    android:id="@+id/tv_contract_check_price"
+                <!--<TextView-->
+                <!--android:id="@+id/tv_contract_write"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="@dimen/qb_px_40"-->
+                <!--android:maxLines="2"-->
+                <!--android:textColor="@color/c_ff"-->
+                <!--android:textStyle="bold"-->
+                <!--app:layout_constraintBottom_toBottomOf="@+id/view_contract_write"-->
+                <!--app:layout_constraintEnd_toStartOf="@+id/tv_contract_write_price"-->
+                <!--app:layout_constraintStart_toStartOf="@+id/view_contract_write"-->
+                <!--app:layout_constraintTop_toTopOf="@+id/view_contract_write"-->
+                <!--tools:text="起草婚姻家事合同" />-->
+
+                <!--<TextView-->
+                <!--android:id="@+id/tv_contract_write_price"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginRight="@dimen/qb_px_40"-->
+                <!--android:textColor="@color/c_ff"-->
+                <!--android:textStyle="bold"-->
+                <!--app:layout_constraintBottom_toBottomOf="@+id/view_contract_write"-->
+                <!--app:layout_constraintEnd_toEndOf="@+id/view_contract_write"-->
+                <!--app:layout_constraintTop_toTopOf="@+id/view_contract_write"-->
+                <!--tools:text="1000元/份" />-->
+
+                <!--&lt;!&ndash; 审查合同 &ndash;&gt;-->
+                <!--<View-->
+                <!--android:id="@+id/view_contract_check"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="@dimen/qb_px_120"-->
+                <!--android:layout_marginTop="@dimen/qb_px_20"-->
+                <!--app:layout_goneMarginTop="@dimen/qb_px_40"-->
+                <!--android:background="@drawable/ic_solution_contract_12"-->
+                <!--app:layout_constraintEnd_toEndOf="@+id/view_contract"-->
+                <!--app:layout_constraintStart_toStartOf="@+id/view_contract"-->
+                <!--app:layout_constraintTop_toBottomOf="@+id/view_contract_write" />-->
+
+                <!--<TextView-->
+                <!--android:id="@+id/tv_contract_check"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="@dimen/qb_px_40"-->
+                <!--android:maxLines="2"-->
+                <!--android:textColor="@color/c_ff"-->
+                <!--android:textStyle="bold"-->
+                <!--app:layout_constraintBottom_toBottomOf="@+id/view_contract_check"-->
+                <!--app:layout_constraintEnd_toStartOf="@+id/tv_contract_check_price"-->
+                <!--app:layout_constraintStart_toStartOf="@+id/view_contract_check"-->
+                <!--app:layout_constraintTop_toTopOf="@+id/view_contract_check"-->
+                <!--tools:text="审查婚姻家事合同" />-->
+
+                <!--<TextView-->
+                <!--android:id="@+id/tv_contract_check_price"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginRight="@dimen/qb_px_40"-->
+                <!--android:textColor="@color/c_ff"-->
+                <!--android:textStyle="bold"-->
+                <!--app:layout_constraintBottom_toBottomOf="@+id/view_contract_check"-->
+                <!--app:layout_constraintEnd_toEndOf="@+id/view_contract_check"-->
+                <!--app:layout_constraintTop_toTopOf="@+id/view_contract_check"-->
+                <!--tools:text="1000元/份" />-->
+
+                <android.support.constraint.Group
+                    android:id="@+id/group_contract_call"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/qb_px_40"
-                    android:textColor="@color/c_ff"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/view_contract_check"
-                    app:layout_constraintEnd_toEndOf="@+id/view_contract_check"
-                    app:layout_constraintTop_toTopOf="@+id/view_contract_check"
-                    tools:text="1000元/份" />
+                    app:constraint_referenced_ids="view_contract_call,tv_contract_call,tv_contract_call2,tv_contract_call_price" />
+
 
                 <View
                     android:id="@+id/view_contract_call"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/qb_px_120"
                     android:layout_marginTop="@dimen/qb_px_80"
-                    app:layout_goneMarginTop="@dimen/qb_px_40"
                     android:background="@drawable/ic_solution_contract_13"
                     app:layout_constraintEnd_toEndOf="@+id/view_contract"
                     app:layout_constraintStart_toStartOf="@+id/view_contract"
-                    app:layout_constraintTop_toBottomOf="@+id/view_contract_check" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_contract_all"
+                    app:layout_goneMarginTop="@dimen/qb_px_40" />
 
                 <TextView
                     android:id="@+id/tv_contract_call"

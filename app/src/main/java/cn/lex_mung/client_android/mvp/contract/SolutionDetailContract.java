@@ -27,7 +27,7 @@ public interface SolutionDetailContract {
         void hideLawyerLayout();
         void hideLawyerAllView();
         void initLawyerAdapter(List<LawyerEntity2> datas);
-        void setContractLayout(List<CommonPageContractsEntity> datas);
+        void setContractLayout(List<CommonPageContractsEntity> datas,CommonPageContractsEntity entity);
         void initFreeAdapter(List<CommonFreeTextEntity> datas);
         void hideFreeLayout();
 
@@ -48,7 +48,7 @@ public interface SolutionDetailContract {
 
         Observable<BaseResponse<BaseListEntity<SolutionListEntity>>> getSolutionList(RequestBody body);
 
-        Observable<BaseResponse<List<CommonPageContractsEntity>>> commonPageContracts();
+        Observable<BaseResponse<List<CommonPageContractsEntity>>> commonPageContracts(int solutionTypeId);
 
         Observable<BaseResponse<BaseListEntity<ActivityEntity>>> popupList(RequestBody body);
 

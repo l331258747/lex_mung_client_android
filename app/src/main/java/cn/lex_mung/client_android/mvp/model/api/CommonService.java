@@ -843,11 +843,11 @@ public interface CommonService {
     @GET("common/marks/{solutionId}")
     Observable<BaseResponse<List<CommonMarkEntity>>> commonMarks(@Path("solutionId") int solutionId);
 
-    ///common/page/contracts
+    //common/page/contracts/{solutionTypeId}
     //GET
     //起草审查合同文案
-    @GET("common/page/contracts")
-    Observable<BaseResponse<List<CommonPageContractsEntity>>> commonPageContracts();
+    @GET("common/page/contracts/{solutionTypeId}")
+    Observable<BaseResponse<List<CommonPageContractsEntity>>> commonPageContracts(@Path("solutionTypeId") int solutionTypeId);
 
     ///client/coupon/count
     //POST

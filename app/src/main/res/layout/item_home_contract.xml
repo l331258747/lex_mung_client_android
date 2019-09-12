@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <View
+        android:id="@+id/view_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/qb_px_20"
+        android:layout_marginRight="@dimen/qb_px_20"
+        android:background="@drawable/ic_card"
+        app:layout_constraintBottom_toBottomOf="@+id/view_line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/qb_px_20"
+        android:layout_marginTop="@dimen/qb_px_10"
+        android:layout_marginRight="@dimen/qb_px_20"
+        android:layout_marginBottom="@dimen/qb_px_20"
+        app:layout_constraintBottom_toBottomOf="@+id/view_line"
+        app:layout_constraintEnd_toEndOf="@+id/view_bg"
+        app:layout_constraintStart_toStartOf="@+id/view_bg"
+        app:layout_constraintTop_toTopOf="@+id/view_bg" />
+
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_30"
+        android:background="@drawable/ic_txt_bg"
+        android:text="标题标题标题标题标题标题标题标题"
+        android:paddingStart="@dimen/qb_px_30"
+        android:textColor="@color/c_ff"
+        android:textSize="13sp"
+        app:layout_constraintStart_toStartOf="@+id/view_content"
+        app:layout_constraintTop_toTopOf="@+id/view_content" />
+
+    <TextView
+        android:id="@+id/tv_price_"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¥"
+        android:textColor="@color/c_323232"
+        android:textSize="12sp"
+        android:paddingBottom="@dimen/qb_px_5"
+        android:layout_marginEnd="@dimen/qb_px_5"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_title"
+        app:layout_constraintEnd_toEndOf="@+id/view_content"
+        app:layout_constraintEnd_toStartOf="@+id/tv_price"
+        app:layout_constraintTop_toTopOf="@+id/tv_title" />
+
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12313"
+        android:includeFontPadding="false"
+        android:textColor="@color/c_f8b22d"
+        android:layout_marginEnd="@dimen/qb_px_5"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_price_"
+        app:layout_constraintEnd_toStartOf="@+id/tv_price_unit" />
+
+    <TextView
+        android:id="@+id/tv_price_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/qb_px_30"
+        android:text="元"
+        android:textColor="@color/c_323232"
+        android:layout_marginBottom="@dimen/qb_px_5"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_price_"
+        app:layout_constraintEnd_toEndOf="@+id/view_content" />
+
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/qb_px_30"
+        android:layout_marginTop="@dimen/qb_px_20"
+        android:layout_marginRight="@dimen/qb_px_30"
+        android:text="内容内容内容内容内容内容内容内容内容内容内容内容内内容内容内容"
+        android:textColor="@color/c_323232"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/view_content"
+        app:layout_constraintStart_toStartOf="@+id/view_content"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+
+    <View
+        android:id="@+id/view_line"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_60"
+        app:layout_constraintTop_toBottomOf="@+id/tv_content" />
+
+
+</android.support.constraint.ConstraintLayout>

@@ -81,10 +81,10 @@ public class SolutionDetailModel extends BaseModel implements SolutionDetailCont
     }
 
     @Override
-    public Observable<BaseResponse<List<CommonPageContractsEntity>>> commonPageContracts() {
+    public Observable<BaseResponse<List<CommonPageContractsEntity>>> commonPageContracts(int solutionTypeId) {
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
-                .commonPageContracts();
+                .commonPageContracts(solutionTypeId);
     }
 
     @Override

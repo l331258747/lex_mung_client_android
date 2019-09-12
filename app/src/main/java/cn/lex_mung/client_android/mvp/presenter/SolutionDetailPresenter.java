@@ -238,7 +238,7 @@ public class SolutionDetailPresenter extends BasePresenter<SolutionDetailContrac
     }
 
     public void getContracts() {
-        mModel.commonPageContracts()
+        mModel.commonPageContracts(solutionId)
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> {
@@ -251,7 +251,18 @@ public class SolutionDetailPresenter extends BasePresenter<SolutionDetailContrac
                     @Override
                     public void onNext(BaseResponse<List<CommonPageContractsEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
-                            mRootView.setContractLayout(baseResponse.getData());
+                            List<CommonPageContractsEntity> lists = new ArrayList<>();
+                            CommonPageContractsEntity item99 = null;
+
+                            for (int i=0;i<baseResponse.getData().size();i++){
+                                if(baseResponse.getData().get(i).getId() == 9999){
+                                    item99 = baseResponse.getData().get(i);
+                                }else{
+                                    lists.add(baseResponse.getData().get(i));
+                                }
+                            }
+
+                            mRootView.setContractLayout(lists,item99);
                         }
                     }
                 });

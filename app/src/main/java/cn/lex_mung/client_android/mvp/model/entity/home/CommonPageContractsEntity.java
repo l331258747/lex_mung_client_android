@@ -20,6 +20,11 @@ public class CommonPageContractsEntity {
     private String url;
     private double amount;
     private String unit;
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
 
     public int getId() {
         return id;
@@ -49,6 +54,10 @@ public class CommonPageContractsEntity {
         return amount;
     }
 
+    public String getAmountStr(){
+        return StringUtils.getStringNum(amount);
+    }
+
     public void setAmount(double amount) {
         this.amount = amount;
     }
@@ -57,20 +66,13 @@ public class CommonPageContractsEntity {
         return unit;
     }
 
-    public String getUnitStr(){
-        if(TextUtils.isEmpty(unit))
-            return "";
-        String str = unit.replace("/","");
-        return str;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-
-
-    public String getPriceStr() {
-        return StringUtils.getStringNum(amount) + "元/" + getUnitStr();
-    }
+//    public void setUnit(String unit) {
+//        this.unit = unit;
+//    }
+//
+//
+//
+//    public String getPriceStr() {
+//        return StringUtils.getStringNum(amount) + "元/" + getUnitStr();
+//    }
 }

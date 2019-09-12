@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -35,6 +36,7 @@ import cn.lex_mung.client_android.mvp.model.entity.home.CommonMarkEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.CommonPageContractsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.ActivityEntity;
 import cn.lex_mung.client_android.mvp.presenter.SolutionDetailPresenter;
+import cn.lex_mung.client_android.mvp.ui.adapter.HomeContractAdapter;
 import cn.lex_mung.client_android.mvp.ui.adapter.HomeFreeAdapter;
 import cn.lex_mung.client_android.mvp.ui.adapter.HomeLawyerAdapter;
 import cn.lex_mung.client_android.mvp.ui.adapter.SolutionAdapter;
@@ -76,18 +78,26 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
     TextView tvContractTitle;
     @BindView(R.id.group_contract)
     Group groupContract;
-    @BindView(R.id.view_contract_write)
-    View viewContractWrite;
-    @BindView(R.id.tv_contract_write)
-    TextView tvContractWrite;
-    @BindView(R.id.tv_contract_write_price)
-    TextView tvContractWritePrice;
-    @BindView(R.id.view_contract_check)
-    View viewContractCheck;
-    @BindView(R.id.tv_contract_check)
-    TextView tvContractCheck;
-    @BindView(R.id.tv_contract_check_price)
-    TextView tvContractCheckPrice;
+    @BindView(R.id.group_contract_call)
+    Group groupContractCall;
+    @BindView(R.id.recycler_view_contract)
+    RecyclerView recyclerViewContract;
+    @BindView(R.id.tv_contract_all)
+    TextView tvContractAll;
+//    @BindView(R.id.view_contract_write)
+//    View viewContractWrite;
+//    @BindView(R.id.tv_contract_write)
+//    TextView tvContractWrite;
+//    @BindView(R.id.tv_contract_write_price)
+//    TextView tvContractWritePrice;
+
+//    @BindView(R.id.view_contract_check)
+//    View viewContractCheck;
+//    @BindView(R.id.tv_contract_check)
+//    TextView tvContractCheck;
+//    @BindView(R.id.tv_contract_check_price)
+//    TextView tvContractCheckPrice;
+
     @BindView(R.id.view_contract_call)
     View viewContractCall;
     @BindView(R.id.tv_contract_call_price)
@@ -116,7 +126,7 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
 
     int solutionId;
     String solutionName;
-    boolean isCriminal;//是否为刑事类
+//    boolean isCriminal;//是否为刑事类
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -137,7 +147,7 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
     public void initData(@Nullable Bundle savedInstanceState) {
         solutionId = bundleIntent.getInt(BundleTags.SOLUTION_TYPE_ID, -1);
         solutionName = bundleIntent.getString(BundleTags.SOLUTION_TYPE_NAME);
-        isCriminal = bundleIntent.getBoolean(BundleTags.IS_CRIMINAL,false);
+//        isCriminal = bundleIntent.getBoolean(BundleTags.IS_CRIMINAL,false);
 
         titleView.getTitleTv().setTextColor(ContextCompat.getColor(mActivity, R.color.c_ff));
         titleView.setTitle(solutionName);
@@ -248,8 +258,8 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
             bean.setHelpNumber(bean.getHelpNumber() + 1);
             solutionAdapter.setData(position, bean);
             bundle.clear();
-            bundle.putString(BundleTags.URL,bean.getSolutionUrl());
-            bundle.putString(BundleTags.TITLE,bean.getTitle());
+            bundle.putString(BundleTags.URL, bean.getSolutionUrl());
+            bundle.putString(BundleTags.TITLE, bean.getTitle());
             bundle.putString(BundleTags.SHARE_URL, bean.getSolutionUrl());
             bundle.putString(BundleTags.SHARE_TITLE, bean.getTitle());
             bundle.putString(BundleTags.SHARE_DES, "");
@@ -408,300 +418,345 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
         groupFree.setVisibility(View.GONE);
     }
 
-    public void setContractLayout(List<CommonPageContractsEntity> datas) {
-        for (int i = 0; i < datas.size(); i++) {
-            CommonPageContractsEntity entity = datas.get(i);
-            if (entity.getId() == 9999) {//电话咨询
-                tvContractCallPrice.setText(entity.getContent());
-                viewContractCall.setOnClickListener(v -> {
+    public void setContractLayout(List<CommonPageContractsEntity> datas, CommonPageContractsEntity entity99) {
+        if (entity99 != null) {
+            tvContractCallPrice.setText(entity99.getContent());
+            viewContractCall.setOnClickListener(v -> {
 
-                    switch (solutionId) {//电话咨询
-                        case 2://2 婚姻及家事
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "marriage_housework_page", "marriage_housework_page_quick_consultation_click");
-                            break;
-                        case 4://4 劳动者权益保护
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "laborer_is_rights_protection_page", "laborer_is_rights_protection_page_quick_consultation_click");
-                            break;
-                        case 6://6 房屋及其他财物的买卖租赁
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "sale_and_lease_page", "sale_and_lease_page_quick_consultation_click");
-                            break;
-                        case 10://10 债权债务
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "creditor_is_rights_and_debts_page", "creditor_is_rights_and_debts_page_quick_consultation_click");
-                            break;
-                        case 14://14 人身伤害赔偿
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "personal_injury_compensation_page", "personal_injury_compensation_page_quick_consultation_click");
-                            break;
-                        case 19:// 19 消费维权
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "consumer_rights_page", "consumer_rights_page_quick_consultation_click");
-                            break;
-                        case 23://23 交通事故
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "traffic_accident_page", "traffic_accident_page_quick_consultation_click");
-                            break;
-                        case 7://7 合同纠纷
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "contractual_dispute_page", "contractual_dispute_page_quick_consultation_click");
-                            break;
-                        case 8://8 基础项目建设
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "basic_project_construction_page", "basic_project_construction_page_quick_consultation_click");
-                            break;
-                        case 9://9 不动产销售与租赁
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "real_estate_page", "real_estate_page_quick_consultation_click");
-                            break;
-                        case 13://13 知识产权及商业保护
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "intellectual_property_page", "intellectual_property_page_quick_consultation_click");
-                            break;
-                        case 17://17 资本市场及股权融资
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "capital_market_page", "capital_market_page_quick_consultation_click");
-                            break;
-                        case 18://18 公司治理及股东关系
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "corporate_governance_page", "corporate_governance_page_quick_consultation_click");
-                            break;
-                        case 22://22 对外投资并购、合伙及联营
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "foreign_investment_page", "foreign_investment_page_quick_consultation_click");
-                            break;
-                        case 27://27 土地纠纷
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "land_development_transfer_page", "land_development_transfer_page_quick_consultation_click");
-                            break;
-                        case 28://28 人力资源及劳资关系
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "human_resources_page", "human_resources_page_quick_consultation_click");
-                            break;
-                        case 29://29 财税专项
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "finance_and_taxation_page", "finance_and_taxation_page_quick_consultation_click");
-                            break;
-                        case 30://30 行政许可\/处罚
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "administrative_license_penalty_page", "administrative_license_penalty_page_quick_consultation_click");
-                            break;
-                        case 31://31 保险及侵权赔偿
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "insurance_and_infringement_compensation_page", "insurance_and_infringement_compensation_page_quick_consultation_click");
-                            break;
-                        case 32://32 基金/信托/保理/融资租聘
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "fund_trust_insurance_financing_page", "fund_trust_insurance_financing_page_quick_consultation_click");
-                            break;
-                        case 33://33 买卖销售合同纠纷
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "sale_and_sales_contract_dispute_page", "sale_and_sales_contract_dispute_page_quick_consultation_click");
-                            break;
-                        case 34://34 环境保护
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "environmental_protection_page", "environmental_protection_page_quick_consultation_click");
-                            break;
-                        case 5://5  重大刑事案件
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "major_criminal_case_page", "major_criminal_case_page_quick_consultation_click");
-                            break;
-                        case 20://20 职务犯罪
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "duty_crime_page", "duty_crime_page_quick_consultation_click");
-                            break;
-                        case 16://16 普通刑事案件
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "ordinary_criminal_page", "ordinary_criminal_page_quick_consultation_click");
-                            break;
-                        case 3://3 融资借贷
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "financing_lending_page", "financing_lending_page_quick_consultation_click");
-                            break;
-                    }
-
-                    bundle.clear();
-                    bundle.putString(BundleTags.URL, entity.getUrl());
-                    bundle.putString(BundleTags.TITLE, "快速电话咨询");
-                    launchActivity(new Intent(mActivity, WebActivity.class), bundle);
-                });
-                continue;
-            }
-
-            if (entity.getContent().indexOf("审查") != -1) {
-                tvContractCheckPrice.setText(entity.getPriceStr());
-                tvContractCheck.setText(entity.getContent() + "(" + solutionName + ")");
-                viewContractCheck.setOnClickListener(v -> {
-
-                    switch (solutionId) {//审查合同
-                        case 2://2 婚姻及家事
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "marriage_housework_page", "marriage_housework_page_view_contract_click");
-                            break;
-                        case 4://4 劳动者权益保护
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "laborer_is_rights_protection_page", "laborer_is_rights_protection_page_view_contract_click");
-                            break;
-                        case 6://6 房屋及其他财物的买卖租赁
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "sale_and_lease_page", "sale_and_lease_page_view_contract_click");
-                            break;
-                        case 10://10 债权债务
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "creditor_is_rights_and_debts_page", "creditor_is_rights_and_debts_page_view_contract_click");
-                            break;
-                        case 14://14 人身伤害赔偿
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "personal_injury_compensation_page", "personal_injury_compensation_page_view_contract_click");
-                            break;
-                        case 19:// 19 消费维权
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "consumer_rights_page", "consumer_rights_page_page_view_contract_click");
-                            break;
-                        case 23://23 交通事故
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "traffic_accident_page", "traffic_accident_page_view_contract_click");
-                            break;
-                        case 7://7 合同纠纷
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "contractual_dispute_page", "contractual_dispute_page_view_contract_click");
-                            break;
-                        case 8://8 基础项目建设
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "basic_project_construction_page", "basic_project_construction_page_view_contract_click");
-                            break;
-                        case 9://9 不动产销售与租赁
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "real_estate_page", "real_estate_page_view_contract_click");
-                            break;
-                        case 13://13 知识产权及商业保护
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "intellectual_property_page", "intellectual_property_page_view_contract_click");
-                            break;
-                        case 17://17 资本市场及股权融资
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "capital_market_page", "capital_market_page_view_contract_click");
-                            break;
-                        case 18://18 公司治理及股东关系
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "corporate_governance_page", "corporate_governance_page_view_contract_click");
-                            break;
-                        case 22://22 对外投资并购、合伙及联营
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "foreign_investment_page", "foreign_investment_page_view_contract_click");
-                            break;
-                        case 27://27 土地纠纷
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "land_development_transfer_page", "land_development_transfer_page_view_contract_click");
-                            break;
-                        case 28://28 人力资源及劳资关系
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "human_resources_page", "human_resources_page_view_contract_click");
-                            break;
-                        case 29://29 财税专项
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "finance_and_taxation_page", "finance_and_taxation_page_view_contract_click");
-                            break;
-                        case 30://30 行政许可\/处罚
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "administrative_license_penalty_page", "administrative_license_penalty_page_view_contract_click");
-                            break;
-                        case 31://31 保险及侵权赔偿
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "insurance_and_infringement_compensation_page", "insurance_and_infringement_compensation_page_view_contract_click");
-                            break;
-                        case 32://32 基金/信托/保理/融资租聘
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "fund_trust_insurance_financing_page", "fund_trust_insurance_financing_page_view_contract_click");
-                            break;
-                        case 33://33 买卖销售合同纠纷
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "sale_and_sales_contract_dispute_page", "sale_and_sales_contract_dispute_page_view_contract_click");
-                            break;
-                        case 34://34 环境保护
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "environmental_protection_page", "environmental_protection_page_view_contract_click");
-                            break;
-                        case 5://5  重大刑事案件
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "major_criminal_case_page", "major_criminal_case_page_view_contract_click");
-                            break;
-                        case 20://20 职务犯罪
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "duty_crime_page", "duty_crime_page_view_contract_click");
-                            break;
-                        case 16://16 普通刑事案件
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "ordinary_criminal_page", "ordinary_criminal_page_view_contract_click");
-                            break;
-                        case 3://3 融资借贷
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "financing_lending_page", "financing_lending_page_view_contract_click");
-                            break;
-                    }
-
-                    bundle.clear();
-                    bundle.putString(BundleTags.URL, entity.getUrl());
-                    bundle.putString(BundleTags.TITLE, entity.getContent());
-                    bundle.putBoolean(BundleTags.IS_SHARE, false);
-                    launchActivity(new Intent(mActivity, WebActivity.class), bundle);
-                });
-                continue;
-            }
-
-            if (entity.getContent().indexOf("起草") != -1) {
-                tvContractWritePrice.setText(entity.getPriceStr());
-                tvContractWrite.setText(entity.getContent() + "(" + solutionName + ")");
-                viewContractWrite.setOnClickListener(v -> {
-
-                    switch (solutionId) {//起草合同
-                        case 2://2 婚姻及家事
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "marriage_housework_page", "marriage_housework_page_draw_contract_click");
-                            break;
-                        case 4://4 劳动者权益保护
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "laborer_is_rights_protection_page", "laborer_is_rights_protection_page_draw_contract_click");
-                            break;
-                        case 6://6 房屋及其他财物的买卖租赁
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "sale_and_lease_page", "sale_and_lease_page_draw_contract_click");
-                            break;
-                        case 10://10 债权债务
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "creditor_is_rights_and_debts_page", "creditor_is_rights_and_debts_page_draw_contract_click");
-                            break;
-                        case 14://14 人身伤害赔偿
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "personal_injury_compensation_page", "personal_injury_compensation_page_draw_contract_click");
-                            break;
-                        case 19:// 19 消费维权
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "consumer_rights_page", "consumer_rights_page_draw_contract_click");
-                            break;
-                        case 23://23 交通事故
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "traffic_accident_page", "traffic_accident_page_draw_contract_click");
-                            break;
-                        case 7://7 合同纠纷
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "contractual_dispute_page", "contractual_dispute_page_draw_contract_click");
-                            break;
-                        case 8://8 基础项目建设
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "basic_project_construction_page", "basic_project_construction_page_draw_contract_click");
-                            break;
-                        case 9://9 不动产销售与租赁
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "real_estate_page", "real_estate_page_draw_contract_click");
-                            break;
-                        case 13://13 知识产权及商业保护
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "intellectual_property_page", "intellectual_property_page_draw_contract_click");
-                            break;
-                        case 17://17 资本市场及股权融资
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "capital_market_page", "capital_market_page_draw_contract_click");
-                            break;
-                        case 18://18 公司治理及股东关系
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "corporate_governance_page", "corporate_governance_page_draw_contract_click");
-                            break;
-                        case 22://22 对外投资并购、合伙及联营
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "foreign_investment_page", "foreign_investment_page_draw_contract_click");
-                            break;
-                        case 27://27 土地纠纷
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "land_development_transfer_page", "land_development_transfer_page_draw_contract_click");
-                            break;
-                        case 28://28 人力资源及劳资关系
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "human_resources_page", "human_resources_page_draw_contract_click");
-                            break;
-                        case 29://29 财税专项
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "finance_and_taxation_page", "finance_and_taxation_page_draw_contract_click");
-                            break;
-                        case 30://30 行政许可\/处罚
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "administrative_license_penalty_page", "administrative_license_penalty_page_draw_contract_click");
-                            break;
-                        case 31://31 保险及侵权赔偿
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "insurance_and_infringement_compensation_page", "insurance_and_infringement_compensation_page_draw_contract_click");
-                            break;
-                        case 32://32 基金/信托/保理/融资租聘
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "fund_trust_insurance_financing_page", "fund_trust_insurance_financing_page_draw_contract_click");
-                            break;
-                        case 33://33 买卖销售合同纠纷
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "sale_and_sales_contract_dispute_page", "sale_and_sales_contract_dispute_page_draw_contract_click");
-                            break;
-                        case 34://34 环境保护
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "environmental_protection_page", "environmental_protection_page_draw_contract_click");
-                            break;
-                        case 5://5  重大刑事案件
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "major_criminal_case_page", "major_criminal_case_page_draw_contract_click");
-                            break;
-                        case 20://20 职务犯罪
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "duty_crime_page", "duty_crime_page_draw_contract_click");
-                            break;
-                        case 16://16 普通刑事案件
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "ordinary_criminal_page", "ordinary_criminal_page_draw_contract_click");
-                            break;
-                        case 3://3 融资借贷
-                            BuryingPointHelp.getInstance().onEvent(mActivity, "financing_lending_page", "financing_lending_page_draw_contract_click");
-                            break;
-                    }
-
-
-                    bundle.clear();
-                    bundle.putString(BundleTags.URL, entity.getUrl());
-                    bundle.putString(BundleTags.TITLE, entity.getContent());
-                    launchActivity(new Intent(mActivity, WebActivity.class), bundle);
-                });
-                continue;
-            }
+                switch (solutionId) {//电话咨询
+                    case 2://2 婚姻及家事
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "marriage_housework_page", "marriage_housework_page_quick_consultation_click");
+                        break;
+                    case 4://4 劳动者权益保护
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "laborer_is_rights_protection_page", "laborer_is_rights_protection_page_quick_consultation_click");
+                        break;
+                    case 6://6 房屋及其他财物的买卖租赁
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "sale_and_lease_page", "sale_and_lease_page_quick_consultation_click");
+                        break;
+                    case 10://10 债权债务
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "creditor_is_rights_and_debts_page", "creditor_is_rights_and_debts_page_quick_consultation_click");
+                        break;
+                    case 14://14 人身伤害赔偿
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "personal_injury_compensation_page", "personal_injury_compensation_page_quick_consultation_click");
+                        break;
+                    case 19:// 19 消费维权
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "consumer_rights_page", "consumer_rights_page_quick_consultation_click");
+                        break;
+                    case 23://23 交通事故
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "traffic_accident_page", "traffic_accident_page_quick_consultation_click");
+                        break;
+                    case 7://7 合同纠纷
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "contractual_dispute_page", "contractual_dispute_page_quick_consultation_click");
+                        break;
+                    case 8://8 基础项目建设
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "basic_project_construction_page", "basic_project_construction_page_quick_consultation_click");
+                        break;
+                    case 9://9 不动产销售与租赁
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "real_estate_page", "real_estate_page_quick_consultation_click");
+                        break;
+                    case 13://13 知识产权及商业保护
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "intellectual_property_page", "intellectual_property_page_quick_consultation_click");
+                        break;
+                    case 17://17 资本市场及股权融资
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "capital_market_page", "capital_market_page_quick_consultation_click");
+                        break;
+                    case 18://18 公司治理及股东关系
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "corporate_governance_page", "corporate_governance_page_quick_consultation_click");
+                        break;
+                    case 22://22 对外投资并购、合伙及联营
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "foreign_investment_page", "foreign_investment_page_quick_consultation_click");
+                        break;
+                    case 27://27 土地纠纷
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "land_development_transfer_page", "land_development_transfer_page_quick_consultation_click");
+                        break;
+                    case 28://28 人力资源及劳资关系
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "human_resources_page", "human_resources_page_quick_consultation_click");
+                        break;
+                    case 29://29 财税专项
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "finance_and_taxation_page", "finance_and_taxation_page_quick_consultation_click");
+                        break;
+                    case 30://30 行政许可\/处罚
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "administrative_license_penalty_page", "administrative_license_penalty_page_quick_consultation_click");
+                        break;
+                    case 31://31 保险及侵权赔偿
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "insurance_and_infringement_compensation_page", "insurance_and_infringement_compensation_page_quick_consultation_click");
+                        break;
+                    case 32://32 基金/信托/保理/融资租聘
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "fund_trust_insurance_financing_page", "fund_trust_insurance_financing_page_quick_consultation_click");
+                        break;
+                    case 33://33 买卖销售合同纠纷
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "sale_and_sales_contract_dispute_page", "sale_and_sales_contract_dispute_page_quick_consultation_click");
+                        break;
+                    case 34://34 环境保护
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "environmental_protection_page", "environmental_protection_page_quick_consultation_click");
+                        break;
+                    case 5://5  重大刑事案件
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "major_criminal_case_page", "major_criminal_case_page_quick_consultation_click");
+                        break;
+                    case 20://20 职务犯罪
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "duty_crime_page", "duty_crime_page_quick_consultation_click");
+                        break;
+                    case 16://16 普通刑事案件
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "ordinary_criminal_page", "ordinary_criminal_page_quick_consultation_click");
+                        break;
+                    case 3://3 融资借贷
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "financing_lending_page", "financing_lending_page_quick_consultation_click");
+                        break;
+                }
+                bundle.clear();
+                bundle.putString(BundleTags.URL, entity99.getUrl());
+                bundle.putString(BundleTags.TITLE, "快速电话咨询");
+                launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+            });
+        } else {
+            groupContractCall.setVisibility(View.GONE);
         }
 
-        if(isCriminal){
+        if (datas != null && datas.size() > 0) {
+            tvContractAll.setText("展开全部 >");
+            HomeContractAdapter homeContractAdapter = new HomeContractAdapter();
+            homeContractAdapter.setOnItemClickListener((adapter1, view, position) -> {
+                if (isFastClick()) return;
+                CommonPageContractsEntity bean = homeContractAdapter.getItem(position);
+                if (bean == null) return;
+                bundle.clear();
+                bundle.putString(BundleTags.URL, bean.getUrl());
+                bundle.putString(BundleTags.TITLE, bean.getContent());
+                launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+            });
+
+            AppUtils.configRecyclerView(recyclerViewContract, new LinearLayoutManager(mActivity));
+            recyclerViewContract.setNestedScrollingEnabled(false);
+            recyclerViewContract.setAdapter(homeContractAdapter);
+
+            int maxSize = 5;
+            if (datas.size() < maxSize) {
+                hideContractAllView();
+                homeContractAdapter.setNewData(datas);
+            } else {
+                List<CommonPageContractsEntity> datas5 = new ArrayList<>();
+                for (int i = 0; i < maxSize; i++) {
+                    datas5.add(datas.get(i));
+                }
+                homeContractAdapter.setNewData(datas5);
+
+                tvContractAll.setOnClickListener(v -> {
+                    if (isFastClick()) return;
+
+                    if (!isContractAll) {
+                        tvContractAll.setText("折叠 >");
+                        homeContractAdapter.setNewData(datas);
+                    } else {
+                        tvContractAll.setText("展开全部 >");
+                        homeContractAdapter.setNewData(datas5);
+                    }
+                    isContractAll = !isContractAll;
+                });
+            }
+//            if (entity.getContent().indexOf("审查") != -1) {
+//                tvContractCheckPrice.setText(entity.getPriceStr());
+//                tvContractCheck.setText(entity.getContent() + "(" + solutionName + ")");
+//                viewContractCheck.setOnClickListener(v -> {
+//
+//                    switch (solutionId) {//审查合同
+//                        case 2://2 婚姻及家事
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "marriage_housework_page", "marriage_housework_page_view_contract_click");
+//                            break;
+//                        case 4://4 劳动者权益保护
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "laborer_is_rights_protection_page", "laborer_is_rights_protection_page_view_contract_click");
+//                            break;
+//                        case 6://6 房屋及其他财物的买卖租赁
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "sale_and_lease_page", "sale_and_lease_page_view_contract_click");
+//                            break;
+//                        case 10://10 债权债务
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "creditor_is_rights_and_debts_page", "creditor_is_rights_and_debts_page_view_contract_click");
+//                            break;
+//                        case 14://14 人身伤害赔偿
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "personal_injury_compensation_page", "personal_injury_compensation_page_view_contract_click");
+//                            break;
+//                        case 19:// 19 消费维权
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "consumer_rights_page", "consumer_rights_page_page_view_contract_click");
+//                            break;
+//                        case 23://23 交通事故
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "traffic_accident_page", "traffic_accident_page_view_contract_click");
+//                            break;
+//                        case 7://7 合同纠纷
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "contractual_dispute_page", "contractual_dispute_page_view_contract_click");
+//                            break;
+//                        case 8://8 基础项目建设
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "basic_project_construction_page", "basic_project_construction_page_view_contract_click");
+//                            break;
+//                        case 9://9 不动产销售与租赁
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "real_estate_page", "real_estate_page_view_contract_click");
+//                            break;
+//                        case 13://13 知识产权及商业保护
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "intellectual_property_page", "intellectual_property_page_view_contract_click");
+//                            break;
+//                        case 17://17 资本市场及股权融资
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "capital_market_page", "capital_market_page_view_contract_click");
+//                            break;
+//                        case 18://18 公司治理及股东关系
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "corporate_governance_page", "corporate_governance_page_view_contract_click");
+//                            break;
+//                        case 22://22 对外投资并购、合伙及联营
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "foreign_investment_page", "foreign_investment_page_view_contract_click");
+//                            break;
+//                        case 27://27 土地纠纷
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "land_development_transfer_page", "land_development_transfer_page_view_contract_click");
+//                            break;
+//                        case 28://28 人力资源及劳资关系
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "human_resources_page", "human_resources_page_view_contract_click");
+//                            break;
+//                        case 29://29 财税专项
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "finance_and_taxation_page", "finance_and_taxation_page_view_contract_click");
+//                            break;
+//                        case 30://30 行政许可\/处罚
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "administrative_license_penalty_page", "administrative_license_penalty_page_view_contract_click");
+//                            break;
+//                        case 31://31 保险及侵权赔偿
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "insurance_and_infringement_compensation_page", "insurance_and_infringement_compensation_page_view_contract_click");
+//                            break;
+//                        case 32://32 基金/信托/保理/融资租聘
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "fund_trust_insurance_financing_page", "fund_trust_insurance_financing_page_view_contract_click");
+//                            break;
+//                        case 33://33 买卖销售合同纠纷
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "sale_and_sales_contract_dispute_page", "sale_and_sales_contract_dispute_page_view_contract_click");
+//                            break;
+//                        case 34://34 环境保护
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "environmental_protection_page", "environmental_protection_page_view_contract_click");
+//                            break;
+//                        case 5://5  重大刑事案件
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "major_criminal_case_page", "major_criminal_case_page_view_contract_click");
+//                            break;
+//                        case 20://20 职务犯罪
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "duty_crime_page", "duty_crime_page_view_contract_click");
+//                            break;
+//                        case 16://16 普通刑事案件
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "ordinary_criminal_page", "ordinary_criminal_page_view_contract_click");
+//                            break;
+//                        case 3://3 融资借贷
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "financing_lending_page", "financing_lending_page_view_contract_click");
+//                            break;
+//                    }
+//
+//                    bundle.clear();
+//                    bundle.putString(BundleTags.URL, entity.getUrl());
+//                    bundle.putString(BundleTags.TITLE, entity.getContent());
+//                    bundle.putBoolean(BundleTags.IS_SHARE, false);
+//                    launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+//                });
+//                continue;
+//            }
+//
+//            if (entity.getContent().indexOf("起草") != -1) {
+//                tvContractWritePrice.setText(entity.getPriceStr());
+//                tvContractWrite.setText(entity.getContent() + "(" + solutionName + ")");
+//                viewContractWrite.setOnClickListener(v -> {
+//
+//                    switch (solutionId) {//起草合同
+//                        case 2://2 婚姻及家事
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "marriage_housework_page", "marriage_housework_page_draw_contract_click");
+//                            break;
+//                        case 4://4 劳动者权益保护
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "laborer_is_rights_protection_page", "laborer_is_rights_protection_page_draw_contract_click");
+//                            break;
+//                        case 6://6 房屋及其他财物的买卖租赁
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "sale_and_lease_page", "sale_and_lease_page_draw_contract_click");
+//                            break;
+//                        case 10://10 债权债务
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "creditor_is_rights_and_debts_page", "creditor_is_rights_and_debts_page_draw_contract_click");
+//                            break;
+//                        case 14://14 人身伤害赔偿
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "personal_injury_compensation_page", "personal_injury_compensation_page_draw_contract_click");
+//                            break;
+//                        case 19:// 19 消费维权
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "consumer_rights_page", "consumer_rights_page_draw_contract_click");
+//                            break;
+//                        case 23://23 交通事故
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "traffic_accident_page", "traffic_accident_page_draw_contract_click");
+//                            break;
+//                        case 7://7 合同纠纷
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "contractual_dispute_page", "contractual_dispute_page_draw_contract_click");
+//                            break;
+//                        case 8://8 基础项目建设
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "basic_project_construction_page", "basic_project_construction_page_draw_contract_click");
+//                            break;
+//                        case 9://9 不动产销售与租赁
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "real_estate_page", "real_estate_page_draw_contract_click");
+//                            break;
+//                        case 13://13 知识产权及商业保护
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "intellectual_property_page", "intellectual_property_page_draw_contract_click");
+//                            break;
+//                        case 17://17 资本市场及股权融资
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "capital_market_page", "capital_market_page_draw_contract_click");
+//                            break;
+//                        case 18://18 公司治理及股东关系
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "corporate_governance_page", "corporate_governance_page_draw_contract_click");
+//                            break;
+//                        case 22://22 对外投资并购、合伙及联营
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "foreign_investment_page", "foreign_investment_page_draw_contract_click");
+//                            break;
+//                        case 27://27 土地纠纷
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "land_development_transfer_page", "land_development_transfer_page_draw_contract_click");
+//                            break;
+//                        case 28://28 人力资源及劳资关系
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "human_resources_page", "human_resources_page_draw_contract_click");
+//                            break;
+//                        case 29://29 财税专项
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "finance_and_taxation_page", "finance_and_taxation_page_draw_contract_click");
+//                            break;
+//                        case 30://30 行政许可\/处罚
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "administrative_license_penalty_page", "administrative_license_penalty_page_draw_contract_click");
+//                            break;
+//                        case 31://31 保险及侵权赔偿
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "insurance_and_infringement_compensation_page", "insurance_and_infringement_compensation_page_draw_contract_click");
+//                            break;
+//                        case 32://32 基金/信托/保理/融资租聘
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "fund_trust_insurance_financing_page", "fund_trust_insurance_financing_page_draw_contract_click");
+//                            break;
+//                        case 33://33 买卖销售合同纠纷
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "sale_and_sales_contract_dispute_page", "sale_and_sales_contract_dispute_page_draw_contract_click");
+//                            break;
+//                        case 34://34 环境保护
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "environmental_protection_page", "environmental_protection_page_draw_contract_click");
+//                            break;
+//                        case 5://5  重大刑事案件
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "major_criminal_case_page", "major_criminal_case_page_draw_contract_click");
+//                            break;
+//                        case 20://20 职务犯罪
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "duty_crime_page", "duty_crime_page_draw_contract_click");
+//                            break;
+//                        case 16://16 普通刑事案件
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "ordinary_criminal_page", "ordinary_criminal_page_draw_contract_click");
+//                            break;
+//                        case 3://3 融资借贷
+//                            BuryingPointHelp.getInstance().onEvent(mActivity, "financing_lending_page", "financing_lending_page_draw_contract_click");
+//                            break;
+//                    }
+//
+//
+//                    bundle.clear();
+//                    bundle.putString(BundleTags.URL, entity.getUrl());
+//                    bundle.putString(BundleTags.TITLE, entity.getContent());
+//                    launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+//                });
+//                continue;
+//            }
+//        }
+        } else {
             hideContractLayout();
         }
     }
 
-    public void hideContractLayout(){
+    boolean isContractAll = false;
+
+    public void hideContractLayout() {
         groupContract.setVisibility(View.GONE);
+        tvContractAll.setVisibility(View.GONE);
+    }
+
+    public void hideContractAllView() {
+        tvContractAll.setVisibility(View.GONE);
     }
 
     @Override
@@ -719,12 +774,12 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
             itemView.setOnClickListener(v -> {
                 if (isFastClick()) return;
                 CommonMarkEntity bean = marks.get(pos);
-                if(bean == null) return;
+                if (bean == null) return;
 
 
                 switch (solutionId) {//律师详情
                     case 2://2 婚姻及家事
-                        switch (bean.getId()){
+                        switch (bean.getId()) {
                             case 21://离婚诉讼
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "marriage_housework_page", "marriage_housework_page_divorce_lawsuit_click");
                                 break;
@@ -743,7 +798,7 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
                         }
                         break;
                     case 3://3 融资借贷
-                        switch (bean.getId()){
+                        switch (bean.getId()) {
                             case 26://民间借贷
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "financing_lending_page", "financing_lending_page_private lending_click");
                                 break;
@@ -777,7 +832,7 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
                         }
                         break;
                     case 4://4 劳动者权益保护
-                        switch (bean.getId()){
+                        switch (bean.getId()) {
                             case 28://劳资纠纷
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "laborer_is_rights_protection_page", "laborer_is_rights_protection_page_labor_dispute_click");
                                 break;
@@ -793,7 +848,7 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
                         }
                         break;
                     case 5://5  重大刑事案件
-                        switch (bean.getId()){
+                        switch (bean.getId()) {
                             case 32://毒品犯罪
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "major_criminal_case_page", "major_criminal_case_page_drug_crime_click");
                                 break;
@@ -809,7 +864,7 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
                         }
                         break;
                     case 6://6 房屋及其他财物的买卖租赁
-                        switch (bean.getId()){
+                        switch (bean.getId()) {
                             case 35://房屋销售/买卖
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "sale_and_lease_page", "sale_and_lease_page_house_sale_click");
                                 break;
@@ -840,7 +895,7 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
                         }
                         break;
                     case 7://7 合同纠纷
-                        switch (bean.getId()){
+                        switch (bean.getId()) {
                             case 38://买卖合同纠纷
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "contractual_dispute_page", "contractual_dispute_page_sale_contract_dispute_click");
                                 break;
@@ -856,7 +911,7 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
                         }
                         break;
                     case 8://8 基础项目建设
-                        switch (bean.getId()){
+                        switch (bean.getId()) {
                             case 41://房地产开发
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "basic_project_construction_page", "basic_project_construction_page_real_estate_development_click");
                                 break;
@@ -887,7 +942,7 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
                         }
                         break;
                     case 9://9 不动产销售与租赁
-                        switch (bean.getId()){
+                        switch (bean.getId()) {
                             case 44://房屋销售/买卖
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "real_estate_page", "real_estate_page_house_sale_click");
                                 break;
@@ -906,7 +961,7 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
                         }
                         break;
                     case 10://10 债权债务
-                        switch (bean.getId()){
+                        switch (bean.getId()) {
                             case 47://P2P借贷
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "creditor_is_rights_and_debts_page", "creditor_is_rights_and_debts_page_p2p_lending_click");
                                 break;
@@ -928,7 +983,7 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
                         }
                         break;
                     case 13://13 知识产权及商业保护
-                        switch (bean.getId()){
+                        switch (bean.getId()) {
                             case 56://著作权申请/保护/交易
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "intellectual_property_page", "intellectual_property_page_copyright_application_protection_click");
                                 break;
@@ -950,7 +1005,7 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
                         }
                         break;
                     case 14://14 人身伤害赔偿
-                        switch (bean.getId()){
+                        switch (bean.getId()) {
                             case 59://人身伤害
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "personal_injury_compensation_page", "personal_injury_compensation_page_personal_injury_click");
                                 break;
@@ -972,7 +1027,7 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
                         }
                         break;
                     case 16://16 普通刑事案件
-                        switch (bean.getId()){
+                        switch (bean.getId()) {
                             case 115://贪污受贿案件
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "ordinary_criminal_page", "ordinary_criminal_page_corruption_bribery_click");
                                 break;
@@ -985,7 +1040,7 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
                         }
                         break;
                     case 17://17 资本市场及股权融资
-                        switch (bean.getId()){
+                        switch (bean.getId()) {
                             case 110://新三板上市
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "capital_market_page", "capital_market_page_new_Third_Board_Listing_click");
                                 break;
@@ -1016,7 +1071,7 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
                         }
                         break;
                     case 18://18 公司治理及股东关系
-                        switch (bean.getId()){
+                        switch (bean.getId()) {
                             case 105://公司治理
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "corporate_governance_page", "corporate_governance_page_corporate_governance_click");
                                 break;
@@ -1038,7 +1093,7 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
                         }
                         break;
                     case 19:// 19 消费维权
-                        switch (bean.getId()){
+                        switch (bean.getId()) {
                             case 107://消费者保护
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "consumer_rights_page", "consumer_rights_page_consumer_protection_click");
                                 break;
@@ -1060,7 +1115,7 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
                         }
                         break;
                     case 20://20 职务犯罪
-                        switch (bean.getId()){
+                        switch (bean.getId()) {
                             case 112://死刑复核
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "duty_crime_page", "duty_crime_page_death_penalty_review_click");
                                 break;
@@ -1070,7 +1125,7 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
                         }
                         break;
                     case 22://22 对外投资并购、合伙及联营
-                        switch (bean.getId()){
+                        switch (bean.getId()) {
                             case 150://有限公司/上市公司并购
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "foreign_investment_page", "foreign_investment_page_merger_click");
                                 break;
@@ -1083,21 +1138,21 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
                         }
                         break;
                     case 23://23 交通事故
-                        switch (bean.getId()){
+                        switch (bean.getId()) {
                             case 123://交通事故
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "traffic_accident_page", "traffic_accident_page_accident_click");
                                 break;
                         }
                         break;
                     case 27://27 土地纠纷
-                        switch (bean.getId()){
+                        switch (bean.getId()) {
                             case 77://土地转让/抵押
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "land_development_transfer_page", "land_development_transfer_page_land_transfer_mortgage_click");
                                 break;
                         }
                         break;
                     case 28://28 人力资源及劳资关系
-                        switch (bean.getId()){
+                        switch (bean.getId()) {
                             case 158://社保纠纷
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "human_resources_page", "human_resources_page_social_security_dispute_click");
                                 break;
@@ -1113,42 +1168,42 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
                         }
                         break;
                     case 29://29 财税专项
-                        switch (bean.getId()){
+                        switch (bean.getId()) {
                             case 147://财税专项
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "finance_and_taxation_page", "finance_and_taxation_page_finance_taxation_click");
                                 break;
                         }
                         break;
                     case 30://30 行政许可\/处罚
-                        switch (bean.getId()){
+                        switch (bean.getId()) {
                             case 153://行政许可/处罚
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "administrative_license_penalty_page", "administrative_license_penalty_page_administrative_penalty_click");
                                 break;
                         }
                         break;
                     case 31://31 保险及侵权赔偿
-                        switch (bean.getId()){
+                        switch (bean.getId()) {
                             case 154://保险及侵权赔偿
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "insurance_and_infringement_compensation_page", "insurance_and_infringement_compensation_page_insurance_infringement_compensation_click");
                                 break;
                         }
                         break;
                     case 32://32 基金/信托/保理/融资租聘
-                        switch (bean.getId()){
+                        switch (bean.getId()) {
                             case 155://基金/信托/保理/融资租赁
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "fund_trust_insurance_financing_page", "fund_trust_insurance_financing_page_fund_trust_insurance_financing_click");
                                 break;
                         }
                         break;
                     case 33://33 买卖销售合同纠纷
-                        switch (bean.getId()){
+                        switch (bean.getId()) {
                             case 156://买卖销售合同纠纷
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "sale_and_sales_contract_dispute_page", "sale_and_sales_contract_dispute_page_sale_and_sales_contract_dispute_click");
                                 break;
                         }
                         break;
                     case 34://34 环境保护
-                        switch (bean.getId()){
+                        switch (bean.getId()) {
                             case 157://环境保护
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "environmental_protection_page", "environmental_protection_page_environmental_protection_click");
                                 break;
@@ -1158,10 +1213,10 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
 
 
                 bundle.clear();
-                bundle.putInt(BundleTags.SOLUTION_TYPE_ID,solutionId);
-                bundle.putInt(BundleTags.SOLUTION_TYPE_CHILD_ID,bean.getId());
-                bundle.putString(BundleTags.SOLUTION_TYPE_NAME,solutionName);
-                launchActivity(new Intent(mActivity, LawyerListActivity.class),bundle);
+                bundle.putInt(BundleTags.SOLUTION_TYPE_ID, solutionId);
+                bundle.putInt(BundleTags.SOLUTION_TYPE_CHILD_ID, bean.getId());
+                bundle.putString(BundleTags.SOLUTION_TYPE_NAME, solutionName);
+                launchActivity(new Intent(mActivity, LawyerListActivity.class), bundle);
             });
             sflTable.addView(itemView, i);
         }
@@ -1368,9 +1423,9 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
                 }
 
                 bundle.clear();
-                bundle.putInt(BundleTags.SOLUTION_TYPE_ID,solutionId);
-                bundle.putString(BundleTags.SOLUTION_TYPE_NAME,solutionName);
-                launchActivity(new Intent(mActivity, LawyerListActivity.class),bundle);
+                bundle.putInt(BundleTags.SOLUTION_TYPE_ID, solutionId);
+                bundle.putString(BundleTags.SOLUTION_TYPE_NAME, solutionName);
+                launchActivity(new Intent(mActivity, LawyerListActivity.class), bundle);
 
                 break;
         }
@@ -1604,7 +1659,7 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
                     .setImgUrl(item.getIconImage())
                     .setOnClickListener(() -> {
 //                        if(item.getTypeId() == 2) //消息通知
-                        if(item.getTypeId() == 1){//h5
+                        if (item.getTypeId() == 1) {//h5
                             bundle.clear();
                             bundle.putString(BundleTags.URL, item.getUrl());
                             bundle.putString(BundleTags.TITLE, item.getName());
