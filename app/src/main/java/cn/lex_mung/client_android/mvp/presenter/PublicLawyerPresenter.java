@@ -138,7 +138,7 @@ public class PublicLawyerPresenter extends BasePresenter<PublicLawyerContract.Mo
         Map<String, Object> map = new HashMap<>();
         map.put("sort", 0);
         map.put("businessTypeId", 0);
-        map.put("regionId", DataHelper.getIntergerSF(mApplication, DataHelperTags.LAUNCH_LOCATION));
+//        map.put("regionId", DataHelper.getIntergerSF(mApplication, DataHelperTags.LAUNCH_LOCATION));
         map.put("orgLevId", orgLevelId);
         map.put("orgId", orgId);
         mModel.getLawyerList(pageNum, RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
