@@ -2,33 +2,28 @@ package cn.lex_mung.client_android.mvp.ui.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
-
 import cn.lex_mung.client_android.R;
-import me.zl.mvp.http.imageloader.ImageLoader;
 
 public class ActivityDialog extends Dialog {
     Context context;
-    ImageLoader mImageLoader;
 
     View view_close;
     ImageView iv_img;
 
-    public ActivityDialog(@NonNull Context context,ImageLoader mImageLoader) {
+    public ActivityDialog(@NonNull Context context) {
         super(context, R.style.alert_dialog);
         this.context = context;
-        this.mImageLoader = mImageLoader;
     }
 
-    String imgUrl;
-    public ActivityDialog setImgUrl(String imgUrl){
-        this.imgUrl = imgUrl;
+    Drawable imgDrawable;
+    public ActivityDialog setImgDrawable(Drawable imgDrawable){
+        this.imgDrawable = imgDrawable;
         return this;
     }
 
@@ -44,7 +39,7 @@ public class ActivityDialog extends Dialog {
 
         setContentView(R.layout.dialog_activity);
         initView();
-        setCancelable(false);
+        setCancelable(true);
     }
 
     private void initView() {
@@ -62,20 +57,15 @@ public class ActivityDialog extends Dialog {
             }
         });
 
-        if(!TextUtils.isEmpty(imgUrl)){
-            mImageLoader.loadImage(getContext()
-                    , ImageConfigImpl
-                            .builder()
-                            .isCenterCrop(false)
-                            .url(imgUrl)
-                            .errorPic(R.drawable.activity_img)
-                            .imageView(iv_img)
-                            .build());
+        if(imgDrawable != null){
+            iv_img.setImageDrawable(imgDrawable);
         }
+
     }
 
     public interface OnClickListener {
         void onClick();
     }
+
 }
 

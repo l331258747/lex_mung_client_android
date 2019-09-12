@@ -2,6 +2,7 @@ package cn.lex_mung.client_android.mvp.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,10 +15,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -47,18 +52,15 @@ import cn.lex_mung.client_android.mvp.ui.fragment.MeFragment;
 import cn.lex_mung.client_android.mvp.ui.widget.BottomNavigationViewEx;
 import cn.lex_mung.client_android.mvp.ui.widget.CustomScrollViewPager;
 import cn.lex_mung.client_android.utils.BuryingPointHelp;
+import cn.lex_mung.client_android.utils.LogUtil;
 import me.zl.mvp.base.AdapterViewPager;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
-import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.StatusBarUtil;
 
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View {
-    @Inject
-    ImageLoader mImageLoader;
-
     @BindView(R.id.view_pager)
     CustomScrollViewPager viewPager;
     @BindView(R.id.bottom_navigation_view_ex)
@@ -133,19 +135,35 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         if (entities == null || entities.size() == 0) return;
 
         for (ActivityEntity item : mPresenter.getNeedActivityDialogEntities(entities)) {
-            new ActivityDialog(mActivity,
-                    mImageLoader)
-                    .setImgUrl(item.getIconImage())
-                    .setOnClickListener(() -> {
-//                        if(item.getTypeId() == 2) //消息通知
-                        if (item.getTypeId() == 1) {//h5
-                            bundle.clear();
-                            bundle.putString(BundleTags.URL, item.getUrl());
-                            bundle.putString(BundleTags.TITLE, item.getName());
-                            launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+            if (TextUtils.isEmpty(item.getUrl())) continue;
+            Glide.with(mActivity)
+                    .load(item.getUrl())
+                    .listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            LogUtil.e("活动弹窗 图片加载失败");
+                            return false;
                         }
-                    })
-                    .show();
+
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            //加载成功，resource为加载到的图片
+                            //如果return true，则不会再回调Target的onResourceReady（也就是不再往下传递），imageView也就不会显示加载到的图片了。
+                            LogUtil.e("活动弹窗 图片加载成功");
+                            new ActivityDialog(mActivity)
+                                    .setImgDrawable(resource)
+                                    .setOnClickListener(() -> {
+                                        //if(item.getTypeId() == 2) //消息通知
+                                        if (item.getTypeId() == 1) {//h5
+                                            bundle.clear();
+                                            bundle.putString(BundleTags.URL, item.getUrl());
+                                            bundle.putString(BundleTags.TITLE, item.getName());
+                                            launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+                                        }
+                                    }).show();
+                            return false;
+                        }
+                    }).preload();
         }
     }
 

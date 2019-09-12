@@ -2,6 +2,7 @@ package cn.lex_mung.client_android.mvp.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,10 +11,16 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
@@ -45,6 +52,7 @@ import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.SimpleFlowLayout;
 import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
 import cn.lex_mung.client_android.utils.BuryingPointHelp;
+import cn.lex_mung.client_android.utils.LogUtil;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
@@ -1647,26 +1655,38 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
         name	弹窗名字
         id	弹窗id
         url	关联跳转
-        buttonName	按钮名称
-        sortOrder	序号
-        targetUsersGroup	目标用户关联组
-        purpose	用途
         iconImage	关联图片
          */
         for (ActivityEntity item : mPresenter.getNeedActivityDialogEntities(entities)) {
-            new ActivityDialog(mActivity,
-                    mImageLoader)
-                    .setImgUrl(item.getIconImage())
-                    .setOnClickListener(() -> {
-//                        if(item.getTypeId() == 2) //消息通知
-                        if (item.getTypeId() == 1) {//h5
-                            bundle.clear();
-                            bundle.putString(BundleTags.URL, item.getUrl());
-                            bundle.putString(BundleTags.TITLE, item.getName());
-                            launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+            if (TextUtils.isEmpty(item.getUrl())) continue;
+            Glide.with(mActivity)
+                    .load(item.getUrl())
+                    .listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            LogUtil.e("活动弹窗 图片加载失败");
+                            return false;
                         }
-                    })
-                    .show();
+
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            //加载成功，resource为加载到的图片
+                            //如果return true，则不会再回调Target的onResourceReady（也就是不再往下传递），imageView也就不会显示加载到的图片了。
+                            LogUtil.e("活动弹窗 图片加载成功");
+                            new ActivityDialog(mActivity)
+                                    .setImgDrawable(resource)
+                                    .setOnClickListener(() -> {
+                                        //if(item.getTypeId() == 2) //消息通知
+                                        if (item.getTypeId() == 1) {//h5
+                                            bundle.clear();
+                                            bundle.putString(BundleTags.URL, item.getUrl());
+                                            bundle.putString(BundleTags.TITLE, item.getName());
+                                            launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+                                        }
+                                    }).show();
+                            return false;
+                        }
+                    }).preload();
         }
     }
 }
