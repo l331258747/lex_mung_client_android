@@ -17,6 +17,7 @@ import cn.lex_mung.client_android.mvp.model.entity.DemandMessageEntity;
 import cn.lex_mung.client_android.mvp.model.entity.EquitiesDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.EquitiesListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.ExpertCallEntity;
+import cn.lex_mung.client_android.mvp.model.entity.entrust.EntrustDetailEntity;
 import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.FeedbackTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.FreeConsultEntity;
@@ -902,4 +903,10 @@ public interface CommonService {
     //客户端弹窗
     @POST("common/popup/list")
     Observable<BaseResponse<BaseListEntity<ActivityEntity>>> popupList(@Body RequestBody body);
+
+    ///lawyer/caseorder/detail/v2/{id}
+    //GET
+    //律师端案源订单详情
+    @GET("lawyer/caseorder/detail/v2/{id}")
+    Observable<BaseResponse<EntrustDetailEntity>> caseorderDetail(@Path("id") int id);
 }

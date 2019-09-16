@@ -24,6 +24,7 @@ import cn.lex_mung.client_android.mvp.model.entity.OrderEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultDetail1Activity;
 import cn.lex_mung.client_android.mvp.ui.activity.OrderDetailsActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.OrderDetailsEntrustActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.OrderDetailsExpertActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.MyOrderAdapter2;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -81,19 +82,6 @@ public class MyOrderPresenter extends BasePresenter<MyOrderContract.Model, MyOrd
                     mRootView.launchActivity(new Intent(mApplication, FreeConsultDetail1Activity.class), bundle);
                     break;
                 case 5://客户需求
-//                    if(entity.getIsHot() == 1){
-//                        bundle.clear();
-//                        bundle.putInt(BundleTags.ID, entity.getId());
-//                        bundle.putString(BundleTags.ORDER_NO,entity.getOrderNo());
-//                        bundle.putInt(BundleTags.STATE,entity.getOrderStatus());
-//                        mRootView.launchActivity(new Intent(mApplication, OrderDetailTabActivity.class), bundle);
-//                        return;
-//                    }
-//                    bundle.clear();
-//                    bundle.putInt(BundleTags.ID, entity.getLawyerMemberId());
-//                    bundle.putString(BundleTags.TITLE, entity.getMemberName());
-//                    mRootView.launchActivity(new Intent(mApplication, MessageChatActivity.class), bundle);
-
                     bundle.clear();
                     bundle.putInt(BundleTags.ID, entity.getId());
                     bundle.putString(BundleTags.TITLE,entity.getTypeName());
@@ -101,22 +89,28 @@ public class MyOrderPresenter extends BasePresenter<MyOrderContract.Model, MyOrd
                     bundle.putString(BundleTags.ORDER_NO,entity.getOrderNo());
                     bundle.putInt(BundleTags.IS_SHOW,entity.getIsHot());
                     mRootView.launchActivity(new Intent(mApplication, OrderDetailsActivity.class), bundle);
-
                     break;
-                case 3:
+                case 3://专家咨询
                     bundle.clear();
                     bundle.putInt(BundleTags.ID, entity.getId());
                     bundle.putString(BundleTags.TITLE,entity.getTypeName());
                     bundle.putString(BundleTags.ORDER_NO,entity.getOrderNo());
                     mRootView.launchActivity(new Intent(mApplication, OrderDetailsExpertActivity.class), bundle);
                     break;
-                case 4:
+                case 4://快速电话咨询
                     bundle.clear();
                     bundle.putInt(BundleTags.ID, entity.getId());
                     bundle.putString(BundleTags.TITLE,entity.getOrderType());
                     bundle.putInt(BundleTags.TYPE, entity.getTypeId());
                     bundle.putString(BundleTags.ORDER_NO,entity.getOrderNo());
                     mRootView.launchActivity(new Intent(mApplication, OrderDetailsActivity.class), bundle);
+                    break;
+                case 6://案源信息
+                    bundle.clear();
+                    bundle.putInt(BundleTags.ID, entity.getId());
+                    bundle.putString(BundleTags.TITLE,entity.getOrderType());
+                    bundle.putString(BundleTags.ORDER_NO,entity.getOrderNo());
+                    mRootView.launchActivity(new Intent(mApplication, OrderDetailsEntrustActivity.class), bundle);
                     break;
             }
         });
