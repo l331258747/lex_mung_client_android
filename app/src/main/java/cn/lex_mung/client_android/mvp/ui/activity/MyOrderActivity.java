@@ -101,4 +101,13 @@ public class MyOrderActivity extends BaseActivity<MyOrderPresenter> implements M
     public void killMyself() {
         finish();
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(smartRefreshLayout != null){
+            smartRefreshLayout.finishLoadMore();
+            smartRefreshLayout.finishRefresh();
+        }
+    }
 }

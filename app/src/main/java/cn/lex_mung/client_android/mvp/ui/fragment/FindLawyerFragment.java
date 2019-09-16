@@ -539,4 +539,13 @@ public class FindLawyerFragment extends BaseFragment<FindLawyerPresenter> implem
     public void killMyself() {
 
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(smartRefreshLayout != null){
+            smartRefreshLayout.finishLoadMore();
+            smartRefreshLayout.finishRefresh();
+        }
+    }
 }
