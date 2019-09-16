@@ -7,11 +7,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.umeng.analytics.MobclickAgent;
 
 import javax.inject.Inject;
 
@@ -23,11 +24,14 @@ import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.di.component.DaggerFreeConsultMainComponent;
 import cn.lex_mung.client_android.di.module.FreeConsultMainModule;
 import cn.lex_mung.client_android.mvp.contract.FreeConsultMainContract;
+import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
 import cn.lex_mung.client_android.mvp.presenter.FreeConsultMainPresenter;
 import cn.lex_mung.client_android.mvp.ui.adapter.FreeConsultMainAdapter;
+import cn.lex_mung.client_android.mvp.ui.dialog.FabFreeDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
 import cn.lex_mung.client_android.utils.BuryingPointHelp;
+import cn.lex_mung.client_android.utils.GsonUtil;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
@@ -46,6 +50,11 @@ public class FreeConsultMainActivity extends BaseActivity<FreeConsultMainPresent
     @BindView(R.id.smart_refresh_layout)
     SmartRefreshLayout smartRefreshLayout;
 
+    @BindView(R.id.fab)
+    ImageView fab;
+
+    private FabFreeDialog fabDialog;
+
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerFreeConsultMainComponent
@@ -57,21 +66,70 @@ public class FreeConsultMainActivity extends BaseActivity<FreeConsultMainPresent
     }
 
     @OnClick({
-            R.id.tv_btn
+//            R.id.tv_btn,
+            R.id.fab
     })
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.tv_btn:
-                BuryingPointHelp.getInstance().onEvent(mActivity, "free_text_list_page","free_text_list_page_free_text_post_click");
-                if (DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
-                    launchActivity(new Intent(mActivity, FreeConsultActivity.class));
-                } else {
-                    bundle.clear();
-                    bundle.putInt(BundleTags.TYPE, 1);
-                    launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
-                }
+//            case R.id.tv_btn:
+//                BuryingPointHelp.getInstance().onEvent(mActivity, "free_text_list_page","free_text_list_page_free_text_post_click");
+//                if (DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
+//                    launchActivity(new Intent(mActivity, FreeConsultActivity.class));
+//                } else {
+//                    bundle.clear();
+//                    bundle.putInt(BundleTags.TYPE, 1);
+//                    launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
+//                }
+//                break;
+            case R.id.fab:
+                showFabDialog();
                 break;
         }
+    }
+
+    public void showFabDialog() {
+        fab.setVisibility(View.GONE);
+        if (fabDialog == null) {
+            fabDialog = new FabFreeDialog(mActivity, new FabFreeDialog.OnClickListener() {
+                @Override
+                public void onCloseClick() {
+                    fab.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onHelpClick() {//发布免费咨询
+                    fab.setVisibility(View.VISIBLE);
+                    if (DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
+                        launchActivity(new Intent(mActivity, FreeConsultActivity.class));
+                    } else {
+                        bundle.clear();
+                        bundle.putInt(BundleTags.TYPE, 1);
+                        launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
+                    }
+                }
+
+                @Override
+                public void onCustomClick() {//委托找律师 h5
+                    fab.setVisibility(View.VISIBLE);
+                    String str = DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL);//TODO 委托找律师
+                    HomeChildEntity entity = GsonUtil.convertString2Object(str,HomeChildEntity.class);
+                    if(!TextUtils.isEmpty(str) && entity != null){
+                        bundle.clear();
+                        bundle.putString(BundleTags.URL, entity.getJumpurl());
+                        bundle.putString(BundleTags.TITLE, entity.getTitle());
+                        if(entity.getShowShare() == 1){
+                            bundle.putBoolean(BundleTags.IS_SHARE, true);
+                            bundle.putString(BundleTags.SHARE_URL, entity.getShareUrl());
+                            bundle.putString(BundleTags.SHARE_TITLE, entity.getShareTitle());
+                            bundle.putString(BundleTags.SHARE_DES, entity.getShareDescription());
+                            bundle.putString(BundleTags.SHARE_IMAGE, entity.getShareImg());
+                        }
+                        launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+                    }
+                }
+            });
+        }
+        fabDialog.show();
     }
 
     @Override

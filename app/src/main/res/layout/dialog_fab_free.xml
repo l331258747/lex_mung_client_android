@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/c_bb000000">
+
+    <ImageView
+        android:id="@+id/fab_help"
+        android:layout_width="@dimen/qb_px_90"
+        android:layout_height="@dimen/qb_px_90"
+        android:layout_marginRight="@dimen/qb_px_40"
+        android:layout_marginBottom="@dimen/qb_px_40"
+        android:src="@drawable/ic_help_floating"
+        app:layout_constraintBottom_toTopOf="@+id/fab_custom"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/fab_help_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/qb_px_30"
+        android:paddingLeft="@dimen/qb_px_20"
+        android:paddingTop="@dimen/qb_px_5"
+        android:paddingRight="@dimen/qb_px_20"
+        android:paddingBottom="@dimen/qb_px_5"
+        android:text="免费问律师"
+        android:textColor="@color/c_ff"
+        app:layout_constraintBottom_toTopOf="@+id/fab_help_content"
+        app:layout_constraintEnd_toStartOf="@+id/fab_help"
+        app:layout_constraintTop_toTopOf="@+id/fab_help" />
+
+    <TextView
+        android:id="@+id/fab_help_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/qb_px_30"
+        android:text="50000+律师在线回复"
+        android:textColor="@color/c_ff"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/fab_help"
+        app:layout_constraintEnd_toStartOf="@+id/fab_help"
+        app:layout_constraintTop_toBottomOf="@+id/fab_help_title" />
+
+    <ImageView
+        android:id="@+id/fab_custom"
+        android:layout_width="@dimen/qb_px_90"
+        android:layout_height="@dimen/qb_px_90"
+        android:layout_marginRight="@dimen/qb_px_40"
+        android:layout_marginBottom="@dimen/qb_px_40"
+        android:src="@drawable/ic_custom_floating"
+        app:layout_constraintBottom_toTopOf="@+id/fab_close"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/fab_custom_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/qb_px_30"
+        android:paddingLeft="@dimen/qb_px_20"
+        android:paddingTop="@dimen/qb_px_5"
+        android:paddingRight="@dimen/qb_px_20"
+        android:paddingBottom="@dimen/qb_px_5"
+        android:text="委托找律师"
+        android:textColor="@color/c_ff"
+        app:layout_constraintBottom_toTopOf="@+id/fab_custom_content"
+        app:layout_constraintEnd_toStartOf="@+id/fab_custom"
+        app:layout_constraintTop_toTopOf="@+id/fab_custom" />
+
+    <TextView
+        android:id="@+id/fab_custom_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/qb_px_30"
+        android:text="委托平台根据案情确定律师"
+        android:textColor="@color/c_ff"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/fab_custom"
+        app:layout_constraintEnd_toStartOf="@+id/fab_custom"
+        app:layout_constraintTop_toBottomOf="@+id/fab_custom_title" />
+
+    <ImageView
+        android:id="@+id/fab_close"
+        android:layout_width="@dimen/qb_px_90"
+        android:layout_height="@dimen/qb_px_90"
+        android:layout_marginRight="@dimen/qb_px_40"
+        android:layout_marginBottom="@dimen/qb_px_150"
+        android:src="@drawable/ic_close_floating"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</android.support.constraint.ConstraintLayout>
