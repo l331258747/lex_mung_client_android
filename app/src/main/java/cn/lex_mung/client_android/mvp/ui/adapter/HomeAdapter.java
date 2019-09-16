@@ -63,7 +63,7 @@ public class HomeAdapter extends BaseQuickAdapter<HomeEntity, BaseViewHolder> {
                 return;
             case 1:
 
-                if(item.getBtns() == null || item.getBtns().size() != 3)
+                if(item.getBtns() == null || item.getBtns().size() < 3)
                     return;
 
                 Home3ButtonView home3ButtonView1 = helper.getView(R.id.view_home_3button1);
