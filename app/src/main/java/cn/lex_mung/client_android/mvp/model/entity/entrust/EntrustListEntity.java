@@ -109,6 +109,7 @@ public class EntrustListEntity {
     private String lawyerAmountStr;
     private String platformAmountStr;
     private int showAdvantage;
+    private String institutionName;//TODO
 
     public int getShowAdvantage() {//显示律师优势（1是0否）
         return showAdvantage;
@@ -530,6 +531,13 @@ public class EntrustListEntity {
 
     public void setPublishUserName(String publishUserName) {
         this.publishUserName = publishUserName;
+    }
+
+    public String getLMemeberName2(){//TODO
+        if(TextUtils.isEmpty(institutionName)){
+            return rname;
+        }
+        return rname + " | " + institutionName;
     }
 
     public String getLmemberName() {

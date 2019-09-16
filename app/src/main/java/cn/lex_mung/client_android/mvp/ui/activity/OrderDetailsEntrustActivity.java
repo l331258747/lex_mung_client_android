@@ -4,12 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.Group;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import cn.lex_mung.client_android.R;
@@ -25,16 +31,32 @@ import cn.lex_mung.client_android.mvp.ui.widget.OrderDetailView;
 import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
+import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.DeviceUtils;
 import me.zl.mvp.utils.StatusBarUtil;
 
 public class OrderDetailsEntrustActivity extends BaseActivity<OrderDetailsEntrustPresenter> implements OrderDetailsEntrustContract.View {
+    @Inject
+    ImageLoader mImageLoader;
 
     @BindView(R.id.titleView)
     TitleView titleView;
     @BindView(R.id.orderDetailView)
     OrderDetailView orderDetailView;
+
+    @BindView(R.id.group_lawyer)
+    Group groupLawyer;
+    @BindView(R.id.view_lawyer)
+    View viewLawyer;
+    @BindView(R.id.iv_head_tip)
+    ImageView ivHeadTip;
+    @BindView(R.id.tv_name)
+    TextView tvName;
+    @BindView(R.id.tv_name_content)
+    TextView tvNameContent;
+    @BindView(R.id.iv_head)
+    ImageView ivHead;
 
     @BindView(R.id.ll_info_no)
     LinearLayout ll_info_no;
@@ -223,6 +245,8 @@ public class OrderDetailsEntrustActivity extends BaseActivity<OrderDetailsEntrus
         }
 
         setStatus(entity);
+
+        setLawyerLayout(entity.getLawyerMemberId(), entity.getLmemberName(), entity.getLMemeberName2(), entity.getLiconImage());
     }
 
     //TODO　进度　　
@@ -264,6 +288,36 @@ public class OrderDetailsEntrustActivity extends BaseActivity<OrderDetailsEntrus
                     setOrderDetailView(3);//支付信息费
                 }
             }
+        }
+    }
+
+    //TODO 律师信息
+    public void setLawyerLayout(int id, String name, String nameContent, String headUrl) {
+        if (id > 0) {
+            groupLawyer.setVisibility(View.VISIBLE);
+            ivHeadTip.setVisibility(View.VISIBLE);
+            tvName.setText(name);
+            tvNameContent.setText(nameContent);
+            if (!TextUtils.isEmpty(headUrl)) {
+                mImageLoader.loadImage(mActivity
+                        , ImageConfigImpl
+                                .builder()
+                                .url(headUrl)
+                                .imageRadius(AppUtils.dip2px(mActivity, 5))
+                                .imageView(ivHead)
+                                .build());
+            } else {
+                ivHead.setImageDrawable(ContextCompat.getDrawable(mActivity, R.drawable.ic_lawyer_avatar));
+            }
+
+            viewLawyer.setOnClickListener(v -> {
+                bundle.clear();
+                bundle.putInt(BundleTags.ID, id);
+                launchActivity(new Intent(mActivity, LawyerHomePageActivity.class), bundle);
+            });
+        } else {
+            groupLawyer.setVisibility(View.GONE);
+            ivHeadTip.setVisibility(View.GONE);
         }
     }
 
