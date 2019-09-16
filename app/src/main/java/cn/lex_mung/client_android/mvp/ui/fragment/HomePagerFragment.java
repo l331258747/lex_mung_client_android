@@ -613,6 +613,7 @@ import cn.lex_mung.client_android.mvp.ui.activity.SolutionDetailActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.HomeAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import cn.lex_mung.client_android.utils.BadgeNumUtil;
 import cn.lex_mung.client_android.utils.BuryingPointHelp;
 import cn.lex_mung.client_android.utils.LogUtil;
 import me.zl.mvp.base.BaseFragment;
@@ -634,6 +635,9 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     ViewFlipper viewFlipper;
     @BindView(R.id.tv_search)
     TextView tvSearch;
+
+    BadgeNumUtil badgeNumUtil;//华为角标
+
 
     private HomeAdapter homeAdapter;
 
@@ -981,8 +985,18 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     }
 
     @Override
-    public void setUnreadMessageCount(String count) {
+    public void setUnreadMessageCount(int count) {
         iv_message.setImageDrawable(ContextCompat.getDrawable(mActivity, R.drawable.ic_message));
+
+        setHuaweiBadgeNum(count);
+    }
+
+    //设置华为角标
+    public void setHuaweiBadgeNum(int num){
+        if(badgeNumUtil == null){
+            badgeNumUtil = new BadgeNumUtil(mActivity);
+        }
+        badgeNumUtil.setHuaweiBadgeNum(num);
     }
 
     @Override

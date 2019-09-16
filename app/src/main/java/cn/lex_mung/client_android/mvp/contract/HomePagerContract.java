@@ -33,7 +33,7 @@ public interface HomePagerContract {
         void setHomeAdapter(List<HomeEntity> datas);
         void addHomeLawyer(HomeEntity homeEntity);
 
-        void setUnreadMessageCount(String count);
+        void setUnreadMessageCount(int count);
 
         void hideUnreadMessageCount();
 

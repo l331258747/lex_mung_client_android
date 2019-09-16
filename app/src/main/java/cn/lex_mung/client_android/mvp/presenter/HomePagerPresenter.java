@@ -454,7 +454,7 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                                     + baseResponse.getData().getUnreadReqMsgCount()
                                     + baseResponse.getData().getUnreadSysMsgCount();
                             if (count > 0) {
-                                mRootView.setUnreadMessageCount(count + "");
+                                mRootView.setUnreadMessageCount(count);
                             } else {
                                 mRootView.hideUnreadMessageCount();
                             }

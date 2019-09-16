@@ -1,0 +1,39 @@
+华为桌面未读角标对外接口说明书
+1. 声明权限，如下：
+<uses-permission android:name="android.permission.INTERNET"/>
+<uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE "/>
+
+2. 在需要进行角标显示地方，采用如下方法传递数据给华为桌面应用
+Bundle extra =new Bundle();
+extra.putString("package", "xxxxxx");
+extra.putString("class", "yyyyyyy");
+extra.putInt("badgenumber", i);
+context.getContentResolver().call(Uri.parse("content://com.huawei.android.launcher.settings/badge/"), "change_badge", null, extra);
+关键参数说明
+package:应用包名
+class:桌面图标对应的应用入口Activity类
+badgenumber:角标数字
+
+
+示例：
+boolean mIsSupportedBade = true;
+if(mIsSupportedBade) {
+    setBadgeNum(num);
+}
+/** set badge number*/
+public void setBadgeNum( int num){
+    try{
+        Bundle bunlde =new Bundle();
+        bunlde.putString("package", "com.test.badge"); // com.test.badge is your package name
+        bunlde.putString("class", "com.test.badge.MainActivity"); // com.test. badge.MainActivity is your apk main activity
+        bunlde.putInt("badgenumber",num);
+        this.getContentResolver().call(Uri.parse("content://com.huawei.android.launcher.settings/badge/"), "change_badge", null, bunlde);
+    }catch(Exception e){
+        mIsSupportedBade = false;
+    }
+}
+
+3. 特殊情形考虑：
+ 对 于第三 应用打 开和退出 时，是 否还继 续显示角 标 取决 应用传 递的值
+（badgenumber为0时，不显示角标；badgenumber大于0时，显示角标）
+ 当第三方应用package和class发生变化时，需传递该变化后的信息
