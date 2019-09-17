@@ -38,7 +38,7 @@
         android:layout_marginBottom="@dimen/qb_px_150"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:src="@drawable/ic_custom_floating" />
+        android:src="@drawable/ic_fab_add" />
 
 
 </android.support.constraint.ConstraintLayout>
