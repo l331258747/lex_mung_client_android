@@ -249,49 +249,21 @@ public class OrderDetailsEntrustActivity extends BaseActivity<OrderDetailsEntrus
         setLawyerLayout(entity.getLawyerMemberId(), entity.getLmemberName(), entity.getLMemeberName2(), entity.getLiconImage());
     }
 
-    //TODO　进度　　
     public void setStatus(EntrustListEntity entity) {
-
+        //orderStatus	1待审核，2待发布，3未通过，4待确认，6已确认，7待打款，8已打款，9已完成，10已关闭，11已删除
         int orderStatus = entity.getOrderStatus();
-        int lawyerStatus = entity.getLawyerStatus();
-        String endTime = entity.getEnrollEffectiveTime();
 
-        //orderStatus	4待确认，6已确认，7待打款，8已打款，9已完成，10已关闭，11已删除
-        //lawyerStatus	0无关联，1待确认，2报名成功，3报名不成功，4律师拒绝接单
-        if (orderStatus == 9 || orderStatus == 10 || orderStatus == 11 || lawyerStatus == 3 || lawyerStatus == 4) {
-            setOrderDetailView(-1);//报名不成功
-            return;
-        }
-
-        if (lawyerStatus == 0) {//报名截止时间到为时间到，没到则为报名
-            if (TextUtils.isEmpty(endTime)) return;
-            if (TimeFormat.strToLong(TimeFormat.getCurrentTime(), TimeFormat.s1) > TimeFormat.strToLong(endTime, TimeFormat.s1)) {
-                setOrderDetailView(-1);//报名不成功
-            } else {
-//                setOrderDetailView(-3);//报名中 默认
-            }
-            return;
-        }
-
-        if (lawyerStatus == 1) {//已报名  后台还没选律师
-            setOrderDetailView(0);//接受报名
-        }
-
-        if (lawyerStatus == 2) {//已被选中为律师
-            if (orderStatus == 6) {
-                setOrderDetailView(1);//选定服务律师
-            } else if (orderStatus == 7 || orderStatus == 8) {
-                if (orderStatus == 7) {
-                    setOrderDetailView(2);//达成意向
-                }
-                if (orderStatus == 8) {
-                    setOrderDetailView(3);//支付信息费
-                }
-            }
+        if(orderStatus == 2 || orderStatus == 4){
+            setOrderDetailView(1);
+        }else if(orderStatus == 6){
+            setOrderDetailView(2);
+        }else if(orderStatus == 7 || orderStatus == 8 || orderStatus == 9){
+            setOrderDetailView(3);
+        }else{
+            setOrderDetailView(0);
         }
     }
 
-    //TODO 律师信息
     public void setLawyerLayout(int id, String name, String nameContent, String headUrl) {
         if (id > 0) {
             groupLawyer.setVisibility(View.VISIBLE);
