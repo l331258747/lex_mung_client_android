@@ -139,7 +139,7 @@ public class HomeAdapter extends BaseQuickAdapter<HomeEntity, BaseViewHolder> {
                 break;
 
             case 3:
-                if(item.getBtns() == null || item.getBtns().size() != 4)
+                if(item.getBtns() == null || item.getBtns().size() < 4)
                     return;
 
                 Home4ButtonView home4ButtonView1 = helper.getView(R.id.view_home_4button1);
@@ -164,7 +164,7 @@ public class HomeAdapter extends BaseQuickAdapter<HomeEntity, BaseViewHolder> {
 
                 break;
             case 4:
-                if(item.getBtns() == null || item.getBtns().size() != 3)
+                if(item.getBtns() == null || item.getBtns().size() < 3)
                     return;
 
                 TextView tvTitle = helper.getView(R.id.tv_title);

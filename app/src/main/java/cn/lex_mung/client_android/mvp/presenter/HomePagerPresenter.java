@@ -429,6 +429,9 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                     if (homeChildEntity.getJumptype().equals("h5") && homeChildEntity.getJumpurl().indexOf("retrial.html") > -1) {//再审申诉
                         DataHelper.setStringSF(mApplication, DataHelperTags.ZSSS_URL, GsonUtil.convertVO2String(homeChildEntity));
                     }
+                    if (homeChildEntity.getJumptype().equals("h5") && homeChildEntity.getJumpurl().indexOf("caseEntrustment.html") > -1) {//委托案件
+                        DataHelper.setStringSF(mApplication, DataHelperTags.WTAJ_URL, GsonUtil.convertVO2String(homeChildEntity));
+                    }
                 }
             }
         }

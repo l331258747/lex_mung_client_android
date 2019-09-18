@@ -111,7 +111,7 @@ public class FreeConsultMainActivity extends BaseActivity<FreeConsultMainPresent
                 @Override
                 public void onCustomClick() {//委托找律师 h5
                     fab.setVisibility(View.VISIBLE);
-                    String str = DataHelper.getStringSF(mActivity,DataHelperTags.QUICK_URL);//TODO 委托找律师
+                    String str = DataHelper.getStringSF(mActivity,DataHelperTags.WTAJ_URL);
                     HomeChildEntity entity = GsonUtil.convertString2Object(str,HomeChildEntity.class);
                     if(!TextUtils.isEmpty(str) && entity != null){
                         bundle.clear();
