@@ -668,6 +668,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         initRecyclerView();
         initTextBanner();
 
+        mPresenter.pagesSecond();
         mPresenter.getHomeData();
         mPresenter.random();
         mPresenter.getSolutionType();//有的地方用到了缓存

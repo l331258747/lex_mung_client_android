@@ -58,6 +58,7 @@ import cn.lex_mung.client_android.mvp.model.entity.home.CommonPageContractsEntit
 import cn.lex_mung.client_android.mvp.model.entity.home.CommonSolutionEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.OnlineUrlEntity;
+import cn.lex_mung.client_android.mvp.model.entity.home.PagesSecondEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.RequirementTypeV3Entity;
 import cn.lex_mung.client_android.mvp.model.entity.mine.RechargeCouponEntity;
 import cn.lex_mung.client_android.mvp.model.entity.mine.RechargeEntity;
@@ -909,4 +910,10 @@ public interface CommonService {
     //律师端案源订单详情
     @GET("lawyer/caseorder/detail/v2/{id}")
     Observable<BaseResponse<EntrustDetailEntity>> caseorderDetail(@Path("id") int id);
+
+    ///common/pages/second
+    //GET
+    //二级页面获取h5地址
+    @GET("common/pages/second")
+    Observable<BaseResponse<PagesSecondEntity>> pagesSecond();
 }

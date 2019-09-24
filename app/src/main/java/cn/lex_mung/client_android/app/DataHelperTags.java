@@ -38,6 +38,9 @@ public class DataHelperTags {
     public static final String ZSSS_URL = "zsss_url";//再审申诉url
     public static final String SSDZ_URL = "ssdz_url";//诉讼垫资url
     public static final String WTAJ_URL = "wtaj_url";//委托案件url
+    public static final String QYFLFXTY_URL = "qyflfxty_url";//企业法律风险体检url
+    public static final String AJFXPG_URL = "ajfxpg_url";//案件风险评估url
+    public static final String AJWT_URL = "ajwt_url";//案件委托url
     public static final String ONLINE_URL = "online_url";//人工客服url
 
     public static final String LAUNCH_LOCATION = "launch_location";//登录获取regionID

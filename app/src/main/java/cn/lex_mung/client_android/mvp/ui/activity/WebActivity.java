@@ -190,8 +190,20 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
         });
         if (isShare) {
             titleView.getRightTv().setVisibility(View.VISIBLE);
-        }else{
+        } else {
             titleView.getRightTv().setVisibility(View.GONE);
+        }
+
+        if (url.indexOf("caseEntrustment.html") > -1) {
+            titleView.setRightTv("我的委托");
+            titleView.getRightTv().setVisibility(View.VISIBLE);
+            titleView.getRightTv().setOnClickListener(v -> {
+                if (!DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
+                    launchActivity(new Intent(mActivity, LoginActivity.class));
+                    return;
+                }
+                launchActivity(new Intent(mActivity, MyEntrustListActivity.class));
+            });
         }
 
         initWebView();

@@ -257,6 +257,7 @@ package cn.lex_mung.client_android.mvp.presenter;
 
 import android.app.Application;
 import android.os.Message;
+import android.text.TextUtils;
 
 import com.google.gson.Gson;
 
@@ -277,6 +278,7 @@ import cn.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UnreadMessageCountEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
+import cn.lex_mung.client_android.mvp.model.entity.home.PagesSecondEntity;
 import cn.lex_mung.client_android.utils.GsonUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -341,6 +343,76 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
         if (isLogin) {
             getUnreadCount();
         }
+    }
+
+    //二级页面h5地址
+    public void pagesSecond() {
+        mModel.pagesSecond()
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> {
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<PagesSecondEntity>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<PagesSecondEntity> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            savePagesSecondUrl(baseResponse.getData());
+                        }
+                    }
+                });
+    }
+
+    //获取存储的url
+    private void savePagesSecondUrl(PagesSecondEntity entity) {
+        if (entity == null) return;
+
+        if (!TextUtils.isEmpty(entity.getLitigationUrl())){
+            HomeChildEntity homeChildEntity = new HomeChildEntity();
+            homeChildEntity.setJumpurl(entity.getLitigationUrl());
+            homeChildEntity.setTitle("诉讼垫资");
+            DataHelper.setStringSF(mApplication, DataHelperTags.SSDZ_URL, GsonUtil.convertVO2String(homeChildEntity));
+        }
+
+        if (!TextUtils.isEmpty(entity.getRetrialUrl())){
+            HomeChildEntity homeChildEntity = new HomeChildEntity();
+            homeChildEntity.setJumpurl(entity.getRetrialUrl());
+            homeChildEntity.setTitle("再审申诉");
+            DataHelper.setStringSF(mApplication, DataHelperTags.ZSSS_URL, GsonUtil.convertVO2String(homeChildEntity));
+        }
+
+        if (!TextUtils.isEmpty(entity.getExaminUrl())){
+            HomeChildEntity homeChildEntity = new HomeChildEntity();
+            homeChildEntity.setJumpurl(entity.getExaminUrl());
+            homeChildEntity.setTitle("企业法律风险体检");
+            DataHelper.setStringSF(mApplication, DataHelperTags.QYFLFXTY_URL, GsonUtil.convertVO2String(homeChildEntity));
+        }
+
+        if (!TextUtils.isEmpty(entity.getCaseRiskUrl())){
+            HomeChildEntity homeChildEntity = new HomeChildEntity();
+            homeChildEntity.setJumpurl(entity.getCaseRiskUrl());
+            homeChildEntity.setTitle("案件风险评估");
+            DataHelper.setStringSF(mApplication, DataHelperTags.AJFXPG_URL, GsonUtil.convertVO2String(homeChildEntity));
+        }
+
+
+        if (!TextUtils.isEmpty(entity.getCaseEntrustedUrl())){
+            HomeChildEntity homeChildEntity = new HomeChildEntity();
+            homeChildEntity.setJumpurl(entity.getCaseEntrustedUrl());
+            homeChildEntity.setTitle("案件委托");
+            DataHelper.setStringSF(mApplication, DataHelperTags.AJWT_URL, GsonUtil.convertVO2String(homeChildEntity));
+        }
+
+        if (!TextUtils.isEmpty(entity.getMemberCard())){
+            HomeChildEntity homeChildEntity = new HomeChildEntity();
+            homeChildEntity.setJumpurl(entity.getMemberCard());
+            homeChildEntity.setTitle("企业法务卡");
+            DataHelper.setStringSF(mApplication, DataHelperTags.FWK_URL, GsonUtil.convertVO2String(homeChildEntity));
+        }
+
     }
 
     //获取首页数据
@@ -416,7 +488,7 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                         DataHelper.setStringSF(mApplication, DataHelperTags.QUICK_URL, GsonUtil.convertVO2String(homeChildEntity));
                     }
                 }
-            }else if(homeEntity.getType().equals("three_card")){
+            } else if (homeEntity.getType().equals("three_card")) {
                 if (homeEntities.get(i).getBtns() == null) return;
                 for (int j = 0; j < homeEntities.get(i).getBtns().size(); j++) {
                     HomeChildEntity homeChildEntity = homeEntities.get(i).getBtns().get(j);

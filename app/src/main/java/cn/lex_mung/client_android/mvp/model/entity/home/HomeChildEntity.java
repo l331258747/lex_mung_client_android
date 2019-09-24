@@ -41,6 +41,26 @@ public class HomeChildEntity {
     private String shareDescription;
     private String shareImg;
 
+    public void setShowShare(int showShare) {
+        this.showShare = showShare;
+    }
+
+    public void setShareUrl(String shareUrl) {
+        this.shareUrl = shareUrl;
+    }
+
+    public void setShareTitle(String shareTitle) {
+        this.shareTitle = shareTitle;
+    }
+
+    public void setShareDescription(String shareDescription) {
+        this.shareDescription = shareDescription;
+    }
+
+    public void setShareImg(String shareImg) {
+        this.shareImg = shareImg;
+    }
+
     public int getShowShare() {
         return showShare;
     }

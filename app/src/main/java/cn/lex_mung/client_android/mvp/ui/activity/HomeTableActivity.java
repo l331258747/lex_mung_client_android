@@ -40,6 +40,10 @@ public class HomeTableActivity extends BaseActivity<HomeTablePresenter> implemen
     Group groupZsss;
     @BindView(R.id.group_qyfwk)
     Group groupQyfwk;
+    @BindView(R.id.group_qyflfxty)
+    Group groupQyflfxty;
+    @BindView(R.id.group_ajfxpg)
+    Group groupAjfxpg;
 
     String title;
     int id;
@@ -81,6 +85,15 @@ public class HomeTableActivity extends BaseActivity<HomeTablePresenter> implemen
             entity = GsonUtil.convertString2Object(str,HomeChildEntity.class);
             if(!TextUtils.isEmpty(str) && entity != null)
                 groupQyfwk.setVisibility(View.VISIBLE);
+            str = DataHelper.getStringSF(mActivity,DataHelperTags.QYFLFXTY_URL);
+            entity = GsonUtil.convertString2Object(str,HomeChildEntity.class);
+            if(!TextUtils.isEmpty(str) && entity != null)
+                groupQyflfxty.setVisibility(View.VISIBLE);
+            str = DataHelper.getStringSF(mActivity,DataHelperTags.AJFXPG_URL);
+            entity = GsonUtil.convertString2Object(str,HomeChildEntity.class);
+            if(!TextUtils.isEmpty(str) && entity != null)
+                groupAjfxpg.setVisibility(View.VISIBLE);
+
         }
     }
 
@@ -91,7 +104,7 @@ public class HomeTableActivity extends BaseActivity<HomeTablePresenter> implemen
         launchActivity(new Intent(mActivity, HelpStepChildActivity.class), bundle);
     }
 
-    @OnClick({R.id.view_help, R.id.view_lawyer,R.id.view_ssdz,R.id.view_zsss,R.id.view_qyfwk})
+    @OnClick({R.id.view_help, R.id.view_lawyer,R.id.view_ssdz,R.id.view_zsss,R.id.view_qyfwk,R.id.view_qyflfxty,R.id.view_ajfxpg})
     public void onViewClicked(View view) {
         if (isFastClick()) return;
         String str;
@@ -163,6 +176,40 @@ public class HomeTableActivity extends BaseActivity<HomeTablePresenter> implemen
                 break;
             case R.id.view_qyfwk:
                 str = DataHelper.getStringSF(mActivity,DataHelperTags.FWK_URL);
+                entity = GsonUtil.convertString2Object(str,HomeChildEntity.class);
+                if(!TextUtils.isEmpty(str) && entity != null){
+                    bundle.clear();
+                    bundle.putString(BundleTags.URL, entity.getJumpurl());
+                    bundle.putString(BundleTags.TITLE, entity.getTitle());
+                    if(entity.getShowShare() == 1){
+                        bundle.putBoolean(BundleTags.IS_SHARE, true);
+                        bundle.putString(BundleTags.SHARE_URL, entity.getShareUrl());
+                        bundle.putString(BundleTags.SHARE_TITLE, entity.getShareTitle());
+                        bundle.putString(BundleTags.SHARE_DES, entity.getShareDescription());
+                        bundle.putString(BundleTags.SHARE_IMAGE, entity.getShareImg());
+                    }
+                    launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+                }
+                break;
+            case R.id.view_qyflfxty:
+                str = DataHelper.getStringSF(mActivity,DataHelperTags.QYFLFXTY_URL);
+                entity = GsonUtil.convertString2Object(str,HomeChildEntity.class);
+                if(!TextUtils.isEmpty(str) && entity != null){
+                    bundle.clear();
+                    bundle.putString(BundleTags.URL, entity.getJumpurl());
+                    bundle.putString(BundleTags.TITLE, entity.getTitle());
+                    if(entity.getShowShare() == 1){
+                        bundle.putBoolean(BundleTags.IS_SHARE, true);
+                        bundle.putString(BundleTags.SHARE_URL, entity.getShareUrl());
+                        bundle.putString(BundleTags.SHARE_TITLE, entity.getShareTitle());
+                        bundle.putString(BundleTags.SHARE_DES, entity.getShareDescription());
+                        bundle.putString(BundleTags.SHARE_IMAGE, entity.getShareImg());
+                    }
+                    launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+                }
+                break;
+            case R.id.view_ajfxpg:
+                str = DataHelper.getStringSF(mActivity,DataHelperTags.AJFXPG_URL);
                 entity = GsonUtil.convertString2Object(str,HomeChildEntity.class);
                 if(!TextUtils.isEmpty(str) && entity != null){
                     bundle.clear();

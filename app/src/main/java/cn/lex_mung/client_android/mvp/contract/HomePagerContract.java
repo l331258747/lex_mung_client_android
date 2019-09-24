@@ -14,6 +14,7 @@ import java.util.List;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.NormalBean;
 import cn.lex_mung.client_android.mvp.model.entity.home.OnlineUrlEntity;
+import cn.lex_mung.client_android.mvp.model.entity.home.PagesSecondEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.RequirementTypeV3Entity;
 import io.reactivex.Observable;
 import me.zl.mvp.mvp.IView;
@@ -59,5 +60,7 @@ public interface HomePagerContract {
         Observable<BaseResponse<List<String>>> random();
 
         Observable<BaseResponse<BaseListEntity<LawyerEntity2>>> getLawyerHomeList(RequestBody body);
+
+        Observable<BaseResponse<PagesSecondEntity>> pagesSecond();
     }
 }
