@@ -103,6 +103,9 @@ public class OrderMessagePresenter extends BasePresenter<OrderMessageContract.Mo
                     case 245:
                         intent.setClass(mApplication, MyAccountActivity.class);
                         break;
+//                    default:
+//                        mRootView.showMessage("当前消息可能需要新版本才能打开，建议检测是否存在最新版本。");
+//                        break;
                 }
                 mRootView.launchActivity(intent);
             } catch (Exception ignored) {

@@ -236,19 +236,24 @@ public class OrderContractPresenter extends BasePresenter<OrderContractContract.
                     @Override
                     public void onNext(BaseResponse<DocGetEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
-                            totalNum = baseResponse.getData().getPaginated().getPages();
-                            pageNum = baseResponse.getData().getPaginated().getPage_num();
+                            if(baseResponse.getData().getPaginated() != null){
+                                totalNum = baseResponse.getData().getPaginated().getPages();
+                                pageNum = baseResponse.getData().getPaginated().getPage_num();
+                            }
 
-                            if (isAdd) {
-                                adapter.addData(baseResponse.getData().getList());
-                                smartRefreshLayout.finishLoadMore();
-                            } else {
-                                smartRefreshLayout.finishRefresh();
-                                adapter.setNewData(baseResponse.getData().getList());
-                                if (totalNum == pageNum) {
-                                    smartRefreshLayout.finishLoadMoreWithNoMoreData();
+                            if(baseResponse.getData().getList() != null){
+                                if (isAdd) {
+                                    adapter.addData(baseResponse.getData().getList());
+                                    smartRefreshLayout.finishLoadMore();
+                                } else {
+                                    smartRefreshLayout.finishRefresh();
+                                    adapter.setNewData(baseResponse.getData().getList());
+                                    if (totalNum == pageNum) {
+                                        smartRefreshLayout.finishLoadMoreWithNoMoreData();
+                                    }
                                 }
                             }
+
                             setHelpHide(helpLink = baseResponse.getData().getHelp_link());
                         } else {
                             mRootView.showMessage(baseResponse.getMessage());

@@ -89,6 +89,9 @@ public class PushJumpActivity extends BaseActivity<PushJumpPresenter> implements
                         intent.setClass(mActivity, LoginActivity.class);
                     }
                     break;
+//                default:
+//                    showMessage("当前消息可能需要新版本才能打开，建议检测是否存在最新版本。");
+//                    break;
             }
             launchActivity(intent);
         } catch (Exception ignored) {

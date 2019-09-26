@@ -23,6 +23,7 @@ public interface OrderDetailsExpertContract {
         void setPrice(String s);
         void setOrderPrice(String s);
         void setCouponType(String s);
+        void setPayType(String s);
         void setOrderNo(String s);
         void setTalkTime(String s);
         void showCancelDialog();

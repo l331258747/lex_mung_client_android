@@ -76,6 +76,11 @@ public class OrderDetailsExpertActivity extends BaseActivity<OrderDetailsExpertP
     @BindView(R.id.tv_info_coupon_type)
     TextView tv_info_coupon_type;
 
+    @BindView(R.id.ll_info_pay_type)
+    LinearLayout ll_info_pay_type;
+    @BindView(R.id.tv_info_pay_type)
+    TextView tv_info_pay_type;
+
     @BindView(R.id.ll_info_order_no)
     LinearLayout ll_info_order_no;
     @BindView(R.id.tv_info_order_no)
@@ -252,6 +257,15 @@ public class OrderDetailsExpertActivity extends BaseActivity<OrderDetailsExpertP
         } else {
             ll_info_coupon_type.setVisibility(View.VISIBLE);
             tv_info_coupon_type.setText(s);
+        }
+    }
+
+    public void setPayType(String s){
+        if (TextUtils.isEmpty(s)) {
+            ll_info_pay_type.setVisibility(View.GONE);
+        } else {
+            ll_info_pay_type.setVisibility(View.VISIBLE);
+            tv_info_pay_type.setText(s);
         }
     }
 

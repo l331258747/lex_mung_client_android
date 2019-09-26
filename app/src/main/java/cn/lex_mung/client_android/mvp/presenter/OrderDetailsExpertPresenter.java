@@ -147,6 +147,13 @@ public class OrderDetailsExpertPresenter extends BasePresenter<OrderDetailsExper
                             } else {
                                 mRootView.setCouponType(null);
                             }
+
+                            if (!TextUtils.isEmpty(bean.getPayType()) && !bean.getPayType().equals("0")) {
+                                mRootView.setPayType(bean.getPayTypeStr());//支付方式
+                            } else {
+                                mRootView.setPayType(null);
+                            }
+
                             if (!TextUtils.isEmpty(bean.getOrderNo())) {//订单编号
                                 mRootView.setOrderNo(bean.getOrderNo());
                             }
