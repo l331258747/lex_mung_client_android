@@ -75,8 +75,8 @@ public class WebPresenter extends BasePresenter<WebContract.Model, WebContract.V
                             String json = new Gson().toJson(baseResponse.getData());
                             DataHelper.setStringSF(mApplication, DataHelperTags.USER_INFO_DETAIL, json);
                             AppUtils.post(LOGIN_INFO, LOGIN);
-
-                            onClickLisenter.onClick();
+                            if(onClickLisenter != null)
+                                onClickLisenter.onClick();
                         }
                     }
                 });

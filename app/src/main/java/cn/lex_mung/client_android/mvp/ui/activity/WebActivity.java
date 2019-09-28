@@ -343,6 +343,8 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             DataHelper.setStringSF(mActivity, DataHelperTags.TOKEN, token1);
 //            mPresenter.getUserInfoDetail();
             isSetToken = true;
+
+            mPresenter.getUserInfoDetail(null);
         }
 
         //快速电话咨询支付页面
