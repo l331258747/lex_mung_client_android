@@ -14,10 +14,16 @@ import me.zl.mvp.utils.StringUtils;
 
 public class HomeLawyerAdapter extends BaseQuickAdapter<LawyerEntity2, BaseViewHolder> {
     private ImageLoader mImageLoader;
+    private boolean isClick;
 
     public HomeLawyerAdapter(ImageLoader imageLoader) {
+        this(imageLoader,true);
+    }
+
+    public HomeLawyerAdapter(ImageLoader imageLoader,boolean isClick) {
         super(R.layout.item_home20_lawyer);
         mImageLoader = imageLoader;
+        this.isClick = isClick;
     }
 
     @Override
@@ -41,6 +47,7 @@ public class HomeLawyerAdapter extends BaseQuickAdapter<LawyerEntity2, BaseViewH
         StringUtils.setHtml(helper.getView(R.id.item_tv_field),item.getDescriptionStr());
         helper.setText(R.id.item_tv_practice_num, item.getPractice());
 
-        helper.addOnClickListener(R.id.item_btn);
+        if(isClick)
+            helper.addOnClickListener(R.id.item_btn);
     }
 }

@@ -1235,7 +1235,7 @@ public class SolutionDetailActivity extends BaseActivity<SolutionDetailPresenter
     }
 
     public void initLawyerAdapter(List<LawyerEntity2> datas) {
-        HomeLawyerAdapter homeLawyerAdapter = new HomeLawyerAdapter(mImageLoader);
+        HomeLawyerAdapter homeLawyerAdapter = new HomeLawyerAdapter(mImageLoader,false);
         homeLawyerAdapter.setOnItemClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;
             LawyerEntity2 entity2 = homeLawyerAdapter.getItem(position);
