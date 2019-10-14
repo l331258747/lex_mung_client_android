@@ -105,6 +105,12 @@ public class PayStatusPresenter extends BasePresenter<PayStatusContract.Model, P
                                                     , DataHelper.getStringSF(mApplication, DataHelperTags.ORDER_MONEY));
                                             mRootView.showSuccessLayout("支付成功");
                                             break;
+                                        case PayStatusTags.ONLINE_LAWYER:
+                                        case PayStatusTags.PRIVATE_LAWYER:
+                                            mRootView.showSuccessLayout("支付成功","返回首页","预约服务");
+                                            mRootView.setContentLayout("我们已根据律师的专业程度、活跃度、好评度为您匹配合适的律师.律师按约定时间与您联系，请保持电话畅通！",onClickListener);
+                                            mRootView.setImg(R.drawable.ic_pay_success3);
+                                            break;
                                     }
                                     break;
                                 default:
@@ -120,6 +126,12 @@ public class PayStatusPresenter extends BasePresenter<PayStatusContract.Model, P
                                             break;
                                         case PayStatusTags.FAST_CONSULT:
                                             mRootView.showFailLayout("支付失败");
+                                            break;
+                                        case PayStatusTags.ONLINE_LAWYER:
+                                        case PayStatusTags.PRIVATE_LAWYER:
+                                            mRootView.showSuccessLayout("支付失败","返回首页","账户充值");
+                                            mRootView.setContentLayout("如果因银行卡每日支付上限导致无法完成交易，您可以先通过充值到平台账户中，在使用余额支付完成交易。",onClickListener);
+                                            mRootView.setImg(R.drawable.ic_pay_failure3);
                                             break;
                                     }
                                     break;

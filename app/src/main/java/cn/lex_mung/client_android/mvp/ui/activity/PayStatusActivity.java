@@ -13,11 +13,14 @@ import android.widget.TextView;
 
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.app.DataHelperTags;
+import cn.lex_mung.client_android.app.PayStatusTags;
 import cn.lex_mung.client_android.di.component.DaggerPayStatusComponent;
 import cn.lex_mung.client_android.di.module.PayStatusModule;
 import cn.lex_mung.client_android.mvp.contract.PayStatusContract;
 import cn.lex_mung.client_android.mvp.presenter.PayStatusPresenter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 
 import butterknife.BindView;
@@ -26,7 +29,7 @@ import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.integration.AppManager;
 import me.zl.mvp.utils.AppUtils;
-import me.zl.mvp.utils.StringUtils;
+import me.zl.mvp.utils.DataHelper;
 
 import static cn.lex_mung.client_android.app.EventBusTags.PAY_INFO.PAY_CONFIRM;
 import static cn.lex_mung.client_android.app.EventBusTags.PAY_INFO.PAY_INFO;
@@ -50,6 +53,8 @@ public class PayStatusActivity extends BaseActivity<PayStatusPresenter> implemen
     TextView tvOrderMoney;
     @BindView(R.id.bt_back)
     Button btBack;
+    @BindView(R.id.bt_back2)
+    Button btBack2;
 
     boolean isSuccess = false;
 
@@ -95,13 +100,23 @@ public class PayStatusActivity extends BaseActivity<PayStatusPresenter> implemen
         ivIcon.setImageResource(R.drawable.ic_pay_success);
         tvStatus.setText(s);
         tvStatus.setTextColor(AppUtils.getColor(mActivity, R.color.c_323232));
+        btBack2.setVisibility(View.GONE);
         isSuccess = true;
     }
 
+
     @Override
-    public void showSuccessLayout(String s,String btnStr) {
+    public void showSuccessLayout(String s, String btnStr) {
         showSuccessLayout(s);
         btBack.setText(btnStr);
+    }
+
+    @Override
+    public void showSuccessLayout(String s, String btnStr, String btnStr2) {
+        showSuccessLayout(s);
+        btBack.setText(btnStr);
+        btBack2.setVisibility(View.VISIBLE);
+        btBack2.setText(btnStr2);
     }
 
     @Override
@@ -109,13 +124,22 @@ public class PayStatusActivity extends BaseActivity<PayStatusPresenter> implemen
         ivIcon.setImageResource(R.drawable.ic_pay_failure);
         tvStatus.setText(s);
         tvStatus.setTextColor(AppUtils.getColor(mActivity, R.color.c_323232));
+        btBack2.setVisibility(View.GONE);
         isSuccess = false;
     }
 
     @Override
-    public void showFailLayout(String s,String btnStr) {
+    public void showFailLayout(String s, String btnStr) {
         showFailLayout(s);
         btBack.setText(btnStr);
+    }
+
+    @Override
+    public void showFailLayout(String s, String btnStr, String btnStr2) {
+        showFailLayout(s);
+        btBack.setText(btnStr);
+        btBack2.setVisibility(View.VISIBLE);
+        btBack2.setText(btnStr2);
     }
 
     @Override
@@ -137,21 +161,75 @@ public class PayStatusActivity extends BaseActivity<PayStatusPresenter> implemen
         tvOrderDate.setText(payTime);
         tvOrderType.setText(orderType);
         tvOrderMoney.setText(money);
-        btBack.setText(getString(R.string.text_confirm));
+        btBack.setText("确定");
     }
 
     //发布需求和快速电话咨询，按钮改为确定
-    @OnClick(R.id.bt_back)
-    public void onViewClicked() {
+    @OnClick({R.id.bt_back, R.id.bt_back2})
+    public void onViewClicked(View view) {
         if (isFastClick()) return;
-        if (getString(R.string.text_confirm).equals(btBack.getText().toString())) {
-            AppManager.getAppManager().killActivity(ReleaseDemandActivity.class);
-            AppUtils.post(PAY_INFO,PAY_CONFIRM);//这个是用来通知抢单页面的。
+        switch (view.getId()) {
+            case R.id.bt_back:
+                if(isSuccess){
+                    switch (DataHelper.getIntergerSF(mActivity, DataHelperTags.PAY_TYPE)) {
+                        case PayStatusTags.PAY://充值，无优惠券
+                        case PayStatusTags.PAY_COUPON://充值,有优惠券
+                        case PayStatusTags.PAY_EXPERT://充值(专家咨询-按钮显示专家咨询)
+                        case PayStatusTags.FAST_CONSULT://快速咨询
+                            killMyself();
+                            break;
+                        case PayStatusTags.RELEASE_DEMAND://发布需求
+                            AppManager.getAppManager().killActivity(ReleaseDemandActivity.class);//发需求页
+                            AppUtils.post(PAY_INFO, PAY_CONFIRM);//这个是用来通知抢单页面的。（热门需求）
+                            killMyself();
+                            break;
+                        case PayStatusTags.ONLINE_LAWYER://在线法律顾问
+                        case PayStatusTags.PRIVATE_LAWYER://私人律师团
+                            killMyself();
+                            AppManager.getAppManager().killAllNotClass(MainActivity.class);
+                            break;
+                        default:
+                            killMyself();
+                            break;
+                    }
+                }else{
+                    killMyself();
+                }
+                break;
+            case R.id.bt_back2:
+                if(isSuccess){
+                    switch (DataHelper.getIntergerSF(mActivity, DataHelperTags.PAY_TYPE)) {
+                        case PayStatusTags.ONLINE_LAWYER://在线法律顾问
+                            killMyself();
+                            AppManager.getAppManager().killAllNotClass(MainActivity.class);
+                            //TODO webActivity 进去有权益详情页  预订  在线法律顾问
+
+                            break;
+                        case PayStatusTags.PRIVATE_LAWYER://私人律师团
+                            killMyself();
+                            AppManager.getAppManager().killAllNotClass(MainActivity.class);
+                            //TODO webActivity 进去有权益详情页  预订  私人律师团
+
+                            break;
+                        default:
+                            killMyself();
+                            break;
+                    }
+                }else{
+                    switch (DataHelper.getIntergerSF(mActivity, DataHelperTags.PAY_TYPE)) {
+                        case PayStatusTags.ONLINE_LAWYER://在线法律顾问
+                        case PayStatusTags.PRIVATE_LAWYER://私人律师团
+                            killMyself();
+                            launchActivity(new Intent(mActivity,MyAccountActivity.class));
+                            break;
+                        default:
+                            killMyself();
+                            break;
+                    }
+                }
+                break;
         }
-//        if(isSuccess){//成功后把充值页面干掉，失败返回充值页面
-//            AppManager.getAppManager().killActivity(MyAccountActivity.class);
-//        }
-        killMyself();
+
     }
 
     @Override

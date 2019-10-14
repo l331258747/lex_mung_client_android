@@ -8,9 +8,12 @@ import android.os.Message;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,9 +30,12 @@ import cn.lex_mung.client_android.di.component.DaggerRushLoanPayComponent;
 import cn.lex_mung.client_android.di.module.RushLoanPayModule;
 import cn.lex_mung.client_android.mvp.contract.RushLoanPayContract;
 import cn.lex_mung.client_android.mvp.model.entity.AmountBalanceEntity;
+import cn.lex_mung.client_android.mvp.model.entity.order.CommodityContentEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.PayTypeEntity;
 import cn.lex_mung.client_android.mvp.presenter.RushLoanPayPresenter;
+import cn.lex_mung.client_android.mvp.ui.adapter.CommodityContentAdapter;
+import cn.lex_mung.client_android.mvp.ui.adapter.PayTypeAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.DefaultDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.PayTypeView2;
@@ -58,6 +64,8 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
     TextView tvOrderMoney;
     @BindView(R.id.tv_commodity)
     TextView tvCommodity;
+    @BindView(R.id.tv_commodity_price)
+    TextView tvCommodityPrice;
     @BindView(R.id.web_view)
     WebView webView;
     @BindView(R.id.tv_discount_money)
@@ -73,6 +81,11 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
     Button btPay;
     @BindView(R.id.tv_order_money_text)
     TextView tvOrderMoneyText;
+
+    @BindView(R.id.ll_commodity_content)
+    LinearLayout llCommodityContent;
+    @BindView(R.id.recycler_view_commodity)
+    RecyclerView recyclerViewCommodity;
 
     private DefaultDialog defaultDialog;
     int type;
@@ -100,17 +113,21 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         if (bundleIntent != null) {
-            tvCommodity.setText(bundleIntent.getString(BundleTags.TITLE));
 
             orderPrice = bundleIntent.getFloat(BundleTags.MONEY);
             type = bundleIntent.getInt(BundleTags.TYPE);
             id = bundleIntent.getInt(BundleTags.ID);
+
+            tvCommodity.setText(bundleIntent.getString(BundleTags.TITLE));
+            tvCommodityPrice.setText(StringUtils.getStringNum(orderPrice) + "元");
 
             mPresenter.setRequireTypeId(id);
             mPresenter.setRequireTypeName(bundleIntent.getString(BundleTags.REQUIRE_TYPE_NAME));
             mPresenter.setMobile(bundleIntent.getString(BundleTags.MOBILE));
             mPresenter.setPayMoney(orderPrice);
             mPresenter.setType(type);
+
+            //TODO 通过h5的回传项目子项 用来显示  通过是否为法律顾问判断是否显示 项目子项
         }
 
         payTypeView.setItemOnClick((type, type6Id) -> {
@@ -123,6 +140,17 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
 
         mPresenter.getCoupon(orderPrice,id);
         mPresenter.getCouponCount(orderPrice,id);
+    }
+
+    public void setCommodityContent(List<CommodityContentEntity> entities){
+        if(entities == null || entities.size() == 0) return;
+        llCommodityContent.setVisibility(View.VISIBLE);
+
+        AppUtils.configRecyclerView(recyclerViewCommodity, new LinearLayoutManager(mActivity));
+        CommodityContentAdapter adapter = new CommodityContentAdapter();
+        recyclerViewCommodity.setAdapter(adapter);
+
+        adapter.setNewData(entities);
     }
 
     //默认布局和数据

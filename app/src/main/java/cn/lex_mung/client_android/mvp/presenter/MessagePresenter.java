@@ -3,6 +3,7 @@ package cn.lex_mung.client_android.mvp.presenter;
 import android.app.Application;
 import android.os.Message;
 
+import cn.lex_mung.client_android.utils.BadgeNumUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -120,20 +121,20 @@ public class MessagePresenter extends BasePresenter<MessageContract.Model, Messa
     @Subscriber(tag = UN_READ_MESSAGE_NUM)
     private void receiveUnReadMessageNum(Message message) {
         switch (message.what) {
+            case SET_CUSTOMER_UN_READ_MESSAGE_NUM:
+                entity.setUnreadReqMsgCount((int) message.obj);
+                if (entity.getUnreadReqMsgCount() > 0) {
+                    mRootView.setDemandMessageCount(entity.getUnreadReqMsgCount() + "");
+                } else {
+                    mRootView.hideDemandMessageCount();
+                }
+                break;
             case SET_ORDER_UN_READ_MESSAGE_NUM:
                 entity.setUnreadOrderMsgCount((int) message.obj);
                 if (entity.getUnreadOrderMsgCount() > 0) {
                     mRootView.setOrderMessageCount(entity.getUnreadOrderMsgCount() + "");
                 } else {
                     mRootView.hideOrderMessageCount();
-                }
-                break;
-            case SET_CUSTOMER_UN_READ_MESSAGE_NUM:
-                entity.setUnreadReqMsgCount((int) message.obj);
-                if (entity.getUnreadOrderMsgCount() > 0) {
-                    mRootView.setDemandMessageCount(entity.getUnreadOrderMsgCount() + "");
-                } else {
-                    mRootView.hideDemandMessageCount();
                 }
                 break;
             case SET_SYSTEM_UN_READ_MESSAGE_NUM:
@@ -164,6 +165,18 @@ public class MessagePresenter extends BasePresenter<MessageContract.Model, Messa
                 break;
         }
 
+        if(entity != null){
+            setHuaweiBadgeNum(entity.getUnreadReqMsgCount() + entity.getUnreadOrderMsgCount() + entity.getUnreadSysMsgCount());
+        }
+    }
+
+    BadgeNumUtil badgeNumUtil;//华为角标
+    //设置华为角标
+    public void setHuaweiBadgeNum(int num){
+        if(badgeNumUtil == null){
+            badgeNumUtil = new BadgeNumUtil(mRootView.getActivity());
+        }
+        badgeNumUtil.setHuaweiBadgeNum(num);
     }
 
     @Override

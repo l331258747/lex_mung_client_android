@@ -1003,6 +1003,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     @Override
     public void hideUnreadMessageCount() {
         iv_message.setImageDrawable(ContextCompat.getDrawable(mActivity, R.drawable.ic_message_un));
+        setHuaweiBadgeNum(0);
     }
 
     //------------搜索栏轮播 start

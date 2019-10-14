@@ -1,5 +1,6 @@
 package cn.lex_mung.client_android.mvp.ui.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -199,6 +200,11 @@ public class MessageActivity extends BaseActivity<MessagePresenter> implements M
     @Override
     public void hideSystemMessageCount() {
         tvSystemMessageCount.setVisibility(View.GONE);
+    }
+
+    @Override
+    public Activity getActivity() {
+        return this;
     }
 
     private long lastClickTime;

@@ -1,5 +1,7 @@
 package cn.lex_mung.client_android.mvp.contract;
 
+import android.app.Activity;
+
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.UnreadMessageCountEntity;
 
@@ -20,6 +22,8 @@ public interface MessageContract {
         void hideOrderMessageCount();
 
         void hideSystemMessageCount();
+
+        Activity getActivity();
     }
 
     interface Model extends IModel {
