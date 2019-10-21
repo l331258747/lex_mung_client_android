@@ -1,22 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:gravity="center"
     android:layout_marginTop="@dimen/qb_px_35"
+    android:gravity="center"
     android:orientation="horizontal">
 
     <cn.lex_mung.client_android.mvp.ui.widget.RoundImageView
         android:id="@+id/item_iv_icon"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="h,32:9"
         android:scaleType="matrix"
-        tools:src="@drawable/ic_call_field_dialog_bg"
+        app:layout_constraintDimensionRatio="h,32:9"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:src="@drawable/ic_call_field_dialog_bg" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/qb_px_30"
+        app:layout_constraintStart_toStartOf="@+id/item_iv_icon"
+        app:layout_constraintTop_toTopOf="@+id/item_iv_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        android:textSize="16sp"
+        tools:visibility="visible"
+        tools:text="在线法律顾问" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/qb_px_30"
+        android:layout_marginEnd="@dimen/qb_px_30"
+        android:layout_marginTop="@dimen/qb_px_20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/item_iv_icon"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+        android:textSize="12sp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        tools:text="为您的企业量身定制解决方法为您的企业量身定制解决方法为您的企业量身定制解决方法" />
 
     <TextView
         android:id="@+id/item_tv_certified"
@@ -31,7 +59,7 @@
         android:textColor="@color/c_ff"
         android:textSize="12sp"
         android:visibility="gone"
-        tools:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:visibility="visible" />
 </android.support.constraint.ConstraintLayout>

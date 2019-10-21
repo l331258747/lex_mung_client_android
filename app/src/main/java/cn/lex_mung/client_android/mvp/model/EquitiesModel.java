@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 
 import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
+import cn.lex_mung.client_android.mvp.model.entity.EquitiesMainListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
 import io.reactivex.Observable;
 import me.zl.mvp.integration.IRepositoryManager;
@@ -46,14 +47,14 @@ public class EquitiesModel extends BaseModel implements EquitiesContract.Model {
     }
 
     @Override
-    public Observable<BaseResponse<List<EquitiesListEntity>>> getEquitiesList() {
+    public Observable<BaseResponse<EquitiesMainListEntity>> getEquitiesList() {
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .getEquitiesList(DataHelper.getIntergerSF(mApplication, DataHelperTags.LAUNCH_LOCATION));
     }
 
     @Override
-    public Observable<BaseResponse<List<EquitiesListEntity>>> getEquitiesList_1() {
+    public Observable<BaseResponse<EquitiesMainListEntity>> getEquitiesList_1() {
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .getEquitiesList_1(DataHelper.getIntergerSF(mApplication, DataHelperTags.LAUNCH_LOCATION));

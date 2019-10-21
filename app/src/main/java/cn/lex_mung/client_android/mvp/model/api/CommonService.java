@@ -16,6 +16,7 @@ import cn.lex_mung.client_android.mvp.model.entity.CouponsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.DemandMessageEntity;
 import cn.lex_mung.client_android.mvp.model.entity.EquitiesDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.EquitiesListEntity;
+import cn.lex_mung.client_android.mvp.model.entity.EquitiesMainListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.ExpertCallEntity;
 import cn.lex_mung.client_android.mvp.model.entity.entrust.EntrustDetailEntity;
 import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertPriceEntity;
@@ -433,16 +434,18 @@ public interface CommonService {
      *
      * @return BaseResponse
      */
-    @GET("common/rights/orglist")
-    Observable<BaseResponse<List<EquitiesListEntity>>> getEquitiesList(@Query("regionId") int regionId);
+    @GET("common/rights/orglist/v2")
+//    Observable<BaseResponse<List<EquitiesListEntity>>> getEquitiesList(@Query("regionId") int regionId);
+    Observable<BaseResponse<EquitiesMainListEntity>> getEquitiesList(@Query("regionId") int regionId);
 
     /**
      * 登录获取全部权益列表
      *
      * @return BaseResponse
      */
-    @GET("client/rights/orglist")
-    Observable<BaseResponse<List<EquitiesListEntity>>> getEquitiesList_1(@Query("regionId") int regionId);
+    @GET("client/rights/orglist/v2")
+//    Observable<BaseResponse<List<EquitiesListEntity>>> getEquitiesList_1(@Query("regionId") int regionId);
+    Observable<BaseResponse<EquitiesMainListEntity>> getEquitiesList_1(@Query("regionId") int regionId);
 
     /**
      * 添加权益组织

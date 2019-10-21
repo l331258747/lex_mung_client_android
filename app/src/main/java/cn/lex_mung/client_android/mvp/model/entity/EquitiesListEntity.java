@@ -29,103 +29,137 @@ public class EquitiesListEntity {
     private int joinStatus;
     private int isPublic;
 
-    public int getIsPublic() {
-        return isPublic;
+    String requireTypeId;
+    String requireTypeNo;
+    String equityName;
+    String equityDesc;
+    String iconImage;
+    boolean isOwn;
+    int roleId;
+    String legalAdviserUrl;
+    private boolean isBuyEquity;
+
+    public String getLegalAdviserUrl() {
+        return legalAdviserUrl;
     }
 
-    public String getSmallImage() {
-        return smallImage;
-    }
-
-    public void setSmallImage(String smallImage) {
-        this.smallImage = smallImage;
-    }
-
-    public int getJoinStatus() {
-        return joinStatus;
-    }
-
-    public void setJoinStatus(int joinStatus) {
-        this.joinStatus = joinStatus;
+    public void setLegalAdviserUrl(String legalAdviserUrl) {
+        this.legalAdviserUrl = legalAdviserUrl;
     }
 
     public int getOrganizationId() {
         return organizationId;
     }
 
-    public void setOrganizationId(int organizationId) {
-        this.organizationId = organizationId;
-    }
-
     public String getOrganizationLevelName() {
         return organizationLevelName;
-    }
-
-    public void setOrganizationLevelName(String organizationLevelName) {
-        this.organizationLevelName = organizationLevelName;
     }
 
     public int getOrganizationLevelNameId() {
         return organizationLevelNameId;
     }
 
-    public void setOrganizationLevelNameId(int organizationLevelNameId) {
-        this.organizationLevelNameId = organizationLevelNameId;
-    }
-
     public String getOrganizationName() {
         return organizationName;
-    }
-
-    public void setOrganizationName(String organizationName) {
-        this.organizationName = organizationName;
     }
 
     public int getMemberId() {
         return memberId;
     }
 
-    public void setMemberId(int memberId) {
-        this.memberId = memberId;
-    }
-
     public int getScore() {
         return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
     }
 
     public String getRightsInterpret() {
         return rightsInterpret;
     }
 
-    public void setRightsInterpret(String rightsInterpret) {
-        this.rightsInterpret = rightsInterpret;
-    }
-
     public String getOpeningQualification() {
         return openingQualification;
-    }
-
-    public void setOpeningQualification(String openingQualification) {
-        this.openingQualification = openingQualification;
     }
 
     public String getExclusiveRights() {
         return exclusiveRights;
     }
 
-    public void setExclusiveRights(String exclusiveRights) {
-        this.exclusiveRights = exclusiveRights;
-    }
-
     public String getImage() {
         return image;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public String getSmallImage() {
+        return smallImage;
+    }
+
+    public int getJoinStatus() {
+        return joinStatus;
+    }
+
+    public int getIsPublic() {
+        return isPublic;
+    }
+
+    public void setRequireTypeId(String requireTypeId) {
+        this.requireTypeId = requireTypeId;
+    }
+
+    public void setRequireTypeNo(String requireTypeNo) {
+        this.requireTypeNo = requireTypeNo;
+    }
+
+    public void setEquityName(String equityName) {
+        this.equityName = equityName;
+    }
+
+    public void setEquityDesc(String equityDesc) {
+        this.equityDesc = equityDesc;
+    }
+
+    public void setIconImage(String iconImage) {
+        this.iconImage = iconImage;
+    }
+
+    public void setOwn(boolean own) {
+        isOwn = own;
+    }
+
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
+
+    public void setIsBuyEquity(boolean isBuyEquity) {
+        this.isBuyEquity = isBuyEquity;
+    }
+
+    public String getRequireTypeId() {
+        return requireTypeId;
+    }
+
+    public String getRequireTypeNo() {
+        return requireTypeNo;
+    }
+
+    public String getEquityName() {
+        return equityName;
+    }
+
+    public String getEquityDesc() {
+        return equityDesc;
+    }
+
+    public String getIconImage() {
+        return iconImage;
+    }
+
+    public boolean isOwn() {
+        return isOwn;
+    }
+
+    public int getRoleId() {
+        return roleId;
+    }
+
+    public boolean getIsBuyEquity() {
+        return isBuyEquity;
     }
 }

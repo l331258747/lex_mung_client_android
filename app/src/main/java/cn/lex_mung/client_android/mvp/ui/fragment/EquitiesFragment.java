@@ -31,6 +31,7 @@ import cn.lex_mung.client_android.mvp.ui.activity.LawyerHomePageActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerListActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.PublicLawyerActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.TradingListActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.EquitiesAdapter;
 import cn.lex_mung.client_android.mvp.ui.adapter.LawyerListAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
@@ -196,9 +197,18 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
             if (isFastClick()) return;
             EquitiesListEntity entity = equitiesAdapter1.getItem(position);
             if (entity == null) return;
-            DataHelper.setIntergerSF(mActivity, DataHelperTags.EQUITIES_ORG_ID, entity.getOrganizationId());
-            DataHelper.setIntergerSF(mActivity, DataHelperTags.EQUITIES_ORG_LEVEL_ID, entity.getOrganizationLevelNameId());
-            mPresenter.getEquitiesDetails();
+
+            if(entity.getIsBuyEquity()){
+                if(TextUtils.isEmpty(entity.getLegalAdviserUrl())) return;
+                bundle.clear();
+                bundle.putString(BundleTags.URL, entity.getLegalAdviserUrl());
+                bundle.putString(BundleTags.TITLE, entity.getEquityName());
+                launchActivity(new Intent(mActivity,WebActivity.class),bundle);
+            }else{
+                DataHelper.setIntergerSF(mActivity, DataHelperTags.EQUITIES_ORG_ID, entity.getOrganizationId());
+                DataHelper.setIntergerSF(mActivity, DataHelperTags.EQUITIES_ORG_LEVEL_ID, entity.getOrganizationLevelNameId());
+                mPresenter.getEquitiesDetails();
+            }
         });
 
         equitiesAdapter2 = new EquitiesAdapter(mImageLoader, false);
@@ -206,14 +216,23 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
             if (isFastClick()) return;
             EquitiesListEntity entity = equitiesAdapter2.getItem(position);
             if (entity == null) return;
-            bundle.clear();
-            bundle.putInt(BundleTags.ID, entity.getOrganizationId());
-            bundle.putInt(BundleTags.LEVEL, entity.getOrganizationLevelNameId());
 
-            if(entity.getIsPublic() == 1){
-                launchActivity(new Intent(mActivity, PublicLawyerActivity.class), bundle);
+            if(entity.getIsBuyEquity()){
+                if(TextUtils.isEmpty(entity.getLegalAdviserUrl())) return;
+                bundle.clear();
+                bundle.putString(BundleTags.URL, entity.getLegalAdviserUrl());
+                bundle.putString(BundleTags.TITLE, entity.getEquityName());
+                launchActivity(new Intent(mActivity,WebActivity.class),bundle);
             }else{
-                launchActivity(new Intent(mActivity, JoinEquitiesOrgActivity.class), bundle);
+                bundle.clear();
+                bundle.putInt(BundleTags.ID, entity.getOrganizationId());
+                bundle.putInt(BundleTags.LEVEL, entity.getOrganizationLevelNameId());
+
+                if(entity.getIsPublic() == 1){
+                    launchActivity(new Intent(mActivity, PublicLawyerActivity.class), bundle);
+                }else{
+                    launchActivity(new Intent(mActivity, JoinEquitiesOrgActivity.class), bundle);
+                }
             }
         });
 

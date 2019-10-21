@@ -4,6 +4,8 @@ import android.app.Application;
 import android.os.Message;
 
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
+import cn.lex_mung.client_android.mvp.model.entity.EquitiesBuyListEntity;
+import cn.lex_mung.client_android.mvp.model.entity.EquitiesMainListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -118,15 +120,33 @@ public class EquitiesPresenter extends BasePresenter<EquitiesContract.Model, Equ
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<List<EquitiesListEntity>>>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<EquitiesMainListEntity>>(mErrorHandler) {
                     @Override
-                    public void onNext(BaseResponse<List<EquitiesListEntity>> baseResponse) {
+                    public void onNext(BaseResponse<EquitiesMainListEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             list_2.clear();
-                            list_2.addAll(baseResponse.getData());
+
+                            if(baseResponse.getData().getEquity() != null){
+                                for (int i=0;i<baseResponse.getData().getEquity().size();i++){
+                                    EquitiesBuyListEntity equitiesBuyListEntity = baseResponse.getData().getEquity().get(i);
+                                    EquitiesListEntity item = new EquitiesListEntity();
+                                    item.setEquityDesc(equitiesBuyListEntity.getEquityDesc());
+                                    item.setEquityName(equitiesBuyListEntity.getEquityName());
+                                    item.setIsBuyEquity(true);
+                                    item.setIconImage(equitiesBuyListEntity.getIconImage());
+                                    item.setOwn(equitiesBuyListEntity.isOwn());
+                                    item.setRequireTypeNo(equitiesBuyListEntity.getRequireTypeNo());
+                                    item.setRoleId(equitiesBuyListEntity.getRoleId());
+                                    item.setRequireTypeId(equitiesBuyListEntity.getRequireTypeId());
+                                    item.setLegalAdviserUrl(equitiesBuyListEntity.getLegalAdviserUrl());
+                                    list_2.add(item);
+                                }
+                            }
+                            list_2.addAll(baseResponse.getData().getList());
+
                             mRootView.showAllEquitiesLayout();
                             mRootView.hideCurrentEquitiesLayout();
-                            mRootView.setEquitiesAdapter2(baseResponse.getData());
+                            mRootView.setEquitiesAdapter2(list_2);
                         }
                     }
                 });
@@ -145,19 +165,38 @@ public class EquitiesPresenter extends BasePresenter<EquitiesContract.Model, Equ
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<List<EquitiesListEntity>>>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<EquitiesMainListEntity>>(mErrorHandler) {
                     @Override
-                    public void onNext(BaseResponse<List<EquitiesListEntity>> baseResponse) {
+                    public void onNext(BaseResponse<EquitiesMainListEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             list_1.clear();
                             list_2.clear();
-                            for (EquitiesListEntity entity : baseResponse.getData()) {
+
+                            if(baseResponse.getData().getEquity() != null){
+                                for (int i=0;i<baseResponse.getData().getEquity().size();i++){
+                                    EquitiesBuyListEntity equitiesBuyListEntity = baseResponse.getData().getEquity().get(i);
+                                    EquitiesListEntity item = new EquitiesListEntity();
+                                    item.setEquityDesc(equitiesBuyListEntity.getEquityDesc());
+                                    item.setEquityName(equitiesBuyListEntity.getEquityName());
+                                    item.setIsBuyEquity(true);
+                                    item.setIconImage(equitiesBuyListEntity.getIconImage());
+                                    item.setOwn(equitiesBuyListEntity.isOwn());
+                                    item.setRequireTypeNo(equitiesBuyListEntity.getRequireTypeNo());
+                                    item.setRoleId(equitiesBuyListEntity.getRoleId());
+                                    item.setRequireTypeId(equitiesBuyListEntity.getRequireTypeId());
+                                    item.setLegalAdviserUrl(equitiesBuyListEntity.getLegalAdviserUrl());
+                                    list_1.add(item);
+                                }
+                            }
+
+                            for (EquitiesListEntity entity : baseResponse.getData().getList()) {
                                 if (entity.getJoinStatus() == 2) {//已经加入
                                     list_1.add(entity);
                                 } else {
                                     list_2.add(entity);
                                 }
                             }
+
                             if (list_1.size() > 0) {
                                 if (!DataHelper.contains(mApplication, DataHelperTags.EQUITIES_ORG_ID)) {
                                     DataHelper.setIntergerSF(mApplication, DataHelperTags.EQUITIES_ORG_ID, list_1.get(0).getOrganizationId());

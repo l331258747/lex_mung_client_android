@@ -7,6 +7,7 @@ import cn.lex_mung.client_android.mvp.model.entity.EquitiesListEntity;
 
 import java.util.List;
 
+import cn.lex_mung.client_android.mvp.model.entity.EquitiesMainListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
 import io.reactivex.Observable;
 import me.zl.mvp.mvp.IView;
@@ -45,9 +46,9 @@ public interface EquitiesContract {
     }
 
     interface Model extends IModel {
-        Observable<BaseResponse<List<EquitiesListEntity>>> getEquitiesList();
+        Observable<BaseResponse<EquitiesMainListEntity>> getEquitiesList();
 
-        Observable<BaseResponse<List<EquitiesListEntity>>> getEquitiesList_1();
+        Observable<BaseResponse<EquitiesMainListEntity>> getEquitiesList_1();
 
         Observable<BaseResponse<EquitiesDetailsEntity>> getEquitiesDetails(int orgId, int levelId);
 
