@@ -185,7 +185,11 @@ public class EquitiesPresenter extends BasePresenter<EquitiesContract.Model, Equ
                                     item.setRoleId(equitiesBuyListEntity.getRoleId());
                                     item.setRequireTypeId(equitiesBuyListEntity.getRequireTypeId());
                                     item.setLegalAdviserUrl(equitiesBuyListEntity.getLegalAdviserUrl());
-                                    list_1.add(item);
+                                    if(equitiesBuyListEntity.isOwn()){//已开通 
+                                        list_1.add(item);
+                                    }else{//未开通
+                                        list_2.add(item);
+                                    }
                                 }
                             }
 

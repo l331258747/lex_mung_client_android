@@ -12,18 +12,12 @@ import me.zl.mvp.http.imageloader.ImageLoader;
 
 public class CouponModeCardAdapter extends BaseQuickAdapter<ReleaseDemandOrgMoneyEntityOptimal, BaseViewHolder> {
     private ImageLoader mImageLoader;
-    int type = 0;
 
     private int cardId = -1;
 
     public CouponModeCardAdapter(ImageLoader imageLoader) {
-        this(imageLoader,0);
-    }
-
-    public CouponModeCardAdapter(ImageLoader imageLoader, int type) {
         super(R.layout.item_my_coupons);
         this.mImageLoader = imageLoader;
-        this.type = type;
     }
 
     public void setCardId(int cardId) {
@@ -47,25 +41,18 @@ public class CouponModeCardAdapter extends BaseQuickAdapter<ReleaseDemandOrgMone
 
         helper.setGone(R.id.view_disabled_bg,false);
 
-        if(type == 0){
-            helper.setGone(R.id.tv_card_club_balance,true);
-            helper.setGone(R.id.fl_card_club_btn,true);
-            helper.setGone(R.id.tv_coupon_card,false);
+        helper.setGone(R.id.tv_card_club_balance,false);
+        helper.setGone(R.id.fl_card_club_btn,false);
+        helper.setGone(R.id.tv_coupon_card,true);
 
+        if(item.getOrgStatus() != 1){
+            helper.setGone(R.id.view_disabled_bg,true);
+        }
+
+        if (cardId == item.getOrganizationId()) {
+            helper.setGone(R.id.view_bg,true);
         }else{
-            helper.setGone(R.id.tv_card_club_balance,false);
-            helper.setGone(R.id.fl_card_club_btn,false);
-            helper.setGone(R.id.tv_coupon_card,true);
-
-            if(item.getOrgStatus() != 1){
-                helper.setGone(R.id.view_disabled_bg,true);
-            }
-
-            if (cardId == item.getOrganizationId()) {
-                helper.setGone(R.id.view_bg,true);
-            }else{
-                helper.setGone(R.id.view_bg,false);
-            }
+            helper.setGone(R.id.view_bg,false);
         }
 
         helper.addOnClickListener(R.id.tv_coupon_card);//查看详情，弹出对话框显示优惠信息

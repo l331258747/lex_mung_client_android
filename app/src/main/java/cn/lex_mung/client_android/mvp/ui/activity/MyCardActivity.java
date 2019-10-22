@@ -1,5 +1,6 @@
 package cn.lex_mung.client_android.mvp.ui.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -59,6 +60,11 @@ public class MyCardActivity extends BaseActivity<MyCardPresenter> implements MyC
     @Override
     public void setEmptyView(MyCardAdapter adapter) {
         adapter.setEmptyView(R.layout.layout_empty_view, (ViewGroup) recyclerView.getParent());
+    }
+
+    @Override
+    public Activity getActivity() {
+        return this;
     }
 
     @Override

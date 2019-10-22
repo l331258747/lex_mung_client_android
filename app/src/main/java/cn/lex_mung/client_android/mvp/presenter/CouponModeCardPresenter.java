@@ -11,7 +11,10 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.mvp.contract.CouponModeCardContract;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.ReleaseDemandOrgMoneyEntity2;
 import cn.lex_mung.client_android.mvp.model.entity.ReleaseDemandOrgMoneyEntityOptimal;
@@ -19,17 +22,13 @@ import cn.lex_mung.client_android.mvp.model.entity.other.CouponModeEntity;
 import cn.lex_mung.client_android.mvp.ui.adapter.CouponModeCardAdapter;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
-import me.zl.mvp.integration.AppManager;
 import me.zl.mvp.di.scope.FragmentScope;
-import me.zl.mvp.mvp.BasePresenter;
 import me.zl.mvp.http.imageloader.ImageLoader;
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
-
-import javax.inject.Inject;
-
-import cn.lex_mung.client_android.mvp.contract.CouponModeCardContract;
+import me.zl.mvp.integration.AppManager;
+import me.zl.mvp.mvp.BasePresenter;
 import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.RxLifecycleUtils;
 import okhttp3.RequestBody;
@@ -93,7 +92,7 @@ public class CouponModeCardPresenter extends BasePresenter<CouponModeCardContrac
     }
 
     private void initAdapter() {
-        adapter = new CouponModeCardAdapter(mImageLoader,1);
+        adapter = new CouponModeCardAdapter(mImageLoader);
         adapter.setCardId(couponType == 1?orgId:-1);
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;

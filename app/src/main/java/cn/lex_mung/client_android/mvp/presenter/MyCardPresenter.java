@@ -2,12 +2,20 @@ package cn.lex_mung.client_android.mvp.presenter;
 
 import android.app.ActivityManager;
 import android.app.Application;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
+import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.mvp.contract.MyCardContract;
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
+import cn.lex_mung.client_android.mvp.model.entity.CouponsMainEntity;
+import cn.lex_mung.client_android.mvp.model.entity.EquitiesBuyListEntity;
+import cn.lex_mung.client_android.mvp.model.entity.EquitiesListEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.MainActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -30,6 +38,9 @@ import cn.lex_mung.client_android.mvp.ui.adapter.MyCardAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static cn.lex_mung.client_android.app.EventBusTags.EQUITIES_REFRESH.EQUITIES_REFRESH;
 import static cn.lex_mung.client_android.app.EventBusTags.EQUITIES_REFRESH.EQUITIES_REFRESH_1;
@@ -68,12 +79,19 @@ public class MyCardPresenter extends BasePresenter<MyCardContract.Model, MyCardC
             if (isFastClick()) return;
             CouponsEntity entity = adapter.getItem(position);
             if (entity == null) return;
-            DataHelper.setIntergerSF(mApplication, DataHelperTags.EQUITIES_ORG_ID, entity.getOrganizationId());
-            DataHelper.setIntergerSF(mApplication, DataHelperTags.EQUITIES_ORG_LEVEL_ID, entity.getOrganizationLevelNameId());
-            AppUtils.post(EQUITIES_REFRESH,EQUITIES_REFRESH_1);
-            AppManager.getAppManager().killAllNotClass(MainActivity.class);
-            ((MainActivity) AppManager.getAppManager().findActivity(MainActivity.class)).switchPage(1);
-
+            if (entity.isBuyEquity()) {
+                if (TextUtils.isEmpty(entity.getLegalAdviserUrl())) return;
+                Bundle bundle = new Bundle();
+                bundle.putString(BundleTags.URL, entity.getLegalAdviserUrl());
+                bundle.putString(BundleTags.TITLE, entity.getEquityName());
+                mRootView.launchActivity(new Intent(mRootView.getActivity(), WebActivity.class), bundle);
+            } else {
+                DataHelper.setIntergerSF(mApplication, DataHelperTags.EQUITIES_ORG_ID, entity.getOrganizationId());
+                DataHelper.setIntergerSF(mApplication, DataHelperTags.EQUITIES_ORG_LEVEL_ID, entity.getOrganizationLevelNameId());
+                AppUtils.post(EQUITIES_REFRESH, EQUITIES_REFRESH_1);
+                AppManager.getAppManager().killAllNotClass(MainActivity.class);
+                ((MainActivity) AppManager.getAppManager().findActivity(MainActivity.class)).switchPage(1);
+            }
         });
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
@@ -95,6 +113,8 @@ public class MyCardPresenter extends BasePresenter<MyCardContract.Model, MyCardC
         mRootView.initRecyclerView(adapter);
     }
 
+    List<CouponsEntity> lists = new ArrayList<>();
+
     private void getCouponsList(boolean isAdd) {
         mModel.getCouponsList(pageNum)
                 .subscribeOn(Schedulers.io())
@@ -105,20 +125,40 @@ public class MyCardPresenter extends BasePresenter<MyCardContract.Model, MyCardC
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<CouponsEntity>>>(mErrorHandler) {
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<CouponsMainEntity>>(mErrorHandler) {
                     @Override
-                    public void onNext(BaseResponse<BaseListEntity<CouponsEntity>> baseResponse) {
+                    public void onNext(BaseResponse<CouponsMainEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
-                            totalNum = baseResponse.getData().getPages();
-                            pageNum = baseResponse.getData().getPageNum();
+                            totalNum = baseResponse.getData().getList().getPages();
+                            pageNum = baseResponse.getData().getList().getPageNum();
 
                             if (isAdd) {
-                                adapter.addData(baseResponse.getData().getList());
+                                adapter.addData(baseResponse.getData().getList().getList());
                                 smartRefreshLayout.finishLoadMore();
                             } else {
+                                lists.clear();
+                                if (baseResponse.getData().getEquity() != null) {
+                                    for (int i = 0; i < baseResponse.getData().getEquity().size(); i++) {
+                                        EquitiesBuyListEntity equitiesBuyListEntity = baseResponse.getData().getEquity().get(i);
+                                        CouponsEntity item = new CouponsEntity();
+                                        item.setEquityDesc(equitiesBuyListEntity.getEquityDesc());
+                                        item.setEquityName(equitiesBuyListEntity.getEquityName());
+                                        item.setBuyEquity(true);
+                                        item.setIconImage(equitiesBuyListEntity.getIconImage());
+                                        item.setOwn(equitiesBuyListEntity.isOwn());
+                                        item.setRequireTypeNo(equitiesBuyListEntity.getRequireTypeNo());
+                                        item.setRoleId(equitiesBuyListEntity.getRoleId());
+                                        item.setRequireTypeId(equitiesBuyListEntity.getRequireTypeId());
+                                        item.setLegalAdviserUrl(equitiesBuyListEntity.getLegalAdviserUrl());
+                                        lists.add(item);
+                                    }
+                                }
+                                lists.addAll(baseResponse.getData().getList().getList());
+
                                 mRootView.setEmptyView(adapter);
                                 smartRefreshLayout.finishRefresh();
-                                adapter.setNewData(baseResponse.getData().getList());
+
+                                adapter.setNewData(lists);
                                 if (totalNum == pageNum) {
                                     smartRefreshLayout.finishLoadMoreWithNoMoreData();
                                 }

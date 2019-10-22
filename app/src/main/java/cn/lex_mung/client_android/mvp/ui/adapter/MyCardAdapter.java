@@ -1,6 +1,8 @@
 package cn.lex_mung.client_android.mvp.ui.adapter;
 
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -12,22 +14,12 @@ import me.zl.mvp.http.imageloader.ImageLoader;
 
 public class MyCardAdapter extends BaseQuickAdapter<CouponsEntity, BaseViewHolder> {
     private ImageLoader mImageLoader;
-    int type = 0;
 
     private int cardId = -1;
 
     public MyCardAdapter(ImageLoader imageLoader) {
-        this(imageLoader,0);
-    }
-
-    public MyCardAdapter(ImageLoader imageLoader, int type) {
-        super(R.layout.item_my_coupons);
+        super(R.layout.item_my_card);
         this.mImageLoader = imageLoader;
-        this.type = type;
-    }
-
-    public void setCardId(int cardId) {
-        this.cardId = cardId;
     }
 
     @Override
@@ -41,14 +33,33 @@ public class MyCardAdapter extends BaseQuickAdapter<CouponsEntity, BaseViewHolde
                             .imageView(helper.getView(R.id.item_iv_icon))
                             .build());
         }else{
-            helper.setImageResource(R.id.item_iv_icon,R.drawable.ic_update_top_round);
+            helper.setImageDrawable(R.id.item_iv_icon,ContextCompat.getDrawable(mContext,R.drawable.round_10_edfaf5_all));
         }
 
-        helper.setGone(R.id.tv_card_club_balance,false);
-        helper.setGone(R.id.tv_card_member_balance,false);
-        helper.setGone(R.id.ll__balance,false);
+        helper.setGone(R.id.tv_title,false);//标题-在线法律顾问
+        helper.setGone(R.id.tv_content,false);//说明-在线法律顾问
 
-        if(type == 0){
+        helper.setGone(R.id.tv_card_club_balance,false);//集团卡余额
+        helper.setGone(R.id.tv_card_member_balance,false);//会员卡
+        helper.setGone(R.id.ll__balance,false);//余额显示
+
+        helper.setGone(R.id.fl_card_club_btn,false);//按钮
+        helper.setText(R.id.tv_card_club_btn,"去使用");//按钮初始化
+
+        if(item.isBuyEquity()) {//购买 开通的权益
+            helper.setGone(R.id.tv_title,true);
+            helper.setGone(R.id.tv_content,true);
+
+            helper.setText(R.id.tv_title,item.getEquityName());
+            helper.setText(R.id.tv_content,item.getEquityDesc());
+
+            helper.setGone(R.id.fl_card_club_btn,true);
+            if(item.isOwn()){//开通
+                helper.setText(R.id.tv_card_club_btn,"已开通");
+            }else{//未开通
+                helper.setText(R.id.tv_card_club_btn,"未开通");
+            }
+        }else{
             if(item.getCouponBalanceList()!= null && item.getCouponBalanceList().size() > 0){
                 helper.setGone(R.id.ll__balance,true);
                 for (CouponsEntity.CouponsChildEntity child:item.getCouponBalanceList()){
@@ -65,22 +76,6 @@ public class MyCardAdapter extends BaseQuickAdapter<CouponsEntity, BaseViewHolde
 
             helper.setGone(R.id.fl_card_club_btn,true);
             helper.setGone(R.id.tv_coupon_card,false);
-
-        }else{
-            helper.setGone(R.id.ll__balance,false);
-            helper.setGone(R.id.tv_card_club_balance,false);
-            helper.setGone(R.id.tv_card_member_balance,false);
-
-            helper.setGone(R.id.fl_card_club_btn,false);
-            helper.setGone(R.id.tv_coupon_card,true);
-
-            if (cardId == item.getCouponId()) {
-                helper.setGone(R.id.view_bg,true);
-            }else{
-                helper.setGone(R.id.view_bg,false);
-            }
         }
-
-        helper.addOnClickListener(R.id.tv_coupon_card);//查看详情，弹出对话框显示优惠信息
     }
 }

@@ -20,7 +20,6 @@ import cn.lex_mung.client_android.mvp.contract.CouponModeCardContract;
 import cn.lex_mung.client_android.mvp.presenter.CouponModeCardPresenter;
 import cn.lex_mung.client_android.mvp.ui.activity.CouponModeActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.CouponModeCardAdapter;
-import cn.lex_mung.client_android.mvp.ui.dialog.DefaultDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.SingleTextDialog;
 import me.zl.mvp.base.BaseFragment;

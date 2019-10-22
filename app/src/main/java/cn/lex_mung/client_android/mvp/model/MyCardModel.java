@@ -5,6 +5,7 @@ import android.app.Application;
 import com.google.gson.Gson;
 
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
+import cn.lex_mung.client_android.mvp.model.entity.CouponsMainEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.integration.IRepositoryManager;
 import me.zl.mvp.mvp.BaseModel;
@@ -38,7 +39,7 @@ public class MyCardModel extends BaseModel implements MyCardContract.Model {
     }
 
     @Override
-    public Observable<BaseResponse<BaseListEntity<CouponsEntity>>> getCouponsList(int pageNum) {
+    public Observable<BaseResponse<CouponsMainEntity>> getCouponsList(int pageNum) {
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .getCouponsList(pageNum);

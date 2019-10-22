@@ -1,7 +1,5 @@
 package cn.lex_mung.client_android.mvp.model.entity;
 
-import com.youth.banner.Banner;
-
 import java.util.List;
 
 import me.zl.mvp.utils.StringUtils;
@@ -34,6 +32,99 @@ public class CouponsEntity {
     private int organizationId;
     private int organizationLevelNameId;
     private List<CouponsChildEntity> couponBalanceList;
+    String requireTypeId;
+    String requireTypeNo;
+    String equityName;
+    String equityDesc;
+    String iconImage;
+    boolean isOwn;
+    int roleId;
+    String legalAdviserUrl;
+    private boolean isBuyEquity;
+
+    public void setOrganizationId(int organizationId) {
+        this.organizationId = organizationId;
+    }
+
+    public void setOrganizationLevelNameId(int organizationLevelNameId) {
+        this.organizationLevelNameId = organizationLevelNameId;
+    }
+
+    public void setCouponBalanceList(List<CouponsChildEntity> couponBalanceList) {
+        this.couponBalanceList = couponBalanceList;
+    }
+
+    public String getRequireTypeId() {
+        return requireTypeId;
+    }
+
+    public void setRequireTypeId(String requireTypeId) {
+        this.requireTypeId = requireTypeId;
+    }
+
+    public String getRequireTypeNo() {
+        return requireTypeNo;
+    }
+
+    public void setRequireTypeNo(String requireTypeNo) {
+        this.requireTypeNo = requireTypeNo;
+    }
+
+    public String getEquityName() {
+        return equityName;
+    }
+
+    public void setEquityName(String equityName) {
+        this.equityName = equityName;
+    }
+
+    public String getEquityDesc() {
+        return equityDesc;
+    }
+
+    public void setEquityDesc(String equityDesc) {
+        this.equityDesc = equityDesc;
+    }
+
+    public String getIconImage() {
+        return iconImage;
+    }
+
+    public void setIconImage(String iconImage) {
+        this.iconImage = iconImage;
+    }
+
+    public boolean isOwn() {
+        return isOwn;
+    }
+
+    public void setOwn(boolean own) {
+        isOwn = own;
+    }
+
+    public int getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
+
+    public String getLegalAdviserUrl() {
+        return legalAdviserUrl;
+    }
+
+    public void setLegalAdviserUrl(String legalAdviserUrl) {
+        this.legalAdviserUrl = legalAdviserUrl;
+    }
+
+    public boolean isBuyEquity() {
+        return isBuyEquity;
+    }
+
+    public void setBuyEquity(boolean buyEquity) {
+        isBuyEquity = buyEquity;
+    }
 
     public List<CouponsChildEntity> getCouponBalanceList() {
         return couponBalanceList;

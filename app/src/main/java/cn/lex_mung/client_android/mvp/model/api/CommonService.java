@@ -13,6 +13,7 @@ import cn.lex_mung.client_android.mvp.model.entity.BusinessEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BusinessTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.CaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.CouponsEntity;
+import cn.lex_mung.client_android.mvp.model.entity.CouponsMainEntity;
 import cn.lex_mung.client_android.mvp.model.entity.DemandMessageEntity;
 import cn.lex_mung.client_android.mvp.model.entity.EquitiesDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.EquitiesListEntity;
@@ -590,7 +591,7 @@ public interface CommonService {
      * @return BaseResponse
      */
     @GET("client/rights/couponlist/v2")
-    Observable<BaseResponse<BaseListEntity<CouponsEntity>>> getCouponsList(@Query("pageNum") int pageNum);
+    Observable<BaseResponse<CouponsMainEntity>> getCouponsList(@Query("pageNum") int pageNum);
 
     /**
      * 获取快速咨询订单用户号码
