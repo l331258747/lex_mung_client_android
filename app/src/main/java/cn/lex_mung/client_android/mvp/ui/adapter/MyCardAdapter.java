@@ -15,8 +15,6 @@ import me.zl.mvp.http.imageloader.ImageLoader;
 public class MyCardAdapter extends BaseQuickAdapter<CouponsEntity, BaseViewHolder> {
     private ImageLoader mImageLoader;
 
-    private int cardId = -1;
-
     public MyCardAdapter(ImageLoader imageLoader) {
         super(R.layout.item_my_card);
         this.mImageLoader = imageLoader;
@@ -33,7 +31,7 @@ public class MyCardAdapter extends BaseQuickAdapter<CouponsEntity, BaseViewHolde
                             .imageView(helper.getView(R.id.item_iv_icon))
                             .build());
         }else{
-            helper.setImageDrawable(R.id.item_iv_icon,ContextCompat.getDrawable(mContext,R.drawable.round_10_edfaf5_all));
+            helper.setImageDrawable(R.id.item_iv_icon,ContextCompat.getDrawable(mContext,R.drawable.round_10_1ec88b_all));
         }
 
         helper.setGone(R.id.tv_title,false);//标题-在线法律顾问

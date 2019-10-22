@@ -33,7 +33,7 @@ public class EquitiesAdapter extends BaseQuickAdapter<EquitiesListEntity, BaseVi
                             .isCenterCrop(false)
                             .build());
         }else{
-            helper.setImageDrawable(R.id.item_iv_icon,ContextCompat.getDrawable(mContext,R.drawable.round_10_edfaf5_all));
+            helper.setImageDrawable(R.id.item_iv_icon,ContextCompat.getDrawable(mContext,R.drawable.round_10_1ec88b_all));
         }
 
         helper.setGone(R.id.tv_title,false);

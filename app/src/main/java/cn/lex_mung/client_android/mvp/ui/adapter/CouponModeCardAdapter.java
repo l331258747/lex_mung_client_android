@@ -35,7 +35,7 @@ public class CouponModeCardAdapter extends BaseQuickAdapter<ReleaseDemandOrgMone
                             .imageView(helper.getView(R.id.item_iv_icon))
                             .build());
         }else{
-            helper.setImageResource(R.id.item_iv_icon,R.drawable.ic_update_top_round);
+            helper.setImageResource(R.id.item_iv_icon,R.drawable.round_10_1ec88b_all);
         }
 
 

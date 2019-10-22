@@ -2,7 +2,6 @@ package cn.lex_mung.client_android.mvp.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
@@ -15,6 +14,14 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.app.DataHelperTags;
@@ -36,28 +43,12 @@ import cn.lex_mung.client_android.mvp.ui.adapter.EquitiesAdapter;
 import cn.lex_mung.client_android.mvp.ui.adapter.LawyerListAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.RoundImageView;
-
-import com.umeng.analytics.MobclickAgent;
-import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
-
-import org.simple.eventbus.Subscriber;
-
-import java.util.List;
-
-import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 import cn.lex_mung.client_android.utils.BuryingPointHelp;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.DataHelper;
-
-import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGIN;
-import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGIN_INFO;
-import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGOUT;
 
 public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements EquitiesContract.View {
     @Inject
@@ -250,9 +241,11 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
     private void initRecyclerView() {
         AppUtils.configRecyclerView(recyclerViewCurrentEquities, new LinearLayoutManager(mActivity));
         recyclerViewCurrentEquities.setAdapter(equitiesAdapter1);
+        recyclerViewCurrentEquities.setNestedScrollingEnabled(false);
 
         AppUtils.configRecyclerView(recyclerViewMoreEquities, new LinearLayoutManager(mActivity));
         recyclerViewMoreEquities.setAdapter(equitiesAdapter2);
+        recyclerViewMoreEquities.setNestedScrollingEnabled(false);
 
         AppUtils.configRecyclerView(recyclerView, new LinearLayoutManager(mActivity));
         recyclerView.setAdapter(lawyerListAdapter);

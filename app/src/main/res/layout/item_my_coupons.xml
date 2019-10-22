@@ -35,7 +35,7 @@
         android:id="@+id/view_disabled_bg"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/round_20_66f7f7f7_all"
+        android:background="@drawable/round_10_1ec88b_all"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/item_iv_icon"
         app:layout_constraintEnd_toEndOf="@+id/item_iv_icon"
