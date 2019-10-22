@@ -5,25 +5,23 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
-
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.di.component.DaggerCouponModeComponent;
 import cn.lex_mung.client_android.di.module.CouponModeModule;
+import cn.lex_mung.client_android.mvp.contract.CouponModeContract;
 import cn.lex_mung.client_android.mvp.model.entity.other.CouponModeEntity;
+import cn.lex_mung.client_android.mvp.presenter.CouponModePresenter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
-
 import cn.lex_mung.client_android.mvp.ui.fragment.CouponModeCardFragment;
 import cn.lex_mung.client_android.mvp.ui.fragment.CouponModeCouponFragment;
 import cn.lex_mung.client_android.mvp.ui.widget.myTabLayout.TabLayout;
@@ -31,12 +29,6 @@ import me.zl.mvp.base.AdapterViewPager;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
-
-import cn.lex_mung.client_android.di.component.DaggerCouponModeComponent;
-import cn.lex_mung.client_android.mvp.contract.CouponModeContract;
-import cn.lex_mung.client_android.mvp.presenter.CouponModePresenter;
-
-import cn.lex_mung.client_android.R;
 
 import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH;
 import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH_DISCOUNT_WAY2;
