@@ -185,13 +185,14 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
             case R.id.rl_coupon_type:
                 bundle.clear();
                 bundle.putInt(BundleTags.ID, couponId);//优惠券id
-                if(type == 3){
+                if(type == 2){
                     bundle.putInt(BundleTags.TYPE, 3);
-                }else if(type == 2){
-                    bundle.putInt(BundleTags.TYPE, 2);
-                }else {
+                }else if(type == 1){
                     bundle.putInt(BundleTags.TYPE, 0);
+                }else {
+                    bundle.putInt(BundleTags.TYPE, 2);
                 }
+//                bundle.putInt(BundleTags.TYPE, type == 1?0:2);
                 bundle.putInt(BundleTags.REQUIREMENT_ID,id);
                 bundle.putDouble(BundleTags.MONEY, orderPrice);
                 launchActivity(new Intent(mActivity, OrderCouponActivity.class), bundle);

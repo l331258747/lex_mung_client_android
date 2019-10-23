@@ -90,7 +90,7 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
     private int payTypeGroup;//支付方式为6 带的集团id（因为集团卡有多个）
 
     private float payMoney;//实付金额
-    private int type;//1 快速咨询，2 热门需求
+    private int type;//1 快速咨询，2 热门需求，3付费权益
 
     private int meetNum;//线下见面次数
     private List<String> legalAdviserIds;//子项目ids
@@ -122,11 +122,11 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
         this.requireTypeName = requireTypeName;
     }
 
+    //获取余额
+
     public void setType(int type) {
         this.type = type;
     }
-
-    //获取余额
     public void getAllBalance() {
         Map<String, Object> map = new HashMap<>();
         mModel.amountBalance(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
@@ -653,7 +653,7 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
         if (mRootView.getCouponPrice() > 0){
             map.put("couponId", mRootView.getCouponId());
         }
-        map.put("type", type);
+        map.put("type", payType);
         mModel.legalAdviserOrderPay(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))
@@ -666,7 +666,7 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
                     @Override
                     public void onNext(BaseResponse<LegalAdviserOrderPayEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
-                            buyEquityPay(ua, baseResponse.getData().getOrderNo());
+                            buyEquityPay(ua, baseResponse.getData().getLegalAdviserOrderNo());
                         } else {
                             mRootView.showMessage(baseResponse.getMessage());
                         }

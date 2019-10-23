@@ -10,18 +10,14 @@ public class LegalAdviserOrderPayEntity {
      * type : 1
      */
 
-    private String orderNo;
+    private String legalAdviserOrderNo;
     private int money;
     private int deduction;
     private int couponId;
     private int type;
 
-    public String getOrderNo() {
-        return orderNo;
-    }
-
-    public void setOrderNo(String orderNo) {
-        this.orderNo = orderNo;
+    public String getLegalAdviserOrderNo() {
+        return legalAdviserOrderNo;
     }
 
     public int getMoney() {
