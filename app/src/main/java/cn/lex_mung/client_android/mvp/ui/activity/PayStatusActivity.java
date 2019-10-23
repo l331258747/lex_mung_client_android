@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.Group;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,7 @@ import cn.lex_mung.client_android.app.PayStatusTags;
 import cn.lex_mung.client_android.di.component.DaggerPayStatusComponent;
 import cn.lex_mung.client_android.di.module.PayStatusModule;
 import cn.lex_mung.client_android.mvp.contract.PayStatusContract;
+import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
 import cn.lex_mung.client_android.mvp.presenter.PayStatusPresenter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
@@ -25,12 +27,15 @@ import com.tencent.mm.opensdk.modelbase.BaseResp;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.lex_mung.client_android.utils.GsonUtil;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.integration.AppManager;
 import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.DataHelper;
 
+import static cn.lex_mung.client_android.app.EventBusTags.EQUITIES_REFRESH.EQUITIES_REFRESH;
+import static cn.lex_mung.client_android.app.EventBusTags.EQUITIES_REFRESH.EQUITIES_REFRESH_1;
 import static cn.lex_mung.client_android.app.EventBusTags.PAY_INFO.PAY_CONFIRM;
 import static cn.lex_mung.client_android.app.EventBusTags.PAY_INFO.PAY_INFO;
 
@@ -186,7 +191,9 @@ public class PayStatusActivity extends BaseActivity<PayStatusPresenter> implemen
                         case PayStatusTags.ONLINE_LAWYER://在线法律顾问
                         case PayStatusTags.PRIVATE_LAWYER://私人律师团
                             killMyself();
+
                             AppManager.getAppManager().killAllNotClass(MainActivity.class);
+                            ((MainActivity) AppManager.getAppManager().findActivity(MainActivity.class)).switchPage(1);
                             break;
                         default:
                             killMyself();
@@ -202,12 +209,22 @@ public class PayStatusActivity extends BaseActivity<PayStatusPresenter> implemen
                         case PayStatusTags.ONLINE_LAWYER://在线法律顾问
                             killMyself();
                             AppManager.getAppManager().killAllNotClass(MainActivity.class);
-                            //TODO webActivity 进去有权益详情页  预订  在线法律顾问
+                            ((MainActivity) AppManager.getAppManager().findActivity(MainActivity.class)).switchPage(1);
+
+                            String str = DataHelper.getStringSF(mActivity, DataHelperTags.ONLINE_LAWYER_URL);
+                            HomeChildEntity entity = GsonUtil.convertString2Object(str, HomeChildEntity.class);
+                            if (!TextUtils.isEmpty(str) && entity != null) {
+                                bundle.clear();
+                                bundle.putString(BundleTags.URL, entity.getJumpurl());
+                                bundle.putString(BundleTags.TITLE, entity.getTitle());
+                                launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+                            }
 
                             break;
                         case PayStatusTags.PRIVATE_LAWYER://私人律师团
                             killMyself();
                             AppManager.getAppManager().killAllNotClass(MainActivity.class);
+                            ((MainActivity) AppManager.getAppManager().findActivity(MainActivity.class)).switchPage(1);
                             //TODO webActivity 进去有权益详情页  预订  私人律师团
 
                             break;

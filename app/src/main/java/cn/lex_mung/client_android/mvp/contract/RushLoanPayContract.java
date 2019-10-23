@@ -12,9 +12,12 @@ import cn.lex_mung.client_android.mvp.model.entity.OrderStatusEntity;
 import cn.lex_mung.client_android.mvp.model.entity.OrgAmountEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.mine.RechargeEntity;
+import cn.lex_mung.client_android.mvp.model.entity.order.CommodityContentEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.QuickPayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RequirementCreateEntity;
+import cn.lex_mung.client_android.mvp.model.entity.payEquity.LegalAdviserOrderConfirmEntity;
+import cn.lex_mung.client_android.mvp.model.entity.payEquity.LegalAdviserOrderPayEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.mvp.IView;
 import me.zl.mvp.mvp.IModel;
@@ -41,23 +44,29 @@ public interface RushLoanPayContract {
 
         void setCouponCountLayout(int couponCount);
 
+        void setCommodityContent(List<CommodityContentEntity> entities);
     }
 
     interface Model extends IModel {
-        Observable<BaseResponse<PayEntity>> pay(RequestBody body);
-        Observable<BaseResponse<RequirementCreateEntity>> requirementCreate(RequestBody body);
 
-        Observable<BaseResponse<OrderStatusEntity>> releaseFastConsult(RequestBody body);
+        //快速咨询
+        Observable<BaseResponse<OrderStatusEntity>> releaseFastConsult(RequestBody body);//创建订单
+        Observable<BaseResponse<QuickPayEntity>> quickPay(int couponId, double orderAmount);//实付金额
+        Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> quickCoupon(float orderAmount);//优惠券列表
 
-        Observable<BaseResponse<QuickPayEntity>> quickPay(int couponId, double orderAmount);
-        Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> quickCoupon(float orderAmount);
+        //热门需求
+        Observable<BaseResponse<RequirementCreateEntity>> requirementCreate(RequestBody body);//创建订单
+        Observable<BaseResponse<QuickPayEntity>> optimalRequire(int couponId, double orderAmount,int productId);//实付金额
+        Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> optimalRequireList(float orderAmount,int productId);//优惠券列表
 
-        Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> optimalRequireList(float orderAmount,int productId);
-        Observable<BaseResponse<QuickPayEntity>> optimalRequire(int couponId, double orderAmount,int productId);
+        Observable<BaseResponse<AmountBalanceEntity>> amountBalance(RequestBody body);//获取余额
+        Observable<BaseResponse<Integer>> couponCount(RequestBody body);//优惠券数量
+        Observable<BaseResponse<PayEntity>> pay(RequestBody body);//支付
 
-
-        Observable<BaseResponse<AmountBalanceEntity>> amountBalance(RequestBody body);
-
-        Observable<BaseResponse<Integer>> couponCount(RequestBody body);
+        //付费权益
+        Observable<BaseResponse<LegalAdviserOrderConfirmEntity>> legalAdviserOrderConfirm(RequestBody body);//获取子项数据
+        Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> legalAdviserServerCoupon(float priceTotal);//优惠券列表
+        Observable<BaseResponse<LegalAdviserOrderPayEntity>> legalAdviserOrderPay(RequestBody body);//创建
+        Observable<BaseResponse<QuickPayEntity>> legalAdviserOrderAmount(int couponId, double orderAmount);//实付金额
     }
 }

@@ -31,6 +31,9 @@ import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import java.util.HashMap;
 import java.util.Map;
 
+import static cn.lex_mung.client_android.app.EventBusTags.EQUITIES_REFRESH.EQUITIES_REFRESH;
+import static cn.lex_mung.client_android.app.EventBusTags.EQUITIES_REFRESH.EQUITIES_REFRESH_1;
+
 @ActivityScope
 public class PayStatusPresenter extends BasePresenter<PayStatusContract.Model, PayStatusContract.View> {
     @Inject
@@ -110,6 +113,8 @@ public class PayStatusPresenter extends BasePresenter<PayStatusContract.Model, P
                                             mRootView.showSuccessLayout("支付成功","返回首页","预约服务");
                                             mRootView.setContentLayout("我们已根据律师的专业程度、活跃度、好评度为您匹配合适的律师.律师按约定时间与您联系，请保持电话畅通！",onClickListener);
                                             mRootView.setImg(R.drawable.ic_pay_success3);
+
+                                            AppUtils.post(EQUITIES_REFRESH, EQUITIES_REFRESH_1);//支付成功后刷新权益列表页面
                                             break;
                                     }
                                     break;

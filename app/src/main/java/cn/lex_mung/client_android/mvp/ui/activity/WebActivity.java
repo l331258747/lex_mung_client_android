@@ -19,6 +19,8 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import butterknife.BindView;
@@ -34,6 +36,7 @@ import cn.lex_mung.client_android.mvp.contract.WebContract;
 import cn.lex_mung.client_android.mvp.model.entity.DeviceEntity2;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
+import cn.lex_mung.client_android.mvp.model.entity.other.WebGoEquityPayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.WebGoOrderDetailEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.WebGoPayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.WebShareEntity;
@@ -376,6 +379,31 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             bundle.putInt(BundleTags.TYPE, 1);
             launchActivity(new Intent(mActivity, RushLoanPayActivity.class), bundle);
         }
+
+        //支付权益支付页面
+        @JavascriptInterface
+        public void goOnlineLegalPay(String string){
+            if (string.equals("undefined")) return;
+
+            WebGoEquityPayEntity entity = GsonUtil.convertString2Object(string, WebGoEquityPayEntity.class);
+
+            if (isFastClick()) return;
+            bundle.clear();
+            bundle.putInt(BundleTags.ID, entity.getRequireTypeId());
+
+            List<String> mList = new ArrayList<>();
+            for (int i=0;i<entity.getLegalAdviserIds().size();i++){
+                if(!TextUtils.isEmpty(entity.getLegalAdviserIds().get(i)))
+                    mList.add(entity.getLegalAdviserIds().get(i));
+            }
+            bundle.putStringArrayList(BundleTags.ENTITY, (ArrayList<String>) mList);
+            bundle.putString(BundleTags.TITLE, "在线法律顾问");
+            bundle.putString(BundleTags.REQUIRE_TYPE_NAME, "在线法律顾问");
+            bundle.putFloat(BundleTags.MONEY, entity.getPriceTotal());
+            bundle.putInt(BundleTags.TYPE, 2);
+            launchActivity(new Intent(mActivity, RushLoanPayActivity.class), bundle);
+        }
+
 
         //电话
         @JavascriptInterface

@@ -88,7 +88,7 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
     RecyclerView recyclerViewCommodity;
 
     private DefaultDialog defaultDialog;
-    int type;
+    int type;//0热门需求,1快速咨询,2付费权益
     int id;
 
     private int couponId;
@@ -122,12 +122,18 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
             tvCommodityPrice.setText(StringUtils.getStringNum(orderPrice) + "元");
 
             mPresenter.setRequireTypeId(id);
-            mPresenter.setRequireTypeName(bundleIntent.getString(BundleTags.REQUIRE_TYPE_NAME));
-            mPresenter.setMobile(bundleIntent.getString(BundleTags.MOBILE));
+            mPresenter.setRequireTypeName(bundleIntent.getString(BundleTags.REQUIRE_TYPE_NAME));//热门需求 名称
+            mPresenter.setMobile(bundleIntent.getString(BundleTags.MOBILE));//快速咨询 电话
             mPresenter.setPayMoney(orderPrice);
             mPresenter.setType(type);
 
-            //TODO 通过h5的回传项目子项 用来显示  通过是否为法律顾问判断是否显示 项目子项
+            List<String> legalAdviserIds = bundleIntent.getStringArrayList(BundleTags.ENTITY);
+            mPresenter.setLegalAdviserIds(legalAdviserIds);
+            mPresenter.setMeetNum(bundleIntent.getInt(BundleTags.NUM));
+
+            if(legalAdviserIds != null && legalAdviserIds.size() > 0){
+                mPresenter.legalAdviserOrderConfirm(orderPrice);
+            }
         }
 
         payTypeView.setItemOnClick((type, type6Id) -> {
@@ -167,17 +173,25 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.bt_pay:
-                if (type == 1) {//快速咨询
+                if(type == 2){//付费权益
+                    mPresenter.buyEquityCreate(webView.getSettings().getUserAgentString());
+                }else if (type == 1) {//快速咨询
                     BuryingPointHelp.getInstance().onEvent(mActivity, "quick_consultation_pay_page", "quick_consultation_pay_page_pay_click");
-                    mPresenter.pay("name", webView.getSettings().getUserAgentString());
+                    mPresenter.quickPay("name", webView.getSettings().getUserAgentString());
                 } else {//热门需求
-                    mPresenter.releaseRequirement(webView.getSettings().getUserAgentString());
+                    mPresenter.releaseRequirementCreate(webView.getSettings().getUserAgentString());
                 }
                 break;
             case R.id.rl_coupon_type:
                 bundle.clear();
                 bundle.putInt(BundleTags.ID, couponId);//优惠券id
-                bundle.putInt(BundleTags.TYPE, type == 1?0:2);
+                if(type == 3){
+                    bundle.putInt(BundleTags.TYPE, 3);
+                }else if(type == 2){
+                    bundle.putInt(BundleTags.TYPE, 2);
+                }else {
+                    bundle.putInt(BundleTags.TYPE, 0);
+                }
                 bundle.putInt(BundleTags.REQUIREMENT_ID,id);
                 bundle.putDouble(BundleTags.MONEY, orderPrice);
                 launchActivity(new Intent(mActivity, OrderCouponActivity.class), bundle);

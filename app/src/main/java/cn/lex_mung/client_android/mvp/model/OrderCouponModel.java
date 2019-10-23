@@ -78,4 +78,16 @@ public class OrderCouponModel extends BaseModel implements OrderCouponContract.M
                 .obtainRetrofitService(CommonService.class)
                 .optimalRequireList(body);
     }
+
+    @Override
+    public Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> legalAdviserServerCoupon(int pageNum,float priceTotal) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("pageNum", pageNum);
+        map.put("pageSize", 10);
+        map.put("priceTotal", priceTotal);
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map));
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .legalAdviserServerCoupon(body);
+    }
 }

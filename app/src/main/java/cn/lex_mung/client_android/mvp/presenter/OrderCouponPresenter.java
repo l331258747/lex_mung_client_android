@@ -116,13 +116,48 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
 
 
     private void getList(boolean isAdd){
-        if(type == 1){
-            getMeCouponsList(isAdd);
+        if(type == 3){
+            getBuyEquityCouponsList(isAdd);
         }else if(type == 2){
-            getCouponsList2(isAdd);
+            getCouponsList2(isAdd);//热门需求
+        }else if(type == 1){
+            getMeCouponsList(isAdd);//我的优惠券
         }else{
-            getCouponsList(isAdd);
+            getCouponsList(isAdd);//快速咨询
         }
+    }
+
+    private void getBuyEquityCouponsList(boolean isAdd){
+        mModel.quickCoupon(pageNum, orderAmount)
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> {
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<OrderCouponEntity>>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<BaseListEntity<OrderCouponEntity>> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            totalNum = baseResponse.getData().getPages();
+                            pageNum = baseResponse.getData().getPageNum();
+
+                            if (isAdd) {
+                                adapter.addData(baseResponse.getData().getList());
+                                smartRefreshLayout.finishLoadMore();
+                            } else {
+                                mRootView.setEmptyView(adapter);
+                                smartRefreshLayout.finishRefresh();
+                                adapter.setNewData(baseResponse.getData().getList());
+                                if (totalNum == pageNum) {
+                                    smartRefreshLayout.finishLoadMoreWithNoMoreData();
+                                }
+                            }
+                        }
+                    }
+                });
     }
 
     private void getCouponsList(boolean isAdd) {

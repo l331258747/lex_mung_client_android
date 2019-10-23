@@ -19,6 +19,8 @@ import cn.lex_mung.client_android.mvp.model.entity.PayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.QuickPayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RequirementCreateEntity;
+import cn.lex_mung.client_android.mvp.model.entity.payEquity.LegalAdviserOrderConfirmEntity;
+import cn.lex_mung.client_android.mvp.model.entity.payEquity.LegalAdviserOrderPayEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.integration.IRepositoryManager;
 import me.zl.mvp.mvp.BaseModel;
@@ -55,6 +57,44 @@ public class RushLoanPayModel extends BaseModel implements RushLoanPayContract.M
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .pay(body);
+    }
+
+    @Override
+    public Observable<BaseResponse<LegalAdviserOrderConfirmEntity>> legalAdviserOrderConfirm(RequestBody body) {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .legalAdviserOrderConfirm(body);
+    }
+
+    @Override
+    public Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> legalAdviserServerCoupon(float priceTotal) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("pageNum", 1);
+        map.put("pageSize", 10);
+        map.put("priceTotal", priceTotal);
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map));
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .legalAdviserServerCoupon(body);
+    }
+
+
+    @Override
+    public Observable<BaseResponse<LegalAdviserOrderPayEntity>> legalAdviserOrderPay(RequestBody body) {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .legalAdviserOrderPay(body);
+    }
+
+    @Override
+    public Observable<BaseResponse<QuickPayEntity>> legalAdviserOrderAmount(int couponId, double priceTotal) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("couponId", couponId);
+        map.put("priceTotal", priceTotal);
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map));
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .quickPay(body);
     }
 
     @Override

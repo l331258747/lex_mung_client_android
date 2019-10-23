@@ -74,6 +74,8 @@ import cn.lex_mung.client_android.mvp.model.entity.order.RushOrderLawyerEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RushOrderStatusEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.ActivityEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.LaunchLocationEntity;
+import cn.lex_mung.client_android.mvp.model.entity.payEquity.LegalAdviserOrderConfirmEntity;
+import cn.lex_mung.client_android.mvp.model.entity.payEquity.LegalAdviserOrderPayEntity;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -920,4 +922,32 @@ public interface CommonService {
     //二级页面获取h5地址
     @GET("common/pages/second")
     Observable<BaseResponse<PagesSecondEntity>> pagesSecond();
+
+    //------start 法律顾问
+
+    //client/legal/adviser/order/confirm
+    //POST
+    //服务购买立即下单（展示订单详情）
+    @POST("client/legal/adviser/order/confirm")
+    Observable<BaseResponse<LegalAdviserOrderConfirmEntity>> legalAdviserOrderConfirm(@Body RequestBody body);
+
+    //client/legal/adviser/server/coupon/{pageNum}/{pageSize}
+    //GET
+    //在线法律顾问优惠券列表(返回字段同接口一致：client/quick/coupon)
+    @POST("client/legal/adviser/server/coupon")
+    Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> legalAdviserServerCoupon(@Body RequestBody body);
+
+    //client/legal/adviser/order/pay
+    //POST
+    //服务购买立即下单（展示订单详情->立即支付调用） 返回信息后调用pay的接口
+    @POST("client/legal/adviser/order/pay")
+    Observable<BaseResponse<LegalAdviserOrderPayEntity>> legalAdviserOrderPay(@Body RequestBody body);
+
+    //client/legal/adviser/order/amount
+    //POST
+    //在线法律顾问计算优惠金额（返回字段同：client/quick/pay）
+    @POST("client/legal/adviser/order/amount")
+    Observable<BaseResponse<QuickPayEntity>> legalAdviserOrderAmount(@Body RequestBody body);
+
+    //------end 法律顾问
 }

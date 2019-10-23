@@ -1,7 +1,5 @@
 package cn.lex_mung.client_android.mvp.model.entity.order;
 
-import com.umeng.commonsdk.debug.D;
-
 public class QuickPayEntity {
 
 
