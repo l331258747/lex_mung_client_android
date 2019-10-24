@@ -704,6 +704,7 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
         map.put("product", 7);//订单类型 在线法律顾问
         map.put("ua", ua);//ua
 
+        orderNo = "\"" + orderNo + "\"";
         if (mRootView.getCouponPrice() > 0) {
             long moneyCoupon = (long) DecimalUtil.multiply(mRootView.getCouponPrice(), 100);
             map.put("deduction", moneyCoupon);//优惠金额
