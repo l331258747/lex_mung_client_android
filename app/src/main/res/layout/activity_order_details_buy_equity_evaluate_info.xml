@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/qb_px_60"
+    android:layout_marginRight="@dimen/qb_px_60"
+    android:layout_marginBottom="@dimen/qb_px_30"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_50"
+        android:text="订单评价"
+        android:textColor="@color/c_737373"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_1"
+        android:layout_marginTop="@dimen/qb_px_30"
+        android:background="@color/c_d8d8d8" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_30">
+
+        <ImageView
+            android:id="@+id/iv_evaluate_whole"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_evaluate_fine"/>
+
+        <TextView
+            android:id="@+id/tv_evaluate_whole"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/qb_px_30"
+            android:textColor="@color/c_737373"
+            android:text="满意"
+            android:layout_toEndOf="@+id/iv_evaluate_whole"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_evaluate_info_major"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_30">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="专业知识"
+            android:textColor="@color/c_737373" />
+
+        <cn.lex_mung.client_android.mvp.ui.widget.EvaluateStarView
+            android:id="@+id/evaluateStarView_major"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_evaluate_info_speed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_30">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="响应速度"
+            android:textColor="@color/c_737373" />
+
+        <cn.lex_mung.client_android.mvp.ui.widget.EvaluateStarView
+            android:id="@+id/evaluateStarView_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_evaluate_info_attitude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_30">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="服务态度"
+            android:textColor="@color/c_737373" />
+
+        <cn.lex_mung.client_android.mvp.ui.widget.EvaluateStarView
+            android:id="@+id/evaluateStarView_attitude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_evaluate_info_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_30"
+        android:text="内容内容内容内容内容内容内容内容内容内容"
+        android:textColor="@color/c_737373"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+
+</LinearLayout>

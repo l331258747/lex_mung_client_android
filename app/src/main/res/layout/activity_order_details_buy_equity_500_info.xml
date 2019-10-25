@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/qb_px_60"
+    android:layout_marginRight="@dimen/qb_px_60"
+    android:layout_marginBottom="@dimen/qb_px_30"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_500_info_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_50">
+
+        <TextView
+            android:id="@+id/tv_500_info_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="文案担保服务"
+            android:textColor="@color/c_737373"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="@dimen/qb_px_30"
+            android:layout_height="@dimen/qb_px_30"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/qb_px_20"
+            android:layout_toEndOf="@+id/tv_500_info_title"
+            android:src="@drawable/ic_what2" />
+
+        <TextView
+            android:id="@+id/tv_500_info_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/qb_px_20"
+            android:layout_toStartOf="@+id/iv_500_info_radio"
+            android:text="¥ 500" />
+
+        <ImageView
+            android:id="@+id/iv_500_info_radio"
+            android:layout_width="@dimen/qb_px_30"
+            android:layout_height="@dimen/qb_px_30"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_show_select" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_500_info_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_30"
+        android:text="LEX绿豆圈担保如果您因平台律师起草合同发生诉讼，LEX免费提供诉讼代理服务。担保有效期自服务发生后2年内有效。"
+        android:textColor="@color/c_737373"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+
+</LinearLayout>

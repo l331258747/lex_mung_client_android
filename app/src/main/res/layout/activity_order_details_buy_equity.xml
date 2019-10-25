@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_440"
+        android:background="@drawable/ic_order_detail_titile_bg" />
+
+    <cn.lex_mung.client_android.mvp.ui.widget.TitleView
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:TitleView_bg="@color/c_00"
+        app:TitleView_left_img="@drawable/ic_withe_back"
+        app:TitleView_title="案件详情页" />
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/titleView">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <cn.lex_mung.client_android.mvp.ui.widget.OrderDetailView
+                android:id="@+id/orderDetailView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/qb_px_30"
+                android:layout_marginTop="@dimen/qb_px_50"
+                android:layout_marginRight="@dimen/qb_px_30"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/view_content"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/qb_px_220"
+                android:background="@drawable/round_40_ffffff_top"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <android.support.constraint.Group
+                android:id="@+id/group_lawyer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:constraint_referenced_ids="view_lawyer,iv_lawyer_name_bg,
+                iv_lawyer_name,tv_name,tv_name_content,iv_head"
+                tools:visibility="visible" />
+
+            <View
+                android:id="@+id/view_lawyer"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qb_px_200"
+                android:layout_marginLeft="@dimen/qb_px_60"
+                android:layout_marginTop="@dimen/qb_px_60"
+                android:layout_marginRight="@dimen/qb_px_60"
+                android:background="@drawable/round_10_f7f7f7_all"
+                app:layout_constraintTop_toTopOf="@+id/view_content" />
+
+            <ImageView
+                android:id="@+id/iv_lawyer_name_bg"
+                android:layout_width="@dimen/qb_px_174"
+                android:layout_height="@dimen/qb_px_40"
+                android:layout_marginTop="@dimen/qb_px_25"
+                android:src="@drawable/ic_order_detail_lawyer_name_bg"
+                app:layout_constraintStart_toStartOf="@+id/view_lawyer"
+                app:layout_constraintTop_toTopOf="@+id/view_lawyer" />
+
+            <TextView
+                android:id="@+id/iv_lawyer_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/qb_px_30"
+                android:includeFontPadding="false"
+                android:text="服务律师"
+                android:textColor="@color/c_ff"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_lawyer_name_bg"
+                app:layout_constraintStart_toStartOf="@+id/view_lawyer"
+                app:layout_constraintTop_toTopOf="@+id/iv_lawyer_name_bg" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/qb_px_30"
+                android:layout_marginTop="@dimen/qb_px_25"
+                android:text="某某律师"
+                android:textColor="@color/c_323232"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/view_lawyer"
+                app:layout_constraintTop_toBottomOf="@+id/iv_lawyer_name_bg" />
+
+            <TextView
+                android:id="@+id/tv_name_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/qb_px_30"
+                android:layout_marginTop="@dimen/qb_px_20"
+                tools:text="长沙 | 湖南芙蓉律师事务所湖南芙"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textColor="@color/c_323232"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/iv_head"
+                app:layout_constraintStart_toStartOf="@+id/view_lawyer"
+                app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+            <ImageView
+                android:id="@+id/iv_head"
+                android:layout_width="@dimen/qb_px_120"
+                android:layout_height="@dimen/qb_px_140"
+                android:layout_marginRight="@dimen/qb_px_30"
+                android:src="@drawable/ic_lawyer_avatar"
+                app:layout_constraintBottom_toBottomOf="@+id/view_lawyer"
+                app:layout_constraintEnd_toEndOf="@+id/view_lawyer"
+                app:layout_constraintTop_toTopOf="@+id/view_lawyer" />
+
+            <ImageView
+                android:id="@+id/iv_head_tip"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/qb_px_30"
+                android:src="@drawable/ic_order_detail_go"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_head"
+                app:layout_constraintEnd_toEndOf="@+id/iv_head"
+                app:layout_constraintStart_toStartOf="@+id/iv_head" />
+
+            <FrameLayout
+                android:id="@+id/fl_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/qb_px_100"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view_lawyer">
+
+                <include layout="@layout/activity_order_details_buy_equity_info" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_500"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/qb_px_100"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fl_info">
+
+                <include layout="@layout/activity_order_details_buy_equity_500_info" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_evaluate_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/qb_px_100"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fl_500">
+
+                <include layout="@layout/activity_order_details_buy_equity_evaluate_info" />
+
+            </FrameLayout>
+
+            <ImageView
+                android:id="@+id/iv_call"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/qb_px_30"
+                android:layout_marginRight="@dimen/qb_px_30"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_order_detail_bottom"
+                app:layout_constraintTop_toBottomOf="@+id/fl_evaluate_info" />
+
+        </android.support.constraint.ConstraintLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+</RelativeLayout>
