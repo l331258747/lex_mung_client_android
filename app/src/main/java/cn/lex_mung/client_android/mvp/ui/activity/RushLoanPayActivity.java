@@ -35,7 +35,6 @@ import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.PayTypeEntity;
 import cn.lex_mung.client_android.mvp.presenter.RushLoanPayPresenter;
 import cn.lex_mung.client_android.mvp.ui.adapter.CommodityContentAdapter;
-import cn.lex_mung.client_android.mvp.ui.adapter.PayTypeAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.DefaultDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.PayTypeView2;
@@ -88,7 +87,7 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
     RecyclerView recyclerViewCommodity;
 
     private DefaultDialog defaultDialog;
-    int type;//0热门需求,1快速咨询,2付费权益
+    int type;//0热门需求,1快速咨询,2付费权益,3诉讼无忧保服务
     int id;
 
     private int couponId;
@@ -127,6 +126,8 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
             mPresenter.setPayMoney(orderPrice);
             mPresenter.setType(type);
 
+            mPresenter.setLawsuiId(bundleIntent.getString(BundleTags.LAWSUI_ID));
+
             List<String> legalAdviserIds = bundleIntent.getStringArrayList(BundleTags.ENTITY);
             mPresenter.setLegalAdviserIds(legalAdviserIds);
             mPresenter.setMeetNum(bundleIntent.getInt(BundleTags.NUM));
@@ -144,8 +145,17 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
 
         mPresenter.getAllBalance();
 
-        mPresenter.getCoupon(orderPrice,id);
-        mPresenter.getCouponCount(orderPrice,id);
+        if(type != 3){
+            mPresenter.getCoupon(orderPrice,id);
+            mPresenter.getCouponCount(orderPrice,id);
+        }else{
+            hideCouponLayout();
+        }
+    }
+
+    public void hideCouponLayout(){
+        rlCouponType.setVisibility(View.GONE);
+        tvCouponCount.setVisibility(View.GONE);
     }
 
     public void setCommodityContent(List<CommodityContentEntity> entities){
@@ -173,7 +183,9 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.bt_pay:
-                if(type == 2){//付费权益
+                if(type == 3){//3诉讼无忧保服务
+                    mPresenter.buyEquity500Pay(webView.getSettings().getUserAgentString());
+                }else if(type == 2){//付费权益
                     mPresenter.buyEquityCreate(webView.getSettings().getUserAgentString());
                 }else if (type == 1) {//快速咨询
                     BuryingPointHelp.getInstance().onEvent(mActivity, "quick_consultation_pay_page", "quick_consultation_pay_page_pay_click");
@@ -185,7 +197,9 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
             case R.id.rl_coupon_type:
                 bundle.clear();
                 bundle.putInt(BundleTags.ID, couponId);//优惠券id
-                if(type == 2){
+                if(type == 3){
+                    return;
+                }else if(type == 2){
                     bundle.putInt(BundleTags.TYPE, 3);
                 }else if(type == 1){
                     bundle.putInt(BundleTags.TYPE, 0);
@@ -284,18 +298,21 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
             entity.setBalance(balanceEntity.getAmount().getAllBalanceAmount());
             list.add(entity);
         }
-        if (balanceEntity.getOrgAmounts() != null && balanceEntity.getOrgAmounts().size() > 0) {
-            for (int i = 0; i < balanceEntity.getOrgAmounts().size(); i++) {
-                PayTypeEntity entity = new PayTypeEntity();
-                entity.setIcon(R.drawable.ic_pay_group);
-                entity.setTitle(balanceEntity.getOrgAmounts().get(i).getCouponName());
-                entity.setType(6);
-                entity.setSelected(false);
-                entity.setBalance(balanceEntity.getOrgAmounts().get(i).getAmount());
-                entity.setGroupId(balanceEntity.getOrgAmounts().get(i).getCouponId());
-                list.add(entity);
+        if(type != 3){
+            if (balanceEntity.getOrgAmounts() != null && balanceEntity.getOrgAmounts().size() > 0) {
+                for (int i = 0; i < balanceEntity.getOrgAmounts().size(); i++) {
+                    PayTypeEntity entity = new PayTypeEntity();
+                    entity.setIcon(R.drawable.ic_pay_group);
+                    entity.setTitle(balanceEntity.getOrgAmounts().get(i).getCouponName());
+                    entity.setType(6);
+                    entity.setSelected(false);
+                    entity.setBalance(balanceEntity.getOrgAmounts().get(i).getAmount());
+                    entity.setGroupId(balanceEntity.getOrgAmounts().get(i).getCouponId());
+                    list.add(entity);
+                }
             }
         }
+
         payTypeView.setPayTYpeData(list);
     }
 

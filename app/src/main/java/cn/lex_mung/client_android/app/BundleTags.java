@@ -57,6 +57,7 @@ public class BundleTags {
     public static final String IS_CRIMINAL = "is_criminal";//是否为刑事类
     public static final String IS_EXPERT = "is_expert";//是否为专家咨询
     public static final String IS_PUBLIC = "is_public";//是否为公益律师
+    public static final String LAWSUI_ID = "lawsui_id";//诉讼无忧保服务id
 
     public static final String INDUSTRY_ID = "industry_id";//熟悉行业id
     public static final String PAY_LAWYER_MONEY_ID = "pay_lawyer_money_id";//愿意支付的律师费id

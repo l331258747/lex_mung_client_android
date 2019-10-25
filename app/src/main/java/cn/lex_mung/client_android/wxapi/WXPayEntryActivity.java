@@ -16,11 +16,15 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import cn.lex_mung.client_android.mvp.ui.activity.RushLoanPayActivity;
+import me.zl.mvp.integration.AppManager;
 import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.DataHelper;
 
 import static cn.lex_mung.client_android.app.DataHelperTags.APP_ID;
 import static cn.lex_mung.client_android.app.DataHelperTags.ORDER_NO;
+import static cn.lex_mung.client_android.app.EventBusTags.BUY_EQUITY_500_INFO.BUY_EQUITY_500;
+import static cn.lex_mung.client_android.app.EventBusTags.BUY_EQUITY_500_INFO.BUY_EQUITY_500_INFO;
 import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH;
 import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH_WX_PAY;
 
@@ -45,7 +49,11 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
         if (DataHelper.getIntergerSF(this, DataHelperTags.PAY_TYPE) == PayStatusTags.FAST_CONSULT
                 && baseResp.errCode == BaseResp.ErrCode.ERR_OK) {
             AppUtils.post(REFRESH, REFRESH_WX_PAY);
-        } else {
+        } else if(DataHelper.getIntergerSF(this, DataHelperTags.PAY_TYPE) == PayStatusTags.ONLINE_LAWYER_500
+                && baseResp.errCode == BaseResp.ErrCode.ERR_OK){
+            AppUtils.post(BUY_EQUITY_500_INFO,BUY_EQUITY_500,DataHelper.getStringSF(this, ORDER_NO));
+            AppManager.getAppManager().killAll(RushLoanPayActivity.class);
+        }else {
             Bundle bundle = new Bundle();
             bundle.putString(BundleTags.ORDER_NO, DataHelper.getStringSF(this, ORDER_NO));
             bundle.putInt(BundleTags.WX, baseResp.errCode);

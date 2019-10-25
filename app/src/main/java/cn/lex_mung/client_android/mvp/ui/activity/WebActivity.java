@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -19,6 +20,8 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import org.simple.eventbus.Subscriber;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -29,6 +32,7 @@ import cn.jpush.im.android.api.JMessageClient;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.app.DataHelperTags;
+import cn.lex_mung.client_android.app.EventBusTags;
 import cn.lex_mung.client_android.app.ShareUtils;
 import cn.lex_mung.client_android.di.component.DaggerWebComponent;
 import cn.lex_mung.client_android.di.module.WebModule;
@@ -37,6 +41,7 @@ import cn.lex_mung.client_android.mvp.model.entity.DeviceEntity2;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.WebGoEquityPayEntity;
+import cn.lex_mung.client_android.mvp.model.entity.other.WebGoOintmentEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.WebGoOrderDetailEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.WebGoPayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.WebShareEntity;
@@ -55,10 +60,14 @@ import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.DeviceUtils;
 
+import static cn.lex_mung.client_android.app.EventBusTags.BUY_EQUITY_500_INFO.BUY_EQUITY_500;
+import static cn.lex_mung.client_android.app.EventBusTags.BUY_EQUITY_500_INFO.BUY_EQUITY_500_INFO;
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO;
 import static cn.lex_mung.client_android.app.EventBusTags.LAWYER_LIST_SCREEN_INFO.LAWYER_LIST_SCREEN_INFO_LIST_ID;
 import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGIN_INFO;
 import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGOUT;
+import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH;
+import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH_WX_PAY;
 
 public class WebActivity extends BaseActivity<WebPresenter> implements WebContract.View {
     @BindView(R.id.web_view)
@@ -284,6 +293,21 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
         }
     }
 
+    /**
+     * 快速咨询 付款后 创建订单
+     */
+    @Subscriber(tag = BUY_EQUITY_500_INFO)
+    private void buyEquity500(Message message) {
+        switch (message.what) {
+            case BUY_EQUITY_500:
+                String payOrderNo = (String) message.obj;
+                if(TextUtils.isEmpty(payOrderNo)) return;
+                webView.loadUrl("javascript:checkPayStatus('" + payOrderNo + "')");
+                break;
+        }
+    }
+
+
     @Override
     public Activity getActivity() {
         return this;
@@ -291,6 +315,31 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 
 
     public class AndroidToJs extends Object {
+
+        //诉讼无忧保服务 支付
+        @JavascriptInterface
+        public void goAppointmentPay(String string){
+            if (TextUtils.isEmpty(string))
+                return;
+            WebGoOintmentEntity webGoOintmentEntity = GsonUtil.convertString2Object(string, WebGoOintmentEntity.class);
+            if (isFastClick()) return;
+            if (mPresenter.isLogin()) {
+                bundle.clear();
+                bundle.putInt(BundleTags.ID, webGoOintmentEntity.getRequireTypeId());
+                bundle.putString(BundleTags.REQUIRE_TYPE_NAME, webGoOintmentEntity.getTitle());
+                bundle.putString(BundleTags.TITLE, webGoOintmentEntity.getTitle());
+                bundle.putFloat(BundleTags.MONEY, webGoOintmentEntity.getAmount());
+                bundle.putString(BundleTags.LAWSUI_ID,webGoOintmentEntity.getLawsuiId());
+                bundle.putInt(BundleTags.TYPE,3);
+                launchActivity(new Intent(mActivity, RushLoanPayActivity.class), bundle);
+            } else {
+                bundle.clear();
+                bundle.putInt(BundleTags.TYPE, 1);
+                launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
+            }
+
+        }
+
 
         //组织律师列表
         @JavascriptInterface

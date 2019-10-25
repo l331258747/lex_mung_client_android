@@ -62,6 +62,8 @@ import me.zl.mvp.utils.RxLifecycleUtils;
 import me.zl.mvp.utils.StringUtils;
 import okhttp3.RequestBody;
 
+import static cn.lex_mung.client_android.app.EventBusTags.BUY_EQUITY_500_INFO.BUY_EQUITY_500;
+import static cn.lex_mung.client_android.app.EventBusTags.BUY_EQUITY_500_INFO.BUY_EQUITY_500_INFO;
 import static cn.lex_mung.client_android.app.EventBusTags.PAY_INFO.PAY_CONFIRM;
 import static cn.lex_mung.client_android.app.EventBusTags.PAY_INFO.PAY_INFO;
 import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH;
@@ -95,10 +97,16 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
     private int meetNum;//线下见面次数
     private List<String> legalAdviserIds;//子项目ids
 
+    private String lawsuiId;
+
     private boolean flag = false;
 
     public void setMeetNum(int meetNum) {
         this.meetNum = meetNum;
+    }
+
+    public void setLawsuiId(String lawsuiId) {
+        this.lawsuiId = lawsuiId;
     }
 
     public void setLegalAdviserIds(List<String> legalAdviserIds) {
@@ -571,6 +579,142 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
     };
 
     //快速咨询-------------end
+
+    //付费权益  诉讼无忧保服务-------start
+    //支付
+    public void buyEquity500Pay(String ua) {
+        if (payMoney == 0) {
+            mRootView.showMessage("价格为0无法支付");
+            return;
+        }
+        switch (payType) {
+            case 1:
+                if (!AppUtils.isWeixinAvilible(mRootView.getActivity())) {
+                    AppUtils.makeText(mRootView.getActivity(), "微信未安装");
+                    return;
+                }
+                break;
+            case 2:
+                if (!flag) {
+                    buyEquity500Permission(ua);
+                    return;
+                }
+                break;
+            case 3:
+                if (payMoney > balance) {
+                    mRootView.showLackOfBalanceDialog();
+                    return;
+                }
+                break;
+        }
+        long money = (long) DecimalUtil.multiply(payMoney, 100);
+        Map<String, Object> map = new HashMap<>();
+        map.put("money", money);
+        map.put("type", payType);
+        map.put("useCoupon", 0);//不使用优惠券
+
+        map.put("other", "{\"lawsuiId\":\"" + lawsuiId + "\",\"requireTypeId\":"+ requireTypeId + "}");
+
+        map.put("source", 2);
+        map.put("product", 7);
+        map.put("ua", ua);
+        String sign = "money=" + money + "&type=" + payType + "&source=" + 2 + "&ua=" + ua;
+        map.put("sign", AppUtils.encodeToMD5(sign));
+        mModel.pay(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> mRootView.showLoading("正在获取支付信息..."))
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<PayEntity>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<PayEntity> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            payOrderNo = baseResponse.getData().getOrderNo();
+                            DataHelper.setStringSF(mApplication, DataHelperTags.ORDER_NO, baseResponse.getData().getOrderNo());
+                            DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.ONLINE_LAWYER_500);
+                            if (payType == 1) {//微信
+                                DataHelper.setStringSF(mApplication, DataHelperTags.APP_ID, baseResponse.getData().getAppid());
+                                IWXAPI api = WXAPIFactory.createWXAPI(mApplication, baseResponse.getData().getAppid(), true);
+                                api.registerApp(baseResponse.getData().getAppid());
+                                PayReq request = new PayReq();
+                                request.appId = baseResponse.getData().getAppid();
+                                request.partnerId = baseResponse.getData().getPartnerId();
+                                request.prepayId = baseResponse.getData().getPrepayId();
+                                request.packageValue = baseResponse.getData().getPkg();
+                                request.nonceStr = baseResponse.getData().getNonceStr();
+                                request.timeStamp = baseResponse.getData().getTimestamp();
+                                request.sign = baseResponse.getData().getSign();
+                                api.sendReq(request);
+                            } else if (payType == 2) {//支付宝
+                                Runnable payRunnable = () -> {
+                                    PayTask payTask = new PayTask(mRootView.getActivity());
+                                    Map<String, String> result = payTask.payV2(baseResponse.getData().getOrderInfo(), true);
+                                    Message msg = new Message();
+                                    msg.what = 1;
+                                    msg.obj = result;
+                                    mHandler3.sendMessage(msg);
+                                };
+                                new Thread(payRunnable).start();
+                            } else {//余额
+                                AppUtils.post(BUY_EQUITY_500_INFO,BUY_EQUITY_500,payOrderNo);
+                                mRootView.killMyself();
+                            }
+                        } else {
+                            mRootView.showMessage(baseResponse.getMessage());
+                        }
+                    }
+                });
+    }
+
+    private void buyEquity500Permission(String ua) {
+        PermissionUtil.readPhonestate(new PermissionUtil.RequestPermission() {
+            @Override
+            public void onRequestPermissionSuccess() {
+                flag = true;
+                buyEquity500Pay(ua);
+            }
+
+            @Override
+            public void onRequestPermissionFailure(List<String> permissions) {
+                mRootView.showMessage("您拒绝了权限，无法前往支付宝支付");
+            }
+
+            @Override
+            public void onRequestPermissionFailureWithAskNeverAgain(List<String> permissions) {
+                mRootView.showToAppInfoDialog();
+            }
+        }, mRxPermissions, mErrorHandler);
+    }
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler3 = new Handler() {
+        @SuppressWarnings("unchecked")
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1: {
+                    PayResultEntity payResult = new PayResultEntity((Map<String, String>) msg.obj);
+                    if ("9000".equals(payResult.getResultStatus())) {
+                        AppUtils.post(BUY_EQUITY_500_INFO,BUY_EQUITY_500,payOrderNo);
+                        mRootView.killMyself();
+                        return;
+                    } else {
+                        DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.FAST_CONSULT);
+                        Bundle bundle = new Bundle();
+                        bundle.putString(BundleTags.ORDER_NO, DataHelper.getStringSF(mApplication, DataHelperTags.ORDER_NO));
+                        bundle.putString(BundleTags.ZFB, payResult.getResultStatus());
+                        Intent intent = new Intent(mApplication, PayStatusActivity.class);
+                        intent.putExtras(bundle);
+                        mRootView.launchActivity(intent);
+                    }
+                    break;
+                }
+            }
+        }
+    };
+    //付费权益  诉讼无忧保服务-------end
 
 
     //付费权益-------start

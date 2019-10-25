@@ -38,6 +38,11 @@ public interface EventBusTags {
         int EDIT_LAWS_FIRMS_NAME = 102;
     }
 
+    interface BUY_EQUITY_500_INFO {
+        String BUY_EQUITY_500_INFO = "buy_equity_500_info";
+        int BUY_EQUITY_500 = 100;
+    }
+
     interface OTHER_INFO {
         String OTHER_INFO = "other_info";
         int EDIT_SOCIAL = 100;
