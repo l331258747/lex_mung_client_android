@@ -640,6 +640,28 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             });
         }
 
+        @JavascriptInterface
+        public void shareInvitePage(String string){
+            if (TextUtils.isEmpty(string))
+                return;
+            if (isFastClick()) return;
+
+            WebShareEntity entity = GsonUtil.convertString2Object(string, WebShareEntity.class);
+            String shareUrl = entity.getShareUrl();
+            String ShareTitle = entity.getShareTitle();
+            String shareImage = entity.getShareImage();
+            String shareDes = entity.getShareDes();
+
+            if (!TextUtils.isEmpty(shareUrl)) {
+                ShareUtils.shareUrl(mActivity
+                        , viewDialog
+                        , shareUrl
+                        , ShareTitle
+                        , shareDes
+                        , shareImage);
+            }
+        }
+
         //领取单张优惠券 String 优惠券id
         @JavascriptInterface
         public void getCoupon(String id) {
