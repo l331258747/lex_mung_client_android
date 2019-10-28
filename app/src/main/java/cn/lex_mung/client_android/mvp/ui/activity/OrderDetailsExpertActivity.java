@@ -26,6 +26,7 @@ import butterknife.OnClick;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.module.OrderDetailsExpertModule;
 import cn.lex_mung.client_android.mvp.model.entity.OrderDetailsEntity;
+import cn.lex_mung.client_android.mvp.model.entity.other.QuickTimeBean;
 import cn.lex_mung.client_android.mvp.ui.adapter.OrderDetailsExpertInfoAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
@@ -197,7 +198,7 @@ public class OrderDetailsExpertActivity extends BaseActivity<OrderDetailsExpertP
     }
 
     @Override
-    public void setTalkRecordList(List<OrderDetailsEntity.QuickTimeBean> lists) {
+    public void setTalkRecordList(List<QuickTimeBean> lists) {
         if(lists == null || lists.size() == 0)
             recyclerView.setVisibility(View.GONE);
         else{

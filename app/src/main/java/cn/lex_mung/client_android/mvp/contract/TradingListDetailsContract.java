@@ -3,6 +3,7 @@ package cn.lex_mung.client_android.mvp.contract;
 import java.util.List;
 
 import cn.lex_mung.client_android.mvp.model.entity.TradingListEntity;
+import cn.lex_mung.client_android.mvp.model.entity.other.QuickTimeBean;
 import me.zl.mvp.mvp.IView;
 import me.zl.mvp.mvp.IModel;
 
@@ -24,7 +25,7 @@ public interface TradingListDetailsContract {
 
         void setOrderStatusColor(int color);
 
-        void setTalkRecordList(List<TradingListEntity.QuickTimeBean> lists);
+        void setTalkRecordList(List<QuickTimeBean> lists);
     }
 
     interface Model extends IModel {

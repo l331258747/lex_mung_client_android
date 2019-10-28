@@ -20,7 +20,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
-import cn.lex_mung.client_android.app.TimeFormat;
 import cn.lex_mung.client_android.di.component.DaggerOrderDetailsEntrustComponent;
 import cn.lex_mung.client_android.di.module.OrderDetailsEntrustModule;
 import cn.lex_mung.client_android.mvp.contract.OrderDetailsEntrustContract;

@@ -10,7 +10,6 @@ import me.zl.mvp.mvp.IModel;
 
 public interface OrderDetailsEntrustContract {
     interface View extends IView {
-        void setOrderDetailView(int index);
         void setEntity(EntrustListEntity entity);
     }
 

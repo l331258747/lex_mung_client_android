@@ -308,8 +308,6 @@ import android.widget.TextView;
 
 import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
 
-import java.text.SimpleDateFormat;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;

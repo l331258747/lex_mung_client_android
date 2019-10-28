@@ -4,16 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/qb_px_60"
-    android:layout_marginRight="@dimen/qb_px_60"
-    android:layout_marginBottom="@dimen/qb_px_30"
+    android:layout_marginTop="@dimen/qb_px_30"
+    android:layout_marginStart="@dimen/qb_px_30"
+    android:layout_marginEnd="@dimen/qb_px_30"
+    android:background="@drawable/ic_card"
+    android:padding="@dimen/qb_px_60"
     android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/rl_500_info_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/qb_px_50">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/tv_500_info_title"
@@ -56,9 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/qb_px_30"
         android:text="LEX绿豆圈担保如果您因平台律师起草合同发生诉讼，LEX免费提供诉讼代理服务。担保有效期自服务发生后2年内有效。"
-        android:textColor="@color/c_737373"
-        android:visibility="gone"
-        tools:visibility="visible" />
+        android:textColor="@color/c_737373"/>
 
 
 </LinearLayout>

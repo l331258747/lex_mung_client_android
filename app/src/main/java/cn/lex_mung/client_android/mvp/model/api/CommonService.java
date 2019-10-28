@@ -74,7 +74,9 @@ import cn.lex_mung.client_android.mvp.model.entity.order.RushOrderLawyerEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RushOrderStatusEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.ActivityEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.LaunchLocationEntity;
+import cn.lex_mung.client_android.mvp.model.entity.payEquity.LegalAdviserOrderComplaintEntity;
 import cn.lex_mung.client_android.mvp.model.entity.payEquity.LegalAdviserOrderConfirmEntity;
+import cn.lex_mung.client_android.mvp.model.entity.payEquity.LegalAdviserOrderDetailEntity;
 import cn.lex_mung.client_android.mvp.model.entity.payEquity.LegalAdviserOrderPayEntity;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
@@ -341,7 +343,7 @@ public interface CommonService {
      *
      * @return BaseResponse
      */
-    @POST("client/member/order/v2")
+    @POST("client/member/order/v3")
     Observable<BaseResponse<BaseListEntity<OrderEntity>>> getOrderList(@Body RequestBody body);
 
     /**
@@ -948,6 +950,43 @@ public interface CommonService {
     //在线法律顾问计算优惠金额（返回字段同：client/quick/pay）
     @POST("client/legal/adviser/order/amount")
     Observable<BaseResponse<QuickPayEntity>> legalAdviserOrderAmount(@Body RequestBody body);
+
+    //client/member/legal/adviser/order/detail，lawyer/legal/adviser/order/detail
+    //POST
+    //在线法律顾问订单详情
+    @POST("client/member/legal/adviser/order/detail")
+    Observable<BaseResponse<LegalAdviserOrderDetailEntity>> legalAdviserOrderDetail(@Body RequestBody body);
+
+    ///client/legal/adviser/order/cancel
+    //POST
+    //订单取消
+    @POST("client/legal/adviser/order/cancel")
+    Observable<BaseResponse> legalAdviserOrderCancel(@Body RequestBody body);
+
+    ///client/legal/adviser/order/complete
+    //POST
+    //用户订单完成
+    @POST("client/legal/adviser/order/complete")
+    Observable<BaseResponse> legalAdviserOrderComplete(@Body RequestBody body);
+
+    ///client/legal/adviser/order/evaluate
+    //POST
+    //用户订单评价
+    @POST("client/legal/adviser/order/evaluate")
+    Observable<BaseResponse> legalAdviserOrderEvaluate(@Body RequestBody body);
+
+    //client/legal/adviser/order/uncomplete
+    //POST
+    //未完成服务（投诉）
+    @POST("client/legal/adviser/order/uncomplete")
+    Observable<BaseResponse> legalAdviserOrderUnComplete(@Body RequestBody body);
+
+    ///client/legal/adviser/order/complaint
+    //POST
+    //获取订单投诉内容
+    @POST("client/legal/adviser/order/complaint")
+    Observable<BaseResponse<List<LegalAdviserOrderComplaintEntity>>> legalAdviserOrderComplaint(@Body RequestBody body);
+
 
     //------end 法律顾问
 }

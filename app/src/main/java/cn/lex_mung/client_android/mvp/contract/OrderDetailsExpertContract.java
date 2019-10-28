@@ -7,6 +7,7 @@ import java.util.List;
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.OrderDetailsEntity;
+import cn.lex_mung.client_android.mvp.model.entity.other.QuickTimeBean;
 import io.reactivex.Observable;
 import me.zl.mvp.mvp.IModel;
 import me.zl.mvp.mvp.IView;
@@ -29,7 +30,7 @@ public interface OrderDetailsExpertContract {
         void showCancelDialog();
         void showFinishDialog();
 
-        void setTalkRecordList(List<OrderDetailsEntity.QuickTimeBean> lists);
+        void setTalkRecordList(List<QuickTimeBean> lists);
 
     }
 

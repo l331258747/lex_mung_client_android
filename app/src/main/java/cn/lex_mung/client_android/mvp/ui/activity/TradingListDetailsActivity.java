@@ -17,6 +17,7 @@ import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.module.TradingListDetailsModule;
 import cn.lex_mung.client_android.mvp.contract.TradingListDetailsContract;
 import cn.lex_mung.client_android.mvp.model.entity.TradingListEntity;
+import cn.lex_mung.client_android.mvp.model.entity.other.QuickTimeBean;
 import cn.lex_mung.client_android.mvp.ui.adapter.TradingListDetailsAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
@@ -140,7 +141,7 @@ public class TradingListDetailsActivity extends BaseActivity<TradingListDetailsP
     }
 
     @Override
-    public void setTalkRecordList(List<TradingListEntity.QuickTimeBean> lists) {
+    public void setTalkRecordList(List<QuickTimeBean> lists) {
         if(lists == null || lists.size() == 0)
             recyclerView.setVisibility(View.GONE);
         else{
@@ -152,7 +153,6 @@ public class TradingListDetailsActivity extends BaseActivity<TradingListDetailsP
             adapter.setNewData(lists);
         }
     }
-
 
     @Override
     public void showLoading(@NonNull String message) {

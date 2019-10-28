@@ -116,9 +116,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/qb_px_30"
         android:text="内容内容内容内容内容内容内容内容内容内容"
-        android:textColor="@color/c_737373"
-        android:visibility="gone"
-        tools:visibility="visible" />
+        android:textColor="@color/c_737373" />
 
 
 </LinearLayout>
