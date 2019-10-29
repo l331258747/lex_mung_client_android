@@ -8,6 +8,7 @@ import java.util.List;
 
 import cn.lex_mung.client_android.mvp.model.api.CommonService;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
+import cn.lex_mung.client_android.mvp.model.entity.RemainEntity;
 import cn.lex_mung.client_android.mvp.model.entity.payEquity.LegalAdviserOrderComplaintEntity;
 import cn.lex_mung.client_android.mvp.model.entity.payEquity.LegalAdviserOrderDetailEntity;
 import io.reactivex.Observable;
@@ -74,5 +75,12 @@ public class OrderDetailsBuyEquityModel extends BaseModel implements OrderDetail
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .legalAdviserOrderComplaint(body);
+    }
+
+    @Override
+    public Observable<BaseResponse<RemainEntity>> legalAdviserOrderUserPhone(String orderNo) {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .legalAdviserOrderUserPhone(orderNo);
     }
 }

@@ -1,13 +1,13 @@
 package cn.lex_mung.client_android.mvp.ui.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.Group;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -20,20 +20,20 @@ import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
 
 import org.simple.eventbus.Subscriber;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.di.component.DaggerOrderDetailsBuyEquityComponent;
 import cn.lex_mung.client_android.di.module.OrderDetailsBuyEquityModule;
-import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
-import cn.lex_mung.client_android.mvp.model.entity.other.QuickTimeBean;
+import cn.lex_mung.client_android.mvp.contract.OrderDetailsBuyEquityContract;
 import cn.lex_mung.client_android.mvp.model.entity.payEquity.LegalAdviserOrderDetailEntity;
-import cn.lex_mung.client_android.mvp.ui.adapter.TradingListDetailsAdapter;
+import cn.lex_mung.client_android.mvp.presenter.OrderDetailsBuyEquityPresenter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
-
 import cn.lex_mung.client_android.mvp.ui.dialog.TextRadioDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.EvaluateStarView;
 import cn.lex_mung.client_android.mvp.ui.widget.OrderDetailView;
@@ -42,18 +42,9 @@ import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.utils.AppUtils;
-
-import cn.lex_mung.client_android.di.component.DaggerOrderDetailsBuyEquityComponent;
-import cn.lex_mung.client_android.mvp.contract.OrderDetailsBuyEquityContract;
-import cn.lex_mung.client_android.mvp.presenter.OrderDetailsBuyEquityPresenter;
-
-import cn.lex_mung.client_android.R;
 import me.zl.mvp.utils.DeviceUtils;
 import me.zl.mvp.utils.StatusBarUtil;
-import me.zl.mvp.utils.StringUtils;
 
-import static cn.lex_mung.client_android.app.EventBusTags.ORDER_COUPON.ORDER_COUPON;
-import static cn.lex_mung.client_android.app.EventBusTags.ORDER_COUPON.REFRESH_COUPON;
 import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH;
 import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH_BUY_EQUITY_DETAIL;
 
@@ -211,18 +202,6 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
         } else {
             orderDetailView.setProgress(index);
         }
-    }
-
-    public void setRightTv(String orderNo,String phone,int isReceipt){
-        titleView.setRightTv("合同");
-        titleView.getRightTv().setTextColor(ContextCompat.getColor(mActivity, R.color.c_ff));
-        titleView.getRightTv().setOnClickListener(v -> {
-            bundle.clear();
-            bundle.putString(BundleTags.ORDER_NO, orderNo);//传递状态，1为可以发合同，0位展示空页面。
-            bundle.putString(BundleTags.MOBILE, phone);
-            bundle.putInt(BundleTags.STATE,isReceipt);
-            launchActivity(new Intent(mActivity,OrderContractActivity.class),bundle);
-        });
     }
 
     @Override
@@ -411,8 +390,7 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
                 tv_btn_left.setText("联系服务律师");
                 tv_btn_left.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_1ec88b_all));
                 tv_btn_left.setOnClickListener(v -> {
-                    //TODO 联系服务律师
-                    showMessage("联系服务律师");
+                    mPresenter.legalAdviserOrderUserPhone();
                 });
             }
             if (orderStatus == 4) {
@@ -533,6 +511,40 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
             case REFRESH_BUY_EQUITY_DETAIL:
                 mPresenter.legalAdviserOrderDetail();
                 break;
+        }
+    }
+
+    public void setRightTv(String orderNo,String phone,int isReceipt){
+        titleView.setRightTv("合同");
+        titleView.getRightTv().setTextColor(ContextCompat.getColor(mActivity, R.color.c_ff));
+        titleView.getRightTv().setOnClickListener(v -> {
+            bundle.clear();
+            bundle.putString(BundleTags.ORDER_NO, orderNo);//传递状态，1为可以发合同，0位展示空页面。
+            bundle.putString(BundleTags.MOBILE, phone);
+            bundle.putInt(BundleTags.STATE,isReceipt);
+            launchActivity(new Intent(mActivity,OrderContractActivity.class),bundle);
+        });
+    }
+
+    @OnClick({R.id.iv_call})
+    public void onViewClicked(View view) {
+        if (isFastClick()) return;
+        switch (view.getId()) {
+            case R.id.iv_call:
+                Intent dialIntent =  new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "400-811-3060"));
+                startActivity(dialIntent);
+                break;
+        }
+    }
+
+    @Override
+    public void call(String phone) {
+        try {
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            Uri data = Uri.parse("tel:" + phone);
+            intent.setData(data);
+            launchActivity(intent);
+        } catch (Exception ignored) {
         }
     }
 

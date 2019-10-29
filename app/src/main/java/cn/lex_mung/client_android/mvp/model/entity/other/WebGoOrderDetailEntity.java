@@ -12,6 +12,11 @@ public class WebGoOrderDetailEntity {
 
     private int id;
     private String orderNo;
+    private int typeId;
+
+    public int getTypeId() {
+        return typeId;
+    }
 
     public int getOrderId() {
         return id;

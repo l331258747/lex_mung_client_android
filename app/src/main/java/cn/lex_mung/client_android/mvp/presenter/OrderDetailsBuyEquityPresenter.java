@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
+import cn.lex_mung.client_android.mvp.model.entity.RemainEntity;
 import cn.lex_mung.client_android.mvp.model.entity.entrust.EntrustDetailEntity;
 import cn.lex_mung.client_android.mvp.model.entity.payEquity.LegalAdviserOrderComplaintEntity;
 import cn.lex_mung.client_android.mvp.model.entity.payEquity.LegalAdviserOrderDetailEntity;
@@ -202,6 +203,27 @@ public class OrderDetailsBuyEquityPresenter extends BasePresenter<OrderDetailsBu
                                 lists.add(item.getComplaintContent());
                             }
                             mRootView.refuseDialog(lists);
+                        }
+                    }
+                });
+    }
+
+    public void legalAdviserOrderUserPhone(){
+        mModel.legalAdviserOrderUserPhone(orderId)
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> mRootView.showLoading(""))
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<RemainEntity>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<RemainEntity> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            mRootView.call(baseResponse.getData().getPhone());
+                        } else {
+                            mRootView.showMessage(baseResponse.getMessage());
                         }
                     }
                 });

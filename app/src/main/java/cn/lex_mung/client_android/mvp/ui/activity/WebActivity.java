@@ -449,6 +449,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             bundle.putString(BundleTags.TITLE, "在线法律顾问");
             bundle.putString(BundleTags.REQUIRE_TYPE_NAME, "在线法律顾问");
             bundle.putFloat(BundleTags.MONEY, entity.getPriceTotal());
+            bundle.putInt(BundleTags.NUM,entity.getMeetNum());
             bundle.putInt(BundleTags.TYPE, 2);
             launchActivity(new Intent(mActivity, RushLoanPayActivity.class), bundle);
         }
@@ -549,12 +550,20 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 
             WebGoOrderDetailEntity entity = GsonUtil.convertString2Object(string, WebGoOrderDetailEntity.class);
 
-            bundle.clear();
-            bundle.putInt(BundleTags.ID, entity.getOrderId());
-            bundle.putString(BundleTags.TITLE, "快速电话咨询");
-            bundle.putInt(BundleTags.TYPE, 4);
-            bundle.putString(BundleTags.ORDER_NO, entity.getOrderNo());
-            launchActivity(new Intent(mActivity, OrderDetailsActivity.class), bundle);
+            if(entity.getTypeId() == 7){
+                bundle.clear();
+                bundle.putInt(BundleTags.ID, entity.getOrderId());
+                bundle.putString(BundleTags.TITLE,"订单详情");
+                bundle.putString(BundleTags.ORDER_NO,entity.getOrderNo());
+                launchActivity(new Intent(mActivity, OrderDetailsBuyEquityActivity.class), bundle);
+            }else{
+                bundle.clear();
+                bundle.putInt(BundleTags.ID, entity.getOrderId());
+                bundle.putString(BundleTags.TITLE, "快速电话咨询");
+                bundle.putInt(BundleTags.TYPE, 4);
+                bundle.putString(BundleTags.ORDER_NO, entity.getOrderNo());
+                launchActivity(new Intent(mActivity, OrderDetailsActivity.class), bundle);
+            }
         }
 
         //回到首页

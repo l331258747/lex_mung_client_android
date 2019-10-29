@@ -238,7 +238,7 @@
         android:id="@+id/ll_top_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/qb_px_100"
+        android:layout_marginTop="@dimen/qb_px_140"
         android:background="@color/c_78F99F"
         android:orientation="horizontal"
         android:paddingTop="@dimen/qb_px_8"

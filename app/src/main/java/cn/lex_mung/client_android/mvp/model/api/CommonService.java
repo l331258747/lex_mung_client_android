@@ -987,6 +987,11 @@ public interface CommonService {
     @POST("client/legal/adviser/order/complaint")
     Observable<BaseResponse<List<LegalAdviserOrderComplaintEntity>>> legalAdviserOrderComplaint(@Body RequestBody body);
 
+    //client/legal/adviser/userphone/{orderNo},lawyer/legal/adviser/userphone/{orderNo}
+    //GET
+    //在线法律顾问获取隐号
+    @GET("client/legal/adviser/userphone/{orderNo}")
+    Observable<BaseResponse<RemainEntity>> legalAdviserOrderUserPhone(@Path("orderNo") String orderNo);
 
     //------end 法律顾问
 }
