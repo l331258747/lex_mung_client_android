@@ -5,9 +5,16 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
+import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
+import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultDetail1Activity;
+import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.OrderDetailsBuyEquityActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
+import cn.lex_mung.client_android.utils.GsonUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -18,6 +25,7 @@ import me.zl.mvp.mvp.BasePresenter;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.zl.mvp.utils.AppUtils;
+import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.RxLifecycleUtils;
 
 import javax.inject.Inject;
@@ -29,6 +37,7 @@ import cn.lex_mung.client_android.mvp.model.entity.MessageEntity;
 import cn.lex_mung.client_android.mvp.ui.activity.MyAccountActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MyOrderActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.OrderMessageAdapter;
+
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -36,6 +45,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static cn.lex_mung.client_android.app.DataHelperTags.IS_LOGIN_SUCCESS;
 import static cn.lex_mung.client_android.app.EventBusTags.MESSAGE_INFO.SET_ORDER_UN_READ_MESSAGE_NUM;
 import static cn.lex_mung.client_android.app.EventBusTags.MESSAGE_INFO.UN_READ_MESSAGE_NUM;
 import static cn.lex_mung.client_android.app.EventBusTags.MESSAGE_INFO.UPDATE_ORDER_UN_READ_MESSAGE_NUM;
@@ -89,7 +99,7 @@ public class OrderMessagePresenter extends BasePresenter<OrderMessageContract.Mo
                     case 240:
                         bundle.clear();
                         bundle.putInt(BundleTags.ID, bean.getBusiId());
-                        bundle.putBoolean(BundleTags.IS_SHOW,true);
+                        bundle.putBoolean(BundleTags.IS_SHOW, true);
                         intent.putExtras(bundle);
                         intent.setClass(mApplication, FreeConsultDetail1Activity.class);
                         break;
@@ -103,9 +113,29 @@ public class OrderMessagePresenter extends BasePresenter<OrderMessageContract.Mo
                     case 245:
                         intent.setClass(mApplication, MyAccountActivity.class);
                         break;
-//                    default:
-//                        mRootView.showMessage("当前消息可能需要新版本才能打开，建议检测是否存在最新版本。");
-//                        break;
+                    case 280://法律顾问 - 权益分享用户提醒
+                        String str = DataHelper.getStringSF(mApplication, DataHelperTags.ONLINE_LAWYER_URL);
+                        HomeChildEntity mEntity = GsonUtil.convertString2Object(str, HomeChildEntity.class);
+                        if (!TextUtils.isEmpty(str) && mEntity != null) {
+                            bundle.clear();
+                            bundle.putString(BundleTags.URL, mEntity.getJumpurl());
+                            bundle.putString(BundleTags.TITLE, mEntity.getTitle());
+                            intent.putExtras(bundle);
+                            intent.setClass(mApplication, FreeConsultDetail1Activity.class);
+                        }
+
+                        break;
+                    case 281://法律顾问 - 订单详情
+                        bundle.clear();
+                        bundle.putInt(BundleTags.ID, bean.getBusiId());
+                        intent.putExtras(bundle);
+                        intent.setClass(mApplication, OrderDetailsBuyEquityActivity.class);
+                        break;
+//                  case 282://法律顾问 - 抢单
+//                      break;
+//                  default:
+//                      mRootView.showMessage("当前消息可能需要新版本才能打开，建议检测是否存在最新版本。");
+//                      break;
                 }
                 mRootView.launchActivity(intent);
             } catch (Exception ignored) {

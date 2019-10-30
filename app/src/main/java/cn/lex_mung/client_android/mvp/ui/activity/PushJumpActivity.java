@@ -4,15 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.di.module.PushJumpModule;
 import cn.lex_mung.client_android.mvp.model.entity.JMessageEntity;
+import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
+import cn.lex_mung.client_android.utils.GsonUtil;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
+import me.zl.mvp.integration.AppManager;
 import me.zl.mvp.utils.AppUtils;
 import me.zl.mvp.utils.DataHelper;
 
@@ -89,6 +94,29 @@ public class PushJumpActivity extends BaseActivity<PushJumpPresenter> implements
                         intent.setClass(mActivity, LoginActivity.class);
                     }
                     break;
+                case 280://法律顾问 - 权益分享用户提醒
+                    String str = DataHelper.getStringSF(mActivity, DataHelperTags.ONLINE_LAWYER_URL);
+                    HomeChildEntity mEntity = GsonUtil.convertString2Object(str, HomeChildEntity.class);
+                    if (!TextUtils.isEmpty(str) && mEntity != null) {
+                        bundle.clear();
+                        bundle.putString(BundleTags.URL, mEntity.getJumpurl());
+                        bundle.putString(BundleTags.TITLE, mEntity.getTitle());
+                        intent.putExtras(bundle);
+                        intent.setClass(mActivity, WebActivity.class);
+                    }
+                    break;
+                case 281://法律顾问 - 订单详情
+                    if (DataHelper.getBooleanSF(mActivity, IS_LOGIN_SUCCESS)) {
+                        bundle.clear();
+                        bundle.putInt(BundleTags.ID, entity.getBusiId());
+                        intent.putExtras(bundle);
+                        intent.setClass(mActivity, OrderDetailsBuyEquityActivity.class);
+                    } else {
+                        intent.setClass(mActivity, LoginActivity.class);
+                    }
+                    break;
+//                case 282://法律顾问 - 抢单
+//                    break;
 //                default:
 //                    showMessage("当前消息可能需要新版本才能打开，建议检测是否存在最新版本。");
 //                    break;
