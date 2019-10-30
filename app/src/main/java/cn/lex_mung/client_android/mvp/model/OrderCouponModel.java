@@ -80,7 +80,7 @@ public class OrderCouponModel extends BaseModel implements OrderCouponContract.M
     }
 
     @Override
-    public Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> legalAdviserServerCoupon(int pageNum,float priceTotal) {
+    public Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> legalAdviserServerCoupon(int pageNum,double priceTotal) {
         Map<String, Object> map = new HashMap<>();
         map.put("pageNum", pageNum);
         map.put("pageSize", 10);

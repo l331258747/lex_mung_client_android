@@ -128,7 +128,7 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
     }
 
     private void getBuyEquityCouponsList(boolean isAdd){
-        mModel.quickCoupon(pageNum, orderAmount)
+        mModel.legalAdviserServerCoupon(pageNum, orderAmount)
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> {

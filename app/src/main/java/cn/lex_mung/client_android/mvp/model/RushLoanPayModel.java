@@ -94,7 +94,7 @@ public class RushLoanPayModel extends BaseModel implements RushLoanPayContract.M
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map));
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
-                .quickPay(body);
+                .legalAdviserOrderAmount(body);
     }
 
     @Override

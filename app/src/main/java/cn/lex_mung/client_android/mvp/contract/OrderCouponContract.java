@@ -37,7 +37,7 @@ public interface OrderCouponContract {
 
         Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> optimalRequireList(int pageNum, double orderAmount,int productId);
 
-        Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> legalAdviserServerCoupon(int pageNum,float priceTotal);//优惠券列表
+        Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> legalAdviserServerCoupon(int pageNum,double priceTotal);//优惠券列表
 
     }
 }
