@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 
 import cn.lex_mung.client_android.mvp.model.api.CommonService;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
+import cn.lex_mung.client_android.mvp.model.entity.RemainEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocGetEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocUploadEntity;
 import io.reactivex.Observable;
@@ -41,23 +42,49 @@ public class OrderContractModel extends BaseModel implements OrderContractContra
     }
 
     @Override
-    public Observable<BaseResponse<DocUploadEntity>> docUpload(RequestBody order_no, MultipartBody.Part file) {
-        return mRepositoryManager
-                .obtainRetrofitService(CommonService.class)
-                .docUpload(order_no, file);
+    public Observable<BaseResponse<DocUploadEntity>> docUpload(int type, RequestBody order_no, MultipartBody.Part file) {
+        if (type == 1) {
+            return mRepositoryManager
+                    .obtainRetrofitService(CommonService.class)
+                    .legalAdviserOrderDocUpload(order_no, file);
+        } else {
+            return mRepositoryManager
+                    .obtainRetrofitService(CommonService.class)
+                    .docUpload(order_no, file);
+        }
     }
 
     @Override
-    public Observable<BaseResponse<DocGetEntity>> docGet(String order_no, int pageNum) {
-        return mRepositoryManager
-                .obtainRetrofitService(CommonService.class)
-                .docGet(order_no,pageNum,10);
+    public Observable<BaseResponse<DocGetEntity>> docGet(int type, String order_no, int pageNum) {
+        if (type == 1) {
+            return mRepositoryManager
+                    .obtainRetrofitService(CommonService.class)
+                    .legalAdviserOrderDocGet(order_no, pageNum, 10);
+        } else {
+            return mRepositoryManager
+                    .obtainRetrofitService(CommonService.class)
+                    .docGet(order_no, pageNum, 10);
+        }
     }
 
     @Override
-    public Observable<BaseResponse> docRead(String repositoryId) {
+    public Observable<BaseResponse> docRead(int type, String repositoryId) {
+        if (type == 1) {
+            return mRepositoryManager
+                    .obtainRetrofitService(CommonService.class)
+                    .legalAdviserOrderDocRead(repositoryId);
+        } else {
+            return mRepositoryManager
+                    .obtainRetrofitService(CommonService.class)
+                    .docRead(repositoryId);
+        }
+
+    }
+
+    @Override
+    public Observable<BaseResponse<RemainEntity>> legalAdviserOrderUserPhone(String orderNo) {
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
-                .docRead(repositoryId);
+                .legalAdviserOrderUserPhone(orderNo);
     }
 }

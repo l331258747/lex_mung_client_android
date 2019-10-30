@@ -993,5 +993,26 @@ public interface CommonService {
     @GET("client/legal/adviser/userphone/{orderNo}")
     Observable<BaseResponse<RemainEntity>> legalAdviserOrderUserPhone(@Path("orderNo") String orderNo);
 
+    //client/legal/adviser/order/doc/upload
+    //POST
+    //在线法律顾问订单-用户上传订单文档(form-data提交)
+    @Multipart
+    @POST("client/legal/adviser/order/doc/upload")
+    Observable<BaseResponse<DocUploadEntity>> legalAdviserOrderDocUpload(@Part("order_no") RequestBody order_no,
+                                                        @Part MultipartBody.Part file);
+
+    //client/legal/adviser/order/doc/get/{orderNo}/{pageNum}/{pageSize}
+    //GET
+    //在线法律顾问-用户获取订单文档
+    @GET("client/legal/adviser/order/doc/get/{orderNo}/{pageNum}/{pageSize}")
+    Observable<BaseResponse<DocGetEntity>> legalAdviserOrderDocGet(@Path("orderNo") String orderNo, @Path("pageNum") int pageNum, @Path("pageSize") int pageSize);
+
+
+    //client/legal/adviser/order/doc/read/{repositoryId}
+    //GET
+    //在线法律顾问-用户端更新文件已读状态
+    @GET("client/legal/adviser/order/doc/read/{repositoryId}")
+    Observable<BaseResponse> legalAdviserOrderDocRead(@Path("repositoryId") String repositoryId);
+
     //------end 法律顾问
 }

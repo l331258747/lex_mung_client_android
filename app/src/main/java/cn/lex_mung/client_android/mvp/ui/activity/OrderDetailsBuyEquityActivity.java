@@ -211,6 +211,22 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
         // 125合同文书  订单编号 订单日期  服务名称  订单状态  服务类型
         // 126线下见面  订单编号 订单日期  服务名称  订单状态  服务类型  （见面时间  见面时长  见面地点）
 
+        if (entity.getRequireTypeId() == 125) {
+            //orderStatus	订单状态：1待接单（空） 2待服务（1） 3服务中（1） 4待确认（1） 5待评价（3） 6已完成（3） 7待处理（3） 8已关闭（3） 9已取消（0）
+            int isReceipt;
+            int orderStatus = entity.getReceiptStatus();
+
+            if (orderStatus == 5 || orderStatus == 6 || orderStatus == 7 || orderStatus == 8) {
+                isReceipt = 3;
+            } else if (orderStatus == 2 || orderStatus == 3 || orderStatus == 4) {
+                isReceipt = 1;
+            } else {
+                isReceipt = 0;
+            }
+
+            setRightTv(entity.getOrderId(), "", isReceipt);
+        }
+
         //订单编号
         if (!TextUtils.isEmpty(entity.getOrderNo())) {
             ll_info_no.setVisibility(View.VISIBLE);
@@ -514,15 +530,16 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
         }
     }
 
-    public void setRightTv(String orderNo,String phone,int isReceipt){
+    public void setRightTv(String orderNo, String phone, int isReceipt) {
         titleView.setRightTv("合同");
         titleView.getRightTv().setTextColor(ContextCompat.getColor(mActivity, R.color.c_ff));
         titleView.getRightTv().setOnClickListener(v -> {
             bundle.clear();
             bundle.putString(BundleTags.ORDER_NO, orderNo);//传递状态，1为可以发合同，0位展示空页面。
             bundle.putString(BundleTags.MOBILE, phone);
-            bundle.putInt(BundleTags.STATE,isReceipt);
-            launchActivity(new Intent(mActivity,OrderContractActivity.class),bundle);
+            bundle.putInt(BundleTags.STATE, isReceipt);
+            bundle.putInt(BundleTags.TYPE,1);
+            launchActivity(new Intent(mActivity, OrderContractActivity.class), bundle);
         });
     }
 
@@ -531,7 +548,7 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
         if (isFastClick()) return;
         switch (view.getId()) {
             case R.id.iv_call:
-                Intent dialIntent =  new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "400-811-3060"));
+                Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "400-811-3060"));
                 startActivity(dialIntent);
                 break;
         }

@@ -22,6 +22,7 @@ import java.net.SocketTimeoutException;
 import cn.lex_mung.client_android.app.Constants;
 import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
+import cn.lex_mung.client_android.mvp.model.entity.RemainEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocGetEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocUploadEntity;
@@ -72,6 +73,12 @@ public class OrderContractPresenter extends BasePresenter<OrderContractContract.
     private int totalNum;//总
     private String helpLink;
 
+    private int type;//0热门合同，1在线法律顾问合同
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
     UserInfoDetailsEntity userInfoDetailsEntity;
 
     @Inject
@@ -99,6 +106,27 @@ public class OrderContractPresenter extends BasePresenter<OrderContractContract.
 
         getList(false);
 
+    }
+
+    public void legalAdviserOrderUserPhone(){
+        mModel.legalAdviserOrderUserPhone(orderNo)
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> mRootView.showLoading(""))
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<RemainEntity>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<RemainEntity> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            mRootView.call(baseResponse.getData().getPhone());
+                        } else {
+                            mRootView.showMessage(baseResponse.getMessage());
+                        }
+                    }
+                });
     }
 
     private void initAdapter() {
@@ -185,7 +213,7 @@ public class OrderContractPresenter extends BasePresenter<OrderContractContract.
 
         RequestBody requestBody = RequestBody.create(MediaType.parse("text/plain"), order_no);
         RequestBody requestFile = RequestBody.create(MediaType.parse("application/octet-stream"), file);
-        mModel.docUpload(requestBody, MultipartBody.Part.createFormData("file", file.getName(), requestFile))
+        mModel.docUpload(type,requestBody, MultipartBody.Part.createFormData("file", file.getName(), requestFile))
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))
@@ -225,7 +253,7 @@ public class OrderContractPresenter extends BasePresenter<OrderContractContract.
     //点击列表item，在自己的目录下查看有没有，没有的话下载，下载完成后进入查看器
 
     public void getList(boolean isAdd) {
-        mModel.docGet(orderNo, pageNum)
+        mModel.docGet(type,orderNo, pageNum)
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -263,7 +291,7 @@ public class OrderContractPresenter extends BasePresenter<OrderContractContract.
     }
 
     public void docRead(int position, String repositoryId,ListBean bean) {
-        mModel.docRead(repositoryId)
+        mModel.docRead(type,repositoryId)
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> {})

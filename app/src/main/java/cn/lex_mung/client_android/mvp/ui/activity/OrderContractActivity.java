@@ -24,7 +24,6 @@ import cn.lex_mung.client_android.di.module.OrderContractModule;
 import cn.lex_mung.client_android.mvp.ui.adapter.TabOrderContractAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
-import cn.lex_mung.client_android.mvp.ui.widget.EmptyView;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
@@ -57,6 +56,8 @@ public class OrderContractActivity extends BaseActivity<OrderContractPresenter> 
     private int orderStatus;
     private String lmobile;
 
+    int type;
+
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerOrderContractComponent
@@ -75,6 +76,7 @@ public class OrderContractActivity extends BaseActivity<OrderContractPresenter> 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         if (bundleIntent != null){
+            mPresenter.setType(type = bundleIntent.getInt(BundleTags.TYPE,0));
             orderStatus = bundleIntent.getInt(BundleTags.STATE,1);
             if(orderStatus == 0){//显示空界面
                 rlRushError.setVisibility(View.VISIBLE);
@@ -107,9 +109,13 @@ public class OrderContractActivity extends BaseActivity<OrderContractPresenter> 
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_call:
-                if(TextUtils.isEmpty(lmobile)) return;
-                Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + lmobile));
-                startActivity(dialIntent);
+                if(type == 1){
+                    mPresenter.legalAdviserOrderUserPhone();
+                }else{
+                    if(TextUtils.isEmpty(lmobile)) return;
+                    Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + lmobile));
+                    startActivity(dialIntent);
+                }
                 break;
             case R.id.iv_send_contract:
                 mPresenter.showFileChooser();
@@ -133,6 +139,17 @@ public class OrderContractActivity extends BaseActivity<OrderContractPresenter> 
 
     public void setLmobile(String lmobile){
         this.lmobile = lmobile;
+    }
+
+    @Override
+    public void call(String phone) {
+        try {
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            Uri data = Uri.parse("tel:" + phone);
+            intent.setData(data);
+            launchActivity(intent);
+        } catch (Exception ignored) {
+        }
     }
 
     @Override
