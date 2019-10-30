@@ -410,8 +410,13 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
                 });
             }
             if (orderStatus == 4) {
-                ll_top_message.setVisibility(View.VISIBLE);
-                tv_top_message.setText("律师已完成服务，如您不进行操作，1小时后系统将自动确认完成！");
+                if(entity.getRequireTypeId() == 123){
+                    ll_top_message.setVisibility(View.VISIBLE);
+                    tv_top_message.setText("律师已完成服务，如您不进行操作，1小时后系统将自动确认完成！");
+                }else{
+                    ll_top_message.setVisibility(View.VISIBLE);
+                    tv_top_message.setText("律师已完成服务，如您不进行操作，24小时后系统将自动确认完成！");
+                }
 
                 tv_btn_left.setVisibility(View.VISIBLE);
                 tv_btn_left.setText("未完成服务");
