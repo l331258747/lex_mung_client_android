@@ -265,15 +265,15 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
             tv_info_server_type.setVisibility(View.GONE);
         }
 
-        if (entity.getRequireTypeId() == 124) {
-            //发布用户
-            if (!TextUtils.isEmpty(entity.getMemberName())) {
-                ll_info_release_user.setVisibility(View.VISIBLE);
-                tv_info_release_user.setText(entity.getMemberName());
-            } else {
-                tv_info_release_user.setVisibility(View.GONE);
-            }
+        //发布用户
+        if (!TextUtils.isEmpty(entity.getMemberName())) {
+            ll_info_release_user.setVisibility(View.VISIBLE);
+            tv_info_release_user.setText(entity.getMemberName());
+        } else {
+            tv_info_release_user.setVisibility(View.GONE);
+        }
 
+        if (entity.getRequireTypeId() == 124) {
             ll_info_talk_time.setVisibility(View.GONE);
 
             ll_info_talk_record.setVisibility(View.VISIBLE);
@@ -406,7 +406,7 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
                 ll_top_message.setVisibility(View.VISIBLE);
                 tv_top_message.setText("如服务律师未主动回电，您也可以点击联系律师拨打电话。");
             } else if (orderStatus == 4) {
-                if (entity.getRequireTypeId() == 123) {
+                if (entity.getRequireTypeId() == 124) {
                     ll_top_message.setVisibility(View.VISIBLE);
                     tv_top_message.setText("律师已完成服务，如您不进行操作，1小时后系统将自动确认完成！");
                 } else {
