@@ -792,7 +792,7 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
         Map<String, Object> map = new HashMap<>();
         map.put("requireTypeId", requireTypeId);
         map.put("legalAdviserIds", legalAdviserIds);
-        map.put("priceTotal", payMoney);
+        map.put("priceTotal", mRootView.getOrderPrice());
         map.put("meetNum", meetNum);
         if (mRootView.getCouponPrice() > 0){
             map.put("couponId", mRootView.getCouponId());

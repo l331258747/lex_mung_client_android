@@ -34,6 +34,8 @@ public interface RushLoanPayContract {
         void setCouponLayout(OrderCouponEntity bean, boolean showToast);
         int getCouponId();
         float getCouponPrice();
+        float getOrderPrice();
+
         void setPriceLayout(float couponPrice,double payPrice);
 
         void setAllBalance(AmountBalanceEntity entity);

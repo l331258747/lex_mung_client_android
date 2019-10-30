@@ -223,6 +223,7 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
             tvDiscountWay.setText("");
             this.couponId = 0;
             setPriceLayout(0, orderPrice);
+            mPresenter.setPayMoney(orderPrice);
             return;
         }
 
@@ -263,6 +264,11 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
     @Override
     public float getCouponPrice() {
         return couponPrice;
+    }
+
+    @Override
+    public float getOrderPrice() {
+        return orderPrice;
     }
 
     //获取优惠id
