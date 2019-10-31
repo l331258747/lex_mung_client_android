@@ -411,7 +411,7 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
             tv_btn_left.setOnClickListener(v -> {
                 mPresenter.legalAdviserOrderCancel();
             });
-        } else if (orderStatus == 2 || orderStatus == 3 || orderStatus == 4 || orderStatus == 7) {
+        } else if (orderStatus == 2 || orderStatus == 3 || orderStatus == 4 || orderStatus == 5 ||orderStatus == 7) {
             //头部进度
             setOrderDetailView(2);
             //头部消息
@@ -426,6 +426,9 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
                     ll_top_message.setVisibility(View.VISIBLE);
                     tv_top_message.setText("律师已完成服务，如您不进行操作，24小时后系统将自动确认完成！");
                 }
+            }else if (orderStatus == 5) {
+                ll_top_message.setVisibility(View.VISIBLE);
+                tv_top_message.setText("您已确认完成服务，如不进行评价，24小时后系统将采用默认评价!");
             } else if (orderStatus == 7) {
                 ll_top_message.setVisibility(View.VISIBLE);
                 tv_top_message.setText("您的投诉反馈正在处理中，请耐心等候！");
@@ -454,20 +457,6 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
                     mPresenter.legalAdviserOrderComplete();
                 });
             }
-            if (orderStatus == 7) {
-                tv_btn_left.setVisibility(View.VISIBLE);
-                tv_btn_left.setText("投诉反馈待处理");
-                tv_btn_left.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_d7d7d7_all));
-            }
-        } else if (orderStatus == 5 || orderStatus == 6) {
-            //头部进度
-            setOrderDetailView(3);
-            //头部消息
-            if (orderStatus == 5) {
-                ll_top_message.setVisibility(View.VISIBLE);
-                tv_top_message.setText("您已确认完成服务，如不进行评价，24小时后系统将采用默认评价!");
-            }
-            //按钮
             if (orderStatus == 5) {
                 tv_btn_left.setVisibility(View.VISIBLE);
                 tv_btn_left.setText("匿名评价律师服务");
@@ -478,11 +467,18 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
                     launchActivity(new Intent(mActivity, BuyEquityEvaluateActivity.class), bundle);
                 });
             }
-            if (orderStatus == 6) {
+            if (orderStatus == 7) {
                 tv_btn_left.setVisibility(View.VISIBLE);
-                tv_btn_left.setText("服务已完成");
+                tv_btn_left.setText("投诉反馈待处理");
                 tv_btn_left.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_d7d7d7_all));
             }
+        } else if (orderStatus == 6) {
+            //头部进度
+            setOrderDetailView(3);
+            //按钮
+            tv_btn_left.setVisibility(View.VISIBLE);
+            tv_btn_left.setText("服务已完成");
+            tv_btn_left.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_d7d7d7_all));
         } else {
             //头部进度
             setOrderDetailView(0);
