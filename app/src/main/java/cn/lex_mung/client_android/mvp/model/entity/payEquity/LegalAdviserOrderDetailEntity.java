@@ -1,5 +1,7 @@
 package cn.lex_mung.client_android.mvp.model.entity.payEquity;
 
+import android.text.TextUtils;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -92,6 +94,11 @@ public class LegalAdviserOrderDetailEntity implements Serializable {
     private String region;
     private List<QuickTimeBean> quickTime;
     private LegalAdviserOrderDetailLawsui lawsui;
+    private String serverName;
+
+    public String getServerName() {
+        return serverName;
+    }
 
     public LegalAdviserOrderDetailLawsui getLawsui() {
         return lawsui;
@@ -107,6 +114,16 @@ public class LegalAdviserOrderDetailEntity implements Serializable {
 
     public String getLawyerRegion() {
         return lawyerRegion;
+    }
+
+    public String getLawyerArea(){
+        if(!TextUtils.isEmpty(lawyerRegion) && !TextUtils.isEmpty(institutionName))
+            return lawyerRegion + " | " + institutionName;
+        if(TextUtils.isEmpty(lawyerRegion))
+            return institutionName;
+        if(TextUtils.isEmpty(institutionName))
+            return lawyerRegion;
+        return "";
     }
 
     public int getId() {

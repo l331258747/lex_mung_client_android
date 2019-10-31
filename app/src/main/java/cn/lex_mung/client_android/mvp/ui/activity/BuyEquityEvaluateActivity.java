@@ -129,7 +129,7 @@ public class BuyEquityEvaluateActivity extends BaseActivity<BuyEquityEvaluatePre
                 break;
             case R.id.tv_btn:
 
-                if (TextUtils.isEmpty(entity.getOrderNo())) {
+                if (TextUtils.isEmpty(entity.getOrderId())) {
                     showMessage("单号为空");
                     return;
                 }

@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         app:TitleView_bg="@color/c_00"
         app:TitleView_left_img="@drawable/ic_withe_back"
-        app:TitleView_title="案件详情页" />
+        app:TitleView_title="订单详情页" />
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/scrollView"

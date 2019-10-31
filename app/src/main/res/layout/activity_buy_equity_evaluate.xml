@@ -268,7 +268,7 @@
         android:gravity="center"
         android:textColor="@color/c_ff"
         android:textSize="15sp"
-        tools:text="匿名评价" />
+        android:text="匿名评价" />
 
 </RelativeLayout>
 

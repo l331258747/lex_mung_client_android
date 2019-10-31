@@ -228,9 +228,9 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
         }
 
         //订单编号
-        if (!TextUtils.isEmpty(entity.getOrderNo())) {
+        if (!TextUtils.isEmpty(entity.getOrderId())) {
             ll_info_no.setVisibility(View.VISIBLE);
-            tv_info_no.setText(entity.getOrderNo());
+            tv_info_no.setText(entity.getOrderId());
         } else {
             ll_info_no.setVisibility(View.GONE);
         }
@@ -243,9 +243,9 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
         }
 
         //服务名称
-        if (!TextUtils.isEmpty(entity.getRequireTypeName())) {
+        if (!TextUtils.isEmpty(entity.getServerName())) {
             ll_info_server_name.setVisibility(View.VISIBLE);
-            tv_info_server_name.setText(entity.getRequireTypeName());
+            tv_info_server_name.setText(entity.getServerName());
         } else {
             tv_info_server_name.setVisibility(View.GONE);
         }
@@ -311,7 +311,7 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
 
         setStatus(entity);
 
-        setLawyerLayout(entity.getLawyerMemberId(), entity.getLawyerName(), entity.getLawyerRegion(), entity.getIconImage());
+        setLawyerLayout(entity.getLawyerId(), entity.getLawyerName(), entity.getLawyerArea(), entity.getIconImage());
 
         set500Layout(entity);
         setEvaluateLayout(entity);
