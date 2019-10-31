@@ -76,6 +76,7 @@ public class MyTradingListPresenter extends BasePresenter<MyTradingListContract.
         map.put("memberId", entity.getMemberId());
         map.put("pageNum", pageNum);
         map.put("pageSize", 10);
+        map.put("roleId", 1);
         if (organizationLevId > 0) {
             map.put("organizationLevId", organizationLevId);
         }
