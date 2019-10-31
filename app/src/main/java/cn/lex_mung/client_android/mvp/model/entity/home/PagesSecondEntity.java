@@ -18,6 +18,16 @@ public class PagesSecondEntity {
     private String caseEntrustedUrl;
     private String memberCard;
     private String examinUrl;
+    private String quickConsultationUrl;
+    private String onlineLegalUrl;
+
+    public String getQuickConsultationUrl() {
+        return quickConsultationUrl;
+    }
+
+    public String getOnlineLegalUrl() {
+        return onlineLegalUrl;
+    }
 
     public String getLitigationUrl() {
         return litigationUrl;

@@ -111,18 +111,6 @@ public class EquitiesPresenter extends BasePresenter<EquitiesContract.Model, Equ
         }
     }
 
-    //获取存储的url
-    private void savePagesSecondUrl(EquitiesBuyListEntity entity) {
-        if (entity == null) return;
-
-        if (!TextUtils.isEmpty(entity.getLegalAdviserUrl()) && entity.getLegalAdviserUrl().indexOf("legalCounsel/index.html") > -1) {//在线法律顾问
-            HomeChildEntity homeChildEntity = new HomeChildEntity();
-            homeChildEntity.setJumpurl(entity.getLegalAdviserUrl());
-            homeChildEntity.setTitle(entity.getEquityName());
-            DataHelper.setStringSF(mApplication, DataHelperTags.ONLINE_LAWYER_URL, GsonUtil.convertVO2String(homeChildEntity));
-        }
-    }
-
     /**
      * 未登录
      */
@@ -156,7 +144,6 @@ public class EquitiesPresenter extends BasePresenter<EquitiesContract.Model, Equ
                                     item.setRequireTypeId(equitiesBuyListEntity.getRequireTypeId());
                                     item.setLegalAdviserUrl(equitiesBuyListEntity.getLegalAdviserUrl());
                                     list_2.add(item);
-                                    savePagesSecondUrl(equitiesBuyListEntity);
                                 }
                             }
                             list_2.addAll(baseResponse.getData().getList());
@@ -207,7 +194,6 @@ public class EquitiesPresenter extends BasePresenter<EquitiesContract.Model, Equ
                                     }else{//未开通
                                         list_2.add(item);
                                     }
-                                    savePagesSecondUrl(equitiesBuyListEntity);
                                 }
                             }
 

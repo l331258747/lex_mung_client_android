@@ -403,7 +403,7 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
             HomeChildEntity homeChildEntity = new HomeChildEntity();
             homeChildEntity.setJumpurl(entity.getCaseEntrustedUrl());
             homeChildEntity.setTitle("案件委托");
-            DataHelper.setStringSF(mApplication, DataHelperTags.AJWT_URL, GsonUtil.convertVO2String(homeChildEntity));
+            DataHelper.setStringSF(mApplication, DataHelperTags.WTAJ_URL, GsonUtil.convertVO2String(homeChildEntity));
         }
 
         if (!TextUtils.isEmpty(entity.getMemberCard())){
@@ -411,6 +411,20 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
             homeChildEntity.setJumpurl(entity.getMemberCard());
             homeChildEntity.setTitle("企业法务卡");
             DataHelper.setStringSF(mApplication, DataHelperTags.FWK_URL, GsonUtil.convertVO2String(homeChildEntity));
+        }
+
+        if (!TextUtils.isEmpty(entity.getOnlineLegalUrl())){
+            HomeChildEntity homeChildEntity = new HomeChildEntity();
+            homeChildEntity.setJumpurl(entity.getOnlineLegalUrl());
+            homeChildEntity.setTitle("在线法律顾问");
+            DataHelper.setStringSF(mApplication, DataHelperTags.ONLINE_LAWYER_URL, GsonUtil.convertVO2String(homeChildEntity));
+        }
+
+        if (!TextUtils.isEmpty(entity.getQuickConsultationUrl())){
+            HomeChildEntity homeChildEntity = new HomeChildEntity();
+            homeChildEntity.setJumpurl(entity.getQuickConsultationUrl());
+            homeChildEntity.setTitle("快速咨询");
+            DataHelper.setStringSF(mApplication, DataHelperTags.QUICK_URL, GsonUtil.convertVO2String(homeChildEntity));
         }
 
     }
@@ -431,7 +445,7 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                     public void onNext(BaseResponse<BaseListEntity<HomeEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             mRootView.setHomeAdapter(baseResponse.getData().getList());
-                            saveShapeUrl(baseResponse.getData().getList());
+//                            saveShapeUrl(baseResponse.getData().getList());
                             getLawyerList();
                         }
                     }
@@ -474,40 +488,40 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                 });
     }
 
-    //获取快速咨询url 还有要存储的url
-    private void saveShapeUrl(List<HomeEntity> homeEntities) {
-        if (homeEntities == null) return;
-
-        for (int i = 0; i < homeEntities.size(); i++) {
-            HomeEntity homeEntity = homeEntities.get(i);
-            if (homeEntity.getType().equals("button")) {
-                if (homeEntities.get(i).getBtns() == null) return;
-                for (int j = 0; j < homeEntities.get(i).getBtns().size(); j++) {
-                    HomeChildEntity homeChildEntity = homeEntities.get(i).getBtns().get(j);
-                    if (homeChildEntity.getJumptype().equals("h5") && homeChildEntity.getJumpurl().indexOf("quick.html") > -1) {
-                        DataHelper.setStringSF(mApplication, DataHelperTags.QUICK_URL, GsonUtil.convertVO2String(homeChildEntity));
-                    }
-                }
-            } else if (homeEntity.getType().equals("three_card")) {
-                if (homeEntities.get(i).getBtns() == null) return;
-                for (int j = 0; j < homeEntities.get(i).getBtns().size(); j++) {
-                    HomeChildEntity homeChildEntity = homeEntities.get(i).getBtns().get(j);
-                    if (homeChildEntity.getJumptype().equals("h5") && homeChildEntity.getJumpurl().indexOf("member") > -1) {//法务卡
-                        DataHelper.setStringSF(mApplication, DataHelperTags.FWK_URL, GsonUtil.convertVO2String(homeChildEntity));
-                    }
-                    if (homeChildEntity.getJumptype().equals("h5") && homeChildEntity.getJumpurl().indexOf("feature.html") > -1) {//诉讼垫资
-                        DataHelper.setStringSF(mApplication, DataHelperTags.SSDZ_URL, GsonUtil.convertVO2String(homeChildEntity));
-                    }
-                    if (homeChildEntity.getJumptype().equals("h5") && homeChildEntity.getJumpurl().indexOf("retrial.html") > -1) {//再审申诉
-                        DataHelper.setStringSF(mApplication, DataHelperTags.ZSSS_URL, GsonUtil.convertVO2String(homeChildEntity));
-                    }
-                    if (homeChildEntity.getJumptype().equals("h5") && homeChildEntity.getJumpurl().indexOf("caseEntrustment.html") > -1) {//委托案件
-                        DataHelper.setStringSF(mApplication, DataHelperTags.WTAJ_URL, GsonUtil.convertVO2String(homeChildEntity));
-                    }
-                }
-            }
-        }
-    }
+//    //获取快速咨询url 还有要存储的url
+//    private void saveShapeUrl(List<HomeEntity> homeEntities) {
+//        if (homeEntities == null) return;
+//
+//        for (int i = 0; i < homeEntities.size(); i++) {
+//            HomeEntity homeEntity = homeEntities.get(i);
+//            if (homeEntity.getType().equals("button")) {
+//                if (homeEntities.get(i).getBtns() == null) return;
+//                for (int j = 0; j < homeEntities.get(i).getBtns().size(); j++) {
+//                    HomeChildEntity homeChildEntity = homeEntities.get(i).getBtns().get(j);
+//                    if (homeChildEntity.getJumptype().equals("h5") && homeChildEntity.getJumpurl().indexOf("quick.html") > -1) {
+//                        DataHelper.setStringSF(mApplication, DataHelperTags.QUICK_URL, GsonUtil.convertVO2String(homeChildEntity));
+//                    }
+//                }
+//            } else if (homeEntity.getType().equals("three_card")) {
+//                if (homeEntities.get(i).getBtns() == null) return;
+//                for (int j = 0; j < homeEntities.get(i).getBtns().size(); j++) {
+//                    HomeChildEntity homeChildEntity = homeEntities.get(i).getBtns().get(j);
+//                    if (homeChildEntity.getJumptype().equals("h5") && homeChildEntity.getJumpurl().indexOf("member") > -1) {//法务卡
+//                        DataHelper.setStringSF(mApplication, DataHelperTags.FWK_URL, GsonUtil.convertVO2String(homeChildEntity));
+//                    }
+//                    if (homeChildEntity.getJumptype().equals("h5") && homeChildEntity.getJumpurl().indexOf("feature.html") > -1) {//诉讼垫资
+//                        DataHelper.setStringSF(mApplication, DataHelperTags.SSDZ_URL, GsonUtil.convertVO2String(homeChildEntity));
+//                    }
+//                    if (homeChildEntity.getJumptype().equals("h5") && homeChildEntity.getJumpurl().indexOf("retrial.html") > -1) {//再审申诉
+//                        DataHelper.setStringSF(mApplication, DataHelperTags.ZSSS_URL, GsonUtil.convertVO2String(homeChildEntity));
+//                    }
+//                    if (homeChildEntity.getJumptype().equals("h5") && homeChildEntity.getJumpurl().indexOf("caseEntrustment.html") > -1) {//委托案件
+//                        DataHelper.setStringSF(mApplication, DataHelperTags.WTAJ_URL, GsonUtil.convertVO2String(homeChildEntity));
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     //消息
     private void getUnreadCount() {
