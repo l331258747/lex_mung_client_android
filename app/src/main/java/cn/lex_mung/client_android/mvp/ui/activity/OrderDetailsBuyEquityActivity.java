@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.Group;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -31,8 +33,10 @@ import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.component.DaggerOrderDetailsBuyEquityComponent;
 import cn.lex_mung.client_android.di.module.OrderDetailsBuyEquityModule;
 import cn.lex_mung.client_android.mvp.contract.OrderDetailsBuyEquityContract;
+import cn.lex_mung.client_android.mvp.model.entity.other.QuickTimeBean;
 import cn.lex_mung.client_android.mvp.model.entity.payEquity.LegalAdviserOrderDetailEntity;
 import cn.lex_mung.client_android.mvp.presenter.OrderDetailsBuyEquityPresenter;
+import cn.lex_mung.client_android.mvp.ui.adapter.OrderDetailsExpertInfoAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.TextRadioDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.EvaluateStarView;
@@ -111,10 +115,8 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
     @BindView(R.id.tv_info_talk_time)
     TextView tv_info_talk_time;
 
-    @BindView(R.id.ll_info_talk_record)
-    LinearLayout ll_info_talk_record;
-    @BindView(R.id.tv_info_talk_record)
-    TextView tv_info_talk_record;
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
 
     @BindView(R.id.ll_info_meet_time)
     LinearLayout ll_info_meet_time;
@@ -274,14 +276,25 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
         }
 
         if (entity.getRequireTypeId() == 124) {
-            ll_info_talk_time.setVisibility(View.GONE);
-
-            ll_info_talk_record.setVisibility(View.VISIBLE);
-            if (entity.getQuickTime() == null || entity.getQuickTime().size() == 0) {
-                tv_info_talk_record.setText("无");
+            //通话时长
+            if (!TextUtils.isEmpty(entity.getCallTimeStr())) {
+                ll_info_talk_time.setVisibility(View.VISIBLE);
+                tv_info_talk_time.setText(entity.getCallTimeStr());
             } else {
-                if (!TextUtils.isEmpty(entity.getQuickTime().get(0).getBeginTime()))
-                    tv_info_talk_record.setText(entity.getQuickTime().get(0).getBeginTime() + "\n通话：" + entity.getQuickTime().get(0).getCalllength());
+                ll_info_talk_time.setVisibility(View.GONE);
+            }
+
+            //通话记录
+            List<QuickTimeBean> lists = entity.getQuickTime();
+            if(lists == null || lists.size() == 0)
+                recyclerView.setVisibility(View.GONE);
+            else{
+                recyclerView.setVisibility(View.VISIBLE);
+                OrderDetailsExpertInfoAdapter adapter = new OrderDetailsExpertInfoAdapter();
+                AppUtils.configRecyclerView(recyclerView, new LinearLayoutManager(mActivity));
+                recyclerView.setAdapter(adapter);
+                recyclerView.setNestedScrollingEnabled(false);
+                adapter.setNewData(lists);
             }
         } else if (entity.getRequireTypeId() == 125) {
 

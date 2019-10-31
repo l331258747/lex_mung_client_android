@@ -95,6 +95,11 @@ public class LegalAdviserOrderDetailEntity implements Serializable {
     private List<QuickTimeBean> quickTime;
     private LegalAdviserOrderDetailLawsui lawsui;
     private String serverName;
+    private String callTimeStr;
+
+    public String getCallTimeStr() {
+        return callTimeStr;
+    }
 
     public String getServerName() {
         return serverName;
