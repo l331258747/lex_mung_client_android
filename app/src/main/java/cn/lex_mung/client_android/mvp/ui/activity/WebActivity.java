@@ -559,8 +559,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 
             if(entity.getTypeId() == 71){//交易明细
                 launchActivity(new Intent(mActivity, MyTradingListActivity.class));
-            }
-            if(entity.getTypeId() == 7){//法律顾问详情页
+            }else if(entity.getTypeId() == 7){//法律顾问详情页
                 bundle.clear();
                 bundle.putInt(BundleTags.ID, entity.getOrderId());
                 bundle.putString(BundleTags.TITLE,"订单详情");
