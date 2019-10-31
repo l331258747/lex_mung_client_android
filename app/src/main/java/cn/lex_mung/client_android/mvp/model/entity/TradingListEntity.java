@@ -1,5 +1,7 @@
 package cn.lex_mung.client_android.mvp.model.entity;
 
+import android.text.TextUtils;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -56,6 +58,11 @@ public class TradingListEntity implements Serializable {
     private double buyerPayAmount;
     private int pageNum;
     private int pageSize;
+    private String typeAliasName;
+
+    public String getTypeAliasName() {
+        return typeAliasName;
+    }
 
     private String callTimeStr;
     private int callTime;
@@ -138,6 +145,9 @@ public class TradingListEntity implements Serializable {
     }
 
     public String getOrderType() {
+        if(orderType.equals("在线法律顾问") && !TextUtils.isEmpty(typeAliasName)){
+            return orderType + "\n" + typeAliasName;
+        }
         return orderType;
     }
 

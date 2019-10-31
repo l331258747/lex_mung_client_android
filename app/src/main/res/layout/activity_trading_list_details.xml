@@ -134,7 +134,7 @@
         android:includeFontPadding="false"
         android:text="订单金额:"
         app:layout_constraintStart_toEndOf="@id/guideline2"
-        app:layout_constraintTop_toBottomOf="@id/tv_order_name_text" />
+        app:layout_constraintTop_toBottomOf="@id/tv_order_name" />
 
     <TextView
         android:id="@+id/tv_order_price"
