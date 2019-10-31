@@ -138,6 +138,7 @@ public class EquitiesPresenter extends BasePresenter<EquitiesContract.Model, Equ
                                     item.setEquityName(equitiesBuyListEntity.getEquityName());
                                     item.setIsBuyEquity(true);
                                     item.setIconImage(equitiesBuyListEntity.getIconImage());
+                                    item.setImage(equitiesBuyListEntity.getImage());
                                     item.setOwn(equitiesBuyListEntity.isOwn());
                                     item.setRequireTypeNo(equitiesBuyListEntity.getRequireTypeNo());
                                     item.setRoleId(equitiesBuyListEntity.getRoleId());
@@ -184,6 +185,7 @@ public class EquitiesPresenter extends BasePresenter<EquitiesContract.Model, Equ
                                     item.setEquityName(equitiesBuyListEntity.getEquityName());
                                     item.setIsBuyEquity(true);
                                     item.setIconImage(equitiesBuyListEntity.getIconImage());
+                                    item.setImage(equitiesBuyListEntity.getImage());
                                     item.setOwn(equitiesBuyListEntity.isOwn());
                                     item.setRequireTypeNo(equitiesBuyListEntity.getRequireTypeNo());
                                     item.setRoleId(equitiesBuyListEntity.getRoleId());

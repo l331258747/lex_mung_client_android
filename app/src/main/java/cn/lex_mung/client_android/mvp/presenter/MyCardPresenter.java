@@ -145,6 +145,7 @@ public class MyCardPresenter extends BasePresenter<MyCardContract.Model, MyCardC
                                         item.setEquityName(equitiesBuyListEntity.getEquityName());
                                         item.setBuyEquity(true);
                                         item.setIconImage(equitiesBuyListEntity.getIconImage());
+                                        item.setImage(equitiesBuyListEntity.getImage());
                                         item.setOwn(equitiesBuyListEntity.isOwn());
                                         item.setRequireTypeNo(equitiesBuyListEntity.getRequireTypeNo());
                                         item.setRoleId(equitiesBuyListEntity.getRoleId());

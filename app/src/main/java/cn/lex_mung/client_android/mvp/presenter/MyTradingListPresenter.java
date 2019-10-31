@@ -4,7 +4,9 @@ import android.app.Application;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import cn.lex_mung.client_android.app.DataHelperTags;
@@ -90,6 +92,20 @@ public class MyTradingListPresenter extends BasePresenter<MyTradingListContract.
                     @Override
                     public void onNext(BaseResponse<BaseListEntity<TradingListEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
+
+//                            List<TradingListEntity> lists = new ArrayList<>();
+//                            if(baseResponse.getData().getList() != null && baseResponse.getData().getList().size() > 0){
+//                                for (TradingListEntity item : baseResponse.getData().getList()){
+//                                    //roleId 为0 要全部显示。 roleId为1 是绿豆圈 roleId为2 是律箭
+//                                    if(item.getRoleId() != 2){
+//                                        lists.add(item);
+//                                    }
+//                                }
+//                            }
+//                            totalNum = baseResponse.getData().getPages();
+//                            pageNum = baseResponse.getData().getPageNum();
+//                            mRootView.setAdapter(lists, isAdd);
+
                             totalNum = baseResponse.getData().getPages();
                             pageNum = baseResponse.getData().getPageNum();
                             mRootView.setAdapter(baseResponse.getData().getList(), isAdd);

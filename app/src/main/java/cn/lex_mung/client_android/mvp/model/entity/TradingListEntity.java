@@ -59,6 +59,11 @@ public class TradingListEntity implements Serializable {
     private int pageNum;
     private int pageSize;
     private String typeAliasName;
+    private int roleId;
+
+    public int getRoleId() {
+        return roleId;
+    }
 
     public String getTypeAliasName() {
         if(!orderType.equals("在线法律顾问"))
