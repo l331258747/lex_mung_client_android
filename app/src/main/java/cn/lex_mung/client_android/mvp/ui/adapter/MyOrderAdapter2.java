@@ -36,6 +36,10 @@ public class MyOrderAdapter2 extends BaseQuickAdapter<OrderEntity, BaseViewHolde
             helper.setGone(R.id.ll_price, false);
         }
 
+        helper.setGone(R.id.ll_lawSuiId,false);
+        if(!TextUtils.isEmpty(item.getLawSuiId())){
+            helper.setGone(R.id.ll_lawSuiId,true);
+        }
 
         helper.setText(R.id.item_tv_status, item.getStatusValue());
         if(item.getOrderStatus() == 3 || item.getOrderStatus() == 7){//3已关闭，7已完成

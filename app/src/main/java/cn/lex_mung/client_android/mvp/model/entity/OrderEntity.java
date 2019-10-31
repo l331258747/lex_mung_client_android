@@ -66,6 +66,11 @@ public class OrderEntity implements Serializable {
     private int isHot;
     private int replyCount;
     private int status;
+    private String lawSuiId;
+
+    public String getLawSuiId() {
+        return lawSuiId;
+    }
 
     public int getStatus() {
         return status;
