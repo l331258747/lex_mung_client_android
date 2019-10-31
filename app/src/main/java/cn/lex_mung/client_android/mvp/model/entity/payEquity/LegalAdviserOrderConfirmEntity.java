@@ -15,7 +15,7 @@ public class LegalAdviserOrderConfirmEntity {
 
     private int requireTypeId;
     private String requireTypeName;
-    private int priceTotal;
+    private float priceTotal;
     private String unit;
     private List<LegalAdviserOrderConfirmChildEntity> serverDetails;
 
@@ -35,11 +35,11 @@ public class LegalAdviserOrderConfirmEntity {
         this.requireTypeName = requireTypeName;
     }
 
-    public int getPriceTotal() {
+    public float getPriceTotal() {
         return priceTotal;
     }
 
-    public void setPriceTotal(int priceTotal) {
+    public void setPriceTotal(float priceTotal) {
         this.priceTotal = priceTotal;
     }
 

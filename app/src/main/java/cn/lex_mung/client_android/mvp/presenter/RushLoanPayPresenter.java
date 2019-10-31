@@ -722,7 +722,7 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
         Map<String, Object> map = new HashMap<>();
         map.put("requireTypeId", requireTypeId);
         map.put("legalAdviserIds", legalAdviserIds);
-        map.put("priceTotal", orderPrice);
+        map.put("priceTotal", StringUtils.getStringNum(orderPrice));
         map.put("meetNum", meetNum);
         mModel.legalAdviserOrderConfirm(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                 .subscribeOn(Schedulers.io())

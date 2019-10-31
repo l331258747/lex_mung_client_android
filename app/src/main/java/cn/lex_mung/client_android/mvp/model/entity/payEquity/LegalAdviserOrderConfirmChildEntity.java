@@ -15,7 +15,7 @@ public class LegalAdviserOrderConfirmChildEntity {
     private int legalAdviserId;
     private String typeName;
     private String typeAliasName;
-    private int priceTotal;
+    private float priceTotal;
     private int meetNum;
     private String unit;
     private int edition;
@@ -44,11 +44,11 @@ public class LegalAdviserOrderConfirmChildEntity {
         this.typeAliasName = typeAliasName;
     }
 
-    public int getPriceTotal() {
+    public float getPriceTotal() {
         return priceTotal;
     }
 
-    public void setPriceTotal(int priceTotal) {
+    public void setPriceTotal(float priceTotal) {
         this.priceTotal = priceTotal;
     }
 
