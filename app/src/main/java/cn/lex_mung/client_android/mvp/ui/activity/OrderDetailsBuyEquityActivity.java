@@ -144,10 +144,12 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
     EvaluateStarView evaluateStarView_attitude;
     @BindView(R.id.tv_evaluate_info_content)
     TextView tv_evaluate_info_content;
-    @BindView(R.id.iv_evaluate_whole)
-    ImageView iv_evaluate_whole;
-    @BindView(R.id.tv_evaluate_whole)
-    TextView tv_evaluate_whole;
+    @BindView(R.id.iv_evaluate_bad)
+    ImageView iv_evaluate_bad;
+    @BindView(R.id.iv_evaluate_commonly)
+    ImageView iv_evaluate_commonly;
+    @BindView(R.id.iv_evaluate_fine)
+    ImageView iv_evaluate_fine;
 
     @BindView(R.id.tv_btn_left)
     TextView tv_btn_left;
@@ -336,18 +338,19 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
             fl_evaluate_info.setVisibility(View.GONE);
         } else {
             fl_evaluate_info.setVisibility(View.VISIBLE);
+
+            iv_evaluate_bad.setImageDrawable(ContextCompat.getDrawable(mActivity, R.drawable.ic_evaluate_bad_un));
+            iv_evaluate_commonly.setImageDrawable(ContextCompat.getDrawable(mActivity, R.drawable.ic_evaluate_commonly_un));
+            iv_evaluate_fine.setImageDrawable(ContextCompat.getDrawable(mActivity, R.drawable.ic_evaluate_fine_un));
+
             if (entity.getGeneralEvaluation() == 1) {
-                tv_evaluate_whole.setText("很差");
-                iv_evaluate_whole.setImageDrawable(ContextCompat.getDrawable(mActivity, R.drawable.ic_evaluate_bad));
+                iv_evaluate_bad.setImageDrawable(ContextCompat.getDrawable(mActivity, R.drawable.ic_evaluate_bad));
             } else if (entity.getGeneralEvaluation() == 3) {
-                tv_evaluate_whole.setText("一般");
-                iv_evaluate_whole.setImageDrawable(ContextCompat.getDrawable(mActivity, R.drawable.ic_evaluate_commonly));
+                iv_evaluate_commonly.setImageDrawable(ContextCompat.getDrawable(mActivity, R.drawable.ic_evaluate_commonly));
             } else if (entity.getGeneralEvaluation() == 5) {
-                tv_evaluate_whole.setText("超赞");
-                iv_evaluate_whole.setImageDrawable(ContextCompat.getDrawable(mActivity, R.drawable.ic_evaluate_fine));
+                iv_evaluate_fine.setImageDrawable(ContextCompat.getDrawable(mActivity, R.drawable.ic_evaluate_fine));
             } else {
-                tv_evaluate_whole.setText("超赞");
-                iv_evaluate_whole.setImageDrawable(ContextCompat.getDrawable(mActivity, R.drawable.ic_evaluate_fine));
+                iv_evaluate_fine.setImageDrawable(ContextCompat.getDrawable(mActivity, R.drawable.ic_evaluate_fine));
             }
 
             tv_evaluate_info_content.setText(entity.getEvaluationContent());
