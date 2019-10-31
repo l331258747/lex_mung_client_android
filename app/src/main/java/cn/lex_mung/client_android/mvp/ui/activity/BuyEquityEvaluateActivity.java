@@ -93,7 +93,7 @@ public class BuyEquityEvaluateActivity extends BaseActivity<BuyEquityEvaluatePre
                     , ImageConfigImpl
                             .builder()
                             .url(entity.getIconImage())
-                            .imageRadius(AppUtils.dip2px(mActivity, 5))
+                            .isCircle(true)
                             .imageView(iv_lawyer_head)
                             .build());
         } else {
