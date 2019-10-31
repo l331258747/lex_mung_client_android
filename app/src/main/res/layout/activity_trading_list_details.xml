@@ -119,10 +119,13 @@
 
     <TextView
         android:id="@+id/tv_order_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/qb_px_35"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/qb_px_20"
         android:includeFontPadding="false"
+        tools:text="asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf"
         app:layout_constraintStart_toEndOf="@id/tv_order_name_text"
         app:layout_constraintTop_toTopOf="@id/tv_order_name_text" />
 
@@ -142,6 +145,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/qb_px_20"
         android:includeFontPadding="false"
+        tools:text="asdfasdfa"
         android:textColor="@color/c_f8b22d"
         app:layout_constraintStart_toEndOf="@id/tv_order_price_text"
         app:layout_constraintTop_toTopOf="@id/tv_order_price_text" />

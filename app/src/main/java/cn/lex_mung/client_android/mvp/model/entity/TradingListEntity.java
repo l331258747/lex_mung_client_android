@@ -61,6 +61,8 @@ public class TradingListEntity implements Serializable {
     private String typeAliasName;
 
     public String getTypeAliasName() {
+        if(!orderType.equals("在线法律顾问"))
+            return "";
         return typeAliasName;
     }
 
@@ -145,6 +147,10 @@ public class TradingListEntity implements Serializable {
     }
 
     public String getOrderType() {
+        return orderType;
+    }
+
+    public String getOrderType2() {
         if(orderType.equals("在线法律顾问") && !TextUtils.isEmpty(typeAliasName)){
             return orderType + "\n" + typeAliasName;
         }

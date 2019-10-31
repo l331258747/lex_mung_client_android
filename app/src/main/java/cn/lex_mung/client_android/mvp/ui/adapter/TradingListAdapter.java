@@ -1,5 +1,7 @@
 package cn.lex_mung.client_android.mvp.ui.adapter;
 
+import android.text.TextUtils;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import cn.lex_mung.client_android.R;
@@ -19,6 +21,12 @@ public class TradingListAdapter extends BaseQuickAdapter<TradingListEntity, Base
         helper.setText(R.id.item_tv_title, item.getOrderType());
         helper.setText(R.id.item_tv_time, item.getCreateDate());
         helper.setText(R.id.item_tv_status, "(" + item.getPayStatus() + ")");
+
+        helper.setGone(R.id.item_tv_title2,false);
+        if(!TextUtils.isEmpty(item.getTypeAliasName())){
+            helper.setGone(R.id.item_tv_title2,true);
+            helper.setText(R.id.item_tv_title2,item.getTypeAliasName());
+        }
 
         if(item.getBuyerPayAmount() >= 0){
             helper.setText(R.id.item_tv_price, "+" + StringUtils.getStringNum(item.getBuyerPayAmount()));

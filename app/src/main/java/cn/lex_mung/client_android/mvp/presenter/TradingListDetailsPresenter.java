@@ -42,8 +42,8 @@ public class TradingListDetailsPresenter extends BasePresenter<TradingListDetail
         if (!TextUtils.isEmpty(bean.getCreateDate())) {
             mRootView.setOrderTime(bean.getCreateDate());
         }
-        if (!TextUtils.isEmpty(bean.getOrderType())) {
-            mRootView.setOrderName(bean.getOrderType());
+        if (!TextUtils.isEmpty(bean.getOrderType2())) {
+            mRootView.setOrderName(bean.getOrderType2());
         }
         if ("充值".equals(bean.getOrderType())) {
             mRootView.setOrderAmount(bean.getBuyerPayAmount() + "元"

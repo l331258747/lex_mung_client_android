@@ -224,8 +224,9 @@
             android:id="@+id/tv_info_server_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxWidth="@dimen/qb_px_400"
             android:textColor="@color/c_737373"
-            tools:text="服务类型" />
+            tools:text="服务类型服务类型服务类型服务类型服务类型服务类型" />
 
     </LinearLayout>
 

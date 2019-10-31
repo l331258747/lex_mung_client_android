@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -33,6 +34,7 @@ import cn.lex_mung.client_android.mvp.contract.BuyEquityEvaluateContract;
 import cn.lex_mung.client_android.mvp.presenter.BuyEquityEvaluatePresenter;
 
 import cn.lex_mung.client_android.R;
+import me.zl.mvp.utils.CharacterHandler;
 
 public class BuyEquityEvaluateActivity extends BaseActivity<BuyEquityEvaluatePresenter> implements BuyEquityEvaluateContract.View {
 
@@ -108,6 +110,8 @@ public class BuyEquityEvaluateActivity extends BaseActivity<BuyEquityEvaluatePre
         evaluateStarView_attitude.setNum(5);
         evaluateStarView_attitude.setClick(true);
         setEvaluateWhole(5);
+
+        et_describe.setFilters(new InputFilter[]{CharacterHandler.emojiFilter});
 
     }
 
