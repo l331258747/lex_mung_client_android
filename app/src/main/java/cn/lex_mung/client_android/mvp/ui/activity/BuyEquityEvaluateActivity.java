@@ -101,7 +101,7 @@ public class BuyEquityEvaluateActivity extends BaseActivity<BuyEquityEvaluatePre
         }
 
         tv_lawyer_name.setText(entity.getLawyerName());
-        tv_lawyer_area.setText(entity.getLawyerRegion());
+        tv_lawyer_area.setText(entity.getInstitutionName());
 
         evaluateStarView_major.setNum(5);
         evaluateStarView_major.setClick(true);
