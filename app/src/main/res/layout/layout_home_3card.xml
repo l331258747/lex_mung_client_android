@@ -38,15 +38,18 @@
 
     <TextView
         android:id="@+id/tv_card1_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/qb_px_30"
+        android:layout_marginStart="@dimen/qb_px_30"
+        android:layout_marginEnd="@dimen/qb_px_30"
         android:layout_marginTop="@dimen/qb_px_30"
         android:textColor="@color/c_ff"
         android:textSize="16sp"
         android:textStyle="bold"
+        android:maxLines="2"
         app:layout_constraintStart_toStartOf="@+id/view_card1"
         app:layout_constraintTop_toTopOf="@+id/view_card1"
+        app:layout_constraintEnd_toEndOf="@+id/view_card1"
         tools:text="LEX法务卡" />
 
     <TextView
@@ -111,15 +114,18 @@
 
     <TextView
         android:id="@+id/tv_card2_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/qb_px_30"
+        android:layout_marginStart="@dimen/qb_px_30"
+        android:layout_marginEnd="@dimen/qb_px_30"
         android:layout_marginTop="@dimen/qb_px_5"
         android:includeFontPadding="false"
         android:textColor="@color/c_ff"
         android:textSize="16sp"
         android:textStyle="bold"
+        android:maxLines="1"
         app:layout_constraintStart_toStartOf="@+id/view_card2"
+        app:layout_constraintEnd_toEndOf="@+id/view_card2"
         app:layout_constraintTop_toBottomOf="@+id/tv_card2_tag"
         app:layout_goneMarginTop="@dimen/qb_px_25"
         tools:text="LEX法务卡" />
@@ -172,15 +178,18 @@
 
     <TextView
         android:id="@+id/tv_card3_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/qb_px_30"
+        android:layout_marginStart="@dimen/qb_px_30"
+        android:layout_marginEnd="@dimen/qb_px_30"
         android:layout_marginTop="@dimen/qb_px_5"
         android:includeFontPadding="false"
         android:textColor="@color/c_ff"
         android:textSize="16sp"
         android:textStyle="bold"
+        android:maxLines="1"
         app:layout_constraintStart_toStartOf="@+id/view_card3"
+        app:layout_constraintEnd_toEndOf="@+id/view_card3"
         app:layout_constraintTop_toBottomOf="@+id/tv_card3_tag"
         app:layout_goneMarginTop="@dimen/qb_px_25"
         tools:text="LEX法务卡" />
