@@ -330,6 +330,7 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
                 bundle.putString(BundleTags.TITLE, webGoOintmentEntity.getTitle());
                 bundle.putFloat(BundleTags.MONEY, webGoOintmentEntity.getAmount());
                 bundle.putString(BundleTags.LAWSUI_ID,webGoOintmentEntity.getLawsuiId());
+                bundle.putString(BundleTags.ORDER_NO,webGoOintmentEntity.getOrderNo());
                 bundle.putInt(BundleTags.TYPE,3);
                 launchActivity(new Intent(mActivity, RushLoanPayActivity.class), bundle);
             } else {

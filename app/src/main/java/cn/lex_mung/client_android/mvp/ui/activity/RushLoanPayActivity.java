@@ -116,6 +116,7 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
             orderPrice = bundleIntent.getFloat(BundleTags.MONEY);
             type = bundleIntent.getInt(BundleTags.TYPE);
             id = bundleIntent.getInt(BundleTags.ID);
+            mPresenter.setOrderNo(bundleIntent.getString(BundleTags.ORDER_NO));
 
             tvCommodity.setText(bundleIntent.getString(BundleTags.TITLE));
             tvCommodityPrice.setText(StringUtils.getStringNum(orderPrice) + "元");

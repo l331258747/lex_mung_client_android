@@ -96,10 +96,15 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
 
     private int meetNum;//线下见面次数
     private List<String> legalAdviserIds;//子项目ids
+    private String orderNo;
 
     private String lawsuiId;
 
     private boolean flag = false;
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
+    }
 
     public void setMeetNum(int meetNum) {
         this.meetNum = meetNum;
@@ -613,7 +618,7 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
         map.put("type", payType);
         map.put("useCoupon", 0);//不使用优惠券
 
-        map.put("other", "{\"lawsuiId\":\"" + lawsuiId + "\",\"requireTypeId\":"+ requireTypeId + "}");
+        map.put("other", "{\"lawsuiId\":\"" + lawsuiId + "\",\"requireTypeId\":"+ requireTypeId + ",\"legalAdviserOrderNo\":\"" + orderNo +"\"}");
 
         map.put("source", 2);
         map.put("product", 7);
