@@ -305,18 +305,16 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
             entity.setBalance(balanceEntity.getAmount().getAllBalanceAmount());
             list.add(entity);
         }
-        if(type != 3){
-            if (balanceEntity.getOrgAmounts() != null && balanceEntity.getOrgAmounts().size() > 0) {
-                for (int i = 0; i < balanceEntity.getOrgAmounts().size(); i++) {
-                    PayTypeEntity entity = new PayTypeEntity();
-                    entity.setIcon(R.drawable.ic_pay_group);
-                    entity.setTitle(balanceEntity.getOrgAmounts().get(i).getCouponName());
-                    entity.setType(6);
-                    entity.setSelected(false);
-                    entity.setBalance(balanceEntity.getOrgAmounts().get(i).getAmount());
-                    entity.setGroupId(balanceEntity.getOrgAmounts().get(i).getCouponId());
-                    list.add(entity);
-                }
+        if (balanceEntity.getOrgAmounts() != null && balanceEntity.getOrgAmounts().size() > 0) {
+            for (int i = 0; i < balanceEntity.getOrgAmounts().size(); i++) {
+                PayTypeEntity entity = new PayTypeEntity();
+                entity.setIcon(R.drawable.ic_pay_group);
+                entity.setTitle(balanceEntity.getOrgAmounts().get(i).getCouponName());
+                entity.setType(6);
+                entity.setSelected(false);
+                entity.setBalance(balanceEntity.getOrgAmounts().get(i).getAmount());
+                entity.setGroupId(balanceEntity.getOrgAmounts().get(i).getCouponId());
+                list.add(entity);
             }
         }
 

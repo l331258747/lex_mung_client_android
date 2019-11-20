@@ -101,6 +101,8 @@
             android:layout_marginTop="@dimen/qb_px_10"
             android:textColor="@color/c_737373"
             android:textSize="12sp"
+            android:maxLines="2"
+            android:ellipsize="end"
             tools:text="起草法律文书" />
 
         <TextView

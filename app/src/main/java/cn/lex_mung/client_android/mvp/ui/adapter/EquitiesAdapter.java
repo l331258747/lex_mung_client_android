@@ -40,11 +40,11 @@ public class EquitiesAdapter extends BaseQuickAdapter<EquitiesListEntity, BaseVi
         helper.setGone(R.id.tv_content,false);
         helper.getView(R.id.item_tv_certified).setVisibility(View.GONE);
         if(item.getIsBuyEquity()){//购买 开通的权益
-            helper.setGone(R.id.tv_title,true);
-            helper.setGone(R.id.tv_content,true);
-
-            helper.setText(R.id.tv_title,item.getEquityName());
-            helper.setText(R.id.tv_content,item.getEquityDesc());
+//            helper.setGone(R.id.tv_title,true);
+//            helper.setGone(R.id.tv_content,true);
+//
+//            helper.setText(R.id.tv_title,item.getEquityName());
+//            helper.setText(R.id.tv_content,item.getEquityDesc());
 
             helper.getView(R.id.item_tv_certified).setVisibility(View.VISIBLE);
             if(item.isOwn()){//开通

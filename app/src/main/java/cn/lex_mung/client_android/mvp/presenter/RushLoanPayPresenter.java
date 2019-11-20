@@ -611,6 +611,12 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
                     return;
                 }
                 break;
+            case 6://集团卡支付
+                if (payMoney > mRootView.getTypeBalance(6, payTypeGroup)) {
+                    mRootView.showMessage("集团卡余额不足");
+                    return;
+                }
+                break;
         }
         long money = (long) DecimalUtil.multiply(payMoney, 100);
         Map<String, Object> map = new HashMap<>();
@@ -618,7 +624,11 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
         map.put("type", payType);
         map.put("useCoupon", 0);//不使用优惠券
 
-        map.put("other", "{\"lawsuiId\":\"" + lawsuiId + "\",\"requireTypeId\":"+ requireTypeId + ",\"legalAdviserOrderNo\":\"" + orderNo +"\"}");
+        if (payType == 6) {
+            map.put("other", "{\"lawsuiId\":\"" + lawsuiId + "\",\"requireTypeId\":"+ requireTypeId + ",\"legalAdviserOrderNo\":\"" + orderNo + ",\"groupCardId\":" + payTypeGroup + "}");
+        } else {
+            map.put("other", "{\"lawsuiId\":\"" + lawsuiId + "\",\"requireTypeId\":"+ requireTypeId + ",\"legalAdviserOrderNo\":\"" + orderNo +"\"}");
+        }
 
         map.put("source", 2);
         map.put("product", 7);
