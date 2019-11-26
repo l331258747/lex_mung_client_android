@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,25 +15,28 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+
+import java.util.List;
+
 import butterknife.BindView;
+import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.app.DataHelperTags;
+import cn.lex_mung.client_android.di.component.DaggerPracticeExperienceComponent;
+import cn.lex_mung.client_android.di.module.PracticeExperienceModule;
+import cn.lex_mung.client_android.mvp.contract.PracticeExperienceContract;
+import cn.lex_mung.client_android.mvp.model.entity.CaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
+import cn.lex_mung.client_android.mvp.presenter.PracticeExperiencePresenter;
 import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.PersonalHomePageCaseAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
-
 import cn.lex_mung.client_android.mvp.ui.widget.EmptyView2;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
-
-import cn.lex_mung.client_android.di.component.DaggerPracticeExperienceComponent;
-import cn.lex_mung.client_android.di.module.PracticeExperienceModule;
-import cn.lex_mung.client_android.mvp.contract.PracticeExperienceContract;
-import cn.lex_mung.client_android.mvp.presenter.PracticeExperiencePresenter;
-
-import cn.lex_mung.client_android.R;
 import me.zl.mvp.utils.DataHelper;
 
 public class PracticeExperienceFragment extends BaseFragment<PracticeExperiencePresenter> implements PracticeExperienceContract.View {
@@ -95,7 +99,12 @@ public class PracticeExperienceFragment extends BaseFragment<PracticeExperienceP
     EmptyView2 emptyView;
     @BindView(R.id.cl_parent)
     ConstraintLayout clParent;
+    @BindView(R.id.smart_refresh_layout)
+    SmartRefreshLayout smartRefreshLayout;
+    @BindView(R.id.scrollView)
+    NestedScrollView scrollView;
 
+    PersonalHomePageCaseAdapter caseAdapter;
 
     public static PracticeExperienceFragment newInstance(LawsHomePagerBaseEntity entity) {
         PracticeExperienceFragment fragment = new PracticeExperienceFragment();
@@ -123,8 +132,10 @@ public class PracticeExperienceFragment extends BaseFragment<PracticeExperienceP
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         if (getArguments() != null) {
-            mPresenter.setEntity((LawsHomePagerBaseEntity) getArguments().getSerializable(BundleTags.ENTITY), recyclerViewLawsCase);
+            mPresenter.setEntity((LawsHomePagerBaseEntity) getArguments().getSerializable(BundleTags.ENTITY));
         }
+
+        initRecyclerView();
 
         emptyView.getBtn().setOnClickListener(v -> {
             bundle.clear();
@@ -136,19 +147,66 @@ public class PracticeExperienceFragment extends BaseFragment<PracticeExperienceP
     @Override
     public void onResume() {
         super.onResume();
-        if(!DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)){
+        if (!DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
             emptyView.setVisibility(View.VISIBLE);
             clParent.setVisibility(View.GONE);
-        }else{
+        } else {
             emptyView.setVisibility(View.GONE);
             clParent.setVisibility(View.VISIBLE);
         }
     }
 
-    @Override
-    public void initRecyclerView(PersonalHomePageCaseAdapter caseAdapter) {
+    public void initRecyclerView() {
+
+        caseAdapter = new PersonalHomePageCaseAdapter();
+        caseAdapter.setOnItemClickListener((adapter, view, position) -> {
+            if (isFastClick()) return;
+            CaseListEntity bean = caseAdapter.getItem(position);
+            if (bean == null) return;
+            Bundle bundle = new Bundle();
+            bundle.clear();
+            bundle.putString(BundleTags.URL, bean.getUrl());
+            bundle.putString(BundleTags.TITLE, bean.getTitle());
+            launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+        });
+
+        smartRefreshLayout.setEnableRefresh(false);
+        smartRefreshLayout.setEnableOverScrollBounce(true);
+
+        scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                    if (mPresenter.getPageNum() < mPresenter.getTotalNum()) {
+                        mPresenter.setPageNum(mPresenter.getPageNum() + 1);
+                        mPresenter.getCaseList(true);
+                    } else {
+                        smartRefreshLayout.finishLoadMoreWithNoMoreData();
+                    }
+                }
+            }
+        });
+
         AppUtils.configRecyclerView(recyclerViewLawsCase, new LinearLayoutManager(mActivity));
+        recyclerViewLawsCase.setNestedScrollingEnabled(false);
         recyclerViewLawsCase.setAdapter(caseAdapter);
+    }
+
+    public void setAdapter(boolean isAdd, List<CaseListEntity> entities) {
+        if (isAdd) {
+            caseAdapter.addData(entities);
+            smartRefreshLayout.finishLoadMore();
+        } else {
+            caseAdapter.setNewData(entities);
+            if (mPresenter.getTotalNum() == mPresenter.getPageNum()) {
+                smartRefreshLayout.finishLoadMoreWithNoMoreData();
+            }
+            if (caseAdapter.getItemCount() == 0) {
+                hideCaseLayout();
+            } else {
+                showCaseLayout();
+            }
+        }
     }
 
     @Override

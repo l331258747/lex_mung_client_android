@@ -1,35 +1,28 @@
 package cn.lex_mung.client_android.mvp.presenter;
 
 import android.app.Application;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 
 import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import cn.lex_mung.client_android.app.BundleTags;
+import javax.inject.Inject;
+
+import cn.lex_mung.client_android.mvp.contract.PracticeExperienceContract;
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.CaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
-import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
-import cn.lex_mung.client_android.mvp.ui.adapter.PersonalHomePageCaseAdapter;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
-import me.zl.mvp.integration.AppManager;
 import me.zl.mvp.di.scope.FragmentScope;
-import me.zl.mvp.mvp.BasePresenter;
 import me.zl.mvp.http.imageloader.ImageLoader;
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
-
-import javax.inject.Inject;
-
-import cn.lex_mung.client_android.mvp.contract.PracticeExperienceContract;
+import me.zl.mvp.integration.AppManager;
+import me.zl.mvp.mvp.BasePresenter;
 import me.zl.mvp.utils.RxLifecycleUtils;
 import okhttp3.RequestBody;
 
@@ -50,15 +43,24 @@ public class PracticeExperiencePresenter extends BasePresenter<PracticeExperienc
     private int pageNum = 1;
     private int totalNum;
 
-    private PersonalHomePageCaseAdapter caseAdapter;
+    public int getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(int pageNum) {
+        this.pageNum = pageNum;
+    }
+
+    public int getTotalNum() {
+        return totalNum;
+    }
 
     @Inject
     public PracticeExperiencePresenter(PracticeExperienceContract.Model model, PracticeExperienceContract.View rootView) {
         super(model, rootView);
     }
 
-    public void setEntity(LawsHomePagerBaseEntity entity, RecyclerView recyclerView) {
-        initAdapter(recyclerView);
+    public void setEntity(LawsHomePagerBaseEntity entity) {
         if (entity == null
                 || entity.getPracticeInfo() == null) return;
         this.entity = entity;
@@ -164,30 +166,8 @@ public class PracticeExperiencePresenter extends BasePresenter<PracticeExperienc
         }
     }
 
-    private void initAdapter(RecyclerView recyclerView) {
-        caseAdapter = new PersonalHomePageCaseAdapter();
-        caseAdapter.setOnItemClickListener((adapter, view, position) -> {
-            if (isFastClick()) return;
-            CaseListEntity bean = caseAdapter.getItem(position);
-            if (bean == null) return;
-            Bundle bundle = new Bundle();
-            bundle.clear();
-            bundle.putString(BundleTags.URL, bean.getUrl());
-            bundle.putString(BundleTags.TITLE, bean.getTitle());
-            mRootView.launchActivity(new Intent(mApplication, WebActivity.class), bundle);
-        });
-        caseAdapter.setOnLoadMoreListener(() -> {
-            if (pageNum < totalNum) {
-                pageNum = pageNum + 1;
-                getCaseList(true);
-            } else {
-                caseAdapter.loadMoreEnd();
-            }
-        }, recyclerView);
-        mRootView.initRecyclerView(caseAdapter);
-    }
 
-    private void getCaseList(boolean isAdd) {
+    public void getCaseList(boolean isAdd) {
         Map<String, Object> map = new HashMap<>();
         map.put("pageNum", pageNum);
         map.put("memberId", entity.getMemberId());
@@ -208,26 +188,12 @@ public class PracticeExperiencePresenter extends BasePresenter<PracticeExperienc
                         if (baseResponse.isSuccess()) {
                             totalNum = baseResponse.getData().getPages();
                             pageNum = baseResponse.getData().getPageNum();
-                            caseAdapter.setNewData(baseResponse.getData().getList());
-                            if (isAdd) {
-                                caseAdapter.addData(baseResponse.getData().getList());
-                                caseAdapter.loadMoreComplete();
-                            } else {
-                                caseAdapter.loadMoreComplete();
-                                caseAdapter.setNewData(baseResponse.getData().getList());
-                                if (totalNum == pageNum) {
-                                    caseAdapter.loadMoreEnd();
-                                }
-                                if (caseAdapter.getItemCount() == 0) {
-                                    mRootView.hideCaseLayout();
-                                } else {
-                                    mRootView.showCaseLayout();
-                                }
-                            }
+                            mRootView.setAdapter(isAdd, baseResponse.getData().getList());
                         }
                     }
                 });
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();

@@ -1,12 +1,13 @@
 package cn.lex_mung.client_android.mvp.contract;
 
+import java.util.List;
+
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.CaseListEntity;
-import cn.lex_mung.client_android.mvp.ui.adapter.PersonalHomePageCaseAdapter;
 import io.reactivex.Observable;
-import me.zl.mvp.mvp.IView;
 import me.zl.mvp.mvp.IModel;
+import me.zl.mvp.mvp.IView;
 import okhttp3.RequestBody;
 
 public interface PracticeExperienceContract {
@@ -44,11 +45,11 @@ public interface PracticeExperienceContract {
 
         void showNoDataLayout();
 
-        void initRecyclerView(PersonalHomePageCaseAdapter caseAdapter);
-
         void showCaseLayout();
 
         void hideCaseLayout();
+
+        void setAdapter(boolean isAdd, List<CaseListEntity> entities);
     }
 
     interface Model extends IModel {
