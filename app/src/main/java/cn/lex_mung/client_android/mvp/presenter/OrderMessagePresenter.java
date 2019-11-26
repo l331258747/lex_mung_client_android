@@ -7,37 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import cn.lex_mung.client_android.app.DataHelperTags;
-import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
-import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
-import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultDetail1Activity;
-import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.OrderDetailsBuyEquityActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
-import cn.lex_mung.client_android.utils.GsonUtil;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
-import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
-import me.zl.mvp.integration.AppManager;
-import me.zl.mvp.di.scope.FragmentScope;
-import me.zl.mvp.mvp.BasePresenter;
-import me.zl.mvp.http.imageloader.ImageLoader;
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
-import me.zl.mvp.utils.AppUtils;
-import me.zl.mvp.utils.DataHelper;
-import me.zl.mvp.utils.RxLifecycleUtils;
-
-import javax.inject.Inject;
-
-import cn.lex_mung.client_android.app.BundleTags;
-import cn.lex_mung.client_android.mvp.contract.OrderMessageContract;
-import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
-import cn.lex_mung.client_android.mvp.model.entity.MessageEntity;
-import cn.lex_mung.client_android.mvp.ui.activity.MyAccountActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.MyOrderActivity;
-import cn.lex_mung.client_android.mvp.ui.adapter.OrderMessageAdapter;
-
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -45,7 +14,35 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import static cn.lex_mung.client_android.app.DataHelperTags.IS_LOGIN_SUCCESS;
+import javax.inject.Inject;
+
+import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.app.DataHelperTags;
+import cn.lex_mung.client_android.mvp.contract.OrderMessageContract;
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
+import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
+import cn.lex_mung.client_android.mvp.model.entity.MessageEntity;
+import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
+import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultDetail1Activity;
+import cn.lex_mung.client_android.mvp.ui.activity.MyAccountActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.MyOrderActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.OrderDetailsBuyEquityActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.OrderDetailsPrivateLawyerActivity;
+import cn.lex_mung.client_android.mvp.ui.adapter.OrderMessageAdapter;
+import cn.lex_mung.client_android.utils.GsonUtil;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
+import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
+import me.zl.mvp.di.scope.FragmentScope;
+import me.zl.mvp.http.imageloader.ImageLoader;
+import me.zl.mvp.integration.AppManager;
+import me.zl.mvp.mvp.BasePresenter;
+import me.zl.mvp.utils.AppUtils;
+import me.zl.mvp.utils.DataHelper;
+import me.zl.mvp.utils.RxLifecycleUtils;
+
 import static cn.lex_mung.client_android.app.EventBusTags.MESSAGE_INFO.SET_ORDER_UN_READ_MESSAGE_NUM;
 import static cn.lex_mung.client_android.app.EventBusTags.MESSAGE_INFO.UN_READ_MESSAGE_NUM;
 import static cn.lex_mung.client_android.app.EventBusTags.MESSAGE_INFO.UPDATE_ORDER_UN_READ_MESSAGE_NUM;
@@ -133,6 +130,25 @@ public class OrderMessagePresenter extends BasePresenter<OrderMessageContract.Mo
                         break;
 //                  case 282://法律顾问 - 抢单
 //                      break;
+                    case 290://私人律师团 - 权益分享用户提醒
+                        String str2 = DataHelper.getStringSF(mApplication, DataHelperTags.PRIVATE_LAWYER_URL);
+                        HomeChildEntity mEntity2 = GsonUtil.convertString2Object(str2, HomeChildEntity.class);
+                        if (!TextUtils.isEmpty(str2) && mEntity2 != null) {
+                            bundle.clear();
+                            bundle.putString(BundleTags.URL, mEntity2.getJumpurl());
+                            bundle.putString(BundleTags.TITLE, mEntity2.getTitle());
+                            intent.putExtras(bundle);
+                            intent.setClass(mApplication, FreeConsultDetail1Activity.class);
+                        }
+                        break;
+//                case 291://私人律师团 - 新订单发布提醒
+//                    break;
+                    case 292://私人律师团 - 订单详情
+                        bundle.clear();
+                        bundle.putInt(BundleTags.ID, bean.getBusiId());
+                        intent.putExtras(bundle);
+                        intent.setClass(mApplication, OrderDetailsPrivateLawyerActivity.class);
+                        break;
 //                  default:
 //                      mRootView.showMessage("当前消息可能需要新版本才能打开，建议检测是否存在最新版本。");
 //                      break;

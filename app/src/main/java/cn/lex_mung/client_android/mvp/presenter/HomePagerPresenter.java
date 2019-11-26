@@ -427,6 +427,12 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
             DataHelper.setStringSF(mApplication, DataHelperTags.QUICK_URL, GsonUtil.convertVO2String(homeChildEntity));
         }
 
+        if (!TextUtils.isEmpty(entity.getLawyerGroupUrl())){
+            HomeChildEntity homeChildEntity = new HomeChildEntity();
+            homeChildEntity.setJumpurl(entity.getLawyerGroupUrl());
+            homeChildEntity.setTitle("私人律师团");
+            DataHelper.setStringSF(mApplication, DataHelperTags.PRIVATE_LAWYER_URL, GsonUtil.convertVO2String(homeChildEntity));
+        }
     }
 
     //获取首页数据

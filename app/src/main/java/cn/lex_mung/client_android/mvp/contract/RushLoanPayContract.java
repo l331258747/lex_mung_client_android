@@ -5,24 +5,21 @@ import android.app.Activity;
 import java.util.List;
 
 import cn.lex_mung.client_android.mvp.model.entity.AmountBalanceEntity;
-import cn.lex_mung.client_android.mvp.model.entity.BalanceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.OrderStatusEntity;
-import cn.lex_mung.client_android.mvp.model.entity.OrgAmountEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayEntity;
-import cn.lex_mung.client_android.mvp.model.entity.mine.RechargeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.CommodityContentEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.QuickPayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RequirementCreateEntity;
 import cn.lex_mung.client_android.mvp.model.entity.payEquity.LegalAdviserOrderConfirmEntity;
 import cn.lex_mung.client_android.mvp.model.entity.payEquity.LegalAdviserOrderPayEntity;
+import cn.lex_mung.client_android.mvp.model.entity.payEquity.PrivategroupBuyEntity;
 import io.reactivex.Observable;
-import me.zl.mvp.mvp.IView;
 import me.zl.mvp.mvp.IModel;
+import me.zl.mvp.mvp.IView;
 import okhttp3.RequestBody;
-import retrofit2.http.Body;
 
 
 public interface RushLoanPayContract {
@@ -70,5 +67,8 @@ public interface RushLoanPayContract {
         Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> legalAdviserServerCoupon(float priceTotal);//优惠券列表
         Observable<BaseResponse<LegalAdviserOrderPayEntity>> legalAdviserOrderPay(RequestBody body);//创建
         Observable<BaseResponse<QuickPayEntity>> legalAdviserOrderAmount(int couponId, double orderAmount);//实付金额
+
+        //在线法律顾问
+        Observable<BaseResponse<PrivategroupBuyEntity>> privategroupBuy(RequestBody body);
     }
 }

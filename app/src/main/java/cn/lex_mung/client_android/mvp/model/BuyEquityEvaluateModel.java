@@ -41,4 +41,11 @@ public class BuyEquityEvaluateModel extends BaseModel implements BuyEquityEvalua
                 .obtainRetrofitService(CommonService.class)
                 .legalAdviserOrderEvaluate(body);
     }
+
+    @Override
+    public Observable<BaseResponse> privateLawyersEvaluateAdd(RequestBody body) {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .privateLawyersEvaluateAdd(body);
+    }
 }

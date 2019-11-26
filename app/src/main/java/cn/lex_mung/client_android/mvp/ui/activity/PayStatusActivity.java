@@ -175,7 +175,7 @@ public class PayStatusActivity extends BaseActivity<PayStatusPresenter> implemen
         if (isFastClick()) return;
         switch (view.getId()) {
             case R.id.bt_back:
-                if(isSuccess){
+                if (isSuccess) {
                     switch (DataHelper.getIntergerSF(mActivity, DataHelperTags.PAY_TYPE)) {
                         case PayStatusTags.PAY://充值，无优惠券
                         case PayStatusTags.PAY_COUPON://充值,有优惠券
@@ -199,12 +199,12 @@ public class PayStatusActivity extends BaseActivity<PayStatusPresenter> implemen
                             killMyself();
                             break;
                     }
-                }else{
+                } else {
                     killMyself();
                 }
                 break;
             case R.id.bt_back2:
-                if(isSuccess){
+                if (isSuccess) {
                     switch (DataHelper.getIntergerSF(mActivity, DataHelperTags.PAY_TYPE)) {
                         case PayStatusTags.ONLINE_LAWYER://在线法律顾问
                             killMyself();
@@ -225,19 +225,26 @@ public class PayStatusActivity extends BaseActivity<PayStatusPresenter> implemen
                             killMyself();
                             AppManager.getAppManager().killAllNotClass(MainActivity.class);
                             ((MainActivity) AppManager.getAppManager().findActivity(MainActivity.class)).switchPage(1);
-                            //TODO webActivity 进去有权益详情页  预订  私人律师团
 
+                            String str2 = DataHelper.getStringSF(mActivity, DataHelperTags.PRIVATE_LAWYER_URL);
+                            HomeChildEntity entity2 = GsonUtil.convertString2Object(str2, HomeChildEntity.class);
+                            if (!TextUtils.isEmpty(str2) && entity2 != null) {
+                                bundle.clear();
+                                bundle.putString(BundleTags.URL, entity2.getJumpurl());
+                                bundle.putString(BundleTags.TITLE, entity2.getTitle());
+                                launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+                            }
                             break;
                         default:
                             killMyself();
                             break;
                     }
-                }else{
+                } else {
                     switch (DataHelper.getIntergerSF(mActivity, DataHelperTags.PAY_TYPE)) {
                         case PayStatusTags.ONLINE_LAWYER://在线法律顾问
                         case PayStatusTags.PRIVATE_LAWYER://私人律师团
                             killMyself();
-                            launchActivity(new Intent(mActivity,MyAccountActivity.class));
+                            launchActivity(new Intent(mActivity, MyAccountActivity.class));
                             break;
                         default:
                             killMyself();

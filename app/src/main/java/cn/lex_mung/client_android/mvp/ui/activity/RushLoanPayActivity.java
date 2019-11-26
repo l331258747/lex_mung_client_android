@@ -87,7 +87,7 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
     RecyclerView recyclerViewCommodity;
 
     private DefaultDialog defaultDialog;
-    int type;//0热门需求,1快速咨询,2付费权益,3诉讼无忧保服务
+    int type;//0热门需求,1快速咨询,2付费权益,3诉讼无忧保服务,4在线法律顾问
     int id;
 
     private int couponId;
@@ -184,7 +184,9 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.bt_pay:
-                if(type == 3){//3诉讼无忧保服务
+                if(type == 4){//私人律师团
+                    mPresenter.privateLawyerCreate(webView.getSettings().getUserAgentString());
+                }else if(type == 3){//3诉讼无忧保服务
                     mPresenter.buyEquity500Pay(webView.getSettings().getUserAgentString());
                 }else if(type == 2){//付费权益
                     mPresenter.buyEquityCreate(webView.getSettings().getUserAgentString());
@@ -198,7 +200,9 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
             case R.id.rl_coupon_type:
                 bundle.clear();
                 bundle.putInt(BundleTags.ID, couponId);//优惠券id
-                if(type == 3){
+                if(type == 4){
+                    bundle.putInt(BundleTags.TYPE, 4);
+                }else if(type == 3){
                     return;
                 }else if(type == 2){
                     bundle.putInt(BundleTags.TYPE, 3);

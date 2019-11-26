@@ -8,6 +8,15 @@ public class WebGoEquityPayEntity {
     private List<String> legalAdviserIds;
     private float priceTotal;
     private int meetNum;
+    private int product;
+
+    public void setProduct(int product) {
+        this.product = product;
+    }
+
+    public int getProduct() {
+        return product;
+    }
 
     public int getRequireTypeId() {
         return requireTypeId;

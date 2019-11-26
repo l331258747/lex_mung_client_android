@@ -116,7 +116,9 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
 
 
     private void getList(boolean isAdd){
-        if(type == 3){
+        if(type == 4){
+            getCouponsList2(isAdd,128);
+        }else if(type == 3){
             getBuyEquityCouponsList(isAdd);
         }else if(type == 2){
             getCouponsList2(isAdd);//热门需求
@@ -194,6 +196,10 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
     }
 
     private void getCouponsList2(boolean isAdd) {
+        this.getCouponsList2(isAdd,productId);
+    }
+
+    private void getCouponsList2(boolean isAdd,int productId) {
         mModel.optimalRequireList(pageNum, orderAmount,productId)
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))

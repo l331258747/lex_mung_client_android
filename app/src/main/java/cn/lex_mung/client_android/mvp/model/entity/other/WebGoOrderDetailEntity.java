@@ -25,4 +25,8 @@ public class WebGoOrderDetailEntity {
     public String getOrderNo() {
         return orderNo;
     }
+
+    public int getId() {
+        return id;
+    }
 }

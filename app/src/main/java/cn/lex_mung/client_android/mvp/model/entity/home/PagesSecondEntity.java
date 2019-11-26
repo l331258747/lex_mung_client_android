@@ -20,6 +20,11 @@ public class PagesSecondEntity {
     private String examinUrl;
     private String quickConsultationUrl;
     private String onlineLegalUrl;
+    private String lawyerGroupUrl;
+
+    public String getLawyerGroupUrl() {
+        return lawyerGroupUrl;
+    }
 
     public String getQuickConsultationUrl() {
         return quickConsultationUrl;

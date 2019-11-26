@@ -440,21 +440,35 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 
             if (isFastClick()) return;
             if (mPresenter.isLogin()) {
-                bundle.clear();
-                bundle.putInt(BundleTags.ID, entity.getRequireTypeId());
 
-                List<String> mList = new ArrayList<>();
-                for (int i=0;i<entity.getLegalAdviserIds().size();i++){
-                    if(!TextUtils.isEmpty(entity.getLegalAdviserIds().get(i)))
-                        mList.add(entity.getLegalAdviserIds().get(i));
+                if(entity.getProduct() == 8){
+                    entity.setRequireTypeId(128);
+                    bundle.clear();
+                    bundle.putString(BundleTags.TITLE, "私人律师团");
+                    bundle.putString(BundleTags.REQUIRE_TYPE_NAME, "私人律师团");
+                    bundle.putFloat(BundleTags.MONEY, entity.getPriceTotal());
+                    bundle.putInt(BundleTags.TYPE, 4);
+                    launchActivity(new Intent(mActivity, RushLoanPayActivity.class), bundle);
+                }else{
+                    bundle.clear();
+                    bundle.putInt(BundleTags.ID, entity.getRequireTypeId());
+
+                    List<String> mList = new ArrayList<>();
+                    if(entity.getLegalAdviserIds() != null){
+                        for (int i=0;i<entity.getLegalAdviserIds().size();i++){
+                            if(!TextUtils.isEmpty(entity.getLegalAdviserIds().get(i)))
+                                mList.add(entity.getLegalAdviserIds().get(i));
+                        }
+                    }
+
+                    bundle.putStringArrayList(BundleTags.ENTITY, (ArrayList<String>) mList);
+                    bundle.putString(BundleTags.TITLE, "在线法律顾问");
+                    bundle.putString(BundleTags.REQUIRE_TYPE_NAME, "在线法律顾问");
+                    bundle.putFloat(BundleTags.MONEY, entity.getPriceTotal());
+                    bundle.putInt(BundleTags.NUM,entity.getMeetNum());
+                    bundle.putInt(BundleTags.TYPE, 2);
+                    launchActivity(new Intent(mActivity, RushLoanPayActivity.class), bundle);
                 }
-                bundle.putStringArrayList(BundleTags.ENTITY, (ArrayList<String>) mList);
-                bundle.putString(BundleTags.TITLE, "在线法律顾问");
-                bundle.putString(BundleTags.REQUIRE_TYPE_NAME, "在线法律顾问");
-                bundle.putFloat(BundleTags.MONEY, entity.getPriceTotal());
-                bundle.putInt(BundleTags.NUM,entity.getMeetNum());
-                bundle.putInt(BundleTags.TYPE, 2);
-                launchActivity(new Intent(mActivity, RushLoanPayActivity.class), bundle);
             } else {
                 bundle.clear();
                 bundle.putInt(BundleTags.TYPE, 1);
@@ -558,7 +572,12 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 
             WebGoOrderDetailEntity entity = GsonUtil.convertString2Object(string, WebGoOrderDetailEntity.class);
 
-            if(entity.getTypeId() == 71){//交易明细
+            if(entity.getTypeId() == 8){
+                bundle.clear();
+                bundle.putInt(BundleTags.ID, entity.getOrderId());
+                bundle.putString(BundleTags.TITLE,"订单详情");
+                launchActivity(new Intent(mActivity, OrderDetailsPrivateLawyerActivity.class), bundle);
+            }else if(entity.getTypeId() == 71){//交易明细
                 launchActivity(new Intent(mActivity, MyTradingListActivity.class));
             }else if(entity.getTypeId() == 7){//法律顾问详情页
                 bundle.clear();

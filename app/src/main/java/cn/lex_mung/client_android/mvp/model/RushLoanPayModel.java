@@ -21,6 +21,7 @@ import cn.lex_mung.client_android.mvp.model.entity.order.QuickPayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RequirementCreateEntity;
 import cn.lex_mung.client_android.mvp.model.entity.payEquity.LegalAdviserOrderConfirmEntity;
 import cn.lex_mung.client_android.mvp.model.entity.payEquity.LegalAdviserOrderPayEntity;
+import cn.lex_mung.client_android.mvp.model.entity.payEquity.PrivategroupBuyEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.integration.IRepositoryManager;
 import me.zl.mvp.mvp.BaseModel;
@@ -95,6 +96,13 @@ public class RushLoanPayModel extends BaseModel implements RushLoanPayContract.M
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .legalAdviserOrderAmount(body);
+    }
+
+    @Override
+    public Observable<BaseResponse<PrivategroupBuyEntity>> privategroupBuy(RequestBody body) {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .privategroupBuy(body);
     }
 
     @Override

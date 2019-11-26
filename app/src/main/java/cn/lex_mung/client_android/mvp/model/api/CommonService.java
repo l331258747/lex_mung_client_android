@@ -79,6 +79,7 @@ import cn.lex_mung.client_android.mvp.model.entity.payEquity.LegalAdviserOrderCo
 import cn.lex_mung.client_android.mvp.model.entity.payEquity.LegalAdviserOrderDetailEntity;
 import cn.lex_mung.client_android.mvp.model.entity.payEquity.LegalAdviserOrderPayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.payEquity.OrderPrivateLawyersDetailEntity;
+import cn.lex_mung.client_android.mvp.model.entity.payEquity.PrivategroupBuyEntity;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -1050,6 +1051,11 @@ public interface CommonService {
     @POST("client/private/lawyers/evaluate/add")
     Observable<BaseResponse> privateLawyersEvaluateAdd(@Body RequestBody body);
 
+    ///client/privategroup/buy
+    //POST
+    //购买私人律师团服务
+    @POST("client/privategroup/buy")
+    Observable<BaseResponse<PrivategroupBuyEntity>> privategroupBuy(@Body RequestBody body);
 
     //------------------------私人律师团 END
 }

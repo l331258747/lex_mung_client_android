@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.di.module.PushJumpModule;
@@ -79,7 +80,7 @@ public class PushJumpActivity extends BaseActivity<PushJumpPresenter> implements
                     if (DataHelper.getBooleanSF(mActivity, IS_LOGIN_SUCCESS)) {
                         bundle.clear();
                         bundle.putInt(BundleTags.ID, entity.getBusiId());
-                        bundle.putBoolean(BundleTags.IS_SHOW,true);
+                        bundle.putBoolean(BundleTags.IS_SHOW, true);
                         intent.putExtras(bundle);
                         intent.setClass(mActivity, FreeConsultDetail1Activity.class);
                     } else {
@@ -117,6 +118,26 @@ public class PushJumpActivity extends BaseActivity<PushJumpPresenter> implements
                     break;
 //                case 282://法律顾问 - 抢单
 //                    break;
+                case 290://私人律师团 - 权益分享用户提醒
+                    String str2 = DataHelper.getStringSF(mActivity, DataHelperTags.PRIVATE_LAWYER_URL);
+                    HomeChildEntity mEntity2 = GsonUtil.convertString2Object(str2, HomeChildEntity.class);
+                    if (!TextUtils.isEmpty(str2) && mEntity2 != null) {
+                        bundle.clear();
+                        bundle.putString(BundleTags.URL, mEntity2.getJumpurl());
+                        bundle.putString(BundleTags.TITLE, mEntity2.getTitle());
+                        intent.putExtras(bundle);
+                        intent.setClass(mActivity, WebActivity.class);
+                    }
+                    break;
+//                case 291://私人律师团 - 新订单发布提醒
+//                    break;
+                case 292://私人律师团 - 订单详情
+                    bundle.clear();
+                    bundle.putInt(BundleTags.ID, entity.getBusiId());
+                    intent.putExtras(bundle);
+                    intent.setClass(mActivity, OrderDetailsPrivateLawyerActivity.class);
+                    launchActivity(intent);
+                    break;
 //                default:
 //                    showMessage("当前消息可能需要新版本才能打开，建议检测是否存在最新版本。");
 //                    break;
