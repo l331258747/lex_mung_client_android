@@ -27,6 +27,7 @@ import cn.lex_mung.client_android.mvp.ui.activity.OrderDetailsActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.OrderDetailsBuyEquityActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.OrderDetailsEntrustActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.OrderDetailsExpertActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.OrderDetailsPrivateLawyerActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.MyOrderAdapter2;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -120,6 +121,14 @@ public class MyOrderPresenter extends BasePresenter<MyOrderContract.Model, MyOrd
                     bundle.putString(BundleTags.ORDER_NO,entity.getOrderNo());
                     mRootView.launchActivity(new Intent(mApplication, OrderDetailsBuyEquityActivity.class), bundle);
                     break;
+                case 8://私人律师团
+                    bundle.clear();
+                    bundle.putInt(BundleTags.ID, entity.getId());
+                    bundle.putString(BundleTags.TITLE,entity.getOrderType());
+                    bundle.putString(BundleTags.ORDER_NO,entity.getOrderNo());
+                    mRootView.launchActivity(new Intent(mApplication, OrderDetailsPrivateLawyerActivity.class), bundle);
+                    break;
+
             }
         });
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {

@@ -30,13 +30,14 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
-import cn.lex_mung.client_android.di.component.DaggerOrderDetailsBuyEquityComponent;
-import cn.lex_mung.client_android.di.module.OrderDetailsBuyEquityModule;
-import cn.lex_mung.client_android.mvp.contract.OrderDetailsBuyEquityContract;
+import cn.lex_mung.client_android.di.component.DaggerOrderDetailsPrivateLawyerComponent;
+import cn.lex_mung.client_android.di.module.OrderDetailsPrivateLawyerModule;
+import cn.lex_mung.client_android.mvp.contract.OrderDetailsPrivateLawyerContract;
 import cn.lex_mung.client_android.mvp.model.entity.other.QuickTimeBean;
+import cn.lex_mung.client_android.mvp.model.entity.payEquity.EvaluateBean;
 import cn.lex_mung.client_android.mvp.model.entity.payEquity.EvaluateIntent;
-import cn.lex_mung.client_android.mvp.model.entity.payEquity.LegalAdviserOrderDetailEntity;
-import cn.lex_mung.client_android.mvp.presenter.OrderDetailsBuyEquityPresenter;
+import cn.lex_mung.client_android.mvp.model.entity.payEquity.OrderPrivateLawyersDetailEntity;
+import cn.lex_mung.client_android.mvp.presenter.OrderDetailsPrivateLawyerPresenter;
 import cn.lex_mung.client_android.mvp.ui.adapter.OrderDetailsExpertInfoAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.TextRadioDialog;
@@ -51,9 +52,9 @@ import me.zl.mvp.utils.DeviceUtils;
 import me.zl.mvp.utils.StatusBarUtil;
 
 import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH;
-import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH_BUY_EQUITY_DETAIL;
+import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH_PRIVATE_LAWYER_DETAIL;
 
-public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyEquityPresenter> implements OrderDetailsBuyEquityContract.View {
+public class OrderDetailsPrivateLawyerActivity extends BaseActivity<OrderDetailsPrivateLawyerPresenter> implements OrderDetailsPrivateLawyerContract.View {
 
     @Inject
     ImageLoader mImageLoader;
@@ -119,21 +120,6 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    @BindView(R.id.ll_info_meet_time)
-    LinearLayout ll_info_meet_time;
-    @BindView(R.id.tv_info_meet_time)
-    TextView tv_info_meet_time;
-
-    @BindView(R.id.ll_info_meet_duration)
-    LinearLayout ll_info_meet_duration;
-    @BindView(R.id.tv_info_meet_duration)
-    TextView tv_info_meet_duration;
-
-    @BindView(R.id.ll_info_meet_place)
-    LinearLayout ll_info_meet_place;
-    @BindView(R.id.tv_info_meet_place)
-    TextView tv_info_meet_place;
-
     @BindView(R.id.fl_evaluate_info)
     FrameLayout fl_evaluate_info;
 
@@ -157,28 +143,19 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
     @BindView(R.id.tv_btn_right)
     TextView tv_btn_right;
 
-    @BindView(R.id.fl_500)
-    FrameLayout fl_500;
-    @BindView(R.id.tv_500_info_title)
-    TextView tv_500_info_title;
-    @BindView(R.id.tv_500_info_price)
-    TextView tv_500_info_price;
-    @BindView(R.id.tv_500_info_content)
-    TextView tv_500_info_content;
-
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
-        DaggerOrderDetailsBuyEquityComponent
+        DaggerOrderDetailsPrivateLawyerComponent
                 .builder()
                 .appComponent(appComponent)
-                .orderDetailsBuyEquityModule(new OrderDetailsBuyEquityModule(this))
+                .orderDetailsPrivateLawyerModule(new OrderDetailsPrivateLawyerModule(this))
                 .build()
                 .inject(this);
     }
 
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
-        return R.layout.activity_order_details_buy_equity;
+        return R.layout.activity_order_details_private_lawyer;
     }
 
     @Override
@@ -198,7 +175,7 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
         String[] strs = {"预约律师", "优选律师", "律师回电", "评价服务"};
         orderDetailView.initView(strs);
 
-        mPresenter.legalAdviserOrderDetail();
+        mPresenter.orderPrivateLawyersDetail();
     }
 
     public void setOrderDetailView(int index) {
@@ -210,27 +187,7 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
     }
 
     @Override
-    public void setEntity(LegalAdviserOrderDetailEntity entity) {
-
-        //124电话咨询   订单编号 订单日期  服务名称  订单状态  发布用户  服务类型  （通话时长  通话记录）
-        // 125合同文书  订单编号 订单日期  服务名称  订单状态  服务类型
-        // 126线下见面  订单编号 订单日期  服务名称  订单状态  服务类型  （见面时间  见面时长  见面地点）
-
-        if (entity.getRequireTypeId() == 125) {
-            //orderStatus	订单状态：1待接单（空） 2待服务（1） 3服务中（1） 4待确认（1） 5待评价（3） 6已完成（3） 7待处理（3） 8已关闭（3） 9已取消（0）
-            int isReceipt;
-            int orderStatus = entity.getReceiptStatus();
-
-            if (orderStatus == 5 || orderStatus == 6 || orderStatus == 7 || orderStatus == 8) {
-                isReceipt = 3;
-            } else if (orderStatus == 2 || orderStatus == 3 || orderStatus == 4) {
-                isReceipt = 1;
-            } else {
-                isReceipt = 0;
-            }
-
-            setRightTv(entity.getOrderId(), "", isReceipt);
-        }
+    public void setEntity(OrderPrivateLawyersDetailEntity entity) {
 
         //订单编号
         if (!TextUtils.isEmpty(entity.getOrderId())) {
@@ -248,9 +205,9 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
         }
 
         //服务名称
-        if (!TextUtils.isEmpty(entity.getServerName())) {
+        if (!TextUtils.isEmpty(entity.getRequireTypeName())) {
             ll_info_server_name.setVisibility(View.VISIBLE);
-            tv_info_server_name.setText(entity.getServerName());
+            tv_info_server_name.setText(entity.getRequireTypeName());
         } else {
             tv_info_server_name.setVisibility(View.GONE);
         }
@@ -263,9 +220,9 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
         }
 
         //服务类型
-        if (!TextUtils.isEmpty(entity.getTypeAliasName())) {
+        if (!TextUtils.isEmpty(entity.getSolutionTypeName())) {
             ll_info_server_type.setVisibility(View.VISIBLE);
-            tv_info_server_type.setText(entity.getTypeAliasName());
+            tv_info_server_type.setText(entity.getSolutionTypeName());
         } else {
             tv_info_server_type.setVisibility(View.GONE);
         }
@@ -278,63 +235,40 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
             tv_info_release_user.setVisibility(View.GONE);
         }
 
-        if (entity.getRequireTypeId() == 124) {
-            //通话时长
-            if (!TextUtils.isEmpty(entity.getCallTimeStr())) {
-                ll_info_talk_time.setVisibility(View.VISIBLE);
-                tv_info_talk_time.setText(entity.getCallTimeStr());
-            } else {
-                ll_info_talk_time.setVisibility(View.GONE);
-            }
+        //通话时长
+        if (!TextUtils.isEmpty(entity.getCallTimeStr())) {
+            ll_info_talk_time.setVisibility(View.VISIBLE);
+            tv_info_talk_time.setText(entity.getCallTimeStr());
+        } else {
+            ll_info_talk_time.setVisibility(View.GONE);
+        }
 
-            //通话记录
-            List<QuickTimeBean> lists = entity.getQuickTime();
-            if(lists == null || lists.size() == 0)
-                recyclerView.setVisibility(View.GONE);
-            else{
-                recyclerView.setVisibility(View.VISIBLE);
-                OrderDetailsExpertInfoAdapter adapter = new OrderDetailsExpertInfoAdapter();
-                AppUtils.configRecyclerView(recyclerView, new LinearLayoutManager(mActivity));
-                recyclerView.setAdapter(adapter);
-                recyclerView.setNestedScrollingEnabled(false);
-                adapter.setNewData(lists);
-            }
-        } else if (entity.getRequireTypeId() == 125) {
-
-        } else if (entity.getRequireTypeId() == 126) {
-            //见面时间
-            if (!TextUtils.isEmpty(entity.getMeetingTime())) {
-                ll_info_meet_time.setVisibility(View.VISIBLE);
-                tv_info_meet_time.setText(entity.getMeetingTime());
-            } else {
-                ll_info_meet_time.setVisibility(View.GONE);
-            }
-            //见面时长
-            if (!TextUtils.isEmpty(entity.getMeetingDuration())) {
-                ll_info_meet_duration.setVisibility(View.VISIBLE);
-                tv_info_meet_duration.setText(entity.getMeetingDuration());
-            } else {
-                tv_info_meet_duration.setVisibility(View.GONE);
-            }
-            //见面地点
-            if (!TextUtils.isEmpty(entity.getRegion())) {
-                ll_info_meet_place.setVisibility(View.VISIBLE);
-                tv_info_meet_place.setText(entity.getRegion());
-            } else {
-                tv_info_meet_place.setVisibility(View.GONE);
-            }
+        //通话记录
+        List<QuickTimeBean> lists = entity.getQuickTime();
+        if (lists == null || lists.size() == 0)
+            recyclerView.setVisibility(View.GONE);
+        else {
+            recyclerView.setVisibility(View.VISIBLE);
+            OrderDetailsExpertInfoAdapter adapter = new OrderDetailsExpertInfoAdapter();
+            AppUtils.configRecyclerView(recyclerView, new LinearLayoutManager(mActivity));
+            recyclerView.setAdapter(adapter);
+            recyclerView.setNestedScrollingEnabled(false);
+            adapter.setNewData(lists);
         }
 
         setStatus(entity);
 
-        setLawyerLayout(entity.getLawyerId(), entity.getLawyerName(), entity.getLawyerArea(), entity.getIconImage());
+        setLawyerLayout(entity.getLmemberId(), entity.getLmemberName(), entity.getLawyerArea(), entity.getIconImage());
 
-        set500Layout(entity);
         setEvaluateLayout(entity);
     }
 
     //评价
-    public void setEvaluateLayout(LegalAdviserOrderDetailEntity entity) {
+    public void setEvaluateLayout(OrderPrivateLawyersDetailEntity entityPrent) {
+        EvaluateBean entity = entityPrent.getEvaluate();
+
+        if (entity == null) return;
+
         if (entity.getEvaluateType() == 0) {
             fl_evaluate_info.setVisibility(View.GONE);
         } else {
@@ -366,33 +300,8 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
         }
     }
 
-    //诉讼无忧
-    public void set500Layout(LegalAdviserOrderDetailEntity entity) {
-        if (TextUtils.isEmpty(entity.getPayOrderNo())) {
-            fl_500.setVisibility(View.GONE);
-        } else {
-            if (entity.getLawsui() == null) {
-                fl_500.setVisibility(View.GONE);
-                return;
-            }
-
-            fl_500.setVisibility(View.VISIBLE);
-            tv_500_info_title.setText(entity.getLawsui().getTitle());
-            tv_500_info_price.setText(entity.getLawsui().getAmountStr());
-            tv_500_info_content.setText(entity.getLawsui().getDescribe());
-            fl_500.setOnClickListener(v -> {
-                if (isFastClick()) return;
-                if (TextUtils.isEmpty(entity.getLawsui().getDescLink())) return;
-                bundle.clear();
-                bundle.putString(BundleTags.URL, entity.getLawsui().getDescLink());
-                bundle.putString(BundleTags.TITLE, entity.getLawsui().getTitle());
-                launchActivity(new Intent(mActivity, WebActivity.class), bundle);
-            });
-        }
-    }
-
     //状态（头部按钮）
-    public void setStatus(LegalAdviserOrderDetailEntity entity) {
+    public void setStatus(OrderPrivateLawyersDetailEntity entity) {
 
         ll_top_message.setVisibility(View.GONE);
 
@@ -405,7 +314,7 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
         //orderStatus	订单状态：1	待接单（1） 2	待服务（2） 3	服务中（2） 4	待确认（2） 5	待评价（3） 6	已完成（3） 7	待处理（2） 8	已关闭（0） 9	已取消（0）
         int orderStatus = entity.getReceiptStatus();
 
-        if (orderStatus == 1) {
+        if (orderStatus == 10) {
             //头部进度
             setOrderDetailView(1);
             //按钮
@@ -413,41 +322,36 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
             tv_btn_left.setText("取消订单");
             tv_btn_left.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_1ec88b_all));
             tv_btn_left.setOnClickListener(v -> {
-                mPresenter.legalAdviserOrderCancel();
+                mPresenter.privateLawyersOrderCancel();
             });
-        } else if (orderStatus == 2 || orderStatus == 3 || orderStatus == 4 || orderStatus == 5 ||orderStatus == 7) {
+        } else if (orderStatus == 20 || orderStatus == 30 || orderStatus == 40 || orderStatus == 50 || orderStatus == 70) {
             //头部进度
             setOrderDetailView(2);
             //头部消息
-            if (orderStatus == 2 || orderStatus == 3) {
+            if (orderStatus == 20 || orderStatus == 30) {
                 ll_top_message.setVisibility(View.VISIBLE);
                 tv_top_message.setText("如服务律师未主动回电，您也可以点击联系律师拨打电话。");
-            } else if (orderStatus == 4) {
-                if (entity.getRequireTypeId() == 124) {
-                    ll_top_message.setVisibility(View.VISIBLE);
-                    tv_top_message.setText("律师已完成服务，如您不进行操作，1小时后系统将自动确认完成！");
-                } else {
-                    ll_top_message.setVisibility(View.VISIBLE);
-                    tv_top_message.setText("律师已完成服务，如您不进行操作，24小时后系统将自动确认完成！");
-                }
-            }else if (orderStatus == 5) {
+            } else if (orderStatus == 40) {
+                ll_top_message.setVisibility(View.VISIBLE);
+                tv_top_message.setText("律师已完成服务，如您不进行操作，1小时后系统将自动确认完成！");
+            } else if (orderStatus == 50) {
                 ll_top_message.setVisibility(View.VISIBLE);
                 tv_top_message.setText("您已确认完成服务，如不进行评价，24小时后系统将采用默认评价!");
-            } else if (orderStatus == 7) {
+            } else if (orderStatus == 70) {
                 ll_top_message.setVisibility(View.VISIBLE);
                 tv_top_message.setText("您的投诉反馈正在处理中，请耐心等候！");
             }
 
             //按钮
-            if (orderStatus == 2 || orderStatus == 3) {
+            if (orderStatus == 20 || orderStatus == 30) {
                 tv_btn_left.setVisibility(View.VISIBLE);
                 tv_btn_left.setText("联系服务律师");
                 tv_btn_left.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_1ec88b_all));
                 tv_btn_left.setOnClickListener(v -> {
-                    mPresenter.legalAdviserOrderUserPhone();
+                    mPresenter.privateLawyersUserphone();
                 });
             }
-            if (orderStatus == 4) {
+            if (orderStatus == 40) {
                 tv_btn_left.setVisibility(View.VISIBLE);
                 tv_btn_left.setText("未完成服务");
                 tv_btn_left.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_d7d7d7_all));
@@ -458,10 +362,10 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
                 tv_btn_right.setText("确认完成服务");
                 tv_btn_right.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_1ec88b_all));
                 tv_btn_right.setOnClickListener(v -> {
-                    mPresenter.legalAdviserOrderComplete();
+                    mPresenter.orderComplete();
                 });
             }
-            if (orderStatus == 5) {
+            if (orderStatus == 50) {
                 tv_btn_left.setVisibility(View.VISIBLE);
                 tv_btn_left.setText("匿名评价律师服务");
                 tv_btn_left.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_1ec88b_all));
@@ -470,20 +374,21 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
                     EvaluateIntent evaluateIntent = new EvaluateIntent();
                     evaluateIntent.setIconImage(entity.getIconImage());
                     evaluateIntent.setInstitutionName(entity.getInstitutionName());
-                    evaluateIntent.setLawyerName(entity.getLawyerName());
+                    evaluateIntent.setLawyerName(entity.getLmemberName());
                     evaluateIntent.setOrderId(entity.getOrderId());
 
                     bundle.clear();
                     bundle.putSerializable(BundleTags.ENTITY, evaluateIntent);
+                    bundle.putInt(BundleTags.TYPE,1);
                     launchActivity(new Intent(mActivity, BuyEquityEvaluateActivity.class), bundle);
                 });
             }
-            if (orderStatus == 7) {
+            if (orderStatus == 70) {
                 tv_btn_left.setVisibility(View.VISIBLE);
                 tv_btn_left.setText("投诉反馈待处理");
                 tv_btn_left.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_d7d7d7_all));
             }
-        } else if (orderStatus == 6) {
+        } else if (orderStatus == 60) {
             //头部进度
             setOrderDetailView(3);
             //按钮
@@ -494,7 +399,7 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
             //头部进度
             setOrderDetailView(0);
             //头部消息
-            if (orderStatus == 8) {
+            if (orderStatus == 80) {
                 ll_top_message.setVisibility(View.VISIBLE);
                 tv_top_message.setText("您的订单已关闭，平台将不会扣除相应权益！");
             }
@@ -502,9 +407,9 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
             tv_btn_left.setVisibility(View.VISIBLE);
             tv_btn_left.setText("已关闭");
             tv_btn_left.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_d7d7d7_all));
-            if (orderStatus == 8)
+            if (orderStatus == 80)
                 tv_btn_left.setText("已关闭");
-            if (orderStatus == 9)
+            if (orderStatus == 90)
                 tv_btn_left.setText("已取消");
         }
     }
@@ -522,7 +427,7 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
                     if (mPresenter.getComplaintEntitys() == null || mPresenter.getComplaintEntitys().size() == 0)
                         return;
                     if (position == -1) return;
-                    mPresenter.legalAdviserOrderUnComplete(mPresenter.getComplaintEntitys().get(position).getComplaintId());
+                    mPresenter.orderUnComplete(mPresenter.getComplaintEntitys().get(position).getComplaintId());
                 }).show();
     }
 
@@ -562,23 +467,10 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
     @Subscriber(tag = REFRESH)
     private void refreshDetail(Message message) {
         switch (message.what) {
-            case REFRESH_BUY_EQUITY_DETAIL:
-                mPresenter.legalAdviserOrderDetail();
+            case REFRESH_PRIVATE_LAWYER_DETAIL:
+                mPresenter.orderPrivateLawyersDetail();
                 break;
         }
-    }
-
-    public void setRightTv(String orderNo, String phone, int isReceipt) {
-        titleView.setRightTv("合同");
-        titleView.getRightTv().setTextColor(ContextCompat.getColor(mActivity, R.color.c_ff));
-        titleView.getRightTv().setOnClickListener(v -> {
-            bundle.clear();
-            bundle.putString(BundleTags.ORDER_NO, orderNo);//传递状态，1为可以发合同，0位展示空页面。
-            bundle.putString(BundleTags.MOBILE, phone);
-            bundle.putInt(BundleTags.STATE, isReceipt);
-            bundle.putInt(BundleTags.TYPE, 1);
-            launchActivity(new Intent(mActivity, OrderContractActivity.class), bundle);
-        });
     }
 
     @OnClick({R.id.iv_call})
@@ -638,5 +530,4 @@ public class OrderDetailsBuyEquityActivity extends BaseActivity<OrderDetailsBuyE
     public void killMyself() {
         finish();
     }
-
 }

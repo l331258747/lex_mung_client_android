@@ -20,7 +20,9 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.module.BuyEquityEvaluateModule;
+import cn.lex_mung.client_android.mvp.model.entity.payEquity.EvaluateIntent;
 import cn.lex_mung.client_android.mvp.model.entity.payEquity.LegalAdviserOrderDetailEntity;
+import cn.lex_mung.client_android.mvp.model.entity.payEquity.OrderPrivateLawyersDetailEntity;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
 import cn.lex_mung.client_android.mvp.ui.widget.EvaluateStarView;
@@ -66,7 +68,9 @@ public class BuyEquityEvaluateActivity extends BaseActivity<BuyEquityEvaluatePre
     EditText et_describe;
 
     int score;
-    LegalAdviserOrderDetailEntity entity;
+    EvaluateIntent entity;
+
+    int type;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -86,7 +90,8 @@ public class BuyEquityEvaluateActivity extends BaseActivity<BuyEquityEvaluatePre
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
 
-        entity = (LegalAdviserOrderDetailEntity) bundleIntent.getSerializable(BundleTags.ENTITY);
+        type = bundleIntent.getInt(BundleTags.TYPE,0);
+        entity = (EvaluateIntent) bundleIntent.getSerializable(BundleTags.ENTITY);
 
         if (!TextUtils.isEmpty(entity.getIconImage())) {
             mImageLoader.loadImage(mActivity
@@ -143,7 +148,9 @@ public class BuyEquityEvaluateActivity extends BaseActivity<BuyEquityEvaluatePre
                     return;
                 }
 
-                mPresenter.legalAdviserOrderEvaluate(entity.getOrderId(),
+                mPresenter.legalAdviserOrderEvaluate(
+                        type,
+                        entity.getOrderId(),
                         score,
                         evaluateStarView_major.getNum(),
                         evaluateStarView_speed.getNum(),

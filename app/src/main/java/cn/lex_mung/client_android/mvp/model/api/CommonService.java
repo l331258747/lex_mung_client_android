@@ -78,6 +78,7 @@ import cn.lex_mung.client_android.mvp.model.entity.payEquity.LegalAdviserOrderCo
 import cn.lex_mung.client_android.mvp.model.entity.payEquity.LegalAdviserOrderConfirmEntity;
 import cn.lex_mung.client_android.mvp.model.entity.payEquity.LegalAdviserOrderDetailEntity;
 import cn.lex_mung.client_android.mvp.model.entity.payEquity.LegalAdviserOrderPayEntity;
+import cn.lex_mung.client_android.mvp.model.entity.payEquity.OrderPrivateLawyersDetailEntity;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -1015,4 +1016,40 @@ public interface CommonService {
     Observable<BaseResponse> legalAdviserOrderDocRead(@Path("repositoryId") String repositoryId);
 
     //------end 法律顾问
+
+
+    //------------------------私人律师团 START
+
+    //client/private/lawyers/userphone/{orderNo}，lawyer/private/lawyers/userphone/{orderNo}
+    //GET
+    //私人律师团获取隐号
+    @GET("client/private/lawyers/userphone/{orderNo}")
+    Observable<BaseResponse<RemainEntity>> privateLawyersUserphone(@Path("orderNo") String orderNo);
+
+    ///client/order/private/lawyers/detail/{id}
+    //GET
+    //用户订单-私人律师团详情
+    @GET("client/order/private/lawyers/detail/{id}")
+    Observable<BaseResponse<OrderPrivateLawyersDetailEntity>> orderPrivateLawyersDetail(@Path("id") int id);
+
+    ///client/private/lawyers/order/cancel
+    //POST
+    //取消私人律师团订单
+    @POST("client/private/lawyers/order/cancel")
+    Observable<BaseResponse> privateLawyersOrderCancel(@Body RequestBody body);
+
+    ///client/private/lawyers/order/update
+    //POST
+    //修改私人律师团订单状态
+    @POST("client/private/lawyers/order/update")
+    Observable<BaseResponse> privateLawyersOrderUpdate(@Body RequestBody body);
+
+    ///client/private/lawyers/evaluate/add
+    //POST
+    //私人律师团客户添加评论
+    @POST("client/private/lawyers/evaluate/add")
+    Observable<BaseResponse> privateLawyersEvaluateAdd(@Body RequestBody body);
+
+
+    //------------------------私人律师团 END
 }

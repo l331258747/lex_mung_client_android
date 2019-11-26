@@ -101,6 +101,7 @@ public interface EventBusTags {
         int REFRESH_UNREAD_MESSAGES_NUMBER = 102;
         int REFRESH_WX_PAY = 103;
         int REFRESH_BUY_EQUITY_DETAIL = 104;
+        int REFRESH_PRIVATE_LAWYER_DETAIL = 105;
     }
 
     interface LOGIN_INFO {
