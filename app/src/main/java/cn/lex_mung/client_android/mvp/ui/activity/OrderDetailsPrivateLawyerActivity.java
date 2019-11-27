@@ -258,7 +258,7 @@ public class OrderDetailsPrivateLawyerActivity extends BaseActivity<OrderDetails
 
         setStatus(entity);
 
-        setLawyerLayout(entity.getLmemberId(), entity.getLmemberName(), entity.getLawyerArea(), entity.getIconImage());
+        setLawyerLayout(entity.getLmemberId(), entity.getLmemberName(), entity.getLawyerArea(), entity.getLiconImage());
 
         setEvaluateLayout(entity);
     }
