@@ -192,12 +192,16 @@ public class PracticeExperienceFragment extends BaseFragment<PracticeExperienceP
         recyclerViewLawsCase.setAdapter(caseAdapter);
     }
 
+
+    List<CaseListEntity> caseListEntities;
     public void setAdapter(boolean isAdd, List<CaseListEntity> entities) {
         if (isAdd) {
-            caseAdapter.addData(entities);
+            caseListEntities.addAll(entities);
+            caseAdapter.setNewData(caseListEntities);
             smartRefreshLayout.finishLoadMore();
         } else {
-            caseAdapter.setNewData(entities);
+            caseListEntities = entities;
+            caseAdapter.setNewData(caseListEntities);
             if (mPresenter.getTotalNum() == mPresenter.getPageNum()) {
                 smartRefreshLayout.finishLoadMoreWithNoMoreData();
             }
