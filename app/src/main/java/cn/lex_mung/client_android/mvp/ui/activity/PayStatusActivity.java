@@ -148,6 +148,12 @@ public class PayStatusActivity extends BaseActivity<PayStatusPresenter> implemen
     }
 
     @Override
+    public void setContentLayout(String s) {
+        tvContent.setText(s);
+        tvContent.setOnClickListener(null);
+    }
+
+    @Override
     public void setContentLayout(String s, View.OnClickListener onClickListener) {
         tvContent.setText(s);
         tvContent.setOnClickListener(onClickListener);

@@ -21,6 +21,8 @@ public interface PayStatusContract {
 
         void showFailLayout(String s,String btnStr,String btnStr2);
 
+        void setContentLayout(String s);
+
         void setContentLayout(String s, android.view.View.OnClickListener onClickListener);
 
         void setImg(int imageId);

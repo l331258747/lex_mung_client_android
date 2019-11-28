@@ -110,14 +110,14 @@ public class PayStatusPresenter extends BasePresenter<PayStatusContract.Model, P
                                             break;
                                         case PayStatusTags.ONLINE_LAWYER:
                                             mRootView.showSuccessLayout("支付成功","返回首页","预约服务");
-                                            mRootView.setContentLayout("您已成功购买在线法律顾问的服务权益，点击预约服务去使用。", null);
+                                            mRootView.setContentLayout("您已成功购买在线法律顾问的服务权益，点击预约服务去使用。");
                                             mRootView.setImg(R.drawable.ic_pay_success3);
 
                                             AppUtils.post(EQUITIES_REFRESH, EQUITIES_REFRESH_1);//支付成功后刷新权益列表页面
                                             break;
                                         case PayStatusTags.PRIVATE_LAWYER:
                                             mRootView.showSuccessLayout("支付成功","返回首页","预约服务");
-                                            mRootView.setContentLayout("我们已根据律师的专业程度、活跃度、好评度为您匹配合适的律师。律师按约定时间与您联系，请保持电话畅通！", null);
+                                            mRootView.setContentLayout("我们已根据律师的专业程度、活跃度、好评度为您匹配合适的律师。律师按约定时间与您联系，请保持电话畅通！");
                                             mRootView.setImg(R.drawable.ic_pay_success3);
 
                                             AppUtils.post(EQUITIES_REFRESH, EQUITIES_REFRESH_1);//支付成功后刷新权益列表页面
@@ -141,7 +141,7 @@ public class PayStatusPresenter extends BasePresenter<PayStatusContract.Model, P
                                         case PayStatusTags.ONLINE_LAWYER:
                                         case PayStatusTags.PRIVATE_LAWYER:
                                             mRootView.showSuccessLayout("支付失败","返回首页","账户充值");
-                                            mRootView.setContentLayout("如果因银行卡每日支付上限导致无法完成交易，您可以先通过充值到平台账户中，在使用余额支付完成交易。",onClickListener);
+                                            mRootView.setContentLayout("如果因银行卡每日支付上限导致无法完成交易，您可以先通过充值到平台账户中，在使用余额支付完成交易。");
                                             mRootView.setImg(R.drawable.ic_pay_failure3);
                                             break;
                                     }
