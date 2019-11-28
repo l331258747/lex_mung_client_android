@@ -41,7 +41,7 @@ public interface LawyerHomePageContract {
 
         void hideSocialPosition();
 
-        void setCreditCertification(String tagName);
+        void setCreditCertification(String tagName,String imgUrl);
 
         void hideCreditCertificationLayout();
 

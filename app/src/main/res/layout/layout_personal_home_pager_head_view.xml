@@ -167,11 +167,16 @@
             android:layout_marginStart="@dimen/qb_px_10"
             android:includeFontPadding="false"
             android:singleLine="true"
-            android:textColor="@color/c_323232"
+            android:textColor="@color/c_d89b4b"
             android:textSize="11sp"
+            android:paddingTop="@dimen/qb_px_3"
+            android:paddingBottom="@dimen/qb_px_3"
+            android:paddingStart="@dimen/qb_px_10"
+            android:paddingEnd="@dimen/qb_px_10"
             app:layout_constraintBottom_toBottomOf="@id/iv_credit_certification"
             app:layout_constraintStart_toEndOf="@id/iv_credit_certification"
             app:layout_constraintTop_toTopOf="@id/iv_credit_certification"
+            android:background="@drawable/round_100_fff2de_all"
             tools:text="LEX提供最高额20000元的担保服务" />
 
         <TextView

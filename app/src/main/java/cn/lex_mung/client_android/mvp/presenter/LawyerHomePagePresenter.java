@@ -216,7 +216,7 @@ public class LawyerHomePagePresenter extends BasePresenter<LawyerHomePageContrac
             //担保额度
             if (entity.getLawyerTags() != null
                     && entity.getLawyerTags().size() > 0) {
-                mRootView.setCreditCertification(entity.getLawyerTags().get(0).getTagName());
+                mRootView.setCreditCertification(entity.getLawyerTags().get(0).getTagName(),entity.getLawyerTags().get(0).getImage());
             } else {
                 mRootView.hideCreditCertificationLayout();
             }

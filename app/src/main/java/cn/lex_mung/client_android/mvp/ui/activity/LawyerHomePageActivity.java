@@ -486,8 +486,20 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
     }
 
     @Override
-    public void setCreditCertification(String tagName) {
+    public void setCreditCertification(String tagName,String imgUrl) {
         tvCreditCertification.setText(tagName);
+
+        if (!TextUtils.isEmpty(imgUrl)) {
+            mImageLoader.loadImage(mActivity
+                    , ImageConfigImpl
+                            .builder()
+                            .url(imgUrl)
+                            .imageView(ivCreditCertification)
+                            .isCircle(true)
+                            .build());
+        } else {
+            ivCreditCertification.setImageResource(R.drawable.ic_personal_home_page_credit_certification);
+        }
     }
 
     @Override
