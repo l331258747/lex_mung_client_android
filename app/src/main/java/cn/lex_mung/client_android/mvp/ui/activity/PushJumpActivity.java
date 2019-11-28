@@ -116,8 +116,6 @@ public class PushJumpActivity extends BaseActivity<PushJumpPresenter> implements
                         intent.setClass(mActivity, LoginActivity.class);
                     }
                     break;
-//                case 282://法律顾问 - 抢单
-//                    break;
                 case 290://私人律师团 - 权益分享用户提醒
                     String str2 = DataHelper.getStringSF(mActivity, DataHelperTags.PRIVATE_LAWYER_URL);
                     HomeChildEntity mEntity2 = GsonUtil.convertString2Object(str2, HomeChildEntity.class);
@@ -129,15 +127,18 @@ public class PushJumpActivity extends BaseActivity<PushJumpPresenter> implements
                         intent.setClass(mActivity, WebActivity.class);
                     }
                     break;
-//                case 291://私人律师团 - 新订单发布提醒
-//                    break;
                 case 292://私人律师团 - 订单详情
+                case 293://私人律师团 - 律师接单后10分钟内为拨打电话
+                case 297://私人律师团 - 投诉反馈关闭订单1
+                case 298://私人律师团 - 投诉反馈关闭订单2
                     bundle.clear();
                     bundle.putInt(BundleTags.ID, entity.getBusiId());
                     intent.putExtras(bundle);
                     intent.setClass(mActivity, OrderDetailsPrivateLawyerActivity.class);
                     launchActivity(intent);
                     break;
+
+
 //                default:
 //                    showMessage("当前消息可能需要新版本才能打开，建议检测是否存在最新版本。");
 //                    break;
