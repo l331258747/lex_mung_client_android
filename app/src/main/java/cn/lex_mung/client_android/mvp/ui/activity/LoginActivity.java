@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.text.InputFilter;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import cn.lex_mung.client_android.BuildConfig;
@@ -36,8 +38,15 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     EditText etCode;
     @BindView(R.id.tv_code)
     TextView tvCode;
+    @BindView(R.id.bt_login)
+    Button btLogin;
     @BindView(R.id.bt_test_code)
     Button btTestCode;
+
+    @BindView(R.id.iv_radio)
+    ImageView iv_radio;
+
+    boolean isRadio;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -64,9 +73,20 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         } else {
             btTestCode.setVisibility(View.VISIBLE);
         }
+        setLoginLayout();
     }
 
-    @OnClick({R.id.tv_code, R.id.bt_login, R.id.tv_agreement, R.id.bt_test_code})
+    public void setLoginLayout(){
+        if(isRadio){
+            btLogin.setBackground(ContextCompat.getDrawable(mActivity,R.drawable.round_100_06a66a_all));
+            iv_radio.setImageResource(R.drawable.ic_radio_selected2);
+        }else{
+            btLogin.setBackground(ContextCompat.getDrawable(mActivity,R.drawable.round_100_dbdcdc_all));
+            iv_radio.setImageResource(R.drawable.ic_radio_un2);
+        }
+    }
+
+    @OnClick({R.id.tv_code, R.id.bt_login, R.id.tv_agreement, R.id.bt_test_code,R.id.ll_radio})
     public void onViewClicked(View view) {
         if (isFastClick()) return;
         switch (view.getId()) {
@@ -74,6 +94,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                 mPresenter.getCode(etMobile.getText().toString());
                 break;
             case R.id.bt_login:
+                if(!isRadio){
+                    showMessage("请勾选我是用户，我要找律师");
+                    return;
+                }
+
                 mPresenter.login(etMobile.getText().toString(), etCode.getText().toString(), JPushInterface.getRegistrationID(mActivity));
                 break;
             case R.id.tv_agreement:
@@ -81,6 +106,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                 break;
             case R.id.bt_test_code:
                 mPresenter.getCode1(etMobile.getText().toString());
+                break;
+            case R.id.ll_radio:
+                isRadio = !isRadio;
+                setLoginLayout();
                 break;
         }
     }
