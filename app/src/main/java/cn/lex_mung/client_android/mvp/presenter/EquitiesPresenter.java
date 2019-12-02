@@ -208,17 +208,20 @@ public class EquitiesPresenter extends BasePresenter<EquitiesContract.Model, Equ
                             }
 
                             if (list_1.size() > 0) {
-                                if (!DataHelper.contains(mApplication, DataHelperTags.EQUITIES_ORG_ID)) {
-                                    DataHelper.setIntergerSF(mApplication, DataHelperTags.EQUITIES_ORG_ID, list_1.get(0).getOrganizationId());
-                                    DataHelper.setIntergerSF(mApplication, DataHelperTags.EQUITIES_ORG_LEVEL_ID, list_1.get(0).getOrganizationLevelNameId());
 
-                                    getEquitiesDetails();
-                                    mRootView.showEquitiesDetails();
-                                    mRootView.showCurrentEquitiesLayout();
-                                    mRootView.setEquitiesAdapter1(list_1);
-                                }else{
-                                    showAllEquitiesLayout();
-                                }
+                                showAllEquitiesLayout();
+
+//                                if (!DataHelper.contains(mApplication, DataHelperTags.EQUITIES_ORG_ID)) {
+//                                    DataHelper.setIntergerSF(mApplication, DataHelperTags.EQUITIES_ORG_ID, list_1.get(0).getOrganizationId());
+//                                    DataHelper.setIntergerSF(mApplication, DataHelperTags.EQUITIES_ORG_LEVEL_ID, list_1.get(0).getOrganizationLevelNameId());
+//
+//                                    getEquitiesDetails();
+//                                    mRootView.showEquitiesDetails();
+//                                    mRootView.showCurrentEquitiesLayout();
+//                                    mRootView.setEquitiesAdapter1(list_1);
+//                                }else{
+//                                    showAllEquitiesLayout();
+//                                }
                             } else {
                                 mRootView.showAllEquitiesLayout();
                                 mRootView.hideCurrentEquitiesLayout();

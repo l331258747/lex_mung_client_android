@@ -20,6 +20,8 @@ import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
+import cn.lex_mung.client_android.mvp.ui.dialog.SingleTextDialog;
+import cn.lex_mung.client_android.mvp.ui.dialog.SingleTextTwoBtnDialog;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.utils.AppUtils;
@@ -86,10 +88,13 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         }
     }
 
-    @OnClick({R.id.tv_code, R.id.bt_login, R.id.tv_agreement, R.id.bt_test_code,R.id.ll_radio})
+    @OnClick({R.id.tv_code, R.id.bt_login, R.id.tv_agreement, R.id.bt_test_code,R.id.ll_radio,R.id.iv_what})
     public void onViewClicked(View view) {
         if (isFastClick()) return;
         switch (view.getId()) {
+            case R.id.iv_what:
+                new SingleTextDialog(mActivity).setContent("律师用户请到应用市场搜索\"律箭\"下载").setSubmitStr("我知道了！").show();
+                break;
             case R.id.tv_code:
                 mPresenter.getCode(etMobile.getText().toString());
                 break;
