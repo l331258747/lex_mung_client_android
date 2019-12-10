@@ -195,9 +195,9 @@ public class EntrustListEntity {
             case 6:
                 return "已确认";
             case 7:
-                return "待打款";
+                return "已完成";
             case 8:
-                return "已打款";
+                return "已完成";
             case 9:
                 return "已完成";
             case 10:
