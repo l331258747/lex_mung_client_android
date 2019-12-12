@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingTop="@dimen/qb_px_20"
+    android:paddingStart="@dimen/qb_px_20"
+    android:paddingEnd="@dimen/qb_px_20"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/iv_img"
+        android:layout_width="@dimen/qb_px_40"
+        android:layout_height="@dimen/qb_px_40"
+        tools:src="@drawable/ic_lawyer_home_verify_1"/>
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/iv_img"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_img"
+        android:layout_marginStart="@dimen/qb_px_10"
+        android:textStyle="bold"
+        tools:text="名字名字名字名字名"/>
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/c_737373"
+        android:layout_marginTop="@dimen/qb_px_10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name"
+        android:text="内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容"/>
+
+
+</android.support.constraint.ConstraintLayout>

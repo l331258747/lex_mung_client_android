@@ -22,7 +22,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.umeng.analytics.MobclickAgent;
 import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
 
 import java.io.Serializable;
@@ -38,11 +37,12 @@ import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.di.component.DaggerLawyerHomePageComponent;
 import cn.lex_mung.client_android.di.module.LawyerHomePageModule;
 import cn.lex_mung.client_android.mvp.contract.LawyerHomePageContract;
-import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
+import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.presenter.LawyerHomePagePresenter;
 import cn.lex_mung.client_android.mvp.ui.dialog.FieldDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.HelpStepDialog;
+import cn.lex_mung.client_android.mvp.ui.dialog.LawyerHomeVerifyDailog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.SingleTextDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.NoScrollViewPager;
@@ -75,10 +75,19 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
     TextView tvLike;
     @BindView(R.id.tv_law_firms)
     TextView tvLawFirms;
+
     @BindView(R.id.iv_credit_certification)
     ImageView ivCreditCertification;
     @BindView(R.id.tv_credit_certification)
     TextView tvCreditCertification;
+    @BindView(R.id.ll_credit_certification)
+    LinearLayout ll_credit_certification;
+
+    @BindView(R.id.ll_curriculum_vitae)
+    LinearLayout ll_curriculum_vitae;
+    @BindView(R.id.tv_curriculum_vitae)
+    TextView tv_curriculum_vitae;
+
     @BindView(R.id.tv_field)
     TextView tvField;
     @BindView(R.id.sfl_field)
@@ -303,10 +312,17 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
             , R.id.iv_call
             , R.id.iv_call_2
             , R.id.iv_release
+            , R.id.ll_credit_certification
+            , R.id.ll_curriculum_vitae
     })
     public void onViewClicked(View view) {
         if (isFastClick()) return;
         switch (view.getId()) {
+            case R.id.ll_credit_certification:
+            case R.id.ll_curriculum_vitae:
+                if(mPresenter.getEntity().getLawyerHomeVerifyDialogEntities().size() == 0) return;
+                new LawyerHomeVerifyDailog(mActivity, mPresenter.getEntity().getLawyerHomeVerifyDialogEntities()).show();
+                break;
             case R.id.iv_back:
             case R.id.iv_head_back:
                 killMyself();
@@ -486,7 +502,19 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
     }
 
     @Override
+    public void setCurriculumVitae(String tagName) {
+        ll_curriculum_vitae.setVisibility(View.VISIBLE);
+        tv_curriculum_vitae.setText(tagName);
+    }
+
+    @Override
+    public void hideCurriculumVitaeLayout() {
+        ll_curriculum_vitae.setVisibility(View.GONE);
+    }
+
+    @Override
     public void setCreditCertification(String tagName,String imgUrl) {
+        ll_credit_certification.setVisibility(View.VISIBLE);
         tvCreditCertification.setText(tagName);
 
         if (!TextUtils.isEmpty(imgUrl)) {
@@ -504,8 +532,7 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
 
     @Override
     public void hideCreditCertificationLayout() {
-        tvCreditCertification.setVisibility(View.GONE);
-        ivCreditCertification.setVisibility(View.GONE);
+        ll_credit_certification.setVisibility(View.GONE);
     }
 
     @Override

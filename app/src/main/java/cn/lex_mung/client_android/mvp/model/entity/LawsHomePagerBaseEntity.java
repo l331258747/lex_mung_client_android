@@ -1,7 +1,12 @@
 package cn.lex_mung.client_android.mvp.model.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+
+import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.mvp.model.entity.other.LawyerHomeVerifyDailogEntity;
+import cn.lex_mung.client_android.mvp.model.entity.user.MemberBaseV2CurriculumEntity;
 
 public class LawsHomePagerBaseEntity implements Serializable {
 
@@ -59,6 +64,39 @@ public class LawsHomePagerBaseEntity implements Serializable {
     private List<String> socialFunction;
     private List<BusinessEntity> requireInfo;
     private String minimumDuration;
+    private MemberBaseV2CurriculumEntity curriculum;
+
+    public MemberBaseV2CurriculumEntity getCurriculum() {
+        return curriculum;
+    }
+
+    public List<LawyerHomeVerifyDailogEntity> getLawyerHomeVerifyDialogEntities() {
+        List<LawyerHomeVerifyDailogEntity> lists = new ArrayList<>();
+        LawyerHomeVerifyDailogEntity item = new LawyerHomeVerifyDailogEntity();
+        item.setRes(R.drawable.ic_lawyer_home_verify_1);
+        item.setTitle("身份认证");
+        item.setContent("经平台实名认证、执业认证、执行年限认证。");
+        lists.add(item);
+
+        if (getLawyerTags() != null
+                && getLawyerTags().size() > 0) {
+            LawyerHomeVerifyDailogEntity item2 = new LawyerHomeVerifyDailogEntity();
+            item2.setRes(R.drawable.ic_lawyer_home_verify_2);
+            item2.setTitle(getLawyerTags().get(0).getTagName());
+            item2.setContent("如律师与客户产生纠纷，且经司法部与律协共同认定存在服务质量问题时，平台为客户提供的赔付金额。");
+            lists.add(item2);
+        }
+
+        if (getCurriculum() != null
+                && getCurriculum().getAuthStatus() == 2) {
+            LawyerHomeVerifyDailogEntity item3 = new LawyerHomeVerifyDailogEntity();
+            item3.setRes(R.drawable.ic_lawyer_home_verify_3);
+            item3.setTitle(getCurriculum().getContent());
+            item3.setContent("经平台认证的职业履历。");
+            lists.add(item3);
+        }
+        return lists;
+    }
 
     public String getMinimumDuration() {
         return minimumDuration;

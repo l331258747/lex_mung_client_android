@@ -45,6 +45,10 @@ public interface LawyerHomePageContract {
 
         void hideCreditCertificationLayout();
 
+        void setCurriculumVitae(String tagName);
+
+        void hideCurriculumVitaeLayout();
+
         void showMoreSocialPositionLayout();
 
         void hideFieldLayout();

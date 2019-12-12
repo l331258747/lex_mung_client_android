@@ -220,6 +220,15 @@ public class LawyerHomePagePresenter extends BasePresenter<LawyerHomePageContrac
             } else {
                 mRootView.hideCreditCertificationLayout();
             }
+
+            //履历认证
+            if (entity.getCurriculum() != null
+                    && entity.getCurriculum().getAuthStatus() == 2) {
+                mRootView.setCurriculumVitae(entity.getCurriculum().getContent());
+            } else {
+                mRootView.hideCurriculumVitaeLayout();
+            }
+
             //是否关注
             if (entity.getIsCollect() == 1) {//已关注
                 mRootView.setLikeLayout(R.drawable.round_100_ffffff_all_717171
