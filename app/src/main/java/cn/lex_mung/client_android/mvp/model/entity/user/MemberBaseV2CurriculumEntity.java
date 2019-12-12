@@ -1,6 +1,8 @@
 package cn.lex_mung.client_android.mvp.model.entity.user;
 
-public class MemberBaseV2CurriculumEntity {
+import java.io.Serializable;
+
+public class MemberBaseV2CurriculumEntity implements Serializable {
 
 
     /**
