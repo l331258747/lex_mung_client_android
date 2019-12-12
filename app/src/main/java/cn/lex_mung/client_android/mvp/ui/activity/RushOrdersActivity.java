@@ -299,11 +299,13 @@ public class RushOrdersActivity extends BaseActivity<RushOrdersPresenter> implem
     public void onBackPressed() {
         if (mPresenter.getOrderStatus() == 2) {
             new DefaultDialog(mActivity, dialog -> {
+                dialog.dismiss();
                 killMyself();
                 AppManager.getAppManager().killAllNotClass(MainActivity.class);
             },"您可以在我的-订单中查看服务律师和订单详情.","确定","取消").show();
         } else {
             new DefaultDialog(mActivity, dialog -> {
+                dialog.dismiss();
                 killMyself();
                 AppManager.getAppManager().killAllNotClass(MainActivity.class);
             },"我们将继续为您优选律师，您可以在我的-订单中查看服务律师和订单详情.","确定","取消").show();

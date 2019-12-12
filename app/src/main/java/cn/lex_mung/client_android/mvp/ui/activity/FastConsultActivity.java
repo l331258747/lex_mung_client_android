@@ -271,6 +271,7 @@ public class FastConsultActivity extends BaseActivity<FastConsultPresenter> impl
     @Override
     public void showLackOfBalanceDialog() {
         new DefaultDialog(mActivity, dialog -> {
+            dialog.dismiss();
             launchActivity(new Intent(mActivity, MyAccountActivity.class));
         }
                 , "您账户余额不足，是否前往充值？"

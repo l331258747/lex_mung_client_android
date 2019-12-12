@@ -151,6 +151,7 @@ public class HelpStepLawyerActivity extends BaseActivity<HelpStepLawyerPresenter
     @Override
     public void onBackPressed() {
         new DefaultDialog(mActivity, dialog -> {
+            dialog.dismiss();
             AppManager.getAppManager().killAllNotClass(MainActivity.class);
         }, "现在返回您将回到首页，您可以在首页右上角的消息中查看需求的进展情况！", "确认返回", "取消").show();
     }

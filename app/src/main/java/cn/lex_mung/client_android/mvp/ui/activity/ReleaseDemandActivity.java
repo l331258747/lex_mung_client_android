@@ -418,7 +418,10 @@ public class ReleaseDemandActivity extends BaseActivity<ReleaseDemandPresenter> 
 
     @Override
     public void showLackOfBalanceDialog() {
-        new DefaultDialog(mActivity, dialog -> launchActivity(new Intent(mActivity, MyAccountActivity.class))
+        new DefaultDialog(mActivity, dialog -> {
+            dialog.dismiss();
+            launchActivity(new Intent(mActivity, MyAccountActivity.class));
+        }
                 , "您账户余额不足，是否前往充值？"
                 , "去充值"
                 , getString(R.string.text_cancel))
