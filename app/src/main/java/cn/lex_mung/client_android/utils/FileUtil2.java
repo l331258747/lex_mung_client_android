@@ -202,6 +202,7 @@ public class FileUtil2 {
     }
 
     public static void downloadFile3(String url, String filePath,DowloadListener dowloadListener) {
+        LogUtil.e("url:" + url);
         //下载路径，如果路径无效了，可换成你的下载路径
         Request request = new Request.Builder().url(url).build();
         new OkHttpClient().newCall(request).enqueue(new Callback() {
@@ -210,6 +211,7 @@ public class FileUtil2 {
                 // 下载失败
                 e.printStackTrace();
                 LogUtil.e("DOWNLOAD ：download failed");
+                dowloadListener.onFailed();
             }
 
             @Override
