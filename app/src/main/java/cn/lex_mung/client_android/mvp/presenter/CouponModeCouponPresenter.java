@@ -15,7 +15,7 @@ import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.ReleaseDemandOrgMoneyEntity2;
 import cn.lex_mung.client_android.mvp.model.entity.ReleaseDemandOrgMoneyEntityCoupon;
 import cn.lex_mung.client_android.mvp.model.entity.other.CouponModeEntity;
-import cn.lex_mung.client_android.mvp.ui.adapter.CouponModeCouponAdapter;
+import cn.lex_mung.client_android.mvp.ui.adapter.CouponModeCouponAdapter2;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -52,7 +52,7 @@ public class CouponModeCouponPresenter extends BasePresenter<CouponModeCouponCon
 
     private int pageNum;
     private int totalNum;
-    private CouponModeCouponAdapter adapter;
+    private CouponModeCouponAdapter2 adapter;
 
     private int memberId;
     private int lMemberId;
@@ -92,7 +92,7 @@ public class CouponModeCouponPresenter extends BasePresenter<CouponModeCouponCon
     }
 
     private void initAdapter() {
-        adapter = new CouponModeCouponAdapter();
+        adapter = new CouponModeCouponAdapter2();
         adapter.setCouponId(couponType == 2?couponId:-1);
         adapter.setOnItemClickListener((adapter1, view, position) -> {
             if (isFastClick()) return;

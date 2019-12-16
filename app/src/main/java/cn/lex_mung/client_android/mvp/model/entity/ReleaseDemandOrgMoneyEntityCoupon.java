@@ -376,6 +376,14 @@ public class ReleaseDemandOrgMoneyEntityCoupon {
         return "立\n即\n使\n用";
     }
 
+    public String getRule() {
+        if(preferentialWay == 2){
+            return "满" + StringUtils.getStringNum(fullNum) + "减";
+        }else{
+            return "满" + StringUtils.getStringNum(fullNum) + "打";
+        }
+    }
+
     public String getReduceNumStr() {
         return StringUtils.getStringNum(reduceNum);
     }

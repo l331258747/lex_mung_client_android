@@ -12,6 +12,7 @@ public class PagesSecondEntity {
      * examinUrl : https://h5-test.lex-mung.com/riskCheckUp.html
      */
 
+    private String hotContractUrl;
     private String litigationUrl;
     private String retrialUrl;
     private String caseRiskUrl;
@@ -21,6 +22,10 @@ public class PagesSecondEntity {
     private String quickConsultationUrl;
     private String onlineLegalUrl;
     private String lawyerGroupUrl;
+
+    public String getHotContractUrl() {
+        return hotContractUrl;
+    }
 
     public String getLawyerGroupUrl() {
         return lawyerGroupUrl;

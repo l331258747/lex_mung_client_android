@@ -1,22 +1,29 @@
 package cn.lex_mung.client_android.mvp.presenter;
 
+import android.app.ActivityManager;
 import android.app.Application;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Inject;
 
+import cn.lex_mung.client_android.app.BundleTags;
+import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.mvp.contract.OrderCouponContract;
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
+import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
-import cn.lex_mung.client_android.mvp.ui.adapter.OrderCouponAdapter;
+import cn.lex_mung.client_android.mvp.ui.activity.MainActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
+import cn.lex_mung.client_android.mvp.ui.adapter.OrderCouponAdapter2;
+import cn.lex_mung.client_android.utils.GsonUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
@@ -27,6 +34,7 @@ import me.zl.mvp.http.imageloader.ImageLoader;
 import me.zl.mvp.integration.AppManager;
 import me.zl.mvp.mvp.BasePresenter;
 import me.zl.mvp.utils.AppUtils;
+import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.RxLifecycleUtils;
 
 import static cn.lex_mung.client_android.app.EventBusTags.ORDER_COUPON.ORDER_COUPON;
@@ -47,7 +55,7 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
     private int pageNum;
     private int totalNum;
 
-    private OrderCouponAdapter adapter;
+    private OrderCouponAdapter2 adapter;
     private SmartRefreshLayout smartRefreshLayout;
 
     private int couponId;
@@ -65,7 +73,7 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
         super(model, rootView);
     }
 
-    public void onCreate(SmartRefreshLayout smartRefreshLayout,int couponId) {
+    public void onCreate(SmartRefreshLayout smartRefreshLayout, int couponId) {
         this.smartRefreshLayout = smartRefreshLayout;
         this.couponId = couponId;
         initAdapter();
@@ -81,17 +89,90 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
     }
 
     private void initAdapter() {
-        adapter = new OrderCouponAdapter(mRootView.getActivity(),type);
+        adapter = new OrderCouponAdapter2(mRootView.getActivity(), type);
         adapter.setCouponId(couponId);
         adapter.setOnItemClickListener((adapter1, view, position) -> {
-            if(mRootView.getType() == 1) return;
             if (isFastClick()) return;
             OrderCouponEntity entity = adapter.getItem(position);
             if (entity == null) return;
-            if(entity.getCouponStatus() == 2) return;//不可用
+            if (entity.getCouponStatus() == 2) return;//不可用
+
+            if (mRootView.getType() == 1) {
+                Bundle bundle = new Bundle();
+                switch (entity.getPageType()) {//pageType（1首页、2专项起草合同、3律师搜索页、4快速咨询、5在线法律顾问、6私人律师团）
+                    case 1:
+                        mRootView.killMyself();
+                        AppManager.getAppManager().killAllNotClass(MainActivity.class);
+                        ((MainActivity) AppManager.getAppManager().findActivity(MainActivity.class)).switchPage(0);
+                        break;
+                    case 2:
+                        String str2 = DataHelper.getStringSF(mApplication, DataHelperTags.HTSCQC_URL);
+                        HomeChildEntity entity2 = GsonUtil.convertString2Object(str2, HomeChildEntity.class);
+                        if (!TextUtils.isEmpty(str2) && entity2 != null) {
+                            bundle.clear();
+                            bundle.putString(BundleTags.URL, entity2.getJumpurl());
+                            bundle.putString(BundleTags.TITLE, entity2.getTitle());
+                            mRootView.launchActivity(new Intent(mApplication, WebActivity.class), bundle);
+                        }
+                        break;
+                    case 3:
+                        mRootView.killMyself();
+                        AppManager.getAppManager().killAllNotClass(MainActivity.class);
+                        ((MainActivity) AppManager.getAppManager().findActivity(MainActivity.class)).switchPage(2);
+                        break;
+                    case 4:
+                        String str4 = DataHelper.getStringSF(mApplication, DataHelperTags.QUICK_URL);
+                        HomeChildEntity entity4 = GsonUtil.convertString2Object(str4, HomeChildEntity.class);
+                        if (!TextUtils.isEmpty(str4) && entity != null) {
+                            bundle.clear();
+                            bundle.putString(BundleTags.URL, entity4.getJumpurl());
+                            bundle.putString(BundleTags.TITLE, entity4.getTitle());
+                            if (entity4.getShowShare() == 1) {
+                                bundle.putBoolean(BundleTags.IS_SHARE, true);
+                                bundle.putString(BundleTags.SHARE_URL, entity4.getShareUrl());
+                                bundle.putString(BundleTags.SHARE_TITLE, entity4.getShareTitle());
+                                bundle.putString(BundleTags.SHARE_DES, entity4.getShareDescription());
+                                bundle.putString(BundleTags.SHARE_IMAGE, entity4.getShareImg());
+                            }
+                            mRootView.launchActivity(new Intent(mApplication, WebActivity.class), bundle);
+                        }
+                        break;
+                    case 5:
+                        String str5 = DataHelper.getStringSF(mApplication, DataHelperTags.ONLINE_LAWYER_URL);
+                        HomeChildEntity entity5 = GsonUtil.convertString2Object(str5, HomeChildEntity.class);
+                        if (!TextUtils.isEmpty(str5) && entity5 != null) {
+                            bundle.clear();
+                            bundle.putString(BundleTags.URL, entity5.getJumpurl());
+                            bundle.putString(BundleTags.TITLE, entity5.getTitle());
+                            mRootView.launchActivity(new Intent(mApplication, WebActivity.class), bundle);
+                        }
+                        break;
+                    case 6:
+                        String str6 = DataHelper.getStringSF(mApplication, DataHelperTags.PRIVATE_LAWYER_URL);
+                        HomeChildEntity entity6 = GsonUtil.convertString2Object(str6, HomeChildEntity.class);
+                        if (!TextUtils.isEmpty(str6) && entity6 != null) {
+                            bundle.clear();
+                            bundle.putString(BundleTags.URL, entity6.getJumpurl());
+                            bundle.putString(BundleTags.TITLE, entity6.getTitle());
+                            mRootView.launchActivity(new Intent(mApplication, WebActivity.class), bundle);
+                        }
+                        break;
+                }
+                return;
+            }
 
             AppUtils.post(ORDER_COUPON, REFRESH_COUPON, entity);
             mRootView.killMyself();
+        });
+
+        adapter.setOnItemChildClickListener((adapter1, view, position) -> {
+            if (isFastClick()) return;
+            OrderCouponEntity entity = adapter.getItem(position);
+            if (entity == null) return;
+            if (mRootView.getType() != 1) return;
+
+            mRootView.showDetailDialog(entity.getPreferentialContent());
+
         });
 
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -115,21 +196,21 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
     }
 
 
-    private void getList(boolean isAdd){
-        if(type == 4){
-            getCouponsList2(isAdd,128);
-        }else if(type == 3){
+    private void getList(boolean isAdd) {
+        if (type == 4) {
+            getCouponsList2(isAdd, 128);
+        } else if (type == 3) {
             getBuyEquityCouponsList(isAdd);
-        }else if(type == 2){
+        } else if (type == 2) {
             getCouponsList2(isAdd);//热门需求
-        }else if(type == 1){
+        } else if (type == 1) {
             getMeCouponsList(isAdd);//我的优惠券
-        }else{
+        } else {
             getCouponsList(isAdd);//快速咨询
         }
     }
 
-    private void getBuyEquityCouponsList(boolean isAdd){
+    private void getBuyEquityCouponsList(boolean isAdd) {
         mModel.legalAdviserServerCoupon(pageNum, orderAmount)
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))
@@ -196,11 +277,11 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
     }
 
     private void getCouponsList2(boolean isAdd) {
-        this.getCouponsList2(isAdd,productId);
+        this.getCouponsList2(isAdd, productId);
     }
 
-    private void getCouponsList2(boolean isAdd,int productId) {
-        mModel.optimalRequireList(pageNum, orderAmount,productId)
+    private void getCouponsList2(boolean isAdd, int productId) {
+        mModel.optimalRequireList(pageNum, orderAmount, productId)
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> {
@@ -232,7 +313,7 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
                 });
     }
 
-    private void getMeCouponsList(boolean isAdd){
+    private void getMeCouponsList(boolean isAdd) {
         mModel.requireCoupon(pageNum)
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))

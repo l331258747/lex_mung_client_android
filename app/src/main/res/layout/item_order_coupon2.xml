@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginLeft="@dimen/qb_px_30"
+    android:layout_marginTop="@dimen/qb_px_20"
+    android:layout_marginRight="@dimen/qb_px_30">
+
+    <View
+        android:id="@+id/view_left_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/ic_coupon_bg_left"
+        app:layout_constraintBottom_toBottomOf="@+id/view_price"
+        app:layout_constraintEnd_toStartOf="@+id/view_right_bg"
+        app:layout_constraintStart_toStartOf="@+id/view_price"
+        app:layout_constraintTop_toTopOf="@+id/view_price" />
+
+    <View
+        android:id="@+id/view_price"
+        android:layout_width="@dimen/qb_px_220"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/view_price_bottom"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/ll_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_35"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/view_price"
+        app:layout_constraintStart_toStartOf="@+id/view_price"
+        app:layout_constraintTop_toTopOf="@+id/view_price">
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:textColor="@color/c_FF7000"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            tools:text="20" />
+
+        <TextView
+            android:id="@+id/tv_price_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/qb_px_8"
+            android:includeFontPadding="false"
+            android:text="折"
+            android:textColor="@color/c_FF7000"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_price_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_15"
+        android:background="@drawable/round_5_33ff7000_all"
+        android:paddingStart="@dimen/qb_px_20"
+        android:paddingTop="@dimen/qb_px_3"
+        android:paddingEnd="@dimen/qb_px_20"
+        android:paddingBottom="@dimen/qb_px_3"
+        android:text="满100减"
+        android:textColor="@color/c_FF7000"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="@+id/view_price"
+        app:layout_constraintStart_toStartOf="@+id/view_price"
+        app:layout_constraintTop_toBottomOf="@+id/ll_price" />
+
+    <View
+        android:id="@+id/view_price_bottom"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/qb_px_35"
+        app:layout_constraintTop_toBottomOf="@+id/tv_price_tip" />
+
+    <LinearLayout
+        android:id="@+id/view_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/qb_px_20"
+        android:paddingRight="@dimen/qb_px_20"
+        app:layout_constraintBottom_toBottomOf="@+id/view_price"
+        app:layout_constraintEnd_toStartOf="@+id/view_right_bg"
+        app:layout_constraintStart_toEndOf="@+id/view_price"
+        app:layout_constraintTop_toTopOf="@+id/view_price">
+
+        <TextView
+            android:id="@+id/tv_user_rule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="@color/c_323232"
+            tools:text="满1000减200满1000减200满1000减200" />
+
+        <cn.lex_mung.client_android.mvp.ui.widget.FolderTextView2
+            android:id="@+id/tv_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_10"
+            android:textColor="@color/c_737373"
+            android:textSize="12sp"
+            app:always="false"
+            app:foldline="2"
+            app:unfold_text=" 查看全部"
+            app:unfold_text_color="@color/c_4A90E2"
+            tools:text="起草法律文书律文书起草法律文书起草法律文书" />
+
+        <TextView
+            android:id="@+id/tv_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_5"
+            android:textColor="@color/c_737373"
+            android:textSize="10sp"
+            tools:text="有效期2019.05.21 18:00" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_right_bg"
+        android:layout_width="@dimen/qb_px_80"
+        android:layout_height="0dp"
+        android:background="@drawable/ic_coupon_bg_right"
+        app:layout_constraintBottom_toBottomOf="@+id/view_left_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view_left_bg" />
+
+
+    <TextView
+        android:id="@+id/tv_coupon_usable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/c_ff"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/view_right_bg"
+        app:layout_constraintEnd_toEndOf="@+id/view_right_bg"
+        app:layout_constraintStart_toStartOf="@+id/view_right_bg"
+        app:layout_constraintTop_toTopOf="@+id/view_right_bg"
+        tools:text="立\n即\n使\n用" />
+
+    <ImageView
+        android:id="@+id/iv_coupon_cannot"
+        android:layout_width="@dimen/qb_px_160"
+        android:layout_height="@dimen/qb_px_120"
+        android:layout_marginEnd="@dimen/qb_px_20"
+        android:src="@drawable/ic_coupon_cannot"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/view_content"
+        app:layout_constraintEnd_toEndOf="@+id/view_content"
+        app:layout_constraintTop_toTopOf="@+id/view_content"
+        tools:visibility="visible" />
+
+    <View
+        android:id="@+id/view_select"
+        android:layout_width="@dimen/qb_px_10"
+        android:layout_height="0dp"
+        android:background="@color/c_FF7000"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/view_price"
+        app:layout_constraintTop_toTopOf="@+id/view_price"
+        tools:visibility="visible" />
+
+</android.support.constraint.ConstraintLayout>

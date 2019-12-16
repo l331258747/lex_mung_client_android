@@ -3,36 +3,27 @@ package cn.lex_mung.client_android.mvp.ui.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.amap.api.maps2d.CameraUpdateFactory;
-import com.amap.api.maps2d.model.CameraPosition;
-import com.amap.api.maps2d.model.LatLng;
-import com.amap.api.services.core.LatLonPoint;
-import com.amap.api.services.core.PoiItem;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-
-import org.simple.eventbus.Subscriber;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
-import cn.lex_mung.client_android.app.decoration.SpacesItemDecoration;
 import cn.lex_mung.client_android.di.component.DaggerOrderCouponComponent;
 import cn.lex_mung.client_android.di.module.OrderCouponModule;
 import cn.lex_mung.client_android.mvp.contract.OrderCouponContract;
 import cn.lex_mung.client_android.mvp.presenter.OrderCouponPresenter;
-import cn.lex_mung.client_android.mvp.ui.adapter.OrderCouponAdapter;
+import cn.lex_mung.client_android.mvp.ui.adapter.OrderCouponAdapter2;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import cn.lex_mung.client_android.mvp.ui.dialog.SingleTextDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
@@ -98,10 +89,15 @@ public class OrderCouponActivity extends BaseActivity<OrderCouponPresenter> impl
     }
 
     @Override
-    public void initRecyclerView(OrderCouponAdapter adapter) {
+    public void initRecyclerView(OrderCouponAdapter2 adapter) {
         AppUtils.configRecyclerView(recyclerView, new LinearLayoutManager(mActivity));
         recyclerView.setAdapter(adapter);
         adapter.setEmptyView(R.layout.layout_loading_view, (ViewGroup) recyclerView.getParent());
+    }
+
+    @Override
+    public void showDetailDialog(String str) {
+        new SingleTextDialog(mActivity).setSubmitStr("关闭").setContent(str).show();
     }
 
     //tv_no_coupon
@@ -123,7 +119,7 @@ public class OrderCouponActivity extends BaseActivity<OrderCouponPresenter> impl
     }
 
     @Override
-    public void setEmptyView(OrderCouponAdapter adapter) {
+    public void setEmptyView(OrderCouponAdapter2 adapter) {
         adapter.setEmptyView(R.layout.layout_empty_view, (ViewGroup) recyclerView.getParent());
     }
 

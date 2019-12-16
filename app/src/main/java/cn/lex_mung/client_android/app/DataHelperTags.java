@@ -34,6 +34,7 @@ public class DataHelperTags {
     public static final String TIME_UUID_DAY = "time_uuid_day";
 
     public static final String QUICK_URL = "quick_url";//快速咨询url
+    public static final String HTSCQC_URL = "htscqc_url";//起草合同 - 合同审查起草 url
     public static final String FWK_URL = "fwk_url";//法务卡url
     public static final String ZSSS_URL = "zsss_url";//再审申诉url
     public static final String SSDZ_URL = "ssdz_url";//诉讼垫资url

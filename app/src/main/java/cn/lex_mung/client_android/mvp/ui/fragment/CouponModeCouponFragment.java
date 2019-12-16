@@ -14,7 +14,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import butterknife.BindView;
 import cn.lex_mung.client_android.mvp.ui.activity.CouponModeActivity;
-import cn.lex_mung.client_android.mvp.ui.adapter.CouponModeCouponAdapter;
+import cn.lex_mung.client_android.mvp.ui.adapter.CouponModeCouponAdapter2;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
 import me.zl.mvp.base.BaseFragment;
@@ -76,14 +76,14 @@ public class CouponModeCouponFragment extends BaseFragment<CouponModeCouponPrese
     }
 
     @Override
-    public void initRecyclerView(CouponModeCouponAdapter adapter) {
+    public void initRecyclerView(CouponModeCouponAdapter2 adapter) {
         AppUtils.configRecyclerView(recyclerView, new LinearLayoutManager(mActivity));
         recyclerView.setAdapter(adapter);
         adapter.setEmptyView(R.layout.layout_loading_view, (ViewGroup) recyclerView.getParent());
     }
 
     @Override
-    public void setEmptyView(CouponModeCouponAdapter adapter) {
+    public void setEmptyView(CouponModeCouponAdapter2 adapter) {
         adapter.setEmptyView(R.layout.layout_empty_view, (ViewGroup) recyclerView.getParent());
     }
 

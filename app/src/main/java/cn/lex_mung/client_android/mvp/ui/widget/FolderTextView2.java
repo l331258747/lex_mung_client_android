@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.support.v4.content.ContextCompat;
 import android.text.Layout;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -20,15 +21,7 @@ import cn.lex_mung.client_android.R;
  * Created by evan on 2016/3/3.
  */
 @SuppressLint("AppCompatCustomView")
-public class FolderTextView extends TextView {
-
-    private static final String FOLD_TEXT = " 收缩";
-    private static final String UNFOLD_TEXT = " 查看详情";
-
-    /**
-     * 收缩状态
-     */
-//    private boolean isFold = false;
+public class FolderTextView2 extends TextView {
 
     /**
      * 绘制，防止重复进行绘制
@@ -44,6 +37,14 @@ public class FolderTextView extends TextView {
      */
     private int foldLine;
 
+    private boolean isAlways;
+
+    private String UNFOLD_TEXT;
+
+    private int UNFOLD_TEXT_COLOR;
+
+    ForegroundColorSpan foregroundColorSpan;
+
     /**
      * 全文本
      */
@@ -52,21 +53,36 @@ public class FolderTextView extends TextView {
     private float mSpacingAdd = 0.0f;
 
 
-    public FolderTextView(Context context) {
+    public FolderTextView2(Context context) {
         this(context, null);
     }
 
-    public FolderTextView(Context context, AttributeSet attrs) {
+    public FolderTextView2(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public FolderTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public FolderTextView2(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        TypedArray a = context.obtainStyledAttributes(R.styleable.FolderTextView);
-        foldLine = a.getInt(R.styleable.FolderTextView_foldline, 3);
+        TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.FolderTextView);
+        if (attributes != null) {
+            foldLine = attributes.getInt(R.styleable.FolderTextView_foldline, 2);
+            isAlways = attributes.getBoolean(R.styleable.FolderTextView_always, true);
 
-        a.recycle();
+            UNFOLD_TEXT = attributes.getString(R.styleable.FolderTextView_unfold_text);
+            if (TextUtils.isEmpty(UNFOLD_TEXT))
+                UNFOLD_TEXT = " 查看详情";
+
+            UNFOLD_TEXT_COLOR = attributes.getResourceId(R.styleable.FolderTextView_unfold_text_color, -1);
+            if (UNFOLD_TEXT_COLOR == -1) {
+                UNFOLD_TEXT_COLOR = R.color.c_1EC88B;
+            }
+
+            foregroundColorSpan = new ForegroundColorSpan(ContextCompat.getColor(context,UNFOLD_TEXT_COLOR));
+
+            attributes.recycle();
+        }
+
     }
 
     /**
@@ -99,10 +115,6 @@ public class FolderTextView extends TextView {
         return foldLine;
     }
 
-    public void setFoldLine(int foldLine) {
-        this.foldLine = foldLine;
-    }
-
     private Layout makeTextLayout(String text) {
         return new StaticLayout(text, getPaint(), getWidth() - getPaddingLeft() - getPaddingRight(),
                 Layout.Alignment.ALIGN_NORMAL, mSpacingMult, mSpacingAdd, false);
@@ -121,34 +133,26 @@ public class FolderTextView extends TextView {
     private void resetText() {
         String spanText = fullText;
 
-        SpannableString spanStr;
+        Layout layout = makeTextLayout(fullText);
 
-        //收缩状态
-//        if (isFold) {
-//            spanStr = createUnFoldSpan(spanText);
-//        } else { //展开状态
-//            spanStr = createFoldSpan(spanText);
-//        }
-        spanStr = createFoldSpan(spanText);
+        if (isAlways) {
+            SpannableString spanStr;
 
-        setUpdateText(spanStr);
-//        setMovementMethod(LinkMovementMethod.getInstance());
-    }
+            spanStr = createFoldSpan(spanText);
 
-    /**
-     * 创建展开状态下的Span
-     *
-     * @param text 源文本
-     * @return
-     */
-    private SpannableString createUnFoldSpan(String text) {
-        String destStr = text + FOLD_TEXT;
-        int start = destStr.length() - FOLD_TEXT.length();
-        int end = destStr.length();
+            setUpdateText(spanStr);
+        } else {
+            //如果行数大于固定行数
+            if (layout.getLineCount() > getFoldLine()) {
+                SpannableString spanStr;
 
-        SpannableString spanStr = new SpannableString(destStr);
-        spanStr.setSpan(foregroundColorSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        return spanStr;
+                spanStr = createFoldSpan(spanText);
+
+                setUpdateText(spanStr);
+            } else {
+                setText(fullText);
+            }
+        }
     }
 
     /**
@@ -190,10 +194,4 @@ public class FolderTextView extends TextView {
         }
     }
 
-    ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(getResources().getColor(R.color.c_3DD790));
-
-    public void setEndColor(int colorId){
-        //c_4A90E2
-        foregroundColorSpan = new ForegroundColorSpan(getResources().getColor(colorId));
-    }
 }

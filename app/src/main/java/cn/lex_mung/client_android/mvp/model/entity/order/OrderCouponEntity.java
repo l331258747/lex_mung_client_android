@@ -37,8 +37,11 @@ public class OrderCouponEntity {
     private int couponStatus;//券状态（1可使用2不可使用）
     private int pageNum;
     private int pageSize;
+    private int pageType;
 
-
+    public int getPageType() {
+        return pageType;
+    }
 
     public int getMemberId() {
         return memberId;
@@ -54,9 +57,9 @@ public class OrderCouponEntity {
 
     public String getRule() {
         if(preferentialWay == 2){
-            return "满" + StringUtils.getStringNum(fullNum) + "减" + StringUtils.getStringNum(reduceNum);
+            return "满" + StringUtils.getStringNum(fullNum) + "减";
         }else{
-            return "满" + StringUtils.getStringNum(fullNum) + "打" + getPreferentialDiscountStr() + "折";
+            return "满" + StringUtils.getStringNum(fullNum) + "打";
         }
     }
 

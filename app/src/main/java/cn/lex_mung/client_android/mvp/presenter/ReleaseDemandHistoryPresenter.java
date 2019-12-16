@@ -5,51 +5,37 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.view.View;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import cn.lex_mung.client_android.R;
-import cn.lex_mung.client_android.app.BundleTags;
-import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
-import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
-import cn.lex_mung.client_android.mvp.model.entity.FreeConsultReplyListEntity;
-import cn.lex_mung.client_android.mvp.model.entity.GeneralEntity;
-import cn.lex_mung.client_android.mvp.model.entity.MyLikeEntity;
-import cn.lex_mung.client_android.mvp.model.entity.help.HirstoryDemandEntity;
-import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
-import cn.lex_mung.client_android.mvp.ui.activity.LawyerHomePageActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.RecommendLawyerActivity;
-import cn.lex_mung.client_android.mvp.ui.adapter.OrderCouponAdapter;
-import cn.lex_mung.client_android.mvp.ui.adapter.ReleaseDemandHistoryAdapter;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
-import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
-import me.zl.mvp.integration.AppManager;
-import me.zl.mvp.di.scope.ActivityScope;
-import me.zl.mvp.mvp.BasePresenter;
-import me.zl.mvp.http.imageloader.ImageLoader;
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 
 import javax.inject.Inject;
 
+import cn.lex_mung.client_android.R;
+import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.mvp.contract.ReleaseDemandHistoryContract;
-import me.zl.mvp.utils.AppUtils;
+import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
+import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
+import cn.lex_mung.client_android.mvp.model.entity.GeneralEntity;
+import cn.lex_mung.client_android.mvp.model.entity.help.HirstoryDemandEntity;
+import cn.lex_mung.client_android.mvp.ui.activity.RecommendLawyerActivity;
+import cn.lex_mung.client_android.mvp.ui.adapter.ReleaseDemandHistoryAdapter;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
+import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
+import me.zl.mvp.di.scope.ActivityScope;
+import me.zl.mvp.http.imageloader.ImageLoader;
+import me.zl.mvp.integration.AppManager;
+import me.zl.mvp.mvp.BasePresenter;
 import me.zl.mvp.utils.RxLifecycleUtils;
 import okhttp3.RequestBody;
-
-import static cn.lex_mung.client_android.app.EventBusTags.ORDER_COUPON.ORDER_COUPON;
-import static cn.lex_mung.client_android.app.EventBusTags.ORDER_COUPON.REFRESH_COUPON;
 
 
 @ActivityScope

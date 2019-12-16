@@ -9,13 +9,13 @@ import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
 
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.mvp.model.entity.free.CommonFreeTextEntity;
-import cn.lex_mung.client_android.mvp.ui.widget.FolderTextView;
+import cn.lex_mung.client_android.mvp.ui.widget.FolderTextView2;
 import me.zl.mvp.http.imageloader.ImageLoader;
 
 public class FreeConsultMainAdapter extends BaseQuickAdapter<CommonFreeTextEntity, BaseViewHolder> {
 
     ImageLoader mImageLoader;
-    FolderTextView tv_content;
+    FolderTextView2 tv_content;
 
     public FreeConsultMainAdapter(ImageLoader imageLoader) {
         super(R.layout.item_free_main);
@@ -24,12 +24,6 @@ public class FreeConsultMainAdapter extends BaseQuickAdapter<CommonFreeTextEntit
 
     @Override
     protected void convert(BaseViewHolder helper, CommonFreeTextEntity item) {
-        tv_content = helper.getView(R.id.tv_content);
-//        TextViewEllipsize.setEllipsize(tv_content
-//                ,item.getContent()
-//                ,"查看详情"
-//                ,ContextCompat.getColor(mContext,R.color.c_26CD8D));
-
         helper.setText(R.id.tv_content, item.getContent());
 
         if (!TextUtils.isEmpty(item.getMemberIconImage())) {

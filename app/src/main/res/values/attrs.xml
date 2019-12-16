@@ -43,6 +43,9 @@
 
     <declare-styleable name="FolderTextView">
         <attr name="foldline" format="integer" />
+        <attr name="always" format="boolean" />
+        <attr name="unfold_text" format="string" />
+        <attr name="unfold_text_color" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="TabLayout">
