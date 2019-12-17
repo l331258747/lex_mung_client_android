@@ -167,12 +167,10 @@
 
     <View
         android:id="@+id/view_select"
-        android:layout_width="@dimen/qb_px_10"
-        android:layout_height="0dp"
-        android:background="@color/c_FF7000"
+        android:layout_width="@dimen/qb_px_40"
+        android:layout_height="@dimen/qb_px_40"
+        android:background="@drawable/ic_select2"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/view_price"
-        app:layout_constraintTop_toTopOf="@+id/view_price"
         tools:visibility="visible" />
 
 </android.support.constraint.ConstraintLayout>
