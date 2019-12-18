@@ -12,15 +12,11 @@ import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.BusinessEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BusinessTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.CaseListEntity;
-import cn.lex_mung.client_android.mvp.model.entity.CouponsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.CouponsMainEntity;
 import cn.lex_mung.client_android.mvp.model.entity.DemandMessageEntity;
 import cn.lex_mung.client_android.mvp.model.entity.EquitiesDetailsEntity;
-import cn.lex_mung.client_android.mvp.model.entity.EquitiesListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.EquitiesMainListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.ExpertCallEntity;
-import cn.lex_mung.client_android.mvp.model.entity.entrust.EntrustDetailEntity;
-import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.FeedbackTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.FreeConsultEntity;
 import cn.lex_mung.client_android.mvp.model.entity.FreeConsultReplyListEntity;
@@ -49,6 +45,8 @@ import cn.lex_mung.client_android.mvp.model.entity.UnreadMessageCountEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UploadImageEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.VersionEntity;
+import cn.lex_mung.client_android.mvp.model.entity.entrust.EntrustListEntity;
+import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertReserveEntity;
 import cn.lex_mung.client_android.mvp.model.entity.free.CommonFreeTextEntity;
 import cn.lex_mung.client_android.mvp.model.entity.free.FreeTextBizinfoEntity;
@@ -915,11 +913,29 @@ public interface CommonService {
     @POST("common/popup/list")
     Observable<BaseResponse<BaseListEntity<ActivityEntity>>> popupList(@Body RequestBody body);
 
-    ///lawyer/caseorder/detail/v2/{id}
+//    ///lawyer/caseorder/detail/v2/{id}
+//    //GET
+//    //律师端案源订单详情
+//    @GET("lawyer/caseorder/detail/v2/{id}")
+//    Observable<BaseResponse<EntrustDetailEntity>> caseorderDetail(@Path("id") int id);
+
+    ///client/casesource/detail/{id}
     //GET
-    //律师端案源订单详情
-    @GET("lawyer/caseorder/detail/v2/{id}")
-    Observable<BaseResponse<EntrustDetailEntity>> caseorderDetail(@Path("id") int id);
+    //客户端案源订单详情
+    @GET("client/casesource/detail/{id}")
+    Observable<BaseResponse<EntrustListEntity>> caseorderDetail(@Path("id") int id);
+
+    ///client/casesource/update
+    //POST
+    //客户端案源订单确认接单律师
+    @POST("client/casesource/update")
+    Observable<BaseResponse> casesourceUpdate(@Body RequestBody body);
+
+    ///lawyer/casesource/userphone/{id} 、 /client/casesource/userphone/{id}/{lawyerId}
+    //GET
+    //案源订单-获取虚拟运营商号码
+    @GET("client/casesource/userphone/{id}/{lawyerId}")
+    Observable<BaseResponse<RemainEntity>> casesourceUserphone(@Path("id") int id, @Path("lawyerId") int lawyerId);
 
     ///common/pages/second
     //GET
@@ -1001,7 +1017,7 @@ public interface CommonService {
     @Multipart
     @POST("client/legal/adviser/order/doc/upload")
     Observable<BaseResponse<DocUploadEntity>> legalAdviserOrderDocUpload(@Part("order_no") RequestBody order_no,
-                                                        @Part MultipartBody.Part file);
+                                                                         @Part MultipartBody.Part file);
 
     //client/legal/adviser/order/doc/get/{orderNo}/{pageNum}/{pageSize}
     //GET

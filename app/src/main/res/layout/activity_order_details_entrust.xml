@@ -146,6 +146,66 @@
 
             </FrameLayout>
 
+
+            <View
+                android:id="@+id/view_line"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qb_px_15"
+                android:layout_marginTop="@dimen/qb_px_30"
+                android:background="@color/c_f7f7f7"
+                app:layout_constraintTop_toBottomOf="@+id/fl_info" />
+
+            <View
+                android:id="@+id/view_list_title_img"
+                android:layout_width="@dimen/qb_px_10"
+                android:layout_height="@dimen/qb_px_30"
+                android:layout_marginStart="@dimen/qb_px_40"
+                android:background="@color/c_1EC88B"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_list_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_list_title" />
+
+            <TextView
+                android:id="@+id/tv_list_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_70"
+                android:paddingTop="@dimen/qb_px_30"
+                android:paddingBottom="@dimen/qb_px_30"
+                android:text="平台推荐律师"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+            <TextView
+                android:id="@+id/tv_list_title_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@+id/tv_list_title"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_list_title"
+                android:layout_marginStart="@dimen/qb_px_20"
+                app:layout_constraintStart_toEndOf="@+id/tv_list_title"
+                android:textSize="12sp"
+                android:textColor="@color/c_737373"
+                tools:text="您的案源已有32名律师有接案意向"/>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                app:layout_constraintTop_toBottomOf="@+id/tv_list_title" />
+
+            <cn.lex_mung.client_android.mvp.ui.widget.EmptyView2
+                android:id="@+id/emptyView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:EmptyView_content2="还没有平台推荐律师"
+                app:layout_constraintTop_toBottomOf="@+id/tv_list_title"
+                app:EmptyView_img="@drawable/ic_empty_entrust" />
+
         </android.support.constraint.ConstraintLayout>
 
 
