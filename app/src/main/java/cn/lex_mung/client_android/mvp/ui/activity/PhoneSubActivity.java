@@ -149,7 +149,7 @@ public class PhoneSubActivity extends BaseActivity<PhoneSubPresenter> implements
         setTvTimeBtn(entity.getMinimumDuration());
 
         String str3 = "1、预约咨询服务需提前预存咨询费用。<br>2、您发起预约后将默认冻结%s分钟的咨询费用，通话过程中，实际咨询费用如超过冻结费用时，系统将自行中断通话，如您预计通话时间会更长，请在上方点击修改冻结费用。<br>3、更多细则请查阅<font color=\"#27CB90\">《绿豆圈专家咨询细则》</font>";
-        StringUtils.setHtml(tvTipContent,String.format(str3, entity.getMinimumDurationStr()));
+        StringUtils.setHtml(tvTipContent, String.format(str3, entity.getMinimumDurationStr()));
     }
 
     public void setTvTimeBtn(int time) {
@@ -284,8 +284,13 @@ public class PhoneSubActivity extends BaseActivity<PhoneSubPresenter> implements
     //查询余额不足
     @Override
     public void showBalanceNoDialog() {
+
         new SingleTextDialog(mActivity)
-                .setContent("咨询余额不足，请至少预存" + entity.getMinimumDuration() + "分钟中的咨询费用。")
+                .setContent(String.format("咨询余额不足，" + entity.getLawyerName()
+                        + "律师咨询费用为" + entity.getPriceStr() + "，不足" + entity.getMinimumDuration()
+                        + "分钟按" + entity.getMinimumDuration() + "分钟计算，"
+                        + "超过" + entity.getMinimumDuration() + "分钟按实际通话分钟数计算。为保障您的最大权益，"
+                        + "建议充值金额不少于" + entity.getMinimumRecharge() + "元"))
                 .setOnClickListener(() -> {
                     bundle.clear();
                     bundle.putBoolean(BundleTags.IS_EXPERT, true);
@@ -303,9 +308,9 @@ public class PhoneSubActivity extends BaseActivity<PhoneSubPresenter> implements
                     killMyself();
                     bundle.clear();
                     bundle.putInt(BundleTags.ID, entity.getOrderId());
-                    bundle.putString(BundleTags.TITLE,"专家咨询详情");
-                    bundle.putString(BundleTags.ORDER_NO,entity.getOrderNo());
-                    launchActivity(new Intent(mActivity,OrderDetailsExpertActivity.class),bundle);
+                    bundle.putString(BundleTags.TITLE, "专家咨询详情");
+                    bundle.putString(BundleTags.ORDER_NO, entity.getOrderNo());
+                    launchActivity(new Intent(mActivity, OrderDetailsExpertActivity.class), bundle);
                 })
                 .setOnClickListener(() -> {
                     killMyself();
