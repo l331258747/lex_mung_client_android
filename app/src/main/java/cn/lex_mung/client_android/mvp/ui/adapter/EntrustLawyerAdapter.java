@@ -61,10 +61,17 @@ public class EntrustLawyerAdapter extends BaseQuickAdapter<EntrustListLawyersBea
             }
         }
 
+        //履历
+        helper.setGone(R.id.ll_curriculum_vitae,false);
+        if(!TextUtils.isEmpty(item.getCurriculumContent())){
+            helper.setGone(R.id.ll_curriculum_vitae,true);
+            helper.setText(R.id.tv_curriculum_vitae,item.getCurriculumContent());
+        }
+
         //服务优势
-        helper.setGone(R.id.tv_advantage, false);
+        helper.setGone(R.id.ll_advantage, false);
         if (!TextUtils.isEmpty(item.getAdvantage())) {
-            helper.setGone(R.id.tv_advantage, true);
+            helper.setGone(R.id.ll_advantage, true);
             helper.setText(R.id.tv_advantage, item.getAdvantage());
         }
 

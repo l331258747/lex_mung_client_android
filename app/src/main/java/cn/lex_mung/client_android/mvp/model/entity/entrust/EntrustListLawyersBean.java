@@ -36,6 +36,11 @@ public class EntrustListLawyersBean {
     private String advantage;
     private List<BusinessBean> business;
     private EntrustListLawyersTag tag;
+    private String curriculumContent;
+
+    public String getCurriculumContent() {
+        return curriculumContent;
+    }
 
     public String getInstitutionName() {
         return institutionName;
@@ -50,8 +55,7 @@ public class EntrustListLawyersBean {
     }
 
     public String getAdvantage() {
-        if(TextUtils.isEmpty(advantage)) return "";
-        return "服务优势："+advantage;
+        return advantage;
     }
 
     public String getMemberPositionNameStr() {
