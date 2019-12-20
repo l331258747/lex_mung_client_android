@@ -133,6 +133,7 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
     boolean isCall;//是否显示拨打电话按钮
     private int requireTypeId;//用来埋点用的
     public boolean isPublic;//是否为公益律师
+    public boolean isOrderLawyer;//是否为订单进去的律师详情
     public String lawyerMobile;//公益律师电话
 
     @Override
@@ -155,23 +156,39 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
         return R.layout.activity_lawyer_home_page;
     }
 
+    public void setBottomLayout(){
+        if(isPublic){
+            llBottom2.setVisibility(View.VISIBLE);
+            llBottom.setVisibility(View.GONE);
+            //公益律师隐藏服务价格
+            tvServicePrice.setVisibility(View.GONE);
+            ivServicePrice.setVisibility(View.GONE);
+            return;
+        }
+
+        if(isOrderLawyer){
+            llBottom2.setVisibility(View.GONE);
+            llBottom.setVisibility(View.GONE);
+            //公益律师隐藏服务价格
+            tvServicePrice.setVisibility(View.GONE);
+            ivServicePrice.setVisibility(View.GONE);
+            return;
+        }
+
+        llBottom2.setVisibility(View.GONE);//公益律师按钮
+        if(!DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)){
+            llBottom.setVisibility(View.GONE);//正常按钮
+        }else{
+            llBottom.setVisibility(View.VISIBLE);
+        }
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
         mPresenter.onResume();
 
-        if(!isPublic){
-            llBottom2.setVisibility(View.GONE);//公益律师按钮
-            if(!DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)){
-                llBottom.setVisibility(View.GONE);//正常按钮
-            }else{
-                llBottom.setVisibility(View.VISIBLE);
-            }
-        }else{
-            llBottom2.setVisibility(View.VISIBLE);
-            llBottom.setVisibility(View.GONE);
-            setServicePriceLayoutGone();
-        }
+        setBottomLayout();
 
         switch (requireTypeId) {
             case 2://诉讼
@@ -193,12 +210,6 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
                 BuryingPointHelp.getInstance().onActivityResumed(mActivity, "search_lawyer_lawyer_detail_page", getPair());
                 break;
         }
-    }
-
-    //公益律师隐藏服务价格
-    public void setServicePriceLayoutGone(){
-        tvServicePrice.setVisibility(View.GONE);
-        ivServicePrice.setVisibility(View.GONE);
     }
 
     @Override
@@ -233,10 +244,13 @@ public class LawyerHomePageActivity extends BaseActivity<LawyerHomePagePresenter
     public void initData(@Nullable Bundle savedInstanceState) {
         if (bundleIntent != null) {
             isPublic = bundleIntent.getBoolean(BundleTags.IS_PUBLIC);
+            isOrderLawyer = bundleIntent.getBoolean(BundleTags.IS_ORDER_LAWYER);
             lawyerMobile = bundleIntent.getString(BundleTags.MOBILE);
             requireTypeId = bundleIntent.getInt(BundleTags.REQUIRE_TYPE_ID);
             mPresenter.setId(bundleIntent.getInt(BundleTags.ID));
-            mPresenter.getLawsHomePagerBase(isPublic);
+            mPresenter.setPublic(isPublic);
+            mPresenter.setOrderLawyer(isOrderLawyer);
+            mPresenter.getLawsHomePagerBase();
 
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

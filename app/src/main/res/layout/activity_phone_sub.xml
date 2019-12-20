@@ -60,11 +60,24 @@
                 android:id="@+id/tv_title_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="名字"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/view_title"
-                app:layout_constraintTop_toTopOf="@+id/view_title" />
+                app:layout_constraintTop_toTopOf="@+id/view_title"
+                tools:text="名字名字" />
+
+            <TextView
+                android:id="@+id/tv_title_name2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_10"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_title_name"
+                app:layout_constraintEnd_toStartOf="@+id/iv_title_img"
+                app:layout_constraintStart_toEndOf="@+id/tv_title_name"
+                tools:text="名字名字名字名字名字名字名字名字" />
 
             <ImageView
                 android:id="@+id/iv_title_location"
@@ -221,14 +234,14 @@
                 android:id="@+id/recycler_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_25"
+                android:layout_marginTop="@dimen/qb_px_30"
+                android:layout_marginEnd="@dimen/qb_px_25"
                 android:overScrollMode="never"
                 android:scrollbars="none"
-                android:layout_marginTop="@dimen/qb_px_30"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginStart="@dimen/qb_px_25"
-                android:layout_marginEnd="@dimen/qb_px_25"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_time_content"/>
+                app:layout_constraintTop_toBottomOf="@+id/tv_time_content" />
 
             <TextView
                 android:id="@+id/tv_time_btn"
@@ -333,6 +346,6 @@
         android:id="@+id/view_bottom"
         android:layout_width="match_parent"
         android:layout_height="@dimen/qb_px_1"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

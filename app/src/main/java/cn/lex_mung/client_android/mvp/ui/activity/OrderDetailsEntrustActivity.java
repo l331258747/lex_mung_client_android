@@ -329,6 +329,9 @@ public class OrderDetailsEntrustActivity extends BaseActivity<OrderDetailsEntrus
                 if (bean == null) return;
                 bundle.clear();
                 bundle.putInt(BundleTags.ID, bean.getMemberId());
+                if(layerId == 0){
+                    bundle.putBoolean(BundleTags.IS_ORDER_LAWYER, true);
+                }
                 launchActivity(new Intent(mActivity, LawyerHomePageActivity.class), bundle);
             });
             homeLawyerAdapter.setOnItemChildClickListener((adapter1, view, position) -> {

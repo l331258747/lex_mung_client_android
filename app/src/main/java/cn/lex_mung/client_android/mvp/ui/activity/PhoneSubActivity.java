@@ -59,6 +59,8 @@ public class PhoneSubActivity extends BaseActivity<PhoneSubPresenter> implements
     TitleView titleView;
     @BindView(R.id.tv_title_name)
     TextView tvTitleName;
+    @BindView(R.id.tv_title_name2)
+    TextView tvTitleName2;
     @BindView(R.id.tv_title_location)
     TextView tvTitleLocation;
     @BindView(R.id.iv_title_img)
@@ -119,6 +121,7 @@ public class PhoneSubActivity extends BaseActivity<PhoneSubPresenter> implements
         entity.setTalkTimes();
 
         tvTitleName.setText(entity.getLawyerName());
+        tvTitleName2.setText(entity.getMemberPositionName());
         tvTitleLocation.setText(entity.getCity());
 
         if (!TextUtils.isEmpty(entity.getIcon())) {
