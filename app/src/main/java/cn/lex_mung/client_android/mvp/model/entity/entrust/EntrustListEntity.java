@@ -304,6 +304,10 @@ public class EntrustListEntity {
             return "风险代理";
         if (procuration == 3)
             return "半风险代理";
+        if (procuration == 4)
+            return "商议";
+        if (procuration == 5)
+            return "其他";
         return "";
     }
 
