@@ -277,11 +277,11 @@ public class OrderDetailsEntrustActivity extends BaseActivity<OrderDetailsEntrus
         //orderStatus	1待审核，2待发布，3未通过，4待确认，6已确认，7待打款，8已打款，9已完成，10已关闭，11已删除
         int orderStatus = entity.getOrderStatus();
 
-        if (orderStatus == 2 || orderStatus == 4) {
+        if (orderStatus == 2) {
             setOrderDetailView(1);
-        } else if (orderStatus == 6) {
+        } else if (orderStatus == 4) {
             setOrderDetailView(2);
-        } else if (orderStatus == 7 || orderStatus == 8 || orderStatus == 9) {
+        } else if (orderStatus == 6 || orderStatus == 7 || orderStatus == 8 || orderStatus == 9) {
             setOrderDetailView(3);
         } else {
             setOrderDetailView(0);
