@@ -212,7 +212,6 @@ public class EntrustListEntity {
             case 4:
                 return "待确认";
             case 6:
-                return "已确认";
             case 7:
                 return "已完成";
             case 8:
