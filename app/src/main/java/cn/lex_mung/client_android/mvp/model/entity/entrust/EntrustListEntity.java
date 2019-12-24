@@ -298,6 +298,8 @@ public class EntrustListEntity {
     }
 
     public String getProcurationStr() {
+        if (procuration == 0)
+            return "其他";
         if (procuration == 1)
             return "一般代理";
         if (procuration == 2)
@@ -306,8 +308,6 @@ public class EntrustListEntity {
             return "半风险代理";
         if (procuration == 4)
             return "商议";
-        if (procuration == 5)
-            return "其他";
         return "";
     }
 
