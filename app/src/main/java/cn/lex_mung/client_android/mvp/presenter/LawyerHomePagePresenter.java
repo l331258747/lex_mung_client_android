@@ -218,7 +218,7 @@ public class LawyerHomePagePresenter extends BasePresenter<LawyerHomePageContrac
                         , entity.getInstitutionName()
                         , entity.getPractice()));
             } else if (!TextUtils.isEmpty(entity.getInstitutionName())) {
-                mRootView.setInstitutionNameAndPractice(entity.getMemberPositionName());
+                mRootView.setInstitutionNameAndPractice(entity.getInstitutionName());
             } else if (!TextUtils.isEmpty(entity.getPractice())) {
                 mRootView.setInstitutionNameAndPractice(entity.getPractice());
             } else {

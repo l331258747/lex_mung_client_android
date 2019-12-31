@@ -223,12 +223,12 @@ public class LawsHomePagerBaseEntity implements Serializable {
         this.memberPositionId = memberPositionId;
     }
 
-    public String getMemberPositionName() {
-        return memberPositionName;
-    }
-
     public void setMemberPositionName(String memberPositionName) {
         this.memberPositionName = memberPositionName;
+    }
+
+    public String getMemberPositionName() {
+        return memberPositionName;
     }
 
     public String getBeginPracticeDate() {
