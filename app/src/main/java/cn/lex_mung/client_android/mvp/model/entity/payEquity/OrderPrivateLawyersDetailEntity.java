@@ -57,7 +57,7 @@ public class OrderPrivateLawyersDetailEntity implements Serializable {
     private String callTimeStr;
     private EvaluateBean evaluate;
     private List<QuickTimeBean> quickTime;
-    private double lawyerAmount;
+    private String lawyerAmount;
 
     public String getLawyerArea(){
         if(!TextUtils.isEmpty(rname) && !TextUtils.isEmpty(institutionName))
@@ -67,15 +67,6 @@ public class OrderPrivateLawyersDetailEntity implements Serializable {
         if(TextUtils.isEmpty(institutionName))
             return rname;
         return "";
-    }
-
-    public double getLawyerAmount() {
-        return lawyerAmount;
-    }
-
-    public String getLawyerAmountStr(){
-        if(lawyerAmount == 0) return "";
-        return StringUtils.getStringNum(lawyerAmount) + "元";
     }
 
     public String getReceiptStatusStr(){

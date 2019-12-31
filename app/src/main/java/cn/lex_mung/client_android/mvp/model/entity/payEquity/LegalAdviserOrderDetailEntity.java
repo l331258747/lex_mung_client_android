@@ -61,7 +61,7 @@ public class LegalAdviserOrderDetailEntity implements Serializable {
     private int lawyerMemberId;
     private String receiptDate;
     private double showAmount;
-    private double lawyerAmount;
+    private String lawyerAmount;
     private int receiptStatus;
     private double platformAmount;
     private int createMemberId;
@@ -168,7 +168,7 @@ public class LegalAdviserOrderDetailEntity implements Serializable {
         return showAmount;
     }
 
-    public double getLawyerAmount() {
+    public String getLawyerAmount() {
         return lawyerAmount;
     }
 
