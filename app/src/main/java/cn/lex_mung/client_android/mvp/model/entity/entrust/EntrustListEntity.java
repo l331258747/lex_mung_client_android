@@ -71,6 +71,7 @@ public class EntrustListEntity {
     private double platformAmount;
     private int authentication;
     private int procuration;
+    private String procurationName;
     private int solutionTypeId;
     private int isRecommend;
     private String recommendTime;
@@ -297,17 +298,18 @@ public class EntrustListEntity {
     }
 
     public String getProcurationStr() {
-        if (procuration == 0)
-            return "其他";
-        if (procuration == 1)
-            return "一般代理";
-        if (procuration == 2)
-            return "风险代理";
-        if (procuration == 3)
-            return "半风险代理";
-        if (procuration == 4)
-            return "商议";
-        return "";
+//        if (procuration == 0)
+//            return "其他";
+//        if (procuration == 1)
+//            return "一般代理";
+//        if (procuration == 2)
+//            return "风险代理";
+//        if (procuration == 3)
+//            return "半风险代理";
+//        if (procuration == 4)
+//            return "商议";
+//        return "";
+        return procurationName;
     }
 
     public void setProcuration(int procuration) {
