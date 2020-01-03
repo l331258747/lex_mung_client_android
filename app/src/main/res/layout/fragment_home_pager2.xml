@@ -116,8 +116,9 @@
                 android:layout_height="match_parent"
                 android:layout_below="@+id/titleView"
                 app:EmptyView_bg="@color/c_ff"
-                app:EmptyView_btn="重新加载"
-                app:EmptyView_content="请检查您的网络"
+                app:EmptyView_btn="点击重试"
+                app:EmptyView_content="网络似乎有点问题"
+                android:visibility="gone"
                 app:EmptyView_img="@drawable/ic_empty_free"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -128,7 +129,6 @@
                 android:id="@+id/smart_refresh_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="gone"
                 android:focusable="true"
                 android:focusableInTouchMode="true">
 
