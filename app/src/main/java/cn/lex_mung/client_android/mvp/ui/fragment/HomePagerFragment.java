@@ -583,6 +583,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -613,6 +617,7 @@ import cn.lex_mung.client_android.mvp.ui.activity.SolutionDetailActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.HomeAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import cn.lex_mung.client_android.mvp.ui.widget.EmptyView;
 import cn.lex_mung.client_android.utils.BadgeNumUtil;
 import cn.lex_mung.client_android.utils.BuryingPointHelp;
 import cn.lex_mung.client_android.utils.LogUtil;
@@ -635,6 +640,11 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     ViewFlipper viewFlipper;
     @BindView(R.id.tv_search)
     TextView tvSearch;
+
+    @BindView(R.id.smart_refresh_layout)
+    SmartRefreshLayout smart_refresh_layout;
+    @BindView(R.id.emptyView)
+    EmptyView emptyView;
 
     BadgeNumUtil badgeNumUtil;//华为角标
 
@@ -665,13 +675,22 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         isCreated = true;
 
         initAdapter();
-        initRecyclerView();
         initTextBanner();
+        initEmptyView();
 
         mPresenter.pagesSecond();
         mPresenter.getHomeData();
         mPresenter.random();
         mPresenter.getSolutionType();//有的地方用到了缓存
+    }
+
+    private void initEmptyView() {
+        emptyView.getBtn().setOnClickListener(v -> {
+            mPresenter.pagesSecond();
+            mPresenter.getHomeData();
+            mPresenter.random();
+            mPresenter.getSolutionType();//有的地方用到了缓存
+        });
     }
 
     private boolean isCreated = false;
@@ -700,6 +719,20 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     }
 
     private void initAdapter() {
+        smart_refresh_layout.setEnableLoadMore(false);
+        smart_refresh_layout.setOnRefreshListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.pagesSecond();
+                mPresenter.getHomeData();
+            }
+        });
+
+
         homeAdapter = new HomeAdapter(mImageLoader);
 
         homeAdapter.setOnBannerClickListener(new HomeAdapter.OnBannerClickListener() {
@@ -954,13 +987,10 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                 launchActivity(new Intent(mActivity, LawyerListActivity.class));
             }
         });
-    }
 
-    private void initRecyclerView() {
         AppUtils.configRecyclerView(recyclerView, new LinearLayoutManager(mActivity));
         recyclerView.setAdapter(homeAdapter);
     }
-
 
     @OnClick({
             R.id.view_search_text
@@ -1070,7 +1100,15 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
 
     @Override
     public void setHomeAdapter(List<HomeEntity> datas) {
+        emptyView.setVisibility(View.GONE);
+        smart_refresh_layout.setVisibility(View.VISIBLE);
         homeAdapter.setNewData(datas);
+        smart_refresh_layout.finishRefresh();
+    }
+
+    public void showEmptyView(){
+        emptyView.setVisibility(View.VISIBLE);
+        smart_refresh_layout.setVisibility(View.GONE);
     }
 
     @Override

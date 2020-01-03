@@ -45,6 +45,8 @@ public interface HomePagerContract {
 
         Activity getHomeActivity();
 
+        void showEmptyView();
+
     }
 
     interface Model extends IModel {

@@ -110,12 +110,36 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view_search">
 
+            <cn.lex_mung.client_android.mvp.ui.widget.EmptyView
+                android:id="@+id/emptyView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/titleView"
+                app:EmptyView_bg="@color/c_ff"
+                app:EmptyView_btn="重新加载"
+                app:EmptyView_content="请检查您的网络"
+                app:EmptyView_img="@drawable/ic_empty_free"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleView" />
+
+            <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                android:id="@+id/smart_refresh_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:overScrollMode="never"
                 android:scrollbars="none" />
+
+            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
         </FrameLayout>
 

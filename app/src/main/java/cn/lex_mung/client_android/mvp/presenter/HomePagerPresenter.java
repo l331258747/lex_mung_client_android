@@ -280,6 +280,7 @@ import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.PagesSecondEntity;
 import cn.lex_mung.client_android.utils.GsonUtil;
+import cn.lex_mung.client_android.utils.http.OnSuccessAndFaultSub2;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
@@ -442,6 +443,7 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
         }
     }
 
+    boolean isFast;
     //获取首页数据
     public void getHomeData() {
         mModel.clientHome()
@@ -453,13 +455,19 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<HomeEntity>>>(mErrorHandler) {
+                .subscribe(new OnSuccessAndFaultSub2<BaseResponse<BaseListEntity<HomeEntity>>>(mErrorHandler,mApplication) {
                     @Override
                     public void onNext(BaseResponse<BaseListEntity<HomeEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             mRootView.setHomeAdapter(baseResponse.getData().getList());
-//                            saveShapeUrl(baseResponse.getData().getList());
                             getLawyerList();
+                        }else {
+                            if(!isFast){
+                                mRootView.showEmptyView();
+                                isFast = true;
+                            }else{
+                                mRootView.showMessage(baseResponse.getMessage());
+                            }
                         }
                     }
                 });
