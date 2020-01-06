@@ -54,6 +54,7 @@ public class FreeConsultReplyActivity extends BaseActivity<FreeConsultReplyPrese
             R.id.tv_btn
     })
     public void onViewClicked(View view) {
+        if (isFastClick()) return;
         switch (view.getId()) {
             case R.id.tv_btn:
                 mPresenter.reply(etContent.getText().toString());
