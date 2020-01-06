@@ -392,6 +392,8 @@
 #2D地图
 -keep class com.amap.api.maps2d.**{*;}
 -keep class com.amap.api.mapcore2d.**{*;}
+#定位 android-10
+-keep class com.loc.**{*;}
 
 #友盟
 -keep class com.umeng.** {*;}
