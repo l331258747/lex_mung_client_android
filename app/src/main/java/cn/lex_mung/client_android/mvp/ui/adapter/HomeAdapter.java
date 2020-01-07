@@ -291,6 +291,7 @@ public class HomeAdapter extends BaseQuickAdapter<HomeEntity, BaseViewHolder> {
                     , ImageConfigImpl
                             .builder()
                             .url(item.getIcon())
+                            .imageRadius(AppUtils.dip2px(mContext, 10))
                             .imageView(ivCard)
                             .build());
         }
