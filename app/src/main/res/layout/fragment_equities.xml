@@ -35,5 +35,20 @@
         layout="@layout/layout_equities_details"
         android:visibility="gone" />
 
+    <cn.lex_mung.client_android.mvp.ui.widget.EmptyView
+        android:id="@+id/emptyView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/titleView"
+        app:EmptyView_bg="@color/c_ff"
+        app:EmptyView_btn="点击重试"
+        android:visibility="gone"
+        app:EmptyView_content="网络似乎有点问题"
+        app:EmptyView_img="@drawable/ic_empty_network"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleView" />
+
     <include layout="@layout/layout_loading_view" />
 </LinearLayout>

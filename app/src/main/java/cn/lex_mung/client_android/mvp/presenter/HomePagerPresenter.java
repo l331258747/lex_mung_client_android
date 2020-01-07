@@ -443,7 +443,6 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
         }
     }
 
-    boolean isFast;
     //获取首页数据
     public void getHomeData() {
         mModel.clientHome()
@@ -461,13 +460,9 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                         if (baseResponse.isSuccess()) {
                             mRootView.setHomeAdapter(baseResponse.getData().getList());
                             getLawyerList();
-                        }else {
-                            if(!isFast){
-                                mRootView.showEmptyView();
-                                isFast = true;
-                            }else{
-                                mRootView.showMessage(baseResponse.getMessage());
-                            }
+                        }else{
+                            mRootView.showEmptyView();
+                            mRootView.showMessage(baseResponse.getMessage());
                         }
                     }
                 });

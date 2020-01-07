@@ -11,6 +11,7 @@ import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.PagesSecondEntity;
 import cn.lex_mung.client_android.utils.GsonUtil;
+import cn.lex_mung.client_android.utils.http.OnSuccessAndFaultSub2;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -124,7 +125,7 @@ public class EquitiesPresenter extends BasePresenter<EquitiesContract.Model, Equ
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<EquitiesMainListEntity>>(mErrorHandler) {
+                .subscribe(new OnSuccessAndFaultSub2<BaseResponse<EquitiesMainListEntity>>(mErrorHandler,mApplication) {
                     @Override
                     public void onNext(BaseResponse<EquitiesMainListEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
@@ -152,6 +153,9 @@ public class EquitiesPresenter extends BasePresenter<EquitiesContract.Model, Equ
                             mRootView.showAllEquitiesLayout();
                             mRootView.hideCurrentEquitiesLayout();
                             mRootView.setEquitiesAdapter2(list_2);
+                        }else{
+                            mRootView.showMessage(baseResponse.getMessage());
+                            mRootView.showEmptyView();
                         }
                     }
                 });
@@ -170,7 +174,7 @@ public class EquitiesPresenter extends BasePresenter<EquitiesContract.Model, Equ
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<EquitiesMainListEntity>>(mErrorHandler) {
+                .subscribe(new OnSuccessAndFaultSub2<BaseResponse<EquitiesMainListEntity>>(mErrorHandler,mApplication) {
                     @Override
                     public void onNext(BaseResponse<EquitiesMainListEntity> baseResponse) {
                         if (baseResponse.isSuccess()) {
@@ -228,6 +232,9 @@ public class EquitiesPresenter extends BasePresenter<EquitiesContract.Model, Equ
                                 mRootView.setEquitiesAdapter2(list_2);
                             }
 
+                        }else{
+                            mRootView.showMessage(baseResponse.getMessage());
+                            mRootView.showEmptyView();
                         }
                     }
                 });

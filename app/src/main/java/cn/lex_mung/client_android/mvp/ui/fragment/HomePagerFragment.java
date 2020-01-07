@@ -580,6 +580,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -645,6 +646,8 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     SmartRefreshLayout smart_refresh_layout;
     @BindView(R.id.emptyView)
     EmptyView emptyView;
+    @BindView(R.id.ll_loading)
+    LinearLayout ll_loading;
 
     BadgeNumUtil badgeNumUtil;//华为角标
 
@@ -677,6 +680,9 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         initAdapter();
         initTextBanner();
         initEmptyView();
+
+        ll_loading.setVisibility(View.VISIBLE);
+        smart_refresh_layout.setVisibility(View.GONE);
 
         mPresenter.pagesSecond();
         mPresenter.getHomeData();
@@ -1102,6 +1108,8 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     public void setHomeAdapter(List<HomeEntity> datas) {
         emptyView.setVisibility(View.GONE);
         smart_refresh_layout.setVisibility(View.VISIBLE);
+        ll_loading.setVisibility(View.GONE);
+
         homeAdapter.setNewData(datas);
         smart_refresh_layout.finishRefresh();
     }
@@ -1109,6 +1117,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     public void showEmptyView(){
         emptyView.setVisibility(View.VISIBLE);
         smart_refresh_layout.setVisibility(View.GONE);
+        ll_loading.setVisibility(View.GONE);
     }
 
     @Override

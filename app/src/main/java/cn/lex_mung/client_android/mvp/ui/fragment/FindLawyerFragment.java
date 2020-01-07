@@ -251,6 +251,15 @@ public class FindLawyerFragment extends BaseFragment<FindLawyerPresenter> implem
     }
 
     @Override
+    public void cleanLoading(boolean isAdd){
+        if (isAdd) {
+            smartRefreshLayout.finishLoadMore();
+        }else{
+            smartRefreshLayout.finishRefresh();
+        }
+    }
+
+    @Override
     public void setScreenColor(int color) {
         tvScreen.setTextColor(color);
     }

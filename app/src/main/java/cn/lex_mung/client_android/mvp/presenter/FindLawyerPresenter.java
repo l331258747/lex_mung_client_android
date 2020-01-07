@@ -8,6 +8,7 @@ import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
 import cn.lex_mung.client_android.mvp.model.entity.RequireEntity;
+import cn.lex_mung.client_android.utils.http.OnSuccessAndFaultSub2;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -196,13 +197,16 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
                     .observeOn(AndroidSchedulers.mainThread())
                     .doFinally(() -> mRootView.hideLoading())
                     .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                    .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<LawyerEntity2>>>(mErrorHandler) {
+                    .subscribe(new OnSuccessAndFaultSub2<BaseResponse<BaseListEntity<LawyerEntity2>>>(mErrorHandler,mApplication) {
                         @Override
                         public void onNext(BaseResponse<BaseListEntity<LawyerEntity2>> baseResponse) {
                             if (baseResponse.isSuccess()) {
                                 totalNum = baseResponse.getData().getPages();
                                 pageNum = baseResponse.getData().getPageNum();
                                 mRootView.setAdapter(baseResponse.getData().getList(), isAdd);
+                            }else{
+                                mRootView.showMessage(baseResponse.getMessage());
+                                mRootView.cleanLoading(isAdd);
                             }
                         }
                     });
@@ -219,13 +223,16 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
                     .observeOn(AndroidSchedulers.mainThread())
                     .doFinally(() -> mRootView.hideLoading())
                     .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                    .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<LawyerEntity2>>>(mErrorHandler) {
+                    .subscribe(new OnSuccessAndFaultSub2<BaseResponse<BaseListEntity<LawyerEntity2>>>(mErrorHandler,mApplication) {
                         @Override
                         public void onNext(BaseResponse<BaseListEntity<LawyerEntity2>> baseResponse) {
                             if (baseResponse.isSuccess()) {
                                 totalNum = baseResponse.getData().getPages();
                                 pageNum = baseResponse.getData().getPageNum();
                                 mRootView.setAdapter(baseResponse.getData().getList(), isAdd);
+                            }else{
+                                mRootView.showMessage(baseResponse.getMessage());
+                                mRootView.cleanLoading(isAdd);
                             }
                         }
                     });

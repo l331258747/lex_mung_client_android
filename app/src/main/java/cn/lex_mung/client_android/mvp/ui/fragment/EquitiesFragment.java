@@ -42,6 +42,7 @@ import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.EquitiesAdapter;
 import cn.lex_mung.client_android.mvp.ui.adapter.LawyerListAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import cn.lex_mung.client_android.mvp.ui.widget.EmptyView;
 import cn.lex_mung.client_android.mvp.ui.widget.RoundImageView;
 import cn.lex_mung.client_android.utils.BuryingPointHelp;
 import me.zl.mvp.base.BaseFragment;
@@ -82,8 +83,6 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
     NestedScrollView nsvAllEquities;
     @BindView(R.id.nsv_equities_details)
     NestedScrollView nsvEquitiesDetails;
-    @BindView(R.id.ll_loading)
-    LinearLayout llLoading;
 
     @BindView(R.id.ll__balance)
     LinearLayout ll__balance;
@@ -91,6 +90,11 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
     TextView tv_card_club_balance;
     @BindView(R.id.tv_card_member_balance)
     TextView tv_card_member_balance;
+
+    @BindView(R.id.emptyView)
+    EmptyView emptyView;
+    @BindView(R.id.ll_loading)
+    LinearLayout llLoading;
 
     private EquitiesAdapter equitiesAdapter1;
     private EquitiesAdapter equitiesAdapter2;
@@ -141,6 +145,13 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
         isCreated = true;
         initAdapter();
         initRecyclerView();
+        initEmptyView();
+    }
+
+    private void initEmptyView() {
+        emptyView.getBtn().setOnClickListener(v -> {
+            mPresenter.onResume();
+        });
     }
 
     @Override
@@ -179,6 +190,14 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
         tvTitle.setText(getString(R.string.text_equities));
         nsvAllEquities.setVisibility(View.VISIBLE);
         nsvEquitiesDetails.setVisibility(View.GONE);
+        llLoading.setVisibility(View.GONE);
+        emptyView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showEmptyView(){
+        emptyView.setVisibility(View.VISIBLE);
+        nsvAllEquities.setVisibility(View.GONE);
         llLoading.setVisibility(View.GONE);
     }
 

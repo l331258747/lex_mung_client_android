@@ -19,6 +19,8 @@ public interface FindLawyerContract {
         void setScreenColor(int color);
 
         void setField(int id,String name);
+
+        void cleanLoading(boolean isAdd);
     }
 
     interface Model extends IModel {

@@ -43,6 +43,8 @@ public interface EquitiesContract {
         void setLawyerAdapter(List<LawyerEntity2> list);
 
         void setBalance(List<EquitiesDetailsEntity.CouponsChildEntity> list);
+
+        void showEmptyView();
     }
 
     interface Model extends IModel {
