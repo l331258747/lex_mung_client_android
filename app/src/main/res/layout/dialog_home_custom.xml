@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/qb_px_570"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/view_1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/round_20_ffffff_all"
+        app:layout_constraintBottom_toBottomOf="@id/view_content_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/qb_px_60"
+        android:layout_marginTop="@dimen/qb_px_30"
+        android:layout_marginRight="@dimen/qb_px_60"
+        android:gravity="center"
+        android:maxLines="10"
+        android:scrollbars="vertical"
+        android:textColor="@color/c_323232"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view_1"
+        android:text="联系客服" />
+
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/qb_px_60"
+        android:layout_marginTop="@dimen/qb_px_20"
+        android:layout_marginRight="@dimen/qb_px_60"
+        android:gravity="center"
+        android:lineSpacingExtra="@dimen/qb_px_10"
+        android:scrollbars="vertical"
+        android:textColor="@color/c_323232"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+        android:text="400-811-3060\n（工作日9：00 - 18：00）" />
+
+    <LinearLayout
+        android:id="@+id/ll_content2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/qb_px_10"
+        android:layout_marginLeft="@dimen/qb_px_60"
+        android:layout_marginRight="@dimen/qb_px_60"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/tv_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:scrollbars="vertical"
+            android:textColor="@color/c_323232"
+            android:text="微信客服：lex-yagnchun" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="复制"
+            android:layout_marginStart="@dimen/qb_px_5"
+            android:textSize="12sp"
+            android:textColor="@color/c_4A90E2"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_btn"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_60"
+        android:layout_marginLeft="@dimen/qb_px_60"
+        android:layout_marginTop="@dimen/qb_px_30"
+        android:layout_marginRight="@dimen/qb_px_60"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_content2">
+
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/qb_px_10"
+            android:layout_weight="1"
+            android:background="@drawable/round_40_2ed08d_all"
+            android:gravity="center"
+            android:text="返回"
+            android:textColor="@color/c_ff" />
+
+        <TextView
+            android:id="@+id/tv_submit"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/qb_px_10"
+            android:layout_weight="1"
+            android:background="@drawable/round_40_2ed08d_all"
+            android:gravity="center"
+            android:text="呼叫"
+            android:textColor="@color/c_ff" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_content_bottom"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_30"
+        app:layout_constraintTop_toBottomOf="@+id/ll_btn" />
+
+</android.support.constraint.ConstraintLayout>

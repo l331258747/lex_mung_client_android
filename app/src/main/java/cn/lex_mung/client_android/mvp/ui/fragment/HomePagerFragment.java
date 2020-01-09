@@ -567,6 +567,7 @@
 package cn.lex_mung.client_android.mvp.ui.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -575,6 +576,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.ClipboardManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -617,6 +619,7 @@ import cn.lex_mung.client_android.mvp.ui.activity.PhoneSubActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.SolutionDetailActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.HomeAdapter;
+import cn.lex_mung.client_android.mvp.ui.dialog.HomeCustomDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.EmptyView;
 import cn.lex_mung.client_android.utils.BadgeNumUtil;
@@ -1001,6 +1004,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     @OnClick({
             R.id.view_search_text
             , R.id.iv_message
+            , R.id.iv_call
     })
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -1018,7 +1022,29 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                     launchActivity(new Intent(mActivity, LoginActivity.class));
                 }
                 break;
+            case R.id.iv_call:
+                showCustomDialog();
+                break;
         }
+    }
+
+    public void showCustomDialog(){
+        new HomeCustomDialog(mActivity).setSubmitOnClickListener(new HomeCustomDialog.OnClickListener() {
+            @Override
+            public void onSubmitClick(String phone) {
+                Intent dialIntent2 = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "400-811-3060"));
+                startActivity(dialIntent2);
+            }
+
+            @Override
+            public void onCloneClick(String wxNum) {
+                ClipboardManager cm = (ClipboardManager) mActivity.getSystemService(Context.CLIPBOARD_SERVICE);
+                if (cm != null) {
+                    cm.setText(wxNum);
+                }
+                AppUtils.makeText(mActivity, "复制成功，请打开微信添加客服！");
+            }
+        }).show();
     }
 
     @Override
