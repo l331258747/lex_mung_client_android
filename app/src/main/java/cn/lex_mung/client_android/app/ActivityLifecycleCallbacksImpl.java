@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.umeng.analytics.MobclickAgent;
 
 import cn.lex_mung.client_android.R;
@@ -60,6 +61,11 @@ public class ActivityLifecycleCallbacksImpl implements Application.ActivityLifec
 
     @Override
     public void onActivityPaused(Activity activity) {
+        if (activity.findViewById(R.id.smart_refresh_layout) != null) {
+            SmartRefreshLayout smartRefreshLayout = activity.findViewById(R.id.smart_refresh_layout);
+            smartRefreshLayout.finishLoadMore();
+            smartRefreshLayout.finishRefresh();
+        }
         MobclickAgent.onPause(activity);
     }
 
