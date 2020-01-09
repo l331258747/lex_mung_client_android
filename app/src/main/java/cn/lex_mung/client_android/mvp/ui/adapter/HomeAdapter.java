@@ -3,10 +3,12 @@ package cn.lex_mung.client_android.mvp.ui.adapter;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -51,6 +53,8 @@ public class HomeAdapter extends BaseQuickAdapter<HomeEntity, BaseViewHolder> {
                 .registerItemType(5, R.layout.layout_home_4hot)
                 .registerItemType(6, R.layout.layout_home_4hot)
                 .registerItemType(7, R.layout.layout_home_only_img)
+                .registerItemType(8, R.layout.layout_home_3button2)
+                .registerItemType(9, R.layout.layout_home_h_srcoll)
                 .registerItemType(20, R.layout.item_home20_lawyer)
                 .registerItemType(21, R.layout.layout_home20_lawyer_title);
 
@@ -62,7 +66,6 @@ public class HomeAdapter extends BaseQuickAdapter<HomeEntity, BaseViewHolder> {
             case 0:
                 return;
             case 1:
-
                 if(item.getBtns() == null || item.getBtns().size() < 3)
                     return;
 
@@ -90,7 +93,6 @@ public class HomeAdapter extends BaseQuickAdapter<HomeEntity, BaseViewHolder> {
                                 , ImageConfigImpl
                                         .builder()
                                         .url(path.toString())
-                                        .imageRadius(AppUtils.dip2px(mContext, 10))
                                         .imageView(imageView)
                                         .build());
                     }
@@ -199,14 +201,20 @@ public class HomeAdapter extends BaseQuickAdapter<HomeEntity, BaseViewHolder> {
                 if(item.getBtns() == null || item.getBtns().size() == 0)
                     return;
 
+                LinearLayout llTitle = helper.getView(R.id.ll_title);
                 TextView tvTitle5 = helper.getView(R.id.tv_title);
                 TextView tvTitleContent5 = helper.getView(R.id.tv_title_content);
                 RecyclerView recyclerView5 = helper.getView(R.id.recycler_view);
                 recyclerView5.setNestedScrollingEnabled(false);
 
-                tvTitle5.setText(item.getHeadline());
-                if (!TextUtils.isEmpty(item.getSubheadline()))
-                    tvTitleContent5.setText(item.getSubheadline());
+                if(TextUtils.isEmpty(item.getHeadline())){
+                    llTitle.setVisibility(View.GONE);
+                }else{
+                    llTitle.setVisibility(View.VISIBLE);
+                    tvTitle5.setText(item.getHeadline());
+                    if (!TextUtils.isEmpty(item.getSubheadline()))
+                        tvTitleContent5.setText(item.getSubheadline());
+                }
 
                 Home4hotAdapter adapter5 = new Home4hotAdapter(mImageLoader);
                 adapter5.setOnItemClickListener((adapter1, view, position) -> {
@@ -236,6 +244,51 @@ public class HomeAdapter extends BaseQuickAdapter<HomeEntity, BaseViewHolder> {
                 }
                 setOnclick(iv_img,item.getBtns().get(0));
 
+                break;
+            case 8:
+                if(item.getBtns() == null || item.getBtns().size() == 0)
+                    return;
+                RecyclerView recyclerView8 = helper.getView(R.id.recycler_view);
+                recyclerView8.setNestedScrollingEnabled(false);
+
+                Home8hotAdapter adapter8 = new Home8hotAdapter(mImageLoader,item.getBtns().size());
+                adapter8.setOnItemClickListener((adapter1, view, position) -> {
+                    if (onBannerClickListener != null) {
+                        onBannerClickListener.onBannerClick(item.getBtns().get(position));
+                    }
+                });
+
+                AppUtils.configRecyclerView(recyclerView8, new LinearLayoutManager(mContext));
+                recyclerView8.setAdapter(adapter8);
+                adapter8.setNewData(item.getBtns());
+
+                break;
+            case 9:
+                if(item.getBtns() == null || item.getBtns().size() == 0)
+                    return;
+
+                LinearLayout llTitle9 = helper.getView(R.id.ll_title);
+                TextView tvTitle9 = helper.getView(R.id.tv_title);
+                RecyclerView recyclerView9 = helper.getView(R.id.recycler_view);
+                recyclerView9.setNestedScrollingEnabled(false);
+
+                if(TextUtils.isEmpty(item.getHeadline())){
+                    llTitle9.setVisibility(View.GONE);
+                }else{
+                    llTitle9.setVisibility(View.VISIBLE);
+                    tvTitle9.setText(item.getHeadline());
+                }
+
+                Home9hotAdapter adapter9 = new Home9hotAdapter(mImageLoader);
+                adapter9.setOnItemChildClickListener((adapter1, view, position) -> {
+                    if (onBannerClickListener != null) {
+                        onBannerClickListener.onBannerClick(item.getBtns().get(position));
+                    }
+                });
+
+                AppUtils.configRecyclerView(recyclerView9, new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+                recyclerView9.setAdapter(adapter9);
+                adapter9.setNewData(item.getBtns());
                 break;
             case 20:
                 setLawyerView(helper,item.getLawyerEntity2());

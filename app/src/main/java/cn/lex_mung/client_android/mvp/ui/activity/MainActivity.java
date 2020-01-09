@@ -174,13 +174,13 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     }
 
     private void setStatusColor(int position) {
-        if (position == 0) {
-            StatusBarUtil.setColor(mActivity, AppUtils.getColor(mActivity, R.color.c_1EC88B), 0);
-            fab.setVisibility(View.VISIBLE);
-        } else {
+//        if (position == 0) {
+//            StatusBarUtil.setColor(mActivity, AppUtils.getColor(mActivity, R.color.c_1EC88B), 0);
+//            fab.setVisibility(View.VISIBLE);
+//        } else {
             StatusBarUtil.setColor(mActivity, AppUtils.getColor(mActivity, R.color.c_ff), 0);
             fab.setVisibility(View.GONE);
-        }
+//        }
     }
 
     private void initViewPager() {

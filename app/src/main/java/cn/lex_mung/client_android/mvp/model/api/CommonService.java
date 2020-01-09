@@ -800,7 +800,7 @@ public interface CommonService {
     ///common/client/home
     //GET
     //获取首页模板
-    @GET("common/client/home")
+    @GET("common/client/home/v2")
     Observable<BaseResponse<BaseListEntity<HomeEntity>>> clientHome();
 
     //http://pv.sohu.com/cityjson?ie=utf-8

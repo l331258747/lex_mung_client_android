@@ -633,8 +633,8 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     @Inject
     ImageLoader mImageLoader;
 
-    @BindView(R.id.iv_message)
-    ImageView iv_message;
+    @BindView(R.id.view_message)
+    View view_message;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.view_flipper)
@@ -670,7 +670,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
 
     @Override
     public View initView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home_pager2, container, false);
+        return inflater.inflate(R.layout.fragment_home_pager3, container, false);
     }
 
     @Override
@@ -1023,9 +1023,10 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
 
     @Override
     public void setUnreadMessageCount(int count) {
-        iv_message.setImageDrawable(ContextCompat.getDrawable(mActivity, R.drawable.ic_message));
-
+        view_message.setVisibility(View.VISIBLE);
         setHuaweiBadgeNum(count);
+
+
     }
 
     //设置华为角标
@@ -1038,7 +1039,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
 
     @Override
     public void hideUnreadMessageCount() {
-        iv_message.setImageDrawable(ContextCompat.getDrawable(mActivity, R.drawable.ic_message_un));
+        view_message.setVisibility(View.GONE);
         setHuaweiBadgeNum(0);
     }
 

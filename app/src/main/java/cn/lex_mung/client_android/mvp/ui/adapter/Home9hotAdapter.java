@@ -9,36 +9,33 @@ import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
 import me.zl.mvp.http.imageloader.ImageLoader;
+import me.zl.mvp.utils.AppUtils;
 
-public class Home4hotAdapter extends BaseQuickAdapter<HomeChildEntity, BaseViewHolder> {
+public class Home9hotAdapter extends BaseQuickAdapter<HomeChildEntity, BaseViewHolder> {
     ImageLoader mImageLoader;
 
-    public Home4hotAdapter(ImageLoader mImageLoader) {
-        super(R.layout.item_home4_hot);
+    public Home9hotAdapter(ImageLoader mImageLoader) {
+        super(R.layout.item_home9_hot);
         this.mImageLoader = mImageLoader;
     }
 
     @Override
     protected void convert(BaseViewHolder helper, HomeChildEntity item) {
-        helper.setText(R.id.tv_name,item.getTitle());
         if (!TextUtils.isEmpty(item.getIcon())) {
             mImageLoader.loadImage(mContext
                     , ImageConfigImpl
                             .builder()
-                            .isCenterCrop(false)
                             .url(item.getIcon())
-                            .imageView(helper.getView(R.id.iv_img))
+                            .imageRadius(AppUtils.dip2px(mContext,10))
+                            .imageView(helper.getView(R.id.view_card))
                             .build());
-        }
-        if (!TextUtils.isEmpty(item.getTag())) {
-            mImageLoader.loadImage(mContext
-                    , ImageConfigImpl
-                            .builder()
-                            .isCenterCrop(false)
-                            .url(item.getTag())
-                            .imageView(helper.getView(R.id.iv_tag))
-                            .build());
+        }else{
+            helper.setImageResource(R.id.view_card,R.drawable.round_20_282a3e_all);
         }
 
+        helper.setText(R.id.tv_name,item.getTitle());
+        helper.setText(R.id.tv_content,item.getDesc1());
+        helper.setText(R.id.tv_content2,item.getDesc2());
+        helper.addOnClickListener(R.id.tv_btn);
     }
 }

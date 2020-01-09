@@ -64,12 +64,16 @@ public class HomeEntity {
                 return 6;
             case "single_image":
                 return 7;
+            case "vertical_navigate_list":
+                return 8;
+            case "swipe_card":
+                return 9;
             case "home_lawyer":
                 return 20;
             case "home_lawyer_title":
                 return 21;
         }
-        return 1;
+        return 0;
     }
 
     public void setType(String type) {

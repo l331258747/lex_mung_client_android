@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:paddingStart="@dimen/qb_px_40"
+    android:paddingEnd="@dimen/qb_px_40"
+    android:layout_marginBottom="@dimen/qb_px_20"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/iv_img"
+        android:layout_width="@dimen/qb_px_100"
+        android:layout_height="@dimen/qb_px_100"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_home_quick" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/qb_px_30"
+        android:layout_marginEnd="@dimen/qb_px_30"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tv_content"
+        app:layout_constraintEnd_toStartOf="@+id/iv_next"
+        app:layout_constraintStart_toEndOf="@+id/iv_img"
+        app:layout_constraintTop_toTopOf="@+id/iv_img"
+        tools:text="离婚协议书" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/qb_px_30"
+        android:layout_marginEnd="@dimen/qb_px_30"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/c_898A95"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_img"
+        app:layout_constraintEnd_toStartOf="@+id/iv_next"
+        app:layout_constraintStart_toEndOf="@+id/iv_img"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name"
+        tools:text="离婚协议书" />
+
+    <ImageView
+        android:id="@+id/iv_next"
+        android:layout_width="@dimen/qb_px_30"
+        android:layout_height="@dimen/qb_px_30"
+        android:src="@drawable/ic_right_arrow"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_img"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_img" />
+
+    <View
+        android:id="@+id/view_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_1"
+        android:layout_marginTop="@dimen/qb_px_20"
+        android:background="@color/c_f4f4f4"
+        app:layout_constraintTop_toBottomOf="@+id/iv_img" />
+</android.support.constraint.ConstraintLayout>

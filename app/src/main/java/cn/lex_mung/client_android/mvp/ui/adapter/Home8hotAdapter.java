@@ -10,17 +10,20 @@ import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
 import me.zl.mvp.http.imageloader.ImageLoader;
 
-public class Home4hotAdapter extends BaseQuickAdapter<HomeChildEntity, BaseViewHolder> {
+public class Home8hotAdapter extends BaseQuickAdapter<HomeChildEntity, BaseViewHolder> {
     ImageLoader mImageLoader;
+    int size;
 
-    public Home4hotAdapter(ImageLoader mImageLoader) {
-        super(R.layout.item_home4_hot);
+    public Home8hotAdapter(ImageLoader mImageLoader, int size) {
+        super(R.layout.item_home8_hot);
         this.mImageLoader = mImageLoader;
+        this.size = size;
     }
 
     @Override
     protected void convert(BaseViewHolder helper, HomeChildEntity item) {
-        helper.setText(R.id.tv_name,item.getTitle());
+        helper.setText(R.id.tv_name, item.getTitle());
+        helper.setText(R.id.tv_content, item.getDesc1());
         if (!TextUtils.isEmpty(item.getIcon())) {
             mImageLoader.loadImage(mContext
                     , ImageConfigImpl
@@ -30,14 +33,10 @@ public class Home4hotAdapter extends BaseQuickAdapter<HomeChildEntity, BaseViewH
                             .imageView(helper.getView(R.id.iv_img))
                             .build());
         }
-        if (!TextUtils.isEmpty(item.getTag())) {
-            mImageLoader.loadImage(mContext
-                    , ImageConfigImpl
-                            .builder()
-                            .isCenterCrop(false)
-                            .url(item.getTag())
-                            .imageView(helper.getView(R.id.iv_tag))
-                            .build());
+
+        helper.setVisible(R.id.view_line, true);
+        if (helper.getLayoutPosition() == size - 1) {
+            helper.setVisible(R.id.view_line, false);
         }
 
     }
