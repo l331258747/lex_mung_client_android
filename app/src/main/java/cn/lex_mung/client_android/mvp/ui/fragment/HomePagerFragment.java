@@ -573,7 +573,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.ClipboardManager;
@@ -581,7 +580,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
@@ -607,6 +605,7 @@ import cn.lex_mung.client_android.mvp.model.entity.free.CommonFreeTextEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
 import cn.lex_mung.client_android.mvp.presenter.HomePagerPresenter;
+import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultDetail1Activity;
 import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultMainActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.HomeSolutionActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.HomeTableActivity;
@@ -616,7 +615,6 @@ import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MainActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MessageActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.OrganizationLawyerActivity;
-import cn.lex_mung.client_android.mvp.ui.activity.PhoneSubActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.SolutionDetailActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.HomeAdapter;
@@ -995,6 +993,19 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
             public void onLawyerTitleClick() {
                 if (isFastClick()) return;
                 launchActivity(new Intent(mActivity, LawyerListActivity.class));
+            }
+
+            @Override
+            public void onFreeClick(CommonFreeTextEntity entity) {
+                if (isFastClick()) return;
+                if(!DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)){
+                    launchActivity(new Intent(mActivity, LoginActivity.class));
+                    return;
+                }
+                if (entity == null) return;
+                bundle.clear();
+                bundle.putInt(BundleTags.ID,entity.getConsultationId());
+                launchActivity(new Intent(mActivity,FreeConsultDetail1Activity.class),bundle);
             }
         });
 

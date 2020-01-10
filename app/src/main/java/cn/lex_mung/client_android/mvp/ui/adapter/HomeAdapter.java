@@ -331,6 +331,12 @@ public class HomeAdapter extends BaseQuickAdapter<HomeEntity, BaseViewHolder> {
         head3View.setHeads(mImageLoader,item.getLawyerMemberImagesStr());
         helper.setText(R.id.tv_comment,item.getReplyCountStr());
         helper.setText(R.id.tv_time,item.getDateAddedStr());
+
+        helper.getView(R.id.cl_parent).setOnClickListener(v -> {
+            if (onBannerClickListener != null) {
+                onBannerClickListener.onFreeClick(item);
+            }
+        });
     }
 
     //设置律师数据
@@ -474,8 +480,9 @@ public class HomeAdapter extends BaseQuickAdapter<HomeEntity, BaseViewHolder> {
 
     public interface OnBannerClickListener {
         void onBannerClick(HomeChildEntity entity);
-        void onLawyerClick(LawyerEntity2 entity2);
+        void onLawyerClick(LawyerEntity2 entity);
         void onLawyerTitleClick();
+        void onFreeClick(CommonFreeTextEntity entity);
     }
 
 }
