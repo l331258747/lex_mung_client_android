@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/qb_px_40"
+    android:layout_marginRight="@dimen/qb_px_40">
+
+
+    <View
+        android:id="@+id/view_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/qb_px_30"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <cn.lex_mung.client_android.mvp.ui.widget.FolderTextView2
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="啊是的噶双方都噶范德萨啊是的噶啥事阿萨德刚阿萨德广发"
+        android:textColor="@color/c_3E4155"
+        android:textSize="12sp"
+        app:unfold_text_color="@color/c_4A90E2"
+        app:foldline="3"
+        app:layout_constraintTop_toTopOf="@+id/view_content" />
+
+    <View
+        android:id="@+id/view_bottom"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/qb_px_30"
+        app:layout_constraintBottom_toBottomOf="@+id/head3View"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_content" />
+
+    <cn.lex_mung.client_android.mvp.ui.widget.Head3View
+        android:id="@+id/head3View"
+        android:layout_width="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/view_bottom"
+        android:layout_height="wrap_content" />
+
+
+    <TextView
+        android:id="@+id/tv_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/qb_px_20"
+        android:text="0条回复"
+        android:textColor="@color/c_898A95"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/view_bottom"
+        app:layout_constraintStart_toEndOf="@+id/head3View"
+        app:layout_constraintTop_toTopOf="@+id/view_bottom" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/qb_px_20"
+        android:text="刚刚"
+        android:textColor="@color/c_b4b4b4"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/view_bottom"
+        app:layout_constraintEnd_toEndOf="@+id/view_bottom"
+        app:layout_constraintTop_toTopOf="@+id/view_bottom" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="@dimen/qb_px_1"
+        android:layout_marginTop="@dimen/qb_px_30"
+        android:background="@color/c_f0f0f0"
+        app:layout_constraintTop_toBottomOf="@+id/view_bottom" />
+
+</android.support.constraint.ConstraintLayout>

@@ -603,6 +603,7 @@ import cn.lex_mung.client_android.di.component.DaggerHomePagerComponent;
 import cn.lex_mung.client_android.di.module.HomePagerModule;
 import cn.lex_mung.client_android.mvp.contract.HomePagerContract;
 import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
+import cn.lex_mung.client_android.mvp.model.entity.free.CommonFreeTextEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
 import cn.lex_mung.client_android.mvp.presenter.HomePagerPresenter;
@@ -1149,6 +1150,11 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
 
     @Override
     public void addHomeLawyer(HomeEntity homeEntity) {
+        homeAdapter.addData(homeEntity);
+    }
+
+    @Override
+    public void addHomeFree(HomeEntity homeEntity) {
         homeAdapter.addData(homeEntity);
     }
 

@@ -44,10 +44,33 @@ public class HomeLawyerAdapter extends BaseQuickAdapter<LawyerEntity2, BaseViewH
         helper.setText(R.id.item_tv_name, item.getMemberName());
         helper.setText(R.id.item_tv_job, item.getMemberPositionNameStr());
         helper.setText(R.id.item_tv_area, item.getReginInstitutionName());
-        StringUtils.setHtml(helper.getView(R.id.item_tv_field),item.getDescriptionStr());
         helper.setText(R.id.item_tv_practice_num, item.getPractice());
 
-        if(isClick)
+        helper.setGone(R.id.item_tv_field, false);
+        if (!TextUtils.isEmpty(item.getDescriptionStr())) {
+            helper.setGone(R.id.item_tv_field, true);
+            StringUtils.setHtml(helper.getView(R.id.item_tv_field),item.getDescriptionStr());
+        }
+
+        //保证金
+        helper.setGone(R.id.ll_tag, false);
+        if (!TextUtils.isEmpty(item.getTagName())) {
+            helper.setGone(R.id.ll_tag, true);
+            helper.setText(R.id.tv_credit_certification, item.getTagName());
+        }
+
+        //履历
+        helper.setGone(R.id.ll_curriculum_vitae,false);
+        if(!TextUtils.isEmpty(item.getCurriculumContent())){
+            helper.setGone(R.id.ll_curriculum_vitae,true);
+            helper.setText(R.id.tv_curriculum_vitae,item.getCurriculumContent());
+        }
+
+        helper.setGone(R.id.item_btn,false);
+        if(isClick){
+            helper.setGone(R.id.item_btn,true);
             helper.addOnClickListener(R.id.item_btn);
+        }
+
     }
 }

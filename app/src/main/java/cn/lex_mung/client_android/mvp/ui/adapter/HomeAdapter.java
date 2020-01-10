@@ -23,8 +23,11 @@ import java.util.List;
 
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
+import cn.lex_mung.client_android.mvp.model.entity.free.CommonFreeTextEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
+import cn.lex_mung.client_android.mvp.ui.widget.FolderTextView2;
+import cn.lex_mung.client_android.mvp.ui.widget.Head3View;
 import cn.lex_mung.client_android.mvp.ui.widget.home.Home3ButtonView;
 import cn.lex_mung.client_android.mvp.ui.widget.home.Home4ButtonView;
 import me.zl.mvp.http.imageloader.ImageLoader;
@@ -56,7 +59,9 @@ public class HomeAdapter extends BaseQuickAdapter<HomeEntity, BaseViewHolder> {
                 .registerItemType(8, R.layout.layout_home_3button2)
                 .registerItemType(9, R.layout.layout_home_h_srcoll)
                 .registerItemType(20, R.layout.item_home20_lawyer)
-                .registerItemType(21, R.layout.layout_home20_lawyer_title);
+                .registerItemType(21, R.layout.layout_home20_lawyer_title)
+                .registerItemType(30, R.layout.item_home20_free)
+                .registerItemType(31, R.layout.layout_home20_free_title);
 
     }
 
@@ -300,6 +305,11 @@ public class HomeAdapter extends BaseQuickAdapter<HomeEntity, BaseViewHolder> {
                     }
                 });
                 break;
+            case 30:
+                setFreeView(helper,item.getFreeTextEntity());
+                break;
+            case 31:
+                break;
         }
 
     }
@@ -310,6 +320,17 @@ public class HomeAdapter extends BaseQuickAdapter<HomeEntity, BaseViewHolder> {
                 onBannerClickListener.onBannerClick(item);
             }
         });
+    }
+
+    //设置热门咨询数据
+    public void setFreeView(BaseViewHolder helper, CommonFreeTextEntity item){
+        FolderTextView2 tvContent = helper.getView(R.id.tv_content);
+        tvContent.setText(item.getContent());
+
+        Head3View head3View = helper.getView(R.id.head3View);
+        head3View.setHeads(mImageLoader,item.getLawyerMemberImagesStr());
+        helper.setText(R.id.tv_comment,item.getReplyCountStr());
+        helper.setText(R.id.tv_time,item.getDateAddedStr());
     }
 
     //设置律师数据
@@ -328,8 +349,27 @@ public class HomeAdapter extends BaseQuickAdapter<HomeEntity, BaseViewHolder> {
         helper.setText(R.id.item_tv_name, item.getMemberName());
         helper.setText(R.id.item_tv_job, item.getMemberPositionNameStr());
         helper.setText(R.id.item_tv_area, item.getReginInstitutionName());
-        StringUtils.setHtml(helper.getView(R.id.item_tv_field),item.getDescriptionStr());
         helper.setText(R.id.item_tv_practice_num, item.getPractice());
+
+        helper.setGone(R.id.item_tv_field, false);
+        if (!TextUtils.isEmpty(item.getDescriptionStr())) {
+            helper.setGone(R.id.item_tv_field, true);
+            StringUtils.setHtml(helper.getView(R.id.item_tv_field),item.getDescriptionStr());
+        }
+
+        //保证金
+        helper.setGone(R.id.ll_tag, false);
+        if (!TextUtils.isEmpty(item.getTagName())) {
+            helper.setGone(R.id.ll_tag, true);
+            helper.setText(R.id.tv_credit_certification, item.getTagName());
+        }
+
+        //履历
+        helper.setGone(R.id.ll_curriculum_vitae,false);
+        if(!TextUtils.isEmpty(item.getCurriculumContent())){
+            helper.setGone(R.id.ll_curriculum_vitae,true);
+            helper.setText(R.id.tv_curriculum_vitae,item.getCurriculumContent());
+        }
 
         helper.getView(R.id.cl_parent).setOnClickListener(v -> {
             if (onBannerClickListener != null) {

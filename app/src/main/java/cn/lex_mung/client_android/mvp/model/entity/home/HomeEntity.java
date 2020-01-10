@@ -3,6 +3,7 @@ package cn.lex_mung.client_android.mvp.model.entity.home;
 import java.util.List;
 
 import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
+import cn.lex_mung.client_android.mvp.model.entity.free.CommonFreeTextEntity;
 
 public class HomeEntity {
 
@@ -18,6 +19,15 @@ public class HomeEntity {
     private String type;
     private List<HomeChildEntity> btns;
     private LawyerEntity2 lawyerEntity2;
+    private CommonFreeTextEntity freeTextEntity;
+
+    public CommonFreeTextEntity getFreeTextEntity() {
+        return freeTextEntity;
+    }
+
+    public void setFreeTextEntity(CommonFreeTextEntity freeTextEntity) {
+        this.freeTextEntity = freeTextEntity;
+    }
 
     public LawyerEntity2 getLawyerEntity2() {
         return lawyerEntity2;
@@ -72,6 +82,10 @@ public class HomeEntity {
                 return 20;
             case "home_lawyer_title":
                 return 21;
+            case "home_free":
+                return 30;
+            case "home_free_title":
+                return 31;
         }
         return 0;
     }

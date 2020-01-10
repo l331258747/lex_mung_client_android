@@ -276,6 +276,7 @@ import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
 import cn.lex_mung.client_android.mvp.model.entity.SolutionTypeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UnreadMessageCountEntity;
+import cn.lex_mung.client_android.mvp.model.entity.free.CommonFreeTextEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.PagesSecondEntity;
@@ -482,7 +483,7 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(() -> mRootView.hideLoading())
                 .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
-                .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<LawyerEntity2>>>(mErrorHandler) {
+                .subscribe(new OnSuccessAndFaultSub2<BaseResponse<BaseListEntity<LawyerEntity2>>>(mErrorHandler,mApplication) {
                     @Override
                     public void onNext(BaseResponse<BaseListEntity<LawyerEntity2>> baseResponse) {
                         if (baseResponse.isSuccess()) {
@@ -498,7 +499,48 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                                 homeEntity.setType("home_lawyer");
                                 mRootView.addHomeLawyer(homeEntity);
                             }
+                        }else{
+                            mRootView.showMessage(baseResponse.getMessage());
+                        }
+                        commonFreeText();
+                    }
+                });
+    }
 
+    public void commonFreeText(){
+        Map<String, Object> map = new HashMap<>();
+        map.put("categoryId", 0);
+        map.put("consultationStatus", 0);
+        map.put("sort", 0);
+        map.put("pageNum", 1);
+        map.put("pageSize", 5);
+        mModel.commonFreeText(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> {
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new OnSuccessAndFaultSub2<BaseResponse<BaseListEntity<CommonFreeTextEntity>>>(mErrorHandler,mApplication) {
+                    @Override
+                    public void onNext(BaseResponse<BaseListEntity<CommonFreeTextEntity>> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            if (baseResponse.getData().getList() == null) return;
+                            for (int i = 0; i < baseResponse.getData().getList().size(); i++) {
+                                if (i == 0) {
+                                    HomeEntity homeEntity = new HomeEntity();
+                                    homeEntity.setType("home_free_title");
+                                    mRootView.addHomeFree(homeEntity);
+                                }
+                                HomeEntity homeEntity = new HomeEntity();
+                                homeEntity.setFreeTextEntity(baseResponse.getData().getList().get(i));
+                                homeEntity.setType("home_free");
+                                mRootView.addHomeFree(homeEntity);
+                            }
+                        }else{
+                            mRootView.showMessage(baseResponse.getMessage());
                         }
                     }
                 });

@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
+import cn.lex_mung.client_android.mvp.model.entity.free.CommonFreeTextEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.OnlineUrlEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.PagesSecondEntity;
@@ -45,6 +46,13 @@ public class HomePagerModel extends BaseModel implements HomePagerContract.Model
         super.onDestroy();
         this.mGson = null;
         this.mApplication = null;
+    }
+
+    @Override
+    public Observable<BaseResponse<BaseListEntity<CommonFreeTextEntity>>> commonFreeText(RequestBody body) {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .commonFreeText(body);
     }
 
 //    @Override
@@ -93,7 +101,7 @@ public class HomePagerModel extends BaseModel implements HomePagerContract.Model
     public Observable<BaseResponse<BaseListEntity<LawyerEntity2>>> getLawyerHomeList(RequestBody body) {
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
-                .getLawyerHomeList(1,20,body);
+                .getLawyerHomeList(1,5,body);
     }
 
     @Override

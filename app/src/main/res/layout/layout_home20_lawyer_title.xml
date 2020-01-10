@@ -30,8 +30,8 @@
         android:paddingBottom="@dimen/qb_px_15"
         android:paddingLeft="@dimen/qb_px_20"
         android:text="查看全部"
-        android:textColor="@color/c_737373"
-        android:textSize="13sp"
+        android:textColor="@color/c_4868FB"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_title" />

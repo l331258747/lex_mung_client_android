@@ -43,6 +43,16 @@ public class LawyerEntity2 {
     private String lawyerWeight;
     private String practice;
     private String mobile;
+    private String tagName;
+    private String curriculumContent;
+
+    public String getTagName() {
+        return tagName;
+    }
+
+    public String getCurriculumContent() {
+        return curriculumContent;
+    }
 
     public String getMobile() {
         return mobile;
