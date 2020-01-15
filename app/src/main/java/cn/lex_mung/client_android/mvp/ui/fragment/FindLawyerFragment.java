@@ -50,6 +50,7 @@ import cn.lex_mung.client_android.mvp.ui.adapter.LawyerListRegionScreenAdapter;
 import cn.lex_mung.client_android.mvp.ui.adapter.LawyerListSortScreenAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.EasyDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
+import cn.lex_mung.client_android.mvp.ui.widget.EmptyView;
 import cn.lex_mung.client_android.utils.BuryingPointHelp;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
@@ -85,6 +86,8 @@ public class FindLawyerFragment extends BaseFragment<FindLawyerPresenter> implem
     RecyclerView recyclerView;
     @BindView(R.id.smart_refresh_layout)
     SmartRefreshLayout smartRefreshLayout;
+    @BindView(R.id.emptyView)
+    EmptyView emptyView;
 
     private boolean isExpand1 = false;
     private boolean isExpand2 = false;
@@ -145,8 +148,7 @@ public class FindLawyerFragment extends BaseFragment<FindLawyerPresenter> implem
         isCreated = true;
         setDefaultLocation();
         initAdapter();
-        initRecyclerView();
-        lawyerListAdapter.setEmptyView(R.layout.layout_loading_view, (ViewGroup) recyclerView.getParent());
+        initEmptyView();
         etSearch.setFilters(new InputFilter[]{CharacterHandler.emojiFilter});
         etSearch.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -156,6 +158,13 @@ public class FindLawyerFragment extends BaseFragment<FindLawyerPresenter> implem
             return false;
         });
     }
+
+    private void initEmptyView() {
+        emptyView.getBtn().setOnClickListener(v -> {
+            mPresenter.onCreate();
+        });
+    }
+
 
     private void initAdapter() {
         lawyerListAdapter = new LawyerListAdapter(mImageLoader);
@@ -167,9 +176,8 @@ public class FindLawyerFragment extends BaseFragment<FindLawyerPresenter> implem
             bundle.putInt(BundleTags.ID, bean.getMemberId());
             launchActivity(new Intent(mActivity, LawyerHomePageActivity.class), bundle);
         });
-    }
+        lawyerListAdapter.setEmptyView(R.layout.layout_loading_view, (ViewGroup) recyclerView.getParent());
 
-    private void initRecyclerView() {
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -190,6 +198,7 @@ public class FindLawyerFragment extends BaseFragment<FindLawyerPresenter> implem
         AppUtils.configRecyclerView(recyclerView, new LinearLayoutManager(mActivity));
         recyclerView.setAdapter(lawyerListAdapter);
     }
+
 
     @OnClick({R.id.tv_search, R.id.ll_sort, R.id.ll_field, R.id.ll_region, R.id.ll_screen})
     public void onViewClicked(View view) {
@@ -235,6 +244,8 @@ public class FindLawyerFragment extends BaseFragment<FindLawyerPresenter> implem
 
     @Override
     public void setAdapter(List<LawyerEntity2> list, boolean isAdd) {
+        emptyView.setVisibility(View.GONE);
+        smartRefreshLayout.setVisibility(View.VISIBLE);
         if (isAdd) {
             lawyerListAdapter.addData(list);
             smartRefreshLayout.finishLoadMore();
@@ -251,7 +262,9 @@ public class FindLawyerFragment extends BaseFragment<FindLawyerPresenter> implem
     }
 
     @Override
-    public void cleanLoading(boolean isAdd){
+    public void showEmptyView(boolean isAdd){
+        emptyView.setVisibility(View.VISIBLE);
+        smartRefreshLayout.setVisibility(View.GONE);
         if (isAdd) {
             smartRefreshLayout.finishLoadMore();
         }else{

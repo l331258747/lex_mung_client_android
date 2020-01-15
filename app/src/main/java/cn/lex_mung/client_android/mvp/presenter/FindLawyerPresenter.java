@@ -206,7 +206,7 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
                                 mRootView.setAdapter(baseResponse.getData().getList(), isAdd);
                             }else{
                                 mRootView.showMessage(baseResponse.getMessage());
-                                mRootView.cleanLoading(isAdd);
+                                mRootView.showEmptyView(isAdd);
                             }
                         }
                     });
@@ -232,7 +232,7 @@ public class FindLawyerPresenter extends BasePresenter<FindLawyerContract.Model,
                                 mRootView.setAdapter(baseResponse.getData().getList(), isAdd);
                             }else{
                                 mRootView.showMessage(baseResponse.getMessage());
-                                mRootView.cleanLoading(isAdd);
+                                mRootView.showEmptyView(isAdd);
                             }
                         }
                     });

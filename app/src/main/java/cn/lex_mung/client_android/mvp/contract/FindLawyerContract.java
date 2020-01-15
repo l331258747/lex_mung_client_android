@@ -20,7 +20,7 @@ public interface FindLawyerContract {
 
         void setField(int id,String name);
 
-        void cleanLoading(boolean isAdd);
+        void showEmptyView(boolean isAdd);
     }
 
     interface Model extends IModel {

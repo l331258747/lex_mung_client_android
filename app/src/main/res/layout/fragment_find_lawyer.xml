@@ -203,6 +203,20 @@
         android:layout_height="@dimen/qb_px_2"
         app:layout_constraintTop_toBottomOf="@id/ll_region" />
 
+    <cn.lex_mung.client_android.mvp.ui.widget.EmptyView
+        android:id="@+id/emptyView"
+        app:EmptyView_bg="@color/c_ff"
+        app:EmptyView_btn="点击重试"
+        app:EmptyView_content="网络似乎有点问题"
+        android:visibility="gone"
+        app:EmptyView_img="@drawable/ic_empty_network"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_region" />
+
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/smart_refresh_layout"
         android:layout_width="0dp"
