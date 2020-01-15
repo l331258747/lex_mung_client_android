@@ -1070,7 +1070,7 @@ public interface CommonService {
     ///client/privategroup/buy
     //POST
     //购买私人律师团服务
-    @POST("client/privategroup/buy")
+    @POST("client/privategroup/buy/v2")
     Observable<BaseResponse<PrivategroupBuyEntity>> privategroupBuy(@Body RequestBody body);
 
     //------------------------私人律师团 END

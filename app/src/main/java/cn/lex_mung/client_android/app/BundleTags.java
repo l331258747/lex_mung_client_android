@@ -62,5 +62,6 @@ public class BundleTags {
 
     public static final String INDUSTRY_ID = "industry_id";//熟悉行业id
     public static final String PAY_LAWYER_MONEY_ID = "pay_lawyer_money_id";//愿意支付的律师费id
+    public static final String PRIVATE_LAWYER_TYPE_ID = "private_lawyer_type_id";//私人律师团配置id PrivateLawyerTypeId
 
 }

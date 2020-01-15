@@ -121,6 +121,7 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
             tvCommodity.setText(bundleIntent.getString(BundleTags.TITLE));
             tvCommodityPrice.setText(StringUtils.getStringNum(orderPrice) + "元");
 
+            mPresenter.setPrivateLawyerTypeId(bundleIntent.getInt(BundleTags.PRIVATE_LAWYER_TYPE_ID));
             mPresenter.setRequireTypeId(id);
             mPresenter.setRequireTypeName(bundleIntent.getString(BundleTags.REQUIRE_TYPE_NAME));//热门需求 名称
             mPresenter.setMobile(bundleIntent.getString(BundleTags.MOBILE));//快速咨询 电话

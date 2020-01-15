@@ -9,6 +9,11 @@ public class WebGoEquityPayEntity {
     private float priceTotal;
     private int meetNum;
     private int product;
+    private int privateLawyerTypeId;
+
+    public int getPrivateLawyerTypeId() {
+        return privateLawyerTypeId;
+    }
 
     public void setProduct(int product) {
         this.product = product;

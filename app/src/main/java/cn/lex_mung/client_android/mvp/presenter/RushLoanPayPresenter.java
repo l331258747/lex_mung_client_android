@@ -92,6 +92,7 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
     private int payType = 1;//支付方式
     private int payTypeGroup;//支付方式为6 带的集团id（因为集团卡有多个）
 
+    private int privateLawyerTypeId;
     private float payMoney;//实付金额
     private int type; //0热门需求,1快速咨询,2付费权益,3诉讼无忧保服务,4在线法律顾问
 
@@ -113,6 +114,10 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
 
     public void setLawsuiId(String lawsuiId) {
         this.lawsuiId = lawsuiId;
+    }
+
+    public void setPrivateLawyerTypeId(int privateLawyerTypeId) {
+        this.privateLawyerTypeId = privateLawyerTypeId;
     }
 
     public void setLegalAdviserIds(List<String> legalAdviserIds) {
@@ -1004,6 +1009,7 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
             return;
         }
         Map<String, Object> map = new HashMap<>();
+        map.put("id", privateLawyerTypeId);
         mModel.privategroupBuy(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))
@@ -1061,16 +1067,16 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
             map.put("useCoupon", 1);//使用优惠券
 
             if (payType == 6) {
-                map.put("other", "{\"privateLawyerOrderNo\":" + orderNo + ",\"couponId\":" + mRootView.getCouponId() + ",\"groupCardId\":" + payTypeGroup + "}");
+                map.put("other", "{\"privateLawyerOrderNo\":" + orderNo + ",\"couponId\":" + mRootView.getCouponId() + ",\"groupCardId\":" + payTypeGroup + ",\"privateLawyerTypeId\":" + privateLawyerTypeId +"}");
             } else {
-                map.put("other", "{\"privateLawyerOrderNo\":" + orderNo + ",\"couponId\":" + mRootView.getCouponId() + "}");
+                map.put("other", "{\"privateLawyerOrderNo\":" + orderNo + ",\"couponId\":" + mRootView.getCouponId() + ",\"privateLawyerTypeId\":" + privateLawyerTypeId +"}");
             }
         } else {
             map.put("useCoupon", 0);//不使用优惠券
             if (payType == 6) {
-                map.put("other", "{\"privateLawyerOrderNo\":" + orderNo + ",\"groupCardId\":" + payTypeGroup + "}");
+                map.put("other", "{\"privateLawyerOrderNo\":" + orderNo + ",\"groupCardId\":" + payTypeGroup + ",\"privateLawyerTypeId\":" + privateLawyerTypeId +"}");
             } else {
-                map.put("other", "{\"privateLawyerOrderNo\":" + orderNo + "}");
+                map.put("other", "{\"privateLawyerOrderNo\":" + orderNo + ",\"privateLawyerTypeId\":" + privateLawyerTypeId +"}");
             }
         }
 
