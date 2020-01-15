@@ -101,7 +101,6 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
                                 return;
                             }
                             LogUtil.e("您当前是最新版本!");
-                            setHelpDialog();
                             getOnlineUrl();
                             popupList();
                         }
@@ -110,18 +109,10 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
                     @Override
                     public void onError(Throwable t) {
                         super.onError(t);
-                        setHelpDialog();
                         getOnlineUrl();
                         popupList();
                     }
                 });
-    }
-
-    public void setHelpDialog() {
-        if (!DataHelper.getBooleanSF(mRootView.getActivity(), DataHelperTags.IS_ONE_IN)) {
-            DataHelper.setBooleanSF(mRootView.getActivity(), DataHelperTags.IS_ONE_IN, true);
-            mRootView.showHelpDialog();
-        }
     }
 
     public void onResume() {

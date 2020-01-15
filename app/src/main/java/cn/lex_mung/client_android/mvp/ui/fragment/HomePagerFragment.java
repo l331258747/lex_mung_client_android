@@ -607,8 +607,11 @@ import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
 import cn.lex_mung.client_android.mvp.presenter.HomePagerPresenter;
 import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultDetail1Activity;
 import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultMainActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.HelpStepActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.HomeSolutionActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.HomeTableActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.HomeTableQyfwActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.HomeTableSszcActivityActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerHomePageActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerListActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LoginActivity;
@@ -618,6 +621,7 @@ import cn.lex_mung.client_android.mvp.ui.activity.OrganizationLawyerActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.SolutionDetailActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.HomeAdapter;
+import cn.lex_mung.client_android.mvp.ui.dialog.HelpStepDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.HomeCustomDialog;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 import cn.lex_mung.client_android.mvp.ui.widget.EmptyView;
@@ -685,6 +689,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
 
         ll_loading.setVisibility(View.VISIBLE);
         smart_refresh_layout.setVisibility(View.GONE);
+        setHelpDialog();
 
         mPresenter.pagesSecond();
         mPresenter.getHomeData();
@@ -772,7 +777,22 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                         //4 企业顾问 lawyer
                         //5 线下见面 lawyer
                         //6 按问题找律师 subject
+                        //7 我的咨询 native_consultation
+                        //8 企业服务 native_enterpriseService
+                        //9 服务助手 native_serviceAssistant
                         switch (uri.getPath().substring(1)) {
+                            case "native_serviceAssistant":
+                                BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "first_page_assistant_click");
+                                showHelpDialog();
+                                break;
+                            case "native_enterpriseService":
+                                bundle.clear();
+                                bundle.putString(BundleTags.TITLE, "企业服务");
+                                launchActivity(new Intent(mActivity, HomeTableQyfwActivity.class), bundle);
+                                break;
+                            case "native_consultation":
+
+                                break;
                             case "expert":
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "first_page_expert_consultation_click");
                                 bundle.clear();
@@ -798,16 +818,24 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
 
                                 if (requireTypeId == 2) {
                                     BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "first_page_litigation_arbitration_click");
+                                    bundle.clear();
+                                    bundle.putInt(BundleTags.ID, requireTypeId);
+                                    bundle.putString(BundleTags.TITLE, requireTypeName);
+                                    launchActivity(new Intent(mActivity, HomeTableSszcActivityActivity.class), bundle);
                                 } else if (requireTypeId == 9) {
                                     BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "first_page_meeting_offline_click");
+                                    bundle.clear();
+                                    bundle.putInt(BundleTags.ID, requireTypeId);
+                                    bundle.putString(BundleTags.TITLE, requireTypeName);
+                                    launchActivity(new Intent(mActivity, HomeTableActivity.class), bundle);
                                 } else if (requireTypeId == 6) {
                                     BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "first_page_legal_counsel_click");
+                                    bundle.clear();
+                                    bundle.putInt(BundleTags.ID, requireTypeId);
+                                    bundle.putString(BundleTags.TITLE, requireTypeName);
+                                    launchActivity(new Intent(mActivity, HomeTableActivity.class), bundle);
                                 }
 
-                                bundle.clear();
-                                bundle.putInt(BundleTags.ID, requireTypeId);
-                                bundle.putString(BundleTags.TITLE, requireTypeName);
-                                launchActivity(new Intent(mActivity, HomeTableActivity.class), bundle);
                                 break;
                             case "subject":
                                 String requireTypeIdStr1 = uri.getQueryParameter("id");
@@ -822,7 +850,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                                     return;
                                 }
 
-                                switch (requireTypeId1){
+                                switch (requireTypeId1) {
                                     case 0://更多分类
                                         BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "first_page_more_categories_click");
                                         break;
@@ -907,14 +935,14 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
 
                                 }
 
-                                if(requireTypeId1 == 0){
+                                if (requireTypeId1 == 0) {
                                     launchActivity(new Intent(mActivity, HomeSolutionActivity.class));
-                                }else{
+                                } else {
                                     bundle.clear();
-                                    bundle.putInt(BundleTags.SOLUTION_TYPE_ID,requireTypeId1);
-                                    bundle.putString(BundleTags.SOLUTION_TYPE_NAME,requireTypeName1);
-                                    bundle.putBoolean(BundleTags.IS_CRIMINAL,TextUtils.equals("0",hasContract));
-                                    launchActivity(new Intent(mActivity, SolutionDetailActivity.class),bundle);
+                                    bundle.putInt(BundleTags.SOLUTION_TYPE_ID, requireTypeId1);
+                                    bundle.putString(BundleTags.SOLUTION_TYPE_NAME, requireTypeName1);
+                                    bundle.putBoolean(BundleTags.IS_CRIMINAL, TextUtils.equals("0", hasContract));
+                                    launchActivity(new Intent(mActivity, SolutionDetailActivity.class), bundle);
                                 }
 
                                 break;
@@ -941,11 +969,11 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                     } else if (linkValue.indexOf("quick.html") > -1) {
                         BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "first_page_quick_consultation_click"); //快速咨询 quick.html
                     } else if (linkValue.indexOf("contractList.html") > -1) {
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","first_page_hot_service_more_click"); //热门更多 contractList.html
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "first_page_hot_service_more_click"); //热门更多 contractList.html
                     } else if (linkValue.indexOf("feature.html") > -1) {
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","first_page_litigation_click"); //诉讼垫资 feature.html
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "first_page_litigation_click"); //诉讼垫资 feature.html
                     } else if (linkValue.indexOf("retrial.html") > -1) {
-                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page","first_page_retrial_appeal_click"); //再审申诉 retrial.html
+                        BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "first_page_retrial_appeal_click"); //再审申诉 retrial.html
                     }
 
                     if (linkValue.indexOf("orgId=") != -1) {
@@ -965,7 +993,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                     bundle.clear();
                     bundle.putString(BundleTags.URL, entity.getJumpurl());
                     bundle.putString(BundleTags.TITLE, entity.getTitle());
-                    if(entity.getShowShare() == 1){
+                    if (entity.getShowShare() == 1) {
                         bundle.putBoolean(BundleTags.IS_SHARE, true);
                         bundle.putString(BundleTags.SHARE_URL, entity.getShareUrl());
                         bundle.putString(BundleTags.SHARE_TITLE, entity.getShareTitle());
@@ -998,14 +1026,14 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
             @Override
             public void onFreeClick(CommonFreeTextEntity entity) {
                 if (isFastClick()) return;
-                if(!DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)){
+                if (!DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_LOGIN_SUCCESS)) {
                     launchActivity(new Intent(mActivity, LoginActivity.class));
                     return;
                 }
                 if (entity == null) return;
                 bundle.clear();
-                bundle.putInt(BundleTags.ID,entity.getConsultationId());
-                launchActivity(new Intent(mActivity,FreeConsultDetail1Activity.class),bundle);
+                bundle.putInt(BundleTags.ID, entity.getConsultationId());
+                launchActivity(new Intent(mActivity, FreeConsultDetail1Activity.class), bundle);
             }
         });
 
@@ -1040,7 +1068,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         }
     }
 
-    public void showCustomDialog(){
+    public void showCustomDialog() {
         new HomeCustomDialog(mActivity).setSubmitOnClickListener(new HomeCustomDialog.OnClickListener() {
             @Override
             public void onSubmitClick(String phone) {
@@ -1068,8 +1096,8 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     }
 
     //设置华为角标
-    public void setHuaweiBadgeNum(int num){
-        if(badgeNumUtil == null){
+    public void setHuaweiBadgeNum(int num) {
+        if (badgeNumUtil == null) {
             badgeNumUtil = new BadgeNumUtil(mActivity);
         }
         badgeNumUtil.setHuaweiBadgeNum(num);
@@ -1153,7 +1181,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         smart_refresh_layout.finishRefresh();
     }
 
-    public void showEmptyView(){
+    public void showEmptyView() {
         emptyView.setVisibility(View.VISIBLE);
         smart_refresh_layout.setVisibility(View.GONE);
         ll_loading.setVisibility(View.GONE);
@@ -1208,5 +1236,22 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     @Override
     public void killMyself() {
 
+    }
+
+    public void setHelpDialog() {
+        if (!DataHelper.getBooleanSF(mActivity, DataHelperTags.IS_ONE_IN)) {
+            DataHelper.setBooleanSF(mActivity, DataHelperTags.IS_ONE_IN, true);
+            showHelpDialog();
+        }
+    }
+
+    public void showHelpDialog() {
+        new HelpStepDialog(mActivity,
+                dialog -> {
+                    launchActivity(new Intent(mActivity, HelpStepActivity.class));
+                }).setContent("服务助手平均每天帮助2561名用户找到合适的法律服务和律师，它能帮助您解决如下问题：")
+                .setContent2("· 不知道当前是否需要法律服务\n· 不知道选择什么样的律师\n· 不知道适合自己的律师费用")
+                .setCannelStr("不需要")
+                .setSubmitStr("试试看").show();
     }
 }

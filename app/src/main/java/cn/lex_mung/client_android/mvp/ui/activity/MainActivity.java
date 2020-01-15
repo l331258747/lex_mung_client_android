@@ -73,8 +73,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     private SparseIntArray items = new SparseIntArray();
     private List<Fragment> fragments = new ArrayList<>();
 
-    private FabDialog fabDialog;
-
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerMainComponent
@@ -110,17 +108,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         initViewPager();
 
         setStatusColor(0);
-    }
-
-    @Override
-    public void showHelpDialog() {
-        new HelpStepDialog(mActivity,
-                dialog -> {
-                    launchActivity(new Intent(mActivity, HelpStepActivity.class));
-                }).setContent("服务助手平均每天帮助2561名用户找到合适的法律服务和律师，它能帮助您解决如下问题：")
-                .setContent2("· 不知道当前是否需要法律服务\n· 不知道选择什么样的律师\n· 不知道适合自己的律师费用")
-                .setCannelStr("不需要")
-                .setSubmitStr("试试看").show();
     }
 
     @Override
@@ -174,13 +161,14 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     }
 
     private void setStatusColor(int position) {
-//        if (position == 0) {
+        StatusBarUtil.setColor(mActivity, AppUtils.getColor(mActivity, R.color.c_ff), 0);
+
+        if (position == 0) {
 //            StatusBarUtil.setColor(mActivity, AppUtils.getColor(mActivity, R.color.c_1EC88B), 0);
-//            fab.setVisibility(View.VISIBLE);
-//        } else {
-            StatusBarUtil.setColor(mActivity, AppUtils.getColor(mActivity, R.color.c_ff), 0);
+            fab.setVisibility(View.VISIBLE);
+        } else {
             fab.setVisibility(View.GONE);
-//        }
+        }
     }
 
     private void initViewPager() {
@@ -235,40 +223,15 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fab:
-                showFabDialog();
+//                showFabDialog();
+                if (!TextUtils.isEmpty(DataHelper.getStringSF(mActivity, DataHelperTags.ONLINE_URL))) {
+                    bundle.clear();
+                    bundle.putString(BundleTags.URL, DataHelper.getStringSF(mActivity, DataHelperTags.ONLINE_URL));
+                    bundle.putString(BundleTags.TITLE, "在线咨询");
+                    launchActivity(new Intent(mActivity, X5WebCommonActivity.class), bundle);
+                }
                 break;
         }
-    }
-
-    public void showFabDialog() {
-        fab.setVisibility(View.GONE);
-        if (fabDialog == null) {
-            fabDialog = new FabDialog(mActivity, new FabDialog.OnClickListener() {
-                @Override
-                public void onCloseClick() {
-                    fab.setVisibility(View.VISIBLE);
-                }
-
-                @Override
-                public void onHelpClick() {
-                    fab.setVisibility(View.VISIBLE);
-                    BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "first_page_assistant_click");
-                    showHelpDialog();
-                }
-
-                @Override
-                public void onCustomClick() {
-                    fab.setVisibility(View.VISIBLE);
-                    if (!TextUtils.isEmpty(DataHelper.getStringSF(mActivity, DataHelperTags.ONLINE_URL))) {
-                        bundle.clear();
-                        bundle.putString(BundleTags.URL, DataHelper.getStringSF(mActivity, DataHelperTags.ONLINE_URL));
-                        bundle.putString(BundleTags.TITLE, "在线咨询");
-                        launchActivity(new Intent(mActivity, X5WebCommonActivity.class), bundle);
-                    }
-                }
-            });
-        }
-        fabDialog.show();
     }
 
     /**

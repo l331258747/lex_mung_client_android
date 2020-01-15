@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <cn.lex_mung.client_android.mvp.ui.widget.TitleView
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:TitleView_left_img="@drawable/ic_back2"
+        app:TitleView_title="诉讼仲裁" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/qb_px_80">
+
+            <ImageView
+                android:id="@+id/iv_title_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_home_table_sszc_title_img" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_40"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_title_img"
+                app:layout_constraintStart_toStartOf="@+id/iv_title_img"
+                app:layout_constraintTop_toTopOf="@+id/iv_title_img">
+
+                <TextView
+                    android:id="@+id/tv_title_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="打官司找律师"
+                    android:textColor="@color/c_ff"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/qb_px_10"
+                    android:text="维权打官司、找专业代理律师"
+                    android:textColor="@color/c_ff" />
+
+            </LinearLayout>
+
+            <!--找律师快捷入口-->
+            <View
+                android:id="@+id/view_find_lawyer"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/qb_px_40"
+                android:layout_marginTop="@dimen/qb_px_50"
+                android:layout_marginEnd="@dimen/qb_px_40"
+                app:layout_constraintBottom_toBottomOf="@+id/view_find_lawyer_send"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_title_img" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_find_lawyer_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@+id/view_find_lawyer"
+                app:layout_constraintStart_toStartOf="@+id/view_find_lawyer"
+                app:layout_constraintTop_toTopOf="@+id/view_find_lawyer">
+
+                <View
+                    android:layout_width="@dimen/qb_px_5"
+                    android:layout_height="14sp"
+                    android:background="@color/c_1EC88B" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/qb_px_10"
+                    android:text="找律师快捷入口"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+
+                    app:layout_constraintTop_toTopOf="@+id/view_find_lawyer" />
+
+            </LinearLayout>
+
+            <!--服务助手找律师-->
+            <View
+                android:id="@+id/view_find_lawyer_help"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/qb_px_50"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_find_lawyer_help_content"
+                app:layout_constraintEnd_toStartOf="@+id/view_find_lawyer_mine"
+                app:layout_constraintStart_toStartOf="@+id/view_find_lawyer"
+                app:layout_constraintTop_toBottomOf="@+id/ll_find_lawyer_title" />
+
+            <ImageView
+                android:id="@+id/iv_find_lawyer_help"
+                android:layout_width="@dimen/qb_px_80"
+                android:layout_height="@dimen/qb_px_80"
+                android:src="@drawable/ic_home_table_help"
+                app:layout_constraintStart_toStartOf="@+id/view_find_lawyer_help"
+                app:layout_constraintTop_toTopOf="@+id/view_find_lawyer_help" />
+
+            <TextView
+                android:id="@+id/tv_find_lawyer_help_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_15"
+                android:text="服务助手选律师"
+                android:textColor="@color/c_3E4155"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/iv_find_lawyer_help"
+                app:layout_constraintTop_toTopOf="@+id/iv_find_lawyer_help" />
+
+            <TextView
+                android:id="@+id/tv_find_lawyer_help_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_15"
+                android:layout_marginTop="@dimen/qb_px_5"
+                android:text="适用于对法律服务市场\n不是很熟悉的用户"
+                android:textColor="@color/c_898A95"
+                android:textSize="10sp"
+                app:layout_constraintStart_toEndOf="@+id/iv_find_lawyer_help"
+                app:layout_constraintTop_toBottomOf="@+id/tv_find_lawyer_help_title" />
+
+            <!--自己找律师-->
+            <View
+                android:id="@+id/view_find_lawyer_mine"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/qb_px_50"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_find_lawyer_mine_content"
+                app:layout_constraintEnd_toEndOf="@+id/view_find_lawyer"
+                app:layout_constraintStart_toEndOf="@+id/view_find_lawyer_help"
+                app:layout_constraintTop_toBottomOf="@+id/ll_find_lawyer_title" />
+
+
+            <ImageView
+                android:id="@+id/iv_find_lawyer_mine"
+                android:layout_width="@dimen/qb_px_80"
+                android:layout_height="@dimen/qb_px_80"
+                android:src="@drawable/ic_home_table_mine"
+                app:layout_constraintStart_toStartOf="@+id/view_find_lawyer_mine"
+                app:layout_constraintTop_toTopOf="@+id/view_find_lawyer_mine" />
+
+            <TextView
+                android:id="@+id/tv_find_lawyer_mine_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_15"
+                android:text="自己找律师"
+                android:textColor="@color/c_3E4155"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/iv_find_lawyer_mine"
+                app:layout_constraintTop_toTopOf="@+id/iv_find_lawyer_mine" />
+
+            <TextView
+                android:id="@+id/tv_find_lawyer_mine_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_15"
+                android:layout_marginTop="@dimen/qb_px_5"
+                android:text="适用熟悉法律服务市场\n知道所需服务的用户"
+                android:textColor="@color/c_898A95"
+                android:textSize="10sp"
+                app:layout_constraintStart_toEndOf="@+id/iv_find_lawyer_mine"
+                app:layout_constraintTop_toBottomOf="@+id/tv_find_lawyer_mine_title" />
+
+
+            <!--发布案件征聘律师-->
+            <View
+                android:id="@+id/view_find_lawyer_send"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/qb_px_50"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_find_lawyer_send_content"
+                app:layout_constraintEnd_toEndOf="@+id/view_find_lawyer"
+                app:layout_constraintStart_toStartOf="@+id/view_find_lawyer"
+                app:layout_constraintTop_toBottomOf="@+id/view_find_lawyer_help" />
+
+            <ImageView
+                android:id="@+id/iv_find_lawyer_send"
+                android:layout_width="@dimen/qb_px_80"
+                android:layout_height="@dimen/qb_px_80"
+                android:src="@drawable/ic_home_table_send"
+                app:layout_constraintStart_toStartOf="@+id/view_find_lawyer_send"
+                app:layout_constraintTop_toTopOf="@+id/view_find_lawyer_send" />
+
+            <TextView
+                android:id="@+id/tv_find_lawyer_send_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_15"
+                android:text="发布案件征聘律师"
+                android:textColor="@color/c_3E4155"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/iv_find_lawyer_send"
+                app:layout_constraintTop_toTopOf="@+id/iv_find_lawyer_send" />
+
+            <TextView
+                android:id="@+id/tv_find_lawyer_send_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_15"
+                android:layout_marginTop="@dimen/qb_px_5"
+                android:text="智能案件诊断平台免费\n帮忙选律师"
+                android:textColor="@color/c_898A95"
+                android:textSize="10sp"
+                app:layout_constraintStart_toEndOf="@+id/iv_find_lawyer_send"
+                app:layout_constraintTop_toBottomOf="@+id/tv_find_lawyer_send_title" />
+
+
+            <View
+                android:id="@+id/view_line"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qb_px_10"
+                android:layout_marginTop="@dimen/qb_px_50"
+                android:background="@color/c_f9f9f9"
+                app:layout_constraintTop_toBottomOf="@+id/view_find_lawyer" />
+
+            <!--服务快捷入口-->
+            <View
+                android:id="@+id/view_server"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/qb_px_40"
+                android:layout_marginTop="@dimen/qb_px_50"
+                android:layout_marginEnd="@dimen/qb_px_40"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+
+            <LinearLayout
+                android:id="@+id/ll_server_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="@+id/view_server"
+                app:layout_constraintStart_toStartOf="@+id/view_server"
+                app:layout_constraintTop_toTopOf="@+id/view_server">
+
+                <View
+                    android:layout_width="@dimen/qb_px_5"
+                    android:layout_height="14sp"
+                    android:background="@color/c_1EC88B" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/qb_px_10"
+                    android:text="服务快捷入口"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toTopOf="@+id/view_server" />
+
+            </LinearLayout>
+
+
+            <!--再审申诉-->
+            <View
+                android:id="@+id/view_server_zsss"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/qb_px_50"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_server_zsss_content"
+                app:layout_constraintEnd_toStartOf="@+id/view_server_ssdz"
+                app:layout_constraintStart_toStartOf="@+id/view_server"
+                app:layout_constraintTop_toBottomOf="@+id/ll_server_title" />
+
+            <ImageView
+                android:id="@+id/iv_server_zsss"
+                android:layout_width="@dimen/qb_px_80"
+                android:layout_height="@dimen/qb_px_80"
+                android:src="@drawable/ic_home_table_zsss"
+                app:layout_constraintStart_toStartOf="@+id/view_server_zsss"
+                app:layout_constraintTop_toTopOf="@+id/view_server_zsss" />
+
+            <TextView
+                android:id="@+id/tv_server_zsss_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_15"
+                android:text="再审申诉"
+                android:textColor="@color/c_3E4155"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/iv_server_zsss"
+                app:layout_constraintTop_toTopOf="@+id/iv_server_zsss" />
+
+            <TextView
+                android:id="@+id/tv_server_zsss_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_15"
+                android:layout_marginTop="@dimen/qb_px_5"
+                android:text="支持省高院、高等法院各\n巡回法庭的再审申"
+                android:textColor="@color/c_898A95"
+                android:textSize="10sp"
+                app:layout_constraintStart_toEndOf="@+id/iv_server_zsss"
+                app:layout_constraintTop_toBottomOf="@+id/tv_server_zsss_title" />
+
+            <!--诉讼垫资-->
+            <View
+                android:id="@+id/view_server_ssdz"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/qb_px_50"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_server_ssdz_content"
+                app:layout_constraintEnd_toEndOf="@+id/view_server"
+                app:layout_constraintStart_toEndOf="@+id/view_server_zsss"
+                app:layout_constraintTop_toBottomOf="@+id/ll_server_title" />
+
+
+            <ImageView
+                android:id="@+id/iv_server_ssdz"
+                android:layout_width="@dimen/qb_px_80"
+                android:layout_height="@dimen/qb_px_80"
+                android:src="@drawable/ic_home_table_ssdz"
+                app:layout_constraintStart_toStartOf="@+id/view_server_ssdz"
+                app:layout_constraintTop_toTopOf="@+id/view_server_ssdz" />
+
+            <TextView
+                android:id="@+id/tv_server_ssdz_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_15"
+                android:text="诉讼垫资"
+                android:textColor="@color/c_3E4155"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/iv_server_ssdz"
+                app:layout_constraintTop_toTopOf="@+id/iv_server_ssdz" />
+
+            <TextView
+                android:id="@+id/tv_server_ssdz_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_15"
+                android:layout_marginTop="@dimen/qb_px_5"
+                android:text="标的额100万以上,你打\n官司平台垫钱."
+                android:textColor="@color/c_898A95"
+                android:textSize="10sp"
+                app:layout_constraintStart_toEndOf="@+id/iv_server_ssdz"
+                app:layout_constraintTop_toBottomOf="@+id/tv_server_ssdz_title" />
+
+
+            <!--案件风险评估-->
+            <View
+                android:id="@+id/view_server_ajfxpg"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/qb_px_50"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_server_ajfxpg_content"
+                app:layout_constraintEnd_toEndOf="@+id/view_server"
+                app:layout_constraintStart_toStartOf="@+id/view_server"
+                app:layout_constraintTop_toBottomOf="@+id/view_server_zsss" />
+
+            <ImageView
+                android:id="@+id/iv_server_ajfxpg"
+                android:layout_width="@dimen/qb_px_80"
+                android:layout_height="@dimen/qb_px_80"
+                android:src="@drawable/ic_home_table_ajfxpg"
+                app:layout_constraintStart_toStartOf="@+id/view_server_ajfxpg"
+                app:layout_constraintTop_toTopOf="@+id/view_server_ajfxpg" />
+
+            <TextView
+                android:id="@+id/tv_server_ajfxpg_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_15"
+                android:text="案件风险评估"
+                android:textColor="@color/c_3E4155"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/iv_server_ajfxpg"
+                app:layout_constraintTop_toTopOf="@+id/iv_server_ajfxpg" />
+
+            <TextView
+                android:id="@+id/tv_server_ajfxpg_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_15"
+                android:layout_marginTop="@dimen/qb_px_5"
+                android:text="客观全面预判案件走向\n"
+                android:textColor="@color/c_898A95"
+                android:textSize="10sp"
+                app:layout_constraintStart_toEndOf="@+id/iv_server_ajfxpg"
+                app:layout_constraintTop_toBottomOf="@+id/tv_server_ajfxpg_title" />
+
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>
+
+

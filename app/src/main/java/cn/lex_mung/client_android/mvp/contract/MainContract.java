@@ -21,8 +21,6 @@ public interface MainContract {
 
         Activity getActivity();
 
-        void showHelpDialog();
-
         void showActivityDialog(List<ActivityEntity> entities);
     }
 
