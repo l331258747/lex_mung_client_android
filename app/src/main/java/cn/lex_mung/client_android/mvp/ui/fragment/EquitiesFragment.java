@@ -14,6 +14,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
 
 import java.util.List;
@@ -79,10 +82,10 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
     TextView tvExclusiveEquities;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-    @BindView(R.id.nsv_all_equities)
-    NestedScrollView nsvAllEquities;
     @BindView(R.id.nsv_equities_details)
     NestedScrollView nsvEquitiesDetails;
+    @BindView(R.id.smart_refresh_layout)
+    SmartRefreshLayout smart_refresh_layout;
 
     @BindView(R.id.ll__balance)
     LinearLayout ll__balance;
@@ -144,7 +147,6 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
     public void initData(@Nullable Bundle savedInstanceState) {
         isCreated = true;
         initAdapter();
-        initRecyclerView();
         initEmptyView();
     }
 
@@ -188,7 +190,7 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
     @Override
     public void showAllEquitiesLayout() {
         tvTitle.setText(getString(R.string.text_equities));
-        nsvAllEquities.setVisibility(View.VISIBLE);
+        smart_refresh_layout.setVisibility(View.VISIBLE);
         nsvEquitiesDetails.setVisibility(View.GONE);
         llLoading.setVisibility(View.GONE);
         emptyView.setVisibility(View.GONE);
@@ -197,11 +199,25 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
     @Override
     public void showEmptyView(){
         emptyView.setVisibility(View.VISIBLE);
-        nsvAllEquities.setVisibility(View.GONE);
+        smart_refresh_layout.setVisibility(View.GONE);
         llLoading.setVisibility(View.GONE);
     }
 
     private void initAdapter() {
+
+        smart_refresh_layout.setEnableLoadMore(false);
+        smart_refresh_layout.setOnRefreshListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.onResume();
+            }
+        });
+
+
         equitiesAdapter1 = new EquitiesAdapter(mImageLoader, true);
         equitiesAdapter1.setOnItemClickListener((adapter, view, position) -> {
             if (isFastClick()) return;
@@ -255,9 +271,7 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
             bundle.putInt(BundleTags.ID, bean.getMemberId());
             launchActivity(new Intent(mActivity, LawyerHomePageActivity.class), bundle);
         });
-    }
 
-    private void initRecyclerView() {
         AppUtils.configRecyclerView(recyclerViewCurrentEquities, new LinearLayoutManager(mActivity));
         recyclerViewCurrentEquities.setAdapter(equitiesAdapter1);
         recyclerViewCurrentEquities.setNestedScrollingEnabled(false);
@@ -274,7 +288,7 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
     public void showEquitiesDetails() {
         tvTitle.setText("专属权益");
         nsvEquitiesDetails.setVisibility(View.VISIBLE);
-        nsvAllEquities.setVisibility(View.GONE);
+        smart_refresh_layout.setVisibility(View.GONE);
         llLoading.setVisibility(View.GONE);
     }
 
@@ -294,11 +308,21 @@ public class EquitiesFragment extends BaseFragment<EquitiesPresenter> implements
 
     @Override
     public void setEquitiesAdapter1(List<EquitiesListEntity> data) {
+        emptyView.setVisibility(View.GONE);
+        smart_refresh_layout.setVisibility(View.VISIBLE);
+        llLoading.setVisibility(View.GONE);
+        smart_refresh_layout.finishRefresh();
+
         equitiesAdapter1.setNewData(data);
     }
 
     @Override
     public void setEquitiesAdapter2(List<EquitiesListEntity> data) {
+        emptyView.setVisibility(View.GONE);
+        smart_refresh_layout.setVisibility(View.VISIBLE);
+        llLoading.setVisibility(View.GONE);
+        smart_refresh_layout.finishRefresh();
+
         tvMoreEquities.setVisibility(View.VISIBLE);
         equitiesAdapter2.setNewData(data);
     }
