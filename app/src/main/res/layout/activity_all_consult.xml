@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <cn.lex_mung.client_android.mvp.ui.widget.TitleView
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:TitleView_left_img="@drawable/ic_back2"
+        app:TitleView_title="我要咨询" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/qb_px_80">
+
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_40"
+                android:layout_marginTop="@dimen/qb_px_50"
+                android:text="选择咨询方式"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <!--文字-->
+            <View
+                android:id="@+id/view_bg_text"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qb_px_200"
+                android:layout_marginLeft="@dimen/qb_px_20"
+                android:layout_marginTop="@dimen/qb_px_30"
+                android:layout_marginRight="@dimen/qb_px_20"
+                android:background="@drawable/ic_card"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+            <View
+                android:id="@+id/view_card_text"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/qb_px_20"
+                android:layout_marginTop="@dimen/qb_px_10"
+                android:layout_marginEnd="@dimen/qb_px_20"
+                android:layout_marginBottom="@dimen/qb_px_25"
+                app:layout_constraintBottom_toBottomOf="@+id/view_bg_text"
+                app:layout_constraintEnd_toEndOf="@+id/view_bg_text"
+                app:layout_constraintStart_toStartOf="@+id/view_bg_text"
+                app:layout_constraintTop_toTopOf="@+id/view_bg_text" />
+
+
+            <ImageView
+                android:id="@+id/iv_img_text"
+                android:layout_width="@dimen/qb_px_100"
+                android:layout_height="@dimen/qb_px_100"
+                android:layout_marginStart="@dimen/qb_px_30"
+                android:src="@drawable/ic_all_consult_text"
+                app:layout_constraintBottom_toBottomOf="@+id/view_card_text"
+                app:layout_constraintStart_toStartOf="@+id/view_card_text"
+                app:layout_constraintTop_toTopOf="@id/view_card_text" />
+
+
+            <TextView
+                android:id="@+id/tv_name_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_30"
+                android:text="免费文字咨询"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/tv_content_text"
+                app:layout_constraintStart_toEndOf="@+id/iv_img_text"
+                app:layout_constraintTop_toTopOf="@+id/iv_img_text" />
+
+            <TextView
+                android:id="@+id/tv_content_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_30"
+                android:text="5万律师答疑简单梳理解"
+                android:textColor="@color/c_898A95"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_img_text"
+                app:layout_constraintStart_toEndOf="@+id/iv_img_text"
+                app:layout_constraintTop_toBottomOf="@+id/tv_name_text" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/qb_px_30"
+                android:src="@drawable/ic_right_arrow"
+                app:layout_constraintBottom_toBottomOf="@+id/view_card_text"
+                app:layout_constraintEnd_toEndOf="@+id/view_card_text"
+                app:layout_constraintTop_toTopOf="@id/view_card_text" />
+
+            <!--电话-->
+            <View
+                android:id="@+id/view_bg_call"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qb_px_200"
+                android:layout_marginLeft="@dimen/qb_px_20"
+                android:layout_marginRight="@dimen/qb_px_20"
+                android:background="@drawable/ic_card"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/view_bg_text" />
+
+            <View
+                android:id="@+id/view_card_call"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/qb_px_20"
+                android:layout_marginTop="@dimen/qb_px_10"
+                android:layout_marginEnd="@dimen/qb_px_20"
+                android:layout_marginBottom="@dimen/qb_px_25"
+                app:layout_constraintBottom_toBottomOf="@+id/view_bg_call"
+                app:layout_constraintEnd_toEndOf="@+id/view_bg_call"
+                app:layout_constraintStart_toStartOf="@+id/view_bg_call"
+                app:layout_constraintTop_toTopOf="@+id/view_bg_call" />
+
+
+            <ImageView
+                android:id="@+id/iv_img_call"
+                android:layout_width="@dimen/qb_px_100"
+                android:layout_height="@dimen/qb_px_100"
+                android:layout_marginStart="@dimen/qb_px_30"
+                android:src="@drawable/ic_all_consult_call"
+                app:layout_constraintBottom_toBottomOf="@+id/view_card_call"
+                app:layout_constraintStart_toStartOf="@+id/view_card_call"
+                app:layout_constraintTop_toTopOf="@id/view_card_call" />
+
+
+            <TextView
+                android:id="@+id/tv_name_call"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_30"
+                android:text="快速电话咨询"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/tv_content_call"
+                app:layout_constraintStart_toEndOf="@+id/iv_img_call"
+                app:layout_constraintTop_toTopOf="@+id/iv_img_call" />
+
+            <TextView
+                android:id="@+id/tv_content_call"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_30"
+                android:text="5分钟专业对口领域律师响应"
+                android:textColor="@color/c_898A95"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_img_call"
+                app:layout_constraintStart_toEndOf="@+id/iv_img_call"
+                app:layout_constraintTop_toBottomOf="@+id/tv_name_call" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/qb_px_30"
+                android:src="@drawable/ic_right_arrow"
+                app:layout_constraintBottom_toBottomOf="@+id/view_card_call"
+                app:layout_constraintEnd_toEndOf="@+id/view_card_call"
+                app:layout_constraintTop_toTopOf="@id/view_card_call" />
+
+
+
+            <!--专家-->
+            <View
+                android:id="@+id/view_bg_expert"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qb_px_200"
+                android:layout_marginLeft="@dimen/qb_px_20"
+                android:layout_marginRight="@dimen/qb_px_20"
+                android:background="@drawable/ic_card"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/view_bg_call" />
+
+            <View
+                android:id="@+id/view_card_expert"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/qb_px_20"
+                android:layout_marginTop="@dimen/qb_px_10"
+                android:layout_marginEnd="@dimen/qb_px_20"
+                android:layout_marginBottom="@dimen/qb_px_25"
+                app:layout_constraintBottom_toBottomOf="@+id/view_bg_expert"
+                app:layout_constraintEnd_toEndOf="@+id/view_bg_expert"
+                app:layout_constraintStart_toStartOf="@+id/view_bg_expert"
+                app:layout_constraintTop_toTopOf="@+id/view_bg_expert" />
+
+
+            <ImageView
+                android:id="@+id/iv_img_expert"
+                android:layout_width="@dimen/qb_px_100"
+                android:layout_height="@dimen/qb_px_100"
+                android:layout_marginStart="@dimen/qb_px_30"
+                android:src="@drawable/ic_all_consult_expert"
+                app:layout_constraintBottom_toBottomOf="@+id/view_card_expert"
+                app:layout_constraintStart_toStartOf="@+id/view_card_expert"
+                app:layout_constraintTop_toTopOf="@id/view_card_expert" />
+
+
+            <TextView
+                android:id="@+id/tv_name_expert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_30"
+                android:text="专家预约咨询"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/tv_content_expert"
+                app:layout_constraintStart_toEndOf="@+id/iv_img_expert"
+                app:layout_constraintTop_toTopOf="@+id/iv_img_expert" />
+
+            <TextView
+                android:id="@+id/tv_content_expert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_30"
+                android:text="金牌律师服务平台提供先行赔付"
+                android:textColor="@color/c_898A95"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_img_expert"
+                app:layout_constraintStart_toEndOf="@+id/iv_img_expert"
+                app:layout_constraintTop_toBottomOf="@+id/tv_name_expert" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/qb_px_30"
+                android:src="@drawable/ic_right_arrow"
+                app:layout_constraintBottom_toBottomOf="@+id/view_card_expert"
+                app:layout_constraintEnd_toEndOf="@+id/view_card_expert"
+                app:layout_constraintTop_toTopOf="@id/view_card_expert" />
+
+
+            <!--线下-->
+            <View
+                android:id="@+id/view_bg_meet"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/qb_px_200"
+                android:layout_marginLeft="@dimen/qb_px_20"
+                android:layout_marginRight="@dimen/qb_px_20"
+                android:background="@drawable/ic_card"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/view_bg_expert" />
+
+            <View
+                android:id="@+id/view_card_meet"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/qb_px_20"
+                android:layout_marginTop="@dimen/qb_px_10"
+                android:layout_marginEnd="@dimen/qb_px_20"
+                android:layout_marginBottom="@dimen/qb_px_25"
+                app:layout_constraintBottom_toBottomOf="@+id/view_bg_meet"
+                app:layout_constraintEnd_toEndOf="@+id/view_bg_meet"
+                app:layout_constraintStart_toStartOf="@+id/view_bg_meet"
+                app:layout_constraintTop_toTopOf="@+id/view_bg_meet" />
+
+
+            <ImageView
+                android:id="@+id/iv_img_meet"
+                android:layout_width="@dimen/qb_px_100"
+                android:layout_height="@dimen/qb_px_100"
+                android:layout_marginStart="@dimen/qb_px_30"
+                android:src="@drawable/ic_all_consult_meet"
+                app:layout_constraintBottom_toBottomOf="@+id/view_card_meet"
+                app:layout_constraintStart_toStartOf="@+id/view_card_meet"
+                app:layout_constraintTop_toTopOf="@id/view_card_meet" />
+
+
+            <TextView
+                android:id="@+id/tv_name_meet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_30"
+                android:text="线下见面咨询"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/tv_content_meet"
+                app:layout_constraintStart_toEndOf="@+id/iv_img_meet"
+                app:layout_constraintTop_toTopOf="@+id/iv_img_meet" />
+
+            <TextView
+                android:id="@+id/tv_content_meet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/qb_px_30"
+                android:text="预约时间、地点与律师见面详谈"
+                android:textColor="@color/c_898A95"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_img_meet"
+                app:layout_constraintStart_toEndOf="@+id/iv_img_meet"
+                app:layout_constraintTop_toBottomOf="@+id/tv_name_meet" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/qb_px_30"
+                android:src="@drawable/ic_right_arrow"
+                app:layout_constraintBottom_toBottomOf="@+id/view_card_meet"
+                app:layout_constraintEnd_toEndOf="@+id/view_card_meet"
+                app:layout_constraintTop_toTopOf="@id/view_card_meet" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>
+
+

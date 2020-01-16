@@ -605,12 +605,14 @@ import cn.lex_mung.client_android.mvp.model.entity.free.CommonFreeTextEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
 import cn.lex_mung.client_android.mvp.presenter.HomePagerPresenter;
+import cn.lex_mung.client_android.mvp.ui.activity.AllConsultActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultDetail1Activity;
 import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultMainActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.HelpStepActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.HomeSolutionActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.HomeTableActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.HomeTableQyfwActivity;
+import cn.lex_mung.client_android.mvp.ui.activity.HomeTableQygwActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.HomeTableSszcActivityActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerHomePageActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.LawyerListActivity;
@@ -791,7 +793,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                                 launchActivity(new Intent(mActivity, HomeTableQyfwActivity.class), bundle);
                                 break;
                             case "native_consultation":
-
+                                launchActivity(new Intent(mActivity, AllConsultActivity.class));
                                 break;
                             case "expert":
                                 BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "first_page_expert_consultation_click");
@@ -823,17 +825,16 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
                                     bundle.putString(BundleTags.TITLE, requireTypeName);
                                     launchActivity(new Intent(mActivity, HomeTableSszcActivityActivity.class), bundle);
                                 } else if (requireTypeId == 9) {
-                                    BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "first_page_meeting_offline_click");
+                                    BuryingPointHelp.getInstance().onEvent(mActivity, "meeting_detail_page", "meeting_detail_page_search_lawyer_click");
                                     bundle.clear();
                                     bundle.putInt(BundleTags.ID, requireTypeId);
-                                    bundle.putString(BundleTags.TITLE, requireTypeName);
-                                    launchActivity(new Intent(mActivity, HomeTableActivity.class), bundle);
+                                    launchActivity(new Intent(mActivity, LawyerListActivity.class), bundle);
                                 } else if (requireTypeId == 6) {
                                     BuryingPointHelp.getInstance().onEvent(mActivity, "first_page", "first_page_legal_counsel_click");
                                     bundle.clear();
                                     bundle.putInt(BundleTags.ID, requireTypeId);
                                     bundle.putString(BundleTags.TITLE, requireTypeName);
-                                    launchActivity(new Intent(mActivity, HomeTableActivity.class), bundle);
+                                    launchActivity(new Intent(mActivity, HomeTableQygwActivity.class), bundle);
                                 }
 
                                 break;
