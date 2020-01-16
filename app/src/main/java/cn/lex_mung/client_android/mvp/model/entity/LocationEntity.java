@@ -33,6 +33,9 @@ public class LocationEntity {
         }catch (Exception e){
             return cityIdInt;
         }
+
+        cityIdInt = cityIdInt / 100 * 100;
+
         return cityIdInt;
     }
 
