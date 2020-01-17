@@ -575,6 +575,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.text.ClipboardManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -1075,6 +1076,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         });
 
         AppUtils.configRecyclerView(recyclerView, new LinearLayoutManager(mActivity));
+        ((SimpleItemAnimator)recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
         recyclerView.setAdapter(homeAdapter);
     }
 
