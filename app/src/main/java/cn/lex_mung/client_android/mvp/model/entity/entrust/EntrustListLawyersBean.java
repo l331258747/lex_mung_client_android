@@ -37,6 +37,11 @@ public class EntrustListLawyersBean {
     private List<BusinessBean> business;
     private EntrustListLawyersTag tag;
     private String curriculumContent;
+    private String practice;
+
+    public String getPractice() {
+        return practice;
+    }
 
     public String getCurriculumContent() {
         return curriculumContent;

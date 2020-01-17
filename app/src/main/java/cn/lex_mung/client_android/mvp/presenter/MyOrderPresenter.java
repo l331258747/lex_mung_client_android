@@ -128,7 +128,6 @@ public class MyOrderPresenter extends BasePresenter<MyOrderContract.Model, MyOrd
                     bundle.putString(BundleTags.ORDER_NO,entity.getOrderNo());
                     mRootView.launchActivity(new Intent(mApplication, OrderDetailsPrivateLawyerActivity.class), bundle);
                     break;
-
             }
         });
         smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
