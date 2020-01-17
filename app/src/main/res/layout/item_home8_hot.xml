@@ -40,8 +40,6 @@
         android:layout_marginStart="@dimen/qb_px_10"
         app:layout_constraintTop_toTopOf="@+id/tv_name"
         android:scaleType="fitCenter"
-        android:visibility="gone"
-        tools:visibility="visible"
         tools:src="@drawable/ic_fail_resend"/>
 
     <TextView
