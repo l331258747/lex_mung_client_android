@@ -37,5 +37,12 @@ public class Home9hotAdapter extends BaseQuickAdapter<HomeChildEntity, BaseViewH
         helper.setText(R.id.tv_content,item.getDesc1());
         helper.setText(R.id.tv_content2,item.getDesc2());
         helper.addOnClickListener(R.id.tv_btn);
+
+        helper.setGone(R.id.iv_tag,false);
+        helper.setText(R.id.tv_btn,"立即开通");
+        if(item.isOwn()){
+            helper.setGone(R.id.iv_tag,true);
+            helper.setText(R.id.tv_btn,"立即使用");
+        }
     }
 }

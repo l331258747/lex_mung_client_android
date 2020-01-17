@@ -40,6 +40,15 @@ public class HomeChildEntity {
     private String shareTitle;
     private String shareDescription;
     private String shareImg;
+    private boolean isOwn;
+
+    public void setOwn(boolean own) {
+        isOwn = own;
+    }
+
+    public boolean isOwn() {
+        return isOwn;
+    }
 
     public void setShowShare(int showShare) {
         this.showShare = showShare;

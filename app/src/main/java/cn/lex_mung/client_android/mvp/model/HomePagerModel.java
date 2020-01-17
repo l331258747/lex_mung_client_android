@@ -11,6 +11,7 @@ import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.OnlineUrlEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.PagesSecondEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.RequirementTypeV3Entity;
+import cn.lex_mung.client_android.mvp.model.entity.home.RightsVipEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.integration.IRepositoryManager;
 import me.zl.mvp.mvp.BaseModel;
@@ -53,6 +54,13 @@ public class HomePagerModel extends BaseModel implements HomePagerContract.Model
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .commonFreeText(body);
+    }
+
+    @Override
+    public Observable<BaseResponse<List<RightsVipEntity>>> rightsVip() {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .rightsVip();
     }
 
 //    @Override

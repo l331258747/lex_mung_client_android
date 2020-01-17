@@ -60,6 +60,7 @@ import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.OnlineUrlEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.PagesSecondEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.RequirementTypeV3Entity;
+import cn.lex_mung.client_android.mvp.model.entity.home.RightsVipEntity;
 import cn.lex_mung.client_android.mvp.model.entity.mine.RechargeCouponEntity;
 import cn.lex_mung.client_android.mvp.model.entity.mine.RechargeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.DocGetEntity;
@@ -1074,4 +1075,10 @@ public interface CommonService {
     Observable<BaseResponse<PrivategroupBuyEntity>> privategroupBuy(@Body RequestBody body);
 
     //------------------------私人律师团 END
+
+    //client/rights/vip
+    //POST
+    //获取是否有vip权益
+    @GET("client/rights/vip")
+    Observable<BaseResponse<List<RightsVipEntity>>> rightsVip();
 }

@@ -12,11 +12,13 @@ import cn.lex_mung.client_android.mvp.model.entity.UnreadMessageCountEntity;
 import java.util.List;
 
 import cn.lex_mung.client_android.mvp.model.entity.free.CommonFreeTextEntity;
+import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.NormalBean;
 import cn.lex_mung.client_android.mvp.model.entity.home.OnlineUrlEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.PagesSecondEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.RequirementTypeV3Entity;
+import cn.lex_mung.client_android.mvp.model.entity.home.RightsVipEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.mvp.IView;
 import me.zl.mvp.mvp.IModel;
@@ -49,6 +51,8 @@ public interface HomePagerContract {
 
         void showEmptyView();
 
+        void changeVipData(List<RightsVipEntity> entities);
+
     }
 
     interface Model extends IModel {
@@ -68,5 +72,7 @@ public interface HomePagerContract {
         Observable<BaseResponse<PagesSecondEntity>> pagesSecond();
 
         Observable<BaseResponse<BaseListEntity<CommonFreeTextEntity>>> commonFreeText(RequestBody body);
+
+        Observable<BaseResponse<List<RightsVipEntity>>> rightsVip();
     }
 }

@@ -280,6 +280,7 @@ import cn.lex_mung.client_android.mvp.model.entity.free.CommonFreeTextEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.PagesSecondEntity;
+import cn.lex_mung.client_android.mvp.model.entity.home.RightsVipEntity;
 import cn.lex_mung.client_android.utils.GsonUtil;
 import cn.lex_mung.client_android.utils.http.OnSuccessAndFaultSub2;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -341,6 +342,7 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
     }
 
     public void onResume() {
+        rightsVip();
         isLogin = DataHelper.getBooleanSF(mApplication, DataHelperTags.IS_LOGIN_SUCCESS);
         if (isLogin) {
             getUnreadCount();
@@ -542,6 +544,7 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                         }else{
                             mRootView.showMessage(baseResponse.getMessage());
                         }
+                        rightsVip();
                     }
                 });
     }
@@ -657,6 +660,30 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
                     public void onNext(BaseResponse<List<SolutionTypeEntity>> baseResponse) {
                         if (baseResponse.isSuccess()) {
                             DataHelper.setStringSF(mApplication, DataHelperTags.HOME_PAGE_SOLUTION_TYPE, new Gson().toJson(baseResponse.getData()));
+                        }
+                    }
+                });
+    }
+
+    public void rightsVip(){
+        if (!DataHelper.getBooleanSF(mApplication, DataHelperTags.IS_LOGIN_SUCCESS)){
+            mRootView.changeVipData(null);
+            return;
+        }
+        mModel.rightsVip()
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> {
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<List<RightsVipEntity>>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<List<RightsVipEntity>> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            mRootView.changeVipData(baseResponse.getData());
                         }
                     }
                 });

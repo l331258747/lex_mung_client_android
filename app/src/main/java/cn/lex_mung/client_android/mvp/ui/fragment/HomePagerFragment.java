@@ -604,6 +604,7 @@ import cn.lex_mung.client_android.mvp.model.entity.LawyerEntity2;
 import cn.lex_mung.client_android.mvp.model.entity.free.CommonFreeTextEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeEntity;
+import cn.lex_mung.client_android.mvp.model.entity.home.RightsVipEntity;
 import cn.lex_mung.client_android.mvp.presenter.HomePagerPresenter;
 import cn.lex_mung.client_android.mvp.ui.activity.AllConsultActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultDetail1Activity;
@@ -731,6 +732,40 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
         super.onResume();
         if (!getUserVisibleHint()) return;
         mPresenter.onResume();
+    }
+
+    @Override
+    public void changeVipData(List<RightsVipEntity> entities){
+        int homeDataPosition = getHomeDataPosition();
+        if(homeDataPosition == -1) return;
+        HomeEntity homeEntity = homeAdapter.getItem(homeDataPosition);
+        List<HomeChildEntity> homeChildEntities = homeEntity.getBtns();
+        if(entities == null){
+            for (int i=0;i<homeChildEntities.size();i++){
+                homeChildEntities.get(i).setOwn(false);
+            }
+            //未开通
+            homeAdapter.setData(homeDataPosition,homeEntity);
+        }else{
+            for (int i=0;i<homeChildEntities.size();i++){
+                for (int j=0;j<entities.size();j++){
+                    if(homeChildEntities.get(i).getTag().equals(entities.get(j).getRequireTypeNo())){
+                        homeChildEntities.get(i).setOwn(entities.get(j).isIsOwn());
+                    }
+                }
+            }
+            //判断是否开通
+            homeAdapter.setData(homeDataPosition,homeEntity);
+        }
+    }
+
+    private int getHomeDataPosition(){
+        for (int i=0;i<homeAdapter.getData().size();i++){
+            if(homeAdapter.getData().get(i).getType().equals("swipe_card")){
+                return i;
+            }
+        }
+        return -1;
     }
 
     private void initAdapter() {

@@ -33,6 +33,8 @@
         app:layout_constraintStart_toStartOf="@+id/view_card"
         app:layout_constraintTop_toTopOf="@+id/view_card"
         android:layout_marginStart="@dimen/qb_px_10"
+        android:visibility="gone"
+        tools:visibility="visible"
         android:layout_width="@dimen/qb_px_30"
         android:layout_height="@dimen/qb_px_80"
         android:src="@drawable/ic_badge_number2"/>
