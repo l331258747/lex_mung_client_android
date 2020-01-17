@@ -88,8 +88,8 @@ public class EntrustLawyerAdapter extends BaseQuickAdapter<EntrustListLawyersBea
             helper.setGone(R.id.iv_badge_number, false);
         }
 
-        if (item.getBeginPrDate() > 0) {
-            helper.setText(R.id.item_tv_practice_num, "执业" + item.getBeginPrDate() + "年");
+        if (!TextUtils.isEmpty(item.getPractice())) {
+            helper.setText(R.id.item_tv_practice_num, item.getPractice());
             helper.setGone(R.id.item_tv_practice_num, true);
         } else {
             helper.setGone(R.id.item_tv_practice_num, false);
