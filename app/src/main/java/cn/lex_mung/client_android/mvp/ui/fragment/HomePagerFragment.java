@@ -760,6 +760,7 @@ public class HomePagerFragment extends BaseFragment<HomePagerPresenter> implemen
     }
 
     private int getHomeDataPosition(){
+        if(homeAdapter.getData() == null || homeAdapter.getData().size() == 0) return -1;
         for (int i=0;i<homeAdapter.getData().size();i++){
             if(homeAdapter.getData().get(i).getType().equals("swipe_card")){
                 return i;
