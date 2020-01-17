@@ -34,6 +34,16 @@ public class Home8hotAdapter extends BaseQuickAdapter<HomeChildEntity, BaseViewH
                             .build());
         }
 
+        if (!TextUtils.isEmpty(item.getTag())) {
+            mImageLoader.loadImage(mContext
+                    , ImageConfigImpl
+                            .builder()
+                            .isCenterCrop(false)
+                            .url(item.getTag())
+                            .imageView(helper.getView(R.id.iv_tag))
+                            .build());
+        }
+
         helper.setVisible(R.id.view_line, true);
         if (helper.getLayoutPosition() == size - 1) {
             helper.setVisible(R.id.view_line, false);

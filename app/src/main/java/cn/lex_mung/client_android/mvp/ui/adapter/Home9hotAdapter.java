@@ -34,8 +34,9 @@ public class Home9hotAdapter extends BaseQuickAdapter<HomeChildEntity, BaseViewH
         }
 
         helper.setText(R.id.tv_name,item.getTitle());
+
         helper.setText(R.id.tv_content,item.getDesc1());
-        helper.setText(R.id.tv_content2,item.getDesc2());
+
         helper.addOnClickListener(R.id.tv_btn);
 
         helper.setGone(R.id.iv_tag,false);

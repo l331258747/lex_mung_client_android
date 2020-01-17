@@ -19,7 +19,7 @@
 
     <TextView
         android:id="@+id/tv_name"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/qb_px_30"
         android:layout_marginEnd="@dimen/qb_px_30"
@@ -27,10 +27,22 @@
         android:maxLines="1"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/tv_content"
-        app:layout_constraintEnd_toStartOf="@+id/iv_next"
         app:layout_constraintStart_toEndOf="@+id/iv_img"
         app:layout_constraintTop_toTopOf="@+id/iv_img"
         tools:text="离婚协议书" />
+
+    <ImageView
+        android:id="@+id/iv_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/qb_px_25"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_name"
+        app:layout_constraintStart_toEndOf="@+id/tv_name"
+        android:layout_marginStart="@dimen/qb_px_10"
+        app:layout_constraintTop_toTopOf="@+id/tv_name"
+        android:scaleType="fitCenter"
+        android:visibility="gone"
+        tools:visibility="visible"
+        tools:src="@drawable/ic_fail_resend"/>
 
     <TextView
         android:id="@+id/tv_content"
