@@ -95,7 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/qb_px_30"
-                android:text="5万律师答疑简单梳理解"
+                android:text="5万律师答疑简单梳理解解决思路"
                 android:textColor="@color/c_898A95"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_img_text"

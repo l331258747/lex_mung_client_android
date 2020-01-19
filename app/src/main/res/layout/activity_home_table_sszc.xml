@@ -316,7 +316,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/qb_px_15"
                 android:layout_marginTop="@dimen/qb_px_5"
-                android:text="支持省高院、高等法院各\n巡回法庭的再审申"
+                android:text="支持省高院、高等法院各\n巡回法庭的再审申诉"
                 android:textColor="@color/c_898A95"
                 android:textSize="10sp"
                 app:layout_constraintStart_toEndOf="@+id/iv_server_zsss"

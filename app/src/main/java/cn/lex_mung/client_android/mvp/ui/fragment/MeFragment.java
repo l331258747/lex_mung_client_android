@@ -292,7 +292,7 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
             launchActivity(new Intent(mActivity, WebActivity.class), bundle);
         });
 
-        AppUtils.configRecyclerView(recycler_view_vip, new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+        AppUtils.configRecyclerView(recycler_view_vip, new LinearLayoutManager(mContext));
         recycler_view_vip.setAdapter(meVipAdapter);
     }
 
