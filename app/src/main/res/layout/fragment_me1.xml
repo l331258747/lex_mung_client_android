@@ -247,7 +247,7 @@
             android:layout_height="wrap_content"
             android:visibility="gone"
             tools:visibility="visible"
-            app:constraint_referenced_ids="view_vip,tv_vip_title,recycler_view_vip" />
+            app:constraint_referenced_ids="view_vip,tv_vip_title,recycler_view_vip,iv_vip_title" />
 
         <View
             android:id="@+id/view_vip"
@@ -259,6 +259,15 @@
             app:layout_constraintBottom_toBottomOf="@+id/recycler_view_vip"
             app:layout_constraintTop_toBottomOf="@id/view_3" />
 
+        <ImageView
+            android:id="@+id/iv_vip_title"
+            android:layout_width="@dimen/qb_px_30"
+            android:layout_height="@dimen/qb_px_30"
+            android:src="@drawable/ic_me_vip_title"
+            app:layout_constraintTop_toTopOf="@+id/tv_vip_title"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_vip_title"
+            app:layout_constraintStart_toStartOf="@id/guideline2"/>
+
         <TextView
             android:id="@+id/tv_vip_title"
             android:layout_width="wrap_content"
@@ -266,7 +275,8 @@
             android:text="我的VIP服务"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/guideline2"
+            android:layout_marginStart="@dimen/qb_px_20"
+            app:layout_constraintStart_toEndOf="@+id/iv_vip_title"
             android:layout_marginTop="@dimen/qb_px_40"
             app:layout_constraintTop_toTopOf="@+id/view_vip" />
 
