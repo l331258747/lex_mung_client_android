@@ -37,28 +37,28 @@
             android:layout_height="0dp"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/ic_me_top_bg_2"
             app:layout_constraintBottom_toBottomOf="@+id/view_3"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/ic_me_top_bg_2" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:id="@+id/iv_avatar_bg"
             android:layout_width="@dimen/qb_px_170"
             android:layout_height="@dimen/qb_px_170"
+            android:layout_marginTop="@dimen/qb_px_120"
             android:background="@drawable/ic_head_bg"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
-            android:layout_marginTop="@dimen/qb_px_120"
-            app:layout_constraintTop_toTopOf="@+id/iv_top_bg"/>
+            app:layout_constraintTop_toTopOf="@+id/iv_top_bg" />
 
         <ImageView
             android:id="@+id/iv_avatar"
             android:layout_width="@dimen/qb_px_125"
             android:layout_height="@dimen/qb_px_125"
+            android:layout_marginTop="@dimen/qb_px_8"
             android:src="@drawable/ic_avatar"
             app:layout_constraintEnd_toEndOf="@id/iv_avatar_bg"
-            android:layout_marginTop="@dimen/qb_px_8"
             app:layout_constraintStart_toStartOf="@id/iv_avatar_bg"
             app:layout_constraintTop_toTopOf="@id/iv_avatar_bg" />
 
@@ -66,17 +66,17 @@
             android:id="@+id/tv_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_160"
             android:includeFontPadding="false"
+            android:maxLength="6"
             android:textColor="@color/c_323232"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:maxLength="6"
             android:visibility="gone"
-            tools:visibility="visible"
-            tools:text="namenamename"
             app:layout_constraintStart_toStartOf="@id/guideline2"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="@dimen/qb_px_160"/>
+            tools:text="namenamename"
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/tv_edit_info"
@@ -84,13 +84,13 @@
             android:layout_height="@dimen/qb_px_30"
             android:layout_marginStart="@dimen/qb_px_30"
             android:layout_marginBottom="@dimen/qb_px_5"
-            android:text="编辑资料"
-            android:gravity="center"
-            android:textColor="@color/c_b89b4b"
             android:background="@drawable/round_40_fff2de_all"
+            android:gravity="center"
+            android:text="编辑资料"
+            android:textColor="@color/c_b89b4b"
             android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="@+id/tv_user_name"
-            app:layout_constraintStart_toEndOf="@+id/tv_user_name"/>
+            app:layout_constraintStart_toEndOf="@+id/tv_user_name" />
 
 
         <TextView
@@ -108,29 +108,29 @@
             tools:visibility="visible" />
 
         <!--<View-->
-            <!--android:id="@+id/view_3"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="@dimen/qb_px_20"-->
-            <!--tools:layout_editor_absoluteY="155dp" />-->
+        <!--android:id="@+id/view_3"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/qb_px_20"-->
+        <!--tools:layout_editor_absoluteY="155dp" />-->
 
         <!--android:background="@drawable/button_withe_down"-->
         <View
             android:id="@+id/view_order"
             android:layout_width="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/tv_user_region"
             android:layout_height="@dimen/qb_px_180"
-            app:layout_constraintEnd_toStartOf="@id/view_account"
             android:layout_marginTop="@dimen/qb_px_10"
+            app:layout_constraintBottom_toBottomOf="@id/iv_top_bg"
+            app:layout_constraintEnd_toStartOf="@id/view_account"
             app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintBottom_toBottomOf="@id/iv_top_bg"  />
+            app:layout_constraintTop_toBottomOf="@+id/tv_user_region" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="@dimen/qb_px_55"
             android:layout_marginTop="@dimen/qb_px_30"
             android:src="@drawable/ic_me_order_2"
-            app:layout_constraintStart_toStartOf="@+id/tv_order_txt"
             app:layout_constraintEnd_toEndOf="@+id/tv_order_txt"
+            app:layout_constraintStart_toStartOf="@+id/tv_order_txt"
             app:layout_constraintTop_toTopOf="@id/view_order" />
 
         <TextView
@@ -176,34 +176,34 @@
             app:layout_constraintStart_toStartOf="@id/view_account" />
 
         <!--<View-->
-            <!--android:id="@+id/view_coupons"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="@dimen/qb_px_180"-->
-            <!--android:background="@drawable/button_withe_down"-->
-            <!--app:layout_constraintEnd_toStartOf="@id/view_like"-->
-            <!--app:layout_constraintStart_toEndOf="@id/view_account"-->
-            <!--app:layout_constraintTop_toTopOf="@id/view_order" />-->
+        <!--android:id="@+id/view_coupons"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="@dimen/qb_px_180"-->
+        <!--android:background="@drawable/button_withe_down"-->
+        <!--app:layout_constraintEnd_toStartOf="@id/view_like"-->
+        <!--app:layout_constraintStart_toEndOf="@id/view_account"-->
+        <!--app:layout_constraintTop_toTopOf="@id/view_order" />-->
 
         <!--<ImageView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="@dimen/qb_px_55"-->
-            <!--android:layout_marginTop="@dimen/qb_px_30"-->
-            <!--android:src="@drawable/ic_me_coupons"-->
-            <!--app:layout_constraintEnd_toEndOf="@id/view_coupons"-->
-            <!--app:layout_constraintStart_toStartOf="@id/view_coupons"-->
-            <!--app:layout_constraintTop_toTopOf="@id/view_coupons" />-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="@dimen/qb_px_55"-->
+        <!--android:layout_marginTop="@dimen/qb_px_30"-->
+        <!--android:src="@drawable/ic_me_coupons"-->
+        <!--app:layout_constraintEnd_toEndOf="@id/view_coupons"-->
+        <!--app:layout_constraintStart_toStartOf="@id/view_coupons"-->
+        <!--app:layout_constraintTop_toTopOf="@id/view_coupons" />-->
 
         <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginBottom="@dimen/qb_px_40"-->
-            <!--android:includeFontPadding="false"-->
-            <!--android:text="@string/text_coupons"-->
-            <!--android:textColor="@color/c_323232"-->
-            <!--android:textSize="14sp"-->
-            <!--app:layout_constraintBottom_toBottomOf="@id/view_coupons"-->
-            <!--app:layout_constraintEnd_toEndOf="@id/view_coupons"-->
-            <!--app:layout_constraintStart_toStartOf="@id/view_coupons" />-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginBottom="@dimen/qb_px_40"-->
+        <!--android:includeFontPadding="false"-->
+        <!--android:text="@string/text_coupons"-->
+        <!--android:textColor="@color/c_323232"-->
+        <!--android:textSize="14sp"-->
+        <!--app:layout_constraintBottom_toBottomOf="@id/view_coupons"-->
+        <!--app:layout_constraintEnd_toEndOf="@id/view_coupons"-->
+        <!--app:layout_constraintStart_toStartOf="@id/view_coupons" />-->
 
         <!--android:background="@drawable/button_withe_down"-->
         <View
@@ -239,7 +239,45 @@
             android:id="@+id/view_3"
             android:layout_width="0dp"
             android:layout_height="@dimen/qb_px_1"
-            app:layout_constraintTop_toBottomOf="@+id/view_order"/>
+            app:layout_constraintTop_toBottomOf="@+id/view_order" />
+
+        <android.support.constraint.Group
+            android:id="@+id/group_vip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:visibility="visible"
+            app:constraint_referenced_ids="view_vip,tv_vip_title,recycler_view_vip" />
+
+        <View
+            android:id="@+id/view_vip"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/c_f9f9f9"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/recycler_view_vip"
+            app:layout_constraintTop_toBottomOf="@id/view_3" />
+
+        <TextView
+            android:id="@+id/tv_vip_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的VIP服务"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            android:layout_marginTop="@dimen/qb_px_40"
+            app:layout_constraintTop_toTopOf="@+id/view_vip" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_vip"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qb_px_30"
+            app:layout_constraintStart_toStartOf="@id/guideline2"
+            app:layout_constraintEnd_toEndOf="@id/guideline3"
+            app:layout_constraintTop_toBottomOf="@+id/tv_vip_title"/>
 
         <!--优惠券-->
         <View
@@ -249,28 +287,28 @@
             android:background="@drawable/button_transparent_down"
             android:clickable="true"
             android:focusable="true"
-            app:layout_constraintTop_toBottomOf="@id/view_3" />
+            app:layout_constraintTop_toBottomOf="@id/view_vip" />
 
         <ImageView
             android:id="@+id/iv_coupons"
             android:layout_width="@dimen/qb_px_40"
             android:layout_height="@dimen/qb_px_40"
-            android:src="@drawable/ic_me_coupon"
             android:scaleType="fitCenter"
+            android:src="@drawable/ic_me_coupon"
             app:layout_constraintBottom_toBottomOf="@id/view_coupons"
             app:layout_constraintStart_toEndOf="@id/guideline2"
-            app:layout_constraintTop_toTopOf="@id/view_coupons"/>
+            app:layout_constraintTop_toTopOf="@id/view_coupons" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/qb_px_25"
             android:includeFontPadding="false"
             android:text="优惠券"
             android:textColor="@color/c_323232"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@id/view_coupons"
             app:layout_constraintStart_toEndOf="@id/iv_coupons"
-            android:layout_marginLeft="@dimen/qb_px_25"
             app:layout_constraintTop_toTopOf="@id/view_coupons" />
 
         <ImageView
@@ -303,22 +341,22 @@
             android:id="@+id/iv_card"
             android:layout_width="@dimen/qb_px_40"
             android:layout_height="@dimen/qb_px_40"
-            android:src="@drawable/ic_me_card"
             android:scaleType="fitCenter"
+            android:src="@drawable/ic_me_card"
             app:layout_constraintBottom_toBottomOf="@id/view_card"
             app:layout_constraintStart_toEndOf="@id/guideline2"
-            app:layout_constraintTop_toTopOf="@id/view_card"/>
+            app:layout_constraintTop_toTopOf="@id/view_card" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/qb_px_25"
             android:includeFontPadding="false"
             android:text="卡包"
             android:textColor="@color/c_323232"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@id/view_card"
             app:layout_constraintStart_toEndOf="@id/iv_setting"
-            android:layout_marginLeft="@dimen/qb_px_25"
             app:layout_constraintTop_toTopOf="@id/view_card" />
 
         <ImageView
@@ -353,22 +391,22 @@
             android:id="@+id/iv_guide"
             android:layout_width="@dimen/qb_px_40"
             android:layout_height="@dimen/qb_px_40"
-            android:src="@drawable/ic_me_guide"
             android:scaleType="fitCenter"
+            android:src="@drawable/ic_me_guide"
             app:layout_constraintBottom_toBottomOf="@id/view_newbie_guide"
             app:layout_constraintStart_toEndOf="@id/guideline2"
-            app:layout_constraintTop_toTopOf="@id/view_newbie_guide"/>
+            app:layout_constraintTop_toTopOf="@id/view_newbie_guide" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/qb_px_25"
             android:includeFontPadding="false"
             android:text="新手引导"
             android:textColor="@color/c_323232"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@id/view_newbie_guide"
             app:layout_constraintStart_toEndOf="@id/iv_guide"
-            android:layout_marginLeft="@dimen/qb_px_25"
             app:layout_constraintTop_toTopOf="@id/view_newbie_guide" />
 
         <ImageView
@@ -403,22 +441,22 @@
             android:id="@+id/iv_about"
             android:layout_width="@dimen/qb_px_40"
             android:layout_height="@dimen/qb_px_40"
-            android:src="@drawable/ic_me_about"
             android:scaleType="fitCenter"
+            android:src="@drawable/ic_me_about"
             app:layout_constraintBottom_toBottomOf="@id/view_about"
             app:layout_constraintStart_toEndOf="@id/guideline2"
-            app:layout_constraintTop_toTopOf="@id/view_about"/>
+            app:layout_constraintTop_toTopOf="@id/view_about" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/qb_px_25"
             android:includeFontPadding="false"
             android:text="关于绿豆圈"
             android:textColor="@color/c_323232"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@id/view_about"
             app:layout_constraintStart_toEndOf="@id/iv_about"
-            android:layout_marginLeft="@dimen/qb_px_25"
             app:layout_constraintTop_toTopOf="@id/view_about" />
 
         <ImageView
@@ -452,22 +490,22 @@
             android:id="@+id/iv_call"
             android:layout_width="@dimen/qb_px_40"
             android:layout_height="@dimen/qb_px_40"
-            android:src="@drawable/ic_me_custom"
             android:scaleType="fitCenter"
+            android:src="@drawable/ic_me_custom"
             app:layout_constraintBottom_toBottomOf="@id/view_call"
             app:layout_constraintStart_toEndOf="@id/guideline2"
-            app:layout_constraintTop_toTopOf="@id/view_call"/>
+            app:layout_constraintTop_toTopOf="@id/view_call" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/qb_px_25"
             android:includeFontPadding="false"
             android:text="联系客服"
             android:textColor="@color/c_323232"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@id/view_call"
             app:layout_constraintStart_toEndOf="@id/iv_call"
-            android:layout_marginLeft="@dimen/qb_px_25"
             app:layout_constraintTop_toTopOf="@id/view_call" />
 
         <ImageView
@@ -500,22 +538,22 @@
             android:id="@+id/iv_setting"
             android:layout_width="@dimen/qb_px_40"
             android:layout_height="@dimen/qb_px_40"
-            android:src="@drawable/ic_me_setting"
             android:scaleType="fitCenter"
+            android:src="@drawable/ic_me_setting"
             app:layout_constraintBottom_toBottomOf="@id/view_setting"
             app:layout_constraintStart_toEndOf="@id/guideline2"
-            app:layout_constraintTop_toTopOf="@id/view_setting"/>
+            app:layout_constraintTop_toTopOf="@id/view_setting" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/qb_px_25"
             android:includeFontPadding="false"
             android:text="设置"
             android:textColor="@color/c_323232"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@id/view_setting"
             app:layout_constraintStart_toEndOf="@id/iv_setting"
-            android:layout_marginLeft="@dimen/qb_px_25"
             app:layout_constraintTop_toTopOf="@id/view_setting" />
 
         <TextView

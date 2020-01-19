@@ -5,17 +5,29 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.Group;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.BundleTags;
 import cn.lex_mung.client_android.di.component.DaggerMeComponent;
 import cn.lex_mung.client_android.di.module.MeModule;
 import cn.lex_mung.client_android.mvp.contract.MeContract;
+import cn.lex_mung.client_android.mvp.model.entity.home.RightsVipEntity;
 import cn.lex_mung.client_android.mvp.presenter.MePresenter;
 import cn.lex_mung.client_android.mvp.ui.activity.AboutActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.EditInfoActivity;
@@ -27,13 +39,8 @@ import cn.lex_mung.client_android.mvp.ui.activity.MyOrderActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.OrderCouponActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.SettingActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
+import cn.lex_mung.client_android.mvp.ui.adapter.MeVipAdapter;
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
-import com.zl.mvp.http.imageloader.glide.ImageConfigImpl;
-
-import javax.inject.Inject;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 import me.zl.mvp.base.BaseFragment;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
@@ -51,6 +58,12 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
     TextView tvUserRegion;
     @BindView(R.id.tv_edit_info)
     TextView tvEditInfo;
+
+    @BindView(R.id.group_vip)
+    Group group_vip;
+    @BindView(R.id.recycler_view_vip)
+    RecyclerView recycler_view_vip;
+    MeVipAdapter meVipAdapter;
 
     public static MeFragment newInstance() {
         return new MeFragment();
@@ -74,6 +87,7 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         isCreated = true;
+        initAdapter();
     }
 
     @Override
@@ -81,6 +95,7 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
         super.onResume();
         if(!getUserVisibleHint()) return;
         mPresenter.loginStatusDispose();
+        mPresenter.rightsVip();
     }
 
     private boolean isCreated = false;
@@ -92,6 +107,7 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
         }
         if (isVisibleToUser) {
             mPresenter.loginStatusDispose();
+            mPresenter.rightsVip();
             if(mPresenter.getAboutEntity() == null)
                 mPresenter.getAbout();
         }
@@ -261,6 +277,35 @@ public class MeFragment extends BaseFragment<MePresenter> implements MeContract.
 
     @Override
     public void hideOrgLayout() {
+    }
+
+    public void initAdapter(){
+        meVipAdapter = new MeVipAdapter();
+        meVipAdapter.setOnItemClickListener((adapter1, view, position) -> {
+            if (isFastClick()) return;
+            RightsVipEntity entity = vipEntities.get(position);
+            if (entity == null) return;
+
+            bundle.clear();
+            bundle.putString(BundleTags.URL, entity.getLegalAdviserUrl());
+            bundle.putString(BundleTags.TITLE, entity.getEquityName());
+            launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+        });
+
+        AppUtils.configRecyclerView(recycler_view_vip, new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+        recycler_view_vip.setAdapter(meVipAdapter);
+    }
+
+    List<RightsVipEntity> vipEntities;
+    @Override
+    public void changeVipData(List<RightsVipEntity> entities) {
+        this.vipEntities = entities;
+        if(entities == null || entities.size() == 0){
+            group_vip.setVisibility(View.GONE);
+        }else {
+            group_vip.setVisibility(View.VISIBLE);
+            meVipAdapter.setNewData(entities);
+        }
     }
 
     @Override

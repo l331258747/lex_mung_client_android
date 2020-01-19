@@ -1,12 +1,14 @@
 package cn.lex_mung.client_android.mvp.contract;
 
+import java.util.List;
+
 import cn.lex_mung.client_android.mvp.model.entity.AboutEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
-
+import cn.lex_mung.client_android.mvp.model.entity.home.RightsVipEntity;
 import io.reactivex.Observable;
-import me.zl.mvp.mvp.IView;
 import me.zl.mvp.mvp.IModel;
+import me.zl.mvp.mvp.IView;
 
 public interface MeContract {
     interface View extends IView {
@@ -34,11 +36,15 @@ public interface MeContract {
         void hideLoginLayout();
 
         void hideOrgLayout();
+
+        void changeVipData(List<RightsVipEntity> entities);
     }
 
     interface Model extends IModel {
         Observable<BaseResponse<UserInfoDetailsEntity>> getUserInfoDetail();
 
         Observable<BaseResponse<AboutEntity>> getAbout();
+
+        Observable<BaseResponse<List<RightsVipEntity>>> rightsVip();
     }
 }

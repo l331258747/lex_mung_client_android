@@ -4,6 +4,9 @@ import android.app.Application;
 
 import com.google.gson.Gson;
 
+import java.util.List;
+
+import cn.lex_mung.client_android.mvp.model.entity.home.RightsVipEntity;
 import io.reactivex.Observable;
 import me.zl.mvp.integration.IRepositoryManager;
 import me.zl.mvp.mvp.BaseModel;
@@ -49,5 +52,12 @@ public class MeModel extends BaseModel implements MeContract.Model {
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .getAbout();
+    }
+
+    @Override
+    public Observable<BaseResponse<List<RightsVipEntity>>> rightsVip() {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .rightsVip();
     }
 }

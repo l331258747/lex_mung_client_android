@@ -4,30 +4,34 @@ import android.app.Application;
 import android.os.Message;
 import android.text.TextUtils;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
-import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
-import me.zl.mvp.integration.AppManager;
-import me.zl.mvp.di.scope.FragmentScope;
-import me.zl.mvp.mvp.BasePresenter;
-import me.zl.mvp.http.imageloader.ImageLoader;
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
-import me.zl.mvp.utils.AppUtils;
-import me.zl.mvp.utils.DataHelper;
-import me.zl.mvp.utils.RxLifecycleUtils;
+import com.google.gson.Gson;
+
+import org.simple.eventbus.Subscriber;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
-import com.google.gson.Gson;
 import cn.lex_mung.client_android.R;
 import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.mvp.contract.MeContract;
 import cn.lex_mung.client_android.mvp.model.entity.AboutEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
-
-import org.simple.eventbus.Subscriber;
+import cn.lex_mung.client_android.mvp.model.entity.home.RightsVipEntity;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
+import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
+import me.zl.mvp.di.scope.FragmentScope;
+import me.zl.mvp.http.imageloader.ImageLoader;
+import me.zl.mvp.integration.AppManager;
+import me.zl.mvp.mvp.BasePresenter;
+import me.zl.mvp.utils.AppUtils;
+import me.zl.mvp.utils.DataHelper;
+import me.zl.mvp.utils.RxLifecycleUtils;
 
 import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGIN_INFO;
 import static cn.lex_mung.client_android.app.EventBusTags.LOGIN_INFO.LOGOUT;
@@ -184,6 +188,34 @@ public class MePresenter extends BasePresenter<MeContract.Model, MeContract.View
                         if (baseResponse.isSuccess()) {
                             aboutEntity = baseResponse.getData();
                             DataHelper.setStringSF(mApplication, DataHelperTags.MOBILE, aboutEntity.getKefuPhone());
+                        }
+                    }
+                });
+    }
+
+    public void rightsVip() {
+        if (!DataHelper.getBooleanSF(mApplication, DataHelperTags.IS_LOGIN_SUCCESS)) {
+            mRootView.changeVipData(null);
+            return;
+        }
+        mModel.rightsVip()
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> {
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<List<RightsVipEntity>>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<List<RightsVipEntity>> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            List<RightsVipEntity> entities = new ArrayList<>();
+                            for (RightsVipEntity item : baseResponse.getData())
+                                if (item.isIsOwn())
+                                    entities.add(item);
+                            mRootView.changeVipData(entities);
                         }
                     }
                 });
