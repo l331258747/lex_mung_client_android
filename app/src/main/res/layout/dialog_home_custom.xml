@@ -33,7 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/iv_head"
         android:textSize="21sp"
         android:textStyle="bold"
-        android:text="400-811-3060" />
+        android:text="客服热线\n400-811-3060" />
 
 
     <TextView
@@ -74,7 +74,7 @@
             android:scrollbars="vertical"
             android:textColor="@color/c_323232"
             android:textStyle="bold"
-            android:text="微信客服：lex-yagnchun" />
+            android:text="客服微信号：lex-yangchun" />
 
         <TextView
             android:layout_width="wrap_content"

@@ -54,7 +54,7 @@ public class HomeCustomDialog extends Dialog {
 
         ll_content2.setOnClickListener(v -> {
             if(onClickListener != null){
-                onClickListener.onCloneClick("lex-yagnchun");
+                onClickListener.onCloneClick("lex-yangchun");
             }
         });
     }
