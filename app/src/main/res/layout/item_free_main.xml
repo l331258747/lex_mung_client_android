@@ -94,6 +94,7 @@
         android:layout_height="wrap_content"
         android:text="啊是的噶双方都噶范德萨啊是的噶啥事阿萨德刚阿萨德广发"
         android:textColor="@color/c_323232"
+        app:unfold_text_color="@color/c_4A90E2"
         app:foldline="3"
         app:layout_constraintTop_toTopOf="@+id/view_content" />
 
