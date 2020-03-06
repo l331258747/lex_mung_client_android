@@ -65,6 +65,10 @@ public class PracticeExperienceFragment extends BaseFragment<PracticeExperienceP
     TextView tvLanguageText;
     @BindView(R.id.tv_language)
     TextView tvLanguage;
+    @BindView(R.id.tv_certificate_text)
+    TextView tvCertificateText;
+    @BindView(R.id.tv_certificate)
+    TextView tvCertificate;
     @BindView(R.id.tv_other_text)
     TextView tvOtherText;
     @BindView(R.id.tv_other)
@@ -276,6 +280,17 @@ public class PracticeExperienceFragment extends BaseFragment<PracticeExperienceP
     }
 
     @Override
+    public void setCertificate(String toString) {
+        tvCertificate.setText(toString);
+    }
+
+    @Override
+    public void hideCertificateLayout() {
+        tvCertificateText.setVisibility(View.GONE);
+        tvCertificate.setVisibility(View.GONE);
+    }
+
+    @Override
     public void setOther(String toString) {
         tvOther.setText(toString);
     }
@@ -322,6 +337,8 @@ public class PracticeExperienceFragment extends BaseFragment<PracticeExperienceP
         tvIndustry.setVisibility(View.GONE);
         tvLanguageText.setVisibility(View.GONE);
         tvLanguage.setVisibility(View.GONE);
+        tvCertificateText.setVisibility(View.GONE);
+        tvCertificate.setVisibility(View.GONE);
         tvOtherText.setVisibility(View.GONE);
         tvOther.setVisibility(View.GONE);
         view2.setVisibility(View.GONE);

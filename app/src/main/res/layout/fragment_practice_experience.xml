@@ -193,6 +193,32 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_language_text" />
 
                 <TextView
+                    android:id="@+id/tv_certificate_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/qb_px_40"
+                    android:includeFontPadding="false"
+                    android:text="资格证书"
+                    android:textColor="@color/c_323232"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@id/guideline2"
+                    app:layout_constraintTop_toBottomOf="@id/tv_language" />
+
+                <TextView
+                    android:id="@+id/tv_certificate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/qb_px_20"
+                    android:includeFontPadding="false"
+                    android:lineSpacingExtra="@dimen/qb_px_15"
+                    android:textColor="@color/c_717171"
+                    android:textSize="13sp"
+                    app:layout_constraintEnd_toStartOf="@id/guideline3"
+                    app:layout_constraintStart_toEndOf="@id/guideline2"
+                    app:layout_constraintTop_toBottomOf="@id/tv_certificate_text" />
+
+                <TextView
                     android:id="@+id/tv_other_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -203,7 +229,7 @@
                     android:textSize="15sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@id/guideline2"
-                    app:layout_constraintTop_toBottomOf="@id/tv_language" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_certificate" />
 
                 <TextView
                     android:id="@+id/tv_other"

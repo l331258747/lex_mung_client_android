@@ -65,6 +65,11 @@ public class LawsHomePagerBaseEntity implements Serializable {
     private List<BusinessEntity> requireInfo;
     private String minimumDuration;
     private MemberBaseV2CurriculumEntity curriculum;
+    private List<QualificationEntity> qualifications;
+
+    public List<QualificationEntity> getQualifications() {
+        return qualifications;
+    }
 
     public MemberBaseV2CurriculumEntity getCurriculum() {
         return curriculum;

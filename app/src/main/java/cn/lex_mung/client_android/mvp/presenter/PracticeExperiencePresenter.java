@@ -14,6 +14,7 @@ import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.CaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.LawsHomePagerBaseEntity;
+import cn.lex_mung.client_android.mvp.model.entity.QualificationEntity;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
@@ -119,6 +120,21 @@ public class PracticeExperiencePresenter extends BasePresenter<PracticeExperienc
                 num1++;
                 mRootView.hideLanguageLayout();
             }
+
+            if (entity.getQualifications() != null
+                    && entity.getQualifications().size() > 0) {
+                StringBuilder text = new StringBuilder();
+                for (QualificationEntity s : entity.getQualifications()) {
+                    text.append(s.getTypeName()).append("  ·  ");
+                }
+                text.delete(text.length() - 3, text.length());
+                mRootView.setCertificate(text.toString());
+            } else {
+                num++;
+                num1++;
+                mRootView.hideCertificateLayout();
+            }
+
             if (entity.getPracticeInfo().getOtherSkill() != null
                     && entity.getPracticeInfo().getOtherSkill().size() > 0) {
                 StringBuilder text = new StringBuilder();
@@ -156,10 +172,10 @@ public class PracticeExperiencePresenter extends BasePresenter<PracticeExperienc
                 num++;
                 mRootView.hidePLayout();
             }
-            if (num1 == 4) {
+            if (num1 == 5) {
                 mRootView.showNoDataLayout1();
             }
-            if (num == 7) {
+            if (num == 8) {
                 mRootView.showNoDataLayout();
             }
         } catch (Exception ignored) {

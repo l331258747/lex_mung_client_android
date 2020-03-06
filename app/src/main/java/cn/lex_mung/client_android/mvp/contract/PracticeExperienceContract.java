@@ -29,6 +29,10 @@ public interface PracticeExperienceContract {
 
         void hideLanguageLayout();
 
+        void setCertificate(String toString);
+
+        void hideCertificateLayout();
+
         void setOther(String toString);
 
         void hideOtherLayout();
