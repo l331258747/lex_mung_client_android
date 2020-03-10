@@ -65,10 +65,16 @@ public class PracticeExperienceFragment extends BaseFragment<PracticeExperienceP
     TextView tvLanguageText;
     @BindView(R.id.tv_language)
     TextView tvLanguage;
+
+    @BindView(R.id.iv_certificate)
+    ImageView ivCertificate;
     @BindView(R.id.tv_certificate_text)
     TextView tvCertificateText;
     @BindView(R.id.tv_certificate)
     TextView tvCertificate;
+    @BindView(R.id.view_5)
+    View view5;
+
     @BindView(R.id.tv_other_text)
     TextView tvOtherText;
     @BindView(R.id.tv_other)
@@ -219,7 +225,7 @@ public class PracticeExperienceFragment extends BaseFragment<PracticeExperienceP
 
     @Override
     public void showCaseLayout() {
-        view4.setVisibility(View.VISIBLE);
+        view5.setVisibility(View.VISIBLE);
         ivLawsCase.setVisibility(View.VISIBLE);
         tvLawsCaseText.setVisibility(View.VISIBLE);
         recyclerViewLawsCase.setVisibility(View.VISIBLE);
@@ -227,7 +233,7 @@ public class PracticeExperienceFragment extends BaseFragment<PracticeExperienceP
 
     @Override
     public void hideCaseLayout() {
-        view4.setVisibility(View.GONE);
+        view5.setVisibility(View.GONE);
         ivLawsCase.setVisibility(View.GONE);
         tvLawsCaseText.setVisibility(View.GONE);
         recyclerViewLawsCase.setVisibility(View.GONE);
@@ -280,17 +286,6 @@ public class PracticeExperienceFragment extends BaseFragment<PracticeExperienceP
     }
 
     @Override
-    public void setCertificate(String toString) {
-        tvCertificate.setText(toString);
-    }
-
-    @Override
-    public void hideCertificateLayout() {
-        tvCertificateText.setVisibility(View.GONE);
-        tvCertificate.setVisibility(View.GONE);
-    }
-
-    @Override
     public void setOther(String toString) {
         tvOther.setText(toString);
     }
@@ -311,7 +306,7 @@ public class PracticeExperienceFragment extends BaseFragment<PracticeExperienceP
         ivResortCourt.setVisibility(View.GONE);
         tvResortCourtText.setVisibility(View.GONE);
         tvResortCourt.setVisibility(View.GONE);
-        view3.setVisibility(View.GONE);
+        view2.setVisibility(View.GONE);
     }
 
     @Override
@@ -324,6 +319,19 @@ public class PracticeExperienceFragment extends BaseFragment<PracticeExperienceP
         ivResortP.setVisibility(View.GONE);
         tvResortPText.setVisibility(View.GONE);
         tvResortP.setVisibility(View.GONE);
+        view3.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setCertificate(String toString) {
+        tvCertificate.setText(toString);
+    }
+
+    @Override
+    public void hideCertificateLayout() {
+        ivCertificate.setVisibility(View.GONE);
+        tvCertificateText.setVisibility(View.GONE);
+        tvCertificate.setVisibility(View.GONE);
         view4.setVisibility(View.GONE);
     }
 
@@ -337,11 +345,9 @@ public class PracticeExperienceFragment extends BaseFragment<PracticeExperienceP
         tvIndustry.setVisibility(View.GONE);
         tvLanguageText.setVisibility(View.GONE);
         tvLanguage.setVisibility(View.GONE);
-        tvCertificateText.setVisibility(View.GONE);
-        tvCertificate.setVisibility(View.GONE);
         tvOtherText.setVisibility(View.GONE);
         tvOther.setVisibility(View.GONE);
-        view2.setVisibility(View.GONE);
+        view5.setVisibility(View.GONE);
     }
 
     @Override

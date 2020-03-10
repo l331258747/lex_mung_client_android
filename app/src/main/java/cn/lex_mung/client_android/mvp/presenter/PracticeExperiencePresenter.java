@@ -121,20 +121,6 @@ public class PracticeExperiencePresenter extends BasePresenter<PracticeExperienc
                 mRootView.hideLanguageLayout();
             }
 
-            if (entity.getQualifications() != null
-                    && entity.getQualifications().size() > 0) {
-                StringBuilder text = new StringBuilder();
-                for (QualificationEntity s : entity.getQualifications()) {
-                    text.append(s.getTypeName()).append("  ·  ");
-                }
-                text.delete(text.length() - 3, text.length());
-                mRootView.setCertificate(text.toString());
-            } else {
-                num++;
-                num1++;
-                mRootView.hideCertificateLayout();
-            }
-
             if (entity.getPracticeInfo().getOtherSkill() != null
                     && entity.getPracticeInfo().getOtherSkill().size() > 0) {
                 StringBuilder text = new StringBuilder();
@@ -172,7 +158,20 @@ public class PracticeExperiencePresenter extends BasePresenter<PracticeExperienc
                 num++;
                 mRootView.hidePLayout();
             }
-            if (num1 == 5) {
+            if (entity.getQualifications() != null
+                    && entity.getQualifications().size() > 0) {
+
+                StringBuilder text = new StringBuilder();
+                for (QualificationEntity s : entity.getQualifications()) {
+                    text.append(s.getTypeName()).append("\n");
+                }
+                text.delete(text.length() - 1, text.length());
+                mRootView.setCertificate(text.toString());
+            } else {
+                num++;
+                mRootView.hideCertificateLayout();
+            }
+            if (num1 == 4) {
                 mRootView.showNoDataLayout1();
             }
             if (num == 8) {
