@@ -24,6 +24,8 @@ public class CommodityContentEntity {
     }
 
     public String getPriceStr(){
+        if(price == 0)
+            return "";
         return StringUtils.getStringNum(price) + "元";
     }
 }

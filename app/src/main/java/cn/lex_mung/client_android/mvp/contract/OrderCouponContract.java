@@ -36,5 +36,7 @@ public interface OrderCouponContract {
 
         Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> legalAdviserServerCoupon(int pageNum,double priceTotal);//优惠券列表
 
+        Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> corporateCoupon(int pageNum, double priceTotal);
+
     }
 }

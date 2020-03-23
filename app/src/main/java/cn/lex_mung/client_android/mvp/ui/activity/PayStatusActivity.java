@@ -196,6 +196,7 @@ public class PayStatusActivity extends BaseActivity<PayStatusPresenter> implemen
                             break;
                         case PayStatusTags.ONLINE_LAWYER://在线法律顾问
                         case PayStatusTags.PRIVATE_LAWYER://私人律师团
+                        case PayStatusTags.CORPORATE://年度企业会员
                             killMyself();
 
                             AppManager.getAppManager().killAllNotClass(MainActivity.class);
@@ -241,6 +242,20 @@ public class PayStatusActivity extends BaseActivity<PayStatusPresenter> implemen
                                 launchActivity(new Intent(mActivity, WebActivity.class), bundle);
                             }
                             break;
+                        case PayStatusTags.CORPORATE://年度企业会员
+                            killMyself();
+                            AppManager.getAppManager().killAllNotClass(MainActivity.class);
+                            ((MainActivity) AppManager.getAppManager().findActivity(MainActivity.class)).switchPage(1);
+
+                            String str3 = DataHelper.getStringSF(mActivity, DataHelperTags.ANNUAL_URL);
+                            HomeChildEntity entity3 = GsonUtil.convertString2Object(str3, HomeChildEntity.class);
+                            if (!TextUtils.isEmpty(str3) && entity3 != null) {
+                                bundle.clear();
+                                bundle.putString(BundleTags.URL, entity3.getJumpurl());
+                                bundle.putString(BundleTags.TITLE, entity3.getTitle());
+                                launchActivity(new Intent(mActivity, WebActivity.class), bundle);
+                            }
+                            break;
                         default:
                             killMyself();
                             break;
@@ -249,6 +264,7 @@ public class PayStatusActivity extends BaseActivity<PayStatusPresenter> implemen
                     switch (DataHelper.getIntergerSF(mActivity, DataHelperTags.PAY_TYPE)) {
                         case PayStatusTags.ONLINE_LAWYER://在线法律顾问
                         case PayStatusTags.PRIVATE_LAWYER://私人律师团
+                        case PayStatusTags.CORPORATE://私人律师团
                             killMyself();
                             launchActivity(new Intent(mActivity, MyAccountActivity.class));
                             break;

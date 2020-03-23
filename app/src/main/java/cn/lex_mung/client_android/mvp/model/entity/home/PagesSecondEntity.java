@@ -22,6 +22,11 @@ public class PagesSecondEntity {
     private String quickConsultationUrl;
     private String onlineLegalUrl;
     private String lawyerGroupUrl;
+    private String businessAnnualMembersUrl;
+
+    public String getBusinessAnnualMembersUrl() {
+        return businessAnnualMembersUrl;
+    }
 
     public String getHotContractUrl() {
         return hotContractUrl;
@@ -43,47 +48,24 @@ public class PagesSecondEntity {
         return litigationUrl;
     }
 
-    public void setLitigationUrl(String litigationUrl) {
-        this.litigationUrl = litigationUrl;
-    }
-
     public String getRetrialUrl() {
         return retrialUrl;
-    }
-
-    public void setRetrialUrl(String retrialUrl) {
-        this.retrialUrl = retrialUrl;
     }
 
     public String getCaseRiskUrl() {
         return caseRiskUrl;
     }
 
-    public void setCaseRiskUrl(String caseRiskUrl) {
-        this.caseRiskUrl = caseRiskUrl;
-    }
-
     public String getCaseEntrustedUrl() {
         return caseEntrustedUrl;
-    }
-
-    public void setCaseEntrustedUrl(String caseEntrustedUrl) {
-        this.caseEntrustedUrl = caseEntrustedUrl;
     }
 
     public String getMemberCard() {
         return memberCard;
     }
 
-    public void setMemberCard(String memberCard) {
-        this.memberCard = memberCard;
-    }
-
     public String getExaminUrl() {
         return examinUrl;
     }
 
-    public void setExaminUrl(String examinUrl) {
-        this.examinUrl = examinUrl;
-    }
 }

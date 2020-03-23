@@ -40,6 +40,7 @@ import cn.lex_mung.client_android.mvp.contract.WebContract;
 import cn.lex_mung.client_android.mvp.model.entity.DeviceEntity2;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
+import cn.lex_mung.client_android.mvp.model.entity.other.WebGoAnnualEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.WebGoEquityPayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.WebGoOintmentEntity;
 import cn.lex_mung.client_android.mvp.model.entity.other.WebGoOrderDetailEntity;
@@ -315,6 +316,29 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
 
 
     public class AndroidToJs extends Object {
+
+        //年度企业会员 支付
+        @JavascriptInterface
+        public void goAnnualPay(String string){
+            if (TextUtils.isEmpty(string))
+                return;
+            WebGoAnnualEntity webGoAnnualEntity = GsonUtil.convertString2Object(string, WebGoAnnualEntity.class);
+            if (isFastClick()) return;
+            if (mPresenter.isLogin()) {
+                bundle.clear();
+                bundle.putInt(BundleTags.ID, webGoAnnualEntity.getCorporateServerId());
+                bundle.putString(BundleTags.REQUIRE_TYPE_NAME, webGoAnnualEntity.getName());
+                bundle.putString(BundleTags.TITLE, webGoAnnualEntity.getName());
+                bundle.putFloat(BundleTags.MONEY, webGoAnnualEntity.getAmount());
+                bundle.putInt(BundleTags.TYPE,5);
+                launchActivity(new Intent(mActivity, RushLoanPayActivity.class), bundle);
+            } else {
+                bundle.clear();
+                bundle.putInt(BundleTags.TYPE, 1);
+                launchActivity(new Intent(mActivity, LoginActivity.class), bundle);
+            }
+
+        }
 
         //诉讼无忧保服务 支付
         @JavascriptInterface

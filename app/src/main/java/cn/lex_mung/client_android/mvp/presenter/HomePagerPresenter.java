@@ -374,6 +374,13 @@ public class HomePagerPresenter extends BasePresenter<HomePagerContract.Model, H
     private void savePagesSecondUrl(PagesSecondEntity entity) {
         if (entity == null) return;
 
+        if(!TextUtils.isEmpty(entity.getBusinessAnnualMembersUrl())){
+            HomeChildEntity homeChildEntity = new HomeChildEntity();
+            homeChildEntity.setJumpurl(entity.getBusinessAnnualMembersUrl());
+            homeChildEntity.setTitle("企业应收款年度会员服务");
+            DataHelper.setStringSF(mApplication,DataHelperTags.ANNUAL_URL, GsonUtil.convertVO2String(homeChildEntity));
+        }
+
         if (!TextUtils.isEmpty(entity.getHotContractUrl())){
             HomeChildEntity homeChildEntity = new HomeChildEntity();
             homeChildEntity.setJumpurl(entity.getHotContractUrl());

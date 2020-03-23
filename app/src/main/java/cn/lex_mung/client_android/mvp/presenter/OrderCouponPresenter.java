@@ -99,7 +99,7 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
 
             if (mRootView.getType() == 1) {
                 Bundle bundle = new Bundle();
-                switch (entity.getPageType()) {//pageType（1首页、2专项起草合同、3律师搜索页、4快速咨询、5在线法律顾问、6私人律师团）
+                switch (entity.getPageType()) {//pageType（1首页、2专项起草合同、3律师搜索页、4快速咨询、5在线法律顾问、6私人律师团，7年度企业会员）
                     case 1:
                         mRootView.killMyself();
                         AppManager.getAppManager().killAllNotClass(MainActivity.class);
@@ -157,6 +157,16 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
                             mRootView.launchActivity(new Intent(mApplication, WebActivity.class), bundle);
                         }
                         break;
+                    case 7:
+                        String str7 = DataHelper.getStringSF(mApplication, DataHelperTags.ANNUAL_URL);
+                        HomeChildEntity entity7 = GsonUtil.convertString2Object(str7, HomeChildEntity.class);
+                        if (!TextUtils.isEmpty(str7) && entity7 != null) {
+                            bundle.clear();
+                            bundle.putString(BundleTags.URL, entity7.getJumpurl());
+                            bundle.putString(BundleTags.TITLE, entity7.getTitle());
+                            mRootView.launchActivity(new Intent(mApplication, WebActivity.class), bundle);
+                        }
+                        break;
                 }
                 return;
             }
@@ -197,7 +207,9 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
 
 
     private void getList(boolean isAdd) {
-        if (type == 4) {
+        if(type == 5){
+            corporateCoupon(isAdd);
+        }else if (type == 4) {
             getCouponsList2(isAdd, 128);
         } else if (type == 3) {
             getBuyEquityCouponsList(isAdd);
@@ -208,6 +220,40 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
         } else {
             getCouponsList(isAdd);//快速咨询
         }
+    }
+
+
+    public void corporateCoupon(boolean isAdd){
+        mModel.corporateCoupon(pageNum, orderAmount)
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> {
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<OrderCouponEntity>>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<BaseListEntity<OrderCouponEntity>> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            totalNum = baseResponse.getData().getPages();
+                            pageNum = baseResponse.getData().getPageNum();
+
+                            if (isAdd) {
+                                adapter.addData(baseResponse.getData().getList());
+                                smartRefreshLayout.finishLoadMore();
+                            } else {
+                                mRootView.setEmptyView(adapter);
+                                smartRefreshLayout.finishRefresh();
+                                adapter.setNewData(baseResponse.getData().getList());
+                                if (totalNum == pageNum) {
+                                    smartRefreshLayout.finishLoadMoreWithNoMoreData();
+                                }
+                            }
+                        }
+                    }
+                });
     }
 
     private void getBuyEquityCouponsList(boolean isAdd) {

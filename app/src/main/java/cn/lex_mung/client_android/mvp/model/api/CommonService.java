@@ -45,6 +45,8 @@ import cn.lex_mung.client_android.mvp.model.entity.UnreadMessageCountEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UploadImageEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.VersionEntity;
+import cn.lex_mung.client_android.mvp.model.entity.corporate.CorporateBuyEntity;
+import cn.lex_mung.client_android.mvp.model.entity.corporate.CorporatePayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.entrust.EntrustListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertPriceEntity;
 import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertReserveEntity;
@@ -1081,4 +1083,34 @@ public interface CommonService {
     //获取是否有vip权益
     @GET("client/rights/vip")
     Observable<BaseResponse<List<RightsVipEntity>>> rightsVip();
+
+    //---------------年度企业会员 start
+    //client/corporate/member/detailed/list/{corporateServerId}
+    //GET
+    //企业年度会员服务-获取购买服务清单列表
+    @GET("client/corporate/member/detailed/list/{corporateServerId}")
+    Observable<BaseResponse<CorporatePayEntity>> getCorporatePay(@Path("corporateServerId") int corporateServerId);
+
+
+    //client/corporate/member/coupon
+    //GET
+    //在线法律顾问优惠券列表(返回字段同接口一致：client/quick/coupon)
+    @POST("client/corporate/member/coupon")
+    Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> corporateCoupon(@Body RequestBody body);
+
+    //client/corporate/member/order/amount
+    //POST
+    //计算优惠金额（返回字段同：client/quick/pay）
+    @POST("client/corporate/member/order/amount")
+    Observable<BaseResponse<QuickPayEntity>> corporateAmount(@Body RequestBody body);
+
+    ///client/corporate/member/buy
+    //POST
+    //购买(预支付订单)
+    @POST("client/corporate/member/buy")
+    Observable<BaseResponse<CorporateBuyEntity>> corporateBuy(@Body RequestBody body);
+
+
+    //------------------年度企业会员 end
+
 }

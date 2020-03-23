@@ -122,6 +122,13 @@ public class PayStatusPresenter extends BasePresenter<PayStatusContract.Model, P
 
                                             AppUtils.post(EQUITIES_REFRESH, EQUITIES_REFRESH_1);//支付成功后刷新权益列表页面
                                             break;
+                                        case PayStatusTags.CORPORATE:
+                                            mRootView.showSuccessLayout("支付成功","返回首页","预约服务");
+                                            mRootView.setContentLayout("您已成功购买企业应收款年度会员服务，点击预约服务去使用。");
+                                            mRootView.setImg(R.drawable.ic_pay_success3);
+
+                                            AppUtils.post(EQUITIES_REFRESH, EQUITIES_REFRESH_1);//支付成功后刷新权益列表页面
+                                            break;
                                     }
                                     break;
                                 default:
@@ -140,6 +147,7 @@ public class PayStatusPresenter extends BasePresenter<PayStatusContract.Model, P
                                             break;
                                         case PayStatusTags.ONLINE_LAWYER:
                                         case PayStatusTags.PRIVATE_LAWYER:
+                                        case PayStatusTags.CORPORATE:
                                             mRootView.showSuccessLayout("支付失败","返回首页","账户充值");
                                             mRootView.setContentLayout("如果因银行卡每日支付上限导致无法完成交易，您可以先通过充值到平台账户中，在使用余额支付完成交易。");
                                             mRootView.setImg(R.drawable.ic_pay_failure3);

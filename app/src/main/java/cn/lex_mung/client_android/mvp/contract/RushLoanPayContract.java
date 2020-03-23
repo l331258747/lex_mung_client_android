@@ -9,6 +9,8 @@ import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.OrderStatusEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayEntity;
+import cn.lex_mung.client_android.mvp.model.entity.corporate.CorporateBuyEntity;
+import cn.lex_mung.client_android.mvp.model.entity.corporate.CorporatePayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.CommodityContentEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.QuickPayEntity;
@@ -70,5 +72,12 @@ public interface RushLoanPayContract {
 
         //在线法律顾问
         Observable<BaseResponse<PrivategroupBuyEntity>> privategroupBuy(RequestBody body);
+
+        //年度企业会员
+        Observable<BaseResponse<CorporatePayEntity>> getCorporatePay(int corporateServerId);//获取子数据
+        Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> corporateCoupon(float priceTotal);//优惠券列表
+        Observable<BaseResponse<QuickPayEntity>> corporateAmount(int couponId, double orderAmount);//实付金额
+        Observable<BaseResponse<CorporateBuyEntity>> corporateBuy(RequestBody body);
+
     }
 }

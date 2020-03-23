@@ -44,6 +44,7 @@ public class DataHelperTags {
     public static final String ONLINE_URL = "online_url";//人工客服url
     public static final String ONLINE_LAWYER_URL = "online_lawyer_url";//在线法律顾问url
     public static final String PRIVATE_LAWYER_URL = "private_lawyer_url";//私人律师团url
+    public static final String ANNUAL_URL = "annual_url";//年度企业会员url
 
     public static final String LAUNCH_LOCATION = "launch_location";//登录获取regionID
     public static final String LAUNCH_LOCATION_NAME = "launch_location_name";//登录获取region name

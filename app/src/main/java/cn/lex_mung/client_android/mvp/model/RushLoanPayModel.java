@@ -16,6 +16,8 @@ import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.OrderStatusEntity;
 import cn.lex_mung.client_android.mvp.model.entity.OrgAmountEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayEntity;
+import cn.lex_mung.client_android.mvp.model.entity.corporate.CorporateBuyEntity;
+import cn.lex_mung.client_android.mvp.model.entity.corporate.CorporatePayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.QuickPayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.RequirementCreateEntity;
@@ -103,6 +105,43 @@ public class RushLoanPayModel extends BaseModel implements RushLoanPayContract.M
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .privategroupBuy(body);
+    }
+
+    @Override
+    public Observable<BaseResponse<CorporatePayEntity>> getCorporatePay(int corporateServerId) {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .getCorporatePay(corporateServerId);
+    }
+
+    @Override
+    public Observable<BaseResponse<BaseListEntity<OrderCouponEntity>>> corporateCoupon(float priceTotal) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("pageNum", 1);
+        map.put("pageSize", 10);
+        map.put("orderAmount", priceTotal);
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map));
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .corporateCoupon(body);
+    }
+
+    @Override
+    public Observable<BaseResponse<QuickPayEntity>> corporateAmount(int couponId, double orderAmount) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("couponId", couponId);
+        map.put("priceTotal", orderAmount);
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map));
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .corporateAmount(body);
+    }
+
+    @Override
+    public Observable<BaseResponse<CorporateBuyEntity>> corporateBuy(RequestBody body) {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .corporateBuy(body);
     }
 
     @Override

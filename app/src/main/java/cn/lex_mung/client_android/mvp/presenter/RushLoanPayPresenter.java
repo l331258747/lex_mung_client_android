@@ -35,6 +35,9 @@ import cn.lex_mung.client_android.mvp.model.entity.BaseResponse;
 import cn.lex_mung.client_android.mvp.model.entity.OrderStatusEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.PayResultEntity;
+import cn.lex_mung.client_android.mvp.model.entity.corporate.CorporateBuyEntity;
+import cn.lex_mung.client_android.mvp.model.entity.corporate.CorporatePayEntity;
+import cn.lex_mung.client_android.mvp.model.entity.corporate.CorporatePayList;
 import cn.lex_mung.client_android.mvp.model.entity.order.CommodityContentEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.OrderCouponEntity;
 import cn.lex_mung.client_android.mvp.model.entity.order.QuickPayEntity;
@@ -1159,9 +1162,257 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
     };
     //在线法律顾问---------end
 
+    //年度企业会员--------start
+    public void getCorporatePay(int corporateServerId){
+        mModel.getCorporatePay(corporateServerId)
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> {
+
+                })
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<CorporatePayEntity>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<CorporatePayEntity> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            List<CommodityContentEntity> lists = new ArrayList<>();
+                            List<CorporatePayList> data = baseResponse.getData().getProductViewList();
+                            for (int i = 0; i < data.size(); i++) {
+                                CommodityContentEntity item = new CommodityContentEntity();
+                                item.setPrice(0);
+                                item.setTitle(data.get(i).getRequireTypeName());
+                                lists.add(item);
+                            }
+                            mRootView.setCommodityContent(lists);
+                        }
+                    }
+                });
+    }
+
+    public void corporatePayCreate(String ua) {
+        if (requireTypeId == -1) {
+            mRootView.showMessage("请选择服务类型");
+            return;
+        }
+
+        switch (payType) {
+            case 1:
+                if (!AppUtils.isWeixinAvilible(mRootView.getActivity())) {
+                    AppUtils.makeText(mRootView.getActivity(), "微信未安装");
+                    return;
+                }
+                break;
+            case 2:
+                if (!flag) {
+                    corporatePayPermission(ua);
+                    return;
+                }
+                break;
+            case 3://余额支付
+                if (payMoney > mRootView.getTypeBalance(3, 0)) {
+                    mRootView.showLackOfBalanceDialog();
+                    return;
+                }
+                break;
+            case 6://集团卡支付
+                if (payMoney > mRootView.getTypeBalance(6, payTypeGroup)) {
+                    mRootView.showMessage("集团卡余额不足");
+                    return;
+                }
+                break;
+        }
+
+        if (payMoney == 0) {
+            mRootView.showMessage("金额错误");
+            return;
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put("corporateServerId", requireTypeId);
+        map.put("payAmount", mRootView.getOrderPrice());
+        map.put("deductionAmount", mRootView.getCouponPrice());
+        mModel.corporateBuy(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> mRootView.showLoading(""))
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<CorporateBuyEntity>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<CorporateBuyEntity> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            corporatePay(ua, baseResponse.getData().getOrderNo());
+                        } else {
+                            mRootView.showMessage(baseResponse.getMessage());
+                        }
+                    }
+                });
+    }
+
+    private void corporatePayPermission(String ua) {
+        PermissionUtil.readPhonestate(new PermissionUtil.RequestPermission() {
+            @Override
+            public void onRequestPermissionSuccess() {
+                flag = true;
+                corporatePayCreate(ua);
+            }
+
+            @Override
+            public void onRequestPermissionFailure(List<String> permissions) {
+                mRootView.showMessage("您拒绝了权限，无法前往支付宝支付");
+            }
+
+            @Override
+            public void onRequestPermissionFailureWithAskNeverAgain(List<String> permissions) {
+                mRootView.showToAppInfoDialog();
+            }
+        }, mRxPermissions, mErrorHandler);
+    }
+
+    private void corporatePay(String ua, String orderNo) {
+        long money = (long) DecimalUtil.multiply(payMoney, 100);
+        Map<String, Object> map = new HashMap<>();
+        map.put("money", money);//金额
+        map.put("type", payType);//支付类型 1微信 2支付宝 3余额支付 4会员卡支付 5百度 6集团卡
+
+        map.put("source", 2);//来源 2app
+        map.put("product", 9);//订单类型 年度企业会员
+        map.put("ua", ua);//ua
+
+        orderNo = "\"" + orderNo + "\"";
+        if (mRootView.getCouponPrice() > 0) {
+            long moneyCoupon = (long) DecimalUtil.multiply(mRootView.getCouponPrice(), 100);
+            map.put("deduction", moneyCoupon);//优惠金额
+            map.put("useCoupon", 1);//使用优惠券
+
+            if (payType == 6) {
+                map.put("other", "{\"corporateMemberServerOrderNo\":" + orderNo + ",\"couponId\":" + mRootView.getCouponId() + ",\"groupCardId\":" + payTypeGroup + ",\"corporateMemberServerId\":" + requireTypeId +"}");
+            } else {
+                map.put("other", "{\"corporateMemberServerOrderNo\":" + orderNo + ",\"couponId\":" + mRootView.getCouponId() + ",\"corporateMemberServerId\":" + requireTypeId +"}");
+            }
+        } else {
+            map.put("useCoupon", 0);//不使用优惠券
+            if (payType == 6) {
+                map.put("other", "{\"corporateMemberServerOrderNo\":" + orderNo + ",\"groupCardId\":" + payTypeGroup + ",\"corporateMemberServerId\":" + requireTypeId +"}");
+            } else {
+                map.put("other", "{\"corporateMemberServerOrderNo\":" + orderNo + ",\"corporateMemberServerId\":" + requireTypeId +"}");
+            }
+        }
+
+        String sign = "money=" + money + "&type=" + payType + "&source=" + 2 + "&ua=" + ua;
+        map.put("sign", AppUtils.encodeToMD5(sign));
+        mModel.pay(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> mRootView.showLoading("正在获取支付信息..."))
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<PayEntity>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<PayEntity> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            DataHelper.setStringSF(mApplication, DataHelperTags.ORDER_TYPE, requireTypeName);
+                            DataHelper.setStringSF(mApplication, DataHelperTags.ORDER_MONEY, String.format(mApplication.getString(R.string.text_yuan_money), StringUtils.getStringNum(payMoney)));
+                            DataHelper.setStringSF(mApplication, DataHelperTags.ORDER_NO, baseResponse.getData().getOrderNo());
+                            if (payType == 1) {//微信
+                                DataHelper.setStringSF(mApplication, DataHelperTags.APP_ID, baseResponse.getData().getAppid());
+                                IWXAPI api = WXAPIFactory.createWXAPI(mApplication, baseResponse.getData().getAppid(), true);
+                                api.registerApp(baseResponse.getData().getAppid());
+                                PayReq request = new PayReq();
+                                request.appId = baseResponse.getData().getAppid();
+                                request.partnerId = baseResponse.getData().getPartnerId();
+                                request.prepayId = baseResponse.getData().getPrepayId();
+                                request.packageValue = baseResponse.getData().getPkg();
+                                request.nonceStr = baseResponse.getData().getNonceStr();
+                                request.timeStamp = baseResponse.getData().getTimestamp();
+                                request.sign = baseResponse.getData().getSign();
+                                api.sendReq(request);
+                                DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.CORPORATE);
+                            } else if (payType == 2) {//支付宝
+                                Runnable payRunnable = () -> {
+                                    PayTask payTask = new PayTask(mRootView.getActivity());
+                                    Map<String, String> result = payTask.payV2(baseResponse.getData().getOrderInfo(), true);
+
+                                    Message msg = new Message();
+                                    msg.what = 1;
+                                    msg.obj = result;
+                                    corporatePayHandler.sendMessage(msg);
+                                };
+                                Thread payThread = new Thread(payRunnable);
+                                payThread.start();
+                            } else {//余额or会员卡支付
+                                DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.CORPORATE);
+                                Bundle bundle = new Bundle();
+                                bundle.putString(BundleTags.ORDER_NO, DataHelper.getStringSF(mApplication, DataHelperTags.ORDER_NO));
+                                Intent intent = new Intent(mApplication, PayStatusActivity.class);
+                                intent.putExtras(bundle);
+                                mRootView.launchActivity(intent);
+                            }
+                        } else {
+                            mRootView.showMessage(baseResponse.getMessage());
+                        }
+                    }
+                });
+    }
+
+    @SuppressLint("HandlerLeak")
+    private Handler corporatePayHandler = new Handler() {
+        @SuppressWarnings("unchecked")
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1: {
+                    DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.CORPORATE);
+                    PayResultEntity payResult = new PayResultEntity((Map<String, String>) msg.obj);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(BundleTags.ORDER_NO, DataHelper.getStringSF(mApplication, DataHelperTags.ORDER_NO));
+                    bundle.putString(BundleTags.ZFB, payResult.getResultStatus());
+                    Intent intent = new Intent(mApplication, PayStatusActivity.class);
+                    intent.putExtras(bundle);
+                    mRootView.launchActivity(intent);
+                    break;
+                }
+            }
+        }
+    };
+
+
+
+    //年度企业会员--------end
+
     //获取优惠券
     public void getCoupon(float orderAmount, int productId) {
-        if(type == 4){
+        if(type == 5){
+            mModel.corporateCoupon(orderAmount)
+                    .subscribeOn(Schedulers.io())
+                    .retryWhen(new RetryWithDelay(0, 0))
+                    .doOnSubscribe(disposable -> mRootView.showLoading(""))
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doFinally(() -> mRootView.hideLoading())
+                    .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                    .subscribe(new ErrorHandleSubscriber<BaseResponse<BaseListEntity<OrderCouponEntity>>>(mErrorHandler) {
+                        @Override
+                        public void onNext(BaseResponse<BaseListEntity<OrderCouponEntity>> baseResponse) {
+                            if (baseResponse.isSuccess()) {
+                                if (baseResponse.getData().getList() != null
+                                        && baseResponse.getData().getList().size() > 0
+                                        && baseResponse.getData().getList().get(0).getCouponStatus() == 1) {
+                                    mRootView.setCouponLayout(baseResponse.getData().getList().get(0), false);
+                                } else {
+                                    mRootView.setCouponLayout(null, false);
+                                }
+                            } else {
+                                mRootView.setCouponLayout(null, false);
+                            }
+                        }
+                    });
+        }else if(type == 4){
             mModel.optimalRequireList(orderAmount, 128)
                     .subscribeOn(Schedulers.io())
                     .retryWhen(new RetryWithDelay(0, 0))
@@ -1267,7 +1518,28 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
 
     //计算实付优惠金额
     public void getPrice(int couponId, double orderAmount, int productId) {
-        if(type == 4){
+        if(type == 5){
+            mModel.corporateAmount(couponId, orderAmount)
+                    .subscribeOn(Schedulers.io())
+                    .retryWhen(new RetryWithDelay(0, 0))
+                    .doOnSubscribe(disposable -> mRootView.showLoading(""))
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doFinally(() -> mRootView.hideLoading())
+                    .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                    .subscribe(new ErrorHandleSubscriber<BaseResponse<QuickPayEntity>>(mErrorHandler) {
+                        @Override
+                        public void onNext(BaseResponse<QuickPayEntity> baseResponse) {
+                            if (baseResponse.isSuccess()) {
+                                mRootView.setPriceLayout(baseResponse.getData().getDeductionAmount()
+                                        , baseResponse.getData().getPayment());
+                                payMoney = baseResponse.getData().getPayment();
+
+                                mRootView.setPayTypeViewSelect(payMoney);
+                            }
+                        }
+                    });
+        }else if(type == 4){
             mModel.optimalRequire(couponId, orderAmount, 128)
                     .subscribeOn(Schedulers.io())
                     .retryWhen(new RetryWithDelay(0, 0))
@@ -1358,7 +1630,9 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
     //优惠券数量
     public void getCouponCount(double orderAmount, int productId) {
         Map<String, Object> map = new HashMap<>();
-        if(type == 4){
+        if(type == 5){
+            map.put("productId", 9997);
+        }else if(type == 4){
             map.put("productId", 128);
         }else if (type == 2) {
             map.put("productId", 9998);
