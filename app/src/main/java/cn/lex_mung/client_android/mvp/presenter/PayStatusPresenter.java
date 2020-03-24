@@ -124,7 +124,7 @@ public class PayStatusPresenter extends BasePresenter<PayStatusContract.Model, P
                                             break;
                                         case PayStatusTags.CORPORATE:
                                             mRootView.showSuccessLayout("支付成功","返回首页","预约服务");
-                                            mRootView.setContentLayout("您已成功购买企业应收款年度会员服务，点击预约服务去使用。");
+                                            mRootView.setContentLayout("您已购买成功，请预约您需要的服务！");
                                             mRootView.setImg(R.drawable.ic_pay_success3);
 
                                             AppUtils.post(EQUITIES_REFRESH, EQUITIES_REFRESH_1);//支付成功后刷新权益列表页面

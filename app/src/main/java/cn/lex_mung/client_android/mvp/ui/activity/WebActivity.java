@@ -641,9 +641,16 @@ public class WebActivity extends BaseActivity<WebPresenter> implements WebContra
             if (TextUtils.isEmpty(string))
                 return;
 
+            if (string.equals("undefined")) return;
+
             WebGoOrderDetailEntity entity = GsonUtil.convertString2Object(string, WebGoOrderDetailEntity.class);
 
-            if(entity.getTypeId() == 8){
+            if(entity.getTypeId() == 9){
+                bundle.clear();
+                bundle.putInt(BundleTags.ID, entity.getOrderId());
+                bundle.putString(BundleTags.TITLE,"订单详情");
+                launchActivity(new Intent(mActivity, OrderDetailsAnnualActivity.class), bundle);
+            }else if(entity.getTypeId() == 8){
                 bundle.clear();
                 bundle.putInt(BundleTags.ID, entity.getOrderId());
                 bundle.putString(BundleTags.TITLE,"订单详情");

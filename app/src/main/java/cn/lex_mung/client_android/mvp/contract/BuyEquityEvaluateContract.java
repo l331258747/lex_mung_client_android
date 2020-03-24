@@ -16,5 +16,7 @@ public interface BuyEquityEvaluateContract {
         Observable<BaseResponse> legalAdviserOrderEvaluate(RequestBody body);
 
         Observable<BaseResponse> privateLawyersEvaluateAdd(RequestBody body);
+
+        Observable<BaseResponse> corporateEvaluate(RequestBody body);
     }
 }

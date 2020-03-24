@@ -102,6 +102,7 @@ public interface EventBusTags {
         int REFRESH_WX_PAY = 103;
         int REFRESH_BUY_EQUITY_DETAIL = 104;
         int REFRESH_PRIVATE_LAWYER_DETAIL = 105;
+        int REFRESH_ANNUAL_DETAIL = 106;
     }
 
     interface LOGIN_INFO {

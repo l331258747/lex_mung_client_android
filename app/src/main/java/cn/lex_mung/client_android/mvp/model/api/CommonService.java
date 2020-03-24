@@ -46,6 +46,7 @@ import cn.lex_mung.client_android.mvp.model.entity.UploadImageEntity;
 import cn.lex_mung.client_android.mvp.model.entity.UserInfoDetailsEntity;
 import cn.lex_mung.client_android.mvp.model.entity.VersionEntity;
 import cn.lex_mung.client_android.mvp.model.entity.corporate.CorporateBuyEntity;
+import cn.lex_mung.client_android.mvp.model.entity.corporate.CorporateDetailEntity;
 import cn.lex_mung.client_android.mvp.model.entity.corporate.CorporatePayEntity;
 import cn.lex_mung.client_android.mvp.model.entity.entrust.EntrustListEntity;
 import cn.lex_mung.client_android.mvp.model.entity.expert.ExpertPriceEntity;
@@ -346,7 +347,7 @@ public interface CommonService {
      *
      * @return BaseResponse
      */
-    @POST("client/member/order/v3")
+    @POST("client/member/order/v4")
     Observable<BaseResponse<BaseListEntity<OrderEntity>>> getOrderList(@Body RequestBody body);
 
     /**
@@ -1110,6 +1111,41 @@ public interface CommonService {
     @POST("client/corporate/member/buy")
     Observable<BaseResponse<CorporateBuyEntity>> corporateBuy(@Body RequestBody body);
 
+    //client/corporate/member/order/detail
+    //POST
+    //订单详情
+    @POST("client/corporate/member/order/detail")
+    Observable<BaseResponse<CorporateDetailEntity>> corporateDetail(@Body RequestBody body);
+
+    ///client/corporate/order/userphone/{id} ， /lawyer/corporate/order/userphone/{id}
+    //GET
+    //企业服务-获取虚拟运营商号码
+    @GET("client/corporate/order/userphone/{id}")
+    Observable<BaseResponse<RemainEntity>> corporateUserphone(@Path("id") int id);
+
+    //client/corporate/member/order/cancel
+    //POST
+    //订单取消(待接单->已取消)
+    @POST("client/corporate/member/order/cancel")
+    Observable<BaseResponse> corporateCancel(@Body RequestBody body);
+
+    //client/corporate/member/order/evaluate
+    //POST
+    //订单评价(待评价->已完成)
+    @POST("client/corporate/member/order/evaluate")
+    Observable<BaseResponse> corporateEvaluate(@Body RequestBody body);
+
+    //client/corporate/member/order/uncomplete
+    //POST
+    //未完成服务(待评价->待处理)
+    @POST("client/corporate/member/order/uncomplete")
+    Observable<BaseResponse> corporateUncomplete(@Body RequestBody body);
+
+    //client/corporate/member/order/complete
+    //POST
+    //用户确认完成订单（待确认->待评价）
+    @POST("client/corporate/member/order/complete")
+    Observable<BaseResponse> corporateComplete(@Body RequestBody body);
 
     //------------------年度企业会员 end
 

@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/qb_px_60"
+    android:layout_marginRight="@dimen/qb_px_60"
+    android:layout_marginBottom="@dimen/qb_px_30"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_50"
+        android:text="订单信息"
+        android:textColor="@color/c_737373"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/qb_px_1"
+        android:layout_marginTop="@dimen/qb_px_30"
+        android:background="@color/c_d8d8d8" />
+
+    <LinearLayout
+        android:id="@+id/ll_info_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_30"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="订单编号"
+            android:textColor="@color/c_737373" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_2"
+            android:layout_marginLeft="@dimen/qb_px_20"
+            android:layout_marginRight="@dimen/qb_px_20"
+            android:layout_weight="1"
+            android:background="@drawable/shape_dash_line"
+            android:layerType="software" />
+
+        <TextView
+            android:id="@+id/tv_info_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/c_737373"
+            tools:text="订单编号" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_info_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_30"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="订单日期"
+            android:textColor="@color/c_737373" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_2"
+            android:layout_marginLeft="@dimen/qb_px_20"
+            android:layout_marginRight="@dimen/qb_px_20"
+            android:layout_weight="1"
+            android:background="@drawable/shape_dash_line"
+            android:layerType="software" />
+
+        <TextView
+            android:id="@+id/tv_info_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/c_737373"
+            tools:text="订单日期" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_info_server_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_30"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="服务名称"
+            android:textColor="@color/c_737373" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_2"
+            android:layout_marginLeft="@dimen/qb_px_20"
+            android:layout_marginRight="@dimen/qb_px_20"
+            android:layout_weight="1"
+            android:background="@drawable/shape_dash_line"
+            android:layerType="software" />
+
+        <TextView
+            android:id="@+id/tv_info_server_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/c_737373"
+            tools:text="服务名称" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_info_order_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_30"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="订单状态"
+            android:textColor="@color/c_737373" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_2"
+            android:layout_marginLeft="@dimen/qb_px_20"
+            android:layout_marginRight="@dimen/qb_px_20"
+            android:layout_weight="1"
+            android:background="@drawable/shape_dash_line"
+            android:layerType="software" />
+
+        <TextView
+            android:id="@+id/tv_info_order_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/c_EB5514"
+            tools:text="订单状态" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_info_pay_express"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_30"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="支付金额"
+            android:textColor="@color/c_737373" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_2"
+            android:layout_marginLeft="@dimen/qb_px_20"
+            android:layout_marginRight="@dimen/qb_px_20"
+            android:layout_weight="1"
+            android:background="@drawable/shape_dash_line"
+            android:layerType="software" />
+
+        <TextView
+            android:id="@+id/tv_info_pay_express"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/c_737373"
+            tools:text="支付金额" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_info_release_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_30"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发布用户"
+            android:textColor="@color/c_737373" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_2"
+            android:layout_marginLeft="@dimen/qb_px_20"
+            android:layout_marginRight="@dimen/qb_px_20"
+            android:layout_weight="1"
+            android:background="@drawable/shape_dash_line"
+            android:layerType="software" />
+
+        <TextView
+            android:id="@+id/tv_info_release_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/c_737373"
+            tools:text="发布用户" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_info_server_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_30"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="服务类型"
+            android:textColor="@color/c_737373" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_2"
+            android:layout_marginLeft="@dimen/qb_px_20"
+            android:layout_marginRight="@dimen/qb_px_20"
+            android:layout_weight="1"
+            android:background="@drawable/shape_dash_line"
+            android:layerType="software" />
+
+        <TextView
+            android:id="@+id/tv_info_server_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="@dimen/qb_px_400"
+            android:textColor="@color/c_737373"
+            tools:text="服务类型服务类型服务类型服务类型服务类型服务类型" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_info_talk_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/qb_px_30"
+        android:gravity="center"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="通话时长"
+            android:textColor="@color/c_737373" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/qb_px_2"
+            android:layout_marginLeft="@dimen/qb_px_20"
+            android:layout_marginRight="@dimen/qb_px_20"
+            android:layout_weight="1"
+            android:background="@drawable/shape_dash_line"
+            android:layerType="software" />
+
+        <TextView
+            android:id="@+id/tv_info_talk_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/c_737373"
+            tools:text="通话时长" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:scrollbars="none" />
+
+</LinearLayout>

@@ -25,6 +25,7 @@ import me.zl.mvp.utils.RxLifecycleUtils;
 import okhttp3.RequestBody;
 
 import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH;
+import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH_ANNUAL_DETAIL;
 import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH_BUY_EQUITY_DETAIL;
 import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH_PRIVATE_LAWYER_DETAIL;
 
@@ -53,6 +54,30 @@ public class BuyEquityEvaluatePresenter extends BasePresenter<BuyEquityEvaluateC
         map.put("responseSpeed", responseSpeed);
         map.put("serviceAttitude", serviceAttitude);
         map.put("evaluationContent", evaluationContent);
+        if(type == 2) {//年度企业会员
+            mModel.corporateEvaluate(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
+                    .subscribeOn(Schedulers.io())
+                    .retryWhen(new RetryWithDelay(0, 0))
+                    .doOnSubscribe(disposable -> {
+                        mRootView.showLoading("");
+                    })
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doFinally(() -> mRootView.hideLoading())
+                    .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                    .subscribe(new ErrorHandleSubscriber<BaseResponse>(mErrorHandler) {
+                        @Override
+                        public void onNext(BaseResponse baseResponse) {
+                            mRootView.hideLoading();
+                            if (baseResponse.isSuccess()) {
+                                mRootView.killMyself();
+                                AppUtils.post(REFRESH, REFRESH_ANNUAL_DETAIL);
+                            } else {
+                                mRootView.showMessage(baseResponse.getMessage());
+                            }
+                        }
+                    });
+        }
         if (type == 1) {
             mModel.privateLawyersEvaluateAdd(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                     .subscribeOn(Schedulers.io())
