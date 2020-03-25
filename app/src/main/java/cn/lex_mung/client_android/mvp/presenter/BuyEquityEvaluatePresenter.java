@@ -77,8 +77,7 @@ public class BuyEquityEvaluatePresenter extends BasePresenter<BuyEquityEvaluateC
                             }
                         }
                     });
-        }
-        if (type == 1) {
+        }else if (type == 1) {
             mModel.privateLawyersEvaluateAdd(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                     .subscribeOn(Schedulers.io())
                     .retryWhen(new RetryWithDelay(0, 0))

@@ -28,12 +28,6 @@ import retrofit2.http.Path;
 
 public interface HomePagerContract {
     interface View extends IView {
-//        void setBannerAdapter(List<BannerEntity> list);
-//        void setSolutionType(List<SolutionTypeEntity> list);
-//        void setRequirementTypeAdapter(List<NormalBean> data);
-//        void setHotContract(List<NormalBean> datas);
-//        void setMoreContract(List<NormalBean> datas);
-
         void setHomeAdapter(List<HomeEntity> datas);
         void addHomeLawyer(HomeEntity homeEntity);
         void addHomeFree(HomeEntity homeEntity);
@@ -56,10 +50,7 @@ public interface HomePagerContract {
     }
 
     interface Model extends IModel {
-//        Observable<BaseResponse<BaseListEntity<BannerEntity>>> getBanner();
         Observable<BaseResponse<List<SolutionTypeEntity>>> getSolutionType(RequestBody body);
-//        Observable<BaseResponse<RequirementTypeV3Entity>> getHomepageRequirementType();
-//        Observable<BaseResponse<OnlineUrlEntity>> clientOnlineUrl();
 
         Observable<BaseResponse<UnreadMessageCountEntity>> getUnreadCount();
 
