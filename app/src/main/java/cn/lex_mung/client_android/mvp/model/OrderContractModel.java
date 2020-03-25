@@ -43,7 +43,11 @@ public class OrderContractModel extends BaseModel implements OrderContractContra
 
     @Override
     public Observable<BaseResponse<DocUploadEntity>> docUpload(int type, RequestBody order_no, MultipartBody.Part file) {
-        if (type == 1) {
+        if (type == 2) {
+            return mRepositoryManager
+                    .obtainRetrofitService(CommonService.class)
+                    .corporateDocUpload(order_no, file);
+        } else if (type == 1) {
             return mRepositoryManager
                     .obtainRetrofitService(CommonService.class)
                     .legalAdviserOrderDocUpload(order_no, file);
@@ -56,7 +60,11 @@ public class OrderContractModel extends BaseModel implements OrderContractContra
 
     @Override
     public Observable<BaseResponse<DocGetEntity>> docGet(int type, String order_no, int pageNum) {
-        if (type == 1) {
+        if(type == 2){
+            return mRepositoryManager
+                    .obtainRetrofitService(CommonService.class)
+                    .corporateDocGet(order_no, pageNum, 10);
+        }else if (type == 1) {
             return mRepositoryManager
                     .obtainRetrofitService(CommonService.class)
                     .legalAdviserOrderDocGet(order_no, pageNum, 10);
@@ -69,7 +77,11 @@ public class OrderContractModel extends BaseModel implements OrderContractContra
 
     @Override
     public Observable<BaseResponse> docRead(int type, String repositoryId) {
-        if (type == 1) {
+        if(type == 2){
+            return mRepositoryManager
+                    .obtainRetrofitService(CommonService.class)
+                    .corporateDocRead(repositoryId);
+        }else if (type == 1) {
             return mRepositoryManager
                     .obtainRetrofitService(CommonService.class)
                     .legalAdviserOrderDocRead(repositoryId);
@@ -86,5 +98,12 @@ public class OrderContractModel extends BaseModel implements OrderContractContra
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .legalAdviserOrderUserPhone(orderNo);
+    }
+
+    @Override
+    public Observable<BaseResponse<RemainEntity>> corporateUserphone(int id) {
+        return mRepositoryManager
+                .obtainRetrofitService(CommonService.class)
+                .corporateUserphone(id);
     }
 }

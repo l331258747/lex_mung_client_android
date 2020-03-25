@@ -30,5 +30,6 @@ public interface OrderContractContract {
         Observable<BaseResponse> docRead(int type,String repositoryId);
 
         Observable<BaseResponse<RemainEntity>> legalAdviserOrderUserPhone(String orderNo);
+        Observable<BaseResponse<RemainEntity>> corporateUserphone(int id);
     }
 }

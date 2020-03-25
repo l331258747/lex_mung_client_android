@@ -148,6 +148,8 @@ public class OrderDetailsAnnualActivity extends BaseActivity<OrderDetailsAnnualP
     @BindView(R.id.tv_btn_top)
     TextView tv_btn_top;
 
+    int id;
+
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         DaggerOrderDetailsAnnualComponent
@@ -174,7 +176,7 @@ public class OrderDetailsAnnualActivity extends BaseActivity<OrderDetailsAnnualP
         titleView.setLayoutParams(lp1);
 
         if (bundleIntent != null) {
-            mPresenter.setId(bundleIntent.getInt(BundleTags.ID));
+            mPresenter.setId(id = bundleIntent.getInt(BundleTags.ID));
         }
 
         String[] strs = {"预约律师", "优选律师", "律师回电", "评价服务"};
@@ -207,7 +209,7 @@ public class OrderDetailsAnnualActivity extends BaseActivity<OrderDetailsAnnualP
                 isReceipt = 0;
             }
 
-            setRightTv(entity.getOrderNo(), "", isReceipt);
+            setRightTv(id, entity.getOrderNo(),"", isReceipt);
         }
 
         //订单编号
@@ -308,6 +310,7 @@ public class OrderDetailsAnnualActivity extends BaseActivity<OrderDetailsAnnualP
         bundle.putString(BundleTags.TITLE, "快递费");
         bundle.putString(BundleTags.REQUIRE_TYPE_NAME, "快递费");
         bundle.putFloat(BundleTags.MONEY, entity.getExpressFeeFloat());
+        bundle.putString(BundleTags.ORDER_NO,entity.getOrderNo());
         bundle.putInt(BundleTags.TYPE, 6);
         launchActivity(new Intent(mActivity, RushLoanPayActivity.class), bundle);
     }
@@ -600,15 +603,16 @@ public class OrderDetailsAnnualActivity extends BaseActivity<OrderDetailsAnnualP
 
 
 
-    public void setRightTv(String orderNo, String phone, int isReceipt) {
+    public void setRightTv(int id, String orderNo,String phone, int isReceipt) {
         titleView.setRightTv("合同");
         titleView.getRightTv().setTextColor(ContextCompat.getColor(mActivity, R.color.c_ff));
         titleView.getRightTv().setOnClickListener(v -> {
             bundle.clear();
-            bundle.putString(BundleTags.ORDER_NO, orderNo);//传递状态，1为可以发合同，0位展示空页面。
+            bundle.putInt(BundleTags.ID, id);//传递状态，1为可以发合同，0位展示空页面。
+            bundle.putString(BundleTags.ORDER_NO,orderNo);
             bundle.putString(BundleTags.MOBILE, phone);
             bundle.putInt(BundleTags.STATE, isReceipt);
-            bundle.putInt(BundleTags.TYPE, 1);
+            bundle.putInt(BundleTags.TYPE, 2);
             launchActivity(new Intent(mActivity, OrderContractActivity.class), bundle);
         });
     }

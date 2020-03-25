@@ -63,6 +63,7 @@ public class OrderContractPresenter extends BasePresenter<OrderContractContract.
     AppManager mAppManager;
 
     private String orderNo;
+    private int id;
 
     private String FILE_CACHE_PATH;
 
@@ -73,7 +74,7 @@ public class OrderContractPresenter extends BasePresenter<OrderContractContract.
     private int totalNum;//总
     private String helpLink;
 
-    private int type;//0热门合同，1在线法律顾问合同
+    private int type;//0热门合同，1在线法律顾问合同,2年度企业会员
 
     public void setType(int type) {
         this.type = type;
@@ -95,11 +96,12 @@ public class OrderContractPresenter extends BasePresenter<OrderContractContract.
         this.mApplication = null;
     }
 
-    public void onCreate(SmartRefreshLayout smartRefreshLayout, String orderNo) {
+    public void onCreate(SmartRefreshLayout smartRefreshLayout, String orderNo,int id) {
         FILE_CACHE_PATH = FileUtil2.getFolder(mApplication, Constants.FILE_PATH).getAbsolutePath();
 
         this.smartRefreshLayout = smartRefreshLayout;
         this.orderNo = orderNo;
+        this.id = id;
         userInfoDetailsEntity = new Gson().fromJson(DataHelper.getStringSF(mApplication, DataHelperTags.USER_INFO_DETAIL), UserInfoDetailsEntity.class);
 
         initAdapter();
@@ -110,6 +112,27 @@ public class OrderContractPresenter extends BasePresenter<OrderContractContract.
 
     public void legalAdviserOrderUserPhone(){
         mModel.legalAdviserOrderUserPhone(orderNo)
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> mRootView.showLoading(""))
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<RemainEntity>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<RemainEntity> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            mRootView.call(baseResponse.getData().getPhone());
+                        } else {
+                            mRootView.showMessage(baseResponse.getMessage());
+                        }
+                    }
+                });
+    }
+
+    public void corporateUserphone(){
+        mModel.corporateUserphone(id)
                 .subscribeOn(Schedulers.io())
                 .retryWhen(new RetryWithDelay(0, 0))
                 .doOnSubscribe(disposable -> mRootView.showLoading(""))

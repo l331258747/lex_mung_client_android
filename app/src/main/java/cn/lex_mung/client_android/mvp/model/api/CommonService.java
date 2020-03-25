@@ -1147,6 +1147,27 @@ public interface CommonService {
     @POST("client/corporate/member/order/complete")
     Observable<BaseResponse> corporateComplete(@Body RequestBody body);
 
+    //client/corporate/member/order/doc/upload
+    //POST
+    //企业会员服务-用户上传订单文档(form-data提交)
+    @Multipart
+    @POST("client/corporate/member/order/doc/upload")
+    Observable<BaseResponse<DocUploadEntity>> corporateDocUpload(@Part("order_no") RequestBody order_no,
+                                                                         @Part MultipartBody.Part file);
+
+    //client/corporate/member/order/doc/get/{orderNo}/{pageNum}/{pageSize}
+    //GET
+    //企业会员服务-用户获取订单文档
+    @GET("client/corporate/member/order/doc/get/{orderNo}/{pageNum}/{pageSize}")
+    Observable<BaseResponse<DocGetEntity>> corporateDocGet(@Path("orderNo") String orderNo, @Path("pageNum") int pageNum, @Path("pageSize") int pageSize);
+
+    //client/corporate/member/doc/read/{repositoryId}
+    //GET
+    //企业会员服务-用户端更新文件已读状态
+    @GET("client/corporate/member/doc/read/{repositoryId}")
+    Observable<BaseResponse> corporateDocRead(@Path("repositoryId") String repositoryId);
+
+
     //------------------年度企业会员 end
 
 }

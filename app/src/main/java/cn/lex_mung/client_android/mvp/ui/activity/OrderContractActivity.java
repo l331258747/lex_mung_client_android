@@ -87,7 +87,7 @@ public class OrderContractActivity extends BaseActivity<OrderContractPresenter> 
 
                 setLmobile(bundleIntent.getString(BundleTags.MOBILE));
 
-                mPresenter.onCreate(smartRefreshLayout,bundleIntent.getString(BundleTags.ORDER_NO));
+                mPresenter.onCreate(smartRefreshLayout,bundleIntent.getString(BundleTags.ORDER_NO),bundleIntent.getInt(BundleTags.ID));
                 mPresenter.setHelpView(cl_help);
             }
 
@@ -109,7 +109,9 @@ public class OrderContractActivity extends BaseActivity<OrderContractPresenter> 
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_call:
-                if(type == 1){
+                if(type == 2){
+                    mPresenter.corporateUserphone();
+                }else if(type == 1){
                     mPresenter.legalAdviserOrderUserPhone();
                 }else{
                     if(TextUtils.isEmpty(lmobile)) return;
