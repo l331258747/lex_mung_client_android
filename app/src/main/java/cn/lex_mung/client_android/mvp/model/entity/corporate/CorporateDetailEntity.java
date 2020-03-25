@@ -68,6 +68,14 @@ public class CorporateDetailEntity {
         return lawyerName;
     }
 
+    public String getEvaluateLawyerName(){
+        if(TextUtils.isEmpty(memberPositionName))
+            return lawyerName;
+        else{
+            return lawyerName + "（" + memberPositionName + "）";
+        }
+    }
+
     public String getIconImage() {
         return iconImage;
     }

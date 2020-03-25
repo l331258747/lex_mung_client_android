@@ -63,6 +63,10 @@ public class BuyEquityEvaluateActivity extends BaseActivity<BuyEquityEvaluatePre
     ImageView iv_commonly;
     @BindView(R.id.iv_fine)
     ImageView iv_fine;
+    @BindView(R.id.tv_tip)
+    TextView tv_tip;
+    @BindView(R.id.tv_btn)
+    TextView tv_btn;
 
     @BindView(R.id.et_describe)
     EditText et_describe;
@@ -117,6 +121,14 @@ public class BuyEquityEvaluateActivity extends BaseActivity<BuyEquityEvaluatePre
         setEvaluateWhole(5);
 
         et_describe.setFilters(new InputFilter[]{CharacterHandler.emojiFilter});
+
+        if(type == 2){
+            tv_tip.setVisibility(View.GONE);
+            tv_btn.setText("提交评价");
+        }else{
+            tv_tip.setVisibility(View.VISIBLE);
+            tv_btn.setText("匿名评价");
+        }
 
     }
 

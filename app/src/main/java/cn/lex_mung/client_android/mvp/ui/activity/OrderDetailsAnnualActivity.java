@@ -376,7 +376,7 @@ public class OrderDetailsAnnualActivity extends BaseActivity<OrderDetailsAnnualP
                     EvaluateIntent evaluateIntent = new EvaluateIntent();
                     evaluateIntent.setIconImage(entity.getIconImage());
                     evaluateIntent.setInstitutionName(entity.getInstitutionName());
-                    evaluateIntent.setLawyerName(entity.getLawyerName());
+                    evaluateIntent.setLawyerName(entity.getEvaluateLawyerName());
                     evaluateIntent.setOrderId(entity.getOrderNo());
 
                     bundle.clear();
