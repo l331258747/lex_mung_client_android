@@ -2,6 +2,8 @@ package cn.lex_mung.client_android.mvp.model.entity.corporate;
 
 import android.text.TextUtils;
 
+import com.umeng.commonsdk.debug.E;
+
 import java.util.List;
 
 import cn.lex_mung.client_android.mvp.model.entity.other.QuickTimeBean;
@@ -38,23 +40,47 @@ public class CorporateDetailEntity {
     private String callTimeStr;
     private int requireTypeId;
     private String expressFee;
+    private String payOrderNo;
+    private int corporateServerId;
+
+    public int getCorporateServerId() {
+        return corporateServerId;
+    }
+
+    public String getPayOrderNo() {
+        return payOrderNo;
+    }
 
     public String getExpressFee() {
         return expressFee;
     }
 
-    public String getExpressFeeStr(){
+    public float getExpressFeeFloat(){
         if(TextUtils.isEmpty(expressFee))
+            return 0;
+        try{
+            return Float.parseFloat(expressFee);
+        }catch (Exception e){
+            return 0;
+        }
+    }
+
+    public String getExpressFeeStr(){
+        if(TextUtils.isEmpty(payOrderNo)){
             return "";
-        else
-            return expressFee + "元（快递费）";
+        }else{
+            if(TextUtils.isEmpty(expressFee))
+                return "";
+            else
+                return expressFee + "元（快递费）";
+        }
     }
 
     public String getExpressFeeStr2(){
         if(TextUtils.isEmpty(expressFee))
             return "";
         else
-            return expressFee + "元";
+            return "已支付快递费" + expressFee + "元";
     }
 
     public int getRequireTypeId() {

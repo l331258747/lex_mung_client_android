@@ -71,6 +71,7 @@ import static cn.lex_mung.client_android.app.EventBusTags.BUY_EQUITY_500_INFO.BU
 import static cn.lex_mung.client_android.app.EventBusTags.PAY_INFO.PAY_CONFIRM;
 import static cn.lex_mung.client_android.app.EventBusTags.PAY_INFO.PAY_INFO;
 import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH;
+import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH_ANNUAL_DETAIL;
 import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH_WX_PAY;
 
 
@@ -593,6 +594,151 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
     };
 
     //快速咨询-------------end
+
+    //快递费===start
+    public void expressPay(String ua) {
+        if (payMoney == 0) {
+            mRootView.showMessage("价格为0无法支付");
+            return;
+        }
+        switch (payType) {
+            case 1:
+                if (!AppUtils.isWeixinAvilible(mRootView.getActivity())) {
+                    AppUtils.makeText(mRootView.getActivity(), "微信未安装");
+                    return;
+                }
+                break;
+            case 2:
+                if (!flag) {
+                    expressPermission(ua);
+                    return;
+                }
+                break;
+            case 3:
+                if (payMoney > balance) {
+                    mRootView.showLackOfBalanceDialog();
+                    return;
+                }
+                break;
+            case 6://集团卡支付
+                if (payMoney > mRootView.getTypeBalance(6, payTypeGroup)) {
+                    mRootView.showMessage("集团卡余额不足");
+                    return;
+                }
+                break;
+        }
+        long money = (long) DecimalUtil.multiply(payMoney, 100);
+        Map<String, Object> map = new HashMap<>();
+        map.put("money", money);
+        map.put("type", payType);
+        map.put("useCoupon", 0);//不使用优惠券
+
+        if (payType == 6) {
+            map.put("other", "{\"corporateMemberServerId\":"+ requireTypeId + ",\"corporateMemberServerOrderNo\":\"" + orderNo + ",\"groupCardId\":" + payTypeGroup + "}");
+        } else {
+            map.put("other", "{\"corporateMemberServerId\":"+ requireTypeId + ",\"corporateMemberServerOrderNo\":\"" + orderNo +"\"}");
+        }
+
+        map.put("source", 2);
+        map.put("product", 9);
+        map.put("ua", ua);
+        String sign = "money=" + money + "&type=" + payType + "&source=" + 2 + "&ua=" + ua;
+        map.put("sign", AppUtils.encodeToMD5(sign));
+        mModel.pay(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
+                .subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(0, 0))
+                .doOnSubscribe(disposable -> mRootView.showLoading("正在获取支付信息..."))
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally(() -> mRootView.hideLoading())
+                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))
+                .subscribe(new ErrorHandleSubscriber<BaseResponse<PayEntity>>(mErrorHandler) {
+                    @Override
+                    public void onNext(BaseResponse<PayEntity> baseResponse) {
+                        if (baseResponse.isSuccess()) {
+                            payOrderNo = baseResponse.getData().getOrderNo();
+                            DataHelper.setStringSF(mApplication, DataHelperTags.ORDER_NO, baseResponse.getData().getOrderNo());
+                            DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.EXPRESS);
+                            if (payType == 1) {//微信
+                                DataHelper.setStringSF(mApplication, DataHelperTags.APP_ID, baseResponse.getData().getAppid());
+                                IWXAPI api = WXAPIFactory.createWXAPI(mApplication, baseResponse.getData().getAppid(), true);
+                                api.registerApp(baseResponse.getData().getAppid());
+                                PayReq request = new PayReq();
+                                request.appId = baseResponse.getData().getAppid();
+                                request.partnerId = baseResponse.getData().getPartnerId();
+                                request.prepayId = baseResponse.getData().getPrepayId();
+                                request.packageValue = baseResponse.getData().getPkg();
+                                request.nonceStr = baseResponse.getData().getNonceStr();
+                                request.timeStamp = baseResponse.getData().getTimestamp();
+                                request.sign = baseResponse.getData().getSign();
+                                api.sendReq(request);
+                            } else if (payType == 2) {//支付宝
+                                Runnable payRunnable = () -> {
+                                    PayTask payTask = new PayTask(mRootView.getActivity());
+                                    Map<String, String> result = payTask.payV2(baseResponse.getData().getOrderInfo(), true);
+                                    Message msg = new Message();
+                                    msg.what = 1;
+                                    msg.obj = result;
+                                    mHandlerExpress.sendMessage(msg);
+                                };
+                                new Thread(payRunnable).start();
+                            } else {//余额
+                                AppUtils.post(REFRESH, REFRESH_ANNUAL_DETAIL);
+                                mRootView.killMyself();
+                            }
+                        } else {
+                            mRootView.showMessage(baseResponse.getMessage());
+                        }
+                    }
+                });
+    }
+
+    private void expressPermission(String ua) {
+        PermissionUtil.readPhonestate(new PermissionUtil.RequestPermission() {
+            @Override
+            public void onRequestPermissionSuccess() {
+                flag = true;
+                expressPay(ua);
+            }
+
+            @Override
+            public void onRequestPermissionFailure(List<String> permissions) {
+                mRootView.showMessage("您拒绝了权限，无法前往支付宝支付");
+            }
+
+            @Override
+            public void onRequestPermissionFailureWithAskNeverAgain(List<String> permissions) {
+                mRootView.showToAppInfoDialog();
+            }
+        }, mRxPermissions, mErrorHandler);
+    }
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandlerExpress = new Handler() {
+        @SuppressWarnings("unchecked")
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1: {
+                    PayResultEntity payResult = new PayResultEntity((Map<String, String>) msg.obj);
+                    if ("9000".equals(payResult.getResultStatus())) {
+                        AppUtils.post(REFRESH, REFRESH_ANNUAL_DETAIL);
+                        mRootView.killMyself();
+                        return;
+                    } else {
+                        DataHelper.setIntergerSF(mApplication, DataHelperTags.PAY_TYPE, PayStatusTags.EXPRESS);
+                        Bundle bundle = new Bundle();
+                        bundle.putString(BundleTags.ORDER_NO, DataHelper.getStringSF(mApplication, DataHelperTags.ORDER_NO));
+                        bundle.putString(BundleTags.ZFB, payResult.getResultStatus());
+                        Intent intent = new Intent(mApplication, PayStatusActivity.class);
+                        intent.putExtras(bundle);
+                        mRootView.launchActivity(intent);
+                    }
+                    break;
+                }
+            }
+        }
+    };
+    //快递费===end
 
     //付费权益  诉讼无忧保服务-------start
     //支付

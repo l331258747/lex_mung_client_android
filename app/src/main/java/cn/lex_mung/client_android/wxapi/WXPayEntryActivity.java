@@ -25,7 +25,10 @@ import static cn.lex_mung.client_android.app.DataHelperTags.APP_ID;
 import static cn.lex_mung.client_android.app.DataHelperTags.ORDER_NO;
 import static cn.lex_mung.client_android.app.EventBusTags.BUY_EQUITY_500_INFO.BUY_EQUITY_500;
 import static cn.lex_mung.client_android.app.EventBusTags.BUY_EQUITY_500_INFO.BUY_EQUITY_500_INFO;
+import static cn.lex_mung.client_android.app.EventBusTags.EXPRESS_INFO.EXPRESS;
+import static cn.lex_mung.client_android.app.EventBusTags.EXPRESS_INFO.EXPRESS_INFO;
 import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH;
+import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH_ANNUAL_DETAIL;
 import static cn.lex_mung.client_android.app.EventBusTags.REFRESH.REFRESH_WX_PAY;
 
 public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
@@ -52,6 +55,10 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
         } else if(DataHelper.getIntergerSF(this, DataHelperTags.PAY_TYPE) == PayStatusTags.ONLINE_LAWYER_500
                 && baseResp.errCode == BaseResp.ErrCode.ERR_OK){
             AppUtils.post(BUY_EQUITY_500_INFO,BUY_EQUITY_500,DataHelper.getStringSF(this, ORDER_NO));
+            AppManager.getAppManager().killAll(RushLoanPayActivity.class);
+        }else if(DataHelper.getIntergerSF(this, DataHelperTags.PAY_TYPE) == PayStatusTags.EXPRESS
+                && baseResp.errCode == BaseResp.ErrCode.ERR_OK){
+            AppUtils.post(REFRESH, REFRESH_ANNUAL_DETAIL);
             AppManager.getAppManager().killAll(RushLoanPayActivity.class);
         }else {
             Bundle bundle = new Bundle();

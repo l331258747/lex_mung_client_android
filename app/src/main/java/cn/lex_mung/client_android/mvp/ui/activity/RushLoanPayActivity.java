@@ -87,7 +87,7 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
     RecyclerView recyclerViewCommodity;
 
     private DefaultDialog defaultDialog;
-    int type;//0热门需求,1快速咨询,2付费权益,3诉讼无忧保服务,4在线法律顾问,5年度企业会员
+    int type;//0热门需求,1快速咨询,2付费权益,3诉讼无忧保服务,4在线法律顾问,5年度企业会员,6快递费
     int id;
 
     private int couponId;
@@ -151,7 +151,7 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
 
         mPresenter.getAllBalance();
 
-        if(type != 3){
+        if(type != 3 && type != 6){
             mPresenter.getCoupon(orderPrice,id);
             mPresenter.getCouponCount(orderPrice,id);
         }else{
@@ -189,7 +189,9 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.bt_pay:
-                if(type == 5){
+                if(type == 6){
+                    mPresenter.expressPay(webView.getSettings().getUserAgentString());
+                }else if(type == 5){
                     mPresenter.corporatePayCreate(webView.getSettings().getUserAgentString());
                 }else if(type == 4){//私人律师团
                     mPresenter.privateLawyerCreate(webView.getSettings().getUserAgentString());
@@ -207,7 +209,9 @@ public class RushLoanPayActivity extends BaseActivity<RushLoanPayPresenter> impl
             case R.id.rl_coupon_type:
                 bundle.clear();
                 bundle.putInt(BundleTags.ID, couponId);//优惠券id
-                if(type == 5){
+                if(type == 6){
+                    return;
+                }else if(type == 5){
                     bundle.putInt(BundleTags.TYPE, 5);
                 }else if(type == 4){
                     bundle.putInt(BundleTags.TYPE, 4);

@@ -10,5 +10,6 @@ public class PayStatusTags {
     public static final int ONLINE_LAWYER_500 = 41;//在线法律顾问 诉讼无忧保服务
     public static final int PRIVATE_LAWYER = 5;//私人律师团 Private lawyer
     public static final int CORPORATE = 6;//年度企业会员
+    public static final int EXPRESS = 7;//快递费
 
 }
