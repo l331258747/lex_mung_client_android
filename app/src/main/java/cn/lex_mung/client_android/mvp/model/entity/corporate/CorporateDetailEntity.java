@@ -43,6 +43,20 @@ public class CorporateDetailEntity {
         return expressFee;
     }
 
+    public String getExpressFeeStr(){
+        if(TextUtils.isEmpty(expressFee))
+            return "";
+        else
+            return expressFee + "元（快递费）";
+    }
+
+    public String getExpressFeeStr2(){
+        if(TextUtils.isEmpty(expressFee))
+            return "";
+        else
+            return expressFee + "元";
+    }
+
     public int getRequireTypeId() {
         return requireTypeId;
     }
