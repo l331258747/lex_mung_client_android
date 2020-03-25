@@ -275,21 +275,19 @@ public class OrderDetailsAnnualActivity extends BaseActivity<OrderDetailsAnnualP
             adapter.setNewData(lists);
         }
 
-//        //快递费
-//        if (!TextUtils.isEmpty(entity.getShowAmount())) {//TODO
-//            ll_info_pay_express.setVisibility(View.VISIBLE);
-//            tv_info_pay_express.setText(entity.getShowAmount());
-//        } else {
-//            tv_info_pay_express.setVisibility(View.GONE);
-//        }
-
         //130电话咨询，131文书服务，132律师函，133诉讼代理
         if (entity.getRequireTypeId() == 130) {
 
         }else if (entity.getRequireTypeId() == 131) {
 
         }else if (entity.getRequireTypeId() == 132) {
-
+            //快递费
+            if (!TextUtils.isEmpty(entity.getExpressFee())) {
+                ll_info_pay_express.setVisibility(View.VISIBLE);
+                tv_info_pay_express.setText(entity.getExpressFee());
+            } else {
+                tv_info_pay_express.setVisibility(View.GONE);
+            }
         }else if (entity.getRequireTypeId() == 133) {
 
         }

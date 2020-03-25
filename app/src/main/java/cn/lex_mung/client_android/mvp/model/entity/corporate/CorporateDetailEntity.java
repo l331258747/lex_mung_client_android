@@ -37,6 +37,11 @@ public class CorporateDetailEntity {
     private int callTime;
     private String callTimeStr;
     private int requireTypeId;
+    private String expressFee;
+
+    public String getExpressFee() {
+        return expressFee;
+    }
 
     public int getRequireTypeId() {
         return requireTypeId;

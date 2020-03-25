@@ -63,26 +63,12 @@ public class HomePagerModel extends BaseModel implements HomePagerContract.Model
                 .rightsVip();
     }
 
-//    @Override
-//    public Observable<BaseResponse<BaseListEntity<BannerEntity>>> getBanner() {
-//        return mRepositoryManager
-//                .obtainRetrofitService(CommonService.class)
-//                .getBanner();
-//    }
-
     @Override
     public Observable<BaseResponse<List<SolutionTypeEntity>>> getSolutionType(RequestBody body) {
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
                 .getSolutionType(body);
     }
-
-//    @Override
-//    public Observable<BaseResponse<RequirementTypeV3Entity>> getHomepageRequirementType() {
-//        return mRepositoryManager
-//                .obtainRetrofitService(CommonService.class)
-//                .getHomepageRequirementType();
-//    }
 
     @Override
     public Observable<BaseResponse<UnreadMessageCountEntity>> getUnreadCount() {
@@ -119,10 +105,4 @@ public class HomePagerModel extends BaseModel implements HomePagerContract.Model
                 .pagesSecond();
     }
 
-//    @Override
-//    public Observable<BaseResponse<OnlineUrlEntity>> clientOnlineUrl() {
-//        return mRepositoryManager
-//                .obtainRetrofitService(CommonService.class)
-//                .clientOnlineUrl();
-//    }
 }
