@@ -1377,7 +1377,7 @@ public class RushLoanPayPresenter extends BasePresenter<RushLoanPayContract.Mode
         }
         Map<String, Object> map = new HashMap<>();
         map.put("corporateServerId", requireTypeId);
-        map.put("payAmount", mRootView.getOrderPrice());
+        map.put("payAmount", payMoney);
         map.put("deductionAmount", mRootView.getCouponPrice());
         mModel.corporateBuy(RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map)))
                 .subscribeOn(Schedulers.io())
