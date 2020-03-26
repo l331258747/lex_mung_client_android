@@ -5,8 +5,13 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
+import cn.lex_mung.client_android.app.DataHelperTags;
 import cn.lex_mung.client_android.mvp.model.entity.BaseListEntity;
+import cn.lex_mung.client_android.mvp.model.entity.home.HomeChildEntity;
+import cn.lex_mung.client_android.mvp.ui.activity.FreeConsultDetail1Activity;
+import cn.lex_mung.client_android.utils.GsonUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
@@ -17,6 +22,7 @@ import me.zl.mvp.mvp.BasePresenter;
 import me.zl.mvp.http.imageloader.ImageLoader;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.zl.mvp.utils.AppUtils;
+import me.zl.mvp.utils.DataHelper;
 import me.zl.mvp.utils.RxLifecycleUtils;
 
 import javax.inject.Inject;
@@ -29,6 +35,7 @@ import cn.lex_mung.client_android.mvp.ui.activity.MainActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.MyOrderActivity;
 import cn.lex_mung.client_android.mvp.ui.activity.WebActivity;
 import cn.lex_mung.client_android.mvp.ui.adapter.SystemMessageAdapter;
+
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -97,6 +104,39 @@ public class SystemMessagePresenter extends BasePresenter<SystemMessageContract.
                         break;
                     case 109:
                         intent.setClass(mApplication, MyOrderActivity.class);
+                        break;
+                    case 280://法律顾问 - 权益分享用户提醒
+                        String str = DataHelper.getStringSF(mApplication, DataHelperTags.ONLINE_LAWYER_URL);
+                        HomeChildEntity mEntity = GsonUtil.convertString2Object(str, HomeChildEntity.class);
+                        if (!TextUtils.isEmpty(str) && mEntity != null) {
+                            bundle.clear();
+                            bundle.putString(BundleTags.URL, mEntity.getJumpurl());
+                            bundle.putString(BundleTags.TITLE, mEntity.getTitle());
+                            intent.putExtras(bundle);
+                            intent.setClass(mApplication, WebActivity.class);
+                        }
+                        break;
+                    case 290://私人律师团 - 权益分享用户提醒
+                        String str2 = DataHelper.getStringSF(mApplication, DataHelperTags.PRIVATE_LAWYER_URL);
+                        HomeChildEntity mEntity2 = GsonUtil.convertString2Object(str2, HomeChildEntity.class);
+                        if (!TextUtils.isEmpty(str2) && mEntity2 != null) {
+                            bundle.clear();
+                            bundle.putString(BundleTags.URL, mEntity2.getJumpurl());
+                            bundle.putString(BundleTags.TITLE, mEntity2.getTitle());
+                            intent.putExtras(bundle);
+                            intent.setClass(mApplication, WebActivity.class);
+                        }
+                        break;
+                    case 601://企业年度会员 - 分享权益 - 通知用户
+                        String str3 = DataHelper.getStringSF(mApplication, DataHelperTags.ANNUAL_URL);
+                        HomeChildEntity mEntity3 = GsonUtil.convertString2Object(str3, HomeChildEntity.class);
+                        if (!TextUtils.isEmpty(str3) && mEntity3 != null) {
+                            bundle.clear();
+                            bundle.putString(BundleTags.URL, mEntity3.getJumpurl());
+                            bundle.putString(BundleTags.TITLE, mEntity3.getTitle());
+                            intent.putExtras(bundle);
+                            intent.setClass(mApplication, WebActivity.class);
+                        }
                         break;
                 }
                 mRootView.launchActivity(intent);

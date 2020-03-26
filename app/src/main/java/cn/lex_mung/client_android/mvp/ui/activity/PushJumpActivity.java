@@ -135,9 +135,25 @@ public class PushJumpActivity extends BaseActivity<PushJumpPresenter> implements
                     bundle.putInt(BundleTags.ID, entity.getBusiId());
                     intent.putExtras(bundle);
                     intent.setClass(mActivity, OrderDetailsPrivateLawyerActivity.class);
-                    launchActivity(intent);
                     break;
-
+                case 601://企业年度会员 - 分享权益 - 通知用户
+                    String str3 = DataHelper.getStringSF(mActivity, DataHelperTags.ANNUAL_URL);
+                    HomeChildEntity mEntity3 = GsonUtil.convertString2Object(str3, HomeChildEntity.class);
+                    if (!TextUtils.isEmpty(str3) && mEntity3 != null) {
+                        bundle.clear();
+                        bundle.putString(BundleTags.URL, mEntity3.getJumpurl());
+                        bundle.putString(BundleTags.TITLE, mEntity3.getTitle());
+                        intent.putExtras(bundle);
+                        intent.setClass(mActivity, WebActivity.class);
+                    }
+                    break;
+                case 620://企业年度会员 - 接单10分钟为拨打电话 - 通知客户
+                case 604://企业年度会员 - 投诉处理 - 通知律师、用户
+                    bundle.clear();
+                    bundle.putInt(BundleTags.ID, entity.getBusiId());
+                    intent.putExtras(bundle);
+                    intent.setClass(mActivity, OrderDetailsAnnualActivity.class);
+                    break;
 
 //                default:
 //                    showMessage("当前消息可能需要新版本才能打开，建议检测是否存在最新版本。");
