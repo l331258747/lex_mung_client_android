@@ -209,7 +209,7 @@ public class OrderDetailsAnnualActivity extends BaseActivity<OrderDetailsAnnualP
                 isReceipt = 0;
             }
 
-            setRightTv(id, entity.getOrderNo(),"", isReceipt);
+            setRightTv(id, entity.getOrderNo(), "", isReceipt);
         }
 
         //订单编号
@@ -306,11 +306,11 @@ public class OrderDetailsAnnualActivity extends BaseActivity<OrderDetailsAnnualP
 
     public void payExpress(CorporateDetailEntity entity) {
         bundle.clear();
-        bundle.putInt(BundleTags.ID,entity.getCorporateServerId());
+        bundle.putInt(BundleTags.ID, entity.getCorporateServerId());
         bundle.putString(BundleTags.TITLE, "快递费");
         bundle.putString(BundleTags.REQUIRE_TYPE_NAME, "快递费");
         bundle.putFloat(BundleTags.MONEY, entity.getExpressFeeFloat());
-        bundle.putString(BundleTags.ORDER_NO,entity.getOrderNo());
+        bundle.putString(BundleTags.ORDER_NO, entity.getOrderNo());
         bundle.putInt(BundleTags.TYPE, 6);
         launchActivity(new Intent(mActivity, RushLoanPayActivity.class), bundle);
     }
@@ -420,37 +420,90 @@ public class OrderDetailsAnnualActivity extends BaseActivity<OrderDetailsAnnualP
                 }
             }
             if (orderStatus == 50) {
-                tv_btn_left.setVisibility(View.VISIBLE);
-                tv_btn_left.setText("匿名评价律师服务");
-                tv_btn_left.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_1ec88b_all));
-                tv_btn_left.setOnClickListener(v -> {
 
-                    EvaluateIntent evaluateIntent = new EvaluateIntent();
-                    evaluateIntent.setIconImage(entity.getIconImage());
-                    evaluateIntent.setInstitutionName(entity.getInstitutionName());
-                    evaluateIntent.setLawyerName(entity.getEvaluateLawyerName());
-                    evaluateIntent.setOrderId(entity.getOrderNo());
+                if (entity.getRequireTypeId() == 132 && !TextUtils.isEmpty(entity.getPayOrderNo())) {
 
-                    bundle.clear();
-                    bundle.putSerializable(BundleTags.ENTITY, evaluateIntent);
-                    bundle.putInt(BundleTags.TYPE, 2);
-                    launchActivity(new Intent(mActivity, BuyEquityEvaluateActivity.class), bundle);
-                });
+                    tv_btn_left.setVisibility(View.VISIBLE);
+                    tv_btn_left.setText(entity.getExpressFeeStr2());
+                    tv_btn_left.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_d7d7d7_all));
+
+                    tv_btn_right.setVisibility(View.VISIBLE);
+                    tv_btn_right.setText("匿名评价律师服务");
+                    tv_btn_right.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_1ec88b_all));
+                    tv_btn_right.setOnClickListener(v -> {
+
+                        EvaluateIntent evaluateIntent = new EvaluateIntent();
+                        evaluateIntent.setIconImage(entity.getIconImage());
+                        evaluateIntent.setInstitutionName(entity.getInstitutionName());
+                        evaluateIntent.setLawyerName(entity.getEvaluateLawyerName());
+                        evaluateIntent.setOrderId(entity.getOrderNo());
+
+                        bundle.clear();
+                        bundle.putSerializable(BundleTags.ENTITY, evaluateIntent);
+                        bundle.putInt(BundleTags.TYPE, 2);
+                        launchActivity(new Intent(mActivity, BuyEquityEvaluateActivity.class), bundle);
+                    });
+                } else {
+                    tv_btn_left.setVisibility(View.VISIBLE);
+                    tv_btn_left.setText("匿名评价律师服务");
+                    tv_btn_left.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_1ec88b_all));
+                    tv_btn_left.setOnClickListener(v -> {
+
+                        EvaluateIntent evaluateIntent = new EvaluateIntent();
+                        evaluateIntent.setIconImage(entity.getIconImage());
+                        evaluateIntent.setInstitutionName(entity.getInstitutionName());
+                        evaluateIntent.setLawyerName(entity.getEvaluateLawyerName());
+                        evaluateIntent.setOrderId(entity.getOrderNo());
+
+                        bundle.clear();
+                        bundle.putSerializable(BundleTags.ENTITY, evaluateIntent);
+                        bundle.putInt(BundleTags.TYPE, 2);
+                        launchActivity(new Intent(mActivity, BuyEquityEvaluateActivity.class), bundle);
+                    });
+                }
 
             }
             if (orderStatus == 70) {
-                tv_btn_left.setVisibility(View.VISIBLE);
-                tv_btn_left.setText("投诉反馈待处理");
-                tv_btn_left.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_d7d7d7_all));
+                if (entity.getRequireTypeId() == 132) {
+                    if (TextUtils.isEmpty(entity.getPayOrderNo())) {
+                        tv_btn_left.setVisibility(View.VISIBLE);
+                        tv_btn_left.setText("支付快递费");
+                        tv_btn_left.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_1ec88b_all));
+                        tv_btn_left.setOnClickListener(v -> {
+                            payExpress(entity);
+                        });
+                    } else {
+                        tv_btn_left.setVisibility(View.VISIBLE);
+                        tv_btn_left.setText(entity.getExpressFeeStr2());
+                        tv_btn_left.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_d7d7d7_all));
+                    }
+
+                    tv_btn_right.setVisibility(View.VISIBLE);
+                    tv_btn_right.setText("投诉反馈待处理");
+                    tv_btn_right.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_d7d7d7_all));
+                } else {
+                    tv_btn_left.setVisibility(View.VISIBLE);
+                    tv_btn_left.setText("投诉反馈待处理");
+                    tv_btn_left.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_d7d7d7_all));
+                }
             }
         } else if (orderStatus == 60) {
             //头部进度
             setOrderDetailView(3);
             //按钮
+            if (entity.getRequireTypeId() == 132 && !TextUtils.isEmpty(entity.getPayOrderNo())) {
+                tv_btn_left.setVisibility(View.VISIBLE);
+                tv_btn_left.setText(entity.getExpressFeeStr2());
+                tv_btn_left.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_d7d7d7_all));
 
-            tv_btn_left.setVisibility(View.VISIBLE);
-            tv_btn_left.setText("服务已完成");
-            tv_btn_left.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_d7d7d7_all));
+                tv_btn_right.setVisibility(View.VISIBLE);
+                tv_btn_right.setText("服务已完成");
+                tv_btn_right.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_d7d7d7_all));
+            } else {
+                tv_btn_left.setVisibility(View.VISIBLE);
+                tv_btn_left.setText("服务已完成");
+                tv_btn_left.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_d7d7d7_all));
+            }
 
         } else {
             //头部进度
@@ -549,14 +602,13 @@ public class OrderDetailsAnnualActivity extends BaseActivity<OrderDetailsAnnualP
     }
 
 
-
-    public void setRightTv(int id, String orderNo,String phone, int isReceipt) {
+    public void setRightTv(int id, String orderNo, String phone, int isReceipt) {
         titleView.setRightTv("合同");
         titleView.getRightTv().setTextColor(ContextCompat.getColor(mActivity, R.color.c_ff));
         titleView.getRightTv().setOnClickListener(v -> {
             bundle.clear();
             bundle.putInt(BundleTags.ID, id);//传递状态，1为可以发合同，0位展示空页面。
-            bundle.putString(BundleTags.ORDER_NO,orderNo);
+            bundle.putString(BundleTags.ORDER_NO, orderNo);
             bundle.putString(BundleTags.MOBILE, phone);
             bundle.putInt(BundleTags.STATE, isReceipt);
             bundle.putInt(BundleTags.TYPE, 2);
