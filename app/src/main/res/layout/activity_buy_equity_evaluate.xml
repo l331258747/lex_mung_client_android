@@ -250,7 +250,7 @@
                 android:layout_margin="@dimen/qb_px_30"
                 android:background="@drawable/round_20_f4f4f4_all"
                 android:gravity="top"
-                android:hint="您的评价是帮助律师提供服务质量的重要保障"
+                android:hint="您的评价是帮助律师提高服务质量的重要保障"
                 android:maxLength="1200"
                 android:minLines="5"
                 android:padding="@dimen/qb_px_20"

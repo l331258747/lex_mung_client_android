@@ -1,6 +1,5 @@
 package cn.lex_mung.client_android.mvp.presenter;
 
-import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
@@ -52,7 +51,7 @@ public class OrderCouponPresenter extends BasePresenter<OrderCouponContract.Mode
     @Inject
     AppManager mAppManager;
 
-    private int pageNum;
+    private int pageNum = 1;
     private int totalNum;
 
     private OrderCouponAdapter2 adapter;

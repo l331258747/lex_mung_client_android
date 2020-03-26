@@ -350,10 +350,10 @@ public class OrderDetailsAnnualActivity extends BaseActivity<OrderDetailsAnnualP
                 tv_top_message.setText("如服务律师未主动回电，您也可以点击联系律师拨打电话。");
             } else if (orderStatus == 40) {
                 ll_top_message.setVisibility(View.VISIBLE);
-                tv_top_message.setText("律师已完成服务，如您不进行操作，1小时后系统将自动确认完成！");
+                tv_top_message.setText("律师已完成服务，如您不进行操作，7天后系统将自动确认完成！");
             } else if (orderStatus == 50) {
                 ll_top_message.setVisibility(View.VISIBLE);
-                tv_top_message.setText("您已确认完成服务，如不进行评价，24小时后系统将采用默认评价!");
+                tv_top_message.setText("您已确认完成服务，如不进行评价，7天后系统将采用默认评价!");
             } else if (orderStatus == 70) {
                 ll_top_message.setVisibility(View.VISIBLE);
                 tv_top_message.setText("您的投诉反馈正在处理中，请耐心等候！");

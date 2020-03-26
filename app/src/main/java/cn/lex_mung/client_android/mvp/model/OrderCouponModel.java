@@ -100,7 +100,7 @@ public class OrderCouponModel extends BaseModel implements OrderCouponContract.M
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(map));
         return mRepositoryManager
                 .obtainRetrofitService(CommonService.class)
-                .legalAdviserServerCoupon(body);
+                .corporateCoupon(body);
     }
 
 }
