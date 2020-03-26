@@ -420,56 +420,22 @@ public class OrderDetailsAnnualActivity extends BaseActivity<OrderDetailsAnnualP
                 }
             }
             if (orderStatus == 50) {
+                tv_btn_left.setVisibility(View.VISIBLE);
+                tv_btn_left.setText("匿名评价律师服务");
+                tv_btn_left.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_1ec88b_all));
+                tv_btn_left.setOnClickListener(v -> {
 
-                if (entity.getRequireTypeId() == 132) {
+                    EvaluateIntent evaluateIntent = new EvaluateIntent();
+                    evaluateIntent.setIconImage(entity.getIconImage());
+                    evaluateIntent.setInstitutionName(entity.getInstitutionName());
+                    evaluateIntent.setLawyerName(entity.getEvaluateLawyerName());
+                    evaluateIntent.setOrderId(entity.getOrderNo());
 
-                    if (TextUtils.isEmpty(entity.getPayOrderNo())) {
-                        tv_btn_left.setVisibility(View.VISIBLE);
-                        tv_btn_left.setText("支付快递费");
-                        tv_btn_left.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_1ec88b_all));
-                        tv_btn_left.setOnClickListener(v -> {
-                            payExpress(entity);
-                        });
-                    } else {
-                        tv_btn_left.setVisibility(View.VISIBLE);
-                        tv_btn_left.setText(entity.getExpressFeeStr2());
-                        tv_btn_left.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_d7d7d7_all));
-                    }
-
-                    tv_btn_right.setVisibility(View.VISIBLE);
-                    tv_btn_right.setText("匿名评价律师服务");
-                    tv_btn_right.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_1ec88b_all));
-                    tv_btn_right.setOnClickListener(v -> {
-
-                        EvaluateIntent evaluateIntent = new EvaluateIntent();
-                        evaluateIntent.setIconImage(entity.getIconImage());
-                        evaluateIntent.setInstitutionName(entity.getInstitutionName());
-                        evaluateIntent.setLawyerName(entity.getEvaluateLawyerName());
-                        evaluateIntent.setOrderId(entity.getOrderNo());
-
-                        bundle.clear();
-                        bundle.putSerializable(BundleTags.ENTITY, evaluateIntent);
-                        bundle.putInt(BundleTags.TYPE, 2);
-                        launchActivity(new Intent(mActivity, BuyEquityEvaluateActivity.class), bundle);
-                    });
-                } else {
-                    tv_btn_left.setVisibility(View.VISIBLE);
-                    tv_btn_left.setText("匿名评价律师服务");
-                    tv_btn_left.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_1ec88b_all));
-                    tv_btn_left.setOnClickListener(v -> {
-
-                        EvaluateIntent evaluateIntent = new EvaluateIntent();
-                        evaluateIntent.setIconImage(entity.getIconImage());
-                        evaluateIntent.setInstitutionName(entity.getInstitutionName());
-                        evaluateIntent.setLawyerName(entity.getEvaluateLawyerName());
-                        evaluateIntent.setOrderId(entity.getOrderNo());
-
-                        bundle.clear();
-                        bundle.putSerializable(BundleTags.ENTITY, evaluateIntent);
-                        bundle.putInt(BundleTags.TYPE, 2);
-                        launchActivity(new Intent(mActivity, BuyEquityEvaluateActivity.class), bundle);
-                    });
-                }
+                    bundle.clear();
+                    bundle.putSerializable(BundleTags.ENTITY, evaluateIntent);
+                    bundle.putInt(BundleTags.TYPE, 2);
+                    launchActivity(new Intent(mActivity, BuyEquityEvaluateActivity.class), bundle);
+                });
 
             }
             if (orderStatus == 70) {
@@ -482,28 +448,9 @@ public class OrderDetailsAnnualActivity extends BaseActivity<OrderDetailsAnnualP
             setOrderDetailView(3);
             //按钮
 
-            if (entity.getRequireTypeId() == 132) {
-                if (TextUtils.isEmpty(entity.getPayOrderNo())) {
-                    tv_btn_left.setVisibility(View.VISIBLE);
-                    tv_btn_left.setText("支付快递费");
-                    tv_btn_left.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_1ec88b_all));
-                    tv_btn_left.setOnClickListener(v -> {
-                        payExpress(entity);
-                    });
-                } else {
-                    tv_btn_left.setVisibility(View.VISIBLE);
-                    tv_btn_left.setText(entity.getExpressFeeStr2());
-                    tv_btn_left.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_d7d7d7_all));
-                }
-
-                tv_btn_right.setVisibility(View.VISIBLE);
-                tv_btn_right.setText("服务已完成");
-                tv_btn_right.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_d7d7d7_all));
-            } else {
-                tv_btn_left.setVisibility(View.VISIBLE);
-                tv_btn_left.setText("服务已完成");
-                tv_btn_left.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_d7d7d7_all));
-            }
+            tv_btn_left.setVisibility(View.VISIBLE);
+            tv_btn_left.setText("服务已完成");
+            tv_btn_left.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_d7d7d7_all));
 
         } else {
             //头部进度
