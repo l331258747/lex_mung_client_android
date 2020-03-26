@@ -290,7 +290,7 @@ public class OrderDetailsAnnualActivity extends BaseActivity<OrderDetailsAnnualP
                 ll_info_pay_express.setVisibility(View.VISIBLE);
                 tv_info_pay_express.setText(entity.getExpressFeeStr());
             } else {
-                tv_info_pay_express.setVisibility(View.GONE);
+                ll_info_pay_express.setVisibility(View.GONE);
             }
         } else if (entity.getRequireTypeId() == 133) {
 
