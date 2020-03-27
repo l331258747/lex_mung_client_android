@@ -428,7 +428,7 @@ public class OrderDetailsAnnualActivity extends BaseActivity<OrderDetailsAnnualP
                     tv_btn_left.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_d7d7d7_all));
 
                     tv_btn_right.setVisibility(View.VISIBLE);
-                    tv_btn_right.setText("匿名评价律师服务");
+                    tv_btn_right.setText("评价律师服务");
                     tv_btn_right.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_1ec88b_all));
                     tv_btn_right.setOnClickListener(v -> {
 
@@ -445,7 +445,7 @@ public class OrderDetailsAnnualActivity extends BaseActivity<OrderDetailsAnnualP
                     });
                 } else {
                     tv_btn_left.setVisibility(View.VISIBLE);
-                    tv_btn_left.setText("匿名评价律师服务");
+                    tv_btn_left.setText("评价律师服务");
                     tv_btn_left.setBackground(ContextCompat.getDrawable(mActivity, R.drawable.round_40_1ec88b_all));
                     tv_btn_left.setOnClickListener(v -> {
 
