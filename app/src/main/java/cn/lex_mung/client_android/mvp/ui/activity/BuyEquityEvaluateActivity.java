@@ -26,6 +26,7 @@ import cn.lex_mung.client_android.mvp.model.entity.payEquity.OrderPrivateLawyers
 import cn.lex_mung.client_android.mvp.ui.dialog.LoadingDialog;
 
 import cn.lex_mung.client_android.mvp.ui.widget.EvaluateStarView;
+import cn.lex_mung.client_android.mvp.ui.widget.TitleView;
 import me.zl.mvp.base.BaseActivity;
 import me.zl.mvp.di.component.AppComponent;
 import me.zl.mvp.http.imageloader.ImageLoader;
@@ -67,6 +68,8 @@ public class BuyEquityEvaluateActivity extends BaseActivity<BuyEquityEvaluatePre
     TextView tv_tip;
     @BindView(R.id.tv_btn)
     TextView tv_btn;
+    @BindView(R.id.titleView)
+    TitleView titleView;
 
     @BindView(R.id.et_describe)
     EditText et_describe;
@@ -125,9 +128,11 @@ public class BuyEquityEvaluateActivity extends BaseActivity<BuyEquityEvaluatePre
         if(type == 2){
             tv_tip.setVisibility(View.GONE);
             tv_btn.setText("提交评价");
+            titleView.setTitle("服务评价");
         }else{
             tv_tip.setVisibility(View.VISIBLE);
             tv_btn.setText("匿名评价");
+            titleView.setTitle("匿名评价");
         }
 
     }
